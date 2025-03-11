@@ -29,7 +29,7 @@ module RubyLLM
       module_function
 
       def api_base
-        'https://api.openai.com/v1'
+        RubyLLM.config.openai_base_url || 'https://api.openai.com/v1'
       end
 
       def headers

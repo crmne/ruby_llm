@@ -33,6 +33,12 @@ RubyLLM.configure do |config|
 end
 ```
 
+You can optionally provide the base URL for the OpenAI API, through which you can point to OpenAI API compatible engines like [Ollama](https://github.com/ollama/ollama), [KoboldCPP](https://github.com/LostRuins/koboldcpp), [TabbyAPI](https://github.com/theroyallab/tabbyAPI), etc:
+
+```ruby
+  config.openai_base_url = "http://localhost:11434/v1"
+```
+
 ## Your First Chat
 
 Let's start with a simple chat interaction:

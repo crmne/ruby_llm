@@ -11,6 +11,7 @@ module RubyLLM
   #   end
   class Configuration
     attr_accessor :openai_api_key,
+                  :openai_base_url,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
