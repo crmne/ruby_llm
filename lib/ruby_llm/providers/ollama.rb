@@ -5,7 +5,7 @@ module RubyLLM
     # Native Ollama API implementation
     module Ollama
       extend Provider
-      # extend Ollama::Chat
+      extend Ollama::Chat
       # extend Ollama::Embeddings
       extend Ollama::Models
       # extend Ollama::Streaming
