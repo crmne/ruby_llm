@@ -13,7 +13,7 @@ module RubyLLM
       module_function
 
       def enabled?
-        !! RubyLLM.config.ollama_api_base_url
+        !!RubyLLM.config.ollama_api_base_url
       end
 
       def api_base
@@ -21,7 +21,7 @@ module RubyLLM
       end
 
       def headers
-        { }
+        {}
       end
 
       def capabilities

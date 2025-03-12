@@ -9,7 +9,7 @@ module RubyLLM
       module_function
 
       def enabled?
-        !! RubyLLM.config.deepseek_api_key
+        !!RubyLLM.config.deepseek_api_key
       end
 
       def api_base

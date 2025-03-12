@@ -16,7 +16,7 @@ module RubyLLM
       module_function
 
       def enabled?
-        !! RubyLLM.config.anthropic_api_key
+        !!RubyLLM.config.anthropic_api_key
       end
 
       def api_base

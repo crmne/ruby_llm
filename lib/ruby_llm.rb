@@ -16,7 +16,7 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
-  'ollama' => 'Ollama',
+  'ollama' => 'Ollama'
 )
 loader.setup
 

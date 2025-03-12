@@ -7,14 +7,12 @@ module RubyLLM
       module Streaming
         # Need to make stream_completion public for chat.rb to access
         def stream_completion(model, payload, &block) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          url = "api/chat"
+          url = 'api/chat'
           accumulator = StreamAccumulator.new
 
           post(url, payload) do |req|
             req.options.on_data = stream_handler(accumulator, &block)
           end
-
-          message = accumulator.to_message
 
           accumulator.to_message
         end
@@ -31,7 +29,7 @@ module RubyLLM
 
               # NOTE: unavailable in the response - https://ollama.readthedocs.io/en/api/#streaming-responses
               input_tokens: nil,
-              output_tokens: nil,
+              output_tokens: nil
             )
 
             accumulator.add(chunk)
