@@ -139,7 +139,7 @@ module RubyLLM
               parsed_data = JSON.parse(chunk)
               block.call(parsed_data)
             else
-              raise NotImplementedError.new("unsupported content-type in streaming response: #{content_type}")
+              raise NotImplementedError, "unsupported content-type in streaming response: #{content_type}"
             end
           end
         end

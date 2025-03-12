@@ -7,7 +7,7 @@ module RubyLLM
       module Chat # rubocop:disable Metrics/ModuleLength
         # Must be public for Provider to use
         def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
-          raise NotImplementedError.new('tool use not implemented in Ollama at this time') if tools.any?
+          raise NotImplementedError, 'tool use not implemented in Ollama at this time' if tools.any?
 
           payload = {
             model: model,
@@ -45,14 +45,8 @@ module RubyLLM
         end
 
         def format_role(role)
-          case role
-          when :assistant
-          when :system
-          when :tool
-            role.to_s
           # FIXME: probably should validate this
-          else role.to_s
-          end
+          role.to_s
         end
 
         def format_parts(msg) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
