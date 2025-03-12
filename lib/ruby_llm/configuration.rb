@@ -14,6 +14,7 @@ module RubyLLM
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
+                  :ollama_api_base_url,
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
