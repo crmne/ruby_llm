@@ -11,6 +11,8 @@ module RubyLLM
         end
 
         def list_models
+          return [] unless enabled?
+
           response = connection.get("models?key=#{RubyLLM.config.gemini_api_key}") do |req|
             req.headers.merge! headers
           end

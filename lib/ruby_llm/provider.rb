@@ -19,6 +19,8 @@ module RubyLLM
       end
 
       def list_models
+        return [] unless enabled?
+
         response = connection.get(models_url) do |req|
           req.headers.merge! headers
         end

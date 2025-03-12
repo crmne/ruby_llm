@@ -15,6 +15,10 @@ module RubyLLM
 
       module_function
 
+      def enabled?
+        !! RubyLLM.config.gemini_api_key
+      end
+
       def api_base
         'https://generativelanguage.googleapis.com/v1beta'
       end
