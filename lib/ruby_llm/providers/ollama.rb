@@ -8,7 +8,7 @@ module RubyLLM
       extend Ollama::Chat
       # extend Ollama::Embeddings
       extend Ollama::Models
-      # extend Ollama::Streaming
+      extend Ollama::Streaming
 
       module_function
 

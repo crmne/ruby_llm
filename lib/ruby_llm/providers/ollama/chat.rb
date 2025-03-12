@@ -20,8 +20,8 @@ module RubyLLM
           }
 
           if block_given?
-            raise NotImplementedError
-            # stream_completion(model, payload, &block)
+            payload[:stream] = true
+            stream_completion(model, payload, &block)
           else
             payload[:stream] = false
             generate_completion(model, payload)
