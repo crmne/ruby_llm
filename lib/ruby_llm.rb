@@ -16,7 +16,7 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
-  'ollama' => 'Ollama',
+  'ollama' => 'Ollama'
 )
 loader.ignore("#{__dir__}/ruby_llm/railtie")
 loader.ignore("#{__dir__}/ruby_llm/active_record")

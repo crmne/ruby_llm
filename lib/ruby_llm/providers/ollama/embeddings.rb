@@ -9,29 +9,28 @@ module RubyLLM
         def embed(text, model:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           payload = {
             model: model,
-            input: format_text_for_embedding(text),
+            input: format_text_for_embedding(text)
           }
 
-          url = "api/embed"
+          url = 'api/embed'
           response = post(url, payload)
 
           Embedding.new(
             vectors: response.body['embeddings'],
             model: model,
             # only available when passing a single string input
-            input_tokens: response.body['prompt_eval_count'] || 0,
+            input_tokens: response.body['prompt_eval_count'] || 0
           )
         end
 
         private
 
         def format_text_for_embedding(text)
-          if text.is_a?(Array) || text.is_a?(String)
-            # Ollama supports either a string or a string array here
-            text
-          else
+          # Ollama supports either a string or a string array here
+          unless text.is_a?(Array) || text.is_a?(String)
             raise NotImplementedException.new("unsupported argument for Ollama embedding: #{text.class}")
           end
+          text
         end
       end
     end

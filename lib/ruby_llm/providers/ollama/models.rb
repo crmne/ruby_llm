@@ -13,7 +13,7 @@ module RubyLLM
         def list_models
           return [] unless enabled?
 
-          response = connection.get("api/tags") do |req|
+          response = connection.get('api/tags') do |req|
             req.headers.merge! headers
           end
 
@@ -34,8 +34,7 @@ module RubyLLM
               provider: slug,
               type: capabilities.model_type(model_id),
               family: model['family'],
-              metadata: {
-              },
+              metadata: {},
               context_window: capabilities.context_window_for(model_id),
               max_tokens: capabilities.max_tokens_for(model_id),
               supports_vision: capabilities.supports_vision?(model_id),
