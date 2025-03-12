@@ -15,6 +15,10 @@ module RubyLLM
 
       module_function
 
+      def enabled?
+        !!RubyLLM.config.anthropic_api_key
+      end
+
       def api_base
         'https://api.anthropic.com'
       end

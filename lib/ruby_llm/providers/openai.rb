@@ -28,6 +28,10 @@ module RubyLLM
 
       module_function
 
+      def enabled?
+        !!RubyLLM.config.openai_api_key
+      end
+
       def api_base
         'https://api.openai.com/v1'
       end

@@ -19,6 +19,8 @@ module RubyLLM
       end
 
       def list_models
+        return [] unless enabled?
+
         response = connection.get(models_url) do |req|
           req.headers.merge! headers
         end
@@ -123,11 +125,21 @@ module RubyLLM
               RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
             end
           else
-            parser.feed(chunk) do |_type, data|
-              unless data == '[DONE]'
-                parsed_data = JSON.parse(data)
-                block.call(parsed_data)
+            content_type = env.response_headers['content-type']
+
+            case content_type
+            when 'text/event-stream'
+              parser.feed(chunk) do |_type, data|
+                unless data == '[DONE]'
+                  parsed_data = JSON.parse(data)
+                  block.call(parsed_data)
+                end
               end
+            when 'application/x-ndjson'
+              parsed_data = JSON.parse(chunk)
+              block.call(parsed_data)
+            else
+              raise NotImplementedError, "unsupported content-type in streaming response: #{content_type}"
             end
           end
         end
