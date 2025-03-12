@@ -28,8 +28,9 @@ module RubyLLM
         def format_text_for_embedding(text)
           # Ollama supports either a string or a string array here
           unless text.is_a?(Array) || text.is_a?(String)
-            raise NotImplementedException.new("unsupported argument for Ollama embedding: #{text.class}")
+            raise NotImplementedException, "unsupported argument for Ollama embedding: #{text.class}"
           end
+
           text
         end
       end
