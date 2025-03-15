@@ -2,18 +2,18 @@
 
 module RubyLLM
   module Providers
-    module Gemini
-      # Models methods for the Gemini API integration
+    module Ollama
+      # Models methods for the Ollama API integration
       module Models
         # Methods needed by Provider - must be public
         def models_url
-          'models'
+          'api/tags'
         end
 
         def list_models
           return [] unless enabled?
 
-          response = connection.get("models?key=#{RubyLLM.config.gemini_api_key}") do |req|
+          response = connection.get('api/tags') do |req|
             req.headers.merge! headers
           end
 
@@ -24,25 +24,19 @@ module RubyLLM
 
         def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           (response.body['models'] || []).map do |model|
-            # Extract model ID without "models/" prefix
-            model_id = model['name'].gsub('models/', '')
+            model_id = model['name']
 
             ModelInfo.new(
               id: model_id,
-              created_at: nil,
-              display_name: model['displayName'],
+              # NOTE: this is date pulled into ollama, not quite date of introduction of a model
+              created_at: model['modified_at'],
+              display_name: model_id,
               provider: slug,
               type: capabilities.model_type(model_id),
-              family: capabilities.model_family(model_id),
-              metadata: {
-                version: model['version'],
-                description: model['description'],
-                input_token_limit: model['inputTokenLimit'],
-                output_token_limit: model['outputTokenLimit'],
-                supported_generation_methods: model['supportedGenerationMethods']
-              },
-              context_window: model['inputTokenLimit'] || capabilities.context_window_for(model_id),
-              max_tokens: model['outputTokenLimit'] || capabilities.max_tokens_for(model_id),
+              family: model['family'],
+              metadata: {},
+              context_window: capabilities.context_window_for(model_id),
+              max_tokens: capabilities.max_tokens_for(model_id),
               supports_vision: capabilities.supports_vision?(model_id),
               supports_functions: capabilities.supports_functions?(model_id),
               supports_json_mode: capabilities.supports_json_mode?(model_id),
