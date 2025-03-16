@@ -1,0 +1,1 @@
+* follow the design patterns of this existing repo
