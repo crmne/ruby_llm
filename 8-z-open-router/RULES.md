@@ -1,6 +1,7 @@
 # RubyLLM Development Rules and Guidelines
 
 * prefer a TDD/BDD approach
+* avoid mocks, use real objects instead, consider VCR
 * Follow the design patterns of this existing repo
 * Maintain consistent code organization and structure
 * Follow Ruby best practices and conventions
