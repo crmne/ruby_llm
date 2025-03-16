@@ -8,12 +8,14 @@ module RubyLLM
   #   RubyLLM.configure do |config|
   #     config.openai_api_key = ENV['OPENAI_API_KEY']
   #     config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
+  #     config.open_router_api_key = ENV['OPENROUTER_API_KEY']
   #   end
   class Configuration
     attr_accessor :openai_api_key,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
+                  :open_router_api_key,
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
