@@ -27,6 +27,9 @@ Understand how to use streaming responses for real-time interactions.
 ### [Rails Integration]({% link guides/rails.md %})
 See how to integrate RubyLLM with Rails applications, including ActiveRecord persistence.
 
+### [Chunking]({% link guides/chunking.md %})
+Learn about smart text chunking strategies for processing large documents effectively.
+
 ### [Image Generation]({% link guides/image-generation.md %})
 Learn how to generate images using DALL-E and other providers.
 

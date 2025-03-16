@@ -61,6 +61,33 @@ module RubyLLM
         level: ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       )
     end
+
+    def chunk(content, chunker: :character, **options)
+      return [] if content.nil? || content.empty?
+
+      chunker_class = Chunker.for(chunker)
+      raise ArgumentError, "Unknown chunker type: #{chunker}" unless chunker_class
+
+      # Filter options to only include those accepted by the chunker
+      filtered_options = filter_chunker_options(chunker_class, options)
+
+      chunker_instance = chunker_class.new(**filtered_options)
+      result = chunker_instance.chunk(content)
+
+      # If content is short enough to be a single chunk, just return it as is
+      result.empty? ? [content] : result
+    end
+
+    private
+
+    def filter_chunker_options(chunker_class, options)
+      # Get the parameters the chunker's initialize method accepts
+      parameters = chunker_class.instance_method(:initialize).parameters
+      allowed_keys = parameters.map { |_, name| name if name != :options }.compact
+
+      # Only keep options that the chunker accepts
+      options.slice(*allowed_keys)
+    end
   end
 end
 

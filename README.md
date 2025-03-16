@@ -35,6 +35,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🔧 **Tools** that let AI use your Ruby code
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
+- 📝 **Smart Chunking** with multiple strategies for processing large texts
 
 ## What makes it great
 
@@ -42,6 +43,13 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 # Just ask questions
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
+
+# Process large documents intelligently
+text = File.read("large_document.txt")
+chunks = RubyLLM.chunk(text, chunker: :recursive, min_size: 100, max_size: 2000)
+chunks.each do |chunk|
+  chat.ask "Analyze this section: #{chunk}"
+end
 
 # Analyze images
 chat.ask "What's in this image?", with: { image: "ruby_conf.jpg" }
