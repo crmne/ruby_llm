@@ -1,5 +1,6 @@
 # RubyLLM Development Rules and Guidelines
 
+* prefer a TDD/BDD approach
 * Follow the design patterns of this existing repo
 * Maintain consistent code organization and structure
 * Follow Ruby best practices and conventions
