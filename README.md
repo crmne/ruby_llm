@@ -112,6 +112,9 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
   config.bedrock_region = ENV.fetch('AWS_REGION', nil)
   config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+  
+  # OpenRouter
+  config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
 end
 ```
 
