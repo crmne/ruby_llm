@@ -20,6 +20,7 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :openrouter_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,
