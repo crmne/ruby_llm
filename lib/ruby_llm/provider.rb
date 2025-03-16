@@ -60,7 +60,9 @@ module RubyLLM
       end
 
       def post(url, payload)
+        additional_headers = RubyLLM.config.additional_headers
         connection.post url, payload do |req|
+          req.headers.merge! additional_headers unless additional_headers.nil?
           req.headers.merge! headers
           yield req if block_given?
         end

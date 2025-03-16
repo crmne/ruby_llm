@@ -18,7 +18,9 @@ module RubyLLM
                   :default_embedding_model,
                   :default_image_model,
                   :request_timeout,
-                  :max_retries
+                  :max_retries,
+                  :openai_base_url_override,
+                  :additional_headers
 
     def initialize
       @request_timeout = 120
