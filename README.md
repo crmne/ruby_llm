@@ -193,6 +193,15 @@ chat.with_tool(Search).ask "Find documents about Ruby 3.3 features"
 
 Check out the guides at https://rubyllm.com for deeper dives into conversations with tools, streaming responses, embedding generations, and more.
 
+## Running tests locally
+
+Remember to set all credentials, otherwise you may get some errors.
+
+If you don't want (or don't have) all of them, you may use VCR cached requests
+by setting `VCR_RECORD=none` to rely only on cached results or
+`VCR_RECORD=new_episodes` to use cached requests and perform http requests only
+if needed.
+
 ## License
 
 Released under the MIT License.
