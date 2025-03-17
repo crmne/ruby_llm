@@ -13,10 +13,19 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil)
+    def initialize(model: nil) # rubocop:disable Metrics/MethodLength
       model_id = model || RubyLLM.config.default_model
       self.model = model_id
-      @temperature = @model.metadata['family'] == 'o1' ? 1 : 0.7
+      @temperature = case @model.temperature
+                     when false
+                       nil
+                     when Numeric
+                       @model.temperature
+                     when nil, ''
+                       0.7
+                     else
+                       raise "Invalid temperature: #{@model.temperature}"
+                     end
       @messages = []
       @tools = {}
       @on = {

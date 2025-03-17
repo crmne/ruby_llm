@@ -17,7 +17,7 @@ module RubyLLM
             messages: format_messages(messages),
             temperature: temperature,
             stream: stream
-          }.tap do |payload|
+          }.compact.tap do |payload|
             if tools.any?
               payload[:tools] = tools.map { |_, tool| tool_for(tool) }
               payload[:tool_choice] = 'auto'

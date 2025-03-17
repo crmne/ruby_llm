@@ -15,7 +15,8 @@ module RubyLLM
   class ModelInfo
     attr_reader :id, :created_at, :display_name, :provider, :metadata,
                 :context_window, :max_tokens, :supports_vision, :supports_functions,
-                :supports_json_mode, :input_price_per_million, :output_price_per_million, :type, :family
+                :supports_json_mode, :input_price_per_million, :output_price_per_million, :type, :family,
+                :temperature
 
     def initialize(data) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       @id = data[:id]
@@ -26,6 +27,7 @@ module RubyLLM
       @max_tokens = data[:max_tokens]
       @type = data[:type]
       @family = data[:family]
+      @temperature = data[:temperature]
       @supports_vision = data[:supports_vision]
       @supports_functions = data[:supports_functions]
       @supports_json_mode = data[:supports_json_mode]
@@ -44,6 +46,7 @@ module RubyLLM
         max_tokens: max_tokens,
         type: type,
         family: family,
+        temperature: temperature,
         supports_vision: supports_vision,
         supports_functions: supports_functions,
         supports_json_mode: supports_json_mode,
