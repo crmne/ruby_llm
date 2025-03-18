@@ -2,9 +2,20 @@
 
 module RubyLLM
   module Providers
-    # DeepSeek API integration.
+    # Perplexity API integration. Handles chat completion, streaming,
+    # and Perplexity's unique features like citations.
     module Perplexity
-      extend OpenAI
+      extend Provider
+      extend Perplexity::Chat
+      extend Perplexity::Models
+      extend Perplexity::Streaming
+
+      def self.extended(base)
+        base.extend(Provider)
+        base.extend(Perplexity::Chat)
+        base.extend(Perplexity::Models)
+        base.extend(Perplexity::Streaming)
+      end
 
       module_function
 

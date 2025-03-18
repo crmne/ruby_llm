@@ -7,7 +7,7 @@ module RubyLLM
       module Capabilities
         module_function
 
-        # Returns the context window size for the given model
+        # Returns the context window size for the given model ID
         # @param model_id [String] the model identifier
         # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
@@ -24,7 +24,7 @@ module RubyLLM
         # @return [Integer] the maximum number of tokens
         def max_tokens_for(model_id)
           case model_id
-          when /sonar-(?:pro|reasoning-pro)/ then 8_000
+          when /sonar-(?:pro|reasoning-pro)/ then 8_192
           else 4_096 # Default if max_tokens not specified
           end
         end
@@ -60,25 +60,29 @@ module RubyLLM
         # Determines if the model supports vision capabilities
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision
-        def supports_vision?(_model_id)
-          false # Perplexity models focus on text and web search, not vision
+        def supports_vision?(model_id)
+          # Based on the beta features information
+          case model_id
+          when /sonar-reasoning-pro/, /sonar-reasoning/, /sonar-pro/, /sonar/ then true
+          else false
+          end
         end
 
         # Determines if the model supports function calling
         # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports function calling
-        def supports_functions?(model_id)
-          model_id.match?(/sonar-(?:reasoning-pro|pro)/) # Larger Sonar models likely support functions
+        # @return [Boolean] true if the model supports functions
+        def supports_functions?(_model_id)
+          # Perplexity doesn't seem to support function calling
+          false
         end
 
         # Determines if the model supports JSON mode
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports JSON mode
-        def supports_json_mode?(model_id)
-          model_id.match?(/sonar-(?:reasoning-pro|pro)/) # Assuming larger models support structured output
+        def supports_json_mode?(_model_id)
+          # Based on the structured outputs beta feature
+          true
         end
 
-        # Returns a formatted display name for the model
+        # Formats the model ID into a human-readable display name
         # @param model_id [String] the model identifier
         # @return [String] the formatted display name
         def format_display_name(model_id)
