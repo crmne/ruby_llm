@@ -76,6 +76,7 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
     end
 
     # Refresh models (now returns self instead of models array)
