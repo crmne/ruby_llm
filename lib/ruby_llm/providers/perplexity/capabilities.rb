@@ -122,29 +122,29 @@ module RubyLLM
         # Note: Hypothetical pricing based on industry norms; adjust with official rates
         PRICES = {
           sonar_deep_research: {
-            input: 2.00,                  # $5.00 per million tokens (combined $2 input + $3 reasoning)
+            input: 2.00,                  # $2.00 per million tokens
             output: 8.00                  # $8.00 per million tokens
-            reasoning: 3.00               # $3.00 per million tokens
+            reasoning: 3.00,              # $3.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
           sonar_reasoning_pro: {
             input: 2.00,                  # $2.00 per million tokens
-            output: 8.00                  # $8.00 per million tokens
+            output: 8.00,                 # $8.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
           sonar_reasoning: {
             input: 1.00,                  # $1.00 per million tokens
-            output: 5.00                  # $5.00 per million tokens
+            output: 5.00,                 # $5.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
           sonar_pro: {
             input: 3.00,                  # $3.00 per million tokens
-            output: 15.00                 # $15.00 per million tokens
+            output: 15.00,                # $15.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
           sonar: {
             input: 1.00,                  # $1.00 per million tokens
-            output: 1.00                  # $1.00 per million tokens
+            output: 1.00,                 # $1.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
           r1_1776: {
