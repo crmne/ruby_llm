@@ -123,7 +123,7 @@ module RubyLLM
         PRICES = {
           sonar_deep_research: {
             input: 2.00,                  # $2.00 per million tokens
-            output: 8.00                  # $8.00 per million tokens
+            output: 8.00,                 # $8.00 per million tokens
             reasoning: 3.00,              # $3.00 per million tokens
             price_per_1000_searches: 5.00 # $5.00 per 1,000 searches
           },
