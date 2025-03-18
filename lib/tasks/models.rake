@@ -19,6 +19,10 @@ PROVIDER_DOCS = {
   },
   anthropic: {
     models: 'https://docs.anthropic.com/en/docs/about-claude/models/all-models'
+  },
+  perplexity: {
+    models: 'https://docs.perplexity.ai/guides/model-cards',
+    pricing: 'https://docs.perplexity.ai/guides/pricing'
   }
 }.freeze
 

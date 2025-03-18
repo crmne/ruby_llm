@@ -11,7 +11,8 @@ RSpec.describe RubyLLM::Chat do
       'claude-3-5-haiku-20241022',
       'gemini-2.0-flash',
       'deepseek-chat',
-      'gpt-4o-mini'
+      'gpt-4o-mini',
+      'sonar'
     ].each do |model|
       it "#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
