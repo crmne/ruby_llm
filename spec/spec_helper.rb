@@ -10,9 +10,9 @@ SimpleCov.start do
   formatter SimpleCov::Formatter::MultiFormatter.new(
     [
       SimpleCov::Formatter::SimpleFormatter,
-      SimpleCov::Formatter::Codecov,
+      (SimpleCov::Formatter::Codecov unless ENV['SKIP_CODECOV_UPLOAD']),
       SimpleCov::Formatter::CoberturaFormatter
-    ]
+    ].compact
   )
 end
 
