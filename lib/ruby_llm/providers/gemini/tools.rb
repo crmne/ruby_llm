@@ -9,9 +9,17 @@ module RubyLLM
         def format_tools(tools)
           return [] if tools.empty?
 
-          [{
-            functionDeclarations: tools.values.map { |tool| function_declaration_for(tool) }
-          }]
+          formatted_tools = tools.map do |tool|
+            if tool.is_a?(Hash) && tool.key?(:google_search)
+              tool
+            else
+              {
+                functionDeclarations: [function_declaration_for(tool)]
+              }
+            end
+          end
+
+          formatted_tools.flatten
         end
 
         # Extract tool calls from response data
