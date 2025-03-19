@@ -55,6 +55,7 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
 
   # Optional: Set default models
   config.default_model = 'gpt-4o-mini'               # Default chat model

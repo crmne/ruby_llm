@@ -15,7 +15,8 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'openai' => 'OpenAI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek'
+  'deepseek' => 'DeepSeek',
+  'perplexity' => 'Perplexity'
 )
 loader.setup
 
@@ -68,6 +69,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

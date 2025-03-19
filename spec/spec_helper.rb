@@ -40,6 +40,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY')
       config.max_retries = 50
     end
   end
