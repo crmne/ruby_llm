@@ -13,7 +13,7 @@ module RubyLLM
       extend Bedrock::Streaming
       extend Bedrock::Models
       extend Bedrock::Tools
-      extend Bedrock::Signature
+      extend Bedrock::Signing
 
       def self.extended(base)
         base.extend(Provider)
@@ -21,27 +21,40 @@ module RubyLLM
         base.extend(Bedrock::Streaming)
         base.extend(Bedrock::Models)
         base.extend(Bedrock::Tools)
-        base.extend(Bedrock::Signature)
+        base.extend(Bedrock::Signing)
       end
 
       module_function
 
       def api_base
-        "https://bedrock.#{aws_region}.amazonaws.com"
-        #"https://bedrock-runtime.#{aws_region}.amazonaws.com"
+        @api_base ||= "https://bedrock-runtime.#{aws_region}.amazonaws.com"
       end
 
-      def headers(method: :post, path: nil, model_id: nil)
-        Signature.sign_request(
+      def post(url, payload)
+        connection.post url, payload do |req|
+          req.headers.merge! headers(method: :post, path: "#{connection.url_prefix}#{url}", body: payload.to_json)
+
+          yield req if block_given?
+        end
+      end
+
+      def headers(method: :post, path: nil, body: nil)
+        signer = Signing::Signer.new({
+                                         access_key_id: aws_access_key_id,
+                                         secret_access_key: aws_secret_access_key,
+                                         session_token: aws_session_token,
+                                         region: aws_region,
+                                         service: 'bedrock',
+                                       })
+        request = {
           connection: connection,
-          method: method,
-          path: path || completion_url,
-          body: '',
-          access_key: aws_access_key_id,
-          secret_key: aws_secret_access_key,
-          session_token: aws_session_token,
-          region: aws_region
-        ).merge(
+          http_method: method,
+          url: path || completion_url,
+          body: body || '',
+        }
+        signature = signer.sign_request(request)
+
+        signature.headers.merge(
           'Content-Type' => 'application/json',
           'Accept' => 'application/json'
         )

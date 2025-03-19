@@ -6,9 +6,12 @@ module RubyLLM
       # Models methods for the AWS Bedrock API implementation
       module Models
         def list_models
+          @connection = nil # reset connection since base url is different
+          @api_base = "https://bedrock.#{aws_region}.amazonaws.com"
           response = connection.get(models_url) do |req|
             req.headers.merge! headers(method: :get, path: models_url)
           end
+          @connection = nil # reset connection since base url is different
 
           parse_list_models_response(response, slug, capabilities)
         end

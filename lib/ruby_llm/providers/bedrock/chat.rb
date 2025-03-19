@@ -7,6 +7,10 @@ module RubyLLM
       module Chat
         module_function
 
+        def completion_url
+          "model/#{model_id}/invoke-with-response-stream"
+        end
+
         def model_id
           @model_id
         end
@@ -41,15 +45,19 @@ module RubyLLM
 
         def build_claude_request(messages, temperature, model_id)
           formatted = messages.map do |msg|
-            {
-              role: msg.role == :assistant ? "assistant" : "user",
-              content: msg.content
-            }
-          end
+            role = msg.role == :assistant ? 'Assistant' : 'Human'
+            content = msg.content
+            "\n\n#{role}: #{content}"
+          end.join
 
           {
             anthropic_version: "bedrock-2023-05-31",
-            messages: formatted,
+            messages: [
+              {
+                role: "user",
+                content: formatted
+              }
+            ],
             temperature: temperature,
             max_tokens: max_tokens_for(model_id)
           }
