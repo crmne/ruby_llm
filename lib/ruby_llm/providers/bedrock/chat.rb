@@ -20,8 +20,6 @@ module RubyLLM
           case model
           when /anthropic\.claude/
             build_claude_request(messages, temperature, model)
-          when /amazon\.titan/
-            build_titan_request(messages, temperature, model)
           else
             raise Error, "Unsupported model: #{model}"
           end
@@ -60,16 +58,6 @@ module RubyLLM
             ],
             temperature: temperature,
             max_tokens: max_tokens_for(model_id)
-          }
-        end
-
-        def build_titan_request(messages, temperature, model_id)
-          {
-            inputText: messages.map { |msg| msg.content }.join("\n"),
-            textGenerationConfig: {
-              temperature: temperature,
-              maxTokenCount: max_tokens_for(model_id)
-            }
           }
         end
 

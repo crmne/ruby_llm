@@ -6,7 +6,7 @@ require 'time'
 module RubyLLM
   module Providers
     # AWS Bedrock API integration. Handles chat completion and streaming
-    # for Claude and Titan models.
+    # for Claude models.
     module Bedrock
       extend Provider
       extend Bedrock::Chat
