@@ -29,7 +29,8 @@ module RubyLLM
       module_function
 
       def api_base
-        'https://api.openai.com/v1'
+        return 'https://api.openai.com/v1' unless RubyLLM.config.openai_base_url_override
+        return RubyLLM.config.openai_base_url_override
       end
 
       def headers
