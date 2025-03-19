@@ -7,10 +7,6 @@ module RubyLLM
       module Streaming
         module_function
 
-        def stream_url
-          'model'
-        end
-
         def handle_stream(&block)
           to_json_stream do |data|
             block.call(
@@ -34,9 +30,10 @@ module RubyLLM
           when /amazon\.titan/
             data.dig(:results, 0, :outputText)
           else
-            raise Error, "Unsupported model: #{data['model']}"
+            raise Error, data.inspect
           end
         end
+
       end
     end
   end

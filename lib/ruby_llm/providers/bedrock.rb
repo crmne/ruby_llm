@@ -25,14 +25,15 @@ module RubyLLM
       module_function
 
       def api_base
-        "https://bedrock-runtime.#{aws_region}.amazonaws.com"
+        "https://bedrock.#{aws_region}.amazonaws.com"
+        #"https://bedrock-runtime.#{aws_region}.amazonaws.com"
       end
 
-      def headers
+      def headers(method: :post, path: nil, model_id: nil)
         SignatureV4.sign_request(
           connection: connection,
-          method: :post,
-          path: completion_url,
+          method: method,
+          path: path || completion_url,
           body: '',
           access_key: aws_access_key_id,
           secret_key: aws_secret_access_key,
@@ -50,14 +51,6 @@ module RubyLLM
 
       def slug
         'bedrock'
-      end
-
-      def connection
-        @connection ||= Faraday.new(url: api_base) do |f|
-          f.request :json
-          f.response :json
-          f.adapter Faraday.default_adapter
-        end
       end
 
       def aws_region
@@ -95,7 +88,7 @@ module RubyLLM
           signed_headers = canonical_headers.map { |h| h.split(':')[0] }.sort.join(';')
           canonical_request = [
             method.to_s.upcase,
-            path,
+            "/#{path}",
             '',
             canonical_headers.sort.join("\n") + "\n",
             signed_headers,

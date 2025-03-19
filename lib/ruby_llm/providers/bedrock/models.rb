@@ -5,21 +5,31 @@ module RubyLLM
     module Bedrock
       # Models methods for the AWS Bedrock API implementation
       module Models
+        def list_models
+          response = connection.get(models_url) do |req|
+            req.headers.merge! headers(method: :get, path: models_url)
+          end
+
+          parse_list_models_response(response, slug, capabilities)
+        end
+
         module_function
 
         def models_url
           'foundation-models'
         end
 
-        def parse_list_models_response(response)
+        def parse_list_models_response(response, slug, capabilities)
+          puts "Got response from Bedrock"
+          pp response.body
           data = response.body['modelSummaries'] || []
           data.map do |model|
             model_id = model['modelId']
-            {
+            ModelInfo.new(
               id: model_id,
               created_at: nil,
               display_name: model['modelName'] || capabilities.format_display_name(model_id),
-              provider: 'bedrock',
+              provider: slug,
               context_window: capabilities.context_window_for(model_id),
               max_tokens: capabilities.max_tokens_for(model_id),
               type: capabilities.model_type(model_id),
@@ -37,14 +47,8 @@ module RubyLLM
                 input_modalities: model['inputModalities'] || [],
                 output_modalities: model['outputModalities'] || []
               }
-            }
+            )
           end
-        end
-
-        private
-
-        def capabilities
-          Bedrock::Capabilities
         end
       end
     end

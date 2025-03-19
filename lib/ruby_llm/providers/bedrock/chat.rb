@@ -7,17 +7,17 @@ module RubyLLM
       module Chat
         module_function
 
-        def completion_url
-          'model'
+        def model_id
+          @model_id
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false)
-          # Format depends on the specific model being used
-          case model_id_for(model)
+          @model_id = model
+          case model
           when /anthropic\.claude/
-            build_claude_request(messages, temperature)
+            build_claude_request(messages, temperature, model)
           when /amazon\.titan/
-            build_titan_request(messages, temperature)
+            build_titan_request(messages, temperature, model)
           else
             raise Error, "Unsupported model: #{model}"
           end
@@ -25,7 +25,8 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
-          return if data.empty?
+          data = JSON.parse(data) if data.is_a?(String)
+          return if data.nil? || data.empty?
 
           Message.new(
             role: :assistant,
@@ -38,59 +39,51 @@ module RubyLLM
 
         private
 
-        def build_claude_request(messages, temperature)
+        def build_claude_request(messages, temperature, model_id)
           formatted = messages.map do |msg|
-            role = msg.role == :assistant ? 'Assistant' : 'Human'
-            content = msg.content
-            "\n\n#{role}: #{content}"
-          end.join
+            {
+              role: msg.role == :assistant ? "assistant" : "user",
+              content: msg.content
+            }
+          end
 
           {
-            prompt: formatted + "\n\nAssistant:",
+            anthropic_version: "bedrock-2023-05-31",
+            messages: formatted,
             temperature: temperature,
-            max_tokens: max_tokens_for(messages.first&.model_id)
+            max_tokens: max_tokens_for(model_id)
           }
         end
 
-        def build_titan_request(messages, temperature)
+        def build_titan_request(messages, temperature, model_id)
           {
             inputText: messages.map { |msg| msg.content }.join("\n"),
             textGenerationConfig: {
               temperature: temperature,
-              maxTokenCount: max_tokens_for(messages.first&.model_id)
+              maxTokenCount: max_tokens_for(model_id)
             }
           }
         end
 
         def extract_content(data)
           case data
-          when /anthropic\.claude/
-            data[:completion]
-          when /amazon\.titan/
-            data.dig(:results, 0, :outputText)
+          when Hash
+            if data.key?('completion')
+              data['completion']
+            elsif data.dig('results', 0, 'outputText')
+              data.dig('results', 0, 'outputText')
+            else
+              raise Error, "Unexpected response format: #{data.keys}"
+            end
           else
-            raise Error, "Unsupported model: #{data['model']}"
-          end
-        end
-
-        def model_id_for(model)
-          case model
-          when 'claude-3-sonnet'
-            'anthropic.claude-3-sonnet-20240229-v1:0'
-          when 'claude-2'
-            'anthropic.claude-v2'
-          when 'claude-instant'
-            'anthropic.claude-instant-v1'
-          when 'titan'
-            'amazon.titan-text-express-v1'
-          else
-            model # assume it's a full model ID
+            raise Error, "Unexpected response type: #{data.class}"
           end
         end
 
         def max_tokens_for(model_id)
-          Models.find(model_id)&.max_tokens
+          RubyLLM.models.find(model_id)&.max_tokens
         end
+
       end
     end
   end

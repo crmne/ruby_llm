@@ -103,8 +103,8 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
-      # Return self for method chaining
-      self
+      # Return instance for method chaining
+      self.class.instance
     end
   end
 end
