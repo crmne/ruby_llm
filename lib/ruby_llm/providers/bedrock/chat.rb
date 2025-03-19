@@ -2,71 +2,78 @@
 
 module RubyLLM
   module Providers
-    class Bedrock
-      # Chat implementation for AWS Bedrock
-      class Chat
-        def initialize(model:, temperature: nil, max_tokens: nil)
-          @model = model
-          @temperature = temperature
-          @max_tokens = max_tokens
+    module Bedrock
+      # Chat methods for the AWS Bedrock API implementation
+      module Chat
+        module_function
+
+        def completion_url
+          'model'
         end
 
-        def chat(messages:, stream: false)
-          request_body = build_request_body(messages)
-          path = "/model/#{model_id}/invoke#{stream ? '-with-response-stream' : ''}"
-          
-          if stream
-            stream_response(path, request_body)
+        def render_payload(messages, tools:, temperature:, model:, stream: false)
+          # Format depends on the specific model being used
+          case model_id_for(model)
+          when /anthropic\.claude/
+            build_claude_request(messages, temperature)
+          when /amazon\.titan/
+            build_titan_request(messages, temperature)
           else
-            complete_response(path, request_body)
+            raise Error, "Unsupported model: #{model}"
           end
+        end
+
+        def parse_completion_response(response)
+          data = response.body
+          return if data.empty?
+
+          Message.new(
+            role: :assistant,
+            content: extract_content(data),
+            input_tokens: data.dig('usage', 'prompt_tokens'),
+            output_tokens: data.dig('usage', 'completion_tokens'),
+            model_id: data['model']
+          )
         end
 
         private
 
-        attr_reader :model, :temperature, :max_tokens
-
-        def connection
-          Bedrock.config.connection
-        end
-
-        def build_request_body(messages)
-          # Format depends on the specific model being used
-          case model_id
-          when /anthropic\.claude/
-            build_claude_request(messages)
-          when /amazon\.titan/
-            build_titan_request(messages)
-          else
-            raise Error, "Unsupported model: #{model_id}"
-          end
-        end
-
-        def build_claude_request(messages)
+        def build_claude_request(messages, temperature)
           formatted = messages.map do |msg|
-            role = msg[:role] == 'assistant' ? 'Assistant' : 'Human'
-            content = msg[:content]
+            role = msg.role == :assistant ? 'Assistant' : 'Human'
+            content = msg.content
             "\n\n#{role}: #{content}"
           end.join
 
           {
             prompt: formatted + "\n\nAssistant:",
             temperature: temperature,
-            max_tokens: max_tokens
+            max_tokens: max_tokens_for(messages.first&.model_id)
           }
         end
 
-        def build_titan_request(messages)
+        def build_titan_request(messages, temperature)
           {
-            inputText: messages.map { |msg| msg[:content] }.join("\n"),
+            inputText: messages.map { |msg| msg.content }.join("\n"),
             textGenerationConfig: {
               temperature: temperature,
-              maxTokenCount: max_tokens
+              maxTokenCount: max_tokens_for(messages.first&.model_id)
             }
           }
         end
 
-        def model_id
+        def extract_content(data)
+          case data
+          when /anthropic\.claude/
+            data[:completion]
+          when /amazon\.titan/
+            data.dig(:results, 0, :outputText)
+          else
+            raise Error, "Unsupported model: #{data['model']}"
+          end
+        end
+
+        def model_id_for(model)
           case model
           when 'claude-3-sonnet'
             'anthropic.claude-3-sonnet-20240229-v1:0'
@@ -81,110 +88,8 @@ module RubyLLM
           end
         end
 
-        def complete_response(path, body)
-          response = make_request(:post, path, body)
-          parse_response(response.body)
-        end
-
-        def stream_response(path, body)
-          Enumerator.new do |yielder|
-            response = make_request(:post, path, body)
-            parser = EventStreamParser.new
-
-            response.body.each do |chunk|
-              parser.feed(chunk) do |event|
-                parsed_chunk = parse_stream_event(event)
-                yielder << parsed_chunk if parsed_chunk
-              end
-            end
-          end
-        end
-
-        def make_request(method, path, body)
-          json_body = JSON.generate(body)
-          headers = SignatureV4.sign_request(
-            connection: connection,
-            method: method,
-            path: path,
-            body: json_body,
-            access_key: Bedrock.config.access_key_id,
-            secret_key: Bedrock.config.secret_access_key,
-            session_token: Bedrock.config.session_token,
-            region: Bedrock.config.region
-          )
-
-          headers['Content-Type'] = 'application/json'
-          headers['Accept'] = 'application/json'
-
-          response = connection.public_send(method, path) do |req|
-            req.headers.merge!(headers)
-            req.body = json_body
-          end
-
-          raise Error, "Request failed: #{response.body}" unless response.success?
-
-          response
-        end
-
-        def parse_response(body)
-          case model_id
-          when /anthropic\.claude/
-            parse_claude_response(body)
-          when /amazon\.titan/
-            parse_titan_response(body)
-          else
-            raise Error, "Unsupported model: #{model_id}"
-          end
-        end
-
-        def parse_stream_event(event)
-          return unless event.data
-
-          body = JSON.parse(event.data, symbolize_names: true)
-          
-          case model_id
-          when /anthropic\.claude/
-            parse_claude_stream_chunk(body)
-          when /amazon\.titan/
-            parse_titan_stream_chunk(body)
-          else
-            raise Error, "Unsupported model: #{model_id}"
-          end
-        end
-
-        def parse_claude_response(body)
-          {
-            role: 'assistant',
-            content: body[:completion]
-          }
-        end
-
-        def parse_titan_response(body)
-          {
-            role: 'assistant',
-            content: body[:results].first[:outputText]
-          }
-        end
-
-        def parse_claude_stream_chunk(body)
-          return unless body[:completion]
-
-          {
-            role: 'assistant',
-            content: body[:completion],
-            delta: true
-          }
-        end
-
-        def parse_titan_stream_chunk(body)
-          text = body[:outputText]
-          return unless text
-
-          {
-            role: 'assistant',
-            content: text,
-            delta: true
-          }
+        def max_tokens_for(model_id)
+          Models.find(model_id)&.max_tokens
         end
       end
     end

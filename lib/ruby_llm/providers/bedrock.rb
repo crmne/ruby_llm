@@ -5,46 +5,78 @@ require 'time'
 
 module RubyLLM
   module Providers
-    # AWS Bedrock provider implementation using Faraday
-    class Bedrock
+    # AWS Bedrock API integration. Handles chat completion and streaming
+    # for Claude and Titan models.
+    module Bedrock
+      extend Provider
+      extend Bedrock::Chat
+      extend Bedrock::Streaming
+      extend Bedrock::Models
+      extend Bedrock::Tools
+
+      def self.extended(base)
+        base.extend(Provider)
+        base.extend(Bedrock::Chat)
+        base.extend(Bedrock::Streaming)
+        base.extend(Bedrock::Models)
+        base.extend(Bedrock::Tools)
+      end
+
+      module_function
+
+      def api_base
+        "https://bedrock-runtime.#{aws_region}.amazonaws.com"
+      end
+
+      def headers
+        SignatureV4.sign_request(
+          connection: connection,
+          method: :post,
+          path: completion_url,
+          body: '',
+          access_key: aws_access_key_id,
+          secret_key: aws_secret_access_key,
+          session_token: aws_session_token,
+          region: aws_region
+        ).merge(
+          'Content-Type' => 'application/json',
+          'Accept' => 'application/json'
+        )
+      end
+
+      def capabilities
+        Bedrock::Capabilities
+      end
+
+      def slug
+        'bedrock'
+      end
+
+      def connection
+        @connection ||= Faraday.new(url: api_base) do |f|
+          f.request :json
+          f.response :json
+          f.adapter Faraday.default_adapter
+        end
+      end
+
+      def aws_region
+        ENV['AWS_REGION'] || 'us-east-1'
+      end
+
+      def aws_access_key_id
+        ENV['AWS_ACCESS_KEY_ID']
+      end
+
+      def aws_secret_access_key
+        ENV['AWS_SECRET_ACCESS_KEY']
+      end
+
+      def aws_session_token
+        ENV['AWS_SESSION_TOKEN']
+      end
+
       class Error < RubyLLM::Error; end
-
-      class << self
-        def configure
-          yield config if block_given?
-        end
-
-        def config
-          @config ||= Configuration.new
-        end
-      end
-
-      # Configuration class for AWS Bedrock
-      class Configuration
-        attr_accessor :access_key_id, :secret_access_key, :region, :session_token
-        attr_writer :connection
-
-        def initialize
-          @region = ENV['AWS_REGION'] || 'us-east-1'
-          @access_key_id = ENV['AWS_ACCESS_KEY_ID']
-          @secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-          @session_token = ENV['AWS_SESSION_TOKEN']
-        end
-
-        def connection
-          @connection ||= Faraday.new(url: endpoint) do |f|
-            f.request :json
-            f.response :json
-            f.adapter Faraday.default_adapter
-          end
-        end
-
-        private
-
-        def endpoint
-          "https://bedrock-runtime.#{region}.amazonaws.com"
-        end
-      end
 
       # AWS Signature V4 implementation
       module SignatureV4

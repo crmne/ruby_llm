@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+module RubyLLM
+  module Providers
+    module Bedrock
+      # Models methods for the AWS Bedrock API implementation
+      module Models
+        module_function
+
+        def models_url
+          'foundation-models'
+        end
+
+        def parse_list_models_response(response)
+          data = response.body['modelSummaries'] || []
+          data.map do |model|
+            model_id = model['modelId']
+            {
+              id: model_id,
+              created_at: nil,
+              display_name: model['modelName'] || capabilities.format_display_name(model_id),
+              provider: 'bedrock',
+              context_window: capabilities.context_window_for(model_id),
+              max_tokens: capabilities.max_tokens_for(model_id),
+              type: capabilities.model_type(model_id),
+              family: capabilities.model_family(model_id).to_s,
+              supports_vision: capabilities.supports_vision?(model_id),
+              supports_functions: capabilities.supports_functions?(model_id),
+              supports_json_mode: capabilities.supports_json_mode?(model_id),
+              input_price_per_million: capabilities.input_price_for(model_id),
+              output_price_per_million: capabilities.output_price_for(model_id),
+              metadata: {
+                provider_name: model['providerName'],
+                customizations_supported: model['customizationsSupported'] || [],
+                inference_configurations: model['inferenceTypesSupported'] || [],
+                response_streaming_supported: model['responseStreamingSupported'] || false,
+                input_modalities: model['inputModalities'] || [],
+                output_modalities: model['outputModalities'] || []
+              }
+            }
+          end
+        end
+
+        private
+
+        def capabilities
+          Bedrock::Capabilities
+        end
+      end
+    end
+  end
+end 
