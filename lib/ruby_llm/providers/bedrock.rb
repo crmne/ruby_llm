@@ -32,13 +32,15 @@ module RubyLLM
 
       def post(url, payload)
         connection.post url, payload do |req|
-          req.headers.merge! headers(method: :post, path: "#{connection.url_prefix}#{url}", body: payload.to_json)
-
+          req.headers.merge! headers(method: :post,
+                                     path: "#{connection.url_prefix}#{url}",
+                                     body: payload.to_json,
+                                     streaming: block_given?)
           yield req if block_given?
         end
       end
 
-      def headers(method: :post, path: nil, body: nil)
+      def headers(method: :post, path: nil, body: nil, streaming: false)
         signer = Signing::Signer.new({
                                          access_key_id: aws_access_key_id,
                                          secret_access_key: aws_secret_access_key,
@@ -54,9 +56,11 @@ module RubyLLM
         }
         signature = signer.sign_request(request)
 
+        accept_header = streaming ? 'application/vnd.amazon.eventstream' : 'application/json'
+
         signature.headers.merge(
           'Content-Type' => 'application/json',
-          'Accept' => 'application/json'
+          'Accept' => accept_header
         )
       end
 

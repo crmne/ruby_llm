@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def completion_url
-          "model/#{model_id}/invoke-with-response-stream"
+          "model/#{model_id}/invoke"
         end
 
         def model_id
