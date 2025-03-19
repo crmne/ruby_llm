@@ -20,8 +20,6 @@ module RubyLLM
         end
 
         def parse_list_models_response(response, slug, capabilities)
-          puts "Got response from Bedrock"
-          pp response.body
           data = response.body['modelSummaries'] || []
           data.map do |model|
             model_id = model['modelId']
