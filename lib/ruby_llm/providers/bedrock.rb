@@ -42,17 +42,17 @@ module RubyLLM
 
       def headers(method: :post, path: nil, body: nil, streaming: false)
         signer = Signing::Signer.new({
-                                         access_key_id: aws_access_key_id,
-                                         secret_access_key: aws_secret_access_key,
-                                         session_token: aws_session_token,
-                                         region: aws_region,
-                                         service: 'bedrock',
-                                       })
+                                       access_key_id: aws_access_key_id,
+                                       secret_access_key: aws_secret_access_key,
+                                       session_token: aws_session_token,
+                                       region: aws_region,
+                                       service: 'bedrock'
+                                     })
         request = {
           connection: connection,
           http_method: method,
           url: path || completion_url,
-          body: body || '',
+          body: body || ''
         }
         signature = signer.sign_request(request)
 
@@ -77,19 +77,18 @@ module RubyLLM
       end
 
       def aws_access_key_id
-        ENV['AWS_ACCESS_KEY_ID']
+        ENV.fetch('AWS_ACCESS_KEY_ID', nil)
       end
 
       def aws_secret_access_key
-        ENV['AWS_SECRET_ACCESS_KEY']
+        ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
       end
 
       def aws_session_token
-        ENV['AWS_SESSION_TOKEN']
+        ENV.fetch('AWS_SESSION_TOKEN', nil)
       end
 
       class Error < RubyLLM::Error; end
-
     end
   end
-end 
+end
