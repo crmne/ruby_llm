@@ -9,7 +9,8 @@ module RubyLLM
           @connection = nil # reset connection since base url is different
           @api_base = "https://bedrock.#{aws_region}.amazonaws.com"
           response = connection.get(models_url) do |req|
-            req.headers.merge! headers(method: :get, path: models_url)
+            req.headers.merge! headers(method: :get,
+                                       path: "#{connection.url_prefix}#{models_url}")
           end
           @connection = nil # reset connection since base url is different
 
@@ -24,6 +25,8 @@ module RubyLLM
 
         def parse_list_models_response(response, slug, capabilities)
           data = response.body['modelSummaries'] || []
+
+          data = data.filter { |model| model['modelId'].include?('claude') }
           data.map do |model|
             model_id = model['modelId']
             ModelInfo.new(

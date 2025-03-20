@@ -73,19 +73,19 @@ module RubyLLM
       end
 
       def aws_region
-        ENV['AWS_REGION'] || 'us-east-1'
+        RubyLLM.config.bedrock_region
       end
 
       def aws_access_key_id
-        ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+        RubyLLM.config.bedrock_api_key
       end
 
       def aws_secret_access_key
-        ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+        RubyLLM.config.bedrock_secret_key
       end
 
       def aws_session_token
-        ENV.fetch('AWS_SESSION_TOKEN', nil)
+        RubyLLM.config.bedrock_session_token
       end
 
       class Error < RubyLLM::Error; end

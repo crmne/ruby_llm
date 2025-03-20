@@ -65,10 +65,10 @@ module RubyLLM
   end
 end
 
-# RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
-# RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
-# RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
-# RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
+RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
+RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 
 if defined?(Rails::Railtie)

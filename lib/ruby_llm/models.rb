@@ -26,6 +26,22 @@ module RubyLLM
       @instance = new(models)
     end
 
+    # Class method to refresh models for a specific provider
+    def self.refresh_provider!(provider_name)
+      # Get existing models from the instance
+      existing_models = instance.all
+
+      # Find the specified provider and get its new models
+      provider = RubyLLM.providers.find { |p| p.to_s.downcase == "rubyllm::providers::#{provider_name.downcase}" }
+      new_provider_models = Array(provider&.list_models)
+
+      # Replace models only for the specified provider
+      merged_models = existing_models.reject { |m| m.provider == provider_name.to_s } + new_provider_models
+      merged_models = merged_models.sort_by(&:id)
+
+      @instance = new(merged_models)
+    end
+
     # Delegate class methods to the singleton instance
     class << self
       def method_missing(method, ...)
@@ -103,6 +119,13 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
+      # Return instance for method chaining
+      self.class.instance
+    end
+
+    # Instance method to refresh models for a specific provider
+    def refresh_provider!(provider)
+      self.class.refresh_provider!(provider)
       # Return instance for method chaining
       self.class.instance
     end
