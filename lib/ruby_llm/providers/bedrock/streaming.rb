@@ -131,12 +131,6 @@ module RubyLLM
             else
               nil
             end
-          when Array
-            if data[0] == 'bytes'
-              data[1]
-            else
-              nil
-            end
           else
             nil
           end

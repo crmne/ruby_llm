@@ -61,21 +61,6 @@ module RubyLLM
           }
         end
 
-        def extract_content(data)
-          case data
-          when Hash
-            if data.key?('completion')
-              data['completion']
-            elsif data.dig('results', 0, 'outputText')
-              data.dig('results', 0, 'outputText')
-            else
-              raise Error, "Unexpected response format: #{data.keys}"
-            end
-          else
-            raise Error, "Unexpected response type: #{data.class}"
-          end
-        end
-
         def max_tokens_for(model_id)
           RubyLLM.models.find(model_id)&.max_tokens
         end
