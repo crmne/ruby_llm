@@ -10,14 +10,6 @@ module RubyLLM
           'models'
         end
 
-        def list_models
-          response = connection.get("models?key=#{RubyLLM.config.gemini_api_key}") do |req|
-            req.headers.merge! headers
-          end
-
-          parse_list_models_response(response, slug, capabilities)
-        end
-
         private
 
         def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength

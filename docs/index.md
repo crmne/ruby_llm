@@ -72,6 +72,11 @@ chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
 # Analyze documents
 chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 
+# Stream responses in real-time
+chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+  print chunk.content
+end
+
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 

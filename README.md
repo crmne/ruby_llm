@@ -52,6 +52,11 @@ chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
 # Analyze documents
 chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 
+# Stream responses in real-time
+chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+  print chunk.content
+end
+
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 
@@ -97,7 +102,7 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY'] # Optional
+  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
 end
 ```
 
