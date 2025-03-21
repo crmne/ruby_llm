@@ -67,6 +67,8 @@ chat.add_message role: :system, content: "Always format your code using proper R
 # - Creating specialized assistants
 ```
 
+If you want to set up system prompts with persistence, please refer to the [Rails integration guide]({% link guides/rails.md %}#using-system-messages)
+
 ## Multi-turn Conversations
 
 Chats maintain conversation history automatically:
