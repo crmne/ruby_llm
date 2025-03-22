@@ -52,6 +52,11 @@ chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
 # Analyze documents
 chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 
+# Stream responses in real-time
+chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+  print chunk.content
+end
+
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 
@@ -97,7 +102,7 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY'] # Optional
+  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
 end
 ```
 
@@ -187,6 +192,18 @@ chat.with_tool(Search).ask "Find documents about Ruby 3.3 features"
 ## Learn more
 
 Check out the guides at https://rubyllm.com for deeper dives into conversations with tools, streaming responses, embedding generations, and more.
+
+## Contributing
+
+We welcome contributions to RubyLLM!
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to:
+- Run the test suite
+- Add new features
+- Update documentation
+- Re-record VCR cassettes when needed
+
+We appreciate your help making RubyLLM better!
 
 ## License
 
