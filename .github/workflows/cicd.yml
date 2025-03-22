@@ -11,10 +11,19 @@ on:
       - 'ruby_llm.gemspec'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'lib/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'Rakefile'
+      - 'ruby_llm.gemspec'
   workflow_call:
 
 jobs:
   test:
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-latest
     strategy:
       matrix:
