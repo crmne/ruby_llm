@@ -47,6 +47,16 @@ module RubyLLM
       self
     end
 
+    def with_google_search
+      raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling" unless @model.supports_functions
+      raise UnsupportedFunctionsError, "Google search is only supported with Gemini models" unless @model.provider == 'gemini'
+
+      @tools = [{
+        google_search: {}
+      }]
+      self
+    end
+
     def model=(model_id)
       @model = Models.find model_id
       @provider = Models.provider_for model_id
@@ -109,6 +119,10 @@ module RubyLLM
     end
 
     def execute_tool(tool_call)
+      if tool_call.name.to_sym == :google_search
+        return tool_call.arguments
+      end
+
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)

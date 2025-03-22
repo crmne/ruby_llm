@@ -26,6 +26,12 @@ module RubyLLM
           end
         end
 
+         def with_google_search
+          @tools ||= []
+          @tools << { google_search: {} }
+          self
+        end
+
         # Format methods can be private
         private
 
