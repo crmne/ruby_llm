@@ -41,6 +41,49 @@ git commit
 gh pr create --web
 ```
 
+## Model Naming Convention & Provider Strategy
+
+When adding new providers to RubyLLM, please follow these guidelines:
+
+### Normalized Model IDs
+
+We use a consistent approach separating **what** (model) from **where** (provider):
+
+```ruby
+# Default way (from the native provider)
+chat = RubyLLM.chat(model: "claude-3-5-sonnet")
+
+# Same model via different provider
+chat = RubyLLM.chat(model: "claude-3-5-sonnet", provider: :bedrock)
+```
+
+### Implementing a Provider
+
+If you're adding a new provider:
+
+1. **Use normalized model IDs** - Don't include provider prefixes in the model ID itself
+2. **Add provider mapping** - Map the normalized IDs to your provider's specific format internally
+3. **Preserve capabilities** - Ensure models accessed through your provider report the same capabilities as their native counterparts
+4. **Update models.json** - Include your provider's models in models.json
+5. **Update aliases.json** - Add entries to aliases.json for models accessible through your provider
+6. **Implement refresh mechanism** - Ensure your provider supports the `list_models` method for refreshing
+
+### Model Aliases
+
+For providers that use complex model identifiers (like Bedrock's `anthropic.claude-3-5-sonnet-20241022-v2:0:200k`), add mappings to the global aliases.json file:
+
+```json
+{
+  "claude-3-5-sonnet": {
+    "anthropic": "claude-3-5-sonnet-20241022",
+    "bedrock": "anthropic.claude-3-5-sonnet-20241022-v2:0:200k",
+    "openrouter": "anthropic/claude-3.5-sonnet"
+  }
+}
+```
+
+This allows users to use consistent model names regardless of provider.
+
 ## Running Tests
 
 Tests automatically use VCR to record and replay HTTP interactions, so you don't need real API keys for testing:
