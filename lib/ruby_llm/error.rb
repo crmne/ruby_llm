@@ -28,6 +28,7 @@ module RubyLLM
   class BadRequestError < Error; end
   class RateLimitError < Error; end
   class ServerError < Error; end
+  class ForbiddenError < Error; end
 
   # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
   # Uses provider's parse_error method to extract meaningful error messages.
@@ -56,6 +57,8 @@ module RubyLLM
           raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
         when 402
           raise PaymentRequiredError.new(response, message || 'Payment required - please top up your account')
+        when 403
+          raise ForbiddenError.new(response, message || 'Forbidden - you do not have permission to access this resource')
         when 429
           raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
         when 500

@@ -61,31 +61,82 @@ def http_client
   end
 end
 
-namespace :models do # rubocop:disable Metrics/BlockLength
-  desc 'Update available models from providers'
-  task :update do
-    require 'ruby_llm'
-
-    # Configure API keys
-    RubyLLM.configure do |config|
-      config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
-      config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
-      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
-      config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
-    end
-
-    # Refresh models (now returns self instead of models array)
-    models = RubyLLM.models.refresh!.all
-    # Write to models.json
-    File.write(File.expand_path('../ruby_llm/models.json', __dir__), JSON.pretty_generate(models.map(&:to_h)))
-
-    puts "Updated models.json with #{models.size} models:"
-    RubyLLM::Provider.providers.each do |provider_sym, provider_module|
-      provider_name = provider_module.to_s.split('::').last
-      provider_models = models.select { |m| m.provider == provider_sym.to_s }
-      puts "#{provider_name} models: #{provider_models.size}"
-    end
+def configure_providers
+  # Configure API keys
+  RubyLLM.configure do |config|
+    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+    config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+    config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+    config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+    config.bedrock_region = ENV.fetch('AWS_REGION', 'us-east-1')
+    config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
   end
+end
+
+namespace :models do
+  namespace :update do
+    desc 'Update all available models from providers'
+    task :all do
+      require 'ruby_llm'
+      configure_providers
+
+      # Refresh all models
+      models = RubyLLM.models.refresh!.all
+      
+      # Write to models.json
+      File.write(File.expand_path('../ruby_llm/models.json', __dir__), JSON.pretty_generate(models.map(&:to_h)))
+
+      puts "Updated models.json with #{models.size} models:"
+      RubyLLM::Provider.providers.each do |provider_sym, provider_module|
+        provider_name = provider_module.to_s.split('::').last
+        provider_models = models.select { |m| m.provider == provider_sym.to_s }
+        puts "#{provider_name} models: #{provider_models.size}"
+      end
+    end
+
+    # Define a task that will create provider-specific tasks at runtime
+    task :setup do
+      require 'ruby_llm'
+
+      # Create a task for each provider
+      RubyLLM::Provider.providers.keys.each do |provider|
+        puts "Setting up task for provider: #{provider}"
+
+        task_name = "models:update:#{provider}"
+        Rake::Task.define_task(task_name => :setup) do
+          puts "Running task for provider: #{provider}"
+          configure_providers
+          begin
+            models = RubyLLM.models.refresh_provider!(provider.to_s).all
+            # Write to models.json
+            File.write(File.expand_path('../ruby_llm/models.json', __dir__), JSON.pretty_generate(models.map(&:to_h)))
+
+            provider_models = models.select { |m| m.provider == provider.to_s }
+            puts "#{provider} models: #{provider_models.size}"
+          rescue => e
+            puts "Error refreshing models for #{provider}: #{e.message}"
+            puts e.backtrace
+          end
+        end
+
+        # Add description for the task
+        Rake.application.last_description = "Update models for #{provider} provider"
+      end
+    end
+
+    # Make sure setup runs before any potential provider tasks
+    task :bedrock => :setup
+    task :openai => :setup
+    task :anthropic => :setup
+    task :gemini => :setup
+    task :deepseek => :setup
+  end
+
+  # Make models:update an alias for models:update:all for backward compatibility
+  desc 'Update all available models from providers'
+  task update: 'update:all'
 
   desc 'Update model capabilities modules by scraping provider documentation (use PROVIDER=name to update only one)'
   task :update_capabilities do # rubocop:disable Metrics/BlockLength
