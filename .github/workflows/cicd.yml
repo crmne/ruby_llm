@@ -19,11 +19,13 @@ on:
       - 'ruby_llm.gemspec'
   workflow_call:
 
+# Define default permissions for this workflow
+permissions:
+  contents: read
+  packages: write  # Needed for publishing to GitHub Packages
+
 jobs:
   test:
-    permissions:
-      contents: read
-      packages: read
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,6 +48,8 @@ jobs:
 
     - name: Run tests
       env:
+        # For PRs, we use VCR cassettes
+        # For main branch, we use real API keys for verification
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -78,7 +82,40 @@ jobs:
         ruby-version: '3.3'
         bundler-cache: true
 
+    - name: Check if version has changed
+      id: check_version
+      run: |
+        VERSION=$(ruby -r ./lib/ruby_llm/version.rb -e "puts RubyLLM::VERSION")
+        echo "Current version: $VERSION"
+
+        # Try to fetch from RubyGems
+        PUBLISHED_VERSION=$(gem list ruby_llm -r | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+' || echo "0.0.0")
+        echo "Published version: $PUBLISHED_VERSION"
+
+        if [ "$VERSION" = "$PUBLISHED_VERSION" ]; then
+          echo "Version has not changed, skipping publish"
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "Version has changed from $PUBLISHED_VERSION to $VERSION"
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Test with real APIs before publishing
+      if: steps.check_version.outputs.version_changed == 'true'
+      run: |
+        echo "Removing all VCR cassettes to test against real APIs..."
+        rm -rf spec/fixtures/vcr_cassettes
+
+        echo "Running tests with real API calls..."
+        bundle exec rspec
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+
     - name: Publish to GPR
+      if: steps.check_version.outputs.version_changed == 'true'
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
@@ -99,6 +136,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
 
     - name: Publish to RubyGems
+      if: steps.check_version.outputs.version_changed == 'true'
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
