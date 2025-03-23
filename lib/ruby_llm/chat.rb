@@ -16,7 +16,7 @@ module RubyLLM
     def initialize(model: nil)
       model_id = model || RubyLLM.config.default_model
       self.model = model_id
-      @temperature = @model.metadata['family'] == 'o1' ? 1 : 0.7
+      @temperature = 0.7
       @messages = []
       @tools = {}
       @on = {

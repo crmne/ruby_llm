@@ -257,6 +257,16 @@ module RubyLLM
             .gsub('Omni Moderation', 'Omni-Moderation')
             .gsub('Text Moderation', 'Text-Moderation')
         end
+
+        def normalize_temperature(temperature, model_id)
+          if model_id.match?(/o[13]/)
+            # O1/O3 models always use temperature 1.0
+            RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
+            1.0
+          else
+            temperature
+          end
+        end
       end
     end
   end
