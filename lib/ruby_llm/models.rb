@@ -12,22 +12,26 @@ module RubyLLM
   class Models
     include Enumerable
 
-    def self.instance
-      @instance ||= new
-    end
-
-    def self.provider_for(model)
-      Provider.for(model)
-    end
-
-    # Class method to refresh model data
-    def self.refresh!
-      models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
-      @instance = new(models)
-    end
-
     # Delegate class methods to the singleton instance
     class << self
+      def instance
+        @instance ||= new
+      end
+
+      def provider_for(model)
+        Provider.for(model)
+      end
+
+      def models_file
+        File.expand_path('models.json', __dir__)
+      end
+
+      # Class method to refresh model data
+      def refresh!
+        models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
+        @instance = new(models)
+      end
+
       def method_missing(method, ...)
         if instance.respond_to?(method)
           instance.send(method, ...)
@@ -48,10 +52,14 @@ module RubyLLM
 
     # Load models from the JSON file
     def load_models
-      data = JSON.parse(File.read(File.expand_path('models.json', __dir__)))
+      data = JSON.parse(File.read(self.class.models_file))
       data.map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
     rescue Errno::ENOENT
       [] # Return empty array if file doesn't exist yet
+    end
+
+    def save_models
+      File.write(self.class.models_file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
     # Return all models in the collection
@@ -103,8 +111,6 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
-      # Return self for method chaining
-      self
     end
   end
 end
