@@ -12,38 +12,26 @@ module RubyLLM
   class Models
     include Enumerable
 
-    def self.instance
-      @instance ||= new
-    end
-
-    def self.provider_for(model)
-      Provider.for(model)
-    end
-
-    # Class method to refresh model data
-    def self.refresh!
-      models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
-      @instance = new(models)
-    end
-
-    # Class method to refresh models for a specific provider
-    def self.refresh_provider!(provider_name)
-      # Get existing models from the instance
-      existing_models = instance.all
-
-      # Find the specified provider and get its new models
-      provider = RubyLLM.providers.find { |p| p.to_s.downcase == "rubyllm::providers::#{provider_name.downcase}" }
-      new_provider_models = Array(provider&.list_models)
-
-      # Replace models only for the specified provider
-      merged_models = existing_models.reject { |m| m.provider == provider_name.to_s } + new_provider_models
-      merged_models = merged_models.sort_by(&:id)
-
-      @instance = new(merged_models)
-    end
-
     # Delegate class methods to the singleton instance
     class << self
+      def instance
+        @instance ||= new
+      end
+
+      def provider_for(model)
+        Provider.for(model)
+      end
+
+      def models_file
+        File.expand_path('models.json', __dir__)
+      end
+
+      # Class method to refresh model data
+      def refresh!
+        models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
+        @instance = new(models)
+      end
+
       def method_missing(method, ...)
         if instance.respond_to?(method)
           instance.send(method, ...)
@@ -64,10 +52,14 @@ module RubyLLM
 
     # Load models from the JSON file
     def load_models
-      data = JSON.parse(File.read(File.expand_path('models.json', __dir__)))
+      data = JSON.parse(File.read(self.class.models_file))
       data.map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
     rescue Errno::ENOENT
       [] # Return empty array if file doesn't exist yet
+    end
+
+    def save_models
+      File.write(self.class.models_file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
     # Return all models in the collection
@@ -82,8 +74,19 @@ module RubyLLM
 
     # Find a specific model by ID
     def find(model_id)
-      all.find { |m| m.id == model_id } or
-        raise ModelNotFoundError, "Unknown model: #{model_id}"
+      # Try exact match first
+      exact_match = all.find { |m| m.id == model_id }
+      return exact_match if exact_match
+
+      # Try to resolve via alias
+      resolved_id = Aliases.resolve(model_id)
+      if resolved_id != model_id
+        alias_match = all.find { |m| m.id == resolved_id }
+        return alias_match if alias_match
+      end
+
+      # Not found
+      raise ModelNotFoundError, "Unknown model: #{model_id}"
     end
 
     # Filter to only chat models
@@ -119,15 +122,6 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
-      # Return instance for method chaining
-      self.class.instance
-    end
-
-    # Instance method to refresh models for a specific provider
-    def refresh_provider!(provider)
-      self.class.refresh_provider!(provider)
-      # Return instance for method chaining
-      self.class.instance
     end
   end
 end

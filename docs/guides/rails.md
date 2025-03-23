@@ -122,6 +122,24 @@ chat.messages.order(:created_at).each do |message|
 end
 ```
 
+## Using System Messages
+
+If you wish to use systems messages, you can create a Message with the role `:system` directly in the chat:
+
+```ruby
+# Create a new chat
+chat = Chat.create!(model_id: 'gpt-4o-mini')
+
+# Create a message with the system role
+chat.messages.create!(role: :system, content: "You are a helpful Ruby programming assistant. Always include code examples in your responses and explain them line by line.")
+
+# Now the AI will follow these instructions in all responses
+chat.ask "How do I handle file operations in Ruby?"
+
+# The response is automatically persisted
+puts chat.messages.last.content
+```
+
 ## Streaming Responses
 
 You can stream responses while still persisting the final result:

@@ -101,4 +101,65 @@ RSpec.describe RubyLLM::Models do
       end
     end
   end
+
+  describe '#embedding_models' do
+    it 'filters to only embedding models' do # rubocop:disable RSpec/MultipleExpectations
+      embedding_models = RubyLLM.models.embedding_models
+
+      expect(embedding_models).to be_a(described_class)
+      expect(embedding_models.all).to all(have_attributes(type: 'embedding'))
+      expect(embedding_models.all).not_to be_empty
+    end
+  end
+
+  describe '#audio_models' do
+    it 'filters to only audio models' do # rubocop:disable RSpec/MultipleExpectations
+      audio_models = RubyLLM.models.audio_models
+
+      expect(audio_models).to be_a(described_class)
+      expect(audio_models.all).to all(have_attributes(type: 'audio'))
+    end
+  end
+
+  describe '#image_models' do
+    it 'filters to only image models' do # rubocop:disable RSpec/MultipleExpectations
+      image_models = RubyLLM.models.image_models
+
+      expect(image_models).to be_a(described_class)
+      expect(image_models.all).to all(have_attributes(type: 'image'))
+      expect(image_models.all).not_to be_empty
+    end
+  end
+
+  describe '#by_family' do
+    it 'filters models by family' do # rubocop:disable RSpec/MultipleExpectations
+      # Use a family we know exists
+      family = RubyLLM.models.all.first.family
+      family_models = RubyLLM.models.by_family(family)
+
+      expect(family_models).to be_a(described_class)
+      expect(family_models.all).to all(have_attributes(family: family))
+      expect(family_models.all).not_to be_empty
+    end
+  end
+
+  describe '#save_models' do
+    it 'saves models to the models.json file' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      temp_file = Tempfile.new(['models', '.json'])
+      allow(described_class).to receive(:models_file).and_return(temp_file.path)
+
+      models = RubyLLM.models
+      models.save_models
+
+      # Verify file was written with valid JSON
+      saved_content = File.read(temp_file.path)
+      expect { JSON.parse(saved_content) }.not_to raise_error
+
+      # Verify model data was saved
+      parsed_models = JSON.parse(saved_content)
+      expect(parsed_models.size).to eq(models.all.size)
+
+      temp_file.unlink
+    end
+  end
 end

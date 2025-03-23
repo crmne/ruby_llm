@@ -8,8 +8,18 @@ module RubyLLM
     # Common functionality for all LLM providers. Implements the core provider
     # interface so specific providers only need to implement a few key methods.
     module Methods # rubocop:disable Metrics/ModuleLength
-      def complete(messages, tools:, temperature:, model:, &block)
-        payload = render_payload messages, tools: tools, temperature: temperature, model: model, stream: block_given?
+      def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+        normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
+                                   capabilities.normalize_temperature(temperature, model)
+                                 else
+                                   temperature
+                                 end
+
+        payload = render_payload(messages,
+                                 tools: tools,
+                                 temperature: normalized_temperature,
+                                 model: model,
+                                 stream: block_given?)
 
         if block_given?
           stream_response payload, &block

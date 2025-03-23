@@ -2,7 +2,9 @@
 
 require 'English'
 require 'faraday'
+require 'fileutils'
 require 'nokogiri'
+require 'ruby_llm'
 
 # URLs to process
 PROVIDER_DOCS = {
@@ -61,17 +63,30 @@ def http_client
   end
 end
 
-def configure_providers
-  # Configure API keys
-  RubyLLM.configure do |config|
-    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-    config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
-    config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-    config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
-    config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-    config.bedrock_region = ENV.fetch('AWS_REGION', 'us-east-1')
-    config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+namespace :models do # rubocop:disable Metrics/BlockLength
+  desc 'Update available models from providers'
+  task :update do
+    # Configure API keys
+    RubyLLM.configure do |config|
+      config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
+      config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
+      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
+      config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+      config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+      config.bedrock_region = ENV.fetch('AWS_REGION', 'us-east-1')
+      config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+    end
+
+    models = RubyLLM.models.refresh!
+    models.save_models
+
+    puts "Updated models.json with #{models.all.size} models:"
+    RubyLLM::Provider.providers.each do |provider_sym, provider_module|
+      provider_name = provider_module.to_s.split('::').last
+      provider_models = models.all.select { |m| m.provider == provider_sym.to_s }
+      puts "#{provider_name} models: #{provider_models.size}"
+    end
   end
 end
 
@@ -142,8 +157,6 @@ namespace :models do
   task :update_capabilities do # rubocop:disable Metrics/BlockLength
     # Check if a specific provider was requested
     target_provider = ENV['PROVIDER']&.to_sym
-    require 'ruby_llm'
-    require 'fileutils'
 
     # Configure API keys
     RubyLLM.configure do |config|

@@ -63,6 +63,36 @@ google_models = RubyLLM.models.by_provider('gemini')
 deepseek_models = RubyLLM.models.by_provider('deepseek')
 ```
 
+## Using Model Aliases
+
+{: .warning-title }
+> Coming in v1.1.0
+>
+> This feature is available in the upcoming version but not in the latest release.
+
+RubyLLM provides convenient aliases for popular models, so you don't have to remember specific version numbers:
+
+```ruby
+# These are equivalent
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
+
+# These are also equivalent
+chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: 'gpt-4o-2024-11-20')
+```
+
+You can also specify a different provider to use with a model:
+
+```ruby
+# Use a specific model via a different provider
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
+
+# Or set the provider after initialization
+chat = RubyLLM.chat(model: 'gpt-4o')
+       .with_provider('azure')
+```
+
 ## Chaining Filters
 
 You can chain multiple filters to find exactly what you need:

@@ -50,15 +50,42 @@ module RubyLLM
         # Determines if the model supports vision capabilities
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision
-        def supports_vision?(model_id)
-          model_id.match?(/gpt-4o|o1/) || model_id.match?(/gpt-4-(?!0314|0613)/)
+        def supports_vision?(model_id) # rubocop:disable Metrics/MethodLength
+          supporting_patterns = [
+            /^o1$/,
+            /^o1-(?!.*mini|.*preview).*$/,
+            /gpt-4\.5/,
+            /^gpt-4o$/,
+            /gpt-4o-2024/,
+            /gpt-4o-search/,
+            /^gpt-4o-mini$/,
+            /gpt-4o-mini-2024/,
+            /gpt-4o-mini-search/,
+            /chatgpt-4o/,
+            /gpt-4-turbo-2024/,
+            /computer-use-preview/,
+            /omni-moderation/
+          ]
+          supporting_patterns.any? { |regex| model_id.match?(regex) }
         end
 
         # Determines if the model supports function calling
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports functions
-        def supports_functions?(model_id)
-          !model_id.include?('instruct')
+        def supports_functions?(model_id) # rubocop:disable Metrics/MethodLength
+          supporting_patterns = [
+            /^o1$/,
+            /gpt-4o/,
+            /gpt-4\.5/,
+            /chatgpt-4o/,
+            /gpt-4-turbo/,
+            /computer-use-preview/,
+            /o1-preview/,
+            /o1-\d{4}-\d{2}-\d{2}/,
+            /o1-pro/,
+            /o3-mini/
+          ]
+          supporting_patterns.any? { |regex| model_id.match?(regex) }
         end
 
         # Determines if the model supports audio input/output
@@ -229,6 +256,16 @@ module RubyLLM
             .gsub(/\bHd\b/, 'HD')
             .gsub('Omni Moderation', 'Omni-Moderation')
             .gsub('Text Moderation', 'Text-Moderation')
+        end
+
+        def normalize_temperature(temperature, model_id)
+          if model_id.match?(/o[13]/)
+            # O1/O3 models always use temperature 1.0
+            RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
+            1.0
+          else
+            temperature
+          end
         end
       end
     end
