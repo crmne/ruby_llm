@@ -8,7 +8,7 @@ Here's how to get started:
 
 ```bash
 # Clone the repository
-git clone https://github.com/crmne/ruby_llm.git
+gh repo clone crmne/ruby_llm
 cd ruby_llm
 
 # Install dependencies
@@ -29,7 +29,9 @@ We recommend using GitHub CLI to simplify the workflow:
 # Create a new branch for your feature
 gh repo fork crmne/ruby_llm --clone
 cd ruby_llm
-git checkout -b my-new-feature
+
+# Find or make an issue for the feature on GitHub and then:
+gh issue develop 123 --checkout  # Substitute 123 with the issue number
 
 # Make your changes and test them
 # ...
