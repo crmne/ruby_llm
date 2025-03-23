@@ -43,6 +43,33 @@ claude_chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
 chat.with_model('gemini-2.0-flash')
 ```
 
+{: .warning-title }
+> Coming in v1.1.0
+>
+> The following model aliases and provider selection features are available in the upcoming version.
+
+RubyLLM supports model aliases, so you don't need to remember specific version numbers:
+
+```ruby
+# Instead of this:
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
+
+# You can simply write:
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+```
+
+You can also specify a specific provider to use with a model:
+
+```ruby
+# Use a specific provider (when the same model is available from multiple providers)
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
+
+# Or set the provider after initialization
+chat = RubyLLM.chat(model: 'gpt-4o')
+       .with_provider('azure')
+```
+
+See [Working with Models]({% link guides/models.md %}) for more details on model selection.
 ## System Prompts
 
 System prompts allow you to set specific instructions or context that guide the AI's behavior throughout the conversation. These prompts are not directly visible to the user but help shape the AI's responses:
