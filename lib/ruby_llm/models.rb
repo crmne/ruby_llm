@@ -74,8 +74,19 @@ module RubyLLM
 
     # Find a specific model by ID
     def find(model_id)
-      all.find { |m| m.id == model_id } or
-        raise ModelNotFoundError, "Unknown model: #{model_id}"
+      # Try exact match first
+      exact_match = all.find { |m| m.id == model_id }
+      return exact_match if exact_match
+
+      # Try to resolve via alias
+      resolved_id = Aliases.resolve(model_id)
+      if resolved_id != model_id
+        alias_match = all.find { |m| m.id == resolved_id }
+        return alias_match if alias_match
+      end
+
+      # Not found
+      raise ModelNotFoundError, "Unknown model: #{model_id}"
     end
 
     # Filter to only chat models

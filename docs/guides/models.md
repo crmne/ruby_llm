@@ -63,6 +63,35 @@ google_models = RubyLLM.models.by_provider('gemini')
 deepseek_models = RubyLLM.models.by_provider('deepseek')
 ```
 
+## Using Model Aliases
+
+RubyLLM provides convenient aliases for popular models, so you don't have to remember specific version numbers:
+
+```ruby
+# These are equivalent
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
+
+# These are also equivalent
+chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: 'gpt-4o-2024-11-20')
+```
+
+Aliases for common models include:
+
+| Alias | Resolves To |
+|--------|-------------|
+| `claude-3-5-sonnet` | `claude-3-5-sonnet-20241022` |
+| `claude-3-5-haiku` | `claude-3-5-haiku-20241022` |
+| `claude-3-7-sonnet` | `claude-3-7-sonnet-20250219` |
+| `claude-3-opus` | `claude-3-opus-20240229` |
+| `gpt-4o` | `gpt-4o-2024-11-20` |
+| `gpt-4o-mini` | `gpt-4o-mini-2024-07-18` |
+| `gemini-1.5-flash` | `gemini-1.5-flash-002` |
+| `gemini-2.0-flash` | `gemini-2.0-flash-001` |
+
+Aliases are particularly useful when you want your code to always use the latest stable version of a model without having to update your codebase when providers release new model versions.
+
 ## Chaining Filters
 
 You can chain multiple filters to find exactly what you need:
