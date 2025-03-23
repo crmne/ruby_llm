@@ -2,7 +2,9 @@
 
 require 'English'
 require 'faraday'
+require 'fileutils'
 require 'nokogiri'
+require 'ruby_llm'
 
 # URLs to process
 PROVIDER_DOCS = {
@@ -64,8 +66,6 @@ end
 namespace :models do # rubocop:disable Metrics/BlockLength
   desc 'Update available models from providers'
   task :update do
-    require 'ruby_llm'
-
     # Configure API keys
     RubyLLM.configure do |config|
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
@@ -74,15 +74,13 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
     end
 
-    # Refresh models (now returns self instead of models array)
-    models = RubyLLM.models.refresh!.all
-    # Write to models.json
-    File.write(File.expand_path('../ruby_llm/models.json', __dir__), JSON.pretty_generate(models.map(&:to_h)))
+    models = RubyLLM.models.refresh!
+    models.save_models
 
-    puts "Updated models.json with #{models.size} models:"
+    puts "Updated models.json with #{models.all.size} models:"
     RubyLLM::Provider.providers.each do |provider_sym, provider_module|
       provider_name = provider_module.to_s.split('::').last
-      provider_models = models.select { |m| m.provider == provider_sym.to_s }
+      provider_models = models.all.select { |m| m.provider == provider_sym.to_s }
       puts "#{provider_name} models: #{provider_models.size}"
     end
   end
@@ -91,8 +89,6 @@ namespace :models do # rubocop:disable Metrics/BlockLength
   task :update_capabilities do # rubocop:disable Metrics/BlockLength
     # Check if a specific provider was requested
     target_provider = ENV['PROVIDER']&.to_sym
-    require 'ruby_llm'
-    require 'fileutils'
 
     # Configure API keys
     RubyLLM.configure do |config|
