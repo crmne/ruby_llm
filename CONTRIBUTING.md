@@ -78,11 +78,48 @@ For providers that use complex model identifiers (like Bedrock's `anthropic.clau
     "anthropic": "claude-3-5-sonnet-20241022",
     "bedrock": "anthropic.claude-3-5-sonnet-20241022-v2:0:200k",
     "openrouter": "anthropic/claude-3.5-sonnet"
+  },
+  "gpt-4o": {
+    "openai": "gpt-4o-2024-05-13",
+    "bedrock": "anthropic.gpt-4o-2024-05-13",
+    "openrouter": "openai/gpt-4o"
   }
 }
 ```
 
-This allows users to use consistent model names regardless of provider.
+If a model can't be found with the provided ID and provider, a `ModelNotFoundError` will be raised with an informative message. Your implementation should make this error helpful by suggesting available alternatives.
+
+When the same model has multiple versions and context windows e.g.
+
+```
+anthropic.claude-3-5-sonnet-20240620-v1:0
+anthropic.claude-3-5-sonnet-20240620-v1:0:18k
+anthropic.claude-3-5-sonnet-20240620-v1:0:200k
+anthropic.claude-3-5-sonnet-20240620-v1:0:51k
+anthropic.claude-3-5-sonnet-20241022-v2:0
+anthropic.claude-3-5-sonnet-20241022-v2:0:18k
+anthropic.claude-3-5-sonnet-20241022-v2:0:200k
+anthropic.claude-3-5-sonnet-20241022-v2:0:51k
+```
+
+We default all aliases to the biggest context window, and the main alias (without date) to the latest version:
+
+```json
+  "claude-3-5-sonnet": {
+    "anthropic": "claude-3-5-sonnet-20241022",
+    "bedrock": "anthropic.claude-3-5-sonnet-20241022-v2:0:200k",
+    "openrouter": "anthropic/claude-3.5-sonnet"
+  },
+  "claude-3-5-sonnet-20241022": {
+    "anthropic": "claude-3-5-sonnet-20241022",
+    "bedrock": "anthropic.claude-3-5-sonnet-20241022-v2:0:200k",
+    "openrouter": "anthropic/claude-3.5-sonnet"
+  },
+  "claude-3-5-sonnet-20240620": {
+    "anthropic": "claude-3-5-sonnet-20240620",
+    "bedrock": "anthropic.claude-3-5-sonnet-20240620-v1:0:200k"
+  },
+```
 
 ## Running Tests
 
