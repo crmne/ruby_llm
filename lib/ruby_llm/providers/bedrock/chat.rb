@@ -18,10 +18,10 @@ module RubyLLM
         def render_payload(messages, tools:, temperature:, model:, stream: false)
           @model_id = model
           case model
-          when /anthropic\.claude/
+          when /claude/
             build_claude_request(messages, temperature, model)
           else
-            raise Error, "Unsupported model: #{model}"
+            raise Error, nil, "Unsupported model: #{model}"
           end
         end
 
