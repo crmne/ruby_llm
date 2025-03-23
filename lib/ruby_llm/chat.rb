@@ -11,12 +11,13 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :model_alias, :messages, :tools
 
     def initialize(model: nil, provider: nil)
       model_id = model || RubyLLM.config.default_model
-      self.model = model_id
       self.provider = provider if provider
+      self.model = model_id
+      @model_alias = model_id
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -49,8 +50,8 @@ module RubyLLM
     end
 
     def model=(model_id)
-      @model = Models.find model_id
-      @provider = Models.provider_for model_id
+      @provider ||= Models.provider_for model_id
+      @model = Models.find model_id, @provider.slug
     end
 
     def provider=(provider_slug)
@@ -60,6 +61,7 @@ module RubyLLM
 
     def with_provider(provider_slug)
       self.provider = provider_slug
+      self.model = model_alias
       self
     end
 

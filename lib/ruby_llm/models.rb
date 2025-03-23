@@ -73,13 +73,13 @@ module RubyLLM
     end
 
     # Find a specific model by ID
-    def find(model_id)
+    def find(model_id, provider_slug = nil)
       # Try exact match first
       exact_match = all.find { |m| m.id == model_id }
       return exact_match if exact_match
 
       # Try to resolve via alias
-      resolved_id = Aliases.resolve(model_id)
+      resolved_id = Aliases.resolve(model_id, provider_slug)
       if resolved_id != model_id
         alias_match = all.find { |m| m.id == resolved_id }
         return alias_match if alias_match
