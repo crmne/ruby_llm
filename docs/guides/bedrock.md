@@ -24,12 +24,12 @@ require 'ruby_llm'
 
 # Get credentials from STS
 sts_client = Aws::STS::Client.new
-creds = sts_client.get_session_token
+session_token = sts_client.get_session_token
 
 RubyLLM.configure do |config|
-  config.bedrock_api_key = creds.credentials.access_key_id
-  config.bedrock_secret_key = creds.credentials.secret_access_key
-  config.bedrock_session_token = creds.credentials.session_token
+  config.bedrock_api_key = session_token.credentials.access_key_id
+  config.bedrock_secret_key = session_token.credentials.secret_access_key
+  config.bedrock_session_token = session_token.credentials.session_token
   config.bedrock_region = 'us-west-2'  # Specify your desired AWS region
 end
 ```
