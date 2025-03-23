@@ -54,22 +54,22 @@ module RubyLLM
           {
             name: tool.name,
             description: tool.description,
-            parameters: {
-              type: 'OBJECT',
-              properties: format_parameters(tool.parameters),
-              required: tool.parameters.select { |_, p| p.required }.keys.map(&:to_s)
-            }
-          }
+            parameters: tool.parameters.any? ? format_parameters(tool.parameters) : nil
+          }.compact
         end
 
         # Format tool parameters for Gemini API
         def format_parameters(parameters)
-          parameters.transform_values do |param|
-            {
-              type: param_type_for_gemini(param.type),
-              description: param.description
-            }.compact
-          end
+          {
+            type: 'OBJECT',
+            properties: parameters.transform_values do |param|
+              {
+                type: param_type_for_gemini(param.type),
+                description: param.description
+              }.compact
+            end,
+            required: parameters.select { |_, p| p.required }.keys.map(&:to_s)
+          }
         end
 
         # Convert RubyLLM param types to Gemini API types

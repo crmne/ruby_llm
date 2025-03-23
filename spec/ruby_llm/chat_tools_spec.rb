@@ -16,6 +16,18 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class CurrentTime < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Gets the current time in Wakanda'
+
+    def initialize(now)
+      @now = now
+    end
+
+    def execute
+      @now.iso8601
+    end
+  end
+
   describe 'function calling' do
     [
       'claude-3-5-haiku-20241022',
@@ -42,6 +54,14 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{model} can use tools without parameters" do
+        now = Time.new(2025, 3, 23, 21, 42, 0)
+        chat = RubyLLM.chat(model: model)
+                      .with_tool(CurrentTime.new(now))
+        response = chat.ask("What's the time in Wakanda? Answer in ISO 8601 format.")
+        expect(response.content).to include(now.iso8601)
       end
 
       it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations

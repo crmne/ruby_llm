@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
+        the time in Wakanda? Answer in ISO 8601 format."}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"current_time","description":"Gets
+        the current time in Wakanda","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 23 Mar 2025 20:49:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-03-23T20:49:12Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-03-23T20:49:17Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-03-23T20:49:18Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-03-23T20:49:17Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 382da897-d586-4e0c-bd1c-a9407bbe3b7a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_019dz4tY2eKXDCNpz5M1m4ep","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you get the current time in Wakanda by using the current_time function."},{"type":"tool_use","id":"toolu_01BdVhiLCcneRYjgmCVWKrr7","name":"current_time","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":335,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":57}}'
+  recorded_at: Sun, 23 Mar 2025 20:49:18 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
+        the time in Wakanda? Answer in ISO 8601 format."},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you get the current time in Wakanda by using the current_time function."},{"type":"tool_use","id":"toolu_01BdVhiLCcneRYjgmCVWKrr7","name":"current_time","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01BdVhiLCcneRYjgmCVWKrr7","content":"2025-03-23T21:42:00+01:00"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"current_time","description":"Gets
+        the current time in Wakanda","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 23 Mar 2025 20:49:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-03-23T20:49:19Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-03-23T20:49:22Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-03-23T20:49:23Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-03-23T20:49:22Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 382da897-d586-4e0c-bd1c-a9407bbe3b7a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01PEaHQWTo9NRjCRd8EeqTNS","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
+        current time in Wakanda is 2025-03-23T21:42:00+01:00 in ISO 8601 format. This
+        includes the date, time, and timezone offset.\n\nTo break it down:\n- Date:
+        2025-03-23 (March 23, 2025)\n- Time: 21:42:00 (9:42:00 PM)\n- Timezone: +01:00
+        (1 hour ahead of UTC)"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":419,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":114}}'
+  recorded_at: Sun, 23 Mar 2025 20:49:23 GMT
+recorded_with: VCR 6.3.1
