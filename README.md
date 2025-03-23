@@ -193,6 +193,18 @@ chat.with_tool(Search).ask "Find documents about Ruby 3.3 features"
 
 Check out the guides at https://rubyllm.com for deeper dives into conversations with tools, streaming responses, embedding generations, and more.
 
+## Contributing
+
+We welcome contributions to RubyLLM!
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to:
+- Run the test suite
+- Add new features
+- Update documentation
+- Re-record VCR cassettes when needed
+
+We appreciate your help making RubyLLM better!
+
 ## License
 
 Released under the MIT License.

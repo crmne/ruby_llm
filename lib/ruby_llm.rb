@@ -18,6 +18,8 @@ loader.inflector.inflect(
   'deepseek' => 'DeepSeek',
   'bedrock' => 'Bedrock'
 )
+loader.ignore("#{__dir__}/ruby_llm/railtie")
+loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
