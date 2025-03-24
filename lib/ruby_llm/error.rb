@@ -58,7 +58,8 @@ module RubyLLM
         when 402
           raise PaymentRequiredError.new(response, message || 'Payment required - please top up your account')
         when 403
-          raise ForbiddenError.new(response, message || 'Forbidden - you do not have permission to access this resource')
+          raise ForbiddenError.new(response,
+                                   message || 'Forbidden - you do not have permission to access this resource')
         when 429
           raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
         when 500

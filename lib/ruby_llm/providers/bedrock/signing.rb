@@ -12,7 +12,6 @@ module RubyLLM
   module Providers
     module Bedrock
       module Signing
-
         # Utility class for creating AWS signature version 4 signature. This class
         # provides two methods for generating signatures:
         #
@@ -76,23 +75,23 @@ module RubyLLM
         module Errors
           class MissingCredentialsError < ArgumentError
             def initialize(msg = nil)
-              super(msg || <<-MSG.strip)
-missing credentials, provide credentials with one of the following options:
-  - :access_key_id and :secret_access_key
-  - :credentials
-  - :credentials_provider
+              super(msg || <<~MSG.strip)
+                missing credentials, provide credentials with one of the following options:
+                  - :access_key_id and :secret_access_key
+                  - :credentials
+                  - :credentials_provider
               MSG
             end
           end
 
           class MissingRegionError < ArgumentError
-            def initialize(*args)
-              super("missing required option :region")
+            def initialize(*_args)
+              super('missing required option :region')
             end
           end
         end
-        class Signature
 
+        class Signature
           # @api private
           def initialize(options)
             options.each_pair do |attr_name, attr_value|
@@ -127,8 +126,8 @@ missing credentials, provide credentials with one of the following options:
           # @return [Hash] Internal data for debugging purposes.
           attr_accessor :extra
         end
-        class Credentials
 
+        class Credentials
           # @option options [required, String] :access_key_id
           # @option options [required, String] :secret_access_key
           # @option options [String, nil] :session_token (nil)
@@ -138,7 +137,7 @@ missing credentials, provide credentials with one of the following options:
               @secret_access_key = options[:secret_access_key]
               @session_token = options[:session_token]
             else
-              msg = "expected both :access_key_id and :secret_access_key options"
+              msg = 'expected both :access_key_id and :secret_access_key options'
               raise ArgumentError, msg
             end
           end
@@ -161,19 +160,17 @@ missing credentials, provide credentials with one of the following options:
               !secret_access_key.empty?
           end
         end
+
         # Users that wish to configure static credentials can use the
         # `:access_key_id` and `:secret_access_key` constructor options.
         # @api private
         class StaticCredentialsProvider
-
           # @option options [Credentials] :credentials
           # @option options [String] :access_key_id
           # @option options [String] :secret_access_key
           # @option options [String] :session_token (nil)
           def initialize(options = {})
-            @credentials = options[:credentials] ?
-                             options[:credentials] :
-                             Credentials.new(options)
+            @credentials = options[:credentials] || Credentials.new(options)
           end
 
           # @return [Credentials]
@@ -248,7 +245,7 @@ missing credentials, provide credentials with one of the following options:
             @service = extract_service(options)
             @region = extract_region(options)
             @credentials_provider = extract_credentials_provider(options)
-            @unsigned_headers = Set.new((options.fetch(:unsigned_headers, [])).map(&:downcase))
+            @unsigned_headers = Set.new(options.fetch(:unsigned_headers, []).map(&:downcase))
             @unsigned_headers << 'authorization'
             @unsigned_headers << 'x-amzn-trace-id'
             @unsigned_headers << 'expect'
@@ -332,7 +329,7 @@ missing credentials, provide credentials with one of the following options:
           #   a `#headers` method. The headers must be applied to your request.
           #
           def sign_request(request)
-            creds, _ = fetch_credentials
+            creds, = fetch_credentials
 
             http_method = extract_http_method(request)
             url = extract_url(request)
@@ -340,7 +337,7 @@ missing credentials, provide credentials with one of the following options:
             headers = downcase_headers(request[:headers])
 
             datetime = headers['x-amz-date']
-            datetime ||= Time.now.utc.strftime("%Y%m%dT%H%M%SZ")
+            datetime ||= Time.now.utc.strftime('%Y%m%dT%H%M%SZ')
             date = datetime[0, 8]
 
             content_sha256 = headers['x-amz-content-sha256']
@@ -350,7 +347,7 @@ missing credentials, provide credentials with one of the following options:
             sigv4_headers['host'] = headers['host'] || host(url)
             sigv4_headers['x-amz-date'] = datetime
             if creds.session_token && !@omit_session_token
-              if @signing_algorithm == 'sigv4-s3express'.to_sym
+              if @signing_algorithm == :'sigv4-s3express'
                 sigv4_headers['x-amz-s3session-token'] = creds.session_token
               else
                 sigv4_headers['x-amz-security-token'] = creds.session_token
@@ -359,9 +356,7 @@ missing credentials, provide credentials with one of the following options:
 
             sigv4_headers['x-amz-content-sha256'] ||= content_sha256 if @apply_checksum_header
 
-            if @signing_algorithm == :sigv4a && @region && !@region.empty?
-              sigv4_headers['x-amz-region-set'] = @region
-            end
+            sigv4_headers['x-amz-region-set'] = @region if @signing_algorithm == :sigv4a && @region && !@region.empty?
             headers = headers.merge(sigv4_headers) # merge so we do not modify given headers hash
 
             algorithm = sts_algorithm
@@ -383,13 +378,11 @@ missing credentials, provide credentials with one of the following options:
             sigv4_headers['authorization'] = [
               "#{algorithm} Credential=#{credential(creds, date)}",
               "SignedHeaders=#{signed_headers(headers)}",
-              "Signature=#{sig}",
+              "Signature=#{sig}"
             ].join(', ')
 
             # skip signing the session token, but include it in the headers
-            if creds.session_token && @omit_session_token
-              sigv4_headers['x-amz-security-token'] = creds.session_token
-            end
+            sigv4_headers['x-amz-security-token'] = creds.session_token if creds.session_token && @omit_session_token
 
             # Returning the signature components.
             Signature.new(
@@ -412,9 +405,9 @@ missing credentials, provide credentials with one of the following options:
               http_method,
               path(url),
               normalized_querystring(url.query || ''),
-              canonical_headers(headers) + "\n",
+              "#{canonical_headers(headers)}\n",
               signed_headers(headers),
-              content_sha256,
+              content_sha256
             ].join("\n")
           end
 
@@ -423,7 +416,7 @@ missing credentials, provide credentials with one of the following options:
               algorithm,
               datetime,
               credential_scope(datetime[0, 8]),
-              sha256_hexdigest(canonical_request),
+              sha256_hexdigest(canonical_request)
             ].join("\n")
           end
 
@@ -441,7 +434,7 @@ missing credentials, provide credentials with one of the following options:
           end
 
           def signature(secret_access_key, date, string_to_sign)
-            k_date = hmac("AWS4" + secret_access_key, date)
+            k_date = hmac("AWS4#{secret_access_key}", date)
             k_region = hmac(k_date, @region)
             k_service = hmac(k_region, @service)
             k_credentials = hmac(k_service, 'aws4_request')
@@ -449,7 +442,7 @@ missing credentials, provide credentials with one of the following options:
           end
 
           def asymmetric_signature(creds, string_to_sign)
-            ec, _ = Aws::Sigv4::AsymmetricCredentials.derive_asymmetric_key(
+            ec, = Aws::Sigv4::AsymmetricCredentials.derive_asymmetric_key(
               creds.access_key_id, creds.secret_access_key
             )
             sts_digest = OpenSSL::Digest::SHA256.digest(string_to_sign)
@@ -470,7 +463,7 @@ missing credentials, provide credentials with one of the following options:
 
           def normalized_querystring(querystring)
             params = querystring.split('&')
-            params = params.map { |p| p.match(/=/) ? p : p + '=' }
+            params = params.map { |p| p.match(/=/) ? p : "#{p}=" }
             # From: https://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
             # Sort the parameter names by character code point in ascending order.
             # Parameters with duplicate names should be sorted by value.
@@ -535,13 +528,14 @@ missing credentials, provide credentials with one of the following options:
           # @param [File, Tempfile, IO#read, String] value
           # @return [String<SHA256 Hexdigest>]
           def sha256_hexdigest(value)
-            if (File === value || Tempfile === value) && !value.path.nil? && File.exist?(value.path)
+            if (value.is_a?(File) || value.is_a?(Tempfile)) && !value.path.nil? && File.exist?(value.path)
               OpenSSL::Digest::SHA256.file(value).hexdigest
             elsif value.respond_to?(:read)
-              sha256 = OpenSSL::Digest::SHA256.new
+              sha256 = OpenSSL::Digest.new('SHA256')
               loop do
                 chunk = value.read(1024 * 1024) # 1MB
                 break unless chunk
+
                 sha256.update(chunk)
               end
               value.rewind
@@ -563,17 +557,15 @@ missing credentials, provide credentials with one of the following options:
             if options[:service]
               options[:service]
             else
-              msg = "missing required option :service"
+              msg = 'missing required option :service'
               raise ArgumentError, msg
             end
           end
 
           def extract_region(options)
-            if options[:region]
-              options[:region]
-            else
-              raise Errors::MissingRegionError
-            end
+            raise Errors::MissingRegionError unless options[:region]
+
+            options[:region]
           end
 
           def extract_credentials_provider(options)
@@ -590,7 +582,7 @@ missing credentials, provide credentials with one of the following options:
             if request[:http_method]
               request[:http_method].upcase
             else
-              msg = "missing required option :http_method"
+              msg = 'missing required option :http_method'
               raise ArgumentError, msg
             end
           end
@@ -599,16 +591,13 @@ missing credentials, provide credentials with one of the following options:
             if request[:url]
               URI.parse(request[:url].to_s)
             else
-              msg = "missing required option :url"
+              msg = 'missing required option :url'
               raise ArgumentError, msg
             end
           end
 
           def downcase_headers(headers)
-            (headers || {}).to_hash.inject({}) do |hash, (key, value)|
-              hash[key.downcase] = value
-              hash
-            end
+            (headers || {}).to_hash.transform_keys(&:downcase)
           end
 
           def extract_expires_in(options)
@@ -616,7 +605,7 @@ missing credentials, provide credentials with one of the following options:
             when nil then 900
             when Integer then options[:expires_in]
             else
-              msg = "expected :expires_in to be a number of seconds"
+              msg = 'expected :expires_in to be a number of seconds'
               raise ArgumentError, msg
             end
           end
@@ -633,9 +622,7 @@ missing credentials, provide credentials with one of the following options:
             credentials = @credentials_provider.credentials
             if credentials_set?(credentials)
               expiration = nil
-              if @credentials_provider.respond_to?(:expiration)
-                expiration = @credentials_provider.expiration
-              end
+              expiration = @credentials_provider.expiration if @credentials_provider.respond_to?(:expiration)
               [credentials, expiration]
             else
               raise Errors::MissingCredentialsError,
@@ -670,7 +657,6 @@ missing credentials, provide credentials with one of the following options:
           end
 
           class << self
-
             # Kept for backwards compatability
             # Always return false since we are not using crt signing functionality
             def use_crt?
@@ -679,7 +665,7 @@ missing credentials, provide credentials with one of the following options:
 
             # @api private
             def uri_escape_path(path)
-              path.gsub(/[^\/]+/) { |part| uri_escape(part) }
+              path.gsub(%r{[^/]+}) { |part| uri_escape(part) }
             end
 
             # @api private
@@ -698,9 +684,7 @@ missing credentials, provide credentials with one of the following options:
               # resolve to "." and should be disregarded
               normalized_path = '' if normalized_path == '.'
               # Ensure trailing slashes are correctly preserved
-              if uri.path.end_with?('/') && !normalized_path.end_with?('/')
-                normalized_path << '/'
-              end
+              normalized_path << '/' if uri.path.end_with?('/') && !normalized_path.end_with?('/')
               uri.path = normalized_path
             end
           end

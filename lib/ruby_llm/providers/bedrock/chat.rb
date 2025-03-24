@@ -49,10 +49,10 @@ module RubyLLM
           end.join
 
           {
-            anthropic_version: "bedrock-2023-05-31",
+            anthropic_version: 'bedrock-2023-05-31',
             messages: [
               {
-                role: "user",
+                role: 'user',
                 content: formatted
               }
             ],
@@ -64,8 +64,7 @@ module RubyLLM
         def max_tokens_for(model_id)
           RubyLLM.models.find(model_id)&.max_tokens
         end
-
       end
     end
   end
-end 
+end

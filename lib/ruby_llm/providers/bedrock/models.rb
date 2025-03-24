@@ -57,4 +57,4 @@ module RubyLLM
       end
     end
   end
-end 
+end

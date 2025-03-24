@@ -25,11 +25,8 @@ module RubyLLM
         # @return [Integer] the maximum output tokens
         def max_tokens_for(model_id)
           case model_id
-          when /anthropic\.claude-3/ then 4096
-          when /anthropic\.claude-v2/ then 4096
-          when /anthropic\.claude-instant/ then 4096
-          else 4096
           end
+4096
         end
 
         # Returns the input price per million tokens for the given model ID
@@ -178,8 +175,7 @@ module RubyLLM
             .map(&:capitalize)
             .join(' ')
         end
-
       end
     end
   end
-end 
+end

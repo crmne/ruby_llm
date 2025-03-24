@@ -44,6 +44,7 @@ module RubyLLM
           raw_message = io.read
           decoded_message = decode_message(raw_message)
           return wrap_as_enumerator(decoded_message) unless block_given?
+
           # fetch message only
           raw_event, _eof = decoded_message
           block.call(raw_event)
@@ -87,9 +88,7 @@ module RubyLLM
           return [nil, true] if raw_message.bytesize < total_length
 
           content, checksum, remaining = content.unpack("a#{total_length - PRELUDE_LENGTH - CRC32_LENGTH}Na*")
-          unless Zlib.crc32([prelude, content].pack('a*a*')) == checksum
-            raise Error, "Message checksum error"
-          end
+          raise Error, 'Message checksum error' unless Zlib.crc32([prelude, content].pack('a*a*')) == checksum
 
           # decode headers and payload
           headers, payload = decode_context(content, header_length)
@@ -103,7 +102,8 @@ module RubyLLM
           # prelude contains length of message and headers,
           # followed with CRC checksum of itself
           content, checksum = prelude.unpack("a#{PRELUDE_LENGTH - CRC32_LENGTH}N")
-          raise Error, "Prelude checksum error" unless Zlib.crc32(content) == checksum
+          raise Error, 'Prelude checksum error' unless Zlib.crc32(content) == checksum
+
           content.unpack('N*')
         end
 
@@ -118,7 +118,7 @@ module RubyLLM
         def extract_headers(buffer)
           scanner = buffer
           headers = {}
-          until scanner.bytesize == 0
+          until scanner.bytesize.zero?
             # header key
             key_length, scanner = scanner.unpack('Ca*')
             key, scanner = scanner.unpack("a#{key_length}a*")
@@ -127,14 +127,14 @@ module RubyLLM
             type_index, scanner = scanner.unpack('Ca*')
             value_type = Types.types[type_index]
             unpack_pattern, value_length = Types.pattern[value_type]
-            value = if !!unpack_pattern == unpack_pattern
-              # boolean types won't have value specified
-              unpack_pattern
-            else
-              value_length, scanner = scanner.unpack('S>a*') unless value_length
-              unpacked_value, scanner = scanner.unpack("#{unpack_pattern || "a#{value_length}"}a*")
-              unpacked_value
-            end
+            value = if !unpack_pattern.nil? == unpack_pattern
+                      # boolean types won't have value specified
+                      unpack_pattern
+                    else
+                      value_length, scanner = scanner.unpack('S>a*') unless value_length
+                      unpacked_value, scanner = scanner.unpack("#{unpack_pattern || "a#{value_length}"}a*")
+                      unpacked_value
+                    end
 
             headers[key] = HeaderValue.new(
               format: @format,
@@ -146,9 +146,11 @@ module RubyLLM
         end
 
         def extract_payload(encoded)
-          encoded.bytesize <= ONE_MEGABYTE ?
-            payload_stringio(encoded) :
+          if encoded.bytesize <= ONE_MEGABYTE
+            payload_stringio(encoded)
+          else
             payload_tempfile(encoded)
+          end
         end
 
         def payload_stringio(encoded)
@@ -188,8 +190,8 @@ module RubyLLM
         module Types
           def self.types
             {
-              0 => :true,
-              1 => :false,
+              0 => true,
+              1 => false,
               2 => :byte,
               3 => :short,
               4 => :integer,
@@ -203,8 +205,8 @@ module RubyLLM
 
           def self.pattern
             {
-              true: [true, 0],
-              false: [false, 0],
+              true => [true, 0],
+              false => [false, 0],
               byte: ['c', 1],
               short: ['s>', 2],
               integer: ['l>', 4],
