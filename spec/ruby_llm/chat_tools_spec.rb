@@ -19,12 +19,14 @@ RSpec.describe RubyLLM::Chat do
   class CurrentTime < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets the current time in Wakanda'
 
+    attr_reader :now
+
     def initialize(now)
       @now = now
     end
 
     def execute
-      @now.iso8601
+      now.iso8601
     end
   end
 
