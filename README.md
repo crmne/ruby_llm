@@ -33,6 +33,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🖼️ **Image generation** with DALL-E and other providers
 - 📊 **Embeddings** for vector search and semantic analysis
 - 🔧 **Tools** that let AI use your Ruby code
+- 🔄 **Structured Output** for extracting JSON data in a type-safe way
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
 
@@ -62,6 +63,29 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 
 # Create vector embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+
+# Extract structured data
+class Delivery
+  attr_accessor :timestamp, :dimensions, :address
+  
+  def self.json_schema
+    {
+      type: "object",
+      properties: {
+        timestamp: { type: "string", format: "date-time" },
+        dimensions: { type: "array", items: { type: "number" } },
+        address: { type: "string" }
+      }
+    }
+  end
+end
+
+response = chat.with_response_format(Delivery)
+               .ask("Extract: Delivery to 123 Main St on 2025-03-20. Size: 12x8x4.")
+
+puts response.timestamp  # => 2025-03-20T00:00:00Z
+puts response.dimensions # => [12, 8, 4]
+puts response.address    # => 123 Main St
 
 # Let AI use your code
 class Weather < RubyLLM::Tool
