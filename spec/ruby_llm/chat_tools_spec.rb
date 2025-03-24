@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     def execute
-      now.iso8601
+      now.utc.iso8601
     end
   end
 
@@ -62,8 +62,8 @@ RSpec.describe RubyLLM::Chat do
         now = Time.new(2025, 3, 23, 21, 42, 0)
         chat = RubyLLM.chat(model: model)
                       .with_tool(CurrentTime.new(now))
-        response = chat.ask("What's the time in Wakanda? Answer in ISO 8601 format.")
-        expect(response.content).to include(now.iso8601)
+        response = chat.ask("What's the time in Wakanda? Answer in ISO 8601 format, UTC timezone.")
+        expect(response.content).to include(now.utc.iso8601)
       end
 
       it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations

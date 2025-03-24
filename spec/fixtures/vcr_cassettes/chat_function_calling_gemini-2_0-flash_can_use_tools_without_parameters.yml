@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the time in Wakanda?
-        Answer in ISO 8601 format."}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
+        Answer in ISO 8601 format, UTC timezone."}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
         the current time in Wakanda"}]}]}'
     headers:
       User-Agent:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 23 Mar 2025 20:45:23 GMT
+      - Mon, 24 Mar 2025 21:53:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=432
+      - gfet4t7; dur=516
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,17 +64,17 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": 3.1600163007775941e-06
+              "avgLogprobs": 2.31900776270777e-06
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 29,
+            "promptTokenCount": 32,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 32,
+            "totalTokenCount": 35,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 29
+                "tokenCount": 32
               }
             ],
             "candidatesTokensDetails": [
@@ -86,14 +86,14 @@ http_interactions:
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Sun, 23 Mar 2025 20:45:23 GMT
+  recorded_at: Mon, 24 Mar 2025 21:53:11 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the time in Wakanda?
-        Answer in ISO 8601 format."}]},{"role":"model","parts":[{"functionCall":{"name":"current_time","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"a5002c81-fcdc-4efb-9d82-4c749a0c90f4","response":{"name":"a5002c81-fcdc-4efb-9d82-4c749a0c90f4","content":"2025-03-23T21:42:00+01:00"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
+        Answer in ISO 8601 format, UTC timezone."}]},{"role":"model","parts":[{"functionCall":{"name":"current_time","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"02e75370-ffed-4b37-a77e-1ccf066e7658","response":{"name":"02e75370-ffed-4b37-a77e-1ccf066e7658","content":"2025-03-23T20:42:00Z"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
         the current time in Wakanda"}]}]}'
     headers:
       User-Agent:
@@ -118,7 +118,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 23 Mar 2025 20:45:24 GMT
+      - Mon, 24 Mar 2025 21:53:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -128,7 +128,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=530
+      - gfet4t7; dur=450
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -142,33 +142,33 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "2025-03-23T21:42:00+01:00\n"
+                    "text": "2025-03-23T20:42:00Z\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0045383764574160939
+              "avgLogprobs": -0.0044805953900019331
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 125,
-            "candidatesTokenCount": 26,
-            "totalTokenCount": 151,
+            "promptTokenCount": 119,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 140,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 125
+                "tokenCount": 119
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 26
+                "tokenCount": 21
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Sun, 23 Mar 2025 20:45:24 GMT
+  recorded_at: Mon, 24 Mar 2025 21:53:11 GMT
 recorded_with: VCR 6.3.1
