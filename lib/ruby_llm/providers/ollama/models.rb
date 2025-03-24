@@ -10,6 +10,13 @@ module RubyLLM
           'api/tags'
         end
 
+        # FIXME: include aliases for tags with the format \d+m or \d+b
+        # ie. given these models in the server,
+        # - gemma3:27b
+        # - gemma3:9b
+        #
+        # create an alias gemma3 for gemma3:27b
+
         def list_models
           return [] unless enabled?
 

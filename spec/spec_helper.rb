@@ -46,6 +46,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
 
+  # Pretend this is the same for everyone
+  config.filter_sensitive_data('http://localhost:11434') { ENV.fetch('OLLAMA_API_BASE_URL', nil) }
+
   # Filter sensitive response headers
   config.filter_sensitive_data('<OPENAI_ORGANIZATION>') do |interaction|
     interaction.response.headers['Openai-Organization']&.first

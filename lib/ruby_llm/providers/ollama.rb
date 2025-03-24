@@ -31,6 +31,10 @@ module RubyLLM
       def slug
         'ollama'
       end
+
+      def configuration_requirements
+        %i[ollama_api_base_url]
+      end
     end
   end
 end
