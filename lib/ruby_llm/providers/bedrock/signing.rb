@@ -73,6 +73,7 @@ module RubyLLM
         # returning another object that responds to `#access_key_id`, `#secret_access_key`,
         # and `#session_token`.
         module Errors
+          # Error raised when AWS credentials are missing or incomplete
           class MissingCredentialsError < ArgumentError
             def initialize(msg = nil)
               super(msg || <<~MSG.strip)
@@ -84,6 +85,7 @@ module RubyLLM
             end
           end
 
+          # Error raised when AWS region is not specified
           class MissingRegionError < ArgumentError
             def initialize(*_args)
               super('missing required option :region')
@@ -91,6 +93,7 @@ module RubyLLM
           end
         end
 
+        # Represents a signature for AWS request signing
         class Signature
           # @api private
           def initialize(options)
@@ -127,6 +130,7 @@ module RubyLLM
           attr_accessor :extra
         end
 
+        # Manages AWS credentials for authentication
         class Credentials
           # @option options [required, String] :access_key_id
           # @option options [required, String] :secret_access_key
@@ -182,6 +186,7 @@ module RubyLLM
           end
         end
 
+        # Handles AWS request signing using SigV4 or SigV4a
         class Signer
           # @overload initialize(service:, region:, access_key_id:, secret_access_key:, session_token:nil, **options)
           #   @param [String] :service The service signing name, e.g. 's3'.

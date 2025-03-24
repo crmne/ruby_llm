@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     module Bedrock
       # Determines capabilities and pricing for AWS Bedrock models
-      module Capabilities # rubocop:disable Metrics/ModuleLength
+      module Capabilities
         module_function
 
         # Returns the context window size for the given model ID
@@ -23,10 +23,8 @@ module RubyLLM
         # Returns the maximum output tokens for the given model ID
         # @param model_id [String] the model identifier
         # @return [Integer] the maximum output tokens
-        def max_tokens_for(model_id)
-          case model_id
-          end
-4096
+        def max_tokens_for(_model_id)
+          4096
         end
 
         # Returns the input price per million tokens for the given model ID

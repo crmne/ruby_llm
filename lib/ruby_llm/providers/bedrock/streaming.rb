@@ -129,8 +129,6 @@ module RubyLLM
             elsif data.key?('content_block') && data['content_block'].key?('text')
               # Handle the newly decoded JSON structure
               data['content_block']['text']
-            else
-              nil
             end
           end
         end

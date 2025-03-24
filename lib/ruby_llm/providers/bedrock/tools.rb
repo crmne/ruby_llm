@@ -22,10 +22,11 @@ module RubyLLM
           return {} unless tool_calls
 
           tool_calls.each_with_object({}) do |call, hash|
+            function_args = call['function']['arguments']
             hash[call['id']] = ToolCall.new(
               id: call['id'],
               name: call['function']['name'],
-              arguments: parse_arguments ? parse_arguments(call['function']['arguments']) : call['function']['arguments']
+              arguments: parse_arguments ? parse_arguments(function_args) : function_args
             )
           end
         end
