@@ -14,9 +14,10 @@ module RubyLLM
 
           url = 'api/embed'
           response = post(url, payload)
+          vectors = response.body['embeddings']
 
           Embedding.new(
-            vectors: response.body['embeddings'],
+            vectors: text.is_a?(String) ? vectors.first : vectors,
             model: model,
             # only available when passing a single string input
             input_tokens: response.body['prompt_eval_count'] || 0
