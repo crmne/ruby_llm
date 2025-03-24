@@ -11,7 +11,7 @@ module RubyLLM
           'chat/completions'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
+        def render_payload(messages, tools:, temperature:, model:, response_format: nil, stream: false) # rubocop:disable Metrics/MethodLength
           {
             model: model,
             messages: format_messages(messages),
@@ -22,6 +22,12 @@ module RubyLLM
               payload[:tools] = tools.map { |_, tool| tool_for(tool) }
               payload[:tool_choice] = 'auto'
             end
+
+            # Add response_format parameter if specified
+            if response_format
+              payload[:response_format] = Schema.convert(response_format)
+            end
+
             payload[:stream_options] = { include_usage: true } if stream
           end
         end

@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :response_format, :parser
 
     def initialize(model: nil, provider: nil)
       model_id = model || RubyLLM.config.default_model
@@ -23,6 +23,8 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
+      @response_format = nil
+      @parser = :text  # Default to text parser
     end
 
     def ask(message = nil, with: {}, &block)
@@ -58,6 +60,43 @@ module RubyLLM
       self
     end
 
+    # Sets a response format for the model to use when generating responses.
+    # This enforces structured output according to the provided schema.
+    #
+    # @param format [Class, Hash, String] Format can be:
+    #   - A class that responds to .json_schema (Plain Old Ruby Object)
+    #   - A hash representing a JSON schema
+    #   - A string containing a valid JSON schema
+    # @return [Chat] Returns self for method chaining
+    # @example Using a class
+    #   chat.with_response_format(Delivery)
+    # @example Using a hash
+    #   chat.with_response_format({type: "object", properties: {name: {type: "string"}}})
+    def with_response_format(format)
+      @response_format = format
+      @parser = :json
+      self
+    end
+
+    # Sets a custom parser to use for processing model responses
+    #
+    # @param parser_type [Symbol] The registered parser type to use
+    # @param options [Hash] Additional options to pass to the parser
+    # @return [Chat] Returns self for method chaining
+    # @example Using XML parser to extract specific tag
+    #   chat.with_parser(:xml, tag: 'result')
+    # @example Using default JSON parser
+    #   chat.with_parser(:json)
+    def with_parser(parser_type, options = nil)
+      if !ResponseParser.parsers.key?(parser_type.to_sym)
+        raise Error, "Unknown parser type: #{parser_type}. Available parsers: #{ResponseParser.parsers.keys.join(', ')}"
+      end
+
+      @parser = parser_type.to_sym
+      @parser_options = options
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -74,14 +113,30 @@ module RubyLLM
 
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, &)
+
+      # Get raw response from provider
+      response = @provider.complete(
+        messages,
+        tools: @tools,
+        temperature: @temperature,
+        model: @model.id,
+        response_format: @response_format,
+        &
+      )
+
       @on[:end_message]&.call(response)
 
-      add_message response
-      if response.tool_call?
-        handle_tool_calls(response, &)
+      # Apply appropriate parser - use response_format if present, or specified parser
+      format_or_parser = @response_format || (@parser_options || @parser)
+      parsed_response = ResponseParser.parse(response, format_or_parser)
+
+      # Add the parsed response to messages
+      add_message parsed_response
+
+      if parsed_response.tool_call?
+        handle_tool_calls(parsed_response, &)
       else
-        response
+        parsed_response
       end
     end
 

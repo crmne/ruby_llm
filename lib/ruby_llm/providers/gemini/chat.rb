@@ -6,7 +6,7 @@ module RubyLLM
       # Chat methods for the Gemini API implementation
       module Chat # rubocop:disable Metrics/ModuleLength
         # Must be public for Provider to use
-        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+        def complete(messages, tools:, temperature:, model:, response_format: nil, &block) # rubocop:disable Metrics/MethodLength
           payload = {
             contents: format_messages(messages),
             generationConfig: {
@@ -15,6 +15,15 @@ module RubyLLM
           }
 
           payload[:tools] = format_tools(tools) if tools.any?
+
+          # Add structured output configuration if response_format is specified
+          if response_format
+            payload[:generationConfig][:response_mime_type] = "application/json"
+
+            # Add schema if provided
+            schema = Schema.convert(response_format)
+            payload[:generationConfig][:response_schema] = schema if schema
+          end
 
           # Store tools for use in generate_completion
           @tools = tools

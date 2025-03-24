@@ -11,15 +11,45 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, response_format: nil, stream: false)
+          formatted_messages = messages.map { |msg| format_message(msg) }
+
+          # Handle schema instructions for structured output
+          if response_format
+            # Get format and schema instructions
+            format_config = Schema.convert(response_format)
+
+            # Add system instructions to guide output format
+            if format_config[:system_instruction]
+              # Find existing system message or create new one
+              system_msg = formatted_messages.find { |msg| msg[:role] == 'system' }
+
+              if system_msg
+                # Append schema instructions to existing system message
+                system_msg[:content] = "#{system_msg[:content]}\n\n#{format_config[:system_instruction]}"
+              else
+                # Add new system message with schema instructions
+                formatted_messages.unshift({
+                  role: 'system',
+                  content: format_config[:system_instruction]
+                })
+              end
+            end
+          end
+
           {
             model: model,
-            messages: messages.map { |msg| format_message(msg) },
+            messages: formatted_messages,
             temperature: temperature,
             stream: stream,
             max_tokens: RubyLLM.models.find(model).max_tokens
           }.tap do |payload|
             payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
+
+            # Add format parameter for structured output if response_format is specified
+            if response_format
+              payload[:format] = format_config[:format]
+            end
           end
         end
 
@@ -69,6 +99,7 @@ module RubyLLM
         def convert_role(role)
           case role
           when :tool, :user then 'user'
+          when :system then 'system'
           else 'assistant'
           end
         end
