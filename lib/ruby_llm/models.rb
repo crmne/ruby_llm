@@ -12,22 +12,26 @@ module RubyLLM
   class Models
     include Enumerable
 
-    def self.instance
-      @instance ||= new
-    end
-
-    def self.provider_for(model)
-      Provider.for(model)
-    end
-
-    # Class method to refresh model data
-    def self.refresh!
-      models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
-      @instance = new(models)
-    end
-
     # Delegate class methods to the singleton instance
     class << self
+      def instance
+        @instance ||= new
+      end
+
+      def provider_for(model)
+        Provider.for(model)
+      end
+
+      def models_file
+        File.expand_path('models.json', __dir__)
+      end
+
+      # Class method to refresh model data
+      def refresh!
+        models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
+        @instance = new(models)
+      end
+
       def method_missing(method, ...)
         if instance.respond_to?(method)
           instance.send(method, ...)
@@ -48,10 +52,14 @@ module RubyLLM
 
     # Load models from the JSON file
     def load_models
-      data = JSON.parse(File.read(File.expand_path('models.json', __dir__)))
+      data = JSON.parse(File.read(self.class.models_file))
       data.map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
     rescue Errno::ENOENT
       [] # Return empty array if file doesn't exist yet
+    end
+
+    def save_models
+      File.write(self.class.models_file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
     # Return all models in the collection
@@ -65,9 +73,13 @@ module RubyLLM
     end
 
     # Find a specific model by ID
-    def find(model_id)
-      all.find { |m| m.id == model_id } or
-        raise ModelNotFoundError, "Unknown model: #{model_id}"
+    def find(model_id, provider = nil)
+      return find_with_provider(model_id, provider) if provider
+
+      # Find native model
+      all.find { |m| m.id == model_id } ||
+        all.find { |m| m.id == Aliases.resolve(model_id) } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id}")
     end
 
     # Filter to only chat models
@@ -103,8 +115,14 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
-      # Return self for method chaining
-      self
+    end
+
+    private
+
+    def find_with_provider(model_id, provider)
+      provider_id = Aliases.resolve(model_id, provider)
+      all.find { |m| m.id == provider_id && m.provider == provider.to_s } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
     end
   end
 end

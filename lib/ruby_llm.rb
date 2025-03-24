@@ -18,6 +18,8 @@ loader.inflector.inflect(
   'deepseek' => 'DeepSeek',
   'openrouter' => 'OpenRouter'
 )
+loader.ignore("#{__dir__}/ruby_llm/railtie")
+loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -27,8 +29,8 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil)
-      Chat.new(model: model)
+    def chat(model: nil, provider: nil)
+      Chat.new(model: model, provider: provider)
     end
 
     def embed(...)

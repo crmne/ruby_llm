@@ -109,7 +109,7 @@ jobs:
         rm -rf spec/fixtures/vcr_cassettes
 
         echo "Running tests with real API calls..."
-        bundle exec rspec
+        env -u CI bundle exec rspec
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

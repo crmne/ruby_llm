@@ -13,10 +13,10 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil)
+    def initialize(model: nil, provider: nil)
       model_id = model || RubyLLM.config.default_model
-      self.model = model_id
-      @temperature = @model.metadata['family'] == 'o1' ? 1 : 0.7
+      with_model(model_id, provider: provider)
+      @temperature = 0.7
       @messages = []
       @tools = {}
       @on = {
@@ -47,13 +47,9 @@ module RubyLLM
       self
     end
 
-    def model=(model_id)
-      @model = Models.find model_id
-      @provider = Models.provider_for model_id
-    end
-
-    def with_model(model_id)
-      self.model = model_id
+    def with_model(model_id, provider: nil)
+      @model = Models.find model_id, provider
+      @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
       self
     end
 
