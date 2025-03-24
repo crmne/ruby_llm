@@ -73,20 +73,13 @@ module RubyLLM
     end
 
     # Find a specific model by ID
-    def find(model_id)
-      # Try exact match first
-      exact_match = all.find { |m| m.id == model_id }
-      return exact_match if exact_match
+    def find(model_id, provider = nil)
+      return find_with_provider(model_id, provider) if provider
 
-      # Try to resolve via alias
-      resolved_id = Aliases.resolve(model_id)
-      if resolved_id != model_id
-        alias_match = all.find { |m| m.id == resolved_id }
-        return alias_match if alias_match
-      end
-
-      # Not found
-      raise ModelNotFoundError, "Unknown model: #{model_id}"
+      # Find native model
+      all.find { |m| m.id == model_id } ||
+        all.find { |m| m.id == Aliases.resolve(model_id) } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id}")
     end
 
     # Filter to only chat models
@@ -122,6 +115,14 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
+    end
+
+    private
+
+    def find_with_provider(model_id, provider)
+      provider_id = Aliases.resolve(model_id, provider)
+      all.find { |m| m.id == provider_id && m.provider == provider.to_s } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
     end
   end
 end

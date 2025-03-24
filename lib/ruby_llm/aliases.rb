@@ -18,14 +18,14 @@ module RubyLLM
       # @param model_id [String] the model identifier or alias
       # @param provider_slug [String, Symbol, nil] optional provider to resolve for
       # @return [String] the resolved model ID or the original if no alias exists
-      def resolve(model_id, provider_slug = nil)
-        provider_aliases = aliases[model_id]
-        return model_id unless provider_aliases
+      def resolve(model_id, provider = nil)
+        return model_id unless aliases[model_id]
 
-        if provider_slug
-          provider_aliases[provider_slug.to_s] || model_id
+        if provider
+          aliases[model_id][provider.to_s] || model_id
         else
-          provider_aliases.values.first || model_id
+          # Get native provider's version
+          aliases[model_id].values.first || model_id
         end
       end
 
