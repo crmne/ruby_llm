@@ -26,7 +26,7 @@ module RubyLLM
         File.expand_path('models.json', __dir__)
       end
 
-      def refresh! # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+      def refresh! # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         configured = Provider.configured_providers
 
         # Log provider status
@@ -38,7 +38,8 @@ module RubyLLM
         current = instance.load_models
         preserved = current.reject { |m| configured.map(&:slug).include?(m.provider) }
 
-        @instance = new(preserved + configured.flat_map(&:list_models))
+        all = (preserved + configured.flat_map(&:list_models)).sort_by(&:id)
+        @instance = new(all)
         @instance.save_models
         @instance
       end
