@@ -25,34 +25,37 @@ module RubyLLM
       end
 
       def post(url, payload)
+        signature = sign_request(url, payload, streaming: block_given?)
+        
         connection.post url, payload do |req|
-          req.headers.merge! headers(method: :post,
-                                     path: "#{connection.url_prefix}#{url}",
-                                     body: payload.to_json,
-                                     streaming: block_given?)
+          req.headers.merge! build_headers(signature.headers, streaming: block_given?)
           yield req if block_given?
         end
       end
 
-      def headers(method: :post, path: nil, body: nil, streaming: false)
+      def sign_request(url, payload, streaming: false)
         signer = Signing::Signer.new({
-                                       access_key_id: aws_access_key_id,
-                                       secret_access_key: aws_secret_access_key,
-                                       session_token: aws_session_token,
-                                       region: aws_region,
-                                       service: 'bedrock'
-                                     })
+          access_key_id: aws_access_key_id,
+          secret_access_key: aws_secret_access_key,
+          session_token: aws_session_token,
+          region: aws_region,
+          service: 'bedrock'
+        })
+
         request = {
           connection: connection,
-          http_method: method,
-          url: path || completion_url,
-          body: body || ''
+          http_method: :post,
+          url: url || completion_url,
+          body: payload&.to_json || ''
         }
-        signature = signer.sign_request(request)
 
+        signer.sign_request(request)
+      end
+
+      def build_headers(signature_headers, streaming: false)
         accept_header = streaming ? 'application/vnd.amazon.eventstream' : 'application/json'
 
-        signature.headers.merge(
+        signature_headers.merge(
           'Content-Type' => 'application/json',
           'Accept' => accept_header
         )
