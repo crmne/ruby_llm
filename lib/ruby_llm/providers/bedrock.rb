@@ -35,12 +35,12 @@ module RubyLLM
 
       def sign_request(url, payload)
         signer = Signing::Signer.new({
-          access_key_id: RubyLLM.config.bedrock_api_key,
-          secret_access_key: RubyLLM.config.bedrock_secret_key,
-          session_token: RubyLLM.config.bedrock_session_token,
-          region: RubyLLM.config.bedrock_region,
-          service: 'bedrock'
-        })
+                                       access_key_id: RubyLLM.config.bedrock_api_key,
+                                       secret_access_key: RubyLLM.config.bedrock_secret_key,
+                                       session_token: RubyLLM.config.bedrock_session_token,
+                                       region: RubyLLM.config.bedrock_region,
+                                       service: 'bedrock'
+                                     })
 
         request = {
           connection: connection,

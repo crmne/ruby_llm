@@ -5,7 +5,6 @@ module RubyLLM
     module Bedrock
       # Models methods for the AWS Bedrock API implementation
       module Models
-
         def list_models
           @connection = nil # reset connection since base url is different
           @api_base = "https://bedrock.#{RubyLLM.config.bedrock_region}.amazonaws.com"

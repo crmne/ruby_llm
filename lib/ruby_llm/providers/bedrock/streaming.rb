@@ -59,32 +59,30 @@ module RubyLLM
           end
         end
 
-        def process_chunk(chunk, &block)
+        def process_chunk(chunk, &)
           offset = 0
-          while offset < chunk.bytesize
-            offset = process_message(chunk, offset, &block)
-          end
+          offset = process_message(chunk, offset, &) while offset < chunk.bytesize
         rescue StandardError => e
           RubyLLM.logger.debug "Error processing chunk: #{e.message}"
           RubyLLM.logger.debug "Chunk size: #{chunk.bytesize}"
         end
 
-        def process_message(chunk, offset, &block)
-          return chunk.bytesize if !can_read_prelude?(chunk, offset)
+        def process_message(chunk, offset, &)
+          return chunk.bytesize unless can_read_prelude?(chunk, offset)
 
           total_length, headers_length = read_prelude(chunk, offset)
-          return find_next_message(chunk, offset) if !valid_lengths?(total_length, headers_length)
+          return find_next_message(chunk, offset) unless valid_lengths?(total_length, headers_length)
 
           message_end = offset + total_length
           return chunk.bytesize if chunk.bytesize < message_end
 
           headers_end, payload_end = calculate_positions(offset, total_length, headers_length)
-          return find_next_message(chunk, offset) if !valid_positions?(headers_end, payload_end, chunk.bytesize)
+          return find_next_message(chunk, offset) unless valid_positions?(headers_end, payload_end, chunk.bytesize)
 
           payload = extract_payload(chunk, headers_end, payload_end)
-          return message_end if !valid_payload?(payload)
+          return message_end unless valid_payload?(payload)
 
-          process_payload(payload, &block)
+          process_payload(payload, &)
           message_end
         end
 
@@ -93,8 +91,8 @@ module RubyLLM
         end
 
         def read_prelude(chunk, offset)
-          total_length = chunk[offset...offset + 4].unpack('N').first
-          headers_length = chunk[offset + 4...offset + 8].unpack('N').first
+          total_length = chunk[offset...offset + 4].unpack1('N')
+          headers_length = chunk[offset + 4...offset + 8].unpack1('N')
           [total_length, headers_length]
         end
 
@@ -102,12 +100,13 @@ module RubyLLM
           return false if total_length.nil? || headers_length.nil?
           return false if total_length <= 0 || total_length > 1_000_000
           return false if headers_length <= 0 || headers_length > total_length
+
           true
         end
 
         def calculate_positions(offset, total_length, headers_length)
           headers_end = offset + 12 + headers_length
-          payload_end = offset + total_length - 4  # Subtract 4 bytes for message CRC
+          payload_end = offset + total_length - 4 # Subtract 4 bytes for message CRC
           [headers_end, payload_end]
         end
 
@@ -115,6 +114,7 @@ module RubyLLM
           return false if headers_end >= payload_end
           return false if headers_end >= chunk_size
           return false if payload_end > chunk_size
+
           true
         end
 
@@ -129,22 +129,23 @@ module RubyLLM
 
         def valid_payload?(payload)
           return false if payload.nil? || payload.empty?
-          
+
           json_start = payload.index('{')
           json_end = payload.rindex('}')
-          
+
           return false if json_start.nil? || json_end.nil? || json_start >= json_end
+
           true
         end
 
-        def process_payload(payload, &block)
+        def process_payload(payload, &)
           json_start = payload.index('{')
           json_end = payload.rindex('}')
           json_payload = payload[json_start..json_end]
-          
+
           begin
             json_data = JSON.parse(json_payload)
-            process_json_data(json_data, &block)
+            process_json_data(json_data, &)
           rescue JSON::ParserError => e
             RubyLLM.logger.debug "Failed to parse payload as JSON: #{e.message}"
             RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
@@ -196,19 +197,19 @@ module RubyLLM
         end
 
         def extract_tool_calls(data)
-          data.dig('message', 'tool_calls') || data.dig('tool_calls')
+          data.dig('message', 'tool_calls') || data['tool_calls']
         end
 
         def find_next_prelude(chunk, start_offset)
           # Look for potential message prelude by scanning for reasonable length values
           (start_offset...(chunk.bytesize - 8)).each do |pos|
-            potential_total_length = chunk[pos...pos + 4].unpack('N').first
-            potential_headers_length = chunk[pos + 4...pos + 8].unpack('N').first
-            
+            potential_total_length = chunk[pos...pos + 4].unpack1('N')
+            potential_headers_length = chunk[pos + 4...pos + 8].unpack1('N')
+
             # Check if these look like valid lengths
             if potential_total_length && potential_headers_length &&
-               potential_total_length > 0 && potential_total_length < 1_000_000 &&
-               potential_headers_length > 0 && potential_headers_length < potential_total_length
+               potential_total_length.positive? && potential_total_length < 1_000_000 &&
+               potential_headers_length.positive? && potential_headers_length < potential_total_length
               return pos
             end
           end

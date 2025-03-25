@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Chat do
       ['gemini-2.0-flash', nil],
       ['deepseek-chat', nil],
       ['gpt-4o-mini', nil],
-      %w[claude-3-5-haiku bedrock],
+      %w[claude-3-5-haiku bedrock]
     ].each do |model, provider|
       provider_suffix = provider ? " with #{provider}" : ''
       it "#{model} supports streaming responses#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
