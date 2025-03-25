@@ -21,7 +21,7 @@ module RubyLLM
       module_function
 
       def api_base
-        @api_base ||= "https://bedrock-runtime.#{aws_region}.amazonaws.com"
+        @api_base ||= "https://bedrock-runtime.#{RubyLLM.config.bedrock_region}.amazonaws.com"
       end
 
       def post(url, payload)
@@ -35,10 +35,10 @@ module RubyLLM
 
       def sign_request(url, payload, streaming: false)
         signer = Signing::Signer.new({
-          access_key_id: aws_access_key_id,
-          secret_access_key: aws_secret_access_key,
-          session_token: aws_session_token,
-          region: aws_region,
+          access_key_id: RubyLLM.config.bedrock_api_key,
+          secret_access_key: RubyLLM.config.bedrock_secret_key,
+          session_token: RubyLLM.config.bedrock_session_token,
+          region: RubyLLM.config.bedrock_region,
           service: 'bedrock'
         })
 
@@ -67,22 +67,6 @@ module RubyLLM
 
       def slug
         'bedrock'
-      end
-
-      def aws_region
-        RubyLLM.config.bedrock_region
-      end
-
-      def aws_access_key_id
-        RubyLLM.config.bedrock_api_key
-      end
-
-      def aws_secret_access_key
-        RubyLLM.config.bedrock_secret_key
-      end
-
-      def aws_session_token
-        RubyLLM.config.bedrock_session_token
       end
 
       def configuration_requirements
