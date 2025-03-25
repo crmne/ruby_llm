@@ -79,7 +79,9 @@ module RubyLLM
         RubyLLM.config.bedrock_session_token
       end
 
-      class Error < RubyLLM::Error; end
+      def configuration_requirements
+        %i[bedrock_api_key bedrock_secret_key bedrock_region]
+      end
     end
   end
 end
