@@ -467,32 +467,49 @@ module RubyLLM
           end
 
           def normalized_querystring(querystring)
+            params = normalize_params(querystring)
+            sort_params(params).map(&:first).join('&')
+          end
+
+          def normalize_params(querystring)
             params = querystring.split('&')
-            params = params.map { |p| p.match(/=/) ? p : "#{p}=" }
-            # From: https://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
-            # Sort the parameter names by character code point in ascending order.
-            # Parameters with duplicate names should be sorted by value.
-            #
-            # Default sort <=> in JRuby will swap members
-            # occasionally when <=> is 0 (considered still sorted), but this
-            # causes our normalized query string to not match the sent querystring.
-            # When names match, we then sort by their values.  When values also
-            # match then we sort by their original order
+            params.map { |p| ensure_param_has_equals(p) }
+          end
+
+          def ensure_param_has_equals(param)
+            param.match(/=/) ? param : "#{param}="
+          end
+
+          # From: https://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
+          # Sort the parameter names by character code point in ascending order.
+          # Parameters with duplicate names should be sorted by value.
+          # When names match, sort by values. When values also match,
+          # preserve original order to maintain stable sorting.
+          def sort_params(params)
             params.each.with_index.sort do |a, b|
-              a, a_offset = a
-              b, b_offset = b
-              a_name, a_value = a.split('=')
-              b_name, b_value = b.split('=')
-              if a_name == b_name
-                if a_value == b_value
-                  a_offset <=> b_offset
-                else
-                  a_value <=> b_value
-                end
+              compare_params(a, b)
+            end
+          end
+
+          def compare_params(param_a, param_b)
+            a, a_offset = param_a
+            b, b_offset = param_b
+            a_name, a_value = a.split('=')
+            b_name, b_value = b.split('=')
+
+            compare_param_components(a_name, a_value, b_name, b_value, a_offset, b_offset)
+          end
+
+          def compare_param_components(a_name, a_value, b_name, b_value, a_offset, b_offset)
+            if a_name == b_name
+              if a_value == b_value
+                a_offset <=> b_offset
               else
-                a_name <=> b_name
+                a_value <=> b_value
               end
-            end.map(&:first).join('&')
+            else
+              a_name <=> b_name
+            end
           end
 
           def signed_headers(headers)
