@@ -34,22 +34,28 @@ module RubyLLM
       end
 
       def sign_request(url, payload)
-        signer = Signing::Signer.new({
-                                       access_key_id: RubyLLM.config.bedrock_api_key,
-                                       secret_access_key: RubyLLM.config.bedrock_secret_key,
-                                       session_token: RubyLLM.config.bedrock_session_token,
-                                       region: RubyLLM.config.bedrock_region,
-                                       service: 'bedrock'
-                                     })
+        signer = create_signer
+        request = build_request(url, payload)
+        signer.sign_request(request)
+      end
 
-        request = {
+      def create_signer
+        Signing::Signer.new({
+                              access_key_id: RubyLLM.config.bedrock_api_key,
+                              secret_access_key: RubyLLM.config.bedrock_secret_key,
+                              session_token: RubyLLM.config.bedrock_session_token,
+                              region: RubyLLM.config.bedrock_region,
+                              service: 'bedrock'
+                            })
+      end
+
+      def build_request(url, payload)
+        {
           connection: connection,
           http_method: :post,
           url: url || completion_url,
           body: payload&.to_json || ''
         }
-
-        signer.sign_request(request)
       end
 
       def build_headers(signature_headers, streaming: false)
