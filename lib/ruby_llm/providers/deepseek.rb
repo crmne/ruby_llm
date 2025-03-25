@@ -25,6 +25,10 @@ module RubyLLM
       def slug
         'deepseek'
       end
+
+      def configuration_requirements
+        %i[deepseek_api_key]
+      end
     end
   end
 end

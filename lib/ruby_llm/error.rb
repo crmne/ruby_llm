@@ -22,6 +22,7 @@ module RubyLLM
   class ModelNotFoundError < StandardError; end
   class InvalidRoleError < StandardError; end
   class UnsupportedFunctionsError < StandardError; end
+  class ConfigurationError < StandardError; end
   class UnauthorizedError < Error; end
   class PaymentRequiredError < Error; end
   class ServiceUnavailableError < Error; end
