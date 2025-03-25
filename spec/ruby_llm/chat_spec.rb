@@ -12,9 +12,10 @@ RSpec.describe RubyLLM::Chat do
       ['gemini-2.0-flash', nil],
       ['deepseek-chat', nil],
       ['gpt-4o-mini', nil],
-      ['claude-3-5-haiku', 'bedrock'],
+      %w[claude-3-5-haiku bedrock]
     ].each do |model, provider|
-      it "#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      provider_suffix = provider ? " with #{provider}" : ''
+      it "#{model} can have a basic conversation#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's 2 + 2?")
 
@@ -24,7 +25,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
 
-      it "#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
+      it "#{model} can handle multi-turn conversations#{provider_suffix}" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model, provider: provider)
 
         first = chat.ask("Who was Ruby's creator?")

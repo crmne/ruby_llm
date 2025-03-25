@@ -10,17 +10,15 @@ module RubyLLM
         module_function
 
         def stream_url
-          "model/#{model_id}/invoke-with-response-stream"
+          "model/#{@model_id}/invoke-with-response-stream"
         end
 
         def handle_stream(&block)
-          decoder = Decoder.new
-          buffer = String.new
-          accumulated_content = ''
 
           proc do |chunk, _bytes, env|
             if env && env.status != 200
               # Accumulate error chunks
+              buffer = String.new
               buffer << chunk
               begin
                 error_data = JSON.parse(buffer)
@@ -99,26 +97,20 @@ module RubyLLM
                     # Handle Base64 encoded bytes
                     if json_data['bytes']
                       decoded_bytes = Base64.strict_decode64(json_data['bytes'])
-                      parsed_data = JSON.parse(decoded_bytes)
-                      
-                      # Extract content based on the event type
-                      content = extract_streaming_content(parsed_data)
-                      
-                      # Only emit a chunk if there's content to emit
-                      unless content.nil? || content.empty?
-                        accumulated_content += content
-                        
-                        block.call(
-                          Chunk.new(
-                            role: :assistant,
-                            model_id: parsed_data.dig('message', 'model') || @model_id,
-                            content: content,
-                            input_tokens: parsed_data.dig('message', 'usage', 'input_tokens'),
-                            output_tokens: parsed_data.dig('message', 'usage', 'output_tokens')
-                          )
+                      data = JSON.parse(decoded_bytes)
+
+                      block.call(
+                        Chunk.new(
+                          role: :assistant,
+                          model_id: data.dig('message', 'model') || @model_id,
+                          content: extract_streaming_content(data),
+                          input_tokens: extract_input_tokens(data),
+                          output_tokens: extract_output_tokens(data),
+                          tool_calls: extract_tool_calls(data)
                         )
-                      end
+                      )
                     end
+
                   rescue JSON::ParserError => e
                     RubyLLM.logger.debug "Failed to parse payload as JSON: #{e.message}"
                     RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
@@ -135,6 +127,10 @@ module RubyLLM
               end
             end
           end
+        end
+
+        def json_delta?(data)
+          data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'input_json_delta'
         end
 
         def extract_streaming_content(data)
@@ -162,6 +158,14 @@ module RubyLLM
         end
 
         private
+
+        def extract_input_tokens(data)
+          data.dig('message', 'usage', 'input_tokens')
+        end
+
+        def extract_output_tokens(data)
+          data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
+        end
 
         def extract_content(data)
           case data

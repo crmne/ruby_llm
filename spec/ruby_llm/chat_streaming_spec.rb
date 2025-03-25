@@ -8,13 +8,14 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'streaming responses' do
     [
-      # ['claude-3-5-haiku-20241022', nil],
-      # ['gemini-2.0-flash', nil],
-      # ['deepseek-chat', nil],
-      # ['gpt-4o-mini', nil],
-      ['claude-3-5-haiku', 'bedrock'],
+      ['claude-3-5-haiku-20241022', nil],
+      ['gemini-2.0-flash', nil],
+      ['deepseek-chat', nil],
+      ['gpt-4o-mini', nil],
+      %w[claude-3-5-haiku bedrock],
     ].each do |model, provider|
-      it "#{model} supports streaming responses" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      provider_suffix = provider ? " with #{provider}" : ''
+      it "#{model} supports streaming responses#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
 

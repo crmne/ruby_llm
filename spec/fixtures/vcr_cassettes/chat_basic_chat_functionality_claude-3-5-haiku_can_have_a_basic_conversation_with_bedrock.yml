@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"temperature":0.7,"max_tokens":4096}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.us-west-2.amazonaws.com
+      X-Amz-Date:
+      - 20250325T222412Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - b5957298a88788e861cf24c2faff82644662c726eed2de6599a41f3789caa703
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250325/us-west-2/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=2223548f016c41afc671c3964098931aeb2d9ca07b3a18c13402c5289f4a7aa9
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 25 Mar 2025 22:23:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '245'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 186ac8b6-6234-45f8-8b4c-c893e78a949d
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '946'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '5'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '16'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_018iG3YNksavaUeLbt48zRrB","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"output_tokens":5}}'
+  recorded_at: Tue, 25 Mar 2025 22:24:13 GMT
+recorded_with: VCR 6.3.1
