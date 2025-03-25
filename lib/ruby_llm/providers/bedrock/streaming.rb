@@ -116,20 +116,31 @@ module RubyLLM
         def process_message(chunk, offset, &)
           return chunk.bytesize unless can_read_prelude?(chunk, offset)
 
+          message_info = extract_message_info(chunk, offset)
+          return find_next_message(chunk, offset) unless message_info
+
+          process_valid_message(chunk, offset, message_info, &)
+        end
+
+        def extract_message_info(chunk, offset)
           total_length, headers_length = read_prelude(chunk, offset)
-          return find_next_message(chunk, offset) unless valid_lengths?(total_length, headers_length)
+          return unless valid_lengths?(total_length, headers_length)
 
           message_end = offset + total_length
-          return chunk.bytesize if chunk.bytesize < message_end
+          return unless chunk.bytesize >= message_end
 
           headers_end, payload_end = calculate_positions(offset, total_length, headers_length)
-          return find_next_message(chunk, offset) unless valid_positions?(headers_end, payload_end, chunk.bytesize)
+          return unless valid_positions?(headers_end, payload_end, chunk.bytesize)
 
-          payload = extract_payload(chunk, headers_end, payload_end)
-          return message_end unless valid_payload?(payload)
+          { total_length:, headers_length:, headers_end:, payload_end: }
+        end
+
+        def process_valid_message(chunk, offset, message_info, &)
+          payload = extract_payload(chunk, message_info[:headers_end], message_info[:payload_end])
+          return find_next_message(chunk, offset) unless valid_payload?(payload)
 
           process_payload(payload, &)
-          message_end
+          offset + message_info[:total_length]
         end
 
         def can_read_prelude?(chunk, offset)
