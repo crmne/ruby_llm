@@ -533,21 +533,38 @@ module RubyLLM
           # @param [File, Tempfile, IO#read, String] value
           # @return [String<SHA256 Hexdigest>]
           def sha256_hexdigest(value)
-            if (value.is_a?(File) || value.is_a?(Tempfile)) && !value.path.nil? && File.exist?(value.path)
-              OpenSSL::Digest::SHA256.file(value).hexdigest
+            if file_like?(value)
+              digest_file(value)
             elsif value.respond_to?(:read)
-              sha256 = OpenSSL::Digest.new('SHA256')
-              loop do
-                chunk = value.read(1024 * 1024) # 1MB
-                break unless chunk
-
-                sha256.update(chunk)
-              end
-              value.rewind
-              sha256.hexdigest
+              digest_io(value)
             else
-              OpenSSL::Digest::SHA256.hexdigest(value)
+              digest_string(value)
             end
+          end
+
+          def file_like?(value)
+            (value.is_a?(File) || value.is_a?(Tempfile)) && !value.path.nil? && File.exist?(value.path)
+          end
+
+          def digest_file(value)
+            OpenSSL::Digest::SHA256.file(value).hexdigest
+          end
+
+          def digest_io(value)
+            sha256 = OpenSSL::Digest.new('SHA256')
+            update_digest_from_io(sha256, value)
+            value.rewind
+            sha256.hexdigest
+          end
+
+          def update_digest_from_io(digest, io)
+            while (chunk = io.read(1024 * 1024)) # 1MB
+              digest.update(chunk)
+            end
+          end
+
+          def digest_string(value)
+            OpenSSL::Digest::SHA256.hexdigest(value)
           end
 
           def hmac(key, value)
