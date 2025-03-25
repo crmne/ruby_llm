@@ -12,9 +12,7 @@ module RubyLLM
         # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
-          when /anthropic\.claude-3-opus/ then 200_000
-          when /anthropic\.claude-3-sonnet/ then 200_000
-          when /anthropic\.claude-3-haiku/ then 200_000
+          when /anthropic\.claude-3-(opus|sonnet|haiku)/ then 200_000
           when /anthropic\.claude-2/ then 100_000
           else 4_096
           end
@@ -121,21 +119,23 @@ module RubyLLM
           model_id.match?(/anthropic\.claude-3/)
         end
 
+        # Model family patterns for capability lookup
+        MODEL_FAMILIES = {
+          /anthropic\.claude-3-opus/ => :claude3_opus,
+          /anthropic\.claude-3-sonnet/ => :claude3_sonnet,
+          /anthropic\.claude-3-5-sonnet/ => :claude3_sonnet,
+          /anthropic\.claude-3-7-sonnet/ => :claude3_sonnet,
+          /anthropic\.claude-3-haiku/ => :claude3_haiku,
+          /anthropic\.claude-3-5-haiku/ => :claude3_5_haiku,
+          /anthropic\.claude-v2/ => :claude2,
+          /anthropic\.claude-instant/ => :claude_instant
+        }.freeze
+
         # Determines the model family for pricing and capability lookup
         # @param model_id [String] the model identifier
         # @return [Symbol] the model family identifier
         def model_family(model_id)
-          case model_id
-          when /anthropic\.claude-3-opus/ then :claude3_opus
-          when /anthropic\.claude-3-sonnet/ then :claude3_sonnet
-          when /anthropic\.claude-3-5-sonnet/ then :claude3_sonnet
-          when /anthropic\.claude-3-7-sonnet/ then :claude3_sonnet
-          when /anthropic\.claude-3-haiku/ then :claude3_haiku
-          when /anthropic\.claude-3-5-haiku/ then :claude3_5_haiku
-          when /anthropic\.claude-v2/ then :claude2
-          when /anthropic\.claude-instant/ then :claude_instant
-          else :other
-          end
+          MODEL_FAMILIES.find { |pattern, _family| model_id.match?(pattern) }&.last || :other
         end
 
         # Pricing information for Bedrock models (per million tokens)
