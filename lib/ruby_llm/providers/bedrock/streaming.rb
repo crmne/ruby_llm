@@ -47,11 +47,11 @@ module RubyLLM
         def extract_content(data)
           return unless data.is_a?(Hash)
 
-          content_extractors = [
-            :extract_completion_content,
-            :extract_output_text_content,
-            :extract_array_content,
-            :extract_content_block_text
+          content_extractors = %i[
+            extract_completion_content
+            extract_output_text_content
+            extract_array_content
+            extract_content_block_text
           ]
 
           content_extractors.each do |extractor|
@@ -185,37 +185,69 @@ module RubyLLM
         end
 
         def process_payload(payload, &)
-          json_start = payload.index('{')
-          json_end = payload.rindex('}')
-          json_payload = payload[json_start..json_end]
-
-          begin
-            json_data = JSON.parse(json_payload)
-            process_json_data(json_data, &)
-          rescue JSON::ParserError => e
-            RubyLLM.logger.debug "Failed to parse payload as JSON: #{e.message}"
-            RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
-          rescue StandardError => e
-            RubyLLM.logger.debug "Error processing payload: #{e.message}"
-          end
+          json_payload = extract_json_payload(payload)
+          parse_and_process_json(json_payload, &)
+        rescue JSON::ParserError => e
+          log_json_parse_error(e, json_payload)
+        rescue StandardError => e
+          log_general_error(e)
         end
 
-        def process_json_data(json_data, &block)
+        def extract_json_payload(payload)
+          json_start = payload.index('{')
+          json_end = payload.rindex('}')
+          payload[json_start..json_end]
+        end
+
+        def parse_and_process_json(json_payload, &)
+          json_data = JSON.parse(json_payload)
+          process_json_data(json_data, &)
+        end
+
+        def log_json_parse_error(error, json_payload)
+          RubyLLM.logger.debug "Failed to parse payload as JSON: #{error.message}"
+          RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
+        end
+
+        def log_general_error(error)
+          RubyLLM.logger.debug "Error processing payload: #{error.message}"
+        end
+
+        def process_json_data(json_data, &)
           return unless json_data['bytes']
 
-          decoded_bytes = Base64.strict_decode64(json_data['bytes'])
-          data = JSON.parse(decoded_bytes)
+          data = decode_and_parse_data(json_data)
+          create_and_yield_chunk(data, &)
+        end
 
-          block.call(
-            Chunk.new(
-              role: :assistant,
-              model_id: data.dig('message', 'model') || @model_id,
-              content: extract_streaming_content(data),
-              input_tokens: extract_input_tokens(data),
-              output_tokens: extract_output_tokens(data),
-              tool_calls: extract_tool_calls(data)
-            )
+        def decode_and_parse_data(json_data)
+          decoded_bytes = Base64.strict_decode64(json_data['bytes'])
+          JSON.parse(decoded_bytes)
+        end
+
+        def create_and_yield_chunk(data, &block)
+          block.call(build_chunk(data))
+        end
+
+        def build_chunk(data)
+          Chunk.new(
+            **extract_chunk_attributes(data)
           )
+        end
+
+        def extract_chunk_attributes(data)
+          {
+            role: :assistant,
+            model_id: extract_model_id(data),
+            content: extract_streaming_content(data),
+            input_tokens: extract_input_tokens(data),
+            output_tokens: extract_output_tokens(data),
+            tool_calls: extract_tool_calls(data)
+          }
+        end
+
+        def extract_model_id(data)
+          data.dig('message', 'model') || @model_id
         end
 
         def extract_input_tokens(data)
