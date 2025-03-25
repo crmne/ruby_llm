@@ -5,17 +5,13 @@ module RubyLLM
     module Bedrock
       # Models methods for the AWS Bedrock API implementation
       module Models
-        def initialize
-          super
-          @api_base = "https://bedrock.#{RubyLLM.config.bedrock_region}.amazonaws.com"
-        end
 
         def list_models
           @connection = nil # reset connection since base url is different
           @api_base = "https://bedrock.#{RubyLLM.config.bedrock_region}.amazonaws.com"
+          signature = sign_request(models_url, nil, streaming: block_given?)
           response = connection.get(models_url) do |req|
-            req.headers.merge! headers(method: :get,
-                                       path: "#{connection.url_prefix}#{models_url}")
+            req.headers.merge! signature.headers
           end
           @connection = nil # reset connection since base url is different
 
