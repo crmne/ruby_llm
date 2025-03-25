@@ -8,13 +8,14 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'basic chat functionality' do
     [
-      'claude-3-5-haiku-20241022',
-      'gemini-2.0-flash',
-      'deepseek-chat',
-      'gpt-4o-mini'
-    ].each do |model|
+      ['claude-3-5-haiku-20241022', nil],
+      ['gemini-2.0-flash', nil],
+      ['deepseek-chat', nil],
+      ['gpt-4o-mini', nil],
+      ['claude-3-5-haiku', 'bedrock'],
+    ].each do |model, provider|
       it "#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's 2 + 2?")
 
         expect(response.content).to include('4')
@@ -24,7 +25,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
 
         first = chat.ask("Who was Ruby's creator?")
         expect(first.content).to include('Matz')

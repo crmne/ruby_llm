@@ -33,8 +33,8 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: extract_content(data),
-            input_tokens: data.dig('usage', 'prompt_tokens'),
-            output_tokens: data.dig('usage', 'completion_tokens'),
+            input_tokens: data.dig('usage', 'input_tokens'),
+            output_tokens: data.dig('usage', 'output_tokens'),
             model_id: data['model']
           )
         end
