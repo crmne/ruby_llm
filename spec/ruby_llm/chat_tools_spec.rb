@@ -1,34 +1,35 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'dotenv/load'
+require "spec_helper"
+require "dotenv/load"
 
 RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
+  include_context "with configured RubyLLM"
 
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    description 'Gets current weather for a location'
-    param :latitude, desc: 'Latitude (e.g., 52.5200)'
-    param :longitude, desc: 'Longitude (e.g., 13.4050)'
+    description "Gets current weather for a location"
+    param :latitude, desc: "Latitude (e.g., 52.5200)"
+    param :longitude, desc: "Longitude (e.g., 13.4050)"
 
     def execute(latitude:, longitude:)
       "Current weather at #{latitude}, #{longitude}: 15°C, Wind: 10 km/h"
     end
   end
 
-  describe 'function calling' do
+  describe "function calling" do
     [
-      'claude-3-5-haiku-20241022',
-      'gemini-2.0-flash',
-      'gpt-4o-mini'
+      "claude-3-5-haiku-20241022",
+      "gemini-2.0-flash",
+      "gpt-4o-mini",
+      "mistral-medium",
     ].each do |model|
       it "#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
-        expect(response.content).to include('15')
-        expect(response.content).to include('10')
+        expect(response.content).to include("15")
+        expect(response.content).to include("10")
       end
 
       it "#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
@@ -36,12 +37,12 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
-        expect(response.content).to include('15')
-        expect(response.content).to include('10')
+        expect(response.content).to include("15")
+        expect(response.content).to include("10")
 
         response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
-        expect(response.content).to include('15')
-        expect(response.content).to include('10')
+        expect(response.content).to include("15")
+        expect(response.content).to include("10")
       end
 
       it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
@@ -55,8 +56,8 @@ RSpec.describe RubyLLM::Chat do
 
         expect(chunks).not_to be_empty
         expect(chunks.first).to be_a(RubyLLM::Chunk)
-        expect(response.content).to include('15')
-        expect(response.content).to include('10')
+        expect(response.content).to include("15")
+        expect(response.content).to include("10")
 
         response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)") do |chunk|
           chunks << chunk
@@ -64,8 +65,8 @@ RSpec.describe RubyLLM::Chat do
 
         expect(chunks).not_to be_empty
         expect(chunks.first).to be_a(RubyLLM::Chunk)
-        expect(response.content).to include('15')
-        expect(response.content).to include('10')
+        expect(response.content).to include("15")
+        expect(response.content).to include("10")
       end
     end
   end

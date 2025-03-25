@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'dotenv/load'
+require "spec_helper"
+require "dotenv/load"
 
 RSpec.describe RubyLLM::Embedding do
-  include_context 'with configured RubyLLM'
+  include_context "with configured RubyLLM"
 
   let(:test_text) { "Ruby is a programmer's best friend" }
   let(:test_texts) { %w[Ruby Python JavaScript] }
 
-  describe 'basic functionality' do
+  describe "basic functionality" do
     [
-      'text-embedding-004', # gemini
-      'text-embedding-3-small' # openai
+      "text-embedding-004", # gemini
+      "text-embedding-3-small", # openai
+      "mistral-embed", # mistral
     ].each do |model|
       it "#{model} can handle a single text" do # rubocop:disable RSpec/MultipleExpectations
         embedding = RubyLLM.embed(test_text, model: model)

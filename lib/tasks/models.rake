@@ -21,6 +21,9 @@ PROVIDER_DOCS = {
   },
   anthropic: {
     models: 'https://docs.anthropic.com/en/docs/about-claude/models/all-models'
+  },
+  mistral: {
+    models: 'https://docs.mistral.ai/models/'
   }
 }.freeze
 
@@ -72,6 +75,7 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY')
     end
 
     models = RubyLLM.models.refresh!
@@ -95,6 +99,8 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
+      config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY')
     end
 
     # Filter providers if a specific one was requested
