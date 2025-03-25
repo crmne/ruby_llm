@@ -49,14 +49,20 @@ module RubyLLM
               provider: slug,
               type: capabilities.model_type(model_id),
               family: model['family'],
-              metadata: {},
               context_window: capabilities.context_window_for(model_id),
               max_tokens: capabilities.max_tokens_for(model_id),
               supports_vision: capabilities.supports_vision?(model_id),
               supports_functions: capabilities.supports_functions?(model_id),
               supports_json_mode: capabilities.supports_json_mode?(model_id),
               input_price_per_million: capabilities.input_price_for(model_id),
-              output_price_per_million: capabilities.output_price_for(model_id)
+              output_price_per_million: capabilities.output_price_for(model_id),
+              metadata: {
+                byte_size: model['size']&.to_i,
+                parameter_size: model.dig('details', 'parameter_size'),
+                quantization_level: model.dig('details', 'quantization_level'),
+                format: model.dig('details', 'format'),
+                parent_model: model.dig('details', 'parent_model')
+              }
             )
           end
         end
