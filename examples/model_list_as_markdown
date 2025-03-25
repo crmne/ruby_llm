@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+
+# model_list_as_markdown
+
+# This script generates a markdown table of all the models available in the RubyLLM library,
+# with one table per model type.
+#
+# Its output can be seen in rendered markdown on the command line by using `glow` or `mdcat`:
+# ./model_list_as_markdown | glow -w 150 -
+# or
+# ./model_list_as_markdown | mdcat -
+
+require 'awesome_print'
+require 'ruby_llm'
+
+# Keys to extract from each model object for display
+MODEL_KEYS_TO_DISPLAY = [
+  :id,
+  :type,
+  :display_name, 
+  :provider, 
+  :context_window, 
+  :max_tokens, 
+  :family, 
+  :input_price_per_million, 
+  :output_price_per_million
+]
+
+def to_display_hash(model)
+  model.to_h.slice(*MODEL_KEYS_TO_DISPLAY)
+end
+
+# Converts model data into a markdown table with appropriate column alignments
+def to_markdown_table(models)
+  model_hashes = Array(models).map { |model| to_display_hash(model) }
+
+  # Shortened column headers for better table readability
+  headers = {
+    id: "ID",
+    type: "Type",
+    display_name: "Name",
+    provider: "Provider",
+    context_window: "Context",
+    max_tokens: "MaxTok",
+    family: "Family",
+    input_price_per_million: "In$/M",
+    output_price_per_million: "Out$/M"
+  }
+
+  # Right-align numeric columns, left-align text
+  alignments = {
+    id: ":--",
+    type: ":--",
+    display_name: ":--",
+    provider: ":--",
+    context_window: "--:",
+    max_tokens: "--:",
+    family: ":--",
+    input_price_per_million: "--:",
+    output_price_per_million: "--:"
+  }
+
+  # Build the table
+  lines = []
+
+  # Header rows
+  lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| headers[key] }.join(' | ')} |"
+  lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| alignments[key] }.join(' | ')} |"
+  
+  # Data rows
+  model_hashes.each do |model_hash|
+    values = MODEL_KEYS_TO_DISPLAY.map do |key| 
+      if model_hash[key].is_a?(Float)
+        format('%.2f', model_hash[key])
+      else
+        model_hash[key]
+      end
+    end
+
+    lines << "| #{values.join(' | ')} |"
+  end
+
+  lines.join("\n")
+end
+
+# Generate markdown tables for each model type
+puts <<~DOC
+  # Model List
+
+  This is a list of all the models available in the RubyLLM library, by type:
+
+  ### Chat Models
+
+  #{to_markdown_table(RubyLLM.models.chat_models)}
+  
+  ### Image Models
+
+  #{to_markdown_table(RubyLLM.models.image_models)}
+
+  ### Audio Models
+
+  #{to_markdown_table(RubyLLM.models.audio_models)}
+
+  ### Embedding Models
+
+  #{to_markdown_table(RubyLLM.models.embedding_models)}
+
+  ### Moderation Models
+
+  #{to_markdown_table(RubyLLM.models.select { |m| m.type == 'moderation'})}
+  DOC
+  
