@@ -25,15 +25,15 @@ module RubyLLM
       end
 
       def post(url, payload)
-        signature = sign_request(url, payload, streaming: block_given?)
-        
+        signature = sign_request("#{connection.url_prefix}#{url}", payload)
         connection.post url, payload do |req|
           req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+
           yield req if block_given?
         end
       end
 
-      def sign_request(url, payload, streaming: false)
+      def sign_request(url, payload)
         signer = Signing::Signer.new({
           access_key_id: RubyLLM.config.bedrock_api_key,
           secret_access_key: RubyLLM.config.bedrock_secret_key,
