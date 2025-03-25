@@ -14,117 +14,11 @@ module RubyLLM
         end
 
         def handle_stream(&block)
-
           proc do |chunk, _bytes, env|
             if env && env.status != 200
-              # Accumulate error chunks
-              buffer = String.new
-              buffer << chunk
-              begin
-                error_data = JSON.parse(buffer)
-                error_response = env.merge(body: error_data)
-                ErrorMiddleware.parse_error(provider: self, response: error_response)
-              rescue JSON::ParserError
-                # Keep accumulating if we don't have complete JSON yet
-                RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
-              end
+              handle_error_response(chunk, env)
             else
-              begin
-                # Process each event stream message in the chunk
-                offset = 0
-                while offset < chunk.bytesize
-                  # Read the prelude (total length + headers length)
-                  break if chunk.bytesize - offset < 12  # Need at least prelude size
-                  
-                  total_length = chunk[offset...offset + 4].unpack('N').first
-                  headers_length = chunk[offset + 4...offset + 8].unpack('N').first
-                  
-                  # Validate lengths to ensure they're reasonable
-                  if total_length.nil? || headers_length.nil? || 
-                     total_length <= 0 || total_length > 1_000_000 ||  # Sanity check for message size
-                     headers_length <= 0 || headers_length > total_length
-                    RubyLLM.logger.debug "Invalid lengths detected, trying next potential message"
-                    # Try to find the next message prelude marker
-                    next_prelude = find_next_prelude(chunk, offset + 4)
-                    offset = next_prelude || chunk.bytesize
-                    next
-                  end
-                  
-                  # Verify we have the complete message
-                  message_end = offset + total_length
-                  break if chunk.bytesize < message_end
-                  
-                  # Extract headers and payload
-                  headers_end = offset + 12 + headers_length
-                  payload_end = message_end - 4  # Subtract 4 bytes for message CRC
-                  
-                  # Safety check for valid positions
-                  if headers_end >= payload_end || headers_end >= chunk.bytesize || payload_end > chunk.bytesize
-                    RubyLLM.logger.debug "Invalid positions detected, trying next potential message"
-                    # Try to find the next message prelude marker
-                    next_prelude = find_next_prelude(chunk, offset + 4)
-                    offset = next_prelude || chunk.bytesize
-                    next
-                  end
-                  
-                  # Get payload
-                  payload = chunk[headers_end...payload_end]
-                  
-                  # Safety check for payload
-                  if payload.nil? || payload.empty?
-                    RubyLLM.logger.debug "Empty or nil payload detected, skipping chunk"
-                    offset = message_end
-                    next
-                  end
-                  
-                  # Find valid JSON in the payload
-                  json_start = payload.index('{')
-                  json_end = payload.rindex('}')
-                  
-                  if json_start.nil? || json_end.nil? || json_start >= json_end
-                    RubyLLM.logger.debug "No valid JSON found in payload, skipping chunk"
-                    offset = message_end
-                    next
-                  end
-                  
-                  # Extract just the JSON portion
-                  json_payload = payload[json_start..json_end]
-                  
-                  begin
-                    # Parse the JSON payload
-                    json_data = JSON.parse(json_payload)
-                    
-                    # Handle Base64 encoded bytes
-                    if json_data['bytes']
-                      decoded_bytes = Base64.strict_decode64(json_data['bytes'])
-                      data = JSON.parse(decoded_bytes)
-
-                      block.call(
-                        Chunk.new(
-                          role: :assistant,
-                          model_id: data.dig('message', 'model') || @model_id,
-                          content: extract_streaming_content(data),
-                          input_tokens: extract_input_tokens(data),
-                          output_tokens: extract_output_tokens(data),
-                          tool_calls: extract_tool_calls(data)
-                        )
-                      )
-                    end
-
-                  rescue JSON::ParserError => e
-                    RubyLLM.logger.debug "Failed to parse payload as JSON: #{e.message}"
-                    RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
-                  rescue StandardError => e
-                    RubyLLM.logger.debug "Error processing payload: #{e.message}"
-                  end
-                  
-                  # Move to next message
-                  offset = message_end
-                end
-              rescue StandardError => e
-                RubyLLM.logger.debug "Error processing chunk: #{e.message}"
-                RubyLLM.logger.debug "Chunk size: #{chunk.bytesize}"
-              end
+              process_chunk(chunk, &block)
             end
           end
         end
@@ -136,28 +30,146 @@ module RubyLLM
         def extract_streaming_content(data)
           if data.is_a?(Hash)
             case data['type']
-            when 'message_start'
-              # No content yet in message_start
-              ''
             when 'content_block_start'
               # Initial content block, might have some text
               data.dig('content_block', 'text').to_s
             when 'content_block_delta'
               # Incremental content updates
               data.dig('delta', 'text').to_s
-            when 'message_delta'
-              # Might contain updates to usage stats, but no new content
-              ''
             else
-              # Fall back to the existing extract_content method for other formats
-              extract_content(data)
+              ''
             end
           else
-            extract_content(data)
+            ''
           end
         end
 
         private
+
+        def handle_error_response(chunk, env)
+          buffer = String.new
+          buffer << chunk
+          begin
+            error_data = JSON.parse(buffer)
+            error_response = env.merge(body: error_data)
+            ErrorMiddleware.parse_error(provider: self, response: error_response)
+          rescue JSON::ParserError
+            # Keep accumulating if we don't have complete JSON yet
+            RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
+          end
+        end
+
+        def process_chunk(chunk, &block)
+          offset = 0
+          while offset < chunk.bytesize
+            offset = process_message(chunk, offset, &block)
+          end
+        rescue StandardError => e
+          RubyLLM.logger.debug "Error processing chunk: #{e.message}"
+          RubyLLM.logger.debug "Chunk size: #{chunk.bytesize}"
+        end
+
+        def process_message(chunk, offset, &block)
+          return chunk.bytesize if !can_read_prelude?(chunk, offset)
+
+          total_length, headers_length = read_prelude(chunk, offset)
+          return find_next_message(chunk, offset) if !valid_lengths?(total_length, headers_length)
+
+          message_end = offset + total_length
+          return chunk.bytesize if chunk.bytesize < message_end
+
+          headers_end, payload_end = calculate_positions(offset, total_length, headers_length)
+          return find_next_message(chunk, offset) if !valid_positions?(headers_end, payload_end, chunk.bytesize)
+
+          payload = extract_payload(chunk, headers_end, payload_end)
+          return message_end if !valid_payload?(payload)
+
+          process_payload(payload, &block)
+          message_end
+        end
+
+        def can_read_prelude?(chunk, offset)
+          chunk.bytesize - offset >= 12
+        end
+
+        def read_prelude(chunk, offset)
+          total_length = chunk[offset...offset + 4].unpack('N').first
+          headers_length = chunk[offset + 4...offset + 8].unpack('N').first
+          [total_length, headers_length]
+        end
+
+        def valid_lengths?(total_length, headers_length)
+          return false if total_length.nil? || headers_length.nil?
+          return false if total_length <= 0 || total_length > 1_000_000
+          return false if headers_length <= 0 || headers_length > total_length
+          true
+        end
+
+        def calculate_positions(offset, total_length, headers_length)
+          headers_end = offset + 12 + headers_length
+          payload_end = offset + total_length - 4  # Subtract 4 bytes for message CRC
+          [headers_end, payload_end]
+        end
+
+        def valid_positions?(headers_end, payload_end, chunk_size)
+          return false if headers_end >= payload_end
+          return false if headers_end >= chunk_size
+          return false if payload_end > chunk_size
+          true
+        end
+
+        def find_next_message(chunk, offset)
+          next_prelude = find_next_prelude(chunk, offset + 4)
+          next_prelude || chunk.bytesize
+        end
+
+        def extract_payload(chunk, headers_end, payload_end)
+          chunk[headers_end...payload_end]
+        end
+
+        def valid_payload?(payload)
+          return false if payload.nil? || payload.empty?
+          
+          json_start = payload.index('{')
+          json_end = payload.rindex('}')
+          
+          return false if json_start.nil? || json_end.nil? || json_start >= json_end
+          true
+        end
+
+        def process_payload(payload, &block)
+          json_start = payload.index('{')
+          json_end = payload.rindex('}')
+          json_payload = payload[json_start..json_end]
+          
+          begin
+            json_data = JSON.parse(json_payload)
+            process_json_data(json_data, &block)
+          rescue JSON::ParserError => e
+            RubyLLM.logger.debug "Failed to parse payload as JSON: #{e.message}"
+            RubyLLM.logger.debug "Attempted JSON payload: #{json_payload.inspect}"
+          rescue StandardError => e
+            RubyLLM.logger.debug "Error processing payload: #{e.message}"
+          end
+        end
+
+        def process_json_data(json_data, &block)
+          return unless json_data['bytes']
+
+          decoded_bytes = Base64.strict_decode64(json_data['bytes'])
+          data = JSON.parse(decoded_bytes)
+
+          block.call(
+            Chunk.new(
+              role: :assistant,
+              model_id: data.dig('message', 'model') || @model_id,
+              content: extract_streaming_content(data),
+              input_tokens: extract_input_tokens(data),
+              output_tokens: extract_output_tokens(data),
+              tool_calls: extract_tool_calls(data)
+            )
+          )
+        end
 
         def extract_input_tokens(data)
           data.dig('message', 'usage', 'input_tokens')
@@ -183,15 +195,8 @@ module RubyLLM
           end
         end
 
-        def split_event_stream_chunk(chunk)
-          # Find the position of the first '{' character which indicates start of JSON
-          json_start = chunk.index('{')
-          return [nil, nil] unless json_start
-
-          header = chunk[0...json_start].strip
-          payload = chunk[json_start..-1]
-          
-          [header, payload]
+        def extract_tool_calls(data)
+          data.dig('message', 'tool_calls') || data.dig('tool_calls')
         end
 
         def find_next_prelude(chunk, start_offset)
