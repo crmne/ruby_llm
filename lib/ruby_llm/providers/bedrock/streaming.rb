@@ -44,6 +44,52 @@ module RubyLLM
           end
         end
 
+        def extract_content(data)
+          return unless data.is_a?(Hash)
+
+          content_extractors = [
+            :extract_completion_content,
+            :extract_output_text_content,
+            :extract_array_content,
+            :extract_content_block_text
+          ]
+
+          content_extractors.each do |extractor|
+            content = send(extractor, data)
+            return content if content
+          end
+
+          nil
+        end
+
+        def extract_completion_content(data)
+          data['completion'] if data.key?('completion')
+        end
+
+        def extract_output_text_content(data)
+          data.dig('results', 0, 'outputText')
+        end
+
+        def extract_array_content(data)
+          return unless data.key?('content')
+
+          if data['content'].is_a?(Array)
+            data['content'].map { |item| item['text'] }.join
+          else
+            data['content']
+          end
+        end
+
+        def extract_content_block_text(data)
+          return unless data.key?('content_block') && data['content_block'].key?('text')
+
+          data['content_block']['text']
+        end
+
+        def extract_tool_calls(data)
+          data.dig('message', 'tool_calls') || data['tool_calls']
+        end
+
         private
 
         def handle_error_response(chunk, env)
@@ -180,40 +226,36 @@ module RubyLLM
           data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
         end
 
-        def extract_content(data)
-          case data
-          when Hash
-            if data.key?('completion')
-              data['completion']
-            elsif data.dig('results', 0, 'outputText')
-              data.dig('results', 0, 'outputText')
-            elsif data.key?('content')
-              data['content'].is_a?(Array) ? data['content'].map { |item| item['text'] }.join : data['content']
-            elsif data.key?('content_block') && data['content_block'].key?('text')
-              # Handle the newly decoded JSON structure
-              data['content_block']['text']
-            end
-          end
-        end
-
-        def extract_tool_calls(data)
-          data.dig('message', 'tool_calls') || data['tool_calls']
-        end
-
         def find_next_prelude(chunk, start_offset)
-          # Look for potential message prelude by scanning for reasonable length values
-          (start_offset...(chunk.bytesize - 8)).each do |pos|
-            potential_total_length = chunk[pos...pos + 4].unpack1('N')
-            potential_headers_length = chunk[pos + 4...pos + 8].unpack1('N')
-
-            # Check if these look like valid lengths
-            if potential_total_length && potential_headers_length &&
-               potential_total_length.positive? && potential_total_length < 1_000_000 &&
-               potential_headers_length.positive? && potential_headers_length < potential_total_length
-              return pos
-            end
+          scan_range(chunk, start_offset).each do |pos|
+            return pos if valid_prelude_at_position?(chunk, pos)
           end
           nil
+        end
+
+        def scan_range(chunk, start_offset)
+          (start_offset...(chunk.bytesize - 8))
+        end
+
+        def valid_prelude_at_position?(chunk, pos)
+          lengths = extract_potential_lengths(chunk, pos)
+          valid_prelude_lengths?(*lengths)
+        end
+
+        def extract_potential_lengths(chunk, pos)
+          [
+            chunk[pos...pos + 4].unpack1('N'),
+            chunk[pos + 4...pos + 8].unpack1('N')
+          ]
+        end
+
+        def valid_prelude_lengths?(total_length, headers_length)
+          return false unless total_length && headers_length
+          return false unless total_length.positive? && headers_length.positive?
+          return false unless total_length < 1_000_000
+          return false unless headers_length < total_length
+
+          true
         end
       end
     end
