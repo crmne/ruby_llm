@@ -26,10 +26,21 @@ module RubyLLM
         File.expand_path('models.json', __dir__)
       end
 
-      # Class method to refresh model data
-      def refresh!
-        models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
-        @instance = new(models)
+      def refresh! # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+        configured = Provider.configured_providers
+
+        # Log provider status
+        skipped = Provider.providers.values - configured
+        RubyLLM.logger.info "Refreshing models from #{configured.map(&:slug).join(', ')}" if configured.any?
+        RubyLLM.logger.info "Skipping #{skipped.map(&:slug).join(', ')} - providers not configured" if skipped.any?
+
+        # Store current models except from configured providers
+        current = instance.load_models
+        preserved = current.reject { |m| configured.map(&:slug).include?(m.provider) }
+
+        @instance = new(preserved + configured.flat_map(&:list_models))
+        @instance.save_models
+        @instance
       end
 
       def method_missing(method, ...)
@@ -52,10 +63,10 @@ module RubyLLM
 
     # Load models from the JSON file
     def load_models
-      data = JSON.parse(File.read(self.class.models_file))
-      data.map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
-    rescue Errno::ENOENT
-      [] # Return empty array if file doesn't exist yet
+      data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
+      JSON.parse(data).map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
+    rescue JSON::ParserError
+      []
     end
 
     def save_models
