@@ -205,19 +205,6 @@ module RubyLLM
       nil
     end
 
-    def configured?
-      missing_configs = configuration_requirements.select do |key|
-        value = RubyLLM.config.send(key)
-        value.nil? || value.empty?
-      end
-
-      return true if missing_configs.empty?
-
-      required = missing_configs.map { |key| "config.#{key}" }.join(', ')
-      @configuration_error = "#{slug} provider is not configured. Please set: #{required}"
-      false
-    end
-
     class << self
       def extended(base)
         base.extend(Methods)
