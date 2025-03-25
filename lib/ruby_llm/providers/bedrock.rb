@@ -15,15 +15,6 @@ module RubyLLM
       extend Bedrock::Tools
       extend Bedrock::Signing
 
-      def self.extended(base)
-        base.extend(Provider)
-        base.extend(Bedrock::Chat)
-        base.extend(Bedrock::Streaming)
-        base.extend(Bedrock::Models)
-        base.extend(Bedrock::Tools)
-        base.extend(Bedrock::Signing)
-      end
-
       module_function
 
       def api_base
