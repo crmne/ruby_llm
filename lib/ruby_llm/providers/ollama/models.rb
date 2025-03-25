@@ -17,6 +17,14 @@ module RubyLLM
         #
         # create an alias gemma3 for gemma3:27b
 
+        # NOTE: Unlike other providers for well known APIs with stable model
+        # offerings, the Ollama provider deals with local servers which
+        # might have arbitrarily named models or even zero models installed.
+        #
+        # Thus, this provider can't ship hardcoded assumptions in models.json
+        # and thus no Ollama models will be known at runtime, so you'll need a
+        # `RubyLLM.models.refresh!` to populate your instance's models.
+
         def list_models
           return [] unless enabled?
 
