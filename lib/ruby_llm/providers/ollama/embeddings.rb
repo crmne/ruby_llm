@@ -6,7 +6,7 @@ module RubyLLM
       # Embeddings methods for the Ollama API integration
       module Embeddings
         # Must be public for Provider module
-        def embed(text, model:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def embed(text, model:) # rubocop:disable Metrics/MethodLength
           payload = {
             model: model,
             input: format_text_for_embedding(text)

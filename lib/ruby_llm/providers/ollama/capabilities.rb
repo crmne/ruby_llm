@@ -4,13 +4,13 @@ module RubyLLM
   module Providers
     module Ollama
       # Determines capabilities for Ollama
-      module Capabilities # rubocop:disable Metrics/ModuleLength
+      module Capabilities
         module_function
 
         # Returns the context window size (input token limit) for the given model
         # @param model_id [String] the model identifier
         # @return [Integer] the context window size in tokens
-        def context_window_for(model_id)
+        def context_window_for(_model_id)
           # FIXME: revise
           4_192 # Sensible (and conservative) default for unknown models
         end
@@ -18,7 +18,7 @@ module RubyLLM
         # Returns the maximum output tokens for the given model
         # @param model_id [String] the model identifier
         # @return [Integer] the maximum output tokens
-        def max_tokens_for(model_id)
+        def max_tokens_for(_model_id)
           # FIXME: revise
           32_768
         end
@@ -26,21 +26,21 @@ module RubyLLM
         # Returns the input price per million tokens for the given model
         # @param model_id [String] the model identifier
         # @return [Float] the price per million tokens in USD
-        def input_price_for(model_id)
+        def input_price_for(_model_id)
           0.0
         end
 
         # Returns the output price per million tokens for the given model
         # @param model_id [String] the model identifier
         # @return [Float] the price per million tokens in USD
-        def output_price_for(model_id)
+        def output_price_for(_model_id)
           0.0
         end
 
         # Determines if the model supports vision (image/video) inputs
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision inputs
-        def supports_vision?(model_id)
+        def supports_vision?(_model_id)
           # FIXME: revise
           false
         end
@@ -48,7 +48,7 @@ module RubyLLM
         # Determines if the model supports function calling
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports function calling
-        def supports_functions?(model_id)
+        def supports_functions?(_model_id)
           # FIXME: revise
           false
         end
@@ -56,7 +56,7 @@ module RubyLLM
         # Determines if the model supports JSON mode
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports JSON mode
-        def supports_json_mode?(model_id)
+        def supports_json_mode?(_model_id)
           # FIXME: revise
           false
         end
@@ -78,7 +78,7 @@ module RubyLLM
         # Determines if the model supports context caching
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports caching
-        def supports_caching?(model_id)
+        def supports_caching?(_model_id)
           # FIXME: revise
           true
         end
@@ -86,7 +86,7 @@ module RubyLLM
         # Determines if the model supports tuning
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports tuning
-        def supports_tuning?(model_id)
+        def supports_tuning?(_model_id)
           # FIXME: revise
           false
         end
@@ -94,7 +94,7 @@ module RubyLLM
         # Determines if the model supports audio inputs
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports audio inputs
-        def supports_audio?(model_id)
+        def supports_audio?(_model_id)
           # FIXME: revise
           false
         end
@@ -102,7 +102,7 @@ module RubyLLM
         # Returns the type of model (chat, embedding, image)
         # @param model_id [String] the model identifier
         # @return [String] the model type
-        def model_type(model_id)
+        def model_type(_model_id)
           # FIXME: revise
           'chat'
         end
@@ -110,7 +110,7 @@ module RubyLLM
         # Returns the model family identifier
         # @param model_id [String] the model identifier
         # @return [String] the model family identifier
-        def model_family(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def model_family(_model_id)
           'other'
         end
 

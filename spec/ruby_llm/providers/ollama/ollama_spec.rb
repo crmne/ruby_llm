@@ -18,11 +18,11 @@ RSpec.shared_context 'with configured local Ollama server' do
   end
 end
 
-RSpec.describe RubyLLM::Providers::Ollama do # rubocop:disable RSpec/SpecFilePathFormat
+RSpec.describe RubyLLM::Providers::Ollama do
   include_context 'with configured local Ollama server'
 
   describe '.models' do
-    it 'fetches models from the server at runtime' do # rubocop:disable RSpec/MultipleExpectations
+    it 'fetches models from the server at runtime' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
       RubyLLM.models.refresh!
 
       # NOTE: to ensure relevant models are pulled into your local server, do
@@ -40,7 +40,7 @@ RSpec.describe RubyLLM::Providers::Ollama do # rubocop:disable RSpec/SpecFilePat
   describe '.chat' do
     let(:chat) { RubyLLM.chat(model: 'smollm:135m', provider: 'ollama') }
 
-    it 'works' do
+    it 'ask works' do
       response = chat.ask('Count from 1 to 3')
       expect(response.content).to be_present
     end
@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Providers::Ollama do # rubocop:disable RSpec/SpecFilePat
   describe 'streaming' do
     let(:chat) { RubyLLM.chat(model: 'smollm:135m', provider: 'ollama') }
 
-    it 'works' do
+    it 'ask with streaming works' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
       chunks = []
 
       chat.ask('Count from 1 to 3') do |chunk|

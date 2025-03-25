@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     module Ollama
       # Chat methods for the Ollama API implementation
-      module Chat # rubocop:disable Metrics/ModuleLength
+      module Chat
         # Must be public for Provider to use
         def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
           raise NotImplementedError, 'tool use not implemented in Ollama at this time' if tools.any?
@@ -49,7 +49,7 @@ module RubyLLM
           role.to_s
         end
 
-        def format_parts(msg) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def format_parts(msg)
           if msg.content.is_a?(Array)
             # Handle multi-part content (text, images, etc.)
             msg.content.map { |part| format_part(part) }

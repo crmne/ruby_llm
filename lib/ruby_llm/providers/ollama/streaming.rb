@@ -6,7 +6,7 @@ module RubyLLM
       # Streaming methods for the Ollama API implementation
       module Streaming
         # Need to make stream_completion public for chat.rb to access
-        def stream_completion(model, payload, &block) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def stream_completion(_model, payload, &block)
           url = 'api/chat'
           accumulator = StreamAccumulator.new
 
@@ -20,8 +20,8 @@ module RubyLLM
         private
 
         # Handle streaming
-        def stream_handler(accumulator, &block) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
-          to_json_stream do |data| # rubocop:disable Metrics/BlockLength
+        def stream_handler(accumulator, &block) # rubocop:disable Metrics/MethodLength
+          to_json_stream do |data|
             chunk = Chunk.new(
               role: :assistant,
               content: data.dig('message', 'content'),
