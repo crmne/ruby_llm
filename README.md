@@ -12,12 +12,9 @@ A delightful Ruby way to work with AI. No configuration madness, no complex call
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
 </div>
 
-<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-<a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
-<a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
-<a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a> <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a> <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a> <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 
-🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
+🤺 Battle tested at [💬 Chat with Work](https://chatwithwork.com)
 
 ## The problem with AI libraries
 
@@ -33,6 +30,8 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🖼️ **Image generation** with DALL-E and other providers
 - 📊 **Embeddings** for vector search and semantic analysis
 - 🔧 **Tools** that let AI use your Ruby code
+- 🔄 **Structured Output** for extracting JSON data in a type-safe way
+- 🧩 **Custom Parsers** for XML, regex, or any format you need
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
 
@@ -62,6 +61,55 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 
 # Create vector embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+
+# Extract structured data
+class Delivery
+  attr_accessor :timestamp, :dimensions, :address
+
+  def self.json_schema
+    {
+      type: "object",
+      properties: {
+        timestamp: { type: "string", format: "date-time" },
+        dimensions: { type: "array", items: { type: "number" } },
+        address: { type: "string" }
+      }
+    }
+  end
+end
+
+response = chat.with_response_format(Delivery)
+               .ask("Extract: Delivery to 123 Main St on 2025-03-20. Size: 12x8x4.")
+
+puts response.timestamp  # => 2025-03-20T00:00:00Z
+puts response.dimensions # => [12, 8, 4]
+puts response.address    # => 123 Main St
+
+# Extract specific XML tags
+chat.with_parser(:xml, tag: 'answer')
+    .ask("Respond with <answer>42</answer>")
+    .content # => "42"
+
+# Create your own parsers for any format
+module CsvParser
+  def self.parse(response, options)
+    rows = response.content.strip.split("\n")
+    headers = rows.first.split(',')
+
+    rows[1..-1].map do |row|
+      values = row.split(',')
+      headers.zip(values).to_h
+    end
+  end
+end
+
+# Register your custom parser
+RubyLLM::ResponseParser.register(:csv, CsvParser)
+
+# Use your custom parser
+result = chat.with_parser(:csv)
+             .ask("Give me a CSV with name,age,city for 3 people")
+             .content
 
 # Let AI use your code
 class Weather < RubyLLM::Tool
@@ -198,6 +246,7 @@ Check out the guides at https://rubyllm.com for deeper dives into conversations 
 We welcome contributions to RubyLLM!
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to:
+
 - Run the test suite
 - Add new features
 - Update documentation

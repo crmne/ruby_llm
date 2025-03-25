@@ -2,16 +2,18 @@
 
 module RubyLLM
   module Providers
-    # Native Gemini API implementation
+    # Google Gemini API integration. Handles chat completion with
+    # the Gemini family of models.
     module Gemini
       extend Provider
       extend Gemini::Chat
-      extend Gemini::Embeddings
-      extend Gemini::Images
       extend Gemini::Models
       extend Gemini::Streaming
       extend Gemini::Tools
+      extend Gemini::Embeddings
+      extend Gemini::Images
       extend Gemini::Media
+      extend Gemini::Schema
 
       module_function
 

@@ -2,16 +2,17 @@
 
 module RubyLLM
   module Providers
-    # Anthropic Claude API integration. Handles the complexities of
-    # Claude's unique message format and tool calling conventions.
+    # Anthropic API integration. Handles chat completion with Claude models,
+    # including Claude 3 Opus, Sonnet, and Haiku.
     module Anthropic
       extend Provider
       extend Anthropic::Chat
-      extend Anthropic::Embeddings
-      extend Anthropic::Media
       extend Anthropic::Models
       extend Anthropic::Streaming
       extend Anthropic::Tools
+      extend Anthropic::Media
+      extend Anthropic::Embeddings
+      extend Anthropic::Schema
 
       module_function
 
