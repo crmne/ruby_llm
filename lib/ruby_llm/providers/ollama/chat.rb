@@ -38,15 +38,10 @@ module RubyLLM
         def format_messages(messages)
           messages.map do |msg|
             {
-              role: format_role(msg.role),
+              role: msg.role.to_s,
               content: format_parts(msg)
             }
           end
-        end
-
-        def format_role(role)
-          # FIXME: probably should validate this
-          role.to_s
         end
 
         def format_parts(msg)

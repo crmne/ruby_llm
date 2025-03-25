@@ -3,23 +3,19 @@
 require 'spec_helper'
 require 'dotenv/load'
 
-RSpec.shared_context 'with configured local Ollama server' do
+RSpec.shared_context 'with configured local Ollama server as sole provider' do
   before :all do
     RubyLLM.configure do |config|
-      config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL', 'http://localhost:11434')
+      # NOTE: other tests will need to ensure relevant providers are enabled as needed
+      RubyLLM::Provider.disable_all_providers
 
-      # FIXME: need a sane internal API to do this, like RubyLLM.disable_all_providers()
-      # FIXME: this will break other tests depending on run order
-      config.openai_api_key = nil
-      config.anthropic_api_key = nil
-      config.gemini_api_key = nil
-      config.deepseek_api_key = nil
+      config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL', 'http://localhost:11434')
     end
   end
 end
 
 RSpec.describe RubyLLM::Providers::Ollama do
-  include_context 'with configured local Ollama server'
+  include_context 'with configured local Ollama server as sole provider'
 
   describe '.models' do
     it 'fetches models from the server at runtime' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength

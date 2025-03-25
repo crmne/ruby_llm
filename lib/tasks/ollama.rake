@@ -4,15 +4,15 @@ require 'ruby_llm'
 
 def pull_model(ollama_library_model_spec, description)
   warn "+ pulling #{ollama_library_model_spec} from Ollama library (#{description})"
-  payload = {
-    model: ollama_library_model_spec,
-    insecure: false,
-    stream: false
-  }
 
   # ugly but effective
-  # FIXME: possibly needs timeout adjustment since it downloads models
-  response = RubyLLM::Providers::Ollama.send :post, '/api/pull', payload
+  response = RubyLLM::Providers::Ollama.send(
+    :post, '/api/pull', {
+      model: ollama_library_model_spec,
+      insecure: false,
+      stream: false
+    }
+  )
 
   unless response.body['status'] == 'success'
     raise 'non-successful response when pulling model; check Ollama server logs'
