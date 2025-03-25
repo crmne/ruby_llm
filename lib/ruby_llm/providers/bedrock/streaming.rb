@@ -53,7 +53,7 @@ module RubyLLM
                   end
                   
                   # Verify we have the complete message
-                  message_end = offset + total_length + 4  # +4 for the message CRC
+                  message_end = offset + total_length
                   break if chunk.bytesize < message_end
                   
                   # Extract headers and payload
