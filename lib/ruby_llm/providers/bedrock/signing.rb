@@ -640,17 +640,27 @@ module RubyLLM
           end
 
           def build_result(request_data)
+            result_hash(request_data)
+          end
+
+          private
+
+          def result_hash(request_data)
             {
               algorithm: request_data[:algorithm],
-              credential: @signature_computation.credential(
-                request_data[:credentials],
-                request_data[:date]
-              ),
+              credential: credential_from_request(request_data),
               signed_headers: request_data[:canonical_request].signed_headers,
               signature: request_data[:signature],
               canonical_request: request_data[:creq],
               string_to_sign: request_data[:sts]
             }
+          end
+
+          def credential_from_request(request_data)
+            @signature_computation.credential(
+              request_data[:credentials],
+              request_data[:date]
+            )
           end
         end
 
