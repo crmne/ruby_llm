@@ -722,10 +722,7 @@ module RubyLLM
           end
 
           def create_canonical_request(components, headers)
-            canon_req_config = CanonicalRequestConfig.new(
-              uri_escape_path: @uri_escape_path,
-              unsigned_headers: @unsigned_headers
-            )
+            canon_req_config = create_canonical_request_config
 
             CanonicalRequest.new(
               http_method: components[:http_method],
@@ -733,6 +730,13 @@ module RubyLLM
               headers: headers,
               content_sha256: components[:content_sha256],
               config: canon_req_config
+            )
+          end
+
+          def create_canonical_request_config
+            CanonicalRequestConfig.new(
+              uri_escape_path: @uri_escape_path,
+              unsigned_headers: @unsigned_headers
             )
           end
 
