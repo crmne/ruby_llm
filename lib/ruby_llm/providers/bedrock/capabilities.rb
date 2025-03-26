@@ -56,31 +56,21 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports images
         def supports_images?(model_id)
-          case model_id
-          when /anthropic\.claude-3/
-            true
-          else
-            false
-          end
+          model_id.match?(/anthropic\.claude/)
         end
 
         # Determines if the model supports vision capabilities
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision
         def supports_vision?(model_id)
-          case model_id
-          when /anthropic\.claude-3/
-            true
-          else
-            false
-          end
+          model_id.match?(/anthropic\.claude/)
         end
 
         # Determines if the model supports function calling
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports functions
         def supports_functions?(model_id)
-          model_id.match?(/anthropic\.claude-3/)
+          model_id.match?(/anthropic\.claude/)
         end
 
         # Determines if the model supports audio input/output
@@ -94,7 +84,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports JSON mode
         def supports_json_mode?(model_id)
-          model_id.match?(/anthropic\.claude-3/)
+          model_id.match?(/anthropic\.claude/)
         end
 
         # Formats the model ID into a human-readable display name
@@ -115,7 +105,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured output
         def supports_structured_output?(model_id)
-          model_id.match?(/anthropic\.claude-3/)
+          model_id.match?(/anthropic\.claude/)
         end
 
         # Model family patterns for capability lookup
