@@ -334,72 +334,126 @@ module RubyLLM
           #   a `#headers` method. The headers must be applied to your request.
           #
           def sign_request(request)
-            creds, = fetch_credentials
+            creds = fetch_credentials.first
+            request_components = extract_request_components(request)
+            sigv4_headers = build_sigv4_headers(request_components, creds)
+            signature = compute_signature(request_components, creds, sigv4_headers)
 
+            build_signature_response(request_components, sigv4_headers, signature)
+          end
+
+          private
+
+          def extract_request_components(request)
             http_method = extract_http_method(request)
             url = extract_url(request)
             Signer.normalize_path(url) if @normalize_path
             headers = downcase_headers(request[:headers])
+            datetime = extract_datetime(headers)
+            content_sha256 = extract_content_sha256(headers, request[:body])
 
-            datetime = headers['x-amz-date']
-            datetime ||= Time.now.utc.strftime('%Y%m%dT%H%M%SZ')
-            date = datetime[0, 8]
-
-            content_sha256 = headers['x-amz-content-sha256']
-            content_sha256 ||= sha256_hexdigest(request[:body] || '')
-
-            sigv4_headers = {}
-            sigv4_headers['host'] = headers['host'] || host(url)
-            sigv4_headers['x-amz-date'] = datetime
-            if creds.session_token && !@omit_session_token
-              if @signing_algorithm == :'sigv4-s3express'
-                sigv4_headers['x-amz-s3session-token'] = creds.session_token
-              else
-                sigv4_headers['x-amz-security-token'] = creds.session_token
-              end
-            end
-
-            sigv4_headers['x-amz-content-sha256'] ||= content_sha256 if @apply_checksum_header
-
-            sigv4_headers['x-amz-region-set'] = @region if @signing_algorithm == :sigv4a && @region && !@region.empty?
-            headers = headers.merge(sigv4_headers) # merge so we do not modify given headers hash
-
-            algorithm = sts_algorithm
-
-            # compute signature parts
-            creq = canonical_request(http_method, url, headers, content_sha256)
-            sts = string_to_sign(datetime, creq, algorithm)
-
-            sig =
-              if @signing_algorithm == :sigv4a
-                asymmetric_signature(creds, sts)
-              else
-                signature(creds.secret_access_key, date, sts)
-              end
-
-            algorithm = sts_algorithm
-
-            # apply signature
-            sigv4_headers['authorization'] = [
-              "#{algorithm} Credential=#{credential(creds, date)}",
-              "SignedHeaders=#{signed_headers(headers)}",
-              "Signature=#{sig}"
-            ].join(', ')
-
-            # skip signing the session token, but include it in the headers
-            sigv4_headers['x-amz-security-token'] = creds.session_token if creds.session_token && @omit_session_token
-
-            # Returning the signature components.
-            Signature.new(
-              headers: sigv4_headers,
-              string_to_sign: sts,
-              canonical_request: creq,
-              content_sha256: content_sha256,
-              signature: sig
-            )
+            {
+              http_method: http_method,
+              url: url,
+              headers: headers,
+              datetime: datetime,
+              date: datetime[0, 8],
+              content_sha256: content_sha256
+            }
           end
 
-          private
+          def extract_datetime(headers)
+            headers['x-amz-date'] || Time.now.utc.strftime('%Y%m%dT%H%M%SZ')
+          end
+
+          def extract_content_sha256(headers, body)
+            headers['x-amz-content-sha256'] || sha256_hexdigest(body || '')
+          end
+
+          def build_sigv4_headers(components, creds)
+            headers = {
+              'host' => components[:headers]['host'] || host(components[:url]),
+              'x-amz-date' => components[:datetime]
+            }
+
+            add_session_token_header(headers, creds)
+            add_content_sha256_header(headers, components[:content_sha256])
+            add_region_header(headers)
+
+            headers
+          end
+
+          def add_session_token_header(headers, creds)
+            return unless creds.session_token && !@omit_session_token
+
+            if @signing_algorithm == :'sigv4-s3express'
+              headers['x-amz-s3session-token'] = creds.session_token
+            else
+              headers['x-amz-security-token'] = creds.session_token
+            end
+          end
+
+          def add_content_sha256_header(headers, content_sha256)
+            headers['x-amz-content-sha256'] = content_sha256 if @apply_checksum_header
+          end
+
+          def add_region_header(headers)
+            headers['x-amz-region-set'] = @region if @signing_algorithm == :sigv4a && @region && !@region.empty?
+          end
+
+          def compute_signature(components, creds, sigv4_headers)
+            algorithm = sts_algorithm
+            headers = components[:headers].merge(sigv4_headers)
+
+            creq = canonical_request(
+              components[:http_method],
+              components[:url],
+              headers,
+              components[:content_sha256]
+            )
+            sts = string_to_sign(components[:datetime], creq, algorithm)
+            sig = generate_signature(creds, components[:date], sts)
+
+            {
+              algorithm: algorithm,
+              credential: credential(creds, components[:date]),
+              signed_headers: signed_headers(headers),
+              signature: sig,
+              canonical_request: creq,
+              string_to_sign: sts
+            }
+          end
+
+          def generate_signature(creds, date, string_to_sign)
+            if @signing_algorithm == :sigv4a
+              asymmetric_signature(creds, string_to_sign)
+            else
+              signature(creds.secret_access_key, date, string_to_sign)
+            end
+          end
+
+          def build_signature_response(components, sigv4_headers, signature)
+            authorization = [
+              "#{signature[:algorithm]} Credential=#{signature[:credential]}",
+              "SignedHeaders=#{signature[:signed_headers]}",
+              "Signature=#{signature[:signature]}"
+            ].join(', ')
+
+            headers = sigv4_headers.merge('authorization' => authorization)
+
+            # Add session token if omitted from signing
+            if @omit_session_token && components[:creds]&.session_token
+              headers['x-amz-security-token'] = components[:creds].session_token
+            end
+
+            Signature.new(
+              headers: headers,
+              string_to_sign: signature[:string_to_sign],
+              canonical_request: signature[:canonical_request],
+              content_sha256: components[:content_sha256],
+              signature: signature[:signature]
+            )
+          end
 
           def sts_algorithm
             @signing_algorithm == :sigv4a ? 'AWS4-ECDSA-P256-SHA256' : 'AWS4-HMAC-SHA256'
