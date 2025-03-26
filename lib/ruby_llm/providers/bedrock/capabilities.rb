@@ -12,9 +12,8 @@ module RubyLLM
         # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
-          when /anthropic\.claude-3-(opus|sonnet|haiku)/ then 200_000
           when /anthropic\.claude-2/ then 100_000
-          else 4_096
+          else 200_000
           end
         end
 
@@ -22,7 +21,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Integer] the maximum output tokens
         def max_tokens_for(_model_id)
-          4096
+          4_096
         end
 
         # Returns the input price per million tokens for the given model ID
