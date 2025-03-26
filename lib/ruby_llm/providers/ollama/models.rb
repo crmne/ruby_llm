@@ -26,8 +26,6 @@ module RubyLLM
         # `RubyLLM.models.refresh!` to populate your instance's models.
 
         def list_models
-          return [] unless enabled?
-
           response = connection.get('api/tags') do |req|
             req.headers.merge! headers
           end
