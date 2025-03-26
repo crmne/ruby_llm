@@ -422,20 +422,30 @@ module RubyLLM
           end
 
           def build_signature_components(components, creds, headers, algorithm)
-            creq = canonical_request(
+            creq = build_canonical_request(components, headers)
+            sts = build_string_to_sign(components, algorithm, creq)
+            {
+              creq: creq,
+              sts: sts,
+              sig: generate_signature(creds, components[:date], sts)
+            }
+          end
+
+          def build_canonical_request(components, headers)
+            canonical_request(
               components[:http_method],
               components[:url],
               headers,
               components[:content_sha256]
             )
-            sts = string_to_sign(components[:datetime], creq, algorithm)
-            sig = generate_signature(creds, components[:date], sts)
+          end
 
-            {
-              creq: creq,
-              sts: sts,
-              sig: sig
-            }
+          def build_string_to_sign(components, algorithm, creq)
+            string_to_sign(
+              components[:datetime],
+              creq,
+              algorithm
+            )
           end
 
           def build_signature_result(components, headers, creds, date)
