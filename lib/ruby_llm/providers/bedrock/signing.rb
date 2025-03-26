@@ -457,6 +457,10 @@ module RubyLLM
             datetime = headers['x-amz-date'] || Time.now.utc.strftime('%Y%m%dT%H%M%SZ')
             content_sha256 = extract_content_sha256(headers, request[:body])
 
+            build_component_hash(http_method, url, headers, datetime, content_sha256)
+          end
+
+          def self.build_component_hash(http_method, url, headers, datetime, content_sha256)
             {
               http_method: http_method,
               url: url,
