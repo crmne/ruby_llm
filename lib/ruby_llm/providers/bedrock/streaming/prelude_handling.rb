@@ -30,11 +30,7 @@ module RubyLLM
           end
 
           def valid_lengths?(total_length, headers_length)
-            return false if total_length.nil? || headers_length.nil?
-            return false if total_length <= 0 || total_length > 1_000_000
-            return false if headers_length <= 0 || headers_length > total_length
-
-            true
+            validate_length_constraints(total_length, headers_length)
           end
 
           def calculate_positions(offset, total_length, headers_length)
@@ -71,7 +67,7 @@ module RubyLLM
 
           def valid_prelude_at_position?(chunk, pos)
             lengths = extract_potential_lengths(chunk, pos)
-            valid_prelude_lengths?(*lengths)
+            validate_length_constraints(*lengths)
           end
 
           def extract_potential_lengths(chunk, pos)
@@ -81,11 +77,10 @@ module RubyLLM
             ]
           end
 
-          def valid_prelude_lengths?(total_length, headers_length)
-            return false unless total_length && headers_length
-            return false unless total_length.positive? && headers_length.positive?
-            return false unless total_length < 1_000_000
-            return false unless headers_length < total_length
+          def validate_length_constraints(total_length, headers_length)
+            return false if total_length.nil? || headers_length.nil?
+            return false if total_length <= 0 || total_length > 1_000_000
+            return false if headers_length <= 0 || headers_length >= total_length
 
             true
           end
