@@ -12,11 +12,6 @@ module RubyLLM
         # - Processing JSON deltas and content blocks
         # - Extracting metadata (tokens, model IDs, tool calls)
         # - Handling different content structures (arrays, blocks, completions)
-        #
-        # @example Content extraction from a response
-        #   content = extract_content(response_data)
-        #   streaming_content = extract_streaming_content(delta_data)
-        #   tool_calls = extract_tool_calls(message_data)
         module ContentExtraction
           def json_delta?(data)
             data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'input_json_delta'
@@ -26,33 +21,6 @@ module RubyLLM
             return '' unless data.is_a?(Hash)
 
             extract_content_by_type(data)
-          end
-
-          def extract_content(data)
-            return unless data.is_a?(Hash)
-
-            try_content_extractors(data)
-          end
-
-          def extract_completion_content(data)
-            data['completion'] if data.key?('completion')
-          end
-
-          def extract_output_text_content(data)
-            data.dig('results', 0, 'outputText')
-          end
-
-          def extract_array_content(data)
-            return unless data.key?('content')
-
-            content = data['content']
-            content.is_a?(Array) ? join_array_content(content) : content
-          end
-
-          def extract_content_block_text(data)
-            return unless data.key?('content_block') && data['content_block'].key?('text')
-
-            data['content_block']['text']
           end
 
           def extract_tool_calls(data)
@@ -87,27 +55,6 @@ module RubyLLM
 
           def extract_delta_content(data)
             data.dig('delta', 'text').to_s
-          end
-
-          def try_content_extractors(data)
-            content_extractors.each do |extractor|
-              content = send(extractor, data)
-              return content if content
-            end
-            nil
-          end
-
-          def content_extractors
-            %i[
-              extract_completion_content
-              extract_output_text_content
-              extract_array_content
-              extract_content_block_text
-            ]
-          end
-
-          def join_array_content(content_array)
-            content_array.map { |item| item['text'] }.join
           end
         end
       end
