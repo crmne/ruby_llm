@@ -30,17 +30,12 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.ollama_api_base_url = 'http://localhost:11434'
 end
 ```
 
 Alternatively, you can point to an Ollama instance; here it is configured to the most common address when Ollama is installed locally:
 ```
-RubyLLM.configure do |config|
-  config.ollama_api_base_url = 'http://localhost:11434'
-end
-
-# Needs to be called to populate Ollama models before using any
-RubyLLM.models.refresh!
 ```
 
 ## Your First Chat
@@ -75,7 +70,8 @@ claude_chat.ask "Tell me about Ruby programming language"
 gemini_chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 gemini_chat.ask "What are the best Ruby gems for machine learning?"
 
-# Use an Ollama model (pull it into the server first; consult Ollama docs):
+# Use an Ollama model - pull it to the server first (consult Ollama docs) and then do models.refresh! before using it:
+RubyLLM.models.refresh!  # Needs to be called to populate Ollama models before using any
 ollama_chat = RubyLLM.chat(model: 'gemma3:latest')
 ollama_chat.ask "What is Alphabet?"
 ```
