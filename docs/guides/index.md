@@ -36,10 +36,13 @@ Explore how to create vector embeddings for semantic search and other applicatio
 ### [Error Handling]({% link guides/error-handling.md %})
 Master the techniques for robust error handling in AI applications.
 
+### [Working with Models]({% link guides/models.md %})
+Learn how to discover, select, and work with different AI models across providers.
+
 ## Getting Help
 
 If you can't find what you're looking for in these guides, consider:
 
 1. Checking the [API Documentation]() for detailed information about specific classes and methods
-2. Looking at the [GitHub repository](https://github.com/yourusername/ruby_llm) for examples and the latest updates
+2. Looking at the [GitHub repository](https://github.com/crmne/ruby_llm) for examples and the latest updates
 3. Filing an issue on GitHub if you find a bug or have a feature request

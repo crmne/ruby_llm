@@ -86,12 +86,11 @@ module RubyLLM
 
     # Find a specific model by ID
     def find(model_id, provider = nil)
-      return find_with_provider(model_id, provider) if provider
-
-      # Find native model
-      all.find { |m| m.id == model_id } ||
-        all.find { |m| m.id == Aliases.resolve(model_id) } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      if provider
+        find_with_provider(model_id, provider)
+      else
+        find_without_provider(model_id)
+      end
     end
 
     # Filter to only chat models
@@ -132,9 +131,16 @@ module RubyLLM
     private
 
     def find_with_provider(model_id, provider)
-      provider_id = Aliases.resolve(model_id, provider)
-      all.find { |m| m.id == provider_id && m.provider == provider.to_s } ||
+      resolved_id = Aliases.resolve(model_id, provider)
+      all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
+        all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+    end
+
+    def find_without_provider(model_id)
+      all.find { |m| m.id == model_id } ||
+        all.find { |m| m.id == Aliases.resolve(model_id) } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id}")
     end
   end
 end
