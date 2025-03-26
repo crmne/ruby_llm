@@ -300,7 +300,7 @@ module RubyLLM
             [
               @http_method,
               path,
-              normalized_querystring(@url.query || ''),
+              '', # Empty string instead of normalized_querystring since we don't use query params
               "#{canonical_headers}\n",
               signed_headers,
               @content_sha256
@@ -327,50 +327,6 @@ module RubyLLM
               UriUtils.uri_escape_path(path)
             else
               path
-            end
-          end
-
-          def normalized_querystring(querystring)
-            params = normalize_params(querystring)
-            sort_params(params).map(&:first).join('&')
-          end
-
-          def normalize_params(querystring)
-            params = querystring.split('&')
-            params.map { |p| ensure_param_has_equals(p) }
-          end
-
-          def ensure_param_has_equals(param)
-            param.match(/=/) ? param : "#{param}="
-          end
-
-          def sort_params(params)
-            params.each.with_index.sort do |a, b|
-              compare_params(a, b)
-            end
-          end
-
-          def compare_params(param_pair1, param_pair2)
-            param1, offset1 = param_pair1
-            param2, offset2 = param_pair2
-            name1, value1 = param1.split('=')
-            name2, value2 = param2.split('=')
-
-            compare_param_components(
-              ParamComponent.new(name1, value1, offset1),
-              ParamComponent.new(name2, value2, offset2)
-            )
-          end
-
-          def compare_param_components(component1, component2)
-            if component1.name == component2.name
-              if component1.value == component2.value
-                component1.offset <=> component2.offset
-              else
-                component1.value <=> component2.value
-              end
-            else
-              component1.name <=> component2.name
             end
           end
 
