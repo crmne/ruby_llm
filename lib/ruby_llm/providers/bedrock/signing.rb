@@ -186,6 +186,8 @@ module RubyLLM
           end
         end
 
+        ParamComponent = Struct.new(:name, :value, :offset)
+
         # Handles AWS request signing using SigV4 or SigV4a
         class Signer
           # @overload initialize(service:, region:, access_key_id:, secret_access_key:, session_token:nil, **options)
@@ -433,18 +435,7 @@ module RubyLLM
           end
 
           def build_signature_response(components, sigv4_headers, signature)
-            authorization = [
-              "#{signature[:algorithm]} Credential=#{signature[:credential]}",
-              "SignedHeaders=#{signature[:signed_headers]}",
-              "Signature=#{signature[:signature]}"
-            ].join(', ')
-
-            headers = sigv4_headers.merge('authorization' => authorization)
-
-            # Add session token if omitted from signing
-            if @omit_session_token && components[:creds]&.session_token
-              headers['x-amz-security-token'] = components[:creds].session_token
-            end
+            headers = build_headers(sigv4_headers, signature, components)
 
             Signature.new(
               headers: headers,
@@ -453,6 +444,29 @@ module RubyLLM
               content_sha256: components[:content_sha256],
               signature: signature[:signature]
             )
+          end
+
+          def build_headers(sigv4_headers, signature, components)
+            headers = sigv4_headers.merge(
+              'authorization' => build_authorization_header(signature)
+            )
+
+            add_omitted_session_token(headers, components[:creds]) if @omit_session_token
+            headers
+          end
+
+          def build_authorization_header(signature)
+            [
+              "#{signature[:algorithm]} Credential=#{signature[:credential]}",
+              "SignedHeaders=#{signature[:signed_headers]}",
+              "Signature=#{signature[:signature]}"
+            ].join(', ')
+          end
+
+          def add_omitted_session_token(headers, creds)
+            return unless creds&.session_token
+
+            headers['x-amz-security-token'] = creds.session_token
           end
 
           def sts_algorithm
@@ -551,18 +565,21 @@ module RubyLLM
             a_name, a_value = a.split('=')
             b_name, b_value = b.split('=')
 
-            compare_param_components(a_name, a_value, b_name, b_value, a_offset, b_offset)
+            compare_param_components(
+              ParamComponent.new(a_name, a_value, a_offset),
+              ParamComponent.new(b_name, b_value, b_offset)
+            )
           end
 
-          def compare_param_components(a_name, a_value, b_name, b_value, a_offset, b_offset)
-            if a_name == b_name
-              if a_value == b_value
-                a_offset <=> b_offset
+          def compare_param_components(a, b)
+            if a.name == b.name
+              if a.value == b.value
+                a.offset <=> b.offset
               else
-                a_value <=> b_value
+                a.value <=> b.value
               end
             else
-              a_name <=> b_name
+              a.name <=> b.name
             end
           end
 
