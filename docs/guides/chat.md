@@ -63,10 +63,6 @@ You can also specify a specific provider to use with a model:
 ```ruby
 # Use a specific provider (when the same model is available from multiple providers)
 chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
-
-# Or set the provider after initialization
-chat = RubyLLM.chat(model: 'gpt-4o')
-       .with_provider('azure')
 ```
 
 See [Working with Models]({% link guides/models.md %}) for more details on model selection.

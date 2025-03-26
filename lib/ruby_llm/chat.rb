@@ -15,8 +15,7 @@ module RubyLLM
 
     def initialize(model: nil, provider: nil)
       model_id = model || RubyLLM.config.default_model
-      self.model = model_id
-      self.provider = provider if provider
+      with_model(model_id, provider: provider)
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -48,23 +47,9 @@ module RubyLLM
       self
     end
 
-    def model=(model_id)
-      @model = Models.find model_id
-      @provider = Models.provider_for model_id
-    end
-
-    def provider=(provider_slug)
-      @provider = Provider.providers[provider_slug.to_sym] ||
-                  raise(Error, "Unknown provider: #{provider_slug}")
-    end
-
-    def with_provider(provider_slug)
-      self.provider = provider_slug
-      self
-    end
-
-    def with_model(model_id)
-      self.model = model_id
+    def with_model(model_id, provider: nil)
+      @model = Models.find model_id, provider
+      @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
       self
     end
 

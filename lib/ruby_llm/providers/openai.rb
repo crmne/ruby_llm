@@ -45,6 +45,10 @@ module RubyLLM
       def slug
         'openai'
       end
+
+      def configuration_requirements
+        %i[openai_api_key]
+      end
     end
   end
 end

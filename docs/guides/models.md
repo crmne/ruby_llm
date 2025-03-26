@@ -10,6 +10,86 @@ permalink: /guides/models
 
 RubyLLM provides a clean interface for discovering and working with AI models from multiple providers. This guide explains how to find, filter, and select the right model for your needs.
 
+## Finding Models
+
+### Basic Model Selection
+
+The simplest way to use a model is to specify it when creating a chat:
+
+```ruby
+# Use the default model
+chat = RubyLLM.chat
+
+# Specify a model
+chat = RubyLLM.chat(model: 'gpt-4o-mini')
+
+# Change models mid-conversation
+chat.with_model('claude-3-5-sonnet')
+```
+
+### Model Resolution
+
+{: .warning-title }
+> Coming in v1.1.0
+>
+> Provider-Specific Match and Alias Resolution will be available in the next release.
+
+When you specify a model, RubyLLM follows these steps to find it:
+
+1. **Exact Match**: First tries to find an exact match for the model ID
+   ```ruby
+   # Uses the actual gemini-2.0-flash model
+   chat = RubyLLM.chat(model: 'gemini-2.0-flash')
+   ```
+
+2. **Provider-Specific Match**: If a provider is specified, looks for an exact match in that provider
+   ```ruby
+   # Looks for gemini-2.0-flash in Gemini
+   chat = RubyLLM.chat(model: 'gemini-2.0-flash', provider: 'gemini')
+   ```
+
+3. **Alias Resolution**: Only if no exact match is found, checks for aliases
+   ```ruby
+   # No exact match for 'claude-3', uses alias
+   chat = RubyLLM.chat(model: 'claude-3')
+   ```
+
+The same model ID can exist both as a concrete model and as an alias, particularly when the same model is available through different providers:
+
+```ruby
+# Use native OpenAI GPT-4
+chat = RubyLLM.chat(model: 'gpt-4o')
+
+# Use GPT-4 through Bedrock
+chat = RubyLLM.chat(model: 'gpt-4o', provider: 'bedrock')
+```
+
+### Model Aliases
+
+{: .warning-title }
+> Coming in v1.1.0
+>
+> Alias Resolution will be available in the next release.
+
+RubyLLM provides convenient aliases for popular models, so you don't have to remember specific version numbers:
+
+```ruby
+# These are equivalent
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
+
+# These are also equivalent
+chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: 'gpt-4o-2024-11-20')
+```
+
+If you want to ensure you're always getting a specific version, use the full model ID:
+
+```ruby
+# Always gets this exact version
+chat = RubyLLM.chat(model: 'claude-3-sonnet-20240229')
+```
+
 ## Exploring Available Models
 
 RubyLLM automatically discovers available models from all configured providers:
@@ -61,36 +141,6 @@ google_models = RubyLLM.models.by_provider('gemini')
 
 # Get DeepSeek models
 deepseek_models = RubyLLM.models.by_provider('deepseek')
-```
-
-## Using Model Aliases
-
-{: .warning-title }
-> Coming in v1.1.0
->
-> This feature is available in the upcoming version but not in the latest release.
-
-RubyLLM provides convenient aliases for popular models, so you don't have to remember specific version numbers:
-
-```ruby
-# These are equivalent
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
-
-# These are also equivalent
-chat = RubyLLM.chat(model: 'gpt-4o')
-chat = RubyLLM.chat(model: 'gpt-4o-2024-11-20')
-```
-
-You can also specify a different provider to use with a model:
-
-```ruby
-# Use a specific model via a different provider
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
-
-# Or set the provider after initialization
-chat = RubyLLM.chat(model: 'gpt-4o')
-       .with_provider('azure')
 ```
 
 ## Chaining Filters
@@ -181,3 +231,4 @@ When selecting models for your application:
 2. **Balance cost vs. quality** - More capable models cost more but may give better results
 3. **Check capabilities** - Make sure the model supports features you need (vision, functions, etc.)
 4. **Use appropriate model types** - Use embedding models for vector operations, chat models for conversations
+5. **Version control** - Use exact model IDs in production for consistency, aliases for development

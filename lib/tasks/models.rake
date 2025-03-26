@@ -68,10 +68,10 @@ namespace :models do # rubocop:disable Metrics/BlockLength
   task :update do
     # Configure API keys
     RubyLLM.configure do |config|
-      config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
-      config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
-      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY')
-      config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY')
+      config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+      config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+      config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
     end
 
     models = RubyLLM.models.refresh!

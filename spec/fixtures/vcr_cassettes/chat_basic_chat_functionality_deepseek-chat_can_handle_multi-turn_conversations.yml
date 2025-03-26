@@ -24,45 +24,43 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 22 Mar 2025 10:05:05 GMT
+      - Tue, 25 Mar 2025 17:49:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      - "<COOKIE>"
       Vary:
-      - accept-encoding
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 63f8f4aaf1a4b66118ba86f118cdbc81
+      - 2addf898e60c15a83dc9f3bbf9a93170
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1a22d8f9-feaa-4ffa-83a8-58cff35b43f6","object":"chat.completion","created":1742637905,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by Yukihiro Matsumoto, often referred to as \"Matz.\" He first
-        released the Ruby programming language in 1995. Matsumoto designed Ruby with
-        the goal of making programming more enjoyable and productive, blending parts
-        of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form
-        a new language that balanced functional programming with imperative programming.
-        Ruby is known for its simplicity and readability, and it gained widespread
-        popularity with the advent of the Ruby on Rails web framework."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":108,"total_tokens":117,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_3a5770e1b4_prod0225"}'
-  recorded_at: Sat, 22 Mar 2025 10:05:16 GMT
+      string: '{"id":"0c4573d5-0f32-4649-82af-a4c1f0e51890","object":"chat.completion","created":1742924945,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He started working
+        on Ruby in 1993 and released the first public version (Ruby 0.95) in 1995.
+        \n\nMatsumoto designed Ruby with a focus on simplicity, productivity, and
+        programmer happiness, blending elements from his favorite languages like Perl,
+        Smalltalk, Eiffel, Ada, and Lisp. The language quickly gained popularity,
+        particularly with the rise of the Ruby on Rails web framework in the mid-2000s.\n\nFun
+        fact: The name \"Ruby\" was inspired by the gemstone, as a playful reference
+        to Perl (another gemstone-inspired language)."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":141,"total_tokens":150,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
+  recorded_at: Tue, 25 Mar 2025 17:49:13 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -70,14 +68,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
         was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        Yukihiro Matsumoto, often referred to as \"Matz.\" He first released the Ruby
-        programming language in 1995. Matsumoto designed Ruby with the goal of making
-        programming more enjoyable and productive, blending parts of his favorite
-        languages (Perl, Smalltalk, Eiffel, Ada, and Lisp) to form a new language
-        that balanced functional programming with imperative programming. Ruby is
-        known for its simplicity and readability, and it gained widespread popularity
-        with the advent of the Ruby on Rails web framework."},{"role":"user","content":"What
-        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        **Yukihiro \"Matz\" Matsumoto** in Japan. He started working on Ruby in 1993
+        and released the first public version (Ruby 0.95) in 1995. \n\nMatsumoto designed
+        Ruby with a focus on simplicity, productivity, and programmer happiness, blending
+        elements from his favorite languages like Perl, Smalltalk, Eiffel, Ada, and
+        Lisp. The language quickly gained popularity, particularly with the rise of
+        the Ruby on Rails web framework in the mid-2000s.\n\nFun fact: The name \"Ruby\"
+        was inspired by the gemstone, as a playful reference to Perl (another gemstone-inspired
+        language)."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -95,41 +93,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 22 Mar 2025 10:05:16 GMT
+      - Tue, 25 Mar 2025 17:49:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      - "<COOKIE>"
       Vary:
-      - accept-encoding
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 758a1674940e75b0bf8478a486dc15f8
+      - 50ba86fcac86de8b0511c555b311e4b3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0872e16e-3d24-441e-bea8-6fbd3689c576","object":"chat.completion","created":1742637916,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto, also known as Matz, created the Ruby programming language in **1993**.
-        He released the first public version, Ruby 0.95, in **1995**. Ruby was designed
-        to be a programmer-friendly language, combining elements of Matz''s favorite
-        languages like Perl, Smalltalk, and Lisp. It has since become widely popular,
-        especially with the rise of the Ruby on Rails web framework."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":127,"completion_tokens":89,"total_tokens":216,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":63},"system_fingerprint":"fp_3a5770e1b4_prod0225"}'
-  recorded_at: Sat, 22 Mar 2025 10:05:27 GMT
+      string: !binary |-
+        eyJpZCI6ImZmODJmMzZjLWYzNjktNDcyZS1hZTA4LTY2ZGRlYzNkNjVkMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDI5MjQ5NTMsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvIGJlZ2FuIHdvcmtpbmcgb24gUnVieSBpbiAqKjE5OTMqKiwgYW5kIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSAodmVyc2lvbiAqKjAuOTUqKikgd2FzIGFubm91bmNlZCBvbiAqKkRlY2VtYmVyIDIxLCAxOTk1KiouICBcblxuU28sIHdoaWxlIGRldmVsb3BtZW50IHN0YXJ0ZWQgaW4gKioxOTkzKiosIFJ1Ynkgd2FzIG9mZmljaWFsbHkgcmVsZWFzZWQgdG8gdGhlIHdvcmxkIGluICoqMTk5NSoqLiAgXG5cbkZ1biBmYWN0OiBNYXR6IGhhcyBzYWlkIHRoYXQgaGUgY2hvc2UgdGhlIHJlbGVhc2UgZGF0ZSAoRGVjZW1iZXIgMjEpIGJlY2F1c2UgaXQgd2FzIGhpcyBiaXJ0aGRheeKAlGEgZ2lmdCB0byBoaW1zZWxmISDwn46B8J+SjiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE2MCwiY29tcGxldGlvbl90b2tlbnMiOjEwMiwidG90YWxfdG9rZW5zIjoyNjIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo2NH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjo2NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo5Nn0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzNkNTE0MWE2OWFfcHJvZDAyMjUifQ==
+  recorded_at: Tue, 25 Mar 2025 17:49:22 GMT
 recorded_with: VCR 6.3.1

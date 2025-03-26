@@ -11,12 +11,6 @@ module RubyLLM
           completion_url
         end
 
-        def handle_stream(&block)
-          to_json_stream do |data|
-            block.call(build_chunk(data))
-          end
-        end
-
         def build_chunk(data)
           Chunk.new(
             role: :assistant,
@@ -30,6 +24,18 @@ module RubyLLM
 
         def json_delta?(data)
           data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'input_json_delta'
+        end
+
+        def parse_streaming_error(data)
+          error_data = JSON.parse(data)
+          return unless error_data['type'] == 'error'
+
+          case error_data.dig('error', 'type')
+          when 'overloaded_error'
+            [529, error_data['error']['message']]
+          else
+            [500, error_data['error']['message']]
+          end
         end
       end
     end

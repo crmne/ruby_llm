@@ -26,10 +26,22 @@ module RubyLLM
         File.expand_path('models.json', __dir__)
       end
 
-      # Class method to refresh model data
-      def refresh!
-        models = RubyLLM.providers.flat_map(&:list_models).sort_by(&:id)
-        @instance = new(models)
+      def refresh! # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
+        configured = Provider.configured_providers
+
+        # Log provider status
+        skipped = Provider.providers.values - configured
+        RubyLLM.logger.info "Refreshing models from #{configured.map(&:slug).join(', ')}" if configured.any?
+        RubyLLM.logger.info "Skipping #{skipped.map(&:slug).join(', ')} - providers not configured" if skipped.any?
+
+        # Store current models except from configured providers
+        current = instance.load_models
+        preserved = current.reject { |m| configured.map(&:slug).include?(m.provider) }
+
+        all = (preserved + configured.flat_map(&:list_models)).sort_by(&:id)
+        @instance = new(all)
+        @instance.save_models
+        @instance
       end
 
       def method_missing(method, ...)
@@ -52,10 +64,10 @@ module RubyLLM
 
     # Load models from the JSON file
     def load_models
-      data = JSON.parse(File.read(self.class.models_file))
-      data.map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
-    rescue Errno::ENOENT
-      [] # Return empty array if file doesn't exist yet
+      data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
+      JSON.parse(data).map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
+    rescue JSON::ParserError
+      []
     end
 
     def save_models
@@ -73,20 +85,12 @@ module RubyLLM
     end
 
     # Find a specific model by ID
-    def find(model_id)
-      # Try exact match first
-      exact_match = all.find { |m| m.id == model_id }
-      return exact_match if exact_match
-
-      # Try to resolve via alias
-      resolved_id = Aliases.resolve(model_id)
-      if resolved_id != model_id
-        alias_match = all.find { |m| m.id == resolved_id }
-        return alias_match if alias_match
+    def find(model_id, provider = nil)
+      if provider
+        find_with_provider(model_id, provider)
+      else
+        find_without_provider(model_id)
       end
-
-      # Not found
-      raise ModelNotFoundError, "Unknown model: #{model_id}"
     end
 
     # Filter to only chat models
@@ -122,6 +126,21 @@ module RubyLLM
     # Instance method to refresh models
     def refresh!
       self.class.refresh!
+    end
+
+    private
+
+    def find_with_provider(model_id, provider)
+      resolved_id = Aliases.resolve(model_id, provider)
+      all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
+        all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+    end
+
+    def find_without_provider(model_id)
+      all.find { |m| m.id == model_id } ||
+        all.find { |m| m.id == Aliases.resolve(model_id) } ||
+        raise(ModelNotFoundError, "Unknown model: #{model_id}")
     end
   end
 end
