@@ -559,27 +559,27 @@ module RubyLLM
             end
           end
 
-          def compare_params(param_a, param_b)
-            a, a_offset = param_a
-            b, b_offset = param_b
-            a_name, a_value = a.split('=')
-            b_name, b_value = b.split('=')
+          def compare_params(param_pair1, param_pair2)
+            param1, offset1 = param_pair1
+            param2, offset2 = param_pair2
+            name1, value1 = param1.split('=')
+            name2, value2 = param2.split('=')
 
             compare_param_components(
-              ParamComponent.new(a_name, a_value, a_offset),
-              ParamComponent.new(b_name, b_value, b_offset)
+              ParamComponent.new(name1, value1, offset1),
+              ParamComponent.new(name2, value2, offset2)
             )
           end
 
-          def compare_param_components(a, b)
-            if a.name == b.name
-              if a.value == b.value
-                a.offset <=> b.offset
+          def compare_param_components(component1, component2)
+            if component1.name == component2.name
+              if component1.value == component2.value
+                component1.offset <=> component2.offset
               else
-                a.value <=> b.value
+                component1.value <=> component2.value
               end
             else
-              a.name <=> b.name
+              component1.name <=> component2.name
             end
           end
 
