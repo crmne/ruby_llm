@@ -10,7 +10,7 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, config:, &block) # rubocop:disable Metrics/MethodLength
         normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
                                    capabilities.normalize_temperature(temperature, model)
                                  else
@@ -24,9 +24,9 @@ module RubyLLM
                                  stream: block_given?)
 
         if block_given?
-          stream_response payload, &block
+          stream_response(payload, config, &block)
         else
-          sync_response payload
+          sync_response(payload, config)
         end
       end
 
@@ -51,25 +51,26 @@ module RubyLLM
         parse_image_response(response)
       end
 
-      def configured?
-        missing_configs.empty?
+      def configured?(config = nil)
+        config ||= RubyLLM.config
+        missing_configs(config).empty?
       end
 
       private
 
-      def missing_configs
+      def missing_configs(config)
         configuration_requirements.select do |key|
-          value = RubyLLM.config.send(key)
+          value = config.send(key)
           value.nil? || value.empty?
         end
       end
 
-      def ensure_configured!
-        return if configured?
+      def ensure_configured!(config)
+        return if configured?(config)
 
         config_block = <<~RUBY
-          RubyLLM.configure do |config|
-            #{missing_configs.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n    ")}
+          RubyLLM.configure do |c|
+            #{missing_configs(config).map { |key| "c.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n    ")}
           end
         RUBY
 
@@ -77,23 +78,23 @@ module RubyLLM
               "#{slug} provider is not configured. Add this to your initialization:\n\n#{config_block}"
       end
 
-      def sync_response(payload)
-        response = post completion_url, payload
-        parse_completion_response response
+      def sync_response(payload, config)
+        response = post(completion_url, payload, config)
+        parse_completion_response(response)
       end
 
-      def post(url, payload)
-        connection.post url, payload do |req|
-          req.headers.merge! headers
+      def post(url, payload, config)
+        connection(config).post(url, payload) do |req|
+          req.headers.merge! headers(config)
           yield req if block_given?
         end
       end
 
-      def connection # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-        ensure_configured!
+      def connection(config) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+        ensure_configured!(config)
 
         @connection ||= Faraday.new(api_base) do |f| # rubocop:disable Metrics/BlockLength
-          f.options.timeout = RubyLLM.config.request_timeout
+          f.options.timeout = config.request_timeout
 
           f.response :logger,
                      RubyLLM.logger,
@@ -107,7 +108,7 @@ module RubyLLM
           end
 
           f.request :retry, {
-            max: RubyLLM.config.max_retries,
+            max: config.max_retries,
             interval: 0.05,
             interval_randomness: 0.5,
             backoff_factor: 2,

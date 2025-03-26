@@ -11,14 +11,15 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :config
 
-    def initialize(model: nil, provider: nil)
+    def initialize(model: nil, provider: nil, config: nil)
       model_id = model || RubyLLM.config.default_model
       with_model(model_id, provider: provider)
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @config = config
       @on = {
         new_message: nil,
         end_message: nil
@@ -58,6 +59,12 @@ module RubyLLM
       self
     end
 
+    def with_config(&block)
+      @config = config.dup
+      yield @config if block
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -74,7 +81,7 @@ module RubyLLM
 
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, &)
+      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, config: @config, &)
       @on[:end_message]&.call(response)
 
       add_message response
