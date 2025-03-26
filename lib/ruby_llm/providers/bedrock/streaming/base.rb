@@ -30,9 +30,10 @@ module RubyLLM
           end
 
           def handle_stream(&block)
+            buffer = String.new
             proc do |chunk, _bytes, env|
               if env && env.status != 200
-                handle_error_response(chunk, env)
+                handle_failed_response(chunk, buffer, env)
               else
                 process_chunk(chunk, &block)
               end
@@ -40,19 +41,6 @@ module RubyLLM
           end
 
           private
-
-          def handle_error_response(chunk, env)
-            buffer = String.new
-            buffer << chunk
-            begin
-              error_data = JSON.parse(buffer)
-              error_response = env.merge(body: error_data)
-              ErrorMiddleware.parse_error(provider: self, response: error_response)
-            rescue JSON::ParserError
-              # Keep accumulating if we don't have complete JSON yet
-              RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
-            end
-          end
         end
       end
     end
