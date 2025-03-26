@@ -41,7 +41,7 @@ module RubyLLM
 
             ModelInfo.new(
               id: model_id,
-              # NOTE: this is date pulled into ollama, not quite date of introduction of a model
+              # NOTE: this is date pulled into the Ollama server, not date of introduction of a model
               created_at: model['modified_at'],
               display_name: model_id,
               provider: slug,
@@ -52,8 +52,8 @@ module RubyLLM
               supports_vision: capabilities.supports_vision?(model_id),
               supports_functions: capabilities.supports_functions?(model_id),
               supports_json_mode: capabilities.supports_json_mode?(model_id),
-              input_price_per_million: capabilities.input_price_for(model_id),
-              output_price_per_million: capabilities.output_price_for(model_id),
+              input_price_per_million: 0.0,
+              output_price_per_million: 0.0,
               metadata: {
                 byte_size: model['size']&.to_i,
                 parameter_size: model.dig('details', 'parameter_size'),
