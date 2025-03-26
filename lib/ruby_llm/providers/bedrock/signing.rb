@@ -17,14 +17,10 @@ module RubyLLM
     module Bedrock
       module Signing
         # Utility class for creating AWS signature version 4 signature. This class
-        # provides two methods for generating signatures:
+        # provides a method for generating signatures:
         #
         # * {#sign_request} - Computes a signature of the given request, returning
         #   the hash of headers that should be applied to the request.
-        #
-        # * {#presign_url} - Computes a presigned request with an expiration.
-        #   By default, the body of this request is not signed and the request
-        #   expires in 15 minutes.
         #
         # ## Configuration
         #
@@ -608,33 +604,6 @@ module RubyLLM
               !credentials.secret_access_key.nil? &&
               !credentials.secret_access_key.empty?
           end
-
-          def presigned_url_expiration(options, expiration, datetime)
-            expires_in = extract_expires_in(options)
-            return expires_in unless expiration
-
-            expiration_seconds = (expiration - datetime).to_i
-            # In the static stability case, credentials may expire in the past
-            # but still be valid. For those cases, use the user configured
-            # expires_in and ignore expiration.
-            if expiration_seconds <= 0
-              expires_in
-            else
-              [expires_in, expiration_seconds].min
-            end
-          end
-
-          private
-
-          def extract_expires_in(options)
-            case options[:expires_in]
-            when nil then 900
-            when Integer then options[:expires_in]
-            else
-              msg = 'expected :expires_in to be a number of seconds'
-              raise ArgumentError, msg
-            end
-          end
         end
 
         # Result builder for signature computation
@@ -942,10 +911,6 @@ module RubyLLM
           end
 
           class << self
-            def use_crt?
-              false
-            end
-
             def uri_escape_path(path)
               UriUtils.uri_escape_path(path)
             end
