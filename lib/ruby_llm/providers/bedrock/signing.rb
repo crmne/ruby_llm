@@ -785,51 +785,68 @@ module RubyLLM
         # Handles initialization of Signer dependencies
         class SignerInitializer
           def self.create_components(options = {})
-            service = SignerOptionExtractor.extract_service(options)
-            region = SignerOptionExtractor.extract_region(options)
-            credentials_provider = SignerOptionExtractor.extract_credentials_provider(options)
+            service, region, credentials_provider = extract_core_components(options)
             unsigned_headers = SignerOptionExtractor.initialize_unsigned_headers(options)
 
-            uri_escape_path = options.fetch(:uri_escape_path, true)
-            apply_checksum_header = options.fetch(:apply_checksum_header, true)
-            signing_algorithm = options.fetch(:signing_algorithm, :sigv4)
-            normalize_path = options.fetch(:normalize_path, true)
-            omit_session_token = options.fetch(:omit_session_token, false)
+            config_options = extract_config_options(options)
 
-            # Create generator
-            signature_generator = SignatureGenerator.new(
-              signing_algorithm: signing_algorithm,
-              uri_escape_path: uri_escape_path,
-              unsigned_headers: unsigned_headers,
-              service: service,
-              region: region
-            )
-
-            # Create header builder
-            header_builder = HeaderBuilder.new(
-              signing_algorithm: signing_algorithm,
-              apply_checksum_header: apply_checksum_header,
-              omit_session_token: omit_session_token,
-              region: region
-            )
-
-            # Create credential manager
-            credential_manager = CredentialManager.new(credentials_provider)
-
-            {
+            components = {
               service: service,
               region: region,
               credentials_provider: credentials_provider,
-              unsigned_headers: unsigned_headers,
-              uri_escape_path: uri_escape_path,
-              apply_checksum_header: apply_checksum_header,
-              signing_algorithm: signing_algorithm,
-              normalize_path: normalize_path,
-              omit_session_token: omit_session_token,
+              unsigned_headers: unsigned_headers
+            }.merge(config_options)
+
+            create_service_components(components)
+          end
+
+          def self.extract_core_components(options)
+            service = SignerOptionExtractor.extract_service(options)
+            region = SignerOptionExtractor.extract_region(options)
+            credentials_provider = SignerOptionExtractor.extract_credentials_provider(options)
+
+            [service, region, credentials_provider]
+          end
+
+          def self.extract_config_options(options)
+            {
+              uri_escape_path: options.fetch(:uri_escape_path, true),
+              apply_checksum_header: options.fetch(:apply_checksum_header, true),
+              signing_algorithm: options.fetch(:signing_algorithm, :sigv4),
+              normalize_path: options.fetch(:normalize_path, true),
+              omit_session_token: options.fetch(:omit_session_token, false)
+            }
+          end
+
+          def self.create_service_components(components)
+            signature_generator = create_signature_generator(components)
+            header_builder = create_header_builder(components)
+            credential_manager = CredentialManager.new(components[:credentials_provider])
+
+            components.merge(
               signature_generator: signature_generator,
               header_builder: header_builder,
               credential_manager: credential_manager
-            }
+            )
+          end
+
+          def self.create_signature_generator(components)
+            SignatureGenerator.new(
+              signing_algorithm: components[:signing_algorithm],
+              uri_escape_path: components[:uri_escape_path],
+              unsigned_headers: components[:unsigned_headers],
+              service: components[:service],
+              region: components[:region]
+            )
+          end
+
+          def self.create_header_builder(components)
+            HeaderBuilder.new(
+              signing_algorithm: components[:signing_algorithm],
+              apply_checksum_header: components[:apply_checksum_header],
+              omit_session_token: components[:omit_session_token],
+              region: components[:region]
+            )
           end
         end
 
