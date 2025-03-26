@@ -57,11 +57,11 @@ When you specify a model, RubyLLM follows these steps to find it:
 The same model ID can exist both as a concrete model and as an alias, particularly when the same model is available through different providers:
 
 ```ruby
-# Use native OpenAI GPT-4
-chat = RubyLLM.chat(model: 'gpt-4o')
+# Use native Claude 3.5
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
 
-# Use GPT-4 through Bedrock
-chat = RubyLLM.chat(model: 'gpt-4o', provider: 'bedrock')
+# Use Claude 3.5 through Bedrock
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
 ```
 
 ### Model Aliases

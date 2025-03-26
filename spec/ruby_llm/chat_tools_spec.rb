@@ -16,6 +16,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class BestLanguageToLearn < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Gets the best language to learn'
+
+    def execute
+      'Ruby'
+    end
+  end
+
   describe 'function calling' do
     [
       'claude-3-5-haiku-20241022',
@@ -42,6 +50,12 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{model} can use tools without parameters" do
+        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        response = chat.ask("What's the best language to learn?")
+        expect(response.content).to include('Ruby')
       end
 
       it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
