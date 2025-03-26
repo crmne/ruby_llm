@@ -880,19 +880,9 @@ module RubyLLM
           # @return [Signature] The signature with headers to apply
           def sign_request(request)
             creds = @credential_manager.fetch_credentials.first
-            request_components = RequestExtractor.extract_components(
-              request,
-              normalize_path: @normalize_path
-            )
-
-            # Generate headers and compute signature
-            sigv4_headers = @header_builder.build_sigv4_headers(request_components, creds)
-            signature = @signature_generator.compute_signature(
-              request_components,
-              creds,
-              sigv4_headers
-            )
-
+            request_components = extract_request_components(request)
+            sigv4_headers = build_sigv4_headers(request_components, creds)
+            signature = compute_signature(request_components, creds, sigv4_headers)
             build_signature_response(request_components, sigv4_headers, signature)
           end
 
@@ -914,6 +904,25 @@ module RubyLLM
             @signature_generator = components[:signature_generator]
             @header_builder = components[:header_builder]
             @credential_manager = components[:credential_manager]
+          end
+
+          def extract_request_components(request)
+            RequestExtractor.extract_components(
+              request,
+              normalize_path: @normalize_path
+            )
+          end
+
+          def build_sigv4_headers(request_components, creds)
+            @header_builder.build_sigv4_headers(request_components, creds)
+          end
+
+          def compute_signature(request_components, creds, sigv4_headers)
+            @signature_generator.compute_signature(
+              request_components,
+              creds,
+              sigv4_headers
+            )
           end
 
           def build_signature_response(components, sigv4_headers, signature)
