@@ -252,15 +252,17 @@ module RubyLLM
             @service = extract_service(options)
             @region = extract_region(options)
             @credentials_provider = extract_credentials_provider(options)
-            @unsigned_headers = Set.new(options.fetch(:unsigned_headers, []).map(&:downcase))
-            @unsigned_headers << 'authorization'
-            @unsigned_headers << 'x-amzn-trace-id'
-            @unsigned_headers << 'expect'
+            @unsigned_headers = initialize_unsigned_headers(options)
             @uri_escape_path = options.fetch(:uri_escape_path, true)
             @apply_checksum_header = options.fetch(:apply_checksum_header, true)
             @signing_algorithm = options.fetch(:signing_algorithm, :sigv4)
             @normalize_path = options.fetch(:normalize_path, true)
             @omit_session_token = options.fetch(:omit_session_token, false)
+          end
+
+          def initialize_unsigned_headers(options)
+            headers = Set.new(options.fetch(:unsigned_headers, []).map(&:downcase))
+            headers.merge(%w[authorization x-amzn-trace-id expect])
           end
 
           # @return [String]
@@ -351,8 +353,13 @@ module RubyLLM
             url = extract_url(request)
             Signer.normalize_path(url) if @normalize_path
             headers = downcase_headers(request[:headers])
+
+            build_request_components(http_method, url, headers, request[:body])
+          end
+
+          def build_request_components(http_method, url, headers, body)
             datetime = extract_datetime(headers)
-            content_sha256 = extract_content_sha256(headers, request[:body])
+            content_sha256 = extract_content_sha256(headers, body)
 
             {
               http_method: http_method,
@@ -407,6 +414,14 @@ module RubyLLM
             algorithm = sts_algorithm
             headers = components[:headers].merge(sigv4_headers)
 
+            signature_components = build_signature_components(
+              components, creds, headers, algorithm
+            )
+
+            build_signature_result(signature_components, headers, creds, components[:date])
+          end
+
+          def build_signature_components(components, creds, headers, algorithm)
             creq = canonical_request(
               components[:http_method],
               components[:url],
@@ -417,12 +432,21 @@ module RubyLLM
             sig = generate_signature(creds, components[:date], sts)
 
             {
+              creq: creq,
+              sts: sts,
+              sig: sig
+            }
+          end
+
+          def build_signature_result(components, headers, creds, date)
+            algorithm = sts_algorithm
+            {
               algorithm: algorithm,
-              credential: credential(creds, components[:date]),
+              credential: credential(creds, date),
               signed_headers: signed_headers(headers),
-              signature: sig,
-              canonical_request: creq,
-              string_to_sign: sts
+              signature: components[:sig],
+              canonical_request: components[:creq],
+              string_to_sign: components[:sts]
             }
           end
 
