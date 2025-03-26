@@ -13,12 +13,12 @@ module RubyLLM
 
         def handle_stream(&block)
           to_json_stream do |data|
-            # FIXME: for some reason, there's an unexpected final call
-            # from on_data with the complete response as an Array.
+            # FIXME: on connection close, on_data is called with the entire response so far as one chunk
+            # consisting of an Array of unparsed JSON strings (ie. an array of lines).
             #
-            # It is skipped here, but this smells a bit; this method shouldn't
-            # need to be overridden just for this. Will look into it
-            done = data.is_a?(Array) || data['done']
+            # It is detected and skipped here, but this is a code smell;
+            # likely standard SSE behavior which shouldn't be happening for NDJSON streaming.
+            done = data.is_a?(Array) && data.first.is_a?(String) && data.first[0] == '{'
 
             block.call(build_chunk(data)) if data && !done
           end
@@ -47,7 +47,7 @@ module RubyLLM
             next if line.empty?
 
             parsed_data = JSON.parse(line)
-            block.call(parsed_data)
+            block.call(parsed_data) unless parsed_data['done']
           end
         end
       end
