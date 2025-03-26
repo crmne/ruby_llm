@@ -188,14 +188,6 @@ module RubyLLM
       def configured_providers
         providers.select { |_name, provider| provider.configured? }.values
       end
-
-      def disable_all_providers
-        providers.each_value do |provider|
-          provider.configuration_requirements.each do |key|
-            RubyLLM.config.send "#{key}=", nil
-          end
-        end
-      end
     end
   end
 end

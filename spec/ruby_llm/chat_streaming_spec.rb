@@ -11,7 +11,8 @@ RSpec.describe RubyLLM::Chat do
       'claude-3-5-haiku-20241022',
       'gemini-2.0-flash',
       'deepseek-chat',
-      'gpt-4o-mini'
+      'gpt-4o-mini',
+      'smollm:135m'
     ].each do |model|
       it "#{model} supports streaming responses" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
