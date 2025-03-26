@@ -25,8 +25,6 @@ module RubyLLM
         end
 
         def build_chunk(data)
-          raise 'wtf' if data.is_a?(Array)
-
           Chunk.new(
             role: :assistant,
             content: data.dig('message', 'content'),
