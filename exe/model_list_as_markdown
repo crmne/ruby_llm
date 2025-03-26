@@ -6,7 +6,7 @@
 # with one table per model type.
 #
 # Its output can be seen in rendered markdown on the command line by using `glow` or `mdcat`:
-# ./model_list_as_markdown | glow -w 150 -
+# ./model_list_as_markdown | glow -w 160 -
 # or
 # ./model_list_as_markdown | mdcat -
 
@@ -63,7 +63,7 @@ def to_markdown_table(models)
   # Build the table
   lines = []
 
-  # Header rows
+  # Header rows=========------=++9
   lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| headers[key] }.join(' | ')} |"
   lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| alignments[key] }.join(' | ')} |"
   
@@ -109,4 +109,8 @@ puts <<~DOC
 
   #{to_markdown_table(RubyLLM.models.select { |m| m.type == 'moderation'})}
   DOC
+  
+=begin
+# TODO: Use JSON data from the model_info.json file to generate a table of model info
+=end
   
