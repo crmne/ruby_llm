@@ -27,7 +27,7 @@ module RubyLLM
         def build_chunk(data)
           raise 'wtf' if data.is_a?(Array)
 
-          chunk = Chunk.new(
+          Chunk.new(
             role: :assistant,
             content: data.dig('message', 'content'),
             model_id: data['model'],
@@ -38,7 +38,7 @@ module RubyLLM
           )
         end
 
-        def handle_sse(chunk, parser, env, &block)
+        def handle_sse(chunk, _parser, env, &block)
           # NOTE: Ollama uses NDJSON rather than standard SSE here
           content_type = env.response_headers['content-type']
           unless content_type =~ %r{application/x-ndjson}
@@ -46,7 +46,8 @@ module RubyLLM
           end
 
           chunk.split(/\n+/).each do |line|
-            next if line.length == 0
+            next if line.empty?
+
             parsed_data = JSON.parse(line)
             block.call(parsed_data)
           end

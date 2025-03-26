@@ -11,10 +11,10 @@ module RubyLLM
           'api/chat'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
+        def render_payload(messages, tools:, temperature:, model:, stream: false)
           raise NotImplementedError, 'tool use not implemented in Ollama at this time' if tools.any?
 
-          payload = {
+          {
             model: model,
             messages: format_messages(messages),
             options: {
