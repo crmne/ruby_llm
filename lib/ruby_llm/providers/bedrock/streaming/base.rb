@@ -39,8 +39,6 @@ module RubyLLM
               end
             end
           end
-
-          private
         end
       end
     end
