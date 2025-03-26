@@ -685,32 +685,41 @@ module RubyLLM
             algorithm = sts_algorithm
             headers = components[:headers].merge(sigv4_headers)
 
-            # Create request configuration and canonical request
+            # Process request and generate signature
             canonical_request = create_canonical_request(components, headers)
+            sig = compute_signature_from_request(canonical_request, components, creds, algorithm)
 
-            # Generate string to sign and signature
+            # Build and return the final result
+            build_signature_result(components, creds, canonical_request, sig, algorithm)
+          end
+
+          private
+
+          def compute_signature_from_request(canonical_request, components, creds, algorithm)
             creq = canonical_request.to_s
-            sts = @signature_computation.string_to_sign(
+            sts = generate_string_to_sign(components, creq, algorithm)
+            generate_signature(creds, components[:date], sts)
+          end
+
+          def generate_string_to_sign(components, creq, algorithm)
+            @signature_computation.string_to_sign(
               components[:datetime],
               creq,
               algorithm
             )
+          end
 
-            sig = generate_signature(creds, components[:date], sts)
-
-            # Build the final result
+          def build_signature_result(components, creds, canonical_request, sig, algorithm)
             @result_builder.build_result(
               algorithm: algorithm,
               credentials: creds,
               date: components[:date],
               signature: sig,
-              creq: creq,
-              sts: sts,
+              creq: canonical_request.to_s,
+              sts: generate_string_to_sign(components, canonical_request.to_s, algorithm),
               canonical_request: canonical_request
             )
           end
-
-          private
 
           def create_canonical_request(components, headers)
             canon_req_config = CanonicalRequestConfig.new(
