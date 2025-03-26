@@ -5,35 +5,50 @@ module RubyLLM
     module Ollama
       # Streaming methods for the Ollama API implementation
       module Streaming
-        # Need to make stream_completion public for chat.rb to access
-        def stream_completion(_model, payload, &block)
-          url = 'api/chat'
-          accumulator = StreamAccumulator.new
+        module_function
 
-          post(url, payload) do |req|
-            req.options.on_data = stream_handler(accumulator, &block)
-          end
-
-          accumulator.to_message
+        def stream_url
+          completion_url
         end
 
-        private
-
-        # Handle streaming
-        def stream_handler(accumulator, &block) # rubocop:disable Metrics/MethodLength
+        def handle_stream(&block)
           to_json_stream do |data|
-            chunk = Chunk.new(
-              role: :assistant,
-              content: data.dig('message', 'content'),
-              model_id: data['model'],
+            # FIXME: for some reason, there's an unexpected final call
+            # from on_data with the complete response as an Array.
+            #
+            # It is skipped here, but this smells a bit; this method shouldn't
+            # need to be overridden just for this. Will look into it
+            done = data.is_a?(Array) || data['done']
 
-              # NOTE: unavailable in the response - https://ollama.readthedocs.io/en/api/#streaming-responses
-              input_tokens: nil,
-              output_tokens: nil
-            )
+            block.call(build_chunk(data)) if data && !done
+          end
+        end
 
-            accumulator.add(chunk)
-            block.call(chunk)
+        def build_chunk(data)
+          raise 'wtf' if data.is_a?(Array)
+
+          chunk = Chunk.new(
+            role: :assistant,
+            content: data.dig('message', 'content'),
+            model_id: data['model'],
+
+            # NOTE: unavailable in the response - https://ollama.readthedocs.io/en/api/#streaming-responses
+            input_tokens: nil,
+            output_tokens: nil
+          )
+        end
+
+        def handle_sse(chunk, parser, env, &block)
+          # NOTE: Ollama uses NDJSON rather than standard SSE here
+          content_type = env.response_headers['content-type']
+          unless content_type =~ %r{application/x-ndjson}
+            raise "Unexpected content-type when parsing Ollama streaming response: #{content_type}"
+          end
+
+          chunk.split(/\n+/).each do |line|
+            next if line.length == 0
+            parsed_data = JSON.parse(line)
+            block.call(parsed_data)
           end
         end
       end

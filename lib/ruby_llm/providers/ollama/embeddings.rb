@@ -5,22 +5,30 @@ module RubyLLM
     module Ollama
       # Embeddings methods for the Ollama API integration
       module Embeddings
-        # Must be public for Provider module
-        def embed(text, model:) # rubocop:disable Metrics/MethodLength
-          payload = {
+        module_function
+
+        def embedding_url
+          'api/embed'
+        end
+
+        def render_embedding_payload(text, model:)
+          {
             model: model,
             input: format_text_for_embedding(text)
           }
+        end
 
-          url = 'api/embed'
-          response = post(url, payload)
+        def parse_embedding_response(response)
           vectors = response.body['embeddings']
+          model_id = response.body['model']
+          input_tokens = response.body['prompt_eval_count'] || 0
+          vectors = vectors.first if vectors.size == 1
 
           Embedding.new(
-            vectors: text.is_a?(String) ? vectors.first : vectors,
-            model: model,
+            vectors: vectors,
+            model: model_id,
             # only available when passing a single string input
-            input_tokens: response.body['prompt_eval_count'] || 0
+            input_tokens: input_tokens
           )
         end
 

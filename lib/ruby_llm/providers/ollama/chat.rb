@@ -5,8 +5,13 @@ module RubyLLM
     module Ollama
       # Chat methods for the Ollama API implementation
       module Chat
-        # Must be public for Provider to use
-        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+        module_function
+
+        def completion_url
+          'api/chat'
+        end
+
+        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
           raise NotImplementedError, 'tool use not implemented in Ollama at this time' if tools.any?
 
           payload = {
@@ -14,58 +19,17 @@ module RubyLLM
             messages: format_messages(messages),
             options: {
               temperature: temperature
-            }
+            },
+            stream: stream
           }
-
-          if block_given?
-            payload[:stream] = true
-            stream_completion(model, payload, &block)
-          else
-            payload[:stream] = false
-            generate_completion(model, payload)
-          end
-        end
-
-        # Format methods can be private
-        private
-
-        def generate_completion(_model, payload)
-          url = 'api/chat'
-          response = post(url, payload)
-          parse_completion_response(response)
         end
 
         def format_messages(messages)
           messages.map do |msg|
             {
               role: msg.role.to_s,
-              content: format_parts(msg)
+              content: msg.content.to_s
             }
-          end
-        end
-
-        def format_parts(msg)
-          if msg.content.is_a?(Array)
-            # Handle multi-part content (text, images, etc.)
-            msg.content.map { |part| format_part(part) }
-          else
-            # Simple text content
-            msg.content.to_s
-          end
-        end
-
-        def format_part(part) # rubocop:disable Metrics/MethodLength
-          case part[:type]
-          when 'text'
-            { text: part[:text] }
-          when 'image'
-            Media.format_image(part)
-          when 'pdf'
-            Media.format_pdf(part)
-          when 'audio'
-            Media.format_audio(part)
-          else
-            { text: part.to_s }
           end
         end
 
