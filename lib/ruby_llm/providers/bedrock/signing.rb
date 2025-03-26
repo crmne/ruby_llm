@@ -411,10 +411,10 @@ module RubyLLM
           def credential_scope(date)
             [
               date,
-              (@region unless @signing_algorithm == :sigv4a),
+              @region,
               @service,
               'aws4_request'
-            ].compact.join('/')
+            ].join('/')
           end
 
           def credential(credentials, date)
@@ -427,16 +427,6 @@ module RubyLLM
             k_service = CryptoUtils.hmac(k_region, @service)
             k_credentials = CryptoUtils.hmac(k_service, 'aws4_request')
             CryptoUtils.hexhmac(k_credentials, string_to_sign)
-          end
-
-          def asymmetric_signature(creds, string_to_sign)
-            ec, = Aws::Sigv4::AsymmetricCredentials.derive_asymmetric_key(
-              creds.access_key_id, creds.secret_access_key
-            )
-            sts_digest = OpenSSL::Digest::SHA256.digest(string_to_sign)
-            s = ec.dsa_sign_asn1(sts_digest)
-
-            Digest.hexencode(s)
           end
         end
 
@@ -526,7 +516,6 @@ module RubyLLM
 
             add_session_token_header(headers, creds)
             add_content_sha256_header(headers, components[:content_sha256])
-            add_region_header(headers)
 
             headers
           end
@@ -558,19 +547,11 @@ module RubyLLM
           def add_session_token_header(headers, creds)
             return unless creds.session_token && !@omit_session_token
 
-            if @signing_algorithm == :'sigv4-s3express'
-              headers['x-amz-s3session-token'] = creds.session_token
-            else
-              headers['x-amz-security-token'] = creds.session_token
-            end
+            headers['x-amz-security-token'] = creds.session_token
           end
 
           def add_content_sha256_header(headers, content_sha256)
             headers['x-amz-content-sha256'] = content_sha256 if @apply_checksum_header
-          end
-
-          def add_region_header(headers)
-            headers['x-amz-region-set'] = @region if @signing_algorithm == :sigv4a && @region && !@region.empty?
           end
 
           def add_omitted_session_token(headers, creds)
@@ -640,7 +621,7 @@ module RubyLLM
         # Core functionality for computing signatures
         class SignatureGenerator
           def initialize(options = {})
-            @signing_algorithm = options[:signing_algorithm] || :sigv4
+            @signing_algorithm = :sigv4 # Always use sigv4
             @uri_escape_path = options[:uri_escape_path] || true
             @unsigned_headers = options[:unsigned_headers] || Set.new
             @service = options[:service]
@@ -651,7 +632,7 @@ module RubyLLM
           end
 
           def sts_algorithm
-            @signing_algorithm == :sigv4a ? 'AWS4-ECDSA-P256-SHA256' : 'AWS4-HMAC-SHA256'
+            'AWS4-HMAC-SHA256' # Always use HMAC-SHA256
           end
 
           def compute_signature(components, creds, sigv4_headers)
@@ -714,11 +695,7 @@ module RubyLLM
           end
 
           def generate_signature(creds, date, string_to_sign)
-            if @signing_algorithm == :sigv4a
-              @signature_computation.asymmetric_signature(creds, string_to_sign)
-            else
-              @signature_computation.signature(creds.secret_access_key, date, string_to_sign)
-            end
+            @signature_computation.signature(creds.secret_access_key, date, string_to_sign)
           end
         end
 
@@ -785,7 +762,6 @@ module RubyLLM
             {
               uri_escape_path: options.fetch(:uri_escape_path, true),
               apply_checksum_header: options.fetch(:apply_checksum_header, true),
-              signing_algorithm: options.fetch(:signing_algorithm, :sigv4),
               normalize_path: options.fetch(:normalize_path, true),
               omit_session_token: options.fetch(:omit_session_token, false)
             }
