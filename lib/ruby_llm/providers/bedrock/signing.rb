@@ -1,3 +1,7 @@
+# Portions of this file are derived from AWS SDK for Ruby (Apache License 2.0)
+# Modifications made by RubyLLM in 2025
+# See THIRD_PARTY_LICENSES/AWS-SDK-NOTICE.txt for details
+
 # frozen_string_literal: true
 
 require 'openssl'
