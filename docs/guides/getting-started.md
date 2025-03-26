@@ -34,10 +34,6 @@ RubyLLM.configure do |config|
 end
 ```
 
-Alternatively, you can point to an Ollama instance; here it is configured to the most common address when Ollama is installed locally:
-```
-```
-
 ## Your First Chat
 
 Let's start with a simple chat interaction:
