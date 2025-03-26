@@ -5,9 +5,9 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the time in Wakanda?
-        Answer in ISO 8601 format, UTC timezone."}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
-        the current time in Wakanda"}]}]}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 24 Mar 2025 21:53:11 GMT
+      - Wed, 26 Mar 2025 12:36:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=516
+      - gfet4t7; dur=505
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -56,7 +56,7 @@ http_interactions:
                 "parts": [
                   {
                     "functionCall": {
-                      "name": "current_time",
+                      "name": "best_language_to_learn",
                       "args": {}
                     }
                   }
@@ -64,37 +64,37 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": 2.31900776270777e-06
+              "avgLogprobs": -0.00011707750880824668
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 32,
-            "candidatesTokenCount": 3,
-            "totalTokenCount": 35,
+            "promptTokenCount": 22,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 29,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 32
+                "tokenCount": 22
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 3
+                "tokenCount": 7
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Mon, 24 Mar 2025 21:53:11 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:31 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the time in Wakanda?
-        Answer in ISO 8601 format, UTC timezone."}]},{"role":"model","parts":[{"functionCall":{"name":"current_time","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"02e75370-ffed-4b37-a77e-1ccf066e7658","response":{"name":"02e75370-ffed-4b37-a77e-1ccf066e7658","content":"2025-03-23T20:42:00Z"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"current_time","description":"Gets
-        the current time in Wakanda"}]}]}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"59a92e0a-8267-4a36-b42f-6c8f41da2add","response":{"name":"59a92e0a-8267-4a36-b42f-6c8f41da2add","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -118,7 +118,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 24 Mar 2025 21:53:11 GMT
+      - Wed, 26 Mar 2025 12:36:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -128,7 +128,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=450
+      - gfet4t7; dur=472
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -142,33 +142,33 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "2025-03-23T20:42:00Z\n"
+                    "text": "I think Ruby is the best language to learn.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0044805953900019331
+              "avgLogprobs": -0.11496557972647926
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 119,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 140,
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 11,
+            "totalTokenCount": 109,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 119
+                "tokenCount": 98
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 21
+                "tokenCount": 11
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Mon, 24 Mar 2025 21:53:11 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:31 GMT
 recorded_with: VCR 6.3.1

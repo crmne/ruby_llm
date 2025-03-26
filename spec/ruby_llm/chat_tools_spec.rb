@@ -16,17 +16,11 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  class CurrentTime < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    description 'Gets the current time in Wakanda'
-
-    attr_reader :now
-
-    def initialize(now)
-      @now = now
-    end
+  class BestLanguageToLearn < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Gets the best language to learn'
 
     def execute
-      now.utc.iso8601
+      'Ruby'
     end
   end
 
@@ -59,11 +53,9 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{model} can use tools without parameters" do
-        now = Time.new(2025, 3, 23, 21, 42, 0)
-        chat = RubyLLM.chat(model: model)
-                      .with_tool(CurrentTime.new(now))
-        response = chat.ask("What's the time in Wakanda? Answer in ISO 8601 format, UTC timezone.")
-        expect(response.content).to include(now.utc.iso8601)
+        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        response = chat.ask("What's the best language to learn?")
+        expect(response.content).to include('Ruby')
       end
 
       it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations

@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        the time in Wakanda? Answer in ISO 8601 format, UTC timezone."}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"current_time","description":"Gets
-        the current time in Wakanda","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 24 Mar 2025 21:53:12 GMT
+      - Wed, 26 Mar 2025 12:36:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '453'
+      - '835'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -47,11 +47,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '199981'
+      - '199988'
       X-Ratelimit-Reset-Requests:
       - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 5ms
+      - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -73,9 +73,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BEk1HDrCd1JHbCFe17oj3g1YYnMmQ",
+          "id": "chatcmpl-BFKHgIGAwLUS0wTdClrDXbEzwGlhE",
           "object": "chat.completion",
-          "created": 1742853191,
+          "created": 1742992592,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -85,10 +85,10 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_i0AEa2OVhnmj59JJFzxA2isr",
+                    "id": "call_rSFV6B5evXpOXNsNQfv379HV",
                     "type": "function",
                     "function": {
-                      "name": "current_time",
+                      "name": "best_language_to_learn",
                       "arguments": "{}"
                     }
                   }
@@ -101,9 +101,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 57,
-            "completion_tokens": 11,
-            "total_tokens": 68,
+            "prompt_tokens": 48,
+            "completion_tokens": 14,
+            "total_tokens": 62,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -116,17 +116,17 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_b8bc95a0ac"
+          "system_fingerprint": "fp_27322b4e16"
         }
-  recorded_at: Mon, 24 Mar 2025 21:53:12 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:32 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        the time in Wakanda? Answer in ISO 8601 format, UTC timezone."},{"role":"assistant","tool_calls":[{"id":"call_i0AEa2OVhnmj59JJFzxA2isr","type":"function","function":{"name":"current_time","arguments":"{}"}}]},{"role":"tool","content":"2025-03-23T20:42:00Z","tool_call_id":"call_i0AEa2OVhnmj59JJFzxA2isr"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"current_time","description":"Gets
-        the current time in Wakanda","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_rSFV6B5evXpOXNsNQfv379HV","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_rSFV6B5evXpOXNsNQfv379HV"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -144,7 +144,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 24 Mar 2025 21:53:13 GMT
+      - Wed, 26 Mar 2025 12:36:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -156,7 +156,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '514'
+      - '261'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -166,11 +166,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '9998'
       X-Ratelimit-Remaining-Tokens:
-      - '199973'
+      - '199986'
       X-Ratelimit-Reset-Requests:
-      - 16.639s
+      - 16.249s
       X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - 4ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -192,16 +192,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BEk1IUzbcTIfMx2LURwD6OPZKKu19",
+          "id": "chatcmpl-BFKHhaUl3iiFyJeMb0nD071b7EYPZ",
           "object": "chat.completion",
-          "created": 1742853192,
+          "created": 1742992593,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The current time in Wakanda is 2025-03-23T20:42:00Z (UTC).",
+                "content": "The best language to learn is Ruby.",
                 "refusal": null,
                 "annotations": []
               },
@@ -210,9 +210,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 88,
-            "completion_tokens": 26,
-            "total_tokens": 114,
+            "prompt_tokens": 73,
+            "completion_tokens": 10,
+            "total_tokens": 83,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -225,7 +225,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_b8bc95a0ac"
+          "system_fingerprint": "fp_bbfba58e46"
         }
-  recorded_at: Mon, 24 Mar 2025 21:53:13 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:33 GMT
 recorded_with: VCR 6.3.1

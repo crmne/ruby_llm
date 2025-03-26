@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
-        the time in Wakanda? Answer in ISO 8601 format, UTC timezone."}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"current_time","description":"Gets
-        the current time in Wakanda","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+        the best language to learn?"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 24 Mar 2025 21:53:07 GMT
+      - Wed, 26 Mar 2025 12:36:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +39,25 @@ http_interactions:
       Anthropic-Ratelimit-Requests-Remaining:
       - '49'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-03-24T21:53:05Z'
+      - '2025-03-26T12:36:22Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '50000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '50000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-03-24T21:53:06Z'
+      - '2025-03-26T12:36:23Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-03-24T21:53:07Z'
+      - '2025-03-26T12:36:23Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '60000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '60000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-03-24T21:53:06Z'
+      - '2025-03-26T12:36:23Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -74,20 +74,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01S6KRyrToAJkHjfnyw98ox4","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        help you get the current time in Wakanda. I''ll retrieve the current time
-        and present it in the ISO 8601 format with UTC timezone."},{"type":"tool_use","id":"toolu_016VWoRj6Pfms3RDGJkaQDPs","name":"current_time","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":338,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":71}}'
-  recorded_at: Mon, 24 Mar 2025 21:53:07 GMT
+      string: '{"id":"msg_016N5q71zpXwLnoYPDYjpi92","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01HiFoEeZiQJ6CFwCNzT6Nwu","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":58}}'
+  recorded_at: Wed, 26 Mar 2025 12:36:24 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
-        the time in Wakanda? Answer in ISO 8601 format, UTC timezone."},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you get the current time in Wakanda. I''ll retrieve the current time
-        and present it in the ISO 8601 format with UTC timezone."},{"type":"tool_use","id":"toolu_016VWoRj6Pfms3RDGJkaQDPs","name":"current_time","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016VWoRj6Pfms3RDGJkaQDPs","content":"2025-03-23T20:42:00Z"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"current_time","description":"Gets
-        the current time in Wakanda","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+        the best language to learn?"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01HiFoEeZiQJ6CFwCNzT6Nwu","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01HiFoEeZiQJ6CFwCNzT6Nwu","content":"Ruby"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -107,7 +105,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 24 Mar 2025 21:53:10 GMT
+      - Wed, 26 Mar 2025 12:36:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -119,25 +117,25 @@ http_interactions:
       Anthropic-Ratelimit-Requests-Remaining:
       - '49'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-03-24T21:53:08Z'
+      - '2025-03-26T12:36:25Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '50000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '50000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-03-24T21:53:09Z'
+      - '2025-03-26T12:36:27Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-03-24T21:53:10Z'
+      - '2025-03-26T12:36:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '60000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '60000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-03-24T21:53:09Z'
+      - '2025-03-26T12:36:27Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -154,9 +152,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01VCSRh7a3NsWCkjWcafqTTo","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
-        current time in Wakanda is 2025-03-23T20:42:00Z, which follows the ISO 8601
-        format in the UTC timezone. The ''Z'' at the end indicates that this is in
-        Coordinated Universal Time (UTC)."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":433,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":62}}'
-  recorded_at: Mon, 24 Mar 2025 21:53:10 GMT
+      string: '{"id":"msg_01VXzvCFsc6ggwCM6qbGXKTK","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
+        to the tool, Ruby is recommended as the best language to learn. Ruby is a
+        dynamic, object-oriented programming language known for its simplicity and
+        readability. It''s particularly popular for web development, especially with
+        the Ruby on Rails framework. \n\nSome reasons why Ruby might be a great language
+        to learn:\n1. Easy to read and write, with a clean and elegant syntax\n2.
+        Great for web development and scripting\n3. Strong community support\n4. Used
+        in many startups and tech companies\n5. Good for beginners due to its intuitive
+        nature\n\nHowever, the \"best\" language can depend on your personal goals,
+        such as:\n- Web development\n- Data science\n- Mobile app development\n- Game
+        development\n- Career opportunities\n\nWould you like to know more about Ruby
+        or discuss how it might fit your specific learning objectives?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":182}}'
+  recorded_at: Wed, 26 Mar 2025 12:36:30 GMT
 recorded_with: VCR 6.3.1
