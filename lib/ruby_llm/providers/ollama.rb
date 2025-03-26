@@ -9,6 +9,7 @@ module RubyLLM
       extend Ollama::Embeddings
       extend Ollama::Models
       extend Ollama::Streaming
+      extend Ollama::Media
 
       module_function
 

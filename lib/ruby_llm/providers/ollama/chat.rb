@@ -16,21 +16,12 @@ module RubyLLM
 
           {
             model: model,
-            messages: format_messages(messages),
+            messages: Media.format_messages(messages),
             options: {
               temperature: temperature
             },
             stream: stream
           }
-        end
-
-        def format_messages(messages)
-          messages.map do |msg|
-            {
-              role: msg.role.to_s,
-              content: msg.content.to_s
-            }
-          end
         end
 
         def parse_completion_response(response)
