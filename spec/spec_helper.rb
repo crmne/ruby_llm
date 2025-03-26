@@ -82,16 +82,13 @@ RSpec.configure do |config|
       example.run
     end
   end
-end
 
-RSpec.shared_context 'with configured RubyLLM' do
-  before do
+  # Run once before all tests
+  config.before(:suite) do
     RubyLLM.configure do |config|
-      # NOTE: to ensure relevant models are pulled into your local server, do
-      #   bundle exec rake ollama:install_models_for_specs
       config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL', 'http://localhost:11434')
-
-      # FIXME: this clobbers the model list from models.json and results in all tests except for ollama's to fail
+      # needs to run when ONLY Ollama is configured and before any others are configured
+      # FIXME: RubyLLM.models.refresh!(provider: 'ollama') would be a cleaner solution
       RubyLLM.models.refresh!
 
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
@@ -102,3 +99,7 @@ RSpec.shared_context 'with configured RubyLLM' do
     end
   end
 end
+
+RSpec.shared_context 'with configured RubyLLM' do
+end
+

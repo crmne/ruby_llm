@@ -12,6 +12,7 @@ RSpec.describe RubyLLM::Chat do
       'gemini-2.0-flash',
       'deepseek-chat',
       'gpt-4o-mini',
+      # FIXME: this 0.1B model is too dumb to know who Matz is
       'smollm:135m'
     ].each do |model|
       it "#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations

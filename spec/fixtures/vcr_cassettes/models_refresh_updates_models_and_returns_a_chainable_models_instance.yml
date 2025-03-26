@@ -1239,4 +1239,32 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '{"object":"list","data":[{"id":"deepseek-chat","object":"model","owned_by":"deepseek"},{"id":"deepseek-reasoner","object":"model","owned_by":"deepseek"}]}'
   recorded_at: Tue, 25 Mar 2025 17:50:51 GMT
+- request:
+    method: get
+    uri: http://localhost:11434/api/tags
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 26 Mar 2025 17:18:38 GMT
+      Content-Length:
+      - '681'
+    body:
+      encoding: UTF-8
+      string: '{"models":[{"name":"snowflake-arctic-embed:22m","model":"snowflake-arctic-embed:22m","modified_at":"2025-03-26T17:18:08.367580922Z","size":45838698,"digest":"bf75350e17522c7dfe63e98f50457b27fadcfee62f0c0767c1c86053407c2abb","details":{"parent_model":"","format":"gguf","family":"bert","families":["bert"],"parameter_size":"23M","quantization_level":"F16"}},{"name":"smollm:135m","model":"smollm:135m","modified_at":"2025-03-26T17:18:01.303574119Z","size":91739413,"digest":"b0b2a46174385c0adcaa77ff245ffeced5fc4a61447b6f221b2beb5c5a760133","details":{"parent_model":"","format":"gguf","family":"llama","families":["llama"],"parameter_size":"134.52M","quantization_level":"Q4_0"}}]}'
+  recorded_at: Wed, 26 Mar 2025 17:18:38 GMT
 recorded_with: VCR 6.3.1
