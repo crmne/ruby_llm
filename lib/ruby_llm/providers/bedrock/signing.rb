@@ -856,20 +856,8 @@ module RubyLLM
           # @param [Hash] options Configuration options for the signer
           def initialize(options = {})
             components = SignerInitializer.create_components(options)
-
-            @service = components[:service]
-            @region = components[:region]
-            @credentials_provider = components[:credentials_provider]
-            @unsigned_headers = components[:unsigned_headers]
-            @uri_escape_path = components[:uri_escape_path]
-            @apply_checksum_header = components[:apply_checksum_header]
-            @signing_algorithm = components[:signing_algorithm]
-            @normalize_path = components[:normalize_path]
-            @omit_session_token = components[:omit_session_token]
-
-            @signature_generator = components[:signature_generator]
-            @header_builder = components[:header_builder]
-            @credential_manager = components[:credential_manager]
+            setup_configuration(components)
+            setup_service_components(components)
           end
 
           # @return [String]
@@ -909,6 +897,24 @@ module RubyLLM
           end
 
           private
+
+          def setup_configuration(components)
+            @service = components[:service]
+            @region = components[:region]
+            @credentials_provider = components[:credentials_provider]
+            @unsigned_headers = components[:unsigned_headers]
+            @uri_escape_path = components[:uri_escape_path]
+            @apply_checksum_header = components[:apply_checksum_header]
+            @signing_algorithm = components[:signing_algorithm]
+            @normalize_path = components[:normalize_path]
+            @omit_session_token = components[:omit_session_token]
+          end
+
+          def setup_service_components(components)
+            @signature_generator = components[:signature_generator]
+            @header_builder = components[:header_builder]
+            @credential_manager = components[:credential_manager]
+          end
 
           def build_signature_response(components, sigv4_headers, signature)
             headers = @header_builder.build_headers(sigv4_headers, signature, components)
