@@ -19,17 +19,22 @@ module RubyLLM
     end
   end
 
-  class ModelNotFoundError < StandardError; end
-  class InvalidRoleError < StandardError; end
-  class UnsupportedFunctionsError < StandardError; end
+  # Error classes for non-HTTP errors
   class ConfigurationError < StandardError; end
-  class UnauthorizedError < Error; end
-  class PaymentRequiredError < Error; end
-  class ServiceUnavailableError < Error; end
+  class InvalidRoleError < StandardError; end
+  class ModelNotFoundError < StandardError; end
+  class UnsupportedFunctionsError < StandardError; end
+
+  # Error classes for different HTTP status codes
   class BadRequestError < Error; end
+  class ForbiddenError < Error; end
+  class OverloadedError < Error; end
+  class PaymentRequiredError < Error; end
   class RateLimitError < Error; end
   class ServerError < Error; end
   class ForbiddenError < Error; end
+  class ServiceUnavailableError < Error; end
+  class UnauthorizedError < Error; end
 
   # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
   # Uses provider's parse_error method to extract meaningful error messages.
@@ -67,6 +72,8 @@ module RubyLLM
           raise ServerError.new(response, message || 'API server error - please try again')
         when 502..503
           raise ServiceUnavailableError.new(response, message || 'API server unavailable - please try again later')
+        when 529
+          raise OverloadedError.new(response, message || 'Service overloaded - please try again later')
         else
           raise Error.new(response, message || 'An unknown error occurred')
         end
