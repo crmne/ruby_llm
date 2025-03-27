@@ -28,7 +28,8 @@ RSpec.describe RubyLLM::Chat do
     [
       'claude-3-5-haiku-20241022',
       'gemini-2.0-flash',
-      'gpt-4o-mini'
+      'gpt-4o-mini',
+      'llama3.1:8b'
     ].each do |model|
       it "#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
