@@ -60,14 +60,13 @@ module RubyLLM
 
           tc = response_data['message']['tool_calls'] ||= []
           response_data['message']['content']&.gsub!(%r{<tool_?call>(.*)</tool_?call>}mi) do
-            capture = $1
+            capture = ::Regexp.last_match(1)
             tc << JSON.parse(capture) if capture =~ /^\s*{/
             ''
           end
           tc.flatten!
           response_data
         end
-
       end
     end
   end

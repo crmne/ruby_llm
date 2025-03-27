@@ -27,7 +27,7 @@ module RubyLLM
 
             {
               role: msg.role.to_s,
-              content: text,
+              content: text
             }.tap { |h| h.merge!(images: images) if images.any? }
           end
         end
