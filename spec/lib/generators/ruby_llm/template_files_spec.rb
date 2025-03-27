@@ -30,10 +30,11 @@ RSpec.describe "Generator template files", type: :generator do
       expect(message_migration).to include("t.references :chat")
       expect(message_migration).to include("t.string :role")
       expect(message_migration).to include("t.text :content")
+      expect(message_migration).to include("t.references :tool_call")
       
       tool_call_migration = File.read(File.join(template_dir, "create_tool_calls_migration.rb"))
       expect(tool_call_migration).to include("create_table :tool_calls")
-      expect(tool_call_migration).to include("t.references :message")
+      expect(tool_call_migration).to include("# No reference to message to avoid circular references")
       expect(tool_call_migration).to include("t.string :tool_call_id")
       expect(tool_call_migration).to include("t.string :name")
       
@@ -96,6 +97,31 @@ RSpec.describe "Generator template files", type: :generator do
       expect(generator_content).to include("def create_migration_files")
       expect(generator_content).to include("def create_model_files")
       expect(generator_content).to include("def create_initializer")
+    end
+    
+    it "creates migrations in the correct order" do
+      generator_file = "/Users/kieranklaassen/rails/ruby_llm/lib/generators/ruby_llm/install_generator.rb"
+      generator_content = File.read(generator_file)
+      
+      # Check for correct order in migration creation
+      # 1. First chats table (no dependencies)
+      # 2. Then tool_calls table (will be referenced by messages)
+      # 3. Finally messages table (depends on both chats and tool_calls)
+      
+      # Simply check the order of template calls
+      # Chats should come before tool_calls, which should come before messages
+      chats_position = generator_content.index('create_chats.rb')
+      tool_calls_position = generator_content.index('create_tool_calls.rb') 
+      messages_position = generator_content.index('create_messages.rb')
+      
+      # Verify order: chats -> tool_calls -> messages
+      expect(chats_position).to be < tool_calls_position
+      expect(tool_calls_position).to be < messages_position
+      
+      # Also test that the method enforces sequential timestamps
+      expect(generator_content).to include("@migration_number = Time.now.utc.strftime")
+      expect(generator_content).to include("@migration_number = (@migration_number.to_i + 1).to_s")
+      expect(generator_content).to include("@migration_number = (@migration_number.to_i + 2).to_s")
     end
   end
   
