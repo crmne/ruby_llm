@@ -31,6 +31,13 @@ module RubyLLM
       def configuration_requirements
         %i[ollama_api_base_url]
       end
+
+      def parse_error(response)
+        return if response.body.empty?
+
+        body = try_parse_json(response.body)
+        body['error']
+      end
     end
   end
 end
