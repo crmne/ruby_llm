@@ -36,7 +36,13 @@ RSpec.describe "Generator template files", type: :generator do
       expect(tool_call_migration).to include("t.references :message")
       expect(tool_call_migration).to include("t.string :tool_call_id")
       expect(tool_call_migration).to include("t.string :name")
+      
+      # Should check for database-agnostic JSON handling
+      expect(tool_call_migration).to include("if postgresql?")
       expect(tool_call_migration).to include("t.jsonb :arguments")
+      expect(tool_call_migration).to include("else")
+      expect(tool_call_migration).to include("t.json :arguments") 
+      expect(tool_call_migration).to include("end")
     end
   end
   
@@ -90,6 +96,19 @@ RSpec.describe "Generator template files", type: :generator do
       expect(generator_content).to include("def create_migration_files")
       expect(generator_content).to include("def create_model_files")
       expect(generator_content).to include("def create_initializer")
+    end
+  end
+  
+  describe "database adapter detection" do
+    it "has proper postgresql detection method" do
+      generator_file = "/Users/kieranklaassen/rails/ruby_llm/lib/generators/ruby_llm/install_generator.rb"
+      generator_content = File.read(generator_file)
+      
+      # Check proper postgresql? method implementation
+      expect(generator_content).to include("def postgresql?")
+      expect(generator_content).to include("ActiveRecord::Base.connection.adapter_name.downcase.include?(\"postgresql\")")
+      expect(generator_content).to include("rescue")
+      expect(generator_content).to include("false")
     end
   end
 end

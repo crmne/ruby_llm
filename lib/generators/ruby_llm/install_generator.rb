@@ -19,6 +19,12 @@ module RubyLLM
     def migration_version
       "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
     end
+    
+    def postgresql?
+      ActiveRecord::Base.connection.adapter_name.downcase.include?("postgresql")
+    rescue
+      false
+    end
 
     def create_migration_files
       migration_template "create_chats_migration.rb", "db/migrate/create_chats.rb"
