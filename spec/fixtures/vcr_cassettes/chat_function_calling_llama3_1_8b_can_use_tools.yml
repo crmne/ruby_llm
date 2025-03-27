@@ -29,20 +29,20 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 27 Mar 2025 19:40:44 GMT
+      - Thu, 27 Mar 2025 20:52:55 GMT
       Server:
       - Caddy
     body:
       encoding: UTF-8
-      string: '{"model":"llama3.1:8b","created_at":"2025-03-27T19:40:44.116572023Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},"done_reason":"stop","done":true,"total_duration":330510672,"load_duration":19297272,"prompt_eval_count":205,"prompt_eval_duration":10692419,"eval_count":28,"eval_duration":300128824}'
-  recorded_at: Thu, 27 Mar 2025 19:40:37 GMT
+      string: '{"model":"llama3.1:8b","created_at":"2025-03-27T20:52:55.210031365Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},"done_reason":"stop","done":true,"total_duration":327978180,"load_duration":15623627,"prompt_eval_count":205,"prompt_eval_duration":12561197,"eval_count":28,"eval_duration":299354569}'
+  recorded_at: Thu, 27 Mar 2025 20:52:48 GMT
 - request:
     method: post
     uri: http://localhost:11434/api/chat
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant"},{"role":"tool","content":"Current
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"options":{"temperature":0.1},"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -62,16 +62,16 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '412'
+      - '435'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 27 Mar 2025 19:40:44 GMT
+      - Thu, 27 Mar 2025 20:52:55 GMT
       Server:
       - Caddy
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDMtMjdUMTk6NDA6NDQuNDI0MDA1MTYzWiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlcyB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIEJlcmxpbiBpcyAxNcKwQyBhbmQgdGhlcmUncyBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZG9uZV9yZWFzb24iOiJzdG9wIiwiZG9uZSI6dHJ1ZSwidG90YWxfZHVyYXRpb24iOjMwNDAyODUzNCwibG9hZF9kdXJhdGlvbiI6MTUzMzQwODgsInByb21wdF9ldmFsX2NvdW50IjoxMTIsInByb21wdF9ldmFsX2R1cmF0aW9uIjo1OTI3NTUyLCJldmFsX2NvdW50IjoyOCwiZXZhbF9kdXJhdGlvbiI6MjgyMTgxMjMzfQ==
-  recorded_at: Thu, 27 Mar 2025 19:40:37 GMT
+        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDMtMjdUMjA6NTI6NTUuNTE1NDY1MTA4WiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlcyB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIEJlcmxpbiBpcyAxNcKwQyBhbmQgdGhlIHdpbmQgc3BlZWQgaXMgYXBwcm94aW1hdGVseSAxMCBraWxvbWV0ZXJzIHBlciBob3VyLiJ9LCJkb25lX3JlYXNvbiI6InN0b3AiLCJkb25lIjp0cnVlLCJ0b3RhbF9kdXJhdGlvbiI6MzAyNDc4Njc0LCJsb2FkX2R1cmF0aW9uIjoxNDcxMTc2NywicHJvbXB0X2V2YWxfY291bnQiOjExMiwicHJvbXB0X2V2YWxfZHVyYXRpb24iOjYwMTcwMDUsImV2YWxfY291bnQiOjI4LCJldmFsX2R1cmF0aW9uIjoyODEwNTA1NDB9
+  recorded_at: Thu, 27 Mar 2025 20:52:48 GMT
 recorded_with: VCR 6.3.1
