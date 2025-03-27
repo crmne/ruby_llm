@@ -8,5 +8,15 @@ module RubyLLM
         include RubyLLM::ActiveRecord::ActsAs
       end
     end
+    
+    # Include rake tasks if applicable
+    rake_tasks do
+      # Task definitions go here if needed
+    end
+    
+    # Register generators
+    generators do
+      require 'generators/ruby_llm/install_generator'
+    end
   end
 end
