@@ -83,8 +83,7 @@ RSpec.configure do |config|
     end
   end
 
-  # Run once before all tests
-  config.before(:suite) do
+  VCR.use_cassette("initial_model_refresh") do
     RubyLLM.configure do |config|
       config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL', 'http://localhost:11434')
       # needs to run when ONLY Ollama is configured and before any others are configured
