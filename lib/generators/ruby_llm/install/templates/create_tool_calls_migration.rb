@@ -4,8 +4,6 @@
 class CreateToolCalls < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :tool_calls do |t|
-      # No reference to message to avoid circular references
-      # Messages will reference tool_calls, not the other way around
       t.string :tool_call_id, null: false
       t.string :name, null: false
       
