@@ -185,11 +185,37 @@ chat.with_model('gemini-2.0-flash').ask "What's your favorite algorithm?"
 
 ## Rails integration that makes sense
 
+### Option 1: Create new models with the generator
+
+Simply run the generator to set up all required models:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This creates all necessary migrations, models, and database tables. Then just use them:
+
+```ruby
+# In your controller
+chat = Chat.create!(model_id: "gpt-4o-mini")
+chat.ask("What's your favorite Ruby gem?") do |chunk|
+  Turbo::StreamsChannel.broadcast_append_to(
+    chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+  )
+end
+
+# That's it - chat history is automatically saved
+```
+
+### Option 2: Add to your existing models
+
+Or, add RubyLLM to your existing ActiveRecord models:
+
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
-
+  
   # Works great with Turbo
   broadcasts_to ->(chat) { "chat_#{chat.id}" }
 end
