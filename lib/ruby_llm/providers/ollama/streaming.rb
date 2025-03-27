@@ -25,6 +25,8 @@ module RubyLLM
         end
 
         def build_chunk(data)
+          data = Tools.preprocess_tool_calls(data)
+
           Chunk.new(
             role: :assistant,
             content: data.dig('message', 'content'),

@@ -48,6 +48,26 @@ module RubyLLM
           end.compact
         end
 
+        # HACK: Llama3.x yields this in the proper tool_calls response field,
+        # but some other models return it as markup inside the text response.
+        #
+        # Unfortunately said other models are all over the place when it comes
+        # to sticking to a format so this doesn't cover all edge cases.
+        def preprocess_tool_calls(response_data)
+          # Move <toolcall>JSON</toolcall> markup from inside the text to its
+          # specific field in the response where it should be.
+          # https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
+
+          tc = response_data['message']['tool_calls'] ||= []
+          response_data['message']['content']&.gsub!(%r{<tool_?call>(.*)</tool_?call>}mi) do
+            capture = $1
+            tc << JSON.parse(capture) if capture =~ /^\s*{/
+            ''
+          end
+          tc.flatten!
+          response_data
+        end
+
       end
     end
   end

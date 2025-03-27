@@ -24,7 +24,7 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          data = Tools.preprocess_tool_calls(response.body)
 
           Message.new(
             role: :assistant,
