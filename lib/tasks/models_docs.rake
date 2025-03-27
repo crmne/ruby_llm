@@ -21,15 +21,16 @@ namespace :models do
 
       This guide lists all models available in RubyLLM, automatically generated from the current model registry.
 
-      _Last updated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC_
+      This file was generated at #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC, 
+      but the lib/ruby_llm/models.json file from which it was generated may or may not be up to date.
 
       ## Contributing
 
       The model list is automatically generated from the model registry. To add or update models:
 
-      1. Run `rake models:update` to refresh the model registry.
-      2. Run `rake models:update_capabilities` to refresh the model capabilities.
-      3. Submit a pull request with the updated `models.json`
+      1. Run `rake models:update` to refresh lib/ruby_llm/models.json.
+      2. Run `rake models:update_capabilities` to refresh lib/ruby_llm/providers/**/capabilities.rb.
+      3. Submit a pull request with the updated files.
 
       See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
