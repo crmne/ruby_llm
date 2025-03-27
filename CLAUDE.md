@@ -16,6 +16,7 @@
 - Follow consistent model naming conventions across providers
 - Keep normalized model IDs (separate model from provider)
 - Use consistent parameter naming across providers
+- Always run rubycop to lint
 
 ## Testing Practices
 - Tests automatically create VCR cassettes based on their descriptions
