@@ -86,6 +86,22 @@ RSpec.describe "Generator template files", type: :generator do
     end
   end
   
+  describe "README template" do
+    it "has a README template file" do
+      expect(File.exist?(File.join(template_dir, "README.md"))).to be(true)
+    end
+    
+    it "has helpful post-installation instructions" do
+      readme_content = File.read(File.join(template_dir, "README.md"))
+      expect(readme_content).to include("RubyLLM Rails Setup Complete")
+      expect(readme_content).to include("Run migrations")
+      expect(readme_content).to include("rails db:migrate")
+      expect(readme_content).to include("Set your API keys")
+      expect(readme_content).to include("Start using RubyLLM in your code")
+      expect(readme_content).to include("For streaming responses")
+    end
+  end
+  
   describe "generator file structure" do
     it "has proper directory structure" do
       generator_file = "/Users/kieranklaassen/rails/ruby_llm/lib/generators/ruby_llm/install_generator.rb"
@@ -97,6 +113,7 @@ RSpec.describe "Generator template files", type: :generator do
       expect(generator_content).to include("def create_migration_files")
       expect(generator_content).to include("def create_model_files")
       expect(generator_content).to include("def create_initializer")
+      expect(generator_content).to include("def show_readme")
     end
     
     it "creates migrations in the correct order" do
