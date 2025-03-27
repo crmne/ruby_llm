@@ -47,7 +47,7 @@ module RubyLLM
             next if line.empty?
 
             parsed_data = JSON.parse(line)
-            block.call(parsed_data) unless parsed_data['done']
+            block.call(parsed_data)
           end
         end
       end
