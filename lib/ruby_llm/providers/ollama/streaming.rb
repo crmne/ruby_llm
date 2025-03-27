@@ -29,6 +29,7 @@ module RubyLLM
             role: :assistant,
             content: data.dig('message', 'content'),
             model_id: data['model'],
+            tool_calls: parse_tool_calls(data.dig('message', 'tool_calls')),
 
             # NOTE: unavailable in the response - https://ollama.readthedocs.io/en/api/#streaming-responses
             input_tokens: nil,

@@ -12,15 +12,14 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false)
-          raise NotImplementedError, 'tool use not implemented in Ollama at this time' if tools.any?
-
           {
             model: model,
             messages: Media.format_messages(messages),
             options: {
               temperature: temperature
             },
-            stream: stream
+            stream: stream,
+            tools: tools.map { |_, tool| tool_for(tool) }
           }
         end
 
@@ -32,7 +31,8 @@ module RubyLLM
             content: data.dig('message', 'content'),
             input_tokens: data['prompt_eval_count'].to_i,
             output_tokens: data['eval_count'].to_i,
-            model_id: data['model']
+            model_id: data['model'],
+            tool_calls: parse_tool_calls(data.dig('message', 'tool_calls'))
           )
         end
       end

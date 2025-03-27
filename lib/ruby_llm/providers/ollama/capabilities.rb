@@ -39,7 +39,7 @@ module RubyLLM
         # @return [Boolean] true if the model supports function calling
         def supports_functions?(_model_id)
           # FIXME: placeholder
-          false
+          true
         end
 
         # Determines if the model supports JSON mode
