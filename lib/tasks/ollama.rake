@@ -3,7 +3,9 @@
 require 'ruby_llm'
 
 def pull_model(ollama_library_model_spec, description)
-  warn "+ pulling #{ollama_library_model_spec} from Ollama library (#{description})"
+  warn <<~MESSAGE
+    + pulling #{ollama_library_model_spec} from Ollama library (#{description}); monitor progress in Ollama server logs
+  MESSAGE
 
   # ugly but effective
   response = RubyLLM::Providers::Ollama.send(
@@ -22,11 +24,12 @@ def pull_model(ollama_library_model_spec, description)
 end
 
 namespace :ollama do
-  desc 'Install some tiny models required for running Ollama specs (downloads about 150 MB into your Ollama server)'
+  desc 'Install some tiny models required for running Ollama specs (downloads about 5 GiB into your Ollama server)'
   task :install_models_for_specs do
+    RubyLLM.config.request_timeout = 60 * 30 # 30min timeout per model since pull is synchronous
     RubyLLM.config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL')
 
-    pull_model('smollm:135m', '92MiB chat model')
-    pull_model('snowflake-arctic-embed:22m', '46MiB embedding model')
+    pull_model('llama3.1:8b', '4.9 GiB chat model')
+    pull_model('snowflake-arctic-embed:22m', '46 MiB embedding model')
   end
 end

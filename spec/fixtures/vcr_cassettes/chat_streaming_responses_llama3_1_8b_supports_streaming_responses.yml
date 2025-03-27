@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"Count
+        from 1 to 3","images":[]}],"options":{"temperature":0.7},"stream":true,"tools":[]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Thu, 27 Mar 2025 20:15:12 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.823627546Z","message":{"role":"assistant","content":"Here"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.836926583Z","message":{"role":"assistant","content":" it"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.845628305Z","message":{"role":"assistant","content":" is"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.854520068Z","message":{"role":"assistant","content":":\n\n"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.863223164Z","message":{"role":"assistant","content":"1"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.871980804Z","message":{"role":"assistant","content":"\n"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.880710143Z","message":{"role":"assistant","content":"2"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.889518343Z","message":{"role":"assistant","content":"\n"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.89843357Z","message":{"role":"assistant","content":"3"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-03-27T20:15:12.907436856Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":3301695608,"load_duration":3125133401,"prompt_eval_count":17,"prompt_eval_duration":88101212,"eval_count":10,"eval_duration":86549601}
+  recorded_at: Thu, 27 Mar 2025 20:15:06 GMT
+recorded_with: VCR 6.3.1
