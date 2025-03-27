@@ -1,0 +1,138 @@
+# frozen_string_literal: true
+
+require 'ruby_llm'
+require 'fileutils'
+
+namespace :models do
+  desc 'Generate available models documentation'
+  task :docs do
+    FileUtils.mkdir_p('docs/guides') # ensure output directory exists
+
+    output = <<~MARKDOWN
+      ---
+      layout: default
+      title: Available Models
+      parent: Guides
+      nav_order: 10
+      permalink: /guides/available-models
+      ---
+
+      # Available Models
+
+      This guide lists all models available in RubyLLM, automatically generated from the current model registry.
+
+      _Last updated: #{Time.now.strftime('%Y-%m-%d')}_
+
+      ## Models by Type
+
+      ### Chat Models
+
+      #{to_markdown_table(RubyLLM.models.chat_models)}
+
+      ### Image Models
+
+      #{to_markdown_table(RubyLLM.models.image_models)}
+
+      ### Audio Models
+
+      #{to_markdown_table(RubyLLM.models.audio_models)}
+
+      ### Embedding Models
+
+      #{to_markdown_table(RubyLLM.models.embedding_models)}
+
+      ### Moderation Models
+
+      #{to_markdown_table(RubyLLM.models.select { |m| m.type == 'moderation'})}
+
+      ## Models by Provider
+
+      #{RubyLLM::Provider.providers.keys.map { |provider|
+        models = RubyLLM.models.by_provider(provider)
+        next if models.none?
+        
+        <<~PROVIDER
+          ### #{provider.to_s.capitalize} Models
+
+          #{to_markdown_table(models)}
+        PROVIDER
+      }.compact.join("\n")}
+    MARKDOWN
+
+    File.write('docs/guides/available-models.md', output)
+    puts "Generated docs/guides/available-models.md"
+  end
+
+  private
+
+  MODEL_KEYS_TO_DISPLAY = [
+    :id,
+    :type,
+    :display_name, 
+    :provider, 
+    :context_window, 
+    :max_tokens, 
+    :family, 
+    :input_price_per_million, 
+    :output_price_per_million
+  ]
+
+  def to_display_hash(model)
+    model.to_h.slice(*MODEL_KEYS_TO_DISPLAY)
+  end
+
+  def to_markdown_table(models)
+    model_hashes = Array(models).map { |model| to_display_hash(model) }
+
+    # Create abbreviated headers
+    headers = {
+      id: "ID",
+      type: "Type",
+      display_name: "Name",
+      provider: "Provider",
+      context_window: "Context",
+      max_tokens: "MaxTok",
+      family: "Family",
+      input_price_per_million: "In$/M",
+      output_price_per_million: "Out$/M"
+    }
+
+    # Create header row with alignment markers
+    # Right-align numbers, left-align text
+    alignments = {
+      id: ":--",
+      type: ":--",
+      display_name: ":--",
+      provider: ":--",
+      context_window: "--:",
+      max_tokens: "--:",
+      family: ":--",
+      input_price_per_million: "--:",
+      output_price_per_million: "--:"
+    }
+
+    # Build the table
+    lines = []
+    
+    # Header row
+    lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| headers[key] }.join(' | ')} |"
+    
+    # Alignment row
+    lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| alignments[key] }.join(' | ')} |"
+    
+    # Data rows
+    model_hashes.each do |model_hash|
+      values = MODEL_KEYS_TO_DISPLAY.map do |key| 
+        if model_hash[key].is_a?(Float)
+          format('%.2f', model_hash[key])
+        else
+          model_hash[key]
+        end
+      end
+
+      lines << "| #{values.join(' | ')} |"
+    end
+
+    lines.join("\n")
+  end
+end 
