@@ -27,9 +27,23 @@ module RubyLLM
     end
 
     def create_migration_files
+      # Create migrations in the correct order with sequential timestamps
+      # to ensure proper foreign key references:
+      # 1. First create chats (no dependencies)
+      # 2. Then create tool_calls (will be referenced by messages)
+      # 3. Finally create messages (depends on both chats and tool_calls)
+      
+      # Use a fixed timestamp for testing and to ensure they're sequential
+      @migration_number = Time.now.utc.strftime("%Y%m%d%H%M%S")
       migration_template "create_chats_migration.rb", "db/migrate/create_chats.rb"
-      migration_template "create_messages_migration.rb", "db/migrate/create_messages.rb"
+      
+      # Increment timestamp for the next migration
+      @migration_number = (@migration_number.to_i + 1).to_s
       migration_template "create_tool_calls_migration.rb", "db/migrate/create_tool_calls.rb"
+      
+      # Increment timestamp again for the final migration
+      @migration_number = (@migration_number.to_i + 2).to_s
+      migration_template "create_messages_migration.rb", "db/migrate/create_messages.rb"
     end
 
     def create_model_files
