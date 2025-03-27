@@ -21,7 +21,17 @@ namespace :models do
 
       This guide lists all models available in RubyLLM, automatically generated from the current model registry.
 
-      _Last updated: #{Time.now.strftime('%Y-%m-%d')}_
+      _Last updated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC_
+
+      ## Contributing
+
+      The model list is automatically generated from the model registry. To add or update models:
+
+      1. Run `rake models:update` to refresh the model registry.
+      2. Run `rake models:update_capabilities` to refresh the model capabilities.
+      3. Submit a pull request with the updated `models.json`
+
+      See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
       ## Models by Type
 
@@ -54,9 +64,22 @@ namespace :models do
         <<~PROVIDER
           ### #{provider.to_s.capitalize} Models
 
-          #{to_markdown_table(models)}
+            #{to_markdown_table(models)}
         PROVIDER
       }.compact.join("\n")}
+
+      ## Model Capabilities
+
+      Each model in the registry includes information about its capabilities:
+
+      - **Context Window**: Maximum number of tokens the model can process in a single request
+      - **Max Tokens**: Maximum number of tokens the model can generate in a single response
+      - **Vision Support**: Whether the model can process images
+      - **Function Calling**: Whether the model supports function calling
+      - **JSON Mode**: Whether the model can be constrained to output valid JSON
+      - **Pricing**: Cost per million tokens for input and output
+
+      For more information about working with models, see the [Working with Models](/guides/models) guide.
     MARKDOWN
 
     File.write('docs/guides/available-models.md', output)
