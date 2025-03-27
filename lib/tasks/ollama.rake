@@ -24,7 +24,7 @@ def pull_model(ollama_library_model_spec, description)
 end
 
 namespace :ollama do
-  desc 'Install some tiny models required for running Ollama specs (downloads about 7.5 GiB into your Ollama server)'
+  desc 'Install some models required for running Ollama specs (downloads about 7.5 GiB into your Ollama server)'
   task :install_models_for_specs do
     RubyLLM.config.request_timeout = 60 * 30 # 30min timeout per model since pull is synchronous
     RubyLLM.config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL')
