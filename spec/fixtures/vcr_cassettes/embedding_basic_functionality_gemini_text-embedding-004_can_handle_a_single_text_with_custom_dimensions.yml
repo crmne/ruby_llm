@@ -5,7 +5,7 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent
     body:
       encoding: UTF-8
-      string: '{"content":{"parts":[{"text":"Ruby is a programmer''s best friend"}]}}'
+      string: '{"content":{"parts":[{"text":"Ruby is a programmer''s best friend"}]},"outputDimensionality":768}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=239
+      - gfet4t7; dur=238
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -821,5 +821,5 @@ http_interactions:
             ]
           }
         }
-  recorded_at: Thu, 03 Apr 2025 15:13:34 GMT
+  recorded_at: Thu, 03 Apr 2025 15:13:35 GMT
 recorded_with: VCR 6.3.1
