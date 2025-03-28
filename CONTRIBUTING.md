@@ -133,9 +133,6 @@ bundle exec rspec
 
 # Run a specific test file
 bundle exec rspec spec/ruby_llm/chat_spec.rb
-
-# Run generator template tests
-bundle exec rspec spec/lib/generators/ruby_llm/template_files_spec.rb
 ```
 
 ### Recording VCR Cassettes
