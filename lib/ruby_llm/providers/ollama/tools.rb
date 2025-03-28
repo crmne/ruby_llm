@@ -47,9 +47,9 @@ module RubyLLM
         #
         # Unfortunately said other models are all over the place when it comes
         # to sticking to a format so this doesn't cover all edge cases.
-        def preprocess_tool_calls(response_data)
-          # Move <toolcall>JSON</toolcall> markup from inside the text to its
-          # specific field in the response where it should be.
+        def preprocess_tool_calls(response_data) # rubocop:disable Metrics/MethodLength
+          # Parse <toolcall>JSON</toolcall> markup from inside the text and
+          # fill in proper fields in the response
           # https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
 
           m = response_data['message']
@@ -58,12 +58,13 @@ module RubyLLM
           [
             %r{<tool_?call>(.*)</tool_?call>}mi,
             %r{<tool_?call>(.*)}mi
-          ].each do |regex|
-            m['content'] = m['content'].gsub(regex) do
-              capture = ::Regexp.last_match(1)
-              tc << JSON.parse(capture)
-              ''
+          ].find do |regex|
+            done = false
+            m['content'].scan(regex) do |(match)|
+              tc << JSON.parse(match)
+              done = true
             end
+            done
           end
           tc.flatten!
           response_data
