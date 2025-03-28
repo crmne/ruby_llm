@@ -29,8 +29,8 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil, provider: nil)
-      Chat.new(model: model, provider: provider)
+    def chat(model: nil, provider: nil, config: configuration)
+      Chat.new(model: model, provider: provider, config: config)
     end
 
     def embed(...)
@@ -56,6 +56,8 @@ module RubyLLM
     def config
       @config ||= Configuration.new
     end
+
+    alias configuration config
 
     def logger
       @logger ||= Logger.new(

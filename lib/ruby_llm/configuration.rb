@@ -27,5 +27,14 @@ module RubyLLM
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
     end
+
+    def dup
+      config = self.class.new
+      instance_variables.each do |var|
+        value = instance_variable_get(var)
+        config.instance_variable_set(var, value)
+      end
+      config
+    end
   end
 end
