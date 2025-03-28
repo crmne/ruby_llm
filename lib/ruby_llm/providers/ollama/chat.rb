@@ -24,7 +24,7 @@ module RubyLLM
               temperature: temperature
             },
             stream: stream
-          }.tap { |h| h.merge!(tools: tools) if tools.any? }
+          }.tap { |h| h.merge!(tools: tools.map { |_, t| tool_for(t) }) if tools.any? }
         end
 
         def parse_completion_response(response)
