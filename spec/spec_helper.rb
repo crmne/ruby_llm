@@ -46,6 +46,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
 
+  # Pretend this is the same for everyone
+  config.filter_sensitive_data('http://localhost:11434') { ENV.fetch('OLLAMA_API_BASE_URL', nil) }
+
   # Filter sensitive response headers
   config.filter_sensitive_data('<OPENAI_ORGANIZATION>') do |interaction|
     interaction.response.headers['Openai-Organization']&.first
@@ -79,11 +82,15 @@ RSpec.configure do |config|
       example.run
     end
   end
-end
 
-RSpec.shared_context 'with configured RubyLLM' do
-  before do
+  # Run once at test suite startup
+  VCR.use_cassette('initial_model_refresh') do
     RubyLLM.configure do |config|
+      config.ollama_api_base_url = ENV.fetch('OLLAMA_API_BASE_URL', 'http://localhost:11434')
+      # needs to run when ONLY Ollama is configured and before any others are configured
+      # FIXME: RubyLLM.models.refresh!(provider: 'ollama') would be a cleaner solution
+      RubyLLM.models.refresh!
+
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
@@ -91,4 +98,8 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.max_retries = 50
     end
   end
+end
+
+RSpec.shared_context 'with configured RubyLLM' do
+  # Put any per-test preeambles here
 end

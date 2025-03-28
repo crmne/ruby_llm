@@ -30,6 +30,7 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.ollama_api_base_url = 'http://localhost:11434'
 end
 ```
 
@@ -64,6 +65,11 @@ claude_chat.ask "Tell me about Ruby programming language"
 # Use Gemini
 gemini_chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 gemini_chat.ask "What are the best Ruby gems for machine learning?"
+
+# Use an Ollama model - pull it to the server first (consult Ollama docs) and then do models.refresh! before using it:
+RubyLLM.models.refresh!  # Needs to be called to populate Ollama models before using any
+ollama_chat = RubyLLM.chat(model: 'gemma3:latest')
+ollama_chat.ask "What is Alphabet?"
 ```
 
 ## Exploring Available Models

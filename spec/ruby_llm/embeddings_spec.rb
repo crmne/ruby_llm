@@ -12,7 +12,8 @@ RSpec.describe RubyLLM::Embedding do
   describe 'basic functionality' do
     [
       'text-embedding-004', # gemini
-      'text-embedding-3-small' # openai
+      'text-embedding-3-small', # openai
+      'snowflake-arctic-embed:22m' # ollama
     ].each do |model|
       it "#{model} can handle a single text" do # rubocop:disable RSpec/MultipleExpectations
         embedding = RubyLLM.embed(test_text, model: model)
