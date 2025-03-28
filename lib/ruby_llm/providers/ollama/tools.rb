@@ -52,11 +52,18 @@ module RubyLLM
           # specific field in the response where it should be.
           # https://github.com/ollama/ollama/blob/main/docs/api.md#chat-request-with-tools
 
-          tc = response_data['message']['tool_calls'] ||= []
-          response_data['message']['content']&.gsub!(%r{<tool_?call>(.*)</tool_?call>}mi) do
-            capture = ::Regexp.last_match(1)
-            tc << JSON.parse(capture) if capture =~ /^\s*{/
-            ''
+          m = response_data['message']
+          tc = m['tool_calls'] ||= []
+
+          [
+            %r{<tool_?call>(.*)</tool_?call>}mi,
+            %r{<tool_?call>(.*)}mi
+          ].each do |regex|
+            m['content'] = m['content'].gsub(regex) do
+              capture = ::Regexp.last_match(1)
+              tc << JSON.parse(capture)
+              ''
+            end
           end
           tc.flatten!
           response_data
