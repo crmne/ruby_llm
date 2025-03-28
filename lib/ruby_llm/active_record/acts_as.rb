@@ -37,7 +37,7 @@ module RubyLLM
           @chat_class = chat_class.to_s
           @tool_call_class = tool_call_class.to_s
 
-          belongs_to :chat, class_name: @chat_class
+          belongs_to :chat, class_name: @chat_class, foreign_key: "#{@chat_class.underscore}_id"
           has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
 
           belongs_to :parent_tool_call,
@@ -52,7 +52,7 @@ module RubyLLM
         def acts_as_tool_call(message_class: 'Message')
           @message_class = message_class.to_s
 
-          belongs_to :message, class_name: @message_class
+          belongs_to :message, class_name: @message_class, foreign_key: "#{@message_class.underscore}_id"
 
           has_one :result,
                   class_name: @message_class,
