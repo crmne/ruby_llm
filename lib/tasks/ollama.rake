@@ -2,7 +2,7 @@
 
 require 'ruby_llm'
 
-def pull_model(ollama_library_model_spec, description)
+def pull_model(ollama_library_model_spec, description) # rubocop:disable Metrics/MethodLength
   warn <<~MESSAGE
     + pulling #{ollama_library_model_spec} from Ollama library (#{description}); monitor progress in Ollama server logs
   MESSAGE

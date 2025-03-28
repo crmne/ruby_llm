@@ -35,7 +35,7 @@ module RubyLLM
 
         private
 
-        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/MethodLength
+        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
           (response.body['models'] || []).map do |model|
             model_id = model['name']
 

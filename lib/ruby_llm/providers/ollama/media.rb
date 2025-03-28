@@ -9,27 +9,33 @@ module RubyLLM
 
         def format_messages(messages)
           messages.map do |msg|
-            text = nil
-            images = []
-
-            if msg.content.is_a?(Array)
-              msg.content.each do |part|
-                case part[:type]
-                when 'text'
-                  text = part[:text]
-                when 'image'
-                  images << part[:source][:data]
-                end
-              end
-            else
-              text = msg.content
-            end
+            text, images = separate_by_type(msg)
 
             {
               role: msg.role.to_s,
               content: text
             }.tap { |h| h.merge!(images: images) if images.any? }
           end
+        end
+
+        def separate_by_type(msg) # rubocop:disable Metrics/MethodLength
+          text = nil
+          images = []
+
+          if msg.content.is_a?(Array)
+            msg.content.each do |part|
+              case part[:type]
+              when 'text'
+                text = part[:text]
+              when 'image'
+                images << part[:source][:data]
+              end
+            end
+          else
+            text = msg.content
+          end
+
+          [text, images]
         end
       end
     end

@@ -7,7 +7,7 @@ module RubyLLM
       module Tools
         module_function
 
-        def tool_for(tool)
+        def tool_for(tool) # rubocop:disable Metrics/MethodLength
           {
             type: 'function',
             function: {
@@ -30,20 +30,14 @@ module RubyLLM
         end
 
         def parse_tool_calls(tool_calls)
-          return nil unless tool_calls&.any?
-
-          tool_calls.to_h do |tc|
+          (tool_calls || []).to_h do |tc|
             tc = tc['function'] if tc['function']
             name = tc['name']
             next [nil, nil] unless name =~ /\S/
 
             [
               name,
-              ToolCall.new(
-                id: name,
-                name: name,
-                arguments: tc['arguments']
-              )
+              ToolCall.new(id: name, name: name, arguments: tc['arguments'])
             ]
           end.compact
         end

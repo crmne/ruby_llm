@@ -101,4 +101,5 @@ RSpec.configure do |config|
 end
 
 RSpec.shared_context 'with configured RubyLLM' do
+  # Put any per-test preeambles here
 end
