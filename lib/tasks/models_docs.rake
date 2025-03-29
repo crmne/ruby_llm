@@ -19,22 +19,32 @@ namespace :models do
 
       # Available Models
 
-      This guide lists all models available in RubyLLM, automatically generated from the 
-      current model registry (lib/ruby_llm/models.json).
+      This guide lists all models available in RubyLLM, automatically generated from the current model registry.
 
-      This file was generated at #{Time.now.utc.strftime('%Y-%m-%d %H:%M')} UTC, 
-      but the lib/ruby_llm/models.json file from which it was generated may or may not be up to date.
-      Its timestamp is #{File.mtime('lib/ruby_llm/models.json').strftime('%Y-%m-%d %H:%M')} UTC.
+      _Last updated: #{Time.now.utc.strftime('%Y-%m-%d')}_
 
       ## Contributing
 
       The model list is automatically generated from the model registry. To add or update models:
 
-      1. Run `rake models:update` to refresh lib/ruby_llm/models.json.
-      2. Run `rake models:update_capabilities` to refresh lib/ruby_llm/providers/**/capabilities.rb.
-      3. Submit a pull request with the updated files.
+      1. Edit the appropriate `capabilities.rb` file in `lib/ruby_llm/providers/<provider>/`
+      2. Run `rake models:update` to refresh the model registry
+      3. Submit a pull request with the updated `models.json`
 
       See [Contributing Guide](/CONTRIBUTING.md) for more details.
+
+      ## Additional Model Information
+
+      The tables below show basic model information including context windows, token limits, and pricing. Models also have additional capabilities not shown in the tables:
+
+      - **Vision Support**: Whether the model can process images
+      - **Function Calling**: Whether the model supports function calling
+      - **JSON Mode**: Whether the model can be constrained to output valid JSON
+      - **Structured Output**: Whether the model supports structured output formats
+
+      For complete model information, you can check the `models.json` file in the RubyLLM source code.
+
+      For more information about working with models, see the [Working with Models](/guides/models) guide.
 
       ## Models by Type
 
@@ -70,20 +80,6 @@ namespace :models do
             #{to_markdown_table(models)}
         PROVIDER
       }.compact.join("\n")}
-
-      ## Additional Model Information
-
-      The tables above show basic model information including context windows, token limits, and pricing. Models also have additional capabilities not shown in the tables:
-
-      - **Family**: The family of models to which the model belongs.
-      - **Vision Support**: Whether the model can process images
-      - **Function Calling**: Whether the model supports function calling
-      - **JSON Mode**: Whether the model can be constrained to output valid JSON
-      - **Structured Output**: Whether the model supports structured output formats
-
-      For complete model information, you can check the `models.json` file in the RubyLLM source code.
-
-      For more information about working with models, see the [Working with Models](/guides/models) guide.
     MARKDOWN
 
     File.write('docs/guides/available-models.md', output)
