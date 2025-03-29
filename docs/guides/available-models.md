@@ -8,10 +8,12 @@ permalink: /guides/available-models
 
 # Available Models
 
-This guide lists all models available in RubyLLM, automatically generated from the current model registry.
+This guide lists all models available in RubyLLM, automatically generated from the 
+current model registry (lib/ruby_llm/models.json).
 
-This file was generated at 2025-03-27 17:45 UTC, 
+This file was generated at 2025-03-29 06:51 UTC, 
 but the lib/ruby_llm/models.json file from which it was generated may or may not be up to date.
+Its timestamp is 2025-03-28 01:45 UTC.
 
 ## Contributing
 
@@ -305,13 +307,13 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
 ## Model Capabilities
 
-Each model in the registry includes information about its capabilities:
+The tables above show basic model information including context windows, token limits, and pricing. Models also have additional capabilities not shown in the tables:
 
-- **Context Window**: Maximum number of tokens the model can process in a single request
-- **Max Tokens**: Maximum number of tokens the model can generate in a single response
 - **Vision Support**: Whether the model can process images
 - **Function Calling**: Whether the model supports function calling
 - **JSON Mode**: Whether the model can be constrained to output valid JSON
-- **Pricing**: Cost per million tokens for input and output
+- **Structured Output**: Whether the model supports structured output formats
+
+For complete model information, you can check the `models.json` file in the RubyLLM source code.
 
 For more information about working with models, see the [Working with Models](/guides/models) guide.
