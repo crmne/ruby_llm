@@ -75,6 +75,7 @@ namespace :models do
 
       The tables above show basic model information including context windows, token limits, and pricing. Models also have additional capabilities not shown in the tables:
 
+      - **Family**: The family of models to which the model belongs.
       - **Vision Support**: Whether the model can process images
       - **Function Calling**: Whether the model supports function calling
       - **JSON Mode**: Whether the model can be constrained to output valid JSON
