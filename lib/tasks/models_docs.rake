@@ -48,56 +48,56 @@ namespace :models do
 
       ## Models by Type
 
-      ### Chat Models
+      ### Chat Models (#{RubyLLM.models.chat_models.count})
 
       #{to_markdown_table(RubyLLM.models.chat_models)}
 
-      ### Image Models
+      ### Image Models (#{RubyLLM.models.image_models.count})
 
       #{to_markdown_table(RubyLLM.models.image_models)}
 
-      ### Audio Models
+      ### Audio Models (#{RubyLLM.models.audio_models.count})
 
       #{to_markdown_table(RubyLLM.models.audio_models)}
 
-      ### Embedding Models
+      ### Embedding Models (#{RubyLLM.models.embedding_models.count})
 
       #{to_markdown_table(RubyLLM.models.embedding_models)}
 
-      ### Moderation Models
+      ### Moderation Models (#{RubyLLM.models.select { |m| m.type == 'moderation' }.count})
 
-      #{to_markdown_table(RubyLLM.models.select { |m| m.type == 'moderation'})}
+      #{to_markdown_table(RubyLLM.models.select { |m| m.type == 'moderation' })}
 
       ## Models by Provider
 
-      #{RubyLLM::Provider.providers.keys.map { |provider|
+      #{RubyLLM::Provider.providers.keys.map do |provider|
         models = RubyLLM.models.by_provider(provider)
         next if models.none?
         
         <<~PROVIDER
-          ### #{provider.to_s.capitalize} Models
+          ### #{provider.to_s.capitalize} Models (#{models.count})
 
             #{to_markdown_table(models)}
         PROVIDER
-      }.compact.join("\n")}
+      end.compact.join("\n")}
     MARKDOWN
 
     File.write('docs/guides/available-models.md', output)
-    puts "Generated docs/guides/available-models.md"
+    puts 'Generated docs/guides/available-models.md'
   end
 
   private
 
-  MODEL_KEYS_TO_DISPLAY = [
-    :id,
-    :type,
-    :display_name, 
-    :provider, 
-    :context_window, 
-    :max_tokens, 
-    :family, 
-    :input_price_per_million, 
-    :output_price_per_million
+  MODEL_KEYS_TO_DISPLAY = %i[
+    id
+    type
+    display_name
+    provider
+    context_window
+    max_tokens
+    family
+    input_price_per_million
+    output_price_per_million
   ]
 
   def to_display_hash(model)
@@ -109,43 +109,43 @@ namespace :models do
 
     # Create abbreviated headers
     headers = {
-      id: "ID",
-      type: "Type",
-      display_name: "Name",
-      provider: "Provider",
-      context_window: "Context",
-      max_tokens: "MaxTok",
-      family: "Family",
-      input_price_per_million: "In$/M",
-      output_price_per_million: "Out$/M"
+      id: 'ID',
+      type: 'Type',
+      display_name: 'Name',
+      provider: 'Provider',
+      context_window: 'Context',
+      max_tokens: 'MaxTok',
+      family: 'Family',
+      input_price_per_million: 'In$/M',
+      output_price_per_million: 'Out$/M'
     }
 
     # Create header row with alignment markers
     # Right-align numbers, left-align text
     alignments = {
-      id: ":--",
-      type: ":--",
-      display_name: ":--",
-      provider: ":--",
-      context_window: "--:",
-      max_tokens: "--:",
-      family: ":--",
-      input_price_per_million: "--:",
-      output_price_per_million: "--:"
+      id: ':--',
+      type: ':--',
+      display_name: ':--',
+      provider: ':--',
+      context_window: '--:',
+      max_tokens: '--:',
+      family: ':--',
+      input_price_per_million: '--:',
+      output_price_per_million: '--:'
     }
 
     # Build the table
     lines = []
-    
+
     # Header row
     lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| headers[key] }.join(' | ')} |"
-    
+
     # Alignment row
     lines << "| #{MODEL_KEYS_TO_DISPLAY.map { |key| alignments[key] }.join(' | ')} |"
-    
+
     # Data rows
     model_hashes.each do |model_hash|
-      values = MODEL_KEYS_TO_DISPLAY.map do |key| 
+      values = MODEL_KEYS_TO_DISPLAY.map do |key|
         if model_hash[key].is_a?(Float)
           format('%.2f', model_hash[key])
         else
@@ -158,4 +158,4 @@ namespace :models do
 
     lines.join("\n")
   end
-end 
+end

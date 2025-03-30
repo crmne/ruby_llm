@@ -10,7 +10,7 @@ permalink: /guides/available-models
 
 This guide lists all models available in RubyLLM, automatically generated from the current model registry.
 
-_Last updated: 2025-03-29_
+_Last updated: 2025-03-30_
 
 ## Contributing
 
@@ -37,7 +37,7 @@ For more information about working with models, see the [Working with Models](/g
 
 ## Models by Type
 
-### Chat Models
+### Chat Models (96)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -138,7 +138,7 @@ For more information about working with models, see the [Working with Models](/g
 | o3-mini-2025-01-31 | chat | O3-Mini 20250131 | openai | 200000 | 100000 | o3_mini | 0.50 | 1.50 |
 | text-bison-001 | chat | PaLM 2 (Legacy) | gemini | 8196 | 1024 | other | 0.08 | 0.30 |
 
-### Image Models
+### Image Models (3)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -146,7 +146,7 @@ For more information about working with models, see the [Working with Models](/g
 | dall-e-3 | image | DALL-E-3 | openai | 4096 | 4096 | dalle3 | 0.50 | 1.50 |
 | imagen-3.0-generate-002 | image | Imagen 3.0 002 model | gemini | 480 | 8192 | other | 0.08 | 0.30 |
 
-### Audio Models
+### Audio Models (6)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -157,7 +157,7 @@ For more information about working with models, see the [Working with Models](/g
 | tts-1-hd-1106 | audio | TTS-1 HD 1106 | openai | 4096 | 4096 | tts1_hd | 0.50 | 1.50 |
 | whisper-1 | audio | Whisper 1 | openai | 4096 | 4096 | whisper1 | 0.50 | 1.50 |
 
-### Embedding Models
+### Embedding Models (8)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -170,7 +170,7 @@ For more information about working with models, see the [Working with Models](/g
 | text-embedding-3-small | embedding | Text Embedding 3 Small | openai | 4096 | 4096 | embedding3_small | 0.50 | 1.50 |
 | text-embedding-ada-002 | embedding | Text Embedding Ada 002 | openai | 4096 | 4096 | embedding2 | 0.50 | 1.50 |
 
-### Moderation Models
+### Moderation Models (2)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -179,7 +179,7 @@ For more information about working with models, see the [Working with Models](/g
 
 ## Models by Provider
 
-### Openai Models
+### Openai Models (63)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -247,7 +247,7 @@ For more information about working with models, see the [Working with Models](/g
 | tts-1-hd-1106 | audio | TTS-1 HD 1106 | openai | 4096 | 4096 | tts1_hd | 0.50 | 1.50 |
 | whisper-1 | audio | Whisper 1 | openai | 4096 | 4096 | whisper1 | 0.50 | 1.50 |
 
-### Anthropic Models
+### Anthropic Models (9)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -261,7 +261,7 @@ For more information about working with models, see the [Working with Models](/g
 | claude-3-opus-20240229 | chat | Claude 3 Opus | anthropic | 200000 | 4096 | claude3_opus | 15.00 | 75.00 |
 | claude-3-sonnet-20240229 | chat | Claude 3 Sonnet | anthropic | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 
-### Gemini Models
+### Gemini Models (41)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -307,7 +307,7 @@ For more information about working with models, see the [Working with Models](/g
 | text-bison-001 | chat | PaLM 2 (Legacy) | gemini | 8196 | 1024 | other | 0.08 | 0.30 |
 | text-embedding-004 | embedding | Text Embedding 004 | gemini | 2048 | 1 | embedding4 | 0.00 | 0.00 |
 
-### Deepseek Models
+### Deepseek Models (2)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
