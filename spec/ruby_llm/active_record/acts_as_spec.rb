@@ -97,17 +97,41 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     
     # Test the class of the return value
     with_tool_result = chat.with_tool(Calculator)
-    puts "Type of with_tool result: #{with_tool_result.class}"
+    expect(with_tool_result).to be_a(Chat)
     
     # When using with_tools in a method chain, user messages should still be saved
     chat.with_tool(Calculator).ask("What's 2 + 2?")
     
-    puts "Number of messages: #{chat.messages.count}"
-    puts "User messages: #{chat.messages.where(role: 'user').count}"
-    puts "Message types: #{chat.messages.pluck(:role).join(', ')}"
-    
     expect(chat.messages.count).to be >= 2 # At least user message and assistant response
     expect(chat.messages.where(role: 'user').count).to eq(1)
     expect(chat.messages.where(role: 'user').first&.content).to eq("What's 2 + 2?")
+  end
+  
+  it 'maintains ActiveRecord model for all chainable methods' do # rubocop:disable RSpec/MultipleExpectations
+    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    
+    # Test that all chainable methods return the ActiveRecord model
+    expect(chat.with_tool(Calculator)).to be_a(Chat)
+    expect(chat.with_tools(Calculator)).to be_a(Chat)
+    expect(chat.with_model('gpt-4o-mini')).to be_a(Chat)
+    expect(chat.with_temperature(0.5)).to be_a(Chat)
+    expect(chat.on_new_message {}).to be_a(Chat)
+    expect(chat.on_end_message {}).to be_a(Chat)
+    
+    # Complex chain
+    result = chat.with_tool(Calculator)
+                 .with_temperature(0.7)
+                 .on_new_message {}
+                 .on_end_message {}
+    
+    expect(result).to be_a(Chat)
+    
+    # And it should still save the message when used at the end of a chain
+    chat.with_tool(Calculator)
+        .with_temperature(0.5)
+        .ask("What's 3 * 3?")
+    
+    expect(chat.messages.where(role: 'user').count).to eq(1)
+    expect(chat.messages.where(role: 'user').first&.content).to eq("What's 3 * 3?")
   end
 end
