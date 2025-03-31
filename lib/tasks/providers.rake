@@ -34,36 +34,48 @@ def missing_provider_methods
     provider_classes.values.all? { |methods| methods.include?(method) }
   end
 
-  missing_methods_hash = missing_methods.each_with_object({}) do |method, mms_hash |
+  missing_methods.each_with_object({}) do |method, mms_hash|
     mms_hash[method] = provider_classes.keys.each_with_object({}) do |provider, mm_hash|
       mm_hash[provider] = provider_classes[provider].include?(method)
     end
   end
-
-  missing_methods_hash
 end
 
 def missing_methods_markdown_string(missing_methods_info)
-  markdown_string = "# Missing Methods in Providers\n\n"
-  markdown_string += "| Method | Providers Missing |\n"
-  markdown_string += "|--------|------------------|\n"
+  # Get sorted list of all providers
+  providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
 
-  missing_methods_info.each do |method, providers|
-    providers_list = providers.select { |_, exists| !exists }.keys.sort.join(", ")
-    markdown_string += "| #{method} | #{providers_list} |\n"
+  markdown_string = "# Missing Methods in Providers\n\n"
+
+  # Create header row with provider names
+  markdown_string += "| Method | #{providers.join(' | ')} |\n"
+
+  # Create alignment row
+  markdown_string += "|--------|#{providers.map { ':-:' }.join('|')}|\n"
+
+  # Create rows for each method
+  missing_methods_info.each do |method, provider_info|
+    row = providers.map { |provider| provider_info[provider] ? '✓' : '' }
+    markdown_string += "| #{method} | #{row.join(' | ')} |\n"
   end
 
   markdown_string
 end
 
 namespace :providers do
-  desc "Check method consistency across providers and output as JSON"
+  desc 'Check method consistency across providers and output as JSON'
   task :missing_methods_as_json do
     puts JSON.pretty_generate(missing_provider_methods)
   end
 
-  desc "Check method consistency across providers and output as Markdown"
+  desc 'Check method consistency across providers and output as Markdown'
   task :missing_methods_as_markdown do
     puts missing_methods_markdown_string(missing_provider_methods)
   end
+
+  desc 'Check method consistency across providers and output as tty table'
+  task :missing_methods_as_tty_table do
+
+  end
+
 end
