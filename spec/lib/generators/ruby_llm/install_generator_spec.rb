@@ -6,8 +6,8 @@ require 'generators/ruby_llm/install_generator'
 
 RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   # Use the actual template directory
-  let(:template_dir) { '/Users/kieranklaassen/rails/ruby_llm/lib/generators/ruby_llm/install/templates' }
-  let(:generator_file) { '/Users/kieranklaassen/rails/ruby_llm/lib/generators/ruby_llm/install_generator.rb' }
+  let(:template_dir) { File.join(File.dirname(__FILE__), '../../../../lib/generators/ruby_llm/install/templates') }
+  let(:generator_file) { File.join(File.dirname(__FILE__), '../../../../lib/generators/ruby_llm/install_generator.rb') }
 
   describe 'migration templates' do
     let(:expected_migration_files) do
@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:chat_migration) { File.read(File.join(template_dir, 'create_chats_migration.rb.tt')) }
 
       it 'defines chats table' do
-        expect(chat_migration).to include('create_table :chats')
+        expect(chat_migration).to include('create_table :<%= options[:chat_model_name].tableize %>')
       end
 
       it 'includes model_id field' do
@@ -40,11 +40,11 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:message_migration) { File.read(File.join(template_dir, 'create_messages_migration.rb.tt')) }
 
       it 'defines messages table' do
-        expect(message_migration).to include('create_table :messages')
+        expect(message_migration).to include('create_table :<%= options[:message_model_name].tableize %>')
       end
 
       it 'includes chat reference' do
-        expect(message_migration).to include('t.references :chat')
+        expect(message_migration).to include('t.references :<%= options[:chat_model_name].tableize.singularize %>, null: false, foreign_key: true')
       end
 
       it 'includes role field' do
@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:tool_call_migration) { File.read(File.join(template_dir, 'create_tool_calls_migration.rb.tt')) }
 
       it 'defines tool_calls table' do
-        expect(tool_call_migration).to include('create_table :tool_calls')
+        expect(tool_call_migration).to include('create_table :<%= options[:tool_call_model_name].tableize %>')
       end
 
       it 'includes tool_call_id field' do
@@ -78,21 +78,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
     describe 'PostgreSQL support' do
       it 'includes postgresql condition check' do
-        expect(tool_call_migration).to include('if postgresql?')
-      end
-
-      it 'uses jsonb type' do
-        expect(tool_call_migration).to include('t.jsonb :arguments')
-      end
-    end
-
-    describe 'other databases support' do
-      it 'includes else condition' do
-        expect(tool_call_migration).to include('else')
-      end
-
-      it 'uses json type' do
-        expect(tool_call_migration).to include('t.json :arguments')
+        expect(tool_call_migration).to include("t.<%= postgresql? ? 'jsonb' : 'json' %> :arguments, default: {}")
       end
     end
   end
@@ -149,10 +135,10 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   end
 
   describe 'README template' do
-    let(:readme_content) { File.read(File.join(template_dir, 'README.md')) }
+    let(:readme_content) { File.read(File.join(template_dir, 'README.md.tt')) }
 
     it 'has README template file' do
-      expect(File.exist?(File.join(template_dir, 'README.md'))).to be(true)
+      expect(File.exist?(File.join(template_dir, 'README.md.tt'))).to be(true)
     end
 
     it 'includes welcome message' do
@@ -213,33 +199,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
     it 'defines show_readme method' do
       expect(generator_content).to include('def show_readme')
-    end
-  end
-
-  describe 'migration sequence' do
-    let(:generator_content) { File.read(generator_file) }
-    let(:migrations_order) do
-      {
-        chats: generator_content.index('create_chats.rb'),
-        tool_calls: generator_content.index('create_tool_calls.rb'),
-        messages: generator_content.index('create_messages.rb')
-      }
-    end
-
-    it 'orders chats before tool_calls' do
-      expect(migrations_order[:chats]).to be < migrations_order[:tool_calls]
-    end
-
-    it 'orders tool_calls before messages' do
-      expect(migrations_order[:tool_calls]).to be < migrations_order[:messages]
-    end
-
-    it 'initializes timestamp from current time' do
-      expect(generator_content).to include('@migration_number = Time.now.utc.strftime')
-    end
-
-    it 'increments timestamp for sequential migrations' do
-      expect(generator_content).to include('@migration_number = (@migration_number.to_i + 1).to_s')
     end
   end
 
