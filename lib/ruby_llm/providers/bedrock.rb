@@ -54,7 +54,7 @@ module RubyLLM
           connection: connection,
           http_method: :post,
           url: url || completion_url,
-          body: payload&.to_json || ''
+          body: JSON.generate(payload, ascii_only: false) || ''
         }
       end
 
