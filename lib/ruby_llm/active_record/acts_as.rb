@@ -9,7 +9,7 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
+        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
           include ChatMethods
 
           @message_class = message_class.to_s
@@ -23,7 +23,6 @@ module RubyLLM
           delegate :complete,
                    :add_message,
                    to: :to_llm
-          # All chainable methods are implemented in the module to return self
         end
 
         def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
@@ -79,38 +78,38 @@ module RubyLLM
         @chat.on_new_message { persist_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
       end
-      
+
       # Override the delegated methods to return self (ActiveRecord model)
       # instead of RubyLLM::Chat for method chaining to maintain persistence
       def with_tool(tool)
         # Remove and re-add the delegation to return self instead of the chat object
         to_llm.with_tool(tool)
-        self  # Return the ActiveRecord model
+        self
       end
-      
+
       def with_tools(*tools)
         # Remove and re-add the delegation to return self instead of the chat object
         to_llm.with_tools(*tools)
-        self  # Return the ActiveRecord model
+        self
       end
-      
+
       def with_model(model_id, provider: nil)
         to_llm.with_model(model_id, provider: provider)
         self
       end
-      
+
       def with_temperature(temperature)
         to_llm.with_temperature(temperature)
         self
       end
-      
-      def on_new_message(&block)
-        to_llm.on_new_message(&block)
+
+      def on_new_message(&)
+        to_llm.on_new_message(&)
         self
       end
-      
-      def on_end_message(&block)
-        to_llm.on_end_message(&block)
+
+      def on_end_message(&)
+        to_llm.on_end_message(&)
         self
       end
 

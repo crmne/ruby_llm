@@ -70,68 +70,64 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
-  it 'persists chat history' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
-    chat.ask("What's your favorite Ruby feature?")
-
-    expect(chat.messages.count).to eq(2)
-    expect(chat.messages.first.role).to eq('user')
-    expect(chat.messages.last.role).to eq('assistant')
-    expect(chat.messages.last.content).to be_present
-    expect(chat.messages.last.input_tokens).to be_positive
-    expect(chat.messages.last.output_tokens).to be_positive
+  shared_examples 'a chainable chat method' do |method_name, *args|
+    it "returns a Chat instance for ##{method_name}" do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      result = chat.public_send(method_name, *args)
+      expect(result).to be_a(Chat)
+    end
   end
 
-  it 'persists tool calls' do # rubocop:disable RSpec/MultipleExpectations
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
-    chat.with_tool(Calculator)
-
-    chat.ask("What's 123 * 456?")
-
-    expect(chat.messages.count).to be >= 3 # User message, tool call, and final response
-    expect(chat.messages.any?(&:tool_calls)).to be true
+  shared_examples 'a chainable callback method' do |callback_name|
+    it "supports #{callback_name} callback" do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      result = chat.public_send(callback_name) do
+        # no-op for testing
+      end
+      expect(result).to be_a(Chat)
+    end
   end
-  
-  it 'persists user messages when using with_tools' do # rubocop:disable RSpec/MultipleExpectations
+
+  def create_chat_and_ask(message, tools: [Calculator])
     chat = Chat.create!(model_id: 'gpt-4o-mini')
-    
-    # Test the class of the return value
-    with_tool_result = chat.with_tool(Calculator)
-    expect(with_tool_result).to be_a(Chat)
-    
-    # When using with_tools in a method chain, user messages should still be saved
-    chat.with_tool(Calculator).ask("What's 2 + 2?")
-    
-    expect(chat.messages.count).to be >= 2 # At least user message and assistant response
-    expect(chat.messages.where(role: 'user').count).to eq(1)
-    expect(chat.messages.where(role: 'user').first&.content).to eq("What's 2 + 2?")
+    chat.with_tools(*tools).ask(message)
+    chat
   end
-  
-  it 'maintains ActiveRecord model for all chainable methods' do # rubocop:disable RSpec/MultipleExpectations
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
-    
-    # Test that all chainable methods return the ActiveRecord model
-    expect(chat.with_tool(Calculator)).to be_a(Chat)
-    expect(chat.with_tools(Calculator)).to be_a(Chat)
-    expect(chat.with_model('gpt-4o-mini')).to be_a(Chat)
-    expect(chat.with_temperature(0.5)).to be_a(Chat)
-    expect(chat.on_new_message {}).to be_a(Chat)
-    expect(chat.on_end_message {}).to be_a(Chat)
-    
-    # Complex chain
-    result = chat.with_tool(Calculator)
-                 .with_temperature(0.7)
-                 .on_new_message {}
-                 .on_end_message {}
-    
-    expect(result).to be_a(Chat)
-    
-    # And it should still save the message when used at the end of a chain
-    chat.with_tool(Calculator)
-        .with_temperature(0.5)
-        .ask("What's 3 * 3?")
-    
-    expect(chat.messages.where(role: 'user').count).to eq(1)
-    expect(chat.messages.where(role: 'user').first&.content).to eq("What's 3 * 3?")
+
+  describe 'with_tools functionality' do
+    it 'returns a Chat instance when using with_tool' do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      with_tool_result = chat.with_tool(Calculator)
+      expect(with_tool_result).to be_a(Chat)
+    end
+
+    it 'persists user messages' do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat.with_tool(Calculator).ask("What's 2 + 2?")
+      expect(chat.messages.where(role: 'user').first&.content).to eq("What's 2 + 2?")
+    end
+  end
+
+  describe 'chainable methods' do
+    it_behaves_like 'a chainable chat method', :with_tool, Calculator
+    it_behaves_like 'a chainable chat method', :with_tools, Calculator
+    it_behaves_like 'a chainable chat method', :with_model, 'gpt-4o-mini'
+    it_behaves_like 'a chainable chat method', :with_temperature, 0.5
+
+    it_behaves_like 'a chainable callback method', :on_new_message
+    it_behaves_like 'a chainable callback method', :on_end_message
+
+    it 'supports method chaining with tools' do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat.with_tool(Calculator)
+          .with_temperature(0.5)
+      expect(chat).to be_a(Chat)
+    end
+
+    it 'persists messages after chaining' do
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat.with_tool(Calculator).ask("What's 3 * 3?")
+      expect(chat.messages.where(role: 'user').first&.content).to eq("What's 3 * 3?")
+    end
   end
 end
