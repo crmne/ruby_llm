@@ -5,7 +5,9 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -29,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 25 Mar 2025 17:45:10 GMT
+      - Wed, 26 Mar 2025 12:36:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=406
+      - gfet4t7; dur=505
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,43 +55,46 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Ruby was created by **Yukihiro \"Matz\" Matsumoto**.\n"
+                    "functionCall": {
+                      "name": "best_language_to_learn",
+                      "args": {}
+                    }
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.027757231678281511
+              "avgLogprobs": -0.00011707750880824668
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 7,
-            "candidatesTokenCount": 14,
-            "totalTokenCount": 21,
+            "promptTokenCount": 22,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 29,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 7
+                "tokenCount": 22
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 14
+                "tokenCount": 7
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Tue, 25 Mar 2025 17:45:10 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:31 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto**.\n"}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"59a92e0a-8267-4a36-b42f-6c8f41da2add","response":{"name":"59a92e0a-8267-4a36-b42f-6c8f41da2add","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -113,7 +118,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 25 Mar 2025 17:45:10 GMT
+      - Wed, 26 Mar 2025 12:36:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -123,7 +128,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=356
+      - gfet4t7; dur=472
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -137,33 +142,33 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto started working on Ruby in **1993**.\n"
+                    "text": "I think Ruby is the best language to learn.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.13802393277486166
+              "avgLogprobs": -0.11496557972647926
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 28,
-            "candidatesTokenCount": 15,
-            "totalTokenCount": 43,
+            "promptTokenCount": 98,
+            "candidatesTokenCount": 11,
+            "totalTokenCount": 109,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 28
+                "tokenCount": 98
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 15
+                "tokenCount": 11
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Tue, 25 Mar 2025 17:45:10 GMT
+  recorded_at: Wed, 26 Mar 2025 12:36:31 GMT
 recorded_with: VCR 6.3.1

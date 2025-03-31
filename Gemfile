@@ -13,6 +13,7 @@ group :development do
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
+  gem 'ferrum'
   gem 'irb'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'

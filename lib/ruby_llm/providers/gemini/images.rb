@@ -5,18 +5,13 @@ module RubyLLM
     module Gemini
       # Image generation methods for the Gemini API implementation
       module Images
-        def images_url(model:)
-          "models/#{model}:predict"
+        def images_url
+          "models/#{@model}:predict"
         end
 
-        def paint(prompt, model:, size:) # rubocop:disable Lint/UnusedMethodArgument
-          payload = render_image_payload(prompt)
-
-          response = post(images_url(model:), payload)
-          parse_image_response(response)
-        end
-
-        def render_image_payload(prompt)
+        def render_image_payload(prompt, model:, size:) # rubocop:disable Metrics/MethodLength
+          RubyLLM.logger.debug "Ignoring size #{size}. Gemini does not support image size customization."
+          @model = model
           {
             instances: [
               {

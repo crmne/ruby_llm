@@ -7,7 +7,9 @@ module RubyLLM
   module Provider
     # Common functionality for all LLM providers. Implements the core provider
     # interface so specific providers only need to implement a few key methods.
-    module Methods # rubocop:disable Metrics/ModuleLength
+    module Methods
+      extend Streaming
+
       def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
         normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
                                    capabilities.normalize_temperature(temperature, model)
@@ -80,19 +82,6 @@ module RubyLLM
         parse_completion_response response
       end
 
-      def stream_response(payload, &block)
-        accumulator = StreamAccumulator.new
-
-        post stream_url, payload do |req|
-          req.options.on_data = handle_stream do |chunk|
-            accumulator.add chunk
-            block.call chunk
-          end
-        end
-
-        accumulator.to_message
-      end
-
       def post(url, payload)
         connection.post url, payload do |req|
           req.headers.merge! headers
@@ -141,33 +130,6 @@ module RubyLLM
           f.use :llm_errors, provider: self
         end
       end
-
-      def to_json_stream(&block) # rubocop:disable Metrics/MethodLength
-        buffer = String.new
-        parser = EventStreamParser::Parser.new
-
-        proc do |chunk, _bytes, env|
-          if env && env.status != 200
-            # Accumulate error chunks
-            buffer << chunk
-            begin
-              error_data = JSON.parse(buffer)
-              error_response = env.merge(body: error_data)
-              ErrorMiddleware.parse_error(provider: self, response: error_response)
-            rescue JSON::ParserError
-              # Keep accumulating if we don't have complete JSON yet
-              RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
-            end
-          else
-            parser.feed(chunk) do |_type, data|
-              unless data == '[DONE]'
-                parsed_data = JSON.parse(data)
-                block.call(parsed_data)
-              end
-            end
-          end
-        end
-      end
     end
 
     def try_parse_json(maybe_json)
@@ -207,6 +169,7 @@ module RubyLLM
     class << self
       def extended(base)
         base.extend(Methods)
+        base.extend(Streaming)
       end
 
       def register(name, provider_module)
