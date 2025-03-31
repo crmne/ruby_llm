@@ -42,6 +42,9 @@ def missing_methods_markdown_string(missing_methods_info)
 
   markdown_string = "# Provider Capability Methods' Presence/Absence\n\n"
 
+  # Add legend
+  markdown_string += "> **Legend**: ✔ = method is present\n\n"
+
   # Create header row with provider names and sequence numbers on both sides
   markdown_string += "| # | Method | #{providers.join(' | ')} | # |\n"
 
@@ -86,7 +89,10 @@ def missing_methods_as_tty_table(missing_methods_info)
     }
   end
 
-  table
+  # Add legend below the table
+  legend = "\nLegend: ✅ = method is present, ❌ = method is missing\n"
+  
+  "#{table}#{legend}"
 end
 
 namespace :providers do
