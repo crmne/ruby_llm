@@ -64,12 +64,13 @@ def missing_methods_as_tty_table(missing_methods_info)
   # Create the table with headers
   table = Terminal::Table.new do |t|
     # Add header row with provider names
-    t.headings = ['Method', *providers]
+    t.headings = ['#', 'Method', *providers, '#']
 
-    # Add rows for each method
-    missing_methods_info.each do |method, provider_info|
+    # Add rows for each method with row numbers
+    missing_methods_info.each_with_index do |(method, provider_info), index|
+      row_num = index + 1
       row = providers.map { |provider| provider_info[provider] ? '✅' : '❌' }
-      t.add_row [method, *row]
+      t.add_row [row_num, method, *row, row_num]
     end
 
     # Style the table
@@ -100,4 +101,3 @@ namespace :providers do
     puts missing_methods_as_tty_table(missing_provider_methods)
   end
 end
-
