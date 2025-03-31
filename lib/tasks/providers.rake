@@ -24,6 +24,7 @@ def missing_provider_methods
     methods = capabilities_class.public_methods(false)
     provider_classes[provider] = methods
     all_methods.concat(methods)
+    all_methods.sort!
   end
 
   all_methods.uniq!
@@ -42,6 +43,19 @@ def missing_provider_methods
   missing_methods_hash
 end
 
+def missing_methods_markdown_string(missing_methods_info)
+  markdown_string = "# Missing Methods in Providers\n\n"
+  markdown_string += "| Method | Providers Missing |\n"
+  markdown_string += "|--------|------------------|\n"
+
+  missing_methods_info.each do |method, providers|
+    providers_list = providers.select { |_, exists| !exists }.keys.sort.join(", ")
+    markdown_string += "| #{method} | #{providers_list} |\n"
+  end
+
+  markdown_string
+end
+
 namespace :providers do
   desc "Check method consistency across providers and output as JSON"
   task :missing_methods_as_json do
@@ -50,6 +64,6 @@ namespace :providers do
 
   desc "Check method consistency across providers and output as Markdown"
   task :missing_methods_as_markdown do
-    puts JSON.pretty_generate(missing_provider_methods)
+    puts missing_methods_markdown_string(missing_provider_methods)
   end
 end
