@@ -57,6 +57,33 @@ def missing_methods_markdown_string(missing_methods_info)
   markdown_string
 end
 
+def missing_methods_as_tty_table(missing_methods_info)
+  missing_methods_info = missing_provider_methods
+  providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
+
+  # Create the table with headers
+  table = Terminal::Table.new do |t|
+    # Add header row with provider names
+    t.headings = ['Method', *providers]
+
+    # Add rows for each method
+    missing_methods_info.each do |method, provider_info|
+      row = providers.map { |provider| provider_info[provider] ? '✅' : '❌' }
+      t.add_row [method, *row]
+    end
+
+    # Style the table
+    t.style = {
+      border_x: '━',
+      border_y: '┃',
+      border_i: '╋',
+      alignment: :center
+    }
+  end
+
+  table
+end
+
 namespace :providers do
   desc 'Check method consistency across providers and output as JSON'
   task :missing_methods_as_json do
@@ -70,30 +97,7 @@ namespace :providers do
 
   desc 'Check method consistency across providers and output as tty table'
   task :missing_methods_as_tty_table do
-    missing_methods_info = missing_provider_methods
-    providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
-    
-    # Create the table with headers
-    table = Terminal::Table.new do |t|
-      # Add header row with provider names
-      t.headings = ['Method', *providers]
-      
-      # Add rows for each method
-      missing_methods_info.each do |method, provider_info|
-        row = providers.map { |provider| provider_info[provider] ? '✓' : '' }
-        t.add_row [method, *row]
-      end
-      
-      # Style the table
-      t.style = { 
-        border_x: '━', 
-        border_y: '┃',
-        border_i: '╋',
-        alignment: :center 
-      }
-    end
-    
-    puts table
+    puts missing_methods_as_tty_table(missing_provider_methods)
   end
 end
 
