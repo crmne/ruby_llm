@@ -40,18 +40,22 @@ def missing_methods_markdown_string(missing_methods_info)
   # Get sorted list of all providers
   providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
 
-  markdown_string = "# Missing Methods in Providers\n\n"
+  markdown_string = "# Provider Capability Methods' Presence/Absence\n\n"
 
-  # Create header row with provider names
-  markdown_string += "| Method | #{providers.join(' | ')} |\n"
+  # Create header row with provider names and sequence numbers on both sides
+  markdown_string += "| # | Method | #{providers.join(' | ')} | # |\n"
 
-  # Create alignment row
-  markdown_string += "|--------|#{providers.map { ':-:' }.join('|')}|\n"
+  # Create alignment row with added columns
+  markdown_string += "|:-:|--------|#{providers.map { ':-:' }.join('|')}|:-:|\n"
 
-  # Create rows for each method
-  missing_methods_info.each do |method, provider_info|
-    row = providers.map { |provider| provider_info[provider] ? '✓' : '' }
-    markdown_string += "| #{method} | #{row.join(' | ')} |\n"
+  # Create rows for each method with sequence numbers on both sides
+  missing_methods_info.each_with_index do |(method, provider_info), index|
+    row_num = index + 1
+    # Alternate between different symbols for even and odd rows for better readability
+    check_mark = '✔'
+    row = providers.map { |provider| provider_info[provider] ? check_mark : '' }
+    
+    markdown_string += "| #{row_num} | **#{method}** | #{row.join(' | ')} | #{row_num} |\n"
   end
 
   markdown_string
