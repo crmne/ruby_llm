@@ -35,5 +35,24 @@ RSpec.describe RubyLLM::Chat do
         expect(followup.content).to include('199')
       end
     end
+
+    it 'claude-3-5-haiku can handle system messages with bedrock' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      chat = RubyLLM.chat(model: 'claude-3-5-haiku', provider: 'bedrock')
+
+      # Add a system message
+      chat.add_message(role: :system, content: 'You are a helpful math tutor who always shows your work.')
+
+      response = chat.ask('What is 15 + 27?')
+      expect(response.content).to include('42')
+      expect(response.content).to match(/step|work|process/i) # Should show work as instructed
+
+      # Add another system message
+      chat.add_message(role: :system, content: 'Always include a fun fact about numbers in your response.')
+
+      response = chat.ask('What is 25 * 4?')
+      expect(response.content).to include('100')
+      expect(response.content).to match(/step|work|process/i) # Should still show work
+      expect(response.content).to match(/fact|interesting|did you know/i) # Should include a fun fact
+    end
   end
 end

@@ -49,14 +49,34 @@ module RubyLLM
         end
 
         def build_claude_request(messages, tools:, temperature:, model:)
+          system_messages, chat_messages = separate_messages(messages)
+          system_content = build_system_content(system_messages)
+
+          build_base_payload(chat_messages, temperature, model).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:)
+          end
+        end
+
+        def separate_messages(messages)
+          messages.partition { |msg| msg.role == :system }
+        end
+
+        def build_system_content(system_messages)
+          system_messages.map { |msg| format_message(msg)[:content] }.join("\n\n")
+        end
+
+        def build_base_payload(chat_messages, temperature, model)
           {
             anthropic_version: 'bedrock-2023-05-31',
-            messages: messages.map { |msg| format_message(msg) },
+            messages: chat_messages.map { |msg| format_message(msg) },
             temperature: temperature,
             max_tokens: max_tokens_for(model)
-          }.tap do |payload|
-            payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
-          end
+          }
+        end
+
+        def add_optional_fields(payload, system_content:, tools:)
+          payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
+          payload[:system] = system_content unless system_content.empty?
         end
 
         def format_message(msg)
@@ -79,6 +99,7 @@ module RubyLLM
         def convert_role(role)
           case role
           when :tool, :user then 'user'
+          when :system then 'system'
           else 'assistant'
           end
         end
