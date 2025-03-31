@@ -4,9 +4,22 @@ Thanks for installing RubyLLM in your Rails application. Here's what was created
 
 ## Models
 
-- `Chat` - Stores chat sessions and their associated model ID
-- `Message` - Stores individual messages in a chat
-- `ToolCall` - Stores tool calls made by language models
+- `<%= options[:chat_model_name] %>` - Stores chat sessions and their associated model ID
+- `<%= options[:message_model_name] %>` - Stores individual messages in a chat
+- `<%= options[:tool_call_model_name] %>` - Stores tool calls made by language models
+
+## Configuration Options
+
+The generator supports the following options to customize model names:
+
+```bash
+rails generate ruby_llm:install \
+  --chat-model-name=Conversation \
+  --message-model-name=ChatMessage \
+  --tool-call-model-name=FunctionCall
+```
+
+This is useful when you need to avoid namespace collisions with existing models in your application. Table names will be automatically derived from the model names following Rails conventions.
 
 ## Next Steps
 
@@ -28,7 +41,7 @@ Thanks for installing RubyLLM in your Rails application. Here's what was created
 3. **Start using RubyLLM in your code:**
    ```ruby
    # Create a new chat
-   chat = Chat.create!(model_id: "gpt-4o-mini")
+   chat = <%= options[:chat_model_name] %>.create!(model_id: "gpt-4o-mini")
    
    # Ask a question
    response = chat.ask("What's the best Ruby web framework?")
