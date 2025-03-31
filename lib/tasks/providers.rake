@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
-
-# lib/tasks/providers.rake
-
-# frozen_string_literal: true
-
-require 'json'
+require 'terminal-table'
 
 def missing_provider_methods
   # Ensure the entire codebase is loaded
@@ -75,7 +70,30 @@ namespace :providers do
 
   desc 'Check method consistency across providers and output as tty table'
   task :missing_methods_as_tty_table do
-
+    missing_methods_info = missing_provider_methods
+    providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
+    
+    # Create the table with headers
+    table = Terminal::Table.new do |t|
+      # Add header row with provider names
+      t.headings = ['Method', *providers]
+      
+      # Add rows for each method
+      missing_methods_info.each do |method, provider_info|
+        row = providers.map { |provider| provider_info[provider] ? '✓' : '' }
+        t.add_row [method, *row]
+      end
+      
+      # Style the table
+      t.style = { 
+        border_x: '━', 
+        border_y: '┃',
+        border_i: '╋',
+        alignment: :center 
+      }
+    end
+    
+    puts table
   end
-
 end
+
