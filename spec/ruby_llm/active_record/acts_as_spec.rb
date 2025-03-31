@@ -91,4 +91,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat.messages.count).to be >= 3 # User message, tool call, and final response
     expect(chat.messages.any?(&:tool_calls)).to be true
   end
+  
+  it 'persists user messages when using with_tools' do # rubocop:disable RSpec/MultipleExpectations
+    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    
+    # Test the class of the return value
+    with_tool_result = chat.with_tool(Calculator)
+    puts "Type of with_tool result: #{with_tool_result.class}"
+    
+    # When using with_tools in a method chain, user messages should still be saved
+    chat.with_tool(Calculator).ask("What's 2 + 2?")
+    
+    puts "Number of messages: #{chat.messages.count}"
+    puts "User messages: #{chat.messages.where(role: 'user').count}"
+    puts "Message types: #{chat.messages.pluck(:role).join(', ')}"
+    
+    expect(chat.messages.count).to be >= 2 # At least user message and assistant response
+    expect(chat.messages.where(role: 'user').count).to eq(1)
+    expect(chat.messages.where(role: 'user').first&.content).to eq("What's 2 + 2?")
+  end
 end

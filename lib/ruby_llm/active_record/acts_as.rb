@@ -21,14 +21,13 @@ module RubyLLM
                    dependent: :destroy
 
           delegate :complete,
-                   :with_tool,
-                   :with_tools,
                    :with_model,
                    :with_temperature,
                    :on_new_message,
                    :on_end_message,
                    :add_message,
                    to: :to_llm
+          # with_tool and with_tools are implemented in the module to return self
         end
 
         def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
@@ -83,6 +82,20 @@ module RubyLLM
         # Set up message persistence
         @chat.on_new_message { persist_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
+      end
+      
+      # Override the delegated methods to return self (ActiveRecord model)
+      # instead of RubyLLM::Chat for method chaining to maintain persistence
+      def with_tool(tool)
+        # Remove and re-add the delegation to return self instead of the chat object
+        to_llm.with_tool(tool)
+        self  # Return the ActiveRecord model
+      end
+      
+      def with_tools(*tools)
+        # Remove and re-add the delegation to return self instead of the chat object
+        to_llm.with_tools(*tools)
+        self  # Return the ActiveRecord model
       end
 
       def ask(message, &)
