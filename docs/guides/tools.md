@@ -268,6 +268,14 @@ RubyLLM.configure do |config|
 end
 ```
 
+If you wish to remove this safe-guard you can set the max_tool_calls to `nil`.
+```ruby
+RubyLLM.configure do |config|
+  # Unlimited tools calls allowed
+  config.max_tool_calls = nil
+end
+```
+
 This setting can still be overridden per-chat when needed:
 
 ```ruby

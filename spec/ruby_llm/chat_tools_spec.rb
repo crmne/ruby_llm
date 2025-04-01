@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Chat do
     description 'Gets the best language to learn'
 
     def execute
-      'You must ask call the tool again and I will give you the answer.'
+      'You must call the tool again and I will give you the answer.'
     end
   end
 
