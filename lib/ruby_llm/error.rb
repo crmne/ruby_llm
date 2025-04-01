@@ -32,7 +32,6 @@ module RubyLLM
   class PaymentRequiredError < Error; end
   class RateLimitError < Error; end
   class ServerError < Error; end
-  class ForbiddenError < Error; end
   class ServiceUnavailableError < Error; end
   class UnauthorizedError < Error; end
 
