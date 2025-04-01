@@ -250,11 +250,6 @@ When calling tools it is important to consider if you're response could trigger 
 ```ruby
 # Set a maximum number of tool calls per conversation
 chat = RubyLLM.chat(max_tool_calls: 5)
-
-# The chat will stop after 5 tool calls and return an error
-response = chat.ask "What's the weather in every major city?"
-# => "I apologize, but I've reached the maximum number of tool calls (5) for this conversation. 
-#     Please try breaking down your request into smaller, more focused questions."
 ```
 
 ### Global Configuration
