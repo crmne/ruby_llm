@@ -82,13 +82,11 @@ module RubyLLM
       # Override the delegated methods to return self (ActiveRecord model)
       # instead of RubyLLM::Chat for method chaining to maintain persistence
       def with_tool(tool)
-        # Remove and re-add the delegation to return self instead of the chat object
         to_llm.with_tool(tool)
         self
       end
 
       def with_tools(*tools)
-        # Remove and re-add the delegation to return self instead of the chat object
         to_llm.with_tools(*tools)
         self
       end
