@@ -13,7 +13,7 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools, :number_of_tool_calls
 
-    def initialize(model: nil, provider: nil, max_tool_calls: nil) # rubocop:disable Metrics/MethodLength
+    def initialize(model: nil, provider: nil, max_tool_calls: nil)
       model_id = model || RubyLLM.config.default_model
       with_model(model_id, provider: provider)
       @temperature = 0.7
@@ -28,6 +28,8 @@ module RubyLLM
     end
 
     def ask(message = nil, with: {}, &block)
+      @number_of_tool_calls = 0
+
       add_message role: :user, content: Content.new(message, with)
       complete(&block)
     end
