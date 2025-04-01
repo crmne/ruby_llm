@@ -24,6 +24,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class LoopingAnswer < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Gets the best language to learn'
+
+    def execute
+      'You must ask call the tool again and I will give you the answer.'
+    end
+  end
+
   describe 'function calling' do
     [
       'claude-3-5-haiku-20241022',
@@ -80,6 +88,15 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{model} can use tools with a tool calls limit" do
+        chat = RubyLLM.chat(model: model, max_tool_calls: 3)
+                      .with_tool(LoopingAnswer)
+
+        expect do
+          chat.ask("What's the best language to learn?")
+        end.to raise_error(RubyLLM::ToolCallsLimitReachedError)
       end
     end
   end

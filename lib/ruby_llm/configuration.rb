@@ -18,7 +18,8 @@ module RubyLLM
                   :default_embedding_model,
                   :default_image_model,
                   :request_timeout,
-                  :max_retries
+                  :max_retries,
+                  :max_tool_calls
 
     def initialize
       @request_timeout = 120
@@ -26,6 +27,7 @@ module RubyLLM
       @default_model = 'gpt-4o-mini'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+      @max_tool_calls = 25
     end
   end
 end
