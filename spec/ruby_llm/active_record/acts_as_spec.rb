@@ -88,12 +88,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
-  def create_chat_and_ask(message, tools: [Calculator])
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
-    chat.with_tools(*tools).ask(message)
-    chat
-  end
-
   it 'persists chat history' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
     chat = Chat.create!(model_id: 'gpt-4o-mini')
     chat.ask("What's your favorite Ruby feature?")
