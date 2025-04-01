@@ -26,13 +26,15 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'function calling' do
     [
-      'claude-3-5-haiku-20241022',
-      'gemini-2.0-flash',
-      'gpt-4o-mini',
-      'llama3.1:8b'
-    ].each do |model|
-      it "#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+      ['claude-3-5-haiku-20241022', nil],
+      ['gemini-2.0-flash', nil],
+      ['gpt-4o-mini', nil],
+      %w[claude-3-5-haiku bedrock],
+      %w[llama3.1:8b ollama]
+    ].each do |model, provider|
+      provider_suffix = provider ? " with #{provider}" : ''
+      it "#{model} can use tools#{provider_suffix}" do # rubocop:disable RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
@@ -40,8 +42,8 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('10')
       end
 
-      it "#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+      it "#{model} can use tools in multi-turn conversations#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
@@ -53,14 +55,14 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('10')
       end
 
-      it "#{model} can use tools without parameters" do
-        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+      it "#{model} can use tools without parameters#{provider_suffix}" do
+        chat = RubyLLM.chat(model: model, provider: provider).with_tool(BestLanguageToLearn)
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
 
-      it "#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+      it "#{model} can use tools with multi-turn streaming conversations#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         chunks = []
 

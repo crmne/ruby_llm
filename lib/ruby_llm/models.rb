@@ -40,7 +40,6 @@ module RubyLLM
 
         all = (preserved + configured.flat_map(&:list_models)).sort_by(&:id)
         @instance = new(all)
-        @instance.save_models
         @instance
       end
 

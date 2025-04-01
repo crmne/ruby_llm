@@ -69,7 +69,7 @@ module RubyLLM
 
         config_block = <<~RUBY
           RubyLLM.configure do |config|
-            #{missing_configs.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n    ")}
+            #{missing_configs.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
           end
         RUBY
 
