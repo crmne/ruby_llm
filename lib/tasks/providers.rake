@@ -3,7 +3,7 @@
 require 'json'
 require 'terminal-table'
 
-def missing_provider_methods
+def missing_provider_methods # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # Ensure the entire codebase is loaded
   require_relative '../../lib/ruby_llm'
 
@@ -36,9 +36,9 @@ def missing_provider_methods
   end
 end
 
-def missing_methods_markdown_string(missing_methods_info)
+def missing_methods_markdown_string(missing_methods_info) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   # Get sorted list of all providers
-  providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
+  providers = missing_methods_info.values.flat_map(&:keys).uniq.sort
 
   markdown_string = "# Provider Capability Methods' Presence/Absence\n\n"
 
@@ -57,16 +57,15 @@ def missing_methods_markdown_string(missing_methods_info)
     # Alternate between different symbols for even and odd rows for better readability
     check_mark = '✔'
     row = providers.map { |provider| provider_info[provider] ? check_mark : '' }
-    
+
     markdown_string += "| #{row_num} | **#{method}** | #{row.join(' | ')} | #{row_num} |\n"
   end
 
   markdown_string
 end
 
-def missing_methods_as_tty_table(missing_methods_info)
-  missing_methods_info = missing_provider_methods
-  providers = missing_methods_info.values.flat_map { |p| p.keys }.uniq.sort
+def missing_methods_as_tty_table(missing_methods_info) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  providers = missing_methods_info.values.flat_map(&:keys).uniq.sort
 
   # Create the table with headers
   table = Terminal::Table.new do |t|
@@ -91,7 +90,7 @@ def missing_methods_as_tty_table(missing_methods_info)
 
   # Add legend below the table
   legend = "\nLegend: ✅ = method is present, ❌ = method is missing\n"
-  
+
   "#{table}#{legend}"
 end
 
