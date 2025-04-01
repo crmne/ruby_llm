@@ -79,8 +79,6 @@ module RubyLLM
              .on_end_message { |msg| persist_message_completion(msg) }
       end
 
-      # Override the delegated methods to return self (ActiveRecord model)
-      # instead of RubyLLM::Chat for method chaining to maintain persistence
       def with_tool(tool)
         to_llm.with_tool(tool)
         self
