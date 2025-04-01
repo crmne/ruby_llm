@@ -94,6 +94,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     chat
   end
 
+  it 'persists chat history' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    chat.ask("What's your favorite Ruby feature?")
+
+    expect(chat.messages.count).to eq(2)
+    expect(chat.messages.first.role).to eq('user')
+    expect(chat.messages.last.role).to eq('assistant')
+    expect(chat.messages.last.content).to be_present
+    expect(chat.messages.last.input_tokens).to be_positive
+    expect(chat.messages.last.output_tokens).to be_positive
+  end
+
+  it 'persists tool calls' do # rubocop:disable RSpec/MultipleExpectations
+    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    chat.with_tool(Calculator)
+
+    chat.ask("What's 123 * 456?")
+
+    expect(chat.messages.count).to be >= 3 # User message, tool call, and final response
+    expect(chat.messages.any?(&:tool_calls)).to be true
+  end
+
   describe 'with_tools functionality' do
     it 'returns a Chat instance when using with_tool' do
       chat = Chat.create!(model_id: 'gpt-4o-mini')
