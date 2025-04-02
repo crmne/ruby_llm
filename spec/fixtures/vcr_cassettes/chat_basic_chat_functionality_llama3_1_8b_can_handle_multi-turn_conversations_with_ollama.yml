@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"Who was
+        the creator of Ruby?"}],"options":{"temperature":0.7},"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 02 Apr 2025 00:44:07 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1334'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-02T00:44:07.063167441Z","message":{"role":"assistant","content":"The
+        creator of the Ruby programming language is Yukihiro \"Matz\" Matsumoto. He
+        is a Japanese computer programmer and is often referred to as the \"Benevolent
+        Dictator for Life\" (BDFL) of the Ruby project.\n\nMatsumoto was born in 1961
+        in Kyoto, Japan. He started programming at the age of six and became interested
+        in computers at an early age. In the late 1980s, he worked on several projects,
+        including a version of the Emacs text editor for MS-DOS.\n\nIn 1993, Matsumoto
+        began working on Ruby as a scripting language for Unix-like operating systems.
+        He was influenced by languages such as Perl, Smalltalk, and Ada, and wanted
+        to create a language that was easy to learn, fun to use, and had a strong
+        focus on object-oriented programming.\n\nRuby was first released in 1995,
+        and it quickly gained popularity due to its simplicity, flexibility, and ease
+        of use. Matsumoto continues to be involved with the Ruby project to this day,
+        and is widely recognized as one of the most influential figures in the world
+        of programming languages."},"done_reason":"stop","done":true,"total_duration":2242629806,"load_duration":14953975,"prompt_eval_count":17,"prompt_eval_duration":3947091,"eval_count":233,"eval_duration":2223358525}'
+  recorded_at: Wed, 02 Apr 2025 00:43:58 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"Who was
+        the creator of Ruby?"},{"role":"assistant","content":"The creator of the Ruby
+        programming language is Yukihiro \"Matz\" Matsumoto. He is a Japanese computer
+        programmer and is often referred to as the \"Benevolent Dictator for Life\"
+        (BDFL) of the Ruby project.\n\nMatsumoto was born in 1961 in Kyoto, Japan.
+        He started programming at the age of six and became interested in computers
+        at an early age. In the late 1980s, he worked on several projects, including
+        a version of the Emacs text editor for MS-DOS.\n\nIn 1993, Matsumoto began
+        working on Ruby as a scripting language for Unix-like operating systems. He
+        was influenced by languages such as Perl, Smalltalk, and Ada, and wanted to
+        create a language that was easy to learn, fun to use, and had a strong focus
+        on object-oriented programming.\n\nRuby was first released in 1995, and it
+        quickly gained popularity due to its simplicity, flexibility, and ease of
+        use. Matsumoto continues to be involved with the Ruby project to this day,
+        and is widely recognized as one of the most influential figures in the world
+        of programming languages."},{"role":"user","content":"What year did he create
+        Ruby?"}],"options":{"temperature":0.7},"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 02 Apr 2025 00:44:07 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '537'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-02T00:44:07.717871079Z","message":{"role":"assistant","content":"Yukihiro
+        \"Matz\" Matsumoto started working on Ruby in 1993, but it was first released
+        publicly on December 21, 1995. So, while the idea and development of Ruby
+        began in 1993, the language itself was officially released to the public in
+        1995."},"done_reason":"stop","done":true,"total_duration":649227133,"load_duration":16363391,"prompt_eval_count":266,"prompt_eval_duration":4060912,"eval_count":64,"eval_duration":628004959}'
+  recorded_at: Wed, 02 Apr 2025 00:43:59 GMT
+recorded_with: VCR 6.3.1

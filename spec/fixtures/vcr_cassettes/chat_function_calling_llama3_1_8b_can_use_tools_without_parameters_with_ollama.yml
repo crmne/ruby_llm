@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"options":{"temperature":0.1},"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '372'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 02 Apr 2025 00:44:56 GMT
+      Server:
+      - Caddy
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-02T00:44:56.484008223Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done_reason":"stop","done":true,"total_duration":187125431,"load_duration":16763705,"prompt_eval_count":155,"prompt_eval_duration":8191628,"eval_count":15,"eval_duration":161762904}'
+  recorded_at: Wed, 02 Apr 2025 00:44:48 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.1},"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 02 Apr 2025 00:44:58 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1365'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-02T00:44:58.547429762Z","message":{"role":"assistant","content":"The
+        best language to learn is often subjective and depends on personal goals,
+        interests, and career aspirations. However, based on various sources and industry
+        trends, Ruby is a popular choice among developers due to its simplicity, readability,
+        and versatility.\n\nHere are some reasons why Ruby stands out:\n\n1.  **Easy
+        to Learn**: Ruby has a clean syntax and is relatively easy to learn for beginners.\n2.  **Versatile**:
+        Ruby can be used for web development (with frameworks like Ruby on Rails),
+        scripting, testing, and even system administration.\n3.  **Large Community**:
+        Ruby has an active community with many resources available online, including
+        documentation, tutorials, and forums.\n4.  **Job Prospects**: Knowledge of
+        Ruby is in demand, especially in the field of web development.\n\nUltimately,
+        the best language to learn depends on your specific needs and goals. If you''re
+        interested in web development, Python or JavaScript might be a better fit.
+        However, if you want a language that''s easy to learn and versatile, Ruby
+        is definitely worth considering."},"done_reason":"stop","done":true,"total_duration":2060128193,"load_duration":14761969,"prompt_eval_count":77,"prompt_eval_duration":4504575,"eval_count":212,"eval_duration":2040277638}'
+  recorded_at: Wed, 02 Apr 2025 00:44:50 GMT
+recorded_with: VCR 6.3.1
