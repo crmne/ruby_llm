@@ -25,7 +25,7 @@ module RubyLLM
       end
 
       def post(url, payload)
-        signature = sign_request("#{connection.url_prefix}#{url}", payload)
+        signature = sign_request("#{connection.url_prefix}#{url}", payload:)
         connection.post url, payload do |req|
           req.headers.merge! build_headers(signature.headers, streaming: block_given?)
 
@@ -33,9 +33,9 @@ module RubyLLM
         end
       end
 
-      def sign_request(url, payload)
+      def sign_request(url, method: :post, payload: nil)
         signer = create_signer
-        request = build_request(url, payload)
+        request = build_request(url, method:, payload:)
         signer.sign_request(request)
       end
 
@@ -49,12 +49,12 @@ module RubyLLM
                             })
       end
 
-      def build_request(url, payload)
+      def build_request(url, method: :post, payload: nil)
         {
           connection: connection,
-          http_method: :post,
+          http_method: method,
           url: url || completion_url,
-          body: JSON.generate(payload, ascii_only: false) || ''
+          body: payload ? JSON.generate(payload, ascii_only: false) : nil
         }
       end
 

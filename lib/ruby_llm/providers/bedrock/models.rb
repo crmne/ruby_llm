@@ -8,7 +8,8 @@ module RubyLLM
         def list_models
           @connection = nil # reset connection since base url is different
           @api_base = "https://bedrock.#{RubyLLM.config.bedrock_region}.amazonaws.com"
-          signature = sign_request(models_url, nil)
+          full_models_url = "#{@api_base}/#{models_url}"
+          signature = sign_request(full_models_url, method: :get)
           response = connection.get(models_url) do |req|
             req.headers.merge! signature.headers
           end
