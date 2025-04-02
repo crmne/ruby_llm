@@ -19,6 +19,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @structured_output_schema = nil
       @on = {
         new_message: nil,
         end_message: nil
@@ -44,6 +45,16 @@ module RubyLLM
 
     def with_tools(*tools)
       tools.each { |tool| with_tool tool }
+      self
+    end
+
+    def with_structured_output(schema)
+      unless @model.supports_structured_output
+        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
+      end
+
+      structured_output_schema_instance = schema.is_a?(Class) ? schema.new : schema
+      @structured_output_schema = structured_output_schema_instance.to_hash
       self
     end
 
