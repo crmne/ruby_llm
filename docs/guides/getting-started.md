@@ -15,7 +15,7 @@ This guide will help you get up and running with RubyLLM, showing you the basics
 Before starting, make sure you have:
 
 1. Installed the RubyLLM gem (see the [Installation guide]({% link installation.md %}))
-2. At least one API key from a supported provider (OpenAI, Anthropic, Google, or DeepSeek)
+2. At least one API key from a supported provider (OpenAI, Anthropic, Google, AWS Bedrock, or DeepSeek)
 
 ## Basic Configuration
 
@@ -26,10 +26,16 @@ require 'ruby_llm'
 
 RubyLLM.configure do |config|
   # Add the API keys you have available
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+
+  # Bedrock
+  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+  config.bedrock_region = ENV.fetch('AWS_REGION', nil)
+  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 end
 ```
 

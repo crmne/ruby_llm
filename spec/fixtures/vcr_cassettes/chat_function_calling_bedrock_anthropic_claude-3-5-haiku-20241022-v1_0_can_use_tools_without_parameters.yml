@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250402T175101Z
+      X-Amz-Content-Sha256:
+      - 5470b3b9e786d362a84d10e00f2ca7de6f684b36347b98361f45534636f69c1a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=dcdf91434c4805f927bb4fd12cc96fb4cbcb1bdf613ca8a2e87723c5289276f6
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:51:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '490'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - f7fd8f7b-6484-446f-b9a9-31d74d6919fd
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1263'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '58'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '327'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01D7TwnTzHSdBt8dARrHJJcH","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_bdrk_01NTg5qGXWt284yF5EcRh5rp","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":58}}'
+  recorded_at: Wed, 02 Apr 2025 17:51:03 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_bdrk_01NTg5qGXWt284yF5EcRh5rp","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01NTg5qGXWt284yF5EcRh5rp","content":"Ruby"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250402T175103Z
+      X-Amz-Content-Sha256:
+      - 9fc90abeae78769d1ba081faa8d069f7f8659d3ba9d043a47d0314a3e6d795ed
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1375499d599f45f84e2bd1d49907d14739d68375e6697f6de00bba1d6d4f8d7c
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:51:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1209'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - f17157da-1d18-4897-8821-6748915429cd
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '3321'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '193'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '397'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01HCxN8Xq31VZw5uvkwJ4dvn","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
+        to the tool, Ruby is currently considered the best language to learn. \n\nRuby
+        is a dynamic, object-oriented programming language known for its simplicity
+        and readability. It''s particularly popular for web development, especially
+        with the Ruby on Rails framework. Some key advantages of learning Ruby include:\n\n1.
+        Easy to read and write syntax\n2. Strong community support\n3. Versatile for
+        web development, scripting, and automation\n4. Used in various industries,
+        including tech startups\n5. Good for beginners due to its intuitive nature\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Game development\n\nIf you have
+        a specific career or project in mind, you might want to consider other languages
+        as well. But for a general recommendation, Ruby seems to be an excellent choice
+        to start with!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":193}}'
+  recorded_at: Wed, 02 Apr 2025 17:51:07 GMT
+recorded_with: VCR 6.3.1

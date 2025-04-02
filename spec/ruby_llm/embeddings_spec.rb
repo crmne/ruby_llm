@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Embedding do
   include_context 'with configured RubyLLM'
@@ -9,12 +8,12 @@ RSpec.describe RubyLLM::Embedding do
   let(:test_text) { "Ruby is a programmer's best friend" }
   let(:test_texts) { %w[Ruby Python JavaScript] }
 
+  embedding_models = %w[text-embedding-004 text-embedding-3-small].freeze
+
   describe 'basic functionality' do
-    [
-      'text-embedding-004', # gemini
-      'text-embedding-3-small' # openai
-    ].each do |model|
-      it "#{model} can handle a single text" do # rubocop:disable RSpec/MultipleExpectations
+    embedding_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can handle a single text" do # rubocop:disable RSpec/MultipleExpectations
         embedding = RubyLLM.embed(test_text, model: model)
         expect(embedding.vectors).to be_an(Array)
         expect(embedding.vectors.first).to be_a(Float)
@@ -22,7 +21,7 @@ RSpec.describe RubyLLM::Embedding do
         expect(embedding.input_tokens).to be >= 0
       end
 
-      it "#{model} can handle multiple texts" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multiple texts" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         embeddings = RubyLLM.embed(test_texts, model: model)
         expect(embeddings.vectors).to be_an(Array)
         expect(embeddings.vectors.size).to eq(3)

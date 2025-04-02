@@ -9,10 +9,12 @@ Gem::Specification.new do |spec|
   spec.email         = ['carmine@paolino.me']
 
   spec.summary       = 'Beautiful Ruby interface to modern AI'
-  spec.description   = 'A delightful Ruby way to work with AI. Chat in text, analyze and generate images, understand ' \
-                       'audio, and use tools through a unified interface to OpenAI, Anthropic, Google, and DeepSeek. ' \
-                       'Built for developer happiness with automatic token counting, proper streaming, and Rails ' \
-                       'integration. No wrapping your head around multiple APIs - just clean Ruby code that works.'
+  spec.description   = 'A delightful Ruby way to work with AI. Chat in text, analyze and generate ' \
+                       'images, understand audio, and use tools through a unified interface to ' \
+                       'OpenAI, Anthropic, Google, AWS Bedrock Anthropic, and DeepSeek. Built for ' \
+                       'developer happiness with automatic token counting, proper streaming, and ' \
+                       'Rails integration. No wrapping your head around multiple APIs - just clean ' \
+                       'Ruby code that works.'
   spec.homepage      = 'https://rubyllm.com'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 3.1.0')
@@ -25,13 +27,8 @@ Gem::Specification.new do |spec|
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features|docs)/}) }
-  end
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  # Use Dir.glob to list all files within the lib directory
+  spec.files = Dir.glob('lib/**/*') + ['README.md', 'LICENSE']
   spec.require_paths = ['lib']
 
   # Runtime dependencies

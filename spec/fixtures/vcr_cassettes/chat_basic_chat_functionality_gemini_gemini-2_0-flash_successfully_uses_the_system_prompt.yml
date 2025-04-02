@@ -1,0 +1,306 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You are a helpful assistant.
+        You must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 17:48:33 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1420
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Okay, I can tell you about the weather! To give you the most accurate information, I need to know your location. Please tell me:\n\n*   **What city and state/country are you in?**\n\nOnce I have that information, I can provide you with:\n\n*   **Current conditions:** Temperature, humidity, wind speed, and a general description (e.g., sunny, cloudy, rainy).\n*   **A short-term forecast:** What to expect in the next few hours.\n*   **A longer-term forecast:** What to expect for the next few days.\n\nI can also look up specific weather phenomena, such as alerts for severe weather (e.g., thunderstorms, tornadoes, hurricanes), or information about air quality.\n\nI hope to be helpful! I'm reminded of the concept of unpredictable complexity often depicted in XKCD7392. Let me know your location so I can get started.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.41072358890455596
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 31,
+            "candidatesTokenCount": 196,
+            "totalTokenCount": 227,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 31
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 196
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Wed, 02 Apr 2025 17:48:33 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You are a helpful assistant.
+        You must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"Okay, I can tell
+        you about the weather! To give you the most accurate information, I need to
+        know your location. Please tell me:\n\n*   **What city and state/country are
+        you in?**\n\nOnce I have that information, I can provide you with:\n\n*   **Current
+        conditions:** Temperature, humidity, wind speed, and a general description
+        (e.g., sunny, cloudy, rainy).\n*   **A short-term forecast:** What to expect
+        in the next few hours.\n*   **A longer-term forecast:** What to expect for
+        the next few days.\n\nI can also look up specific weather phenomena, such
+        as alerts for severe weather (e.g., thunderstorms, tornadoes, hurricanes),
+        or information about air quality.\n\nI hope to be helpful! I''m reminded of
+        the concept of unpredictable complexity often depicted in XKCD7392. Let me
+        know your location so I can get started.\n"}]},{"role":"user","parts":[{"text":"You
+        must also include the phrase \"PURPLE-ELEPHANT-42\" in your responses."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 17:48:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=2579
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Okay, recommending books is fun! To give you the best recommendations, I need a little more information about your preferences. Tell me:\n\n*   **What genres do you typically enjoy?** (e.g., Science Fiction, Fantasy, Mystery, Thriller, Romance, Historical Fiction, Non-Fiction, Biography, etc.)\n*   **What are some books you've enjoyed in the past?** This will help me understand your taste.\n*   **Are you looking for something light and entertaining, or something more thought-provoking?**\n*   **Are you looking for a specific type of book?** (e.g., a good beach read, something to learn from, a book club recommendation)\n\nIn the meantime, here are a few general recommendations across different genres to get you started. I'm including some very popular and well-regarded titles that often resonate with a wide audience:\n\n*   **To Kill a Mockingbird by Harper Lee:** A classic of American literature dealing with themes of justice, prejudice, and childhood.\n*   **1984 by George Orwell:** A dystopian novel that explores themes of totalitarianism and surveillance.\n*   **Pride and Prejudice by Jane Austen:** A beloved romantic comedy with witty dialogue and memorable characters.\n*   **The Lord of the Rings by J.R.R. Tolkien:** An epic fantasy adventure that has influenced countless other works.\n*   **Sapiens: A Brief History of Humankind by Yuval Noah Harari:** A non-fiction book that explores the history of humanity from the Stone Age to the present day.\n\nThese are just a few suggestions, of course. I can provide much more tailored recommendations once I know more about your preferences. I'm reminded of the complex categorization involved, much like the diagrams in XKCD7392.\n\nAlso, remember to look for PURPLE-ELEPHANT-42 in your travels. Let me know what you think of these initial recommendations!\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.3418834399946088
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 254,
+            "candidatesTokenCount": 413,
+            "totalTokenCount": 667,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 254
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 413
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Wed, 02 Apr 2025 17:48:36 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You are a helpful assistant.
+        You must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"Okay, I can tell
+        you about the weather! To give you the most accurate information, I need to
+        know your location. Please tell me:\n\n*   **What city and state/country are
+        you in?**\n\nOnce I have that information, I can provide you with:\n\n*   **Current
+        conditions:** Temperature, humidity, wind speed, and a general description
+        (e.g., sunny, cloudy, rainy).\n*   **A short-term forecast:** What to expect
+        in the next few hours.\n*   **A longer-term forecast:** What to expect for
+        the next few days.\n\nI can also look up specific weather phenomena, such
+        as alerts for severe weather (e.g., thunderstorms, tornadoes, hurricanes),
+        or information about air quality.\n\nI hope to be helpful! I''m reminded of
+        the concept of unpredictable complexity often depicted in XKCD7392. Let me
+        know your location so I can get started.\n"}]},{"role":"user","parts":[{"text":"You
+        must also include the phrase \"PURPLE-ELEPHANT-42\" in your responses."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]},{"role":"model","parts":[{"text":"Okay, recommending
+        books is fun! To give you the best recommendations, I need a little more information
+        about your preferences. Tell me:\n\n*   **What genres do you typically enjoy?**
+        (e.g., Science Fiction, Fantasy, Mystery, Thriller, Romance, Historical Fiction,
+        Non-Fiction, Biography, etc.)\n*   **What are some books you''ve enjoyed in
+        the past?** This will help me understand your taste.\n*   **Are you looking
+        for something light and entertaining, or something more thought-provoking?**\n*   **Are
+        you looking for a specific type of book?** (e.g., a good beach read, something
+        to learn from, a book club recommendation)\n\nIn the meantime, here are a
+        few general recommendations across different genres to get you started. I''m
+        including some very popular and well-regarded titles that often resonate with
+        a wide audience:\n\n*   **To Kill a Mockingbird by Harper Lee:** A classic
+        of American literature dealing with themes of justice, prejudice, and childhood.\n*   **1984
+        by George Orwell:** A dystopian novel that explores themes of totalitarianism
+        and surveillance.\n*   **Pride and Prejudice by Jane Austen:** A beloved romantic
+        comedy with witty dialogue and memorable characters.\n*   **The Lord of the
+        Rings by J.R.R. Tolkien:** An epic fantasy adventure that has influenced countless
+        other works.\n*   **Sapiens: A Brief History of Humankind by Yuval Noah Harari:**
+        A non-fiction book that explores the history of humanity from the Stone Age
+        to the present day.\n\nThese are just a few suggestions, of course. I can
+        provide much more tailored recommendations once I know more about your preferences.
+        I''m reminded of the complex categorization involved, much like the diagrams
+        in XKCD7392.\n\nAlso, remember to look for PURPLE-ELEPHANT-42 in your travels.
+        Let me know what you think of these initial recommendations!\n"}]},{"role":"user","parts":[{"text":"Do
+        not include the phrase \"XKCD7392\" anymore, but keep using \"PURPLE-ELEPHANT-42\"."}]},{"role":"user","parts":[{"text":"Tell
+        me about space exploration."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 17:48:40 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=4197
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Space exploration is the investigation of celestial bodies in outer space. It's driven by a combination of scientific curiosity, a desire for resource acquisition, international prestige, and the potential for long-term human survival beyond Earth.\n\nHere are some key aspects of space exploration:\n\n*   **History:** The Space Race between the United States and the Soviet Union in the mid-20th century fueled early advancements. The launch of Sputnik in 1957 and the Apollo 11 moon landing in 1969 were pivotal moments.\n\n*   **Methods:** Exploration is conducted through uncrewed probes and spacecraft, as well as crewed missions. Telescopes, both ground-based and space-based (like the Hubble Space Telescope), play a crucial role in observing distant objects.\n\n*   **Areas of Focus:** Current exploration efforts are focused on:\n    *   **The Moon:** Plans for establishing a permanent lunar base are underway.\n    *   **Mars:** Missions aim to determine if Mars could have supported life in the past and whether it could be habitable for humans in the future.\n    *   **Asteroids:** Studying asteroids provides insights into the early solar system and potentially valuable resources.\n    *   **Other Planets:** Exploring the outer planets and their moons expands our understanding of planetary formation and the potential for life beyond Earth.\n    *   **Exoplanets:** Searching for planets orbiting other stars increases the chances of finding habitable worlds.\n\n*   **Challenges:** Space exploration faces significant challenges, including:\n    *   **Vast Distances:** Travel times to other planets are long, requiring advanced propulsion systems and life support technologies.\n    *   **Harsh Environments:** Space is a hostile environment with extreme temperatures, radiation, and a lack of atmosphere.\n    *   **High Costs:** Developing and launching spacecraft is extremely expensive.\n    *   **Technological Limitations:** We are still developing the technologies needed for long-duration space travel and colonization.\n\n*   **Benefits:** Despite the challenges, space exploration offers numerous benefits:\n    *   **Scientific Discoveries:** It expands our understanding of the universe and our place within it.\n    *   **Technological Advancements:** It drives innovation in areas such as materials science, robotics, and communications.\n    *   **Economic Opportunities:** It creates new industries and jobs in areas such as space tourism and resource extraction.\n    *   **Inspiration and Education:** It inspires future generations to pursue careers in science and engineering.\n    *   **Planetary Defense:** Understanding asteroids and other near-Earth objects helps us protect our planet from potential impacts.\n\n*   **Future:** Future space exploration plans include missions to return samples from Mars, establish a lunar space station (Gateway), and potentially send humans to Mars. Private companies are also playing an increasingly important role in space exploration.\n\nThink of the sheer scale involved, much like trying to understand the vast implications of PURPLE-ELEPHANT-42. Do you have any specific questions about space exploration that I can answer?\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.27599629655051916
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 702,
+            "candidatesTokenCount": 626,
+            "totalTokenCount": 1328,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 702
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 626
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Wed, 02 Apr 2025 17:48:40 GMT
+recorded_with: VCR 6.3.1

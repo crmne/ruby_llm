@@ -207,41 +207,34 @@ chat.ask "What's the weather at invalid coordinates 1000, 1000?"
 # => "The coordinates 1000, 1000 are not valid for any location on Earth, as latitude must be between -90 and 90, and longitude must be between -180 and 180. Please provide valid coordinates or a city name for weather information."
 ```
 
-## Advanced Tool Parameters
+## Simple Tool Parameters
 
-Tools can have complex parameter types:
+RubyLLM currently only supports simple parameter types: strings, numbers, and booleans. Complex types like arrays and objects are not supported.
 
 ```ruby
-class DataAnalysis < RubyLLM::Tool
-  description "Analyzes numerical data"
+class WeatherTool < RubyLLM::Tool
+  description "Gets current weather for a location"
 
-  param :data,
-    type: :array,
-    desc: "Array of numbers to analyze"
+  param :latitude,
+    type: :string,
+    desc: "Latitude (e.g., 52.5200)"
 
-  param :operations,
-    type: :object,
-    desc: "Analysis operations to perform",
+  param :longitude,
+    type: :string,
+    desc: "Longitude (e.g., 13.4050)"
+
+  param :unit,
+    type: :string,
+    desc: "Temperature unit. Must be 'celsius' or 'fahrenheit'",
     required: false
 
-  def execute(data:, operations: {mean: true, median: false})
-    result = {}
-
-    result[:mean] = data.sum.to_f / data.size if operations[:mean]
-    result[:median] = calculate_median(data) if operations[:median]
-
-    result
-  end
-
-  private
-
-  def calculate_median(data)
-    sorted = data.sort
-    mid = sorted.size / 2
-    sorted.size.odd? ? sorted[mid] : (sorted[mid-1] + sorted[mid]) / 2.0
+  def execute(latitude:, longitude:, unit: 'celsius')
+    # Weather lookup logic here
   end
 end
 ```
+
+> Note: For parameters with limited valid values, clearly specify them in the description.
 
 ## Security Considerations
 

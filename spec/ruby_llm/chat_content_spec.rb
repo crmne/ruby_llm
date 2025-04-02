@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
@@ -9,13 +8,14 @@ RSpec.describe RubyLLM::Chat do
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
 
+  vision_models = %w[claude-3-5-haiku-20241022 anthropic.claude-3-5-sonnet-20240620-v1:0 gemini-2.0-flash
+                     gpt-4o-mini].freeze
+  audio_models = %w[gpt-4o-mini-audio-preview gpt-4o-audio-preview].freeze
+
   describe 'vision models' do
-    [
-      'claude-3-5-haiku-20241022',
-      'gemini-2.0-flash',
-      'gpt-4o-mini'
-    ].each do |model|
-      it "#{model} can understand images" do # rubocop:disable RSpec/MultipleExpectations
+    vision_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can understand images" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
 
@@ -27,11 +27,9 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'audio models' do
-    %w[
-      gpt-4o-mini-audio-preview
-      gpt-4o-audio-preview
-    ].each do |model|
-      it "#{model} can understand audio" do # rubocop:disable RSpec/MultipleExpectations
+    audio_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can understand audio" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
         response = chat.ask('What is being said?', with: { audio: audio_path })
 

@@ -1,0 +1,185 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.7,"stream":false,"max_tokens":8192,"system":"You
+        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
+        in your response."}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:48:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-02T17:48:10Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-02T17:48:10Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-02T17:48:12Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-02T17:48:10Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01LVDK4jMxw3vNQcdWDj3MHk","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
+        a general weather overview:\n\nWeather can vary greatly depending on location
+        and time of year. XKCD7392 Some regions experience mild temperatures, while
+        others might have more extreme conditions like hot summers or cold winters.
+        Factors like humidity, wind, precipitation, and atmospheric pressure all contribute
+        to the day-to-day weather patterns we experience. If you''re curious about
+        specific weather conditions, it''s best to check a local forecast for the
+        most accurate and up-to-date information."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":38,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":105}}'
+  recorded_at: Wed, 02 Apr 2025 17:48:12 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"Here''s a general weather
+        overview:\n\nWeather can vary greatly depending on location and time of year.
+        XKCD7392 Some regions experience mild temperatures, while others might have
+        more extreme conditions like hot summers or cold winters. Factors like humidity,
+        wind, precipitation, and atmospheric pressure all contribute to the day-to-day
+        weather patterns we experience. If you''re curious about specific weather
+        conditions, it''s best to check a local forecast for the most accurate and
+        up-to-date information."},{"role":"user","content":"What are some good books?"}],"temperature":0.7,"stream":false,"max_tokens":8192,"system":"You
+        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
+        in your response.\n\nYou must also include the phrase \"PURPLE-ELEPHANT-42\"
+        in your responses."}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:48:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-02T17:48:14Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-02T17:48:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-02T17:48:17Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-02T17:48:13Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_018w8hRiWeGfsEYonQmgZuQN","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+        are some book recommendations across different genres:\n\nFiction:\n1. \"1984\"
+        by George Orwell - A classic dystopian novel\n2. \"The Name of the Wind\"
+        by Patrick Rothfuss - An excellent fantasy book\n3. \"To Kill a Mockingbird\"
+        by Harper Lee - A powerful literary classic\n\nNon-Fiction:\n1. \"Sapiens\"
+        by Yuval Noah Harari - A fascinating history of humanity\n2. \"The Immortal
+        Life of Henrietta Lacks\" by Rebecca Skloot - A compelling scientific narrative\n\nScience
+        Fiction:\n1. \"Dune\" by Frank Herbert - An iconic sci-fi epic\n2. \"The Martian\"
+        by Andy Weir - A thrilling space survival story\n\nXKCD7392 reminds me that
+        book tastes are subjective, so what one person loves, another might not enjoy.
+        PURPLE-ELEPHANT-42 suggests that reading is a personal journey of discovery.\n\nSome
+        tips for finding great books:\n- Check bestseller lists\n- Read reviews on
+        Goodreads\n- Ask friends for recommendations\n- Explore different genres\n\nWould
+        you like recommendations in a specific genre?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":172,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":264}}'
+  recorded_at: Wed, 02 Apr 2025 17:48:17 GMT
+recorded_with: VCR 6.3.1

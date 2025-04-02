@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Providers::OpenAI::Capabilities do # rubocop:disable RSpec/SpecFilePathFormat
   describe '.normalize_temperature' do
