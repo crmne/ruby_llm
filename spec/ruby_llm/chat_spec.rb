@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  chat_models = %w[claude-3-5-haiku-20241022
+                   anthropic.claude-3-5-haiku-20241022-v1:0
+                   gemini-2.0-flash
+                   deepseek-chat
+                   gpt-4o-mini].freeze
+
   describe 'basic chat functionality' do
-    [
-      'claude-3-5-haiku-20241022',
-      'gemini-2.0-flash',
-      'deepseek-chat',
-      'gpt-4o-mini'
-    ].each do |model|
-      it "#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    chat_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
         response = chat.ask("What's 2 + 2?")
 
@@ -23,7 +24,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
 
-      it "#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
 
         first = chat.ask("Who was Ruby's creator?")
@@ -31,6 +32,34 @@ RSpec.describe RubyLLM::Chat do
 
         followup = chat.ask('What year did he create Ruby?')
         expect(followup.content).to include('199')
+      end
+
+      it "#{provider}/#{model} successfully uses the system prompt" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
+
+        # Use a distinctive and unusual instruction that wouldn't happen naturally
+        chat.with_instructions(
+          'You are a helpful assistant. You must include the exact phrase "XKCD7392" somewhere in your response.'
+        )
+
+        response = chat.ask('Tell me about the weather.')
+        expect(response.content).to include('XKCD7392')
+
+        # Test ability to follow multiple instructions with another unique marker
+        chat.with_instructions 'You must also include the phrase "PURPLE-ELEPHANT-42" in your responses.'
+
+        response = chat.ask('What are some good books?')
+        expect(response.content).to include('XKCD7392')
+        expect(response.content).to include('PURPLE-ELEPHANT-42')
+
+        unless %w[bedrock anthropic].include?(provider) # Bedrock and Anthropic merge all system prompts into one
+          # Test with conflicting instructions to see if newer system prompts override older ones
+          chat.with_instructions 'Do not include the phrase "XKCD7392" anymore, but keep using "PURPLE-ELEPHANT-42".'
+
+          response = chat.ask('Tell me about space exploration.')
+          expect(response.content).not_to include('XKCD7392')
+          expect(response.content).to include('PURPLE-ELEPHANT-42')
+        end
       end
     end
   end

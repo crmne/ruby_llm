@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Error do
   it 'handles invalid API keys gracefully' do # rubocop:disable RSpec/ExampleLength

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 require 'tempfile'
 
 RSpec.describe RubyLLM::Models do

@@ -2,13 +2,16 @@
 
 A delightful Ruby way to work with AI. No configuration madness, no complex callbacks, no handler hell – just beautiful, expressive Ruby code.
 
-<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+<div style="display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 1em">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Google" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" height="40">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" height="40" width="120">
+  &nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
 </div>
 
@@ -27,7 +30,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ## Features
 
-- 💬 **Chat** with OpenAI, Anthropic, Gemini, and DeepSeek models
+- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, and DeepSeek models
 - 👁️ **Vision and Audio** understanding
 - 📄 **PDF Analysis** for analyzing documents
 - 🖼️ **Image generation** with DALL-E and other providers
@@ -99,10 +102,16 @@ Configure with your API keys:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['OPENAI_API_KEY']
-  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+
+  # Bedrock
+  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
+  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
+  config.bedrock_region = ENV.fetch('AWS_REGION', nil)
+  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 end
 ```
 
@@ -125,6 +134,9 @@ chat.ask "Could you give me an example?"
 chat.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
+
+# Set personality or behavior with instructions (aka system prompts) - available from 1.1.0
+chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
 
 # Understand content in multiple forms
 chat.ask "Compare these diagrams", with: { image: ["diagram1.png", "diagram2.png"] }
@@ -182,8 +194,12 @@ class ToolCall < ApplicationRecord
   acts_as_tool_call
 end
 
-# In your controller
-chat = Chat.create!(model_id: "gpt-4o-mini")
+# In a background job
+chat = Chat.create! model_id: "gpt-4o-mini"
+
+# Set personality or behavior with instructions (aka system prompts) - they're persisted too! - available from 1.1.0
+chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
+
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(
     chat,
