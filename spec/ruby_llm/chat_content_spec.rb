@@ -13,7 +13,8 @@ RSpec.describe RubyLLM::Chat do
     [
       'claude-3-5-haiku-20241022',
       'gemini-2.0-flash',
-      'gpt-4o-mini'
+      'gpt-4o-mini',
+      'granite3.2-vision:2b'
     ].each do |model|
       it "#{model} can understand images" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)

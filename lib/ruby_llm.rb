@@ -16,6 +16,7 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
+  'ollama' => 'Ollama',
   'bedrock' => 'Bedrock'
 )
 loader.ignore("#{__dir__}/tasks")
@@ -72,6 +73,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 
 if defined?(Rails::Railtie)

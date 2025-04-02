@@ -30,6 +30,7 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+  config.ollama_api_base_url = ENV.fetch('OLLAMA_BASE_URL', 'http://localhost:11434')
 
   # Bedrock
   config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
@@ -70,6 +71,11 @@ claude_chat.ask "Tell me about Ruby programming language"
 # Use Gemini
 gemini_chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 gemini_chat.ask "What are the best Ruby gems for machine learning?"
+
+# Use an Ollama model - pull it to the server first (consult Ollama docs) and then do models.refresh! before using it:
+RubyLLM.models.refresh!  # Needs to be called to populate Ollama models before using any
+ollama_chat = RubyLLM.chat(model: 'gemma3:latest')
+ollama_chat.ask "What is Alphabet?"
 ```
 
 ## Exploring Available Models

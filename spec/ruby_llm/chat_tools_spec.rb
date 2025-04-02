@@ -29,7 +29,8 @@ RSpec.describe RubyLLM::Chat do
       ['claude-3-5-haiku-20241022', nil],
       ['gemini-2.0-flash', nil],
       ['gpt-4o-mini', nil],
-      %w[claude-3-5-haiku bedrock]
+      %w[claude-3-5-haiku bedrock],
+      %w[llama3.1:8b ollama]
     ].each do |model, provider|
       provider_suffix = provider ? " with #{provider}" : ''
       it "#{model} can use tools#{provider_suffix}" do # rubocop:disable RSpec/MultipleExpectations
