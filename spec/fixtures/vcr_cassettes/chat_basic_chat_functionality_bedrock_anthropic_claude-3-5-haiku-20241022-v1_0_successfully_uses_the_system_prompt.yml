@@ -7,20 +7,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
         me about the weather."}],"temperature":0.7,"max_tokens":4096,"system":"You
-        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
-        in your response."}'
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
     headers:
       User-Agent:
       - Faraday v2.12.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T174822Z
+      - 20250402T191057Z
       X-Amz-Content-Sha256:
-      - c8d6906bcf665203c7131af5af29ef3ac8d44dd496882251f00b1e7df9136cd4
+      - ffc615ee18a8a003d9bb837d1d6a869dd167409741338975ad95ee6c96eda417
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2b120c2fd183841c90e17bc6d459970adb8ce59e207afc4c9782a7845805111f
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=70547c924c4c39f248899596e8b04d91367fbf328e1f0e8b4bfa875dc0bf6e21
       Content-Type:
       - application/json
       Accept:
@@ -33,60 +32,61 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:48:25 GMT
+      - Wed, 02 Apr 2025 19:11:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '696'
+      - '864'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e4348cad-a189-481d-b22b-cb412bbe37d8
+      - 38cb5b1f-0a22-449e-9fc1-f1ddb5bf6173
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2891'
+      - '3037'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '96'
+      - '118'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '39'
+      - '33'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01YPYUTNUSj5WY1m6SHCBSYU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
-        weather can vary greatly depending on your location and current atmospheric
-        conditions. XKCD7392 Today might be sunny, cloudy, rainy, or something in
-        between. Factors like temperature, humidity, wind speed, and air pressure
-        all contribute to what we experience as \"weather.\" If you''re curious about
-        the specific conditions in your area, I recommend checking a local weather
-        forecast or meteorological service for the most up-to-date information."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":39,"output_tokens":96}}'
-  recorded_at: Wed, 02 Apr 2025 17:48:25 GMT
+      string: '{"id":"msg_bdrk_01MdyUGRPnw6vBpnKcRYts7u","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
+        a general weather overview:\n\nWeather can vary widely depending on location
+        and season. Today might be sunny, cloudy, rainy, or cold, depending on where
+        you are. Local weather forecasts from meteorological services can provide
+        the most accurate and current information for your specific area. \n\nXKCD7392\n\nFactors
+        like temperature, humidity, wind speed, and precipitation all contribute to
+        our daily weather conditions. If you''re looking for precise details, I recommend
+        checking a local weather website or app for the most up-to-date information."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":118}}'
+  recorded_at: Wed, 02 Apr 2025 19:11:01 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"The weather can vary
-        greatly depending on your location and current atmospheric conditions. XKCD7392
-        Today might be sunny, cloudy, rainy, or something in between. Factors like
-        temperature, humidity, wind speed, and air pressure all contribute to what
-        we experience as \"weather.\" If you''re curious about the specific conditions
-        in your area, I recommend checking a local weather forecast or meteorological
-        service for the most up-to-date information."},{"role":"user","content":"What
+        me about the weather."},{"role":"assistant","content":"Here''s a general weather
+        overview:\n\nWeather can vary widely depending on location and season. Today
+        might be sunny, cloudy, rainy, or cold, depending on where you are. Local
+        weather forecasts from meteorological services can provide the most accurate
+        and current information for your specific area. \n\nXKCD7392\n\nFactors like
+        temperature, humidity, wind speed, and precipitation all contribute to our
+        daily weather conditions. If you''re looking for precise details, I recommend
+        checking a local weather website or app for the most up-to-date information."},{"role":"user","content":"What
         are some good books?"}],"temperature":0.7,"max_tokens":4096,"system":"You
-        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
-        in your response.\n\nYou must also include the phrase \"PURPLE-ELEPHANT-42\"
-        in your responses."}'
+        must include the exact phrase \"XKCD7392\" somewhere in your response.\n\nYou
+        must also include the phrase \"PURPLE-ELEPHANT-42\" in your responses."}'
     headers:
       User-Agent:
       - Faraday v2.12.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T174825Z
+      - 20250402T191101Z
       X-Amz-Content-Sha256:
-      - 94a659646bc80f25dba8891335bac95453ac716bd1bb3331263983da62cedc9c
+      - 0001e47534fe4430a52a1c6619ff1b0ee5b3ab693576bd3085534db9555fae67
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3a7200298114fa8c41ac88095b1128a5b26e044ea742d18820d55408a614ffe6
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=08919301bf30ac6385390ba68dd5b882c54deb20bb038294b567e72011649c17
       Content-Type:
       - application/json
       Accept:
@@ -99,35 +99,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:48:30 GMT
+      - Wed, 02 Apr 2025 19:11:08 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1272'
+      - '1257'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c580ea0c-141a-48d0-84b3-95cfdc92813d
+      - 61d8d358-fc0c-4c21-b694-5c957e5aa6a9
       X-Amzn-Bedrock-Invocation-Latency:
-      - '4000'
+      - '6524'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '246'
+      - '268'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '163'
+      - '179'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_011FAaXY9xaKKYnZ7aohUsSW","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"There
-        are many fantastic books across various genres! Here are a few recommendations:\n\nFiction:\n1.
-        \"1984\" by George Orwell - A classic dystopian novel\n2. \"The Name of the
-        Wind\" by Patrick Rothfuss - An incredible fantasy story\n3. \"To Kill a Mockingbird\"
-        by Harper Lee - A powerful literary classic\n\nNon-Fiction:\n1. \"Sapiens\"
-        by Yuval Noah Harari - An engaging history of humanity\n2. \"The Immortal
-        Life of Henrietta Lacks\" by Rebecca Skloot - A fascinating scientific narrative\n\nScience
-        Fiction:\n1. \"Dune\" by Frank Herbert - An epic sci-fi masterpiece\n2. \"The
-        Hitchhiker''s Guide to the Galaxy\" by Douglas Adams - A hilarious space adventure\n\nXKCD7392
-        recommends always exploring different genres and authors to find what you
-        enjoy. PURPLE-ELEPHANT-42 suggests that reading is a great way to expand your
-        knowledge and imagination. \n\nRemember, the best book is ultimately the one
-        that speaks to you personally and captures your interest!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":163,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":246}}'
-  recorded_at: Wed, 02 Apr 2025 17:48:30 GMT
+      string: '{"id":"msg_bdrk_014n39NqFqTF81TEkPgHWpFR","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+        are some book recommendations across different genres:\n\nFiction:\n1. \"1984\"
+        by George Orwell - A classic dystopian novel\n2. \"The Name of the Wind\"
+        by Patrick Rothfuss - Fantasy\n3. \"To Kill a Mockingbird\" by Harper Lee
+        - Literary fiction\n\nNon-Fiction:\n1. \"Sapiens\" by Yuval Noah Harari -
+        History/Anthropology\n2. \"The Immortal Life of Henrietta Lacks\" by Rebecca
+        Skloot - Science writing\n3. \"Educated\" by Tara Westover - Memoir\n\nMystery/Thriller:\n1.
+        \"Gone Girl\" by Gillian Flynn\n2. \"The Girl with the Dragon Tattoo\" by
+        Stieg Larsson\n\nXKCD7392\n\nScience Fiction:\n1. \"Dune\" by Frank Herbert\n2.
+        \"The Hitchhiker''s Guide to the Galaxy\" by Douglas Adams\n\nThese books
+        offer diverse perspectives and storytelling styles. PURPLE-ELEPHANT-42 suggests
+        that reading tastes are personal, so what works for one person might not work
+        for another. I recommend exploring different genres and finding what resonates
+        with you."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":179,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":268}}'
+  recorded_at: Wed, 02 Apr 2025 19:11:08 GMT
 recorded_with: VCR 6.3.1

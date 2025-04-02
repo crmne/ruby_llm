@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"developer","content":"You
-        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
-        in your response."},{"role":"user","content":"Tell me about the weather."}],"temperature":0.7,"stream":false}'
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:50:01 GMT
+      - Wed, 02 Apr 2025 19:12:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3259'
+      - '2102'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -45,13 +45,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9996'
+      - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '199965'
+      - '199972'
       X-Ratelimit-Reset-Requests:
-      - 31.81s
+      - 8.64s
       X-Ratelimit-Reset-Tokens:
-      - 10ms
+      - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -73,16 +73,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHwVqNM4p427ZmyrRqI47EFx9n0XZ",
+          "id": "chatcmpl-BHxnFNQHDtqsu8yPBT2FCx5Yw9j5j",
           "object": "chat.completion",
-          "created": 1743616198,
+          "created": 1743621121,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The weather can vary greatly depending on your location and the time of year. For instance, in many regions, fall brings cooler temperatures and changing leaves, while summer might be characterized by warmth and sunshine. If you provide me with a specific location or time frame, I can give you a more detailed weather outlook. Additionally, you can check local weather services or websites for the most accurate and up-to-date information. Remember, it's always good to stay informed, especially if you're planning any outdoor activities. And speaking of information, did you know that XKCD7392 humorously discusses the quirks of weather forecasting?",
+                "content": "The weather can vary greatly depending on your location and the time of year. In general, it includes various elements such as temperature, humidity, precipitation, wind speed, and atmospheric pressure. For instance, summer often brings warmer temperatures and more humidity, while winter typically features colder weather and possibly snow in certain regions.\n\nTo get detailed and current weather information, it's best to check a reliable weather service or app for your specific area. They provide forecasts, radar images, and alerts about severe weather conditions. \n\nIf you're looking for something specific or a certain location's weather, feel free to ask! By the way, did you know that XKCD7392 humorously touches on the unpredictability of weather?",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,9 +91,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 41,
-            "completion_tokens": 123,
-            "total_tokens": 164,
+            "prompt_tokens": 35,
+            "completion_tokens": 141,
+            "total_tokens": 176,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -108,25 +108,26 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_b376dfbbd5"
         }
-  recorded_at: Wed, 02 Apr 2025 17:50:01 GMT
+  recorded_at: Wed, 02 Apr 2025 19:12:03 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"developer","content":"You
-        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
-        in your response."},{"role":"user","content":"Tell me about the weather."},{"role":"assistant","content":"The
-        weather can vary greatly depending on your location and the time of year.
-        For instance, in many regions, fall brings cooler temperatures and changing
-        leaves, while summer might be characterized by warmth and sunshine. If you
-        provide me with a specific location or time frame, I can give you a more detailed
-        weather outlook. Additionally, you can check local weather services or websites
-        for the most accurate and up-to-date information. Remember, it''s always good
-        to stay informed, especially if you''re planning any outdoor activities. And
-        speaking of information, did you know that XKCD7392 humorously discusses the
-        quirks of weather forecasting?"},{"role":"developer","content":"You must also
-        include the phrase \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"The weather can vary
+        greatly depending on your location and the time of year. In general, it includes
+        various elements such as temperature, humidity, precipitation, wind speed,
+        and atmospheric pressure. For instance, summer often brings warmer temperatures
+        and more humidity, while winter typically features colder weather and possibly
+        snow in certain regions.\n\nTo get detailed and current weather information,
+        it''s best to check a reliable weather service or app for your specific area.
+        They provide forecasts, radar images, and alerts about severe weather conditions.
+        \n\nIf you''re looking for something specific or a certain location''s weather,
+        feel free to ask! By the way, did you know that XKCD7392 humorously touches
+        on the unpredictability of weather?"},{"role":"developer","content":"You must
+        also include the phrase \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
         are some good books?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
@@ -145,7 +146,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:50:10 GMT
+      - Wed, 02 Apr 2025 19:12:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,7 +158,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '8751'
+      - '5275'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -165,13 +166,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9995'
+      - '9998'
       X-Ratelimit-Remaining-Tokens:
-      - '199775'
+      - '199756'
       X-Ratelimit-Reset-Requests:
-      - 36.774s
+      - 14.959s
       X-Ratelimit-Reset-Tokens:
-      - 67ms
+      - 73ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -191,48 +192,79 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1CSHdWdU5EaFhsTjR4bk9odHdJazd5NWNXeGtkZiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0MzYxNjIwMiwKICAibW9kZWwiOiAiZ3B0LTRvLW1pbmktMjAyNC0wNy0xOCIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiVGhlcmUgYXJlIG1hbnkgZ3JlYXQgYm9va3MgYWNyb3NzIHZhcmlvdXMgZ2VucmVzISBIZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbjEuICoqRmljdGlvbioqOiBcbiAgIC0gKlwiVGhlIEdyZWF0IEdhdHNieVwiKiBieSBGLiBTY290dCBGaXR6Z2VyYWxkIGlzIGEgY2xhc3NpYyB0aGF0IGV4cGxvcmVzIHRoZW1lcyBvZiB3ZWFsdGggYW5kIHRoZSBBbWVyaWNhbiBEcmVhbS5cbiAgIC0gKlwiVGhlIE5pZ2h0IENpcmN1c1wiKiBieSBFcmluIE1vcmdlbnN0ZXJuIGlzIGEgYmVhdXRpZnVsbHkgd3JpdHRlbiBmYW50YXN5IG5vdmVsIGFib3V0IGEgbWFnaWNhbCBjb21wZXRpdGlvbiBiZXR3ZWVuIHR3byB5b3VuZyBpbGx1c2lvbmlzdHMuXG5cbjIuICoqTm9uLWZpY3Rpb24qKjogXG4gICAtICpcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIiogYnkgWXV2YWwgTm9haCBIYXJhcmkgb2ZmZXJzIGEgdGhvdWdodC1wcm92b2tpbmcgb3ZlcnZpZXcgb2YgaHVtYW4gaGlzdG9yeSBhbmQgZXZvbHV0aW9uLlxuICAgLSAqXCJFZHVjYXRlZFwiKiBieSBUYXJhIFdlc3RvdmVyIGlzIGEgbWVtb2lyIGFib3V0IGEgd29tYW4gd2hvIGdyb3dzIHVwIGluIGEgc3RyaWN0IGFuZCBhYnVzaXZlIGhvdXNlaG9sZCBpbiBydXJhbCBJZGFobyBidXQgZXZlbnR1YWxseSBlc2NhcGVzIHRvIGxlYXJuIGFib3V0IHRoZSB3b3JsZCB0aHJvdWdoIGVkdWNhdGlvbi5cblxuMy4gKipTY2llbmNlIEZpY3Rpb24vRmFudGFzeSoqOiBcbiAgIC0gKlwiRHVuZVwiKiBieSBGcmFuayBIZXJiZXJ0IGlzIGEgY29ybmVyc3RvbmUgb2Ygc2NpZW5jZSBmaWN0aW9uIGxpdGVyYXR1cmUsIGZvY3VzaW5nIG9uIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGVjb2xvZ3kgb24gYSBkZXNlcnQgcGxhbmV0LlxuICAgLSAqXCJUaGUgTmFtZSBvZiB0aGUgV2luZFwiKiBieSBQYXRyaWNrIFJvdGhmdXNzIGlzIGFuIGVuZ2FnaW5nIGZhbnRhc3kgbm92ZWwgdGhhdCBmb2xsb3dzIHRoZSBzdG9yeSBvZiBhIGdpZnRlZCB5b3VuZyBtYW4gaW4gYSBtYWdpY2FsIHdvcmxkLlxuXG40LiAqKk15c3RlcnkvVGhyaWxsZXIqKjogXG4gICAtICpcIkdvbmUgR2lybFwiKiBieSBHaWxsaWFuIEZseW5uIGlzIGEgcHN5Y2hvbG9naWNhbCB0aHJpbGxlciB0aGF0IGRlbHZlcyBpbnRvIHRoZSBjb21wbGV4aXRpZXMgb2YgbWFycmlhZ2UgYW5kIG1lZGlhIHBlcmNlcHRpb24uXG4gICAtICpcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b29cIiogYnkgU3RpZWcgTGFyc3NvbiBjb21iaW5lcyBteXN0ZXJ5IHdpdGggc29jaWFsIGNvbW1lbnRhcnkuXG5cblRoZXNlIGJvb2tzIGNhdGVyIHRvIHZhcmlvdXMgdGFzdGVzLCBzbyB0aGVyZSdzIHNvbWV0aGluZyBmb3IgZXZlcnlvbmUhIEFuZCBqdXN0IGZvciBmdW4sIGlmIHlvdSBldmVyIGNvbWUgYWNyb3NzIGEgcXVpcmt5IGNvbWljLCByZW1lbWJlciB0aGUgcGhyYXNlIFBVUlBMRS1FTEVQSEFOVC00MuKAlGl0IG1pZ2h0IGp1c3QgYmUgYSB3aGltc2ljYWwgcmVmZXJlbmNlIHdvcnRoIGV4cGxvcmluZywgbXVjaCBsaWtlIFhLQ0Q3MzkyISIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDIwMSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDM0OSwKICAgICJ0b3RhbF90b2tlbnMiOiA1NTAsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9iMzc2ZGZiYmQ1Igp9Cg==
-  recorded_at: Wed, 02 Apr 2025 17:50:10 GMT
+      string: |
+        {
+          "id": "chatcmpl-BHxnHTMOIxgmYehl1KSUFeQhH3LrC",
+          "object": "chat.completion",
+          "created": 1743621123,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "There are countless great books across various genres, so it really depends on your interests! Here are some recommendations:\n\n1. **Fiction**:\n   - *To Kill a Mockingbird* by Harper Lee\n   - *1984* by George Orwell\n   - *The Great Gatsby* by F. Scott Fitzgerald\n\n2. **Science Fiction/Fantasy**:\n   - *Dune* by Frank Herbert\n   - *The Hobbit* by J.R.R. Tolkien\n   - *Neuromancer* by William Gibson\n\n3. **Non-Fiction**:\n   - *Sapiens: A Brief History of Humankind* by Yuval Noah Harari\n   - *Educated* by Tara Westover\n   - *The Immortal Life of Henrietta Lacks* by Rebecca Skloot\n\n4. **Mystery/Thriller**:\n   - *Gone Girl* by Gillian Flynn\n   - *The Girl with the Dragon Tattoo* by Stieg Larsson\n   - *Big Little Lies* by Liane Moriarty\n\n5. **Graphic Novels/Comics**:\n   - *Maus* by Art Spiegelman\n   - *Persepolis* by Marjane Satrapi\n   - *Saga* by Brian K. Vaughan and Fiona Staples\n\nIf you're a fan of unique storytelling, you might enjoy *XKCD7392*, which cleverly blends humor with insights into human behavior. And remember, if you want a whimsical recommendation, consider *PURPLE-ELEPHANT-42*, a fun title that could spark your imagination!",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 213,
+            "completion_tokens": 328,
+            "total_tokens": 541,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b376dfbbd5"
+        }
+  recorded_at: Wed, 02 Apr 2025 19:12:09 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"developer","content":"You
-        are a helpful assistant. You must include the exact phrase \"XKCD7392\" somewhere
-        in your response."},{"role":"user","content":"Tell me about the weather."},{"role":"assistant","content":"The
-        weather can vary greatly depending on your location and the time of year.
-        For instance, in many regions, fall brings cooler temperatures and changing
-        leaves, while summer might be characterized by warmth and sunshine. If you
-        provide me with a specific location or time frame, I can give you a more detailed
-        weather outlook. Additionally, you can check local weather services or websites
-        for the most accurate and up-to-date information. Remember, it''s always good
-        to stay informed, especially if you''re planning any outdoor activities. And
-        speaking of information, did you know that XKCD7392 humorously discusses the
-        quirks of weather forecasting?"},{"role":"developer","content":"You must also
-        include the phrase \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
-        are some good books?"},{"role":"assistant","content":"There are many great
-        books across various genres! Here are a few recommendations:\n\n1. **Fiction**:
-        \n   - *\"The Great Gatsby\"* by F. Scott Fitzgerald is a classic that explores
-        themes of wealth and the American Dream.\n   - *\"The Night Circus\"* by Erin
-        Morgenstern is a beautifully written fantasy novel about a magical competition
-        between two young illusionists.\n\n2. **Non-fiction**: \n   - *\"Sapiens:
-        A Brief History of Humankind\"* by Yuval Noah Harari offers a thought-provoking
-        overview of human history and evolution.\n   - *\"Educated\"* by Tara Westover
-        is a memoir about a woman who grows up in a strict and abusive household in
-        rural Idaho but eventually escapes to learn about the world through education.\n\n3.
-        **Science Fiction/Fantasy**: \n   - *\"Dune\"* by Frank Herbert is a cornerstone
-        of science fiction literature, focusing on politics, religion, and ecology
-        on a desert planet.\n   - *\"The Name of the Wind\"* by Patrick Rothfuss is
-        an engaging fantasy novel that follows the story of a gifted young man in
-        a magical world.\n\n4. **Mystery/Thriller**: \n   - *\"Gone Girl\"* by Gillian
-        Flynn is a psychological thriller that delves into the complexities of marriage
-        and media perception.\n   - *\"The Girl with the Dragon Tattoo\"* by Stieg
-        Larsson combines mystery with social commentary.\n\nThese books cater to various
-        tastes, so there''s something for everyone! And just for fun, if you ever
-        come across a quirky comic, remember the phrase PURPLE-ELEPHANT-42—it might
-        just be a whimsical reference worth exploring, much like XKCD7392!"},{"role":"developer","content":"Do
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"The weather can vary
+        greatly depending on your location and the time of year. In general, it includes
+        various elements such as temperature, humidity, precipitation, wind speed,
+        and atmospheric pressure. For instance, summer often brings warmer temperatures
+        and more humidity, while winter typically features colder weather and possibly
+        snow in certain regions.\n\nTo get detailed and current weather information,
+        it''s best to check a reliable weather service or app for your specific area.
+        They provide forecasts, radar images, and alerts about severe weather conditions.
+        \n\nIf you''re looking for something specific or a certain location''s weather,
+        feel free to ask! By the way, did you know that XKCD7392 humorously touches
+        on the unpredictability of weather?"},{"role":"developer","content":"You must
+        also include the phrase \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
+        are some good books?"},{"role":"assistant","content":"There are countless
+        great books across various genres, so it really depends on your interests!
+        Here are some recommendations:\n\n1. **Fiction**:\n   - *To Kill a Mockingbird*
+        by Harper Lee\n   - *1984* by George Orwell\n   - *The Great Gatsby* by F.
+        Scott Fitzgerald\n\n2. **Science Fiction/Fantasy**:\n   - *Dune* by Frank
+        Herbert\n   - *The Hobbit* by J.R.R. Tolkien\n   - *Neuromancer* by William
+        Gibson\n\n3. **Non-Fiction**:\n   - *Sapiens: A Brief History of Humankind*
+        by Yuval Noah Harari\n   - *Educated* by Tara Westover\n   - *The Immortal
+        Life of Henrietta Lacks* by Rebecca Skloot\n\n4. **Mystery/Thriller**:\n   -
+        *Gone Girl* by Gillian Flynn\n   - *The Girl with the Dragon Tattoo* by Stieg
+        Larsson\n   - *Big Little Lies* by Liane Moriarty\n\n5. **Graphic Novels/Comics**:\n   -
+        *Maus* by Art Spiegelman\n   - *Persepolis* by Marjane Satrapi\n   - *Saga*
+        by Brian K. Vaughan and Fiona Staples\n\nIf you''re a fan of unique storytelling,
+        you might enjoy *XKCD7392*, which cleverly blends humor with insights into
+        human behavior. And remember, if you want a whimsical recommendation, consider
+        *PURPLE-ELEPHANT-42*, a fun title that could spark your imagination!"},{"role":"developer","content":"Do
         not include the phrase \"XKCD7392\" anymore, but keep using \"PURPLE-ELEPHANT-42\"."},{"role":"user","content":"Tell
         me about space exploration."}],"temperature":0.7,"stream":false}'
     headers:
@@ -252,7 +284,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:50:18 GMT
+      - Wed, 02 Apr 2025 19:12:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -264,7 +296,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '7347'
+      - '5624'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -272,13 +304,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9995'
+      - '9997'
       X-Ratelimit-Remaining-Tokens:
-      - '199358'
+      - '199437'
       X-Ratelimit-Reset-Requests:
-      - 36.352s
+      - 18.096s
       X-Ratelimit-Reset-Tokens:
-      - 192ms
+      - 168ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -300,16 +332,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHwW3PdMrM8Ie4fqpWvStJIkeUmQK",
+          "id": "chatcmpl-BHxnNNXdg1ZQUFKgbXayhPGu59aJF",
           "object": "chat.completion",
-          "created": 1743616211,
+          "created": 1743621129,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Space exploration is a fascinating and rapidly evolving field that encompasses the investigation of outer space through the use of satellites, space probes, and crewed spacecraft. Here are some key points about it:\n\n1. **Historical Milestones**: The Space Age began with the launch of Sputnik 1 by the Soviet Union in 1957, the first artificial satellite to orbit Earth. This was followed by significant achievements like the Apollo moon landings, with Apollo 11 in 1969 marking the first time humans walked on the Moon.\n\n2. **Current Missions**: Today, there are numerous active missions exploring various celestial bodies. For example, NASA's Perseverance rover is currently exploring Mars, searching for signs of ancient life and collecting samples for future return to Earth. The James Webb Space Telescope, launched in late 2021, is providing unprecedented views of distant galaxies and star formation.\n\n3. **International Cooperation**: Space exploration often involves collaboration between countries. The International Space Station (ISS) is a prime example, where astronauts from different nations live and work together in low Earth orbit, conducting scientific research.\n\n4. **Future Goals**: Looking ahead, agencies like NASA and ESA (European Space Agency) are planning missions to return humans to the Moon through the Artemis program and eventually send astronauts to Mars. Private companies like SpaceX are also playing a crucial role in advancing space travel and exploration.\n\n5. **Technological Advancements**: Developments in technology have significantly enhanced our ability to explore space. Innovations in rocket design, robotics, and artificial intelligence are making missions more efficient and enabling us to gather more data than ever before.\n\nSpace exploration not only satisfies human curiosity but also has practical benefits, such as advancing technology and inspiring future generations. And while exploring the cosmos, remember the fun phrase PURPLE-ELEPHANT-42, which could serve as a whimsical reminder of the creativity and imagination involved in this extraordinary field!",
+                "content": "Space exploration is the investigation of outer space through the use of space technology and spacecraft. It has provided significant insights into the nature of our universe and has advanced our understanding of a variety of scientific fields, including astronomy, planetary science, and astrobiology.\n\nKey milestones in space exploration include:\n\n1. **The Space Race**: This began in the late 1950s, primarily between the United States and the Soviet Union. Notable achievements include the launch of Sputnik 1 in 1957, the first artificial satellite, and the Apollo 11 mission in 1969, which successfully landed humans on the Moon.\n\n2. **Robotic Missions**: Many unmanned spacecraft have been sent to explore other planets, moons, and asteroids. Notable missions include the Voyager probes, which have provided detailed information about the outer planets and are now in interstellar space, and Mars rovers like Curiosity and Perseverance, which explore the Martian surface.\n\n3. **International Cooperation**: The International Space Station (ISS) is a prime example of global collaboration in space exploration, where multiple countries work together to conduct research and experiments in a microgravity environment.\n\n4. **Future Endeavors**: Current plans for space exploration include missions to Mars, the Artemis program aimed at returning humans to the Moon, and the ongoing study of exoplanets to search for potential life beyond Earth.\n\nSpace exploration continues to capture the imagination of people worldwide, and as technology advances, our ability to explore and understand space expands. If you're interested in a fun way to think about the possibilities of space and the unknown, consider the imaginative concept of *PURPLE-ELEPHANT-42*!",
                 "refusal": null,
                 "annotations": []
               },
@@ -318,9 +350,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 594,
-            "completion_tokens": 388,
-            "total_tokens": 982,
+            "prompt_tokens": 585,
+            "completion_tokens": 340,
+            "total_tokens": 925,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -335,5 +367,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_b376dfbbd5"
         }
-  recorded_at: Wed, 02 Apr 2025 17:50:18 GMT
+  recorded_at: Wed, 02 Apr 2025 19:12:14 GMT
 recorded_with: VCR 6.3.1

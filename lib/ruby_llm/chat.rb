@@ -32,7 +32,9 @@ module RubyLLM
 
     alias say ask
 
-    def with_instructions(instructions)
+    def with_instructions(instructions, replace: false)
+      @messages = @messages.reject! { |msg| msg.role == :system } if replace
+
       add_message role: :system, content: instructions
       self
     end

@@ -38,9 +38,7 @@ RSpec.describe RubyLLM::Chat do
         chat = RubyLLM.chat(model: model)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
-        chat.with_instructions(
-          'You are a helpful assistant. You must include the exact phrase "XKCD7392" somewhere in your response.'
-        )
+        chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
 
         response = chat.ask('Tell me about the weather.')
         expect(response.content).to include('XKCD7392')
@@ -60,6 +58,24 @@ RSpec.describe RubyLLM::Chat do
           expect(response.content).not_to include('XKCD7392')
           expect(response.content).to include('PURPLE-ELEPHANT-42')
         end
+      end
+
+      it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
+
+        # Use a distinctive and unusual instruction that wouldn't happen naturally
+        chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
+
+        response = chat.ask('Tell me about the weather.')
+        expect(response.content).to include('XKCD7392')
+
+        # Test ability to follow multiple instructions with another unique marker
+        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.',
+                               replace: true
+
+        response = chat.ask('What are some good books?')
+        expect(response.content).not_to include('XKCD7392')
+        expect(response.content).to include('PURPLE-ELEPHANT-42')
       end
     end
   end

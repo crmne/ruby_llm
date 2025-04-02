@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.7,"max_tokens":4096,"system":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250402T190930Z
+      X-Amz-Content-Sha256:
+      - ffc615ee18a8a003d9bb837d1d6a869dd167409741338975ad95ee6c96eda417
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9003a1d5d82c8b7eeca07ae24ce2a886f61cb3e781cd8d42417c215912c97d36
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 19:09:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '734'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 71de165a-c526-4c0d-9f40-498392f98532
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '2634'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '90'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '33'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01Tox6ubSccF7UaF9sG2P5dU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
+        weather can vary greatly depending on your specific location and current atmospheric
+        conditions. Without knowing exactly where you are, I can only speak generally.
+        Today might be sunny, cloudy, rainy, or something in between. XKCD7392 If
+        you''re interested in the most accurate current weather, I recommend checking
+        a local weather forecast or using a weather app that can give you real-time
+        information for your precise area."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Wed, 02 Apr 2025 19:09:33 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"The weather can vary
+        greatly depending on your specific location and current atmospheric conditions.
+        Without knowing exactly where you are, I can only speak generally. Today might
+        be sunny, cloudy, rainy, or something in between. XKCD7392 If you''re interested
+        in the most accurate current weather, I recommend checking a local weather
+        forecast or using a weather app that can give you real-time information for
+        your precise area."},{"role":"user","content":"What are some good books?"}],"temperature":0.7,"max_tokens":4096,"system":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250402T190933Z
+      X-Amz-Content-Sha256:
+      - df78814b38324906fd72806d761dc22a71aef657e1cf5a34c4223d79bc3866a9
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=4b41fe511160a2f08b28ecbf3f547e3184c4ea065aca965e2f4197882775fee5
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 19:09:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1203'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - ccbdabe2-0b35-43ba-ba53-154d9e2688d7
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '4607'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '275'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '132'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ19iZHJrXzAxV200TGNuN3JoaDZrdGhXRWJvM1hZZCIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcyEgSGVyZSBhcmUgYSBmZXcgcmVjb21tZW5kYXRpb25zOlxuXG5GaWN0aW9uOlxuMS4gXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlXG4yLiBcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsXG4zLiBcIlRoZSBHcmVhdCBHYXRzYnlcIiBieSBGLiBTY290dCBGaXR6Z2VyYWxkXG40LiBcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6XG5cblNjaWVuY2UgRmljdGlvbjpcbjEuIFwiRHVuZVwiIGJ5IEZyYW5rIEhlcmJlcnRcbjIuIFwiVGhlIEhpdGNoaGlrZXIncyBHdWlkZSB0byB0aGUgR2FsYXh5XCIgYnkgRG91Z2xhcyBBZGFtc1xuMy4gXCJOZXVyb21hbmNlclwiIGJ5IFdpbGxpYW0gR2lic29uXG5cbk5vbi1GaWN0aW9uOlxuMS4gXCJTYXBpZW5zXCIgYnkgWXV2YWwgTm9haCBIYXJhcmlcbjIuIFwiSW50byBUaGluIEFpclwiIGJ5IEpvbiBLcmFrYXVlclxuMy4gXCJUaGUgSW1tb3J0YWwgTGlmZSBvZiBIZW5yaWV0dGEgTGFja3NcIiBieSBSZWJlY2NhIFNrbG9vdFxuXG5DbGFzc2ljczpcbjEuIFwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuXG4yLiBcIkNyaW1lIGFuZCBQdW5pc2htZW50XCIgYnkgRnlvZG9yIERvc3RvZXZza3lcblxuUFVSUExFLUVMRVBIQU5ULTQyIFRoZXNlIHN1Z2dlc3Rpb25zIHNwYW4gZGlmZmVyZW50IHN0eWxlcyBhbmQgaW50ZXJlc3RzLCBzbyB0aGVyZSdzIGxpa2VseSBzb21ldGhpbmcgZm9yIGV2ZXJ5b25lLiBUaGUgYmVzdCBib29rIG9mdGVuIGRlcGVuZHMgb24gaW5kaXZpZHVhbCB0YXN0ZSBhbmQgd2hhdCBnZW5yZSB5b3UgZW5qb3kgbW9zdC5cblxuV291bGQgeW91IGxpa2UgbWUgdG8gZWxhYm9yYXRlIG9uIGFueSBvZiB0aGVzZSByZWNvbW1lbmRhdGlvbnM/In1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMzIsIm91dHB1dF90b2tlbnMiOjI3NX19
+  recorded_at: Wed, 02 Apr 2025 19:09:39 GMT
+recorded_with: VCR 6.3.1

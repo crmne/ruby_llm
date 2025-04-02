@@ -19,9 +19,11 @@ RubyLLM::Error                    # Base error class
     RubyLLM::BadRequestError      # Invalid request parameters (400)
     RubyLLM::UnauthorizedError    # API key issues (401)
     RubyLLM::PaymentRequiredError # Billing issues (402)
+    RubyLLM::ForbiddenError       # Permission issues (403)
     RubyLLM::RateLimitError       # Rate limit exceeded (429)
     RubyLLM::ServerError          # Provider server error (500)
-    RubyLLM::ServiceUnavailableError # Service unavailable (503)
+    RubyLLM::ServiceUnavailableError # Service unavailable (502/503)
+    RubyLLM::OverloadedError      # Service overloaded (529)
     RubyLLM::ModelNotFoundError   # Invalid model ID
     RubyLLM::InvalidRoleError     # Invalid message role
 ```
