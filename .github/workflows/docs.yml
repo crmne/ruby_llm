@@ -25,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
+      - name: Setup Ruby for models guide generation (ruby_llm environment)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
@@ -34,7 +34,7 @@ jobs:
       - name: Run models:docs rake task
         run: bundle exec rake models:docs
 
-      - name: Setup Ruby for docs
+      - name: Setup Ruby for Jekyll build (ruby_llm environment)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
