@@ -2,7 +2,7 @@ name: Deploy docs
 
 on:
   push:
-    branches: [main]
+    branches: [main, examples] # Adding `examples` only for testing. Remove later!
     paths:
       - 'docs/**'
       - 'lib/**'
