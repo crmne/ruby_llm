@@ -99,6 +99,8 @@ module RubyLLM
 
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|
+        raise ToolCallsLimitReachedError, "Tool calls limit reached: #{@max_tool_calls}" if max_tool_calls_reached?
+
         @on[:new_message]&.call
         result = execute_tool tool_call
         message = add_tool_result tool_call.id, result
@@ -109,8 +111,6 @@ module RubyLLM
     end
 
     def execute_tool(tool_call)
-      raise ToolCallsLimitReachedError, "Tool calls limit reached: #{@max_tool_calls}" if max_tool_calls_reached?
-
       @number_of_tool_calls += 1
 
       tool = tools[tool_call.name.to_sym]
