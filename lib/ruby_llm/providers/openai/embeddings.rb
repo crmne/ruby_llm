@@ -7,7 +7,7 @@ module RubyLLM
       module Embeddings
         module_function
 
-        def embedding_url
+        def embedding_url(...)
           'embeddings'
         end
 
@@ -19,20 +19,15 @@ module RubyLLM
           }.compact
         end
 
-        def parse_embedding_response(response)
+        def parse_embedding_response(response, model:)
           data = response.body
-          model_id = data['model']
           input_tokens = data.dig('usage', 'prompt_tokens') || 0
           vectors = data['data'].map { |d| d['embedding'] }
 
           # If we only got one embedding, return it as a single vector
-          vectors = vectors.first if vectors.size == 1
+          vectors in [vectors]
 
-          Embedding.new(
-            vectors: vectors,
-            model: model_id,
-            input_tokens: input_tokens
-          )
+          Embedding.new(vectors:, model:, input_tokens:)
         end
       end
     end
