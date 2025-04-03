@@ -5,6 +5,7 @@ module RubyLLM
     # DeepSeek API integration.
     module DeepSeek
       extend OpenAI
+      extend DeepSeek::Chat
 
       module_function
 

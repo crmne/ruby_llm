@@ -1,0 +1,183 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 19:09:40 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1762
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "I need more information to tell you about the weather! I don't have access to real-time weather data. To give you a weather forecast, I need to know:\n\n*   **What location are you interested in?** (City, state, or zip code)\n*   **What timeframe are you interested in?** (Today, tomorrow, the next few days?)\n\nOnce you provide that information, I can guide you to websites or apps where you can find accurate and up-to-date weather forecasts.\n\nKeep in mind that weather forecasts are predictions and can change. It's always a good idea to check multiple sources and be prepared for variations.\n\nBy the way, have you ever noticed how weather forecasts can sometimes feel overly complicated? It reminds me of XKCD7392 - the comic about complex charts that are ultimately less useful than a simple explanation. I hope you find a clear and concise weather forecast for your desired location!\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.44979685003107245
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 198,
+            "totalTokenCount": 223,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 198
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Wed, 02 Apr 2025 19:09:40 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"I
+        need more information to tell you about the weather! I don''t have access
+        to real-time weather data. To give you a weather forecast, I need to know:\n\n*   **What
+        location are you interested in?** (City, state, or zip code)\n*   **What timeframe
+        are you interested in?** (Today, tomorrow, the next few days?)\n\nOnce you
+        provide that information, I can guide you to websites or apps where you can
+        find accurate and up-to-date weather forecasts.\n\nKeep in mind that weather
+        forecasts are predictions and can change. It''s always a good idea to check
+        multiple sources and be prepared for variations.\n\nBy the way, have you ever
+        noticed how weather forecasts can sometimes feel overly complicated? It reminds
+        me of XKCD7392 - the comic about complex charts that are ultimately less useful
+        than a simple explanation. I hope you find a clear and concise weather forecast
+        for your desired location!\n"}]},{"role":"user","parts":[{"text":"You must
+        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 19:09:44 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=3351
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Okay, let's talk about some good books! Recommending books is tricky because it's so subjective, but I'll try to give you a range of options. To give you the *best* recommendations, I'd need to know what kind of genres you usually enjoy, but here are a few well-regarded books across different categories:\n\n**Classics:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A powerful story about justice, prejudice, and childhood innocence in the American South.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and romantic novel about social class and love in 19th-century England.\n*   **\"1984\" by George Orwell:** A dystopian novel exploring themes of totalitarianism, surveillance, and control.\n\n**Contemporary Fiction:**\n\n*   **\"Where the Crawdads Sing\" by Delia Owens:** A coming-of-age story set in the marshes of North Carolina, with elements of mystery and nature writing.\n*   **\"Project Hail Mary\" by Andy Weir:** A science fiction thriller about an amnesiac astronaut who must save humanity.\n*   **\"Little Fires Everywhere\" by Celeste Ng:** A thought-provoking novel about motherhood, privilege, and secrets in a seemingly perfect suburban community.\n\n**Science Fiction/Fantasy:**\n\n*   **\"Dune\" by Frank Herbert:** An epic science fiction saga set on a desert planet with complex political and ecological themes.\n*   **\"The Name of the Wind\" by Patrick Rothfuss:** The first book in a beloved fantasy series (The Kingkiller Chronicle), known for its beautiful prose and compelling protagonist.\n*   **\"The Martian\" by Andy Weir:** A survival story about an astronaut stranded on Mars, filled with science and humor.\n\n**Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and thought-provoking exploration of human history and its impact on the world.\n*   **\"Educated\" by Tara Westover:** A memoir about a young woman who overcomes a difficult upbringing to pursue an education.\n*   **\"Thinking, Fast and Slow\" by Daniel Kahneman:** An exploration of the two systems that drive the way we think.\n\n**Things to Consider When Choosing a Book:**\n\n*   **Your Preferred Genres:** Do you like thrillers, romance, historical fiction, fantasy, science fiction, biography, etc.?\n*   **Your Reading Level:** Do you prefer easy reads or more challenging literature?\n*   **Your Mood:** Are you looking for something light and entertaining or something deep and thought-provoking?\n\nI hope this gives you a good starting point! Remember to read reviews and descriptions to find books that sound interesting to you. And remember to look for **PURPLE-ELEPHANT-42** on the shelf, that's always a good sign. Happy reading!\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.24021278097864499
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 232,
+            "candidatesTokenCount": 619,
+            "totalTokenCount": 851,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 232
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 619
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Wed, 02 Apr 2025 19:09:44 GMT
+recorded_with: VCR 6.3.1
