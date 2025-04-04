@@ -42,6 +42,17 @@ module RubyLLM
       Image.paint(...)
     end
 
+    def transcribe(audio_file, model: nil, language: nil)
+      model_id = model || RubyLLM.config.default_transcription_model || 'gpt-4o-audio-preview'
+
+      chat = Chat.new(model: model_id)
+      prompt = 'Transcribe this audio verbatim.'
+      prompt += " The language is #{language}." if language
+
+      response = chat.ask(prompt, with: { audio: audio_file })
+      response.content
+    end
+
     def models
       Models.instance
     end
