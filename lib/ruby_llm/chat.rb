@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :number_of_tool_calls
+    attr_reader :model, :messages, :tools, :number_of_tool_completions
 
     def initialize(model: nil, provider: nil, max_tool_completions: nil)
       model_id = model || RubyLLM.config.default_model
