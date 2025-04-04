@@ -92,13 +92,18 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('10')
       end
 
-      it "#{model} can use tools with a tool calls limit" do
-        chat = RubyLLM.chat(model: model, max_tool_calls: 3)
-                      .with_tool(LoopingAnswer)
+      it "#{model} can use tools with a tool completions limit" do
+        chat = RubyLLM.chat(model: model, max_tool_completions: 1)
+                      .with_tools(LoopingAnswer, Weather)
 
         expect do
           chat.ask("What's the best language to learn?")
         end.to raise_error(RubyLLM::ToolCallsLimitReachedError)
+
+        # Ensure it does not break the next ask.
+        next_response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        expect(next_response.content).to include('15')
+        expect(next_response.content).to include('10')
       end
     end
   end

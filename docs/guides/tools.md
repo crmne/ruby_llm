@@ -236,20 +236,22 @@ end
 
 > Note: For parameters with limited valid values, clearly specify them in the description.
 
-## Maximum Tools Call Limiting
+## Maximum Tool Completion Limiting
 
-When calling tools it is important to consider if you're response could trigger a loop. RubyLLM provides built-in protection against infinite tool call loops:
+When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit, which can be overridden or turned off entirely.
+
+This can be performed on a per chat basis or provided in the global configuration.
 
 ```ruby
 # Set a maximum number of tool calls per conversation
-chat = RubyLLM.chat(max_tool_calls: 5)
+chat = RubyLLM.chat(max_tool_completions: 5)
 chat.ask "Question that triggers tools loop"
 # => `execute_tool': Tool calls limit reached: 5 (RubyLLM::ToolCallsLimitReachedError)
 ```
 
-If you wish to remove this safe-guard you can set the max_tool_calls to `nil`.
+If you wish to remove this safe-guard you can set the max_tool_completions to `nil`.
 ```ruby
-chat = RubyLLM.chat(max_tool_calls: nil)
+chat = RubyLLM.chat(max_tool_completions: nil)
 chat.ask "Question that triggers tools loop"
 # Loops until you've used all your credit...
 ```
@@ -261,7 +263,7 @@ You can set a default maximum tool calls limit for all chats through the global 
 ```ruby
 RubyLLM.configure do |config|
   # Default is 25 calls per conversation
-  config.max_tool_calls = 10  # Set a more conservative limit
+  config.max_tool_completions = 10  # Set a more conservative limit
 end
 ```
 
@@ -269,7 +271,7 @@ This setting can still be overridden per-chat when needed:
 
 ```ruby
 # Override the global setting for this specific chat
-chat = RubyLLM.chat(max_tool_calls: 15)
+chat = RubyLLM.chat(max_tool_completions: 15)
 ```
 
 ## Security Considerations

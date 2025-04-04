@@ -13,7 +13,7 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools, :number_of_tool_calls
 
-    def initialize(model: nil, provider: nil, max_tool_calls: nil)
+    def initialize(model: nil, provider: nil, max_tool_completions: nil)
       model_id = model || RubyLLM.config.default_model
       with_model(model_id, provider: provider)
       @temperature = 0.7
@@ -23,12 +23,12 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
-      @max_tool_calls = max_tool_calls
-      @number_of_tool_calls = 0
+      @max_tool_completions = max_tool_completions
+      @number_of_tool_completions = 0
     end
 
     def ask(message = nil, with: {}, &block)
-      @number_of_tool_calls = 0
+      @number_of_tool_completions = 0
 
       add_message role: :user, content: Content.new(message, with)
       complete(&block)
@@ -106,20 +106,21 @@ module RubyLLM
 
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|
-        raise ToolCallsLimitReachedError, "Tool calls limit reached: #{@max_tool_calls}" if max_tool_calls_reached?
-
         @on[:new_message]&.call
         result = execute_tool tool_call
         message = add_tool_result tool_call.id, result
         @on[:end_message]&.call(message)
       end
 
+      if max_tool_completions_reached?
+        raise ToolCallsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
+      end
+
+      @number_of_tool_completions += 1
       complete(&)
     end
 
     def execute_tool(tool_call)
-      @number_of_tool_calls += 1
-
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
@@ -133,10 +134,10 @@ module RubyLLM
       )
     end
 
-    def max_tool_calls_reached?
-      return false unless @max_tool_calls
+    def max_tool_completions_reached?
+      return false unless @max_tool_completions
 
-      @number_of_tool_calls >= @max_tool_calls
+      @number_of_tool_completions >= @max_tool_completions
     end
   end
 end

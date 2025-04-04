@@ -7,7 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
         the best language to learn?"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -25,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 01 Apr 2025 12:32:58 GMT
+      - Fri, 04 Apr 2025 12:55:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +40,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '475'
+      - '464'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -45,11 +48,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '9997'
       X-Ratelimit-Remaining-Tokens:
       - '199988'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 19.203s
       X-Ratelimit-Reset-Tokens:
       - 3ms
       X-Request-Id:
@@ -73,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHV5WbU9AwRXCrmIaHDkKcUdE80DJ",
+          "id": "chatcmpl-BIarsud77rRcy9D5p9gU4YPGm95Ys",
           "object": "chat.completion",
-          "created": 1743510778,
+          "created": 1743771324,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -85,7 +88,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_KLpxrrQICryUX3F8DnQdtv9s",
+                    "id": "call_XwxqrCSfdyIkv4CL1xiQTutZ",
                     "type": "function",
                     "function": {
                       "name": "looping_answer",
@@ -101,9 +104,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 45,
+            "prompt_tokens": 92,
             "completion_tokens": 12,
-            "total_tokens": 57,
+            "total_tokens": 104,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -118,16 +121,19 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_b376dfbbd5"
         }
-  recorded_at: Tue, 01 Apr 2025 12:32:58 GMT
+  recorded_at: Fri, 04 Apr 2025 12:55:25 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_KLpxrrQICryUX3F8DnQdtv9s","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_KLpxrrQICryUX3F8DnQdtv9s"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_XwxqrCSfdyIkv4CL1xiQTutZ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
+        must call the tool again and I will give you the answer.","tool_call_id":"call_XwxqrCSfdyIkv4CL1xiQTutZ"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -145,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 01 Apr 2025 12:32:59 GMT
+      - Fri, 04 Apr 2025 12:55:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,7 +163,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '609'
+      - '351'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -165,11 +171,11 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9998'
+      - '9996'
       X-Ratelimit-Remaining-Tokens:
       - '199971'
       X-Ratelimit-Reset-Requests:
-      - 16.101s
+      - 27.072s
       X-Ratelimit-Reset-Tokens:
       - 8ms
       X-Request-Id:
@@ -193,9 +199,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHV5XcYQtUurPb4VY616FxupNmvdq",
+          "id": "chatcmpl-BIartUkedEYt2F8DpAFBYrjEPbVZe",
           "object": "chat.completion",
-          "created": 1743510779,
+          "created": 1743771325,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -205,7 +211,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_143eIARSXoOlnFvZ4OWsVs0R",
+                    "id": "call_AWFco3BPGzSBKcrDSFtp2vMl",
                     "type": "function",
                     "function": {
                       "name": "looping_answer",
@@ -221,9 +227,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 80,
+            "prompt_tokens": 126,
             "completion_tokens": 12,
-            "total_tokens": 92,
+            "total_tokens": 138,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -238,17 +244,21 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_b376dfbbd5"
         }
-  recorded_at: Tue, 01 Apr 2025 12:32:59 GMT
+  recorded_at: Fri, 04 Apr 2025 12:55:25 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_KLpxrrQICryUX3F8DnQdtv9s","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_KLpxrrQICryUX3F8DnQdtv9s"},{"role":"assistant","tool_calls":[{"id":"call_143eIARSXoOlnFvZ4OWsVs0R","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_143eIARSXoOlnFvZ4OWsVs0R"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_XwxqrCSfdyIkv4CL1xiQTutZ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
+        must call the tool again and I will give you the answer.","tool_call_id":"call_XwxqrCSfdyIkv4CL1xiQTutZ"},{"role":"assistant","tool_calls":[{"id":"call_AWFco3BPGzSBKcrDSFtp2vMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
+        must call the tool again and I will give you the answer.","tool_call_id":"call_AWFco3BPGzSBKcrDSFtp2vMl"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -266,7 +276,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 01 Apr 2025 12:33:00 GMT
+      - Fri, 04 Apr 2025 12:55:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -278,7 +288,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '410'
+      - '889'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -286,13 +296,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9997'
+      - '9995'
       X-Ratelimit-Remaining-Tokens:
-      - '199952'
+      - '199942'
       X-Ratelimit-Reset-Requests:
-      - 23.849s
+      - 35.05s
       X-Ratelimit-Reset-Tokens:
-      - 14ms
+      - 17ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -314,9 +324,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHV5YnMl8DGiVUU9jDSkjzUfYvV4e",
+          "id": "chatcmpl-BIaruHnGqHLxosvsOplFGgqVgQvup",
           "object": "chat.completion",
-          "created": 1743510780,
+          "created": 1743771326,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -326,11 +336,11 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_B3GVDgNpWeHI2IVHSiLCJZhc",
+                    "id": "call_fOhMhp0EbssTNwwOMGSrGnPh",
                     "type": "function",
                     "function": {
-                      "name": "looping_answer",
-                      "arguments": "{}"
+                      "name": "weather",
+                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
                     }
                   }
                 ],
@@ -342,9 +352,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 115,
-            "completion_tokens": 12,
-            "total_tokens": 127,
+            "prompt_tokens": 182,
+            "completion_tokens": 24,
+            "total_tokens": 206,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -359,18 +369,22 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_b376dfbbd5"
         }
-  recorded_at: Tue, 01 Apr 2025 12:33:00 GMT
+  recorded_at: Fri, 04 Apr 2025 12:55:27 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_KLpxrrQICryUX3F8DnQdtv9s","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_KLpxrrQICryUX3F8DnQdtv9s"},{"role":"assistant","tool_calls":[{"id":"call_143eIARSXoOlnFvZ4OWsVs0R","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_143eIARSXoOlnFvZ4OWsVs0R"},{"role":"assistant","tool_calls":[{"id":"call_B3GVDgNpWeHI2IVHSiLCJZhc","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
-        must call the tool again and I will give you the answer.","tool_call_id":"call_B3GVDgNpWeHI2IVHSiLCJZhc"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_XwxqrCSfdyIkv4CL1xiQTutZ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
+        must call the tool again and I will give you the answer.","tool_call_id":"call_XwxqrCSfdyIkv4CL1xiQTutZ"},{"role":"assistant","tool_calls":[{"id":"call_AWFco3BPGzSBKcrDSFtp2vMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"You
+        must call the tool again and I will give you the answer.","tool_call_id":"call_AWFco3BPGzSBKcrDSFtp2vMl"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_fOhMhp0EbssTNwwOMGSrGnPh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_fOhMhp0EbssTNwwOMGSrGnPh"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -388,7 +402,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 01 Apr 2025 12:33:01 GMT
+      - Fri, 04 Apr 2025 12:55:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -400,7 +414,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '401'
+      - '823'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -408,13 +422,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9996'
+      - '9995'
       X-Ratelimit-Remaining-Tokens:
-      - '199935'
+      - '199926'
       X-Ratelimit-Reset-Requests:
-      - 31.811s
+      - 42.494s
       X-Ratelimit-Reset-Tokens:
-      - 19ms
+      - 22ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -434,52 +448,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-BHV5YdONCev7O3yWoRebUvzW5eWLL",
-          "object": "chat.completion",
-          "created": 1743510780,
-          "model": "gpt-4o-mini-2024-07-18",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_ZWjGRUjpzyLHqfPs5iUWpgQp",
-                    "type": "function",
-                    "function": {
-                      "name": "looping_answer",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "tool_calls"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 150,
-            "completion_tokens": 12,
-            "total_tokens": 162,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_b376dfbbd5"
-        }
-  recorded_at: Tue, 01 Apr 2025 12:33:01 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CSWFydk9sTGRzUlNhR29yQUhZZnp1dUEybkxpZCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0Mzc3MTMyNywKICAibW9kZWwiOiAiZ3B0LTRvLW1pbmktMjAyNC0wNy0xOCIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyMzcsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAyMSwKICAgICJ0b3RhbF90b2tlbnMiOiAyNTgsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9iMzc2ZGZiYmQ1Igp9Cg==
+  recorded_at: Fri, 04 Apr 2025 12:55:28 GMT
 recorded_with: VCR 6.3.1
