@@ -76,6 +76,8 @@ gemini_chat.ask "What are the best Ruby gems for machine learning?"
 
 RubyLLM gives you access to models from multiple providers. You can see what's available:
 
+For a complete list of available models and their capabilities, see the [Available Models guide]({% link guides/available-models.md %}). This guide is automatically generated using the `models:docs` rake task.
+
 ```ruby
 # List all models
 all_models = RubyLLM.models.all
@@ -168,3 +170,4 @@ Now that you've got the basics down, you're ready to explore more advanced featu
 - [Chatting with AI]({% link guides/chat.md %}) - Learn more about chat capabilities
 - [Using Tools]({% link guides/tools.md %}) - Let AI use your Ruby code
 - [Rails Integration]({% link guides/rails.md %}) - Persist chats in your Rails apps
+- [Available Models]({% link guides/available-models.md %}) - Complete list of supported models and their capabilities
