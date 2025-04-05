@@ -12,9 +12,32 @@ RubyLLM provides seamless integration with Rails through ActiveRecord models. Th
 
 ## Setup
 
-### 1. Create Migrations
+### Using the Generator (Recommended)
 
-First, create the necessary tables in your database:
+The easiest way to set up RubyLLM with Rails is to use the built-in generator:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This will automatically:
+1. Create the necessary migrations for chats, messages, and tool calls
+2. Create model files with appropriate `acts_as_*` methods
+3. Set up proper relationships between models
+
+After running the generator, simply run the migrations:
+
+```bash
+rails db:migrate
+```
+
+### Manual Setup
+
+If you prefer to set up manually or need to customize the implementation, follow these steps:
+
+#### 1. Create Migrations
+
+Create the necessary tables in your database:
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
@@ -65,7 +88,7 @@ Run the migrations:
 rails db:migrate
 ```
 
-### 2. Set Up Models
+#### 2. Set Up Models
 
 Create the model classes:
 
