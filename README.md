@@ -49,6 +49,9 @@ chat.ask "What's the best way to learn Ruby?"
 # Analyze images
 chat.ask "What's in this image?", with: { image: "ruby_conf.jpg" }
 
+# Transcribe audio files
+RubyLLM.transcribe "interview.wav"
+
 # Analyze audio recordings
 chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
 

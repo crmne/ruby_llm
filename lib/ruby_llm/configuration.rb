@@ -21,6 +21,7 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
+                  :default_transcription_model,
                   :request_timeout,
                   :max_retries
 
@@ -30,6 +31,7 @@ module RubyLLM
       @default_model = 'gpt-4o-mini'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+      @default_transcription_model = 'gpt-4o-audio-preview'
     end
   end
 end
