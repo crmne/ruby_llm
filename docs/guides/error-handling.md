@@ -97,7 +97,7 @@ end
 
 ## Handling Tool Errors
 
-When using tools, errors can be handled within the tool or in the calling code:
+There are two kinds of errors when working with tools: those the LLM should know about and retry, and those that should bubble up to your application code. Let's handle them appropriately:
 
 ```ruby
 # Error handling within tools
@@ -110,13 +110,17 @@ class Weather < RubyLLM::Tool
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
 
     response = Faraday.get(url)
-    data = JSON.parse(response.body)
-  rescue => e
+    JSON.parse(response.body)
+  rescue Faraday::ClientError => e
+    # Return errors the LLM should know about and can retry
     { error: e.message }
   end
 end
+```
 
-# Error handling when using tools
+Handle program-ending errors at the application level:
+
+```ruby
 begin
   chat = RubyLLM.chat.with_tool(Calculator)
   chat.ask "What's 1/0?"
@@ -124,6 +128,8 @@ rescue RubyLLM::Error => e
   puts "Error using tools: #{e.message}"
 end
 ```
+
+Return errors to the LLM when it should try a different approach (like invalid parameters or temporary failures), but let serious problems bubble up to be handled by your application's error tracking. The LLM is smart enough to work with error messages and try alternative approaches, but it shouldn't have to deal with program-ending problems.
 
 ## Automatic Retries
 
