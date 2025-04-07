@@ -294,7 +294,7 @@ end
 
 ## Maximum Tool Completion Limiting
 
-When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit, which can be overridden or turned off entirely.
+When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit of 25, which can be overridden or turned off entirely.
 
 This can be performed on a per chat basis or provided in the global configuration.
 
