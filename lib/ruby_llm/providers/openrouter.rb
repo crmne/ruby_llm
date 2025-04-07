@@ -40,6 +40,10 @@ module RubyLLM
       def slug
         'openrouter'
       end
+
+      def configuration_requirements
+        %i[openrouter_api_key]
+      end
     end
   end
 end
