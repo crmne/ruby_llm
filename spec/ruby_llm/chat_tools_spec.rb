@@ -136,7 +136,7 @@ RSpec.describe RubyLLM::Chat do
 
         expect do
           chat.ask("Fetch all of the posts from r/RandomNames. Fetch the next_page listed in the response until it responds with an empty array")
-        end.to raise_error(RubyLLM::ToolCallsLimitReachedError)
+        end.to raise_error(RubyLLM::ToolCallCompletionsLimitReachedError)
 
         # Ensure it does not break the next ask.
         next_response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")

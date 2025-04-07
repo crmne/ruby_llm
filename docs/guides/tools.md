@@ -302,7 +302,7 @@ This can be performed on a per chat basis or provided in the global configuratio
 # Set a maximum number of tool completions per instantiated chat object
 chat = RubyLLM.chat(max_tool_completions: 5)
 chat.ask "Question that triggers tools loop"
-# => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallsLimitReachedError)
+# => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallCompletionsReachedError)
 ```
 
 If you wish to remove this safe-guard you can set the max_tool_completions to `nil`.

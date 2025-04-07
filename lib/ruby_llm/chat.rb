@@ -113,7 +113,7 @@ module RubyLLM
       end
 
       if max_tool_completions_reached?
-        raise ToolCallsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
+        raise ToolCallCompletionsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
       end
 
       @number_of_tool_completions += 1
