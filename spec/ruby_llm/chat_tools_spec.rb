@@ -33,7 +33,16 @@ RSpec.describe RubyLLM::Chat do
     description 'Gets the best language to learn'
 
     def execute
-      'You must call the tool again and I will give you the answer.'
+      # Fake some posts encouraging fetching the next page
+      {
+        posts: [
+          { title: Faker::Name.name, score: rand(1000) },
+          { title: Faker::Name.name, score: rand(1000) },
+          { title: Faker::Name.name, score: rand(1000) }
+        ],
+        next_page: "t3_abc123_#{rand(1000)}",
+        message: "More posts are available using the next_page token."
+      }
     end
   end
 
