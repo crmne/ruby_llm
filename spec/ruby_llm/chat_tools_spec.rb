@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   class LoopingAnswer < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    description 'Gets the best language to learn'
+    description 'Fetches posts from the r/RandomNames Reddit community.'
 
     def execute
       # Fake some posts encouraging fetching the next page
@@ -102,11 +102,11 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{model} can use tools with a tool completions limit" do
-        chat = RubyLLM.chat(model: model, max_tool_completions: 1)
+        chat = RubyLLM.chat(model: model, max_tool_completions: 5)
                       .with_tools(LoopingAnswer, Weather)
 
         expect do
-          chat.ask("What's the best language to learn?")
+          chat.ask("Fetch all of the posts from r/RandomNames. Fetch the next_page listed in the response until it responds with an empty array")
         end.to raise_error(RubyLLM::ToolCallsLimitReachedError)
 
         # Ensure it does not break the next ask.

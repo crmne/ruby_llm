@@ -243,10 +243,10 @@ When including tools it is important to consider if the response could trigger u
 This can be performed on a per chat basis or provided in the global configuration.
 
 ```ruby
-# Set a maximum number of tool calls per conversation
+# Set a maximum number of tool completions per instantiated chat object
 chat = RubyLLM.chat(max_tool_completions: 5)
 chat.ask "Question that triggers tools loop"
-# => `execute_tool': Tool calls limit reached: 5 (RubyLLM::ToolCallsLimitReachedError)
+# => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallsLimitReachedError)
 ```
 
 If you wish to remove this safe-guard you can set the max_tool_completions to `nil`.
@@ -258,7 +258,7 @@ chat.ask "Question that triggers tools loop"
 
 ### Global Configuration
 
-You can set a default maximum tool calls limit for all chats through the global configuration:
+You can set a default maximum tool completion limit for all chats through the global configuration:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -281,6 +281,7 @@ When implementing tools that process user input (via the AI):
 * Avoid using `eval`, `system` or similar methods with unsanitized input
 * Remember that AI models might be tricked into producing dangerous inputs
 * Validate all inputs and use appropriate sanitization
+* Ensure protection against Cost-based Denial of Service from malicious input, particularly when used in conjunction with tool completions if you remove the default limit
 
 ## When to Use Tools
 
