@@ -11,9 +11,9 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :number_of_tool_completions
 
-    def initialize(model: nil, provider: nil)
+    def initialize(model: nil, provider: nil, max_tool_completions: nil)
       model_id = model || RubyLLM.config.default_model
       with_model(model_id, provider: provider)
       @temperature = 0.7
@@ -23,9 +23,13 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
+      @max_tool_completions = max_tool_completions
+      @number_of_tool_completions = 0
     end
 
     def ask(message = nil, with: {}, &block)
+      @number_of_tool_completions = 0
+
       add_message role: :user, content: Content.new(message, with)
       complete(&block)
     end
@@ -108,6 +112,11 @@ module RubyLLM
         @on[:end_message]&.call(message)
       end
 
+      if max_tool_completions_reached?
+        raise ToolCallCompletionsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
+      end
+
+      @number_of_tool_completions += 1
       complete(&)
     end
 
@@ -123,6 +132,12 @@ module RubyLLM
         content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
         tool_call_id: tool_use_id
       )
+    end
+
+    def max_tool_completions_reached?
+      return false unless @max_tool_completions
+
+      @number_of_tool_completions >= @max_tool_completions
     end
   end
 end
