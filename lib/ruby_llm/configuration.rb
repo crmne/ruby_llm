@@ -10,6 +10,7 @@ module RubyLLM
   #     config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   #   end
   class Configuration
+    # Provider-specific configuration
     attr_accessor :openai_api_key,
                   :anthropic_api_key,
                   :gemini_api_key,
@@ -18,15 +19,26 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  # Default models
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
+                  # Connection configuration
                   :request_timeout,
-                  :max_retries
+                  :max_retries,
+                  :retry_interval,
+                  :retry_backoff_factor,
+                  :retry_interval_randomness
 
     def initialize
+      # Connection configuration
       @request_timeout = 120
       @max_retries = 3
+      @retry_interval = 0.1
+      @retry_backoff_factor = 2
+      @retry_interval_randomness = 0.5
+
+      # Default models
       @default_model = 'gpt-4o-mini'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
