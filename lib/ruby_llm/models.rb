@@ -137,9 +137,19 @@ module RubyLLM
     end
 
     def find_without_provider(model_id)
-      all.find { |m| m.id == model_id } ||
-        all.find { |m| m.id == Aliases.resolve(model_id) } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      exact_match = all.find { |m| m.id == model_id }
+      alias_match = try_resolve_alias(model_id)
+
+      # For model IDs that are both concrete models and aliases (like 'gpt-4o'),
+      # prefer the alias resolution to match documented behavior
+      return alias_match if exact_match && alias_match && Aliases.aliases.key?(model_id)
+
+      exact_match || alias_match || raise(ModelNotFoundError, "Unknown model: #{model_id}")
+    end
+
+    def try_resolve_alias(model_id)
+      resolved_id = Aliases.resolve(model_id)
+      all.find { |m| m.id == resolved_id } if resolved_id != model_id
     end
   end
 end

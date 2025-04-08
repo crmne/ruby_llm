@@ -24,4 +24,28 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
+
+  it 'handles models that are both concrete models and alias keys' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    # This test specifically tests the gpt-4o case where the ID exists as both a concrete model
+    # and an alias key in aliases.json
+
+    # Arrange: Set up mock models and aliases
+    allow(RubyLLM::Aliases).to receive(:aliases).and_return(
+      'gpt-4o' => { 'openai' => 'gpt-4o-2024-11-20' }
+    )
+
+    models = [
+      RubyLLM::ModelInfo.new(id: 'gpt-4o', provider: 'openai'),
+      RubyLLM::ModelInfo.new(id: 'gpt-4o-2024-11-20', provider: 'openai')
+    ]
+    # Create a models instance with our test data and mock the singleton
+    models_instance = RubyLLM::Models.new
+    allow(models_instance).to receive(:all).and_return(models)
+    allow(RubyLLM::Models).to receive(:instance).and_return(models_instance)
+
+    # Act & Assert: The model should resolve to the aliased version
+    chat = RubyLLM.chat(model: 'gpt-4o')
+    expect(chat.model.id).to eq('gpt-4o-2024-11-20')
+    expect(chat.model.provider).to eq('openai')
+  end
 end

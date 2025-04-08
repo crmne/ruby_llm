@@ -40,10 +40,16 @@ RSpec.describe RubyLLM::Models do
 
   describe 'finding models' do
     it 'finds models by ID' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      # Find the default model
+      # We need to account for the fact that default model might be an alias
       model_id = RubyLLM.config.default_model
       model = RubyLLM.models.find(model_id)
-      expect(model.id).to eq(model_id)
+      # If the model ID is an alias, it will resolve to the versioned ID
+      expected_id = if RubyLLM::Aliases.aliases.key?(model_id)
+                      RubyLLM::Aliases.resolve(model_id)
+                    else
+                      model_id
+                    end
+      expect(model.id).to eq(expected_id)
 
       # Find a model with chaining
       if RubyLLM.models.by_provider('openai').chat_models.any?
@@ -62,18 +68,39 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe '#find' do
-    it 'prioritizes exact matches over aliases' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      # This test covers the case from the issue
-      chat_model = RubyLLM.chat(model: 'gemini-2.0-flash')
-      expect(chat_model.model.id).to eq('gemini-2.0-flash')
-
-      # Even with provider specified, exact match wins
-      chat_model = RubyLLM.chat(model: 'gemini-2.0-flash', provider: 'gemini')
-      expect(chat_model.model.id).to eq('gemini-2.0-flash')
-
-      # Only use alias when exact match isn't found
+    it 'resolves known aliases correctly' do # rubocop:disable RSpec/MultipleExpectations
+      # Use claude-3 as our test case since it's a stable alias
       chat_model = RubyLLM.chat(model: 'claude-3')
       expect(chat_model.model.id).to eq('claude-3-sonnet-20240229')
+
+      # With provider specified too
+      chat_model = RubyLLM.chat(model: 'claude-3-5-haiku', provider: 'bedrock')
+      expect(chat_model.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
+      expect(chat_model.model.provider).to eq('bedrock')
+    end
+
+    it 'resolves aliases even when an exact match exists' do # rubocop:disable RSpec/ExampleLength
+      # Test for the special case of model IDs that are both concrete models and alias keys
+      # This ensures 'gpt-4o' resolves to 'gpt-4o-2024-11-20' as per the documentation
+
+      # Arrange: Prepare a test with mock models and aliases
+      allow(RubyLLM::Aliases).to receive(:aliases).and_return(
+        'gpt-4o' => { 'openai' => 'gpt-4o-2024-11-20' }
+      )
+
+      models = [
+        RubyLLM::ModelInfo.new(id: 'gpt-4o', provider: 'openai'),
+        RubyLLM::ModelInfo.new(id: 'gpt-4o-2024-11-20', provider: 'openai')
+      ]
+      # Create a models instance with our test data
+      models_instance = described_class.new
+      allow(models_instance).to receive(:all).and_return(models)
+
+      # Act: Find the model by its alias
+      model = models_instance.find('gpt-4o')
+
+      # Assert: It should resolve to the aliased version
+      expect(model.id).to eq('gpt-4o-2024-11-20')
     end
   end
 
