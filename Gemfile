@@ -8,6 +8,7 @@ group :development do
   # Rails integration dependencies
   gem 'activerecord', '>= 6.0', '< 9.0'
   gem 'activesupport', '>= 6.0', '< 9.0'
+  gem 'rails', '>= 7.0.0'
 
   # Development dependencies
   gem 'bundler', '>= 2.0'
