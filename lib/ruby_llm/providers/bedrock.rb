@@ -24,7 +24,7 @@ module RubyLLM
         @api_base ||= "https://bedrock-runtime.#{RubyLLM.config.bedrock_region}.amazonaws.com"
       end
 
-      def post(url, payload)
+      def post(url, payload, model_id: nil) # rubocop:disable Lint/UnusedMethodArgument
         signature = sign_request("#{connection.url_prefix}#{url}", payload:)
         connection.post url, payload do |req|
           req.headers.merge! build_headers(signature.headers, streaming: block_given?)

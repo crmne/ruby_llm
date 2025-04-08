@@ -7,7 +7,8 @@ module RubyLLM
   module Provider
     # Common functionality for all LLM providers. Implements the core provider
     # interface so specific providers only need to implement a few key methods.
-    module Methods # rubocop:disable Metrics/ModuleLength
+    # rubocop:disable Metrics/ModuleLength
+    module Methods
       extend Streaming
 
       def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
@@ -40,14 +41,14 @@ module RubyLLM
 
       def embed(text, model:)
         payload = render_embedding_payload text, model: model
-        response = post embedding_url, payload
+        response = post embedding_url, payload, model_id: model
         parse_embedding_response response
       end
 
       def paint(prompt, model:, size:)
         payload = render_image_payload(prompt, model:, size:)
 
-        response = post(images_url, payload)
+        response = post(images_url, payload, model_id: model)
         parse_image_response(response)
       end
 
@@ -78,13 +79,21 @@ module RubyLLM
       end
 
       def sync_response(payload)
-        response = post completion_url, payload
+        model_id = payload[:model]
+        response = post completion_url, payload, model_id: model_id
         parse_completion_response response
       end
 
-      def post(url, payload)
+      def post(url, payload, model_id: nil)
+        request_headers = headers
+
+        if model_id && capabilities.respond_to?(:additional_headers_for_model)
+          additional_headers = capabilities.additional_headers_for_model(model_id)
+          request_headers = request_headers.merge(additional_headers) unless additional_headers.empty?
+        end
+
         connection.post url, payload do |req|
-          req.headers.merge! headers
+          req.headers.merge! request_headers
           yield req if block_given?
         end
       end
@@ -190,5 +199,6 @@ module RubyLLM
         providers.select { |_name, provider| provider.configured? }.values
       end
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end

@@ -68,6 +68,18 @@ module RubyLLM
           model_id.match?(/claude-3-7-sonnet/)
         end
 
+        # Returns additional request headers for a specific model
+        # @param model_id [String] the model identifier
+        # @return [Hash] additional headers to include in the request
+        def additional_headers_for_model(model_id)
+          case model_id
+          when 'claude-3-7-sonnet-20250219'
+            { 'anthropic-beta' => 'output-128k-2025-02-19' }
+          else
+            {}
+          end
+        end
+
         # Determines the model family for a given model ID
         # @param model_id [String] the model identifier
         # @return [Symbol] the model family identifier
