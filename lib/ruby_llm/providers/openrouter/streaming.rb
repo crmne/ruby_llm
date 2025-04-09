@@ -13,6 +13,8 @@ module RubyLLM
 
         def handle_stream(&block) # rubocop:disable Metrics/MethodLength
           to_json_stream do |data|
+            next if data.nil?
+
             block.call(
               Chunk.new(
                 role: :assistant,
