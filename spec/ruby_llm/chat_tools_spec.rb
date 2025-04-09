@@ -48,7 +48,10 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+    end
 
+    chat_models.each do |model| # rubocop:disable Style/CombinableLoops
+      provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
                       .with_tool(Weather)
@@ -61,13 +64,43 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+    end
 
+    chat_models.each do |model| # rubocop:disable Style/CombinableLoops
+      provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools without parameters" do
         chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
+    end
 
+    chat_models.each do |model| # rubocop:disable Style/CombinableLoops
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        chunks = []
+
+        response = chat.ask("What's the best language to learn?") do |chunk|
+          chunks << chunk
+        end
+
+        expect(chunks).not_to be_empty
+        expect(chunks.first).to be_a(RubyLLM::Chunk)
+        expect(response.content).to include('Ruby')
+
+        response = chat.ask("Tell me again: what's the best language to learn?") do |chunk|
+          chunks << chunk
+        end
+
+        expect(chunks).not_to be_empty
+        expect(chunks.first).to be_a(RubyLLM::Chunk)
+        expect(response.content).to include('Ruby')
+      end
+    end
+
+    chat_models.each do |model| # rubocop:disable Style/CombinableLoops
+      provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
                       .with_tool(Weather)

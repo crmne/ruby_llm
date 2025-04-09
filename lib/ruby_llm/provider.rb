@@ -115,9 +115,9 @@ module RubyLLM
 
           f.request :retry, {
             max: RubyLLM.config.max_retries,
-            interval: 0.05,
-            interval_randomness: 0.5,
-            backoff_factor: 2,
+            interval: RubyLLM.config.retry_interval,
+            interval_randomness: RubyLLM.config.retry_interval_randomness,
+            backoff_factor: RubyLLM.config.retry_backoff_factor,
             exceptions: [
               Errno::ETIMEDOUT,
               Timeout::Error,
@@ -126,9 +126,10 @@ module RubyLLM
               Faraday::RetriableResponse,
               RubyLLM::RateLimitError,
               RubyLLM::ServerError,
-              RubyLLM::ServiceUnavailableError
+              RubyLLM::ServiceUnavailableError,
+              RubyLLM::OverloadedError
             ],
-            retry_statuses: [429, 500, 502, 503, 504]
+            retry_statuses: [429, 500, 502, 503, 504, 529]
           }
 
           f.request :json

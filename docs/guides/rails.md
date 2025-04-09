@@ -130,25 +130,20 @@ end
 
 ## Instructions (aka System Prompts)
 
-{: .warning-title }
-> Coming in v1.1.0
->
-> chat.with_instructions is coming in 1.1.0. 1.0.x users should use `chat.messages.create! role: system, content: PROMPT`
-
 Instructions help guide the AI's behavior throughout a conversation. With Rails integration, these messages are automatically persisted just like regular chat messages:
 
 ```ruby
 # Create a new chat
 chat = Chat.create!(model_id: 'gpt-4o-mini')
 
-# Add instructions (these are persisted) - available from 1.1.0
+# Add instructions (these are persisted)
 chat.with_instructions("You are a helpful Ruby programming assistant. Always include code examples in your responses and explain them line by line.")
 
 # Ask questions - the AI will follow the instructions
 response = chat.ask("How do I handle file operations in Ruby?")
 puts response.content  # Will include detailed code examples
 
-# Add additional instructions - available from 1.1.0
+# Add additional instructions
 chat.with_instructions("Always format your code using proper Ruby style conventions and include comments.")
 # Both instructions are now persisted and active
 

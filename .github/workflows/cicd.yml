@@ -74,24 +74,46 @@ jobs:
         ruby-version: '3.3'
         bundler-cache: true
 
-    - name: Check if version has changed
+    - name: Check if version needs publishing
       id: check_version
       run: |
-        VERSION=$(ruby -r ./lib/ruby_llm/version.rb -e "puts RubyLLM::VERSION")
-        echo "Current version: $VERSION"
+        VERSION_FILE="./lib/ruby_llm/version.rb"
+        VERSION=$(ruby -r $VERSION_FILE -e "puts RubyLLM::VERSION" 2>/dev/null)
 
-        # Fetch all versions including prereleases
-        ALL_VERSIONS=$(gem list ruby_llm -r --prerelease | grep -oE '[0-9a-zA-Z\.\-]+')
-        echo "Available versions: $ALL_VERSIONS"
+        if [ -z "$VERSION" ]; then
+          echo "Error: Could not extract VERSION from $VERSION_FILE" >&2
+          exit 1
+        fi
+        echo "Local version: $VERSION"
 
-        # Check if current version is among published versions
-        if echo "$ALL_VERSIONS" | grep -Fxq "$VERSION"; then
-          echo "Version $VERSION already published, skipping publish"
+        GEM_NAME="ruby_llm"
+        echo "Fetching published versions for '$GEM_NAME'..."
+
+        # Combine results from --all and --prerelease, extract, clean, unique sort
+        ALL_PUBLISHED_VERSIONS=$(( \
+          gem list ^${GEM_NAME}$ -r --all 2>/dev/null || true; \
+          gem list ^${GEM_NAME}$ -r --prerelease 2>/dev/null || true; \
+        ) | sed -n 's/.*(\(.*\)).*/\1/p' \
+          | tr ',' '\n' \
+          | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+          | grep . \
+          | sort -u )
+
+        echo "Checking against published versions:"
+        if [ -n "$ALL_PUBLISHED_VERSIONS" ]; then
+            echo "$ALL_PUBLISHED_VERSIONS" | sed 's/^/  /' # Log found versions nicely
+        else
+            echo "  (none found)"
+        fi
+
+        if echo "$ALL_PUBLISHED_VERSIONS" | grep -Fxq "$VERSION"; then
+          echo "Verdict: Version $VERSION already published."
           echo "version_changed=false" >> $GITHUB_OUTPUT
         else
-          echo "Version $VERSION is new"
+          echo "Verdict: Version $VERSION is new."
           echo "version_changed=true" >> $GITHUB_OUTPUT
         fi
+      shell: bash
 
     - name: Test with real APIs before publishing
       if: steps.check_version.outputs.version_changed == 'true'
