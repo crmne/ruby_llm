@@ -9,6 +9,7 @@ RSpec.describe RubyLLM::Chat do
                    anthropic.claude-3-5-haiku-20241022-v1:0
                    gemini-2.0-flash
                    deepseek-chat
+                   anthropic/claude-3.5-haiku
                    gpt-4.1-nano].freeze
 
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration

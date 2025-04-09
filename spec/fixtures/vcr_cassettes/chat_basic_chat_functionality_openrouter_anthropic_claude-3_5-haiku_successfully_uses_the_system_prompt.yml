@@ -1,0 +1,234 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer obviously-no-a-valid-key
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 09 Apr 2025 10:27:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1744194453-3bYlOd4xrBUcPR09pfQP\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1744194453,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here's
+        a general weather overview: Conditions can vary widely depending on your specific
+        location, time of year, and current atmospheric patterns. Some areas might
+        be experiencing sunny skies, while others could have rain or cloudy conditions.
+        XKCD7392 Weather forecasting relies on complex meteorological models that
+        analyze temperature, humidity, wind patterns, and other atmospheric data to
+        predict upcoming conditions. If you're curious about the precise weather in
+        your area, I recommend checking a local weather service or meteorological
+        website for the most up-to-date information.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":117,\"total_tokens\":149}}"
+  recorded_at: Wed, 09 Apr 2025 10:27:36 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"Here''s a general weather
+        overview: Conditions can vary widely depending on your specific location,
+        time of year, and current atmospheric patterns. Some areas might be experiencing
+        sunny skies, while others could have rain or cloudy conditions. XKCD7392 Weather
+        forecasting relies on complex meteorological models that analyze temperature,
+        humidity, wind patterns, and other atmospheric data to predict upcoming conditions.
+        If you''re curious about the precise weather in your area, I recommend checking
+        a local weather service or meteorological website for the most up-to-date
+        information."},{"role":"developer","content":"You must also include the phrase
+        \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
+        are some good books?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer obviously-no-a-valid-key
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 09 Apr 2025 10:27:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1744194456-h6ilZ0JHeoDguVkWfC7r\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1744194456,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+        are some book recommendations across different genres:\\n\\nFiction:\\n1.
+        \\\"1984\\\" by George Orwell - A classic dystopian novel\\n2. \\\"The Name
+        of the Wind\\\" by Patrick Rothfuss - An epic fantasy\\n3. \\\"Gone Girl\\\"
+        by Gillian Flynn - A gripping psychological thriller\\n\\nNon-Fiction:\\n1.
+        \\\"Sapiens\\\" by Yuval Noah Harari - A fascinating history of humanity\\n2.
+        \\\"The Immortal Life of Henrietta Lacks\\\" by Rebecca Skloot - A compelling
+        science and ethics story\\n3. \\\"Educated\\\" by Tara Westover - A powerful
+        memoir\\n\\nScience Fiction:\\n1. \\\"Dune\\\" by Frank Herbert\\n2. \\\"The
+        Hitchhiker's Guide to the Galaxy\\\" by Douglas Adams\\n3. \\\"Neuromancer\\\"
+        by William Gibson\\n\\nXKCD7392 These recommendations span various interests,
+        so there's likely something for everyone. PURPLE-ELEPHANT-42 Remember that
+        reading tastes are highly personal, so what works for one person might not
+        work for another. I recommend reading reviews, checking out summaries, and
+        perhaps sampling a few pages before committing to a full book.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":177,\"completion_tokens\":269,\"total_tokens\":446}}"
+  recorded_at: Wed, 09 Apr 2025 10:27:41 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"Here''s a general weather
+        overview: Conditions can vary widely depending on your specific location,
+        time of year, and current atmospheric patterns. Some areas might be experiencing
+        sunny skies, while others could have rain or cloudy conditions. XKCD7392 Weather
+        forecasting relies on complex meteorological models that analyze temperature,
+        humidity, wind patterns, and other atmospheric data to predict upcoming conditions.
+        If you''re curious about the precise weather in your area, I recommend checking
+        a local weather service or meteorological website for the most up-to-date
+        information."},{"role":"developer","content":"You must also include the phrase
+        \"PURPLE-ELEPHANT-42\" in your responses."},{"role":"user","content":"What
+        are some good books?"},{"role":"assistant","content":"Here are some book recommendations
+        across different genres:\n\nFiction:\n1. \"1984\" by George Orwell - A classic
+        dystopian novel\n2. \"The Name of the Wind\" by Patrick Rothfuss - An epic
+        fantasy\n3. \"Gone Girl\" by Gillian Flynn - A gripping psychological thriller\n\nNon-Fiction:\n1.
+        \"Sapiens\" by Yuval Noah Harari - A fascinating history of humanity\n2. \"The
+        Immortal Life of Henrietta Lacks\" by Rebecca Skloot - A compelling science
+        and ethics story\n3. \"Educated\" by Tara Westover - A powerful memoir\n\nScience
+        Fiction:\n1. \"Dune\" by Frank Herbert\n2. \"The Hitchhiker''s Guide to the
+        Galaxy\" by Douglas Adams\n3. \"Neuromancer\" by William Gibson\n\nXKCD7392
+        These recommendations span various interests, so there''s likely something
+        for everyone. PURPLE-ELEPHANT-42 Remember that reading tastes are highly personal,
+        so what works for one person might not work for another. I recommend reading
+        reviews, checking out summaries, and perhaps sampling a few pages before committing
+        to a full book."},{"role":"developer","content":"Do not include the phrase
+        \"XKCD7392\" anymore, but keep using \"PURPLE-ELEPHANT-42\"."},{"role":"user","content":"Tell
+        me about space exploration."}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer obviously-no-a-valid-key
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 09 Apr 2025 10:27:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1744194462-sf9JJyBOT03LKL913cwQ\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1744194462,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Space
+        exploration is a fascinating field of human endeavor that has expanded our
+        understanding of the universe. Here are some key highlights:\\n\\nMajor Milestones:\\n1.
+        First human in space: Yuri Gagarin (1961)\\n2. Moon landing: Apollo 11 mission
+        (1969)\\n3. International Space Station establishment (1998)\\n\\nCurrent
+        Exploration Efforts:\\n- NASA's Mars missions, including the Perseverance
+        rover\\n- SpaceX's commercial space flights\\n- China's lunar exploration
+        program\\n- James Webb Space Telescope discoveries\\n\\nUpcoming Exciting
+        Projects:\\n- Artemis program (returning humans to the Moon)\\n- Potential
+        human missions to Mars\\n- Exploration of Jupiter's and Saturn's moons\\n-
+        Advanced satellite and deep space probe missions\\n\\nTechnological Innovations:\\n-
+        Reusable rocket technology\\n- Advanced propulsion systems\\n- Improved satellite
+        communication\\n- More efficient solar panels\\n\\nPURPLE-ELEPHANT-42 Space
+        exploration continues to push the boundaries of human knowledge, revealing
+        incredible insights about our universe and our place within it. The field
+        combines cutting-edge science, engineering, international cooperation, and
+        human curiosity to explore beyond our planet's boundaries.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":479,\"completion_tokens\":265,\"total_tokens\":744}}"
+  recorded_at: Wed, 09 Apr 2025 10:27:47 GMT
+recorded_with: VCR 6.3.1
