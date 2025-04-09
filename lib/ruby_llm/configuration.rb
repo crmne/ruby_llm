@@ -31,7 +31,7 @@ module RubyLLM
       @default_model = 'gpt-4o-mini'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
-      @default_transcription_model = 'gpt-4o-audio-preview'
+      @default_transcription_model = 'whisper-1'
     end
   end
 end

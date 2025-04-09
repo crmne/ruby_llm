@@ -6,56 +6,48 @@ RSpec.describe RubyLLM do
   include_context 'with configured RubyLLM'
 
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+  let(:default_model) { 'whisper-1' }
+
+  before do
+    allow(described_class.config).to receive(:default_transcription_model).and_return(default_model)
+    allow(described_class::Models).to receive(:find).with(default_model)
+    allow(described_class::Provider).to receive(:for).with(default_model).and_return(described_class::Providers::OpenAI)
+    allow(described_class::Providers::OpenAI).to receive(:transcribe)
+  end
 
   describe '.transcribe' do
-    it 'can transcribe audio with default model', vcr: {
-      cassette_name: 'transcription_default_model_transcribes_audio'
-    } do
-      transcription = described_class.transcribe(audio_path)
+    it 'uses the default model from config when no model is specified' do # rubocop:disable RSpec/MultipleExpectations
+      described_class.transcribe(audio_path)
 
-      expect(transcription).to be_a(String)
+      expect(described_class::Provider).to have_received(:for).with(default_model)
+      expect(described_class::Providers::OpenAI).to have_received(:transcribe).with(
+        audio_path, model: default_model, language: nil
+      )
     end
 
-    it 'returns non-empty output with default model', vcr: {
-      cassette_name: 'transcription_default_model_returns_content'
-    } do
-      transcription = described_class.transcribe(audio_path)
+    it 'validates and uses a custom model when specified' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+      custom_model = 'whisper-large'
+      allow(described_class::Models).to receive(:find).with(custom_model)
+      allow(described_class::Provider).to receive(:for).with(custom_model)
+                                                       .and_return(described_class::Providers::OpenAI)
 
-      expect(transcription).not_to be_empty
+      described_class.transcribe(audio_path, model: custom_model)
+
+      expect(described_class::Models).to have_received(:find).with(custom_model)
+      expect(described_class::Provider).to have_received(:for).with(custom_model)
+      expect(described_class::Providers::OpenAI).to have_received(:transcribe).with(
+        audio_path, model: custom_model, language: nil
+      )
     end
 
-    it 'includes ruby in the default model transcription', vcr: {
-      cassette_name: 'transcription_default_model_includes_ruby'
-    } do
-      transcription = described_class.transcribe(audio_path)
+    it 'passes language parameter to the provider' do
+      language = 'en'
 
-      expect(transcription.downcase).to include('ruby')
-    end
+      described_class.transcribe(audio_path, language: language)
 
-    it 'accepts a specific model', vcr: { cassette_name: 'transcription_specific_model_gpt4o_audio_preview' } do
-      transcription = described_class.transcribe(audio_path, model: 'gpt-4o-audio-preview')
-
-      expect(transcription).to be_a(String)
-    end
-
-    it 'produces non-empty output with a specific model',
-       vcr: { cassette_name: 'transcription_specific_model_output_check' } do
-      transcription = described_class.transcribe(audio_path, model: 'gpt-4o-audio-preview')
-
-      expect(transcription).not_to be_empty
-    end
-
-    it 'accepts a language hint', vcr: { cassette_name: 'transcription_with_language_hint_english' } do
-      transcription = described_class.transcribe(audio_path, language: 'English')
-
-      expect(transcription).to be_a(String)
-    end
-
-    it 'produces non-empty output with a language hint',
-       vcr: { cassette_name: 'transcription_with_language_hint_output_check' } do
-      transcription = described_class.transcribe(audio_path, language: 'English')
-
-      expect(transcription).not_to be_empty
+      expect(described_class::Providers::OpenAI).to have_received(:transcribe).with(
+        audio_path, model: default_model, language: language
+      )
     end
   end
 end

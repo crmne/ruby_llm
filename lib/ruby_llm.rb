@@ -4,6 +4,7 @@ require 'base64'
 require 'event_stream_parser'
 require 'faraday'
 require 'faraday/retry'
+require 'faraday/multipart'
 require 'json'
 require 'logger'
 require 'securerandom'
@@ -43,14 +44,11 @@ module RubyLLM
     end
 
     def transcribe(audio_file, model: nil, language: nil)
-      model_id = model || RubyLLM.config.default_transcription_model || 'gpt-4o-audio-preview'
+      model_id = model || RubyLLM.config.default_transcription_model
+      Models.find(model_id) # Validates model exists
 
-      chat = Chat.new(model: model_id)
-      prompt = 'Transcribe this audio verbatim.'
-      prompt += " The language is #{language}." if language
-
-      response = chat.ask(prompt, with: { audio: audio_file })
-      response.content
+      provider = Provider.for(model_id)
+      provider.transcribe(audio_file, model: model_id, language: language)
     end
 
     def models

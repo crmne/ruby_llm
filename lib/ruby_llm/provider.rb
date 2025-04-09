@@ -7,7 +7,7 @@ module RubyLLM
   module Provider
     # Common functionality for all LLM providers. Implements the core provider
     # interface so specific providers only need to implement a few key methods.
-    module Methods
+    module Methods # rubocop:disable Metrics/ModuleLength
       extend Streaming
 
       def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
@@ -49,6 +49,13 @@ module RubyLLM
 
         response = post(images_url, payload)
         parse_image_response(response)
+      end
+
+      def transcribe(audio_file, model:, language: nil)
+        payload = render_transcription_payload(audio_file, model:, language:)
+
+        response = post(transcription_url, payload)
+        parse_transcription_response(response)
       end
 
       def configured?
