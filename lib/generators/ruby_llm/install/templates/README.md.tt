@@ -40,14 +40,21 @@ This is useful when you need to avoid namespace collisions with existing models 
 
 3. **Start using RubyLLM in your code:**
    ```ruby
-   # Create a new chat
+   # In a background job
+   class ChatJob < ApplicationJob
+     def perform(chat_id, question)
+       chat = <%= options[:chat_model_name] %>.find(chat_id)
+       chat.ask(question) do |chunk|
+         Turbo::StreamsChannel.broadcast_append_to(
+           chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+         )
+       end
+     end
+   end
+
+   # Queue the job
    chat = <%= options[:chat_model_name] %>.create!(model_id: "gpt-4o-mini")
-   
-   # Ask a question
-   response = chat.ask("What's the best Ruby web framework?")
-   
-   # Get chat history
-   chat.messages
+   ChatJob.perform_later(chat.id, "What's your favorite Ruby gem?")
    ```
 
 4. **For streaming responses** with ActionCable or Turbo:

@@ -31,9 +31,6 @@ Gem::Specification.new do |spec|
   spec.files = Dir.glob('lib/**/*') + ['README.md', 'LICENSE']
   spec.require_paths = ['lib']
 
-  # Add generator files
-  spec.files += Dir.glob('lib/generators/**/*')
-
   # Runtime dependencies
   spec.add_dependency 'base64'
   spec.add_dependency 'event_stream_parser', '~> 1'
@@ -41,7 +38,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday-multipart', '~> 1'
   spec.add_dependency 'faraday-retry', '~> 2'
   spec.add_dependency 'zeitwerk', '~> 2'
-
-  # Development dependencies
-  spec.add_development_dependency 'rails', '>= 7.0.0'
 end
