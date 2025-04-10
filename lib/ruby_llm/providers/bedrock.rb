@@ -33,6 +33,22 @@ module RubyLLM
         end
       end
 
+      def parse_error(response) # rubocop:disable Metrics/MethodLength
+        return if response.body.empty?
+
+        body = try_parse_json(response.body)
+        case body
+        when Hash
+          body['message']
+        when Array
+          body.map do |part|
+            part['message']
+          end.join('. ')
+        else
+          body
+        end
+      end
+
       def sign_request(url, method: :post, payload: nil)
         signer = create_signer
         request = build_request(url, method:, payload:)

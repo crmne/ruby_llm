@@ -21,11 +21,6 @@ A delightful Ruby way to work with AI through a unified interface to OpenAI, Ant
 
 ---
 
-{: .warning-title }
-> Coming in v1.1.0
->
-> Amazon Bedrock support is coming in v1.1.0
-
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em; margin-bottom: 1em">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
