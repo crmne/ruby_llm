@@ -46,7 +46,7 @@ module RubyLLM
         def acts_as_tool_call(message_class: 'Message')
           @message_class = message_class.to_s
 
-          belongs_to :message, class_name: @message_class
+          belongs_to :message, class_name: @message_class, foreign_key: "#{@message_class.underscore}_id"
 
           has_one :result,
                   class_name: @message_class,
