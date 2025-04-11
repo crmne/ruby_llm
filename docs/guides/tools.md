@@ -184,7 +184,7 @@ chat.ask "What's the weather in New York? Coordinates are 40.7128, -74.0060"
 
 ## Error Handling
 
-Tools can handle errors gracefully:
+Tools should handle errors differently based on whether they're recoverable by the LLM or require application intervention:
 
 ```ruby
 class Weather < RubyLLM::Tool
@@ -193,19 +193,75 @@ class Weather < RubyLLM::Tool
   param :longitude, desc: "Longitude (e.g., 13.4050)"
 
   def execute(latitude:, longitude:)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
+    validate_coordinates!(latitude, longitude)
+    response = Faraday.get(weather_api_url(latitude, longitude))
 
-    response = Faraday.get(url)
-    data = JSON.parse(response.body)
-  rescue => e
-    { error: e.message }
+    case response.status
+    when 429
+      # Return errors the LLM should know about and can retry
+      { error: "Rate limit exceeded. Please try again in 60 seconds." }
+    when 200
+      JSON.parse(response.body)
+    else
+      # Let serious problems bubble up
+      raise "Weather API error: #{response.status}"
+    end
   end
-end
 
-# When there's an error, the model will receive and explain it
-chat.ask "What's the weather at invalid coordinates 1000, 1000?"
-# => "The coordinates 1000, 1000 are not valid for any location on Earth, as latitude must be between -90 and 90, and longitude must be between -180 and 180. Please provide valid coordinates or a city name for weather information."
+  private
+    def validate_coordinates!(lat, long)
+      lat = lat.to_f
+      long = long.to_f
+
+      if lat.abs > 90 || long.abs > 180
+        # Return validation errors to the LLM
+        { error: "Invalid coordinates. Latitude must be between -90 and 90, longitude between -180 and 180." }
+      end
+    end
+
+    def weather_api_url(lat, long)
+      "https://api.open-meteo.com/v1/forecast?latitude=#{lat}&longitude=#{long}&current=temperature_2m"
+    end
+end
 ```
+
+Handle application-level errors in your code:
+
+```ruby
+begin
+  chat = RubyLLM.chat.with_tool(Weather)
+  response = chat.ask "What's the weather in Berlin?"
+rescue RubyLLM::Error => e
+  # Handle LLM-specific errors
+  Rails.logger.error "LLM error: #{e.message}"
+  raise
+rescue StandardError => e
+  # Handle other unexpected errors
+  Rails.logger.error "Tool execution failed: #{e.message}"
+  raise
+end
+```
+
+### Error Handling Guidelines
+
+When implementing tools, follow these principles:
+
+1. **Return errors to the LLM when:**
+   - Input validation fails
+   - The operation can be retried (rate limits, temporary failures)
+   - Alternative approaches might work
+
+2. **Let errors bubble up when:**
+   - The tool encounters unexpected states
+   - System resources are unavailable
+   - Authentication or authorization fails
+   - Data integrity is compromised
+
+The LLM can handle returned errors intelligently by:
+- Retrying with different parameters
+- Suggesting alternative approaches
+- Explaining the issue to the user
+- Using different tools to accomplish the task
 
 ## Simple Tool Parameters
 

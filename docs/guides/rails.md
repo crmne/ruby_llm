@@ -128,22 +128,69 @@ chat.messages.order(:created_at).each do |message|
 end
 ```
 
-## Using System Messages
+## Instructions (aka System Prompts)
 
-If you wish to use systems messages, you can create a Message with the role `:system` directly in the chat:
+Instructions help guide the AI's behavior throughout a conversation. With Rails integration, these messages are automatically persisted just like regular chat messages:
 
 ```ruby
 # Create a new chat
 chat = Chat.create!(model_id: 'gpt-4o-mini')
 
-# Create a message with the system role
-chat.messages.create!(role: :system, content: "You are a helpful Ruby programming assistant. Always include code examples in your responses and explain them line by line.")
+# Add instructions (these are persisted)
+chat.with_instructions("You are a helpful Ruby programming assistant. Always include code examples in your responses and explain them line by line.")
 
-# Now the AI will follow these instructions in all responses
-chat.ask "How do I handle file operations in Ruby?"
+# Ask questions - the AI will follow the instructions
+response = chat.ask("How do I handle file operations in Ruby?")
+puts response.content  # Will include detailed code examples
 
-# The response is automatically persisted
-puts chat.messages.last.content
+# Add additional instructions
+chat.with_instructions("Always format your code using proper Ruby style conventions and include comments.")
+# Both instructions are now persisted and active
+
+# Check your system prompts
+system_messages = chat.messages.where(role: 'system')
+system_messages.each do |msg|
+  puts "Instruction: #{msg.content}"
+end
+```
+
+### When to Use Instructions
+
+Instructions are great for:
+1. Setting the AI's persona or tone
+2. Providing domain-specific knowledge
+3. Enforcing specific response formats
+4. Creating specialized assistants
+
+### Managing Instructions
+
+You can add multiple instructions or replace existing ones:
+
+```ruby
+# Add initial instructions
+chat.with_instructions("Be a helpful Ruby expert")
+
+# Add another instruction (keeps the first one)
+chat.with_instructions("Always include code examples")
+
+# Replace all previous instructions
+chat.with_instructions("Be a concise Ruby expert who always shows examples", replace: true)
+```
+
+This is particularly useful in controllers:
+
+```ruby
+def update_instructions
+  @chat = Chat.find(params[:id])
+
+  # Replace existing instructions with new ones
+  @chat.with_instructions(params[:instructions], replace: true)
+
+  respond_to do |format|
+    format.html { redirect_to @chat }
+    format.turbo_stream
+  end
+end
 ```
 
 ## Streaming Responses

@@ -135,6 +135,9 @@ chat.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
 
+# Set personality or behavior with instructions (aka system prompts)
+chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
+
 # Understand content in multiple forms
 chat.ask "Compare these diagrams", with: { image: ["diagram1.png", "diagram2.png"] }
 chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
@@ -165,8 +168,12 @@ class ToolCall < ApplicationRecord
   acts_as_tool_call
 end
 
-# In your controller
-chat = Chat.create!(model_id: "gpt-4o-mini")
+# In a background job
+chat = Chat.create! model_id: "gpt-4o-mini"
+
+# Set personality or behavior with instructions (aka system prompts) - they're persisted too!
+chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
+
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(
     chat,

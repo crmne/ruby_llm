@@ -185,10 +185,6 @@ When adding new features, please include documentation updates:
 - Add inline documentation using YARD comments
 - Keep the README clean and focused on helping new users get started quickly
 
-## Philosophy
-
-RubyLLM follows certain design philosophies and conventions. Please refer to our [Philosophy Guide](https://rubyllm.com/philosophy) to ensure your contributions align with the project's vision.
-
 ## Discussions and Issues
 
 - For questions and discussions, please use [GitHub Discussions](https://github.com/crmne/ruby_llm/discussions)

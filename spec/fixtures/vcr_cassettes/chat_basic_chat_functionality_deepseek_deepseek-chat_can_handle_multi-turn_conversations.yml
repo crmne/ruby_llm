@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:48:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - cd3d879fee905b0b5bc97e249a6cd7bd
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijc0OGZjMzRjLTA0YTQtNDdhNC04ZDliLTdlMzhmNjYwZWVlMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDM2MTYxMjYsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIEphcGFuLiBIZSByZWxlYXNlZCB0aGUgZmlyc3QgdmVyc2lvbiBvZiBSdWJ5IGluICoqMTk5NSoqLiBNYXR6IGRlc2lnbmVkIFJ1Ynkgd2l0aCBhIGZvY3VzIG9uIHNpbXBsaWNpdHksIHByb2R1Y3Rpdml0eSwgYW5kIHByb2dyYW1tZXIgaGFwcGluZXNzLCBibGVuZGluZyBlbGVtZW50cyBmcm9tIFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgYW5kIG90aGVyIGxhbmd1YWdlcy4gXG5cbkhpcyBndWlkaW5nIHByaW5jaXBsZSB3YXM6ICBcbipcIlJ1YnkgaXMgZGVzaWduZWQgdG8gbWFrZSBwcm9ncmFtbWVycyBoYXBweS5cIiogIFxuXG5NYXR6IHJlbWFpbnMgYW4gaW5mbHVlbnRpYWwgZmlndXJlIGluIHRoZSBSdWJ5IGNvbW11bml0eSBhbmQgY29udGludWVzIHRvIGNvbnRyaWJ1dGUgdG8gaXRzIGRldmVsb3BtZW50LiDwn5qA8J+SjiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjksImNvbXBsZXRpb25fdG9rZW5zIjoxMDUsInRvdGFsX3Rva2VucyI6MTE0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjl9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zZDUxNDFhNjlhX3Byb2QwMjI1In0=
+  recorded_at: Wed, 02 Apr 2025 17:48:54 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
+        was Ruby's creator?\"},{\"role\":\"assistant\",\"content\":\"Ruby was created
+        by **Yukihiro \\\"Matz\\\" Matsumoto** in Japan. He released the first version
+        of Ruby in **1995**. Matz designed Ruby with a focus on simplicity, productivity,
+        and programmer happiness, blending elements from Perl, Smalltalk, Lisp, and
+        other languages. \\n\\nHis guiding principle was:  \\n*\\\"Ruby is designed
+        to make programmers happy.\\\"*  \\n\\nMatz remains an influential figure
+        in the Ruby community and continues to contribute to its development. \U0001F680\U0001F48E\"},{\"role\":\"user\",\"content\":\"What
+        year did he create Ruby?\"}],\"temperature\":0.7,\"stream\":false}"
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:48:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 29bc814dfdf3ba1879f68d0c877cd010
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImE5NDFlNWQxLTE0NjktNDBhOC1iZjNkLWM3YWQ3OGEzNDcxNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDM2MTYxMzQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqY3JlYXRlZCBSdWJ5IGluIDE5OTMqKiBhbmQgcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uICgqKlJ1YnkgMC45NSoqKSBpbiAqKkRlY2VtYmVyIDE5OTQqKi4gVGhlIHN0YWJsZSAqKlJ1YnkgMS4wKiogd2FzIG9mZmljaWFsbHkgbGF1bmNoZWQgaW4gKioxOTk2KiouICBcblxuU28sIHdoaWxlIHRoZSBsYW5ndWFnZSdzIGRldmVsb3BtZW50IHN0YXJ0ZWQgaW4gKioxOTkzKiosIGl0cyBwdWJsaWMgZGVidXQgd2FzIGluICoqMTk5NOKAkzE5OTUqKiwgd2l0aCBicm9hZGVyIGFkb3B0aW9uIGZvbGxvd2luZyBpbiB0aGUgbGF0ZSAxOTkwcyBhbmQgZWFybHkgMjAwMHMgKGVzcGVjaWFsbHkgYWZ0ZXIgdGhlIHJlbGVhc2Ugb2YgUnVieSBvbiBSYWlscyBpbiAyMDA1KS4gIFxuXG5GdW4gZmFjdDogTWF0eiBuYW1lZCB0aGUgbGFuZ3VhZ2UgYWZ0ZXIgdGhlIGdlbXN0b25lICoqcnVieSoqIGFzIGEgcGxheWZ1bCBub2QgdG8gUGVybCAoYW5vdGhlciBnZW0taW5zcGlyZWQgbGFuZ3VhZ2UpLiDwn5KOIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTI0LCJjb21wbGV0aW9uX3Rva2VucyI6MTQ0LCJ0b3RhbF90b2tlbnMiOjI2OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjY0fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjY0LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjYwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfM2Q1MTQxYTY5YV9wcm9kMDIyNSJ9
+  recorded_at: Wed, 02 Apr 2025 17:49:03 GMT
+recorded_with: VCR 6.3.1

@@ -14,41 +14,7 @@ module RubyLLM
         def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
           # Hold model_id in instance variable for use in completion_url and stream_url
           @model_id = model
-          case model
-          when /claude/
-            build_claude_request(messages, tools:, temperature:, model:)
-          else
-            raise Error, nil, "Unsupported model: #{model}"
-          end
-        end
 
-        def parse_completion_response(response)
-          data = response.body
-          content_blocks = data['content'] || []
-
-          text_content = extract_text_content(content_blocks)
-          tool_use = find_tool_use(content_blocks)
-
-          build_message(data, text_content, tool_use)
-        end
-
-        def extract_text_content(blocks)
-          text_blocks = blocks.select { |c| c['type'] == 'text' }
-          text_blocks.map { |c| c['text'] }.join
-        end
-
-        def build_message(data, content, tool_use)
-          Message.new(
-            role: :assistant,
-            content: content,
-            tool_calls: parse_tool_calls(tool_use),
-            input_tokens: data.dig('usage', 'input_tokens'),
-            output_tokens: data.dig('usage', 'output_tokens'),
-            model_id: data['model']
-          )
-        end
-
-        def build_claude_request(messages, tools:, temperature:, model:)
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
@@ -62,6 +28,13 @@ module RubyLLM
         end
 
         def build_system_content(system_messages)
+          if system_messages.length > 1
+            RubyLLM.logger.warn(
+              "Amazon Bedrock's Claude implementation only supports a single system message. " \
+              'Multiple system messages will be combined into one.'
+            )
+          end
+
           system_messages.map { |msg| format_message(msg)[:content] }.join("\n\n")
         end
 
@@ -70,7 +43,7 @@ module RubyLLM
             anthropic_version: 'bedrock-2023-05-31',
             messages: chat_messages.map { |msg| format_message(msg) },
             temperature: temperature,
-            max_tokens: max_tokens_for(model)
+            max_tokens: RubyLLM.models.find(model).max_tokens
           }
         end
 
@@ -104,8 +77,30 @@ module RubyLLM
           end
         end
 
-        def max_tokens_for(model_id)
-          RubyLLM.models.find(model_id)&.max_tokens
+        def parse_completion_response(response)
+          data = response.body
+          content_blocks = data['content'] || []
+
+          text_content = extract_text_content(content_blocks)
+          tool_use = find_tool_use(content_blocks)
+
+          build_message(data, text_content, tool_use)
+        end
+
+        def extract_text_content(blocks)
+          text_blocks = blocks.select { |c| c['type'] == 'text' }
+          text_blocks.map { |c| c['text'] }.join
+        end
+
+        def build_message(data, content, tool_use)
+          Message.new(
+            role: :assistant,
+            content: content,
+            tool_calls: parse_tool_calls(tool_use),
+            input_tokens: data.dig('usage', 'input_tokens'),
+            output_tokens: data.dig('usage', 'output_tokens'),
+            model_id: data['model']
+          )
         end
       end
     end

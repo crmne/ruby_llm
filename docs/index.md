@@ -20,6 +20,7 @@ A delightful Ruby way to work with AI through a unified interface to OpenAI, Ant
   <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
 ---
+
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em; margin-bottom: 1em">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
@@ -175,7 +176,7 @@ class ToolCall < ApplicationRecord
   acts_as_tool_call
 end
 
-# In your controller
+# In a background job
 chat = Chat.create!(model_id: "gpt-4o-mini")
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(

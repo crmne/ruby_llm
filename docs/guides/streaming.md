@@ -51,32 +51,6 @@ puts "Token usage: #{final_message.output_tokens} tokens"
 
 ## Web Application Integration
 
-### Rails with ActionCable
-
-```ruby
-# In your controller
-def ask
-  @chat = Chat.find(params[:id])
-
-  @chat.ask(params[:message]) do |chunk|
-    ActionCable.server.broadcast(
-      "chat_#{@chat.id}",
-      { content: chunk.content }
-    )
-  end
-
-  head :ok
-end
-
-# In your JavaScript
-const channel = consumer.subscriptions.create({ channel: "ChatChannel", id: chatId }, {
-  received(data) {
-    // Append incoming chunk to the display
-    document.getElementById('response').innerHTML += data.content;
-  }
-});
-```
-
 ### Rails with Turbo Streams
 
 ```ruby

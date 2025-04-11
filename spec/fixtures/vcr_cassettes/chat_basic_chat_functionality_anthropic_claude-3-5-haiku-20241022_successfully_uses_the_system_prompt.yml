@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.0,"stream":false,"max_tokens":8192,"system":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 11 Apr 2025 14:00:35 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-11T14:00:33Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-11T14:00:33Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-11T14:00:35Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-11T14:00:33Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01X9KKJajdger8HUQvrLDBWa","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t provide real-time weather information as I don''t
+        have access to current weather data. Weather conditions vary depending on
+        your specific location and the current time. If you''d like to know about
+        the weather, I recommend:\n\n1. Checking a local weather website or app\n2.
+        Looking at a weather forecast on TV\n3. Checking your local meteorological
+        service website\n4. Using a smartphone weather app\n\nXKCD7392 Just remember
+        that weather can change quickly, so it''s always best to get the most up-to-date
+        information from a live source."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":130}}'
+  recorded_at: Fri, 11 Apr 2025 14:00:35 GMT
+recorded_with: VCR 6.3.1

@@ -34,6 +34,13 @@ module RubyLLM
 
     alias say ask
 
+    def with_instructions(instructions, replace: false)
+      @messages = @messages.reject! { |msg| msg.role == :system } if replace
+
+      add_message role: :system, content: instructions
+      self
+    end
+
     def with_tool(tool)
       unless @model.supports_functions
         raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"

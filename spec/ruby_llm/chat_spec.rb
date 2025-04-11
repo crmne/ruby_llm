@@ -1,23 +1,22 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  chat_models = %w[claude-3-5-haiku-20241022
+                   anthropic.claude-3-5-haiku-20241022-v1:0
+                   gemini-2.0-flash
+                   deepseek-chat
+                   gpt-4o-mini
+                   llama3.1:8b].freeze
+
   describe 'basic chat functionality' do
-    [
-      ['claude-3-5-haiku-20241022', nil],
-      ['gemini-2.0-flash', nil],
-      ['deepseek-chat', nil],
-      ['gpt-4o-mini', nil],
-      %w[claude-3-5-haiku bedrock],
-      %w[llama3.1:8b ollama]
-    ].each do |model, provider|
-      provider_suffix = provider ? " with #{provider}" : ''
-      it "#{model} can have a basic conversation#{provider_suffix}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model, provider: provider)
+    chat_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+      it "#{provider}/#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
         response = chat.ask("What's 2 + 2?")
 
         expect(response.content).to include('4')
@@ -26,8 +25,8 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
 
-      it "#{model} can handle multi-turn conversations#{provider_suffix}" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model, provider: provider)
+      it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
 
         first =
           if model =~ /llama/
@@ -48,25 +47,34 @@ RSpec.describe RubyLLM::Chat do
         followup = chat.ask('What year did he create Ruby?')
         expect(followup.content).to include('199')
       end
-    end
 
-    it 'claude-3-5-haiku can handle system messages with bedrock' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      chat = RubyLLM.chat(model: 'claude-3-5-haiku', provider: 'bedrock')
+      it "#{provider}/#{model} successfully uses the system prompt" do
+        chat = RubyLLM.chat(model: model).with_temperature(0.0)
 
-      # Add a system message
-      chat.add_message(role: :system, content: 'You are a helpful math tutor who always shows your work.')
+        # Use a distinctive and unusual instruction that wouldn't happen naturally
+        chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
 
-      response = chat.ask('What is 15 + 27?')
-      expect(response.content).to include('42')
-      expect(response.content).to match(/step|work|process/i) # Should show work as instructed
+        response = chat.ask('Tell me about the weather.')
+        expect(response.content).to include('XKCD7392')
+      end
 
-      # Add another system message
-      chat.add_message(role: :system, content: 'Always include a fun fact about numbers in your response.')
+      it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model).with_temperature(0.0)
 
-      response = chat.ask('What is 25 * 4?')
-      expect(response.content).to include('100')
-      expect(response.content).to match(/step|work|process/i) # Should still show work
-      expect(response.content).to match(/fact|interesting|did you know/i) # Should include a fun fact
+        # Use a distinctive and unusual instruction that wouldn't happen naturally
+        chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
+
+        response = chat.ask('Tell me about the weather.')
+        expect(response.content).to include('XKCD7392')
+
+        # Test ability to follow multiple instructions with another unique marker
+        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.',
+                               replace: true
+
+        response = chat.ask('What are some good books?')
+        expect(response.content).not_to include('XKCD7392')
+        expect(response.content).to include('PURPLE-ELEPHANT-42')
+      end
     end
   end
 end

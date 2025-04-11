@@ -1,0 +1,234 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
+        3 * 3?"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
+        expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:47:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '505'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9994'
+      X-Ratelimit-Remaining-Tokens:
+      - '199993'
+      X-Ratelimit-Reset-Requests:
+      - 44.164s
+      X-Ratelimit-Reset-Tokens:
+      - 1ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BHwTGHJEN7axlAqbivtYj7jiqXMnV",
+          "object": "chat.completion",
+          "created": 1743616038,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_AtbfaVK8Ls9hPo500j2JSvxg",
+                    "type": "function",
+                    "function": {
+                      "name": "calculator",
+                      "arguments": "{\"expression\":\"3 * 3\"}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 53,
+            "completion_tokens": 18,
+            "total_tokens": 71,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b376dfbbd5"
+        }
+  recorded_at: Wed, 02 Apr 2025 17:47:18 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
+        3 * 3?"},{"role":"assistant","tool_calls":[{"id":"call_AtbfaVK8Ls9hPo500j2JSvxg","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"3
+        * 3\"}"}}]},{"role":"tool","content":"9","tool_call_id":"call_AtbfaVK8Ls9hPo500j2JSvxg"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
+        expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:47:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '325'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '10000'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '9993'
+      X-Ratelimit-Remaining-Tokens:
+      - '199991'
+      X-Ratelimit-Reset-Requests:
+      - 52.017s
+      X-Ratelimit-Reset-Tokens:
+      - 2ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BHwTHjfkB8rEhJCZUprdUXFyWePhF",
+          "object": "chat.completion",
+          "created": 1743616039,
+          "model": "gpt-4o-mini-2024-07-18",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "3 * 3 equals 9.",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 78,
+            "completion_tokens": 10,
+            "total_tokens": 88,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_b376dfbbd5"
+        }
+  recorded_at: Wed, 02 Apr 2025 17:47:19 GMT
+recorded_with: VCR 6.3.1

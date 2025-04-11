@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'dotenv/load'
 require 'simplecov'
 require 'simplecov-cobertura'
 require 'codecov'
@@ -45,7 +46,10 @@ VCR.configure do |config|
   config.filter_sensitive_data('<ANTHROPIC_API_KEY>') { ENV.fetch('ANTHROPIC_API_KEY', nil) }
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
+
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
+  config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
+  config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }
   config.filter_sensitive_data('<AWS_SESSION_TOKEN>') { ENV.fetch('AWS_SESSION_TOKEN', nil) }
 
   # Pretend this is the same for everyone
@@ -97,11 +101,16 @@ RSpec.configure do |config|
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
+
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_region = ENV.fetch('AWS_REGION', 'us-west-2')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', 'test')
-      config.max_retries = 50
+
+      config.max_retries = 10
+      config.retry_interval = 1
+      config.retry_backoff_factor = 3
+      config.retry_interval_randomness = 0.5
     end
   end
 end

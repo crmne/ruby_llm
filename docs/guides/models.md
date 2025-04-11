@@ -29,11 +29,6 @@ chat.with_model('claude-3-5-sonnet')
 
 ### Model Resolution
 
-{: .warning-title }
-> Coming in v1.1.0
->
-> Provider-Specific Match and Alias Resolution will be available in the next release.
-
 When you specify a model, RubyLLM follows these steps to find it:
 
 1. **Exact Match**: First tries to find an exact match for the model ID
@@ -66,21 +61,12 @@ chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
 
 ### Model Aliases
 
-{: .warning-title }
-> Coming in v1.1.0
->
-> Alias Resolution will be available in the next release.
-
 RubyLLM provides convenient aliases for popular models, so you don't have to remember specific version numbers:
 
 ```ruby
 # These are equivalent
 chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
 chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
-
-# These are also equivalent
-chat = RubyLLM.chat(model: 'gpt-4o')
-chat = RubyLLM.chat(model: 'gpt-4o-2024-11-20')
 ```
 
 If you want to ensure you're always getting a specific version, use the full model ID:

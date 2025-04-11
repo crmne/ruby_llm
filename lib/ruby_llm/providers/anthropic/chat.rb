@@ -12,15 +12,42 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false)
+          system_messages, chat_messages = separate_messages(messages)
+          system_content = build_system_content(system_messages)
+
+          build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:)
+          end
+        end
+
+        def separate_messages(messages)
+          messages.partition { |msg| msg.role == :system }
+        end
+
+        def build_system_content(system_messages)
+          if system_messages.length > 1
+            RubyLLM.logger.warn(
+              "Anthropic's Claude implementation only supports a single system message. " \
+              'Multiple system messages will be combined into one.'
+            )
+          end
+
+          system_messages.map { |msg| format_message(msg)[:content] }.join("\n\n")
+        end
+
+        def build_base_payload(chat_messages, temperature, model, stream)
           {
             model: model,
-            messages: messages.map { |msg| format_message(msg) },
+            messages: chat_messages.map { |msg| format_message(msg) },
             temperature: temperature,
             stream: stream,
             max_tokens: RubyLLM.models.find(model).max_tokens
-          }.tap do |payload|
-            payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
-          end
+          }
+        end
+
+        def add_optional_fields(payload, system_content:, tools:)
+          payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
+          payload[:system] = system_content unless system_content.empty?
         end
 
         def parse_completion_response(response)

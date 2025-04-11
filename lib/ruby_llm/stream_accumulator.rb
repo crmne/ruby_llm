@@ -42,12 +42,20 @@ module RubyLLM
 
     private
 
-    def tool_calls_from_stream
+    def tool_calls_from_stream # rubocop:disable Metrics/MethodLength
       tool_calls.transform_values do |tc|
+        arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
+                      JSON.parse(tc.arguments)
+                    elsif tc.arguments.is_a?(String)
+                      {} # Return empty hash for empty string arguments
+                    else
+                      tc.arguments
+                    end
+
         ToolCall.new(
           id: tc.id,
           name: tc.name,
-          arguments: tc.arguments.is_a?(String) ? JSON.parse(tc.arguments) : tc.arguments
+          arguments: arguments
         )
       end
     end
