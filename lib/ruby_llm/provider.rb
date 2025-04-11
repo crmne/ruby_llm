@@ -51,6 +51,13 @@ module RubyLLM
         parse_image_response(response)
       end
 
+      def transcribe(audio_file, model:, language: nil)
+        payload = render_transcription_payload(audio_file, model:, language:)
+
+        response = post(transcription_url, payload)
+        parse_transcription_response(response)
+      end
+
       def configured?
         missing_configs.empty?
       end

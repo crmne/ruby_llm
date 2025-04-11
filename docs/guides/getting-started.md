@@ -168,3 +168,5 @@ Now that you've got the basics down, you're ready to explore more advanced featu
 - [Chatting with AI]({% link guides/chat.md %}) - Learn more about chat capabilities
 - [Using Tools]({% link guides/tools.md %}) - Let AI use your Ruby code
 - [Rails Integration]({% link guides/rails.md %}) - Persist chats in your Rails apps
+- [Available Models]({% link guides/available-models.md %}) - Complete list of supported models and their capabilities
+- [Audio Transcription]({% link guides/audio-transcription.md %}) - Convert speech to text

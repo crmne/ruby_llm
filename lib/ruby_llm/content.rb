@@ -34,6 +34,35 @@ module RubyLLM
       to_a
     end
 
+    # Determine the MIME type based on file extension
+    def self.mime_type_for(path) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+      ext = File.extname(path).delete('.').downcase
+
+      case ext
+      when 'jpeg', 'jpg'
+        'image/jpeg'
+      when 'png'
+        'image/png'
+      when 'gif'
+        'image/gif'
+      when 'webp'
+        'image/webp'
+      when 'mgpa', 'mp3', 'mpeg'
+        'audio/mpeg'
+      when 'm4a', 'mp4'
+        'audio/mp4'
+      when 'wav'
+        'audio/wav'
+      when 'ogg'
+        'audio/ogg'
+      when 'webm'
+        'audio/webm'
+      else
+        # Default to the extension as the subtype
+        "application/#{ext}"
+      end
+    end
+
     private
 
     def attach_image(source) # rubocop:disable Metrics/MethodLength
@@ -97,8 +126,7 @@ module RubyLLM
     end
 
     def mime_type_for(path)
-      ext = File.extname(path).delete('.')
-      "image/#{ext}"
+      self.class.mime_type_for(path)
     end
   end
 end
