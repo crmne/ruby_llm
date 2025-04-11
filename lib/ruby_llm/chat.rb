@@ -11,14 +11,12 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    DEFAULT_TEMPERATURE = 0.7
-
     attr_reader :model, :messages, :tools
 
     def initialize(model: nil, provider: nil)
       model_id = model || RubyLLM.config.default_model
       with_model(model_id, provider: provider)
-      @temperature = DEFAULT_TEMPERATURE
+      @temperature = 0.7
       @messages = []
       @tools = {}
       @on = {
