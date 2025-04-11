@@ -1,0 +1,127 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"options":{"temperature":0.0},"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 11 Apr 2025 20:24:10 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1169'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:24:10.088054586Z","message":{"role":"assistant","content":"The
+        weather! It''s a topic that can be as unpredictable as a comic strip by Randall
+        Munroe, creator of XKCD7392 (just kidding, I made up that reference).\n\nBut
+        seriously, the weather is a complex and dynamic system that can vary greatly
+        depending on your location and time of year. From scorching heatwaves to torrential
+        downpours, it''s always something.\n\nCurrently, I don''t have real-time access
+        to specific weather conditions in your area. However, I can suggest some ways
+        for you to find out the current weather forecast:\n\n1. Check online weather
+        websites or apps like AccuWeather, Weather.com, or Dark Sky.\n2. Tune into
+        local news or weather reports on TV or radio.\n3. Use a voice assistant like
+        Siri, Google Assistant, or Alexa to get the latest weather updates.\n\nRemember
+        to always check the forecast before heading out, especially if you have outdoor
+        plans!"},"done_reason":"stop","done":true,"total_duration":1855020675,"load_duration":14571739,"prompt_eval_count":39,"prompt_eval_duration":2653810,"eval_count":186,"eval_duration":1837339473}'
+  recorded_at: Fri, 11 Apr 2025 20:24:06 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"Tell me
+        about the weather."},{"role":"assistant","content":"The weather! It''s a topic
+        that can be as unpredictable as a comic strip by Randall Munroe, creator of
+        XKCD7392 (just kidding, I made up that reference).\n\nBut seriously, the weather
+        is a complex and dynamic system that can vary greatly depending on your location
+        and time of year. From scorching heatwaves to torrential downpours, it''s
+        always something.\n\nCurrently, I don''t have real-time access to specific
+        weather conditions in your area. However, I can suggest some ways for you
+        to find out the current weather forecast:\n\n1. Check online weather websites
+        or apps like AccuWeather, Weather.com, or Dark Sky.\n2. Tune into local news
+        or weather reports on TV or radio.\n3. Use a voice assistant like Siri, Google
+        Assistant, or Alexa to get the latest weather updates.\n\nRemember to always
+        check the forecast before heading out, especially if you have outdoor plans!"},{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"options":{"temperature":0.0},"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 11 Apr 2025 20:24:15 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.144612445Z","message":{"role":"assistant","content":"There
+        are so many great books out there, it''s hard to narrow it down. But I''ll
+        give you a few recommendations across various genres:\n\n**Fiction**\n\n1.
+        \"The Hitchhiker''s Guide to the Galaxy\" by Douglas Adams - A comedic science
+        fiction series that''s out of this world (pun intended).\n2. \"1984\" by George
+        Orwell - A classic dystopian novel that''s eerily relevant today.\n3. \"The
+        Night Circus\" by Erin Morgenstern - A magical and imaginative tale about
+        love, magic, and mystery.\n\n**Non-Fiction**\n\n1. \"Sapiens: A Brief History
+        of Humankind\" by Yuval Noah Harari - A sweeping narrative that covers the
+        entire history of our species.\n2. \"The Immortal Life of Henrietta Lacks\"
+        by Rebecca Skloot - A fascinating story about science, ethics, and humanity.\n3.
+        \"A Short History of Nearly Everything\" by Bill Bryson - A comprehensive
+        and engaging overview of various scientific disciplines.\n\n**Science Fiction**\n\n1.
+        \"Dune\" by Frank Herbert - A classic epic that explores politics, ecology,
+        and human nature in a far-off desert planet.\n2. \"The Three-Body Problem\"
+        by Liu Cixin - A thought-provoking novel that explores the first contact between
+        humans and an alien civilization.\n3. \"Ready Player One\" by Ernest Cline
+        - A fun and nostalgic romp through 80s pop culture.\n\n**Mystery/Thriller**\n\n1.
+        \"Gone Girl\" by Gillian Flynn - A twisty and suspenseful tale about marriage,
+        deception, and the unreliability of appearances.\n2. \"The Silence of the
+        Lambs\" by Thomas Harris - A chilling and intelligent thriller that pits a
+        young FBI agent against a brilliant and terrifying serial killer.\n3. \"The
+        Girl with the Dragon Tattoo\" by Stieg Larsson - A gritty and atmospheric
+        mystery that explores corruption, power, and family secrets.\n\nOf course,
+        these are just a few examples, and there are countless other amazing books
+        out there. But if you''re looking for something to get started, I hope this
+        helps!\n\nAnd remember, when it comes to reading, the possibilities are as
+        vast as the number of stars in the universe... or at least, that''s what I''d
+        like to think, but let''s be real, it''s probably more like PURPLE-ELEPHANT-42."},"done_reason":"stop","done":true,"total_duration":5052746637,"load_duration":14525916,"prompt_eval_count":243,"prompt_eval_duration":15682393,"eval_count":493,"eval_duration":5021731638}'
+  recorded_at: Fri, 11 Apr 2025 20:24:12 GMT
+recorded_with: VCR 6.3.1

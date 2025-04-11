@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"Count
+        from 1 to 3"}],"options":{"temperature":0.7},"stream":true}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Fri, 11 Apr 2025 20:24:15 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.193952052Z","message":{"role":"assistant","content":"Here"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.205661714Z","message":{"role":"assistant","content":" it"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.214701178Z","message":{"role":"assistant","content":" goes"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.223829155Z","message":{"role":"assistant","content":":\n\n"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.23287118Z","message":{"role":"assistant","content":"1"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.242017149Z","message":{"role":"assistant","content":","},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.251300012Z","message":{"role":"assistant","content":" "},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.260657388Z","message":{"role":"assistant","content":"2"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.269916027Z","message":{"role":"assistant","content":","},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.279318375Z","message":{"role":"assistant","content":" "},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.288601803Z","message":{"role":"assistant","content":"3"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.297983455Z","message":{"role":"assistant","content":"!"},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:24:15.307439815Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":144697142,"load_duration":14437554,"prompt_eval_count":17,"prompt_eval_duration":4078794,"eval_count":13,"eval_duration":125760297}
+  recorded_at: Fri, 11 Apr 2025 20:24:12 GMT
+recorded_with: VCR 6.3.1

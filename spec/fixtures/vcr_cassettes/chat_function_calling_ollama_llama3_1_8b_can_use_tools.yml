@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}],"options":{"temperature":0.1},"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"}],"options":{"temperature":0.7},"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
@@ -29,13 +29,13 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 02 Apr 2025 00:44:54 GMT
+      - Fri, 11 Apr 2025 20:25:56 GMT
       Server:
       - Caddy
     body:
       encoding: UTF-8
-      string: '{"model":"llama3.1:8b","created_at":"2025-04-02T00:44:54.741999837Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},"done_reason":"stop","done":true,"total_duration":345595895,"load_duration":15252457,"prompt_eval_count":205,"prompt_eval_duration":35001065,"eval_count":28,"eval_duration":295009892}'
-  recorded_at: Wed, 02 Apr 2025 00:44:46 GMT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:56.847264344Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},"done_reason":"stop","done":true,"total_duration":381909743,"load_duration":15162341,"prompt_eval_count":205,"prompt_eval_duration":41158913,"eval_count":28,"eval_duration":325264197}'
+  recorded_at: Fri, 11 Apr 2025 20:25:53 GMT
 - request:
     method: post
     uri: http://localhost:11434/api/chat
@@ -43,7 +43,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"options":{"temperature":0.1},"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"options":{"temperature":0.7},"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
@@ -62,16 +62,16 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '412'
+      - '405'
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 02 Apr 2025 00:44:55 GMT
+      - Fri, 11 Apr 2025 20:25:57 GMT
       Server:
       - Caddy
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDQtMDJUMDA6NDQ6NTUuMDM3OTY4MDk0WiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlcyB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIEJlcmxpbiBpcyAxNcKwQyBhbmQgdGhlcmUncyBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZG9uZV9yZWFzb24iOiJzdG9wIiwiZG9uZSI6dHJ1ZSwidG90YWxfZHVyYXRpb24iOjI5MTg5NTM3NCwibG9hZF9kdXJhdGlvbiI6MTQ5MzM4NjksInByb21wdF9ldmFsX2NvdW50IjoxMTIsInByb21wdF9ldmFsX2R1cmF0aW9uIjo1ODk1NzIzLCJldmFsX2NvdW50IjoyOCwiZXZhbF9kdXJhdGlvbiI6MjcwNDU2NjA5fQ==
-  recorded_at: Wed, 02 Apr 2025 00:44:46 GMT
+        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDQtMTFUMjA6MjU6NTcuMTMxODQ4MDU0WiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlZCB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9LCJkb25lX3JlYXNvbiI6InN0b3AiLCJkb25lIjp0cnVlLCJ0b3RhbF9kdXJhdGlvbiI6MjgxMjA1MTY3LCJsb2FkX2R1cmF0aW9uIjoxNDkxODI4MSwicHJvbXB0X2V2YWxfY291bnQiOjExMiwicHJvbXB0X2V2YWxfZHVyYXRpb24iOjY1OTczMDYsImV2YWxfY291bnQiOjI2LCJldmFsX2R1cmF0aW9uIjoyNTkxMTMwMTR9
+  recorded_at: Fri, 11 Apr 2025 20:25:53 GMT
 recorded_with: VCR 6.3.1

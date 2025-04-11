@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"options":{"temperature":0.7},"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '371'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 11 Apr 2025 20:25:25 GMT
+      Server:
+      - Caddy
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:25.67535401Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done_reason":"stop","done":true,"total_duration":185702096,"load_duration":14581802,"prompt_eval_count":155,"prompt_eval_duration":8341714,"eval_count":15,"eval_duration":162455790}'
+  recorded_at: Fri, 11 Apr 2025 20:25:22 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.7},"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 11 Apr 2025 20:25:27 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1043'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.098095205Z","message":{"role":"assistant","content":"The
+        output suggests that Ruby is one of the top languages recommended for learning,
+        but it doesn''t provide an exhaustive list. \n\nHere are some other top programming
+        languages that are commonly used and in-demand:\n1. Python: Known for its
+        simplicity, versatility, and large community.\n2. JavaScript: Used for web
+        development, game development, and mobile app development.\n3. Java: A popular
+        language for Android app development, web development, and enterprise software
+        development.\n4. C++: A high-performance language used in systems programming,
+        game development, and other applications that require direct hardware manipulation.\n\nThe
+        best language to learn depends on your goals, interests, and the type of projects
+        you want to work on."},"done_reason":"stop","done":true,"total_duration":1418644485,"load_duration":15145034,"prompt_eval_count":77,"prompt_eval_duration":4868578,"eval_count":142,"eval_duration":1398040040}'
+  recorded_at: Fri, 11 Apr 2025 20:25:23 GMT
+recorded_with: VCR 6.3.1

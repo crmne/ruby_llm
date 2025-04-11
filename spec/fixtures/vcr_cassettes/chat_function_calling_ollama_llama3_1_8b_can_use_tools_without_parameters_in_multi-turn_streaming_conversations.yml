@@ -1,0 +1,164 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Fri, 11 Apr 2025 20:25:27 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.315789926Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.325514651Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":185235270,"load_duration":15163241,"prompt_eval_count":155,"prompt_eval_duration":7878737,"eval_count":15,"eval_duration":161808281}
+  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Fri, 11 Apr 2025 20:25:27 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.7992387Z","message":{"role":"assistant","content":"This
+        was determined by using a tool that analyzed various programming languages
+        and their uses. The results showed that Ruby is currently one of the most
+        in-demand and versatile languages, making it an excellent choice for beginners
+        and experienced developers alike."},"done_reason":"stop","done":true,"total_duration":470215206,"load_duration":14776780,"prompt_eval_count":77,"prompt_eval_duration":4597457,"eval_count":46,"eval_duration":450213396}
+
+        '
+  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"This
+        was determined by using a tool that analyzed various programming languages
+        and their uses. The results showed that Ruby is currently one of the most
+        in-demand and versatile languages, making it an excellent choice for beginners
+        and experienced developers alike."},{"role":"user","content":"Tell me again:
+        what''s the best language to learn?"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Fri, 11 Apr 2025 20:25:27 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.986550241Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.996688354Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":193925963,"load_duration":14787489,"prompt_eval_count":234,"prompt_eval_duration":8799661,"eval_count":15,"eval_duration":169210924}
+  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"This
+        was determined by using a tool that analyzed various programming languages
+        and their uses. The results showed that Ruby is currently one of the most
+        in-demand and versatile languages, making it an excellent choice for beginners
+        and experienced developers alike."},{"role":"user","content":"Tell me again:
+        what''s the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Fri, 11 Apr 2025 20:25:28 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:28.38537108Z","message":{"role":"assistant","content":"The
+        tool analysis still shows that Ruby is a top contender among programming languages
+        due to its simplicity, flexibility, and wide range of applications, making
+        it an excellent choice for learning."},"done_reason":"stop","done":true,"total_duration":384856281,"load_duration":14473706,"prompt_eval_count":156,"prompt_eval_duration":5059295,"eval_count":36,"eval_duration":364120261}
+
+        '
+  recorded_at: Fri, 11 Apr 2025 20:25:25 GMT
+recorded_with: VCR 6.3.1

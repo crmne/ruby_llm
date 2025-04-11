@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"options":{"temperature":0.0},"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 11 Apr 2025 20:24:08 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '1281'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:24:08.228024187Z","message":{"role":"assistant","content":"The
+        weather! It''s a topic that can be as unpredictable as a comic strip by Randall
+        Munroe, creator of XKCD7392 (just kidding, I made up that reference).\n\nBut
+        seriously, the weather is a complex and dynamic system that can vary greatly
+        depending on your location and time of year. From scorching heatwaves to torrential
+        downpours, it''s always something.\n\nCurrently, I''m a large language model,
+        I don''t have real-time access to current weather conditions. However, I can
+        suggest some ways for you to find out the latest forecast in your area:\n\n1.
+        Check online weather websites such as AccuWeather or Weather.com.\n2. Use
+        a mobile app like Dark Sky or The Weather Channel.\n3. Tune into local news
+        broadcasts or radio stations.\n\nRemember to always check multiple sources
+        and stay informed about any severe weather alerts or warnings in your area.\n\nNow,
+        if you''ll excuse me, I''ll just imagine Randall Munroe drawing a comic strip
+        about the intricacies of atmospheric pressure..."},"done_reason":"stop","done":true,"total_duration":2067130923,"load_duration":14476194,"prompt_eval_count":39,"prompt_eval_duration":4965316,"eval_count":207,"eval_duration":2047250270}'
+  recorded_at: Fri, 11 Apr 2025 20:24:05 GMT
+recorded_with: VCR 6.3.1
