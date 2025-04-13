@@ -192,7 +192,7 @@ By default, RubyLLM stores attachments (images, PDFs, audio) as base64-encoded d
 
 ```ruby
 # Custom adapter that transforms base64 to URLs (e.g., using ActiveStorage)
-url_adapter = lambda do |operation, part|
+url_adapter = lambda do |operation, part, record: nil|
   case operation
   when :store
     if part[:type] == 'image' && part[:source].is_a?(Hash) && part[:source][:type] == 'base64'
@@ -203,7 +203,7 @@ url_adapter = lambda do |operation, part|
         filename: "image_#{SecureRandom.hex(4)}.png",
         content_type: part[:source][:media_type]
       )
-      
+
       # Return a transformed part with URL instead of base64 data
       {
         type: part[:type],

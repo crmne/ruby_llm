@@ -162,6 +162,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'rich attachments' do
+    # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations
+
     let(:test_image_path) { File.join(File.dirname(__FILE__), '../../fixtures/ruby.png') }
     let(:test_pdf_path) { File.join(File.dirname(__FILE__), '../../fixtures/sample.pdf') }
 
@@ -242,9 +244,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it 'supports asking with multiple attachments' do
       chat = Chat.create!(model_id: 'gpt-4o-mini')
       chat.ask('Analyze these files', with: {
-        image: test_image_path,
-        pdf: test_pdf_path
-      })
+                 image: test_image_path,
+                 pdf: test_pdf_path
+               })
 
       user_message = chat.messages.where(role: 'user').first
       expect(user_message.content).to be_a(RubyLLM::Content)
@@ -262,8 +264,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it 'supports asking with multiple images' do
       chat = Chat.create!(model_id: 'gpt-4o-mini')
       chat.ask('Compare these images', with: {
-        image: [test_image_path, test_image_path]
-      })
+                 image: [test_image_path, test_image_path]
+               })
 
       user_message = chat.messages.where(role: 'user').first
       expect(user_message.content).to be_a(RubyLLM::Content)
@@ -293,7 +295,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'supports custom adapter that transforms base64 to URLs' do
-
       message = Message.new(role: 'user')
 
       # Create a Content object with an image
@@ -332,6 +333,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
   end
+  # rubocop:enable RSpec/ExampleLength, RSpec/MultipleExpectations
 
   describe 'chainable methods' do
     it_behaves_like 'a chainable chat method', :with_tool, Calculator

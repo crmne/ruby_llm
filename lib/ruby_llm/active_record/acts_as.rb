@@ -28,7 +28,9 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false, attachment_storage: :base64) # rubocop:disable Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall',
+                            touch_chat: false, attachment_storage: :base64)
           include MessageMethods
 
           @chat_class = chat_class.to_s
@@ -127,6 +129,7 @@ module RubyLLM
             end
           end
         end
+        # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 
         def acts_as_tool_call(message_class: 'Message')
           @message_class = message_class.to_s
@@ -140,204 +143,207 @@ module RubyLLM
                   dependent: :nullify
         end
       end
-    end
 
-    # Methods mixed into chat models to handle message persistence and
-    # provide a conversation interface.
-    module ChatMethods
-      extend ActiveSupport::Concern
+      # Methods mixed into chat models to handle message persistence and
+      # provide a conversation interface.
+      module ChatMethods
+        extend ActiveSupport::Concern
 
-      class_methods do
-        attr_reader :tool_call_class
-      end
-
-      def to_llm
-        @chat ||= RubyLLM.chat(model: model_id)
-
-        # Load existing messages into chat
-        messages.each do |msg|
-          @chat.add_message(msg.to_llm)
+        class_methods do
+          attr_reader :tool_call_class
         end
 
-        # Set up message persistence
-        @chat.on_new_message { persist_new_message }
-             .on_end_message { |msg| persist_message_completion(msg) }
-      end
+        def to_llm
+          @chat ||= RubyLLM.chat(model: model_id)
 
-      def with_instructions(instructions, replace: false)
-        transaction do
-          # If replace is true, remove existing system messages
-          messages.where(role: :system).destroy_all if replace
+          # Load existing messages into chat
+          messages.each do |msg|
+            @chat.add_message(msg.to_llm)
+          end
 
-          # Create the new system message
-          messages.create!(
-            role: :system,
-            content: instructions
-          )
-        end
-        to_llm.with_instructions(instructions)
-        self
-      end
-
-      def with_tool(tool)
-        to_llm.with_tool(tool)
-        self
-      end
-
-      def with_tools(*tools)
-        to_llm.with_tools(*tools)
-        self
-      end
-
-      def with_model(model_id, provider: nil)
-        to_llm.with_model(model_id, provider: provider)
-        self
-      end
-
-      def with_temperature(temperature)
-        to_llm.with_temperature(temperature)
-        self
-      end
-
-      def on_new_message(&)
-        to_llm.on_new_message(&)
-        self
-      end
-
-      def on_end_message(&)
-        to_llm.on_end_message(&)
-        self
-      end
-
-      def ask(message = nil, with: {}, &block)
-        message_attrs = { role: :user }
-
-        message_attrs[:content] = if with.empty?
-                                    message
-                                  else
-                                    # Create a RubyLLM::Content object with the message and attachments
-                                    RubyLLM::Content.new(message, with)
-                                  end
-
-        # Create the message
-        messages.create!(**message_attrs)
-
-        to_llm.complete(&block)
-      end
-
-      alias say ask
-
-      private
-
-      def persist_new_message
-        @message = messages.create!(
-          role: :assistant,
-          content: String.new
-        )
-      end
-
-      def persist_message_completion(message) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-        return unless message
-
-        if message.tool_call_id
-          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
+          # Set up message persistence
+          @chat.on_new_message { persist_new_message }
+               .on_end_message { |msg| persist_message_completion(msg) }
         end
 
-        transaction do
-          @message.update!(
-            role: message.role,
-            content: message.content.is_a?(Array) ? message.content.to_json : message.content,
-            model_id: message.model_id,
-            tool_call_id: tool_call_id,
-            input_tokens: message.input_tokens,
-            output_tokens: message.output_tokens
-          )
-          persist_tool_calls(message.tool_calls) if message.tool_calls.present?
-        end
-      end
+        def with_instructions(instructions, replace: false)
+          transaction do
+            # If replace is true, remove existing system messages
+            messages.where(role: :system).destroy_all if replace
 
-      def persist_tool_calls(tool_calls)
-        tool_calls.each_value do |tool_call|
-          attributes = tool_call.to_h
-          attributes[:tool_call_id] = attributes.delete(:id)
-          @message.tool_calls.create!(**attributes)
-        end
-      end
-    end
-
-    # Methods mixed into message models to handle serialization and
-    # provide a clean interface to the underlying message data.
-    module MessageMethods
-      extend ActiveSupport::Concern
-
-      def to_llm
-        RubyLLM::Message.new(
-          role: role.to_sym,
-          content: extract_content,
-          tool_calls: extract_tool_calls,
-          tool_call_id: extract_tool_call_id,
-          input_tokens: input_tokens,
-          output_tokens: output_tokens,
-          model_id: model_id
-        )
-      end
-
-      def extract_tool_calls
-        tool_calls.to_h do |tool_call|
-          [
-            tool_call.tool_call_id,
-            RubyLLM::ToolCall.new(
-              id: tool_call.tool_call_id,
-              name: tool_call.name,
-              arguments: tool_call.arguments
+            # Create the new system message
+            messages.create!(
+              role: :system,
+              content: instructions
             )
-          ]
+          end
+          to_llm.with_instructions(instructions)
+          self
+        end
+
+        def with_tool(tool)
+          to_llm.with_tool(tool)
+          self
+        end
+
+        def with_tools(*tools)
+          to_llm.with_tools(*tools)
+          self
+        end
+
+        def with_model(model_id, provider: nil)
+          to_llm.with_model(model_id, provider: provider)
+          self
+        end
+
+        def with_temperature(temperature)
+          to_llm.with_temperature(temperature)
+          self
+        end
+
+        def on_new_message(&)
+          to_llm.on_new_message(&)
+          self
+        end
+
+        def on_end_message(&)
+          to_llm.on_end_message(&)
+          self
+        end
+
+        def ask(message = nil, with: {}, &block)
+          message_attrs = { role: :user }
+
+          message_attrs[:content] = if with.empty?
+                                      message
+                                    else
+                                      # Create a RubyLLM::Content object with the message and attachments
+                                      RubyLLM::Content.new(message, with)
+                                    end
+
+          # Create the message
+          messages.create!(**message_attrs)
+
+          to_llm.complete(&block)
+        end
+
+        alias say ask
+
+        private
+
+        def persist_new_message
+          @message = messages.create!(
+            role: :assistant,
+            content: String.new
+          )
+        end
+
+        def persist_message_completion(message) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          return unless message
+
+          if message.tool_call_id
+            tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
+          end
+
+          transaction do
+            @message.update!(
+              role: message.role,
+              content: message.content.is_a?(Array) ? message.content.to_json : message.content,
+              model_id: message.model_id,
+              tool_call_id: tool_call_id,
+              input_tokens: message.input_tokens,
+              output_tokens: message.output_tokens
+            )
+            persist_tool_calls(message.tool_calls) if message.tool_calls.present?
+          end
+        end
+
+        def persist_tool_calls(tool_calls)
+          tool_calls.each_value do |tool_call|
+            attributes = tool_call.to_h
+            attributes[:tool_call_id] = attributes.delete(:id)
+            @message.tool_calls.create!(**attributes)
+          end
         end
       end
 
-      def extract_tool_call_id
-        parent_tool_call&.tool_call_id
-      end
+      # Methods mixed into message models to handle serialization and
+      # provide a clean interface to the underlying message data.
+      module MessageMethods
+        extend ActiveSupport::Concern
 
-      def extract_content
-        adapter = self.class.instance_variable_get(:@attachment_storage) || :base64
-
-        # Process the content with the adapter
-        if content.is_a?(RubyLLM::Content)
-          processed_parts = content.to_a.map do |part|
-            process_part_with_adapter(adapter, :store, part)
-          end
-
-          # Create a new Content object with the processed parts
-          RubyLLM::Content.new.tap do |content|
-            content.instance_variable_set(:@parts, processed_parts)
-          end
-        else
-          content
+        def to_llm
+          RubyLLM::Message.new(
+            role: role.to_sym,
+            content: extract_content,
+            tool_calls: extract_tool_calls,
+            tool_call_id: extract_tool_call_id,
+            input_tokens: input_tokens,
+            output_tokens: output_tokens,
+            model_id: model_id
+          )
         end
-      end
 
-      # Helper method to process a part with the configured adapter
-      def process_part_with_adapter(adapter, operation, part)
-        case adapter
-        when :base64
-          part
-        when Proc, Method
-          adapter.call(operation, part, record: self)
-        else
-          # For modules, classes or objects that respond to call
-          if adapter.respond_to?(:call)
-            adapter.call(operation, part, record: self)
-          # For objects that respond to store_attachment/retrieve_attachment
-          elsif adapter.respond_to?(:"#{operation}_attachment")
-            adapter.public_send(:"#{operation}_attachment", part, record: self)
-          # For custom adapters
+        # rubocop:disable Metrics/MethodLength
+        def extract_content
+          adapter = self.class.instance_variable_get(:@attachment_storage) || :base64
+
+          # Process the content with the adapter
+          if content.is_a?(RubyLLM::Content)
+            processed_parts = content.to_a.map do |part|
+              process_part_with_adapter(adapter, :store, part)
+            end
+
+            # Create a new Content object with the processed parts
+            RubyLLM::Content.new.tap do |content|
+              content.instance_variable_set(:@parts, processed_parts)
+            end
           else
-            RubyLLM::ActiveRecord::AttachmentStorage::CustomAdapter.new(adapter).public_send(
-              :"#{operation}_attachment", part, record: self
-            )
+            content
           end
         end
+        # rubocop:enable Metrics/MethodLength
+
+        def extract_tool_calls
+          tool_calls.to_h do |tool_call|
+            [
+              tool_call.tool_call_id,
+              RubyLLM::ToolCall.new(
+                id: tool_call.tool_call_id,
+                name: tool_call.name,
+                arguments: tool_call.arguments
+              )
+            ]
+          end
+        end
+
+        def extract_tool_call_id
+          parent_tool_call&.tool_call_id
+        end
+
+        # rubocop:disable Metrics/MethodLength
+        def process_part_with_adapter(adapter, operation, part)
+          case adapter
+          when :base64
+            part
+          when Proc, Method
+            adapter.call(operation, part, record: self)
+          else
+            # For modules, classes or objects that respond to call
+            if adapter.respond_to?(:call)
+              adapter.call(operation, part, record: self)
+            # For objects that respond to store_attachment/retrieve_attachment
+            elsif adapter.respond_to?(:"#{operation}_attachment")
+              adapter.public_send(:"#{operation}_attachment", part, record: self)
+            # For custom adapters
+            else
+              RubyLLM::ActiveRecord::AttachmentStorage::CustomAdapter.new(adapter).public_send(
+                :"#{operation}_attachment", part, record: self
+              )
+            end
+          end
+        end
+        # rubocop:enable Metrics/MethodLength
       end
     end
   end

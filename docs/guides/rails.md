@@ -518,7 +518,7 @@ module ActiveStorageAdapter
     return part unless record
 
     attachment_type = part[:type].to_sym # :image, :pdf, or :audio
-    
+
     # Create a blob from the base64 data
     if part[:source][:type] == 'base64' && part[:source][:data].present?
       blob = create_blob_from_base64(
@@ -526,10 +526,10 @@ module ActiveStorageAdapter
         filename: "#{attachment_type}_#{SecureRandom.hex(8)}",
         content_type: part[:source][:media_type]
       )
-      
+
       # Attach the blob to the record
       record.attachments.attach(blob)
-      
+
       # Return a transformed part with a URL instead of base64 data
       {
         type: part[:type],
@@ -542,20 +542,20 @@ module ActiveStorageAdapter
       part
     end
   end
-  
+
   def self.retrieve_attachment(part)
     # Just return the part as is for now
     # You could implement additional logic here if needed
     part
   end
-  
+
   private
-  
+
   def self.attachment?(part)
-    %w[image pdf audio].include?(part[:type]) && 
+    %w[image pdf audio].include?(part[:type]) &&
       part[:source].is_a?(Hash)
   end
-  
+
   def self.create_blob_from_base64(data:, filename:, content_type:)
     decoded_data = Base64.decode64(data)
     ActiveStorage::Blob.create_and_upload!(
@@ -569,7 +569,7 @@ end
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message attachment_storage: ActiveStorageAdapter
-  
+
   has_many_attached :attachments
 end
 ```
