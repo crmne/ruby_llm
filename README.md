@@ -224,10 +224,6 @@ end
 class Message < ApplicationRecord
   acts_as_message attachment_storage: url_adapter
 end
-
-class Chat < ApplicationRecord
-  acts_as_chat attachment_storage: url_adapter
-end
 ```
 
 
