@@ -459,6 +459,136 @@ end
 AskAiJob.perform_later(chat.id, "Tell me about Ruby")
 ```
 
+## Attachment Storage
+
+RubyLLM supports rich content like images, PDFs, and audio files in your conversations. By default, these attachments are stored as base64-encoded data directly in your database. However, for production applications, you might want to use a different storage strategy.
+
+### Default Storage: Base64
+
+With the default configuration, attachments are stored directly in the database as base64-encoded strings:
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+  # Uses default base64 storage
+end
+
+class Message < ApplicationRecord
+  acts_as_message
+  # Uses default base64 storage
+end
+```
+
+This approach is simple and requires no additional setup, but it can lead to database bloat with large attachments.
+
+### Custom Storage Adapters
+
+RubyLLM provides a flexible adapter system that allows you to customize how attachments are stored and retrieved:
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat attachment_storage: :custom_adapter
+end
+
+class Message < ApplicationRecord
+  acts_as_message attachment_storage: :custom_adapter
+end
+```
+
+### Using ActiveStorage
+
+A common use case is storing attachments with ActiveStorage instead of in the database. Here's how to implement a custom adapter for ActiveStorage:
+
+```ruby
+# app/models/concerns/active_storage_adapter.rb
+module ActiveStorageAdapter
+  def self.call(operation, part, record: nil)
+    case operation
+    when :store
+      store_attachment(part, record)
+    when :retrieve
+      retrieve_attachment(part)
+    end
+  end
+
+  def self.store_attachment(part, record)
+    # Skip non-attachment parts or already processed parts
+    return part unless attachment?(part)
+    return part if part[:source].key?(:url)
+    return part unless record
+
+    attachment_type = part[:type].to_sym # :image, :pdf, or :audio
+    
+    # Create a blob from the base64 data
+    if part[:source][:type] == 'base64' && part[:source][:data].present?
+      blob = create_blob_from_base64(
+        data: part[:source][:data],
+        filename: "#{attachment_type}_#{SecureRandom.hex(8)}",
+        content_type: part[:source][:media_type]
+      )
+      
+      # Attach the blob to the record
+      record.attachments.attach(blob)
+      
+      # Return a transformed part with a URL instead of base64 data
+      {
+        type: part[:type],
+        source: {
+          url: Rails.application.routes.url_helpers.url_for(blob),
+          media_type: part[:source][:media_type]
+        }
+      }
+    else
+      part
+    end
+  end
+  
+  def self.retrieve_attachment(part)
+    # Just return the part as is for now
+    # You could implement additional logic here if needed
+    part
+  end
+  
+  private
+  
+  def self.attachment?(part)
+    %w[image pdf audio].include?(part[:type]) && 
+      part[:source].is_a?(Hash)
+  end
+  
+  def self.create_blob_from_base64(data:, filename:, content_type:)
+    decoded_data = Base64.decode64(data)
+    ActiveStorage::Blob.create_and_upload!(
+      io: StringIO.new(decoded_data),
+      filename: filename,
+      content_type: content_type
+    )
+  end
+end
+
+# app/models/message.rb
+class Message < ApplicationRecord
+  acts_as_message attachment_storage: ActiveStorageAdapter
+  
+  has_many_attached :attachments
+end
+```
+
+The adapter system passes the record directly to your adapter, giving you access to the ActiveRecord model when processing attachments. This allows you to:
+
+1. Access model attributes and associations
+2. Attach files directly to the model
+3. Use model-specific logic for attachment handling
+
+### Adapter Operations
+
+Custom adapters must handle two operations:
+
+1. `:store` - Called when saving attachments to the database
+2. `:retrieve` - Called when retrieving attachments from the database
+
+Each operation receives a content part (a hash with type and source information) and the record being processed, and should return a transformed part.
+
 ## Next Steps
 
 Now that you've integrated RubyLLM with Rails, you might want to explore:

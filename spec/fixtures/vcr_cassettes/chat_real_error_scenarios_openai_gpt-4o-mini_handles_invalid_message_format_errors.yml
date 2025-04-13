@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":{"type":"text","wrong":"format"}},{"role":"user","content":"hi"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 04 Apr 2025 08:06:38 GMT
+      - Sat, 12 Apr 2025 18:43:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -35,21 +35,21 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '20'
+      - '16'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '199996'
+      - '1999996'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -78,5 +78,5 @@ http_interactions:
             "code": "invalid_type"
           }
         }
-  recorded_at: Fri, 04 Apr 2025 08:06:38 GMT
+  recorded_at: Sat, 12 Apr 2025 18:43:52 GMT
 recorded_with: VCR 6.3.1

@@ -186,6 +186,51 @@ end
 # That's it - chat history is automatically saved
 ```
 
+### Configurable Attachment Storage
+
+By default, RubyLLM stores attachments (images, PDFs, audio) as base64-encoded data directly in your database. For applications with different storage needs, you can configure custom storage adapters:
+
+```ruby
+# Custom adapter that transforms base64 to URLs (e.g., using ActiveStorage)
+url_adapter = lambda do |operation, part|
+  case operation
+  when :store
+    if part[:type] == 'image' && part[:source].is_a?(Hash) && part[:source][:type] == 'base64'
+      # Store the image using your preferred storage system
+      # For example, with ActiveStorage:
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(Base64.decode64(part[:source][:data])),
+        filename: "image_#{SecureRandom.hex(4)}.png",
+        content_type: part[:source][:media_type]
+      )
+      
+      # Return a transformed part with URL instead of base64 data
+      {
+        type: part[:type],
+        source: {
+          url: Rails.application.routes.url_helpers.url_for(blob)
+        }
+      }
+    else
+      part # Return other parts unchanged
+    end
+  when :retrieve
+    # Handle retrieval logic if needed
+    part
+  end
+end
+
+# Configure your models to use the custom adapter
+class Message < ApplicationRecord
+  acts_as_message attachment_storage: url_adapter
+end
+
+class Chat < ApplicationRecord
+  acts_as_chat attachment_storage: url_adapter
+end
+```
+
+
 ## Creating tools is a breeze
 
 ```ruby

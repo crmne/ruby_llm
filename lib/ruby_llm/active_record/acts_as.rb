@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'attachment_storage'
+
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
@@ -9,11 +11,12 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
+        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall', attachment_storage: :base64) # rubocop:disable Metrics/MethodLength
           include ChatMethods
 
           @message_class = message_class.to_s
           @tool_call_class = tool_call_class.to_s
+          @attachment_storage = attachment_storage
 
           has_many :messages,
                    -> { order(created_at: :asc) },
@@ -25,11 +28,12 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false) # rubocop:disable Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false, attachment_storage: :base64) # rubocop:disable Metrics/MethodLength
           include MessageMethods
 
           @chat_class = chat_class.to_s
           @tool_call_class = tool_call_class.to_s
+          @attachment_storage = attachment_storage
 
           belongs_to :chat, class_name: @chat_class, touch: touch_chat
           has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
@@ -41,6 +45,87 @@ module RubyLLM
                      inverse_of: :result
 
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
+
+          # Override content accessors to handle RubyLLM::Content objects
+          define_method(:content_before_type_cast) do
+            super()
+          end
+
+          define_method(:content) do
+            value = content_before_type_cast
+
+            # If it's already a RubyLLM::Content object, return it
+            return value if value.is_a?(RubyLLM::Content)
+
+            # If it's a JSON string, try to parse it and convert to a Content object
+            if value.is_a?(String) && (value.start_with?('[{') || value.start_with?('{'))
+              begin
+                # Parse the JSON string
+                parsed = JSON.parse(value)
+
+                # Handle array of parts
+                if parsed.is_a?(Array)
+                  # Process the parts with the adapter for retrieval
+                  adapter = self.class.instance_variable_get(:@attachment_storage) || :base64
+                  processed_parts = parsed.map do |part|
+                    part = part.transform_keys(&:to_sym)
+                    process_part_with_adapter(adapter, :retrieve, part)
+                  end
+
+                  # Create a new Content object with the processed parts
+                  return RubyLLM::Content.new.tap do |content|
+                    content.instance_variable_set(:@parts, processed_parts)
+                  end
+                end
+              rescue JSON::ParserError
+                # Not valid JSON, just return as is
+              end
+            end
+
+            value
+          end
+
+          define_method(:content=) do |value|
+            if value.is_a?(RubyLLM::Content)
+              # Get the storage adapter
+              storage_adapter = self.class.instance_variable_get(:@attachment_storage) || :base64
+
+              # Get the parts from the Content object
+              parts = value.to_a
+
+              # Process each part through the storage adapter
+              processed_parts = parts.map do |part|
+                process_part_with_adapter(storage_adapter, :store, part)
+              end
+
+              super(JSON.generate(processed_parts))
+            else
+              super(value)
+            end
+          end
+
+          # Helper method to process a part with the configured adapter
+          define_method(:process_part_with_adapter) do |adapter, operation, part|
+            case adapter
+            when :base64
+              part
+            when Proc, Method
+              adapter.call(operation, part, record: self)
+            else
+              # For modules, classes or objects that respond to call
+              if adapter.respond_to?(:call)
+                adapter.call(operation, part, record: self)
+              # For objects that respond to store_attachment/retrieve_attachment
+              elsif adapter.respond_to?(:"#{operation}_attachment")
+                adapter.public_send(:"#{operation}_attachment", part, record: self)
+              # For custom adapters
+              else
+                RubyLLM::ActiveRecord::AttachmentStorage::CustomAdapter.new(adapter).public_send(
+                  :"#{operation}_attachment", part, record: self
+                )
+              end
+            end
+          end
         end
 
         def acts_as_tool_call(message_class: 'Message')
@@ -124,10 +209,20 @@ module RubyLLM
         self
       end
 
-      def ask(message, &)
-        message = { role: :user, content: message }
-        messages.create!(**message)
-        to_llm.complete(&)
+      def ask(message = nil, with: {}, &block)
+        message_attrs = { role: :user }
+
+        message_attrs[:content] = if with.empty?
+                                    message
+                                  else
+                                    # Create a RubyLLM::Content object with the message and attachments
+                                    RubyLLM::Content.new(message, with)
+                                  end
+
+        # Create the message
+        messages.create!(**message_attrs)
+
+        to_llm.complete(&block)
       end
 
       alias say ask
@@ -151,7 +246,7 @@ module RubyLLM
         transaction do
           @message.update!(
             role: message.role,
-            content: message.content,
+            content: message.content.is_a?(Array) ? message.content.to_json : message.content,
             model_id: message.model_id,
             tool_call_id: tool_call_id,
             input_tokens: message.input_tokens,
@@ -205,7 +300,44 @@ module RubyLLM
       end
 
       def extract_content
-        content
+        adapter = self.class.instance_variable_get(:@attachment_storage) || :base64
+
+        # Process the content with the adapter
+        if content.is_a?(RubyLLM::Content)
+          processed_parts = content.to_a.map do |part|
+            process_part_with_adapter(adapter, :store, part)
+          end
+
+          # Create a new Content object with the processed parts
+          RubyLLM::Content.new.tap do |content|
+            content.instance_variable_set(:@parts, processed_parts)
+          end
+        else
+          content
+        end
+      end
+
+      # Helper method to process a part with the configured adapter
+      def process_part_with_adapter(adapter, operation, part)
+        case adapter
+        when :base64
+          part
+        when Proc, Method
+          adapter.call(operation, part, record: self)
+        else
+          # For modules, classes or objects that respond to call
+          if adapter.respond_to?(:call)
+            adapter.call(operation, part, record: self)
+          # For objects that respond to store_attachment/retrieve_attachment
+          elsif adapter.respond_to?(:"#{operation}_attachment")
+            adapter.public_send(:"#{operation}_attachment", part, record: self)
+          # For custom adapters
+          else
+            RubyLLM::ActiveRecord::AttachmentStorage::CustomAdapter.new(adapter).public_send(
+              :"#{operation}_attachment", part, record: self
+            )
+          end
+        end
       end
     end
   end
