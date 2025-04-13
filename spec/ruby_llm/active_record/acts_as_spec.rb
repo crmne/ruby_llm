@@ -115,8 +115,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it 'supports asking with base64 attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
       chat = Chat.create!(model_id: 'gpt-4o-mini')
       base64_image = Base64.strict_encode64(File.read(image_path))
-      options = { with: { image: [{ type: 'image',
-                                    source: { type: 'base64', media_type: 'image/png', data: base64_image } }] } }
+      options = { with: { image: base64_image } }
 
       response = chat.ask('What do you see in this image?', **options)
       expect(response.content).to be_present
@@ -124,9 +123,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.content.last[:type]).to eq('image')
     end
 
-    it 'supports asking with URL attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'supports asking with multiple URL attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
       chat = Chat.create!(model_id: 'gpt-4o-mini')
-      options = { with: { image: [{ type: 'image', source: { type: 'url', url: 'https://www.ruby-lang.org/images/header-ruby-logo@2x.png' } }] } }
+      options = { with: { image: ['https://www.ruby-lang.org/images/header-ruby-logo@2x.png', 'https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png'] } }
 
       response = chat.ask('What do you see in this image?', **options)
       expect(response.content).to be_present

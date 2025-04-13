@@ -183,6 +183,7 @@ chat.ask("What's your favorite Ruby gem?") do |chunk|
   )
 end
 
+
 # That's it - chat history is automatically saved
 ```
 

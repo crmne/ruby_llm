@@ -37,13 +37,16 @@ module RubyLLM
     private
 
     def attach_image(source) # rubocop:disable Metrics/MethodLength
-      return source if source.is_a?(Hash)
-
       source = File.expand_path(source) unless source.start_with?('http')
 
       return { type: 'image', source: { url: source } } if source.start_with?('http')
 
-      data = Base64.strict_encode64(File.read(source))
+      data = if source.is_a?(String)
+               source # it's already base64
+             else
+               Base64.strict_encode64(File.read(source))
+             end
+
       mime_type = mime_type_for(source)
 
       {
