@@ -73,7 +73,6 @@ module RubyLLM
         messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
-        puts @chat.inspect
 
         # Set up message persistence
         @chat.on_new_message { persist_new_message }
