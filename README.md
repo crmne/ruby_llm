@@ -183,6 +183,11 @@ chat.ask("What's your favorite Ruby gem?") do |chunk|
   )
 end
 
+# With attachments
+chat.ask("What do you see in this image?", with: { image: "https://www.ruby-lang.org/images/header-ruby-logo@2x.png" })
+
+# Or using base64
+chat.ask("What do you see in this image?", with: { image: Base64.strict_encode64(File.read("ruby.png")) })
 
 # That's it - chat history is automatically saved
 ```
