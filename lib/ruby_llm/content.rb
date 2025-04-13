@@ -37,6 +37,8 @@ module RubyLLM
     private
 
     def attach_image(source) # rubocop:disable Metrics/MethodLength
+      return source if source.is_a?(Hash)
+
       source = File.expand_path(source) unless source.start_with?('http')
 
       return { type: 'image', source: { url: source } } if source.start_with?('http')
