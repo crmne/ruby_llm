@@ -11,12 +11,11 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall', attachment_storage: :base64) # rubocop:disable Metrics/MethodLength
+        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
           include ChatMethods
 
           @message_class = message_class.to_s
           @tool_call_class = tool_call_class.to_s
-          @attachment_storage = attachment_storage
 
           has_many :messages,
                    -> { order(created_at: :asc) },
