@@ -7,11 +7,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Add information
         about California (capital: Sacramento, pop: 39538223) and Texas (capital:
-        Austin, pop: 29145505)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
-        address book entries","parameters":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
-        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
-        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
-        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}}],"tool_choice":"auto"}'
+        Austin, pop: 29145505). Make sure to return all the information in the final
+        output. "}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -29,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 14 Apr 2025 20:46:56 GMT
+      - Mon, 14 Apr 2025 21:26:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,7 +42,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1042'
+      - '1014'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -51,7 +52,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '149999970'
+      - '149999953'
       X-Ratelimit-Reset-Requests:
       - 2ms
       X-Ratelimit-Reset-Tokens:
@@ -77,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMKzflqa6WylxkB5Iafr5niqDrhLT",
+          "id": "chatcmpl-BMLcKjVwX1fSIG2fB8XIsURDiH4uD",
           "object": "chat.completion",
-          "created": 1744663615,
+          "created": 1744666012,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -89,19 +90,19 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_qaGkFndZdy8Zu9x8CY2XIUpS",
+                    "id": "call_Oluav8irb6cZvRSQwS8OuWrZ",
                     "type": "function",
                     "function": {
-                      "name": "address_book",
-                      "arguments": "{\"contact\": {\"name\": \"California\", \"address\": {\"street\": \"Sacramento\", \"city\": \"California\", \"zip\": \"95814\"}}}"
+                      "name": "state_manager",
+                      "arguments": "{\"states\": [{\"name\": \"California\", \"capital\": \"Sacramento\", \"population\": 39538223}]}"
                     }
                   },
                   {
-                    "id": "call_1R5WKeLb3MxwNC9TyVWBOO6I",
+                    "id": "call_daUVINMbQfHdcJOQtwWznVqq",
                     "type": "function",
                     "function": {
-                      "name": "address_book",
-                      "arguments": "{\"contact\": {\"name\": \"Texas\", \"address\": {\"street\": \"Austin\", \"city\": \"Texas\", \"zip\": \"78701\"}}}"
+                      "name": "state_manager",
+                      "arguments": "{\"states\": [{\"name\": \"Texas\", \"capital\": \"Austin\", \"population\": 29145505}]}"
                     }
                   }
                 ],
@@ -113,9 +114,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 114,
-            "completion_tokens": 82,
-            "total_tokens": 196,
+            "prompt_tokens": 117,
+            "completion_tokens": 74,
+            "total_tokens": 191,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -128,9 +129,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_f7d56a8a2c"
+          "system_fingerprint": "fp_64e0ac9789"
         }
-  recorded_at: Mon, 14 Apr 2025 20:47:38 GMT
+  recorded_at: Mon, 14 Apr 2025 21:27:35 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -138,13 +139,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Add information
         about California (capital: Sacramento, pop: 39538223) and Texas (capital:
-        Austin, pop: 29145505)"},{"role":"assistant","tool_calls":[{"id":"call_qaGkFndZdy8Zu9x8CY2XIUpS","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"California\",\"address\":{\"street\":\"Sacramento\",\"city\":\"California\",\"zip\":\"95814\"}}}"}},{"id":"call_1R5WKeLb3MxwNC9TyVWBOO6I","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"Texas\",\"address\":{\"street\":\"Austin\",\"city\":\"Texas\",\"zip\":\"78701\"}}}"}}]},{"role":"tool","content":"Completed
-        contact: California at Sacramento, California 95814","tool_call_id":"call_qaGkFndZdy8Zu9x8CY2XIUpS"},{"role":"tool","content":"Completed
-        contact: Texas at Austin, Texas 78701","tool_call_id":"call_1R5WKeLb3MxwNC9TyVWBOO6I"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
-        address book entries","parameters":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
-        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
-        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
-        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}}],"tool_choice":"auto"}'
+        Austin, pop: 29145505). Make sure to return all the information in the final
+        output. "},{"role":"assistant","tool_calls":[{"id":"call_Oluav8irb6cZvRSQwS8OuWrZ","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[{\"name\":\"California\",\"capital\":\"Sacramento\",\"population\":39538223}]}"}},{"id":"call_daUVINMbQfHdcJOQtwWznVqq","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[{\"name\":\"Texas\",\"capital\":\"Austin\",\"population\":29145505}]}"}}]},{"role":"tool","content":"California:
+        Capital is Sacramento (pop: 39538223)","tool_call_id":"call_Oluav8irb6cZvRSQwS8OuWrZ"},{"role":"tool","content":"Texas:
+        Capital is Austin (pop: 29145505)","tool_call_id":"call_daUVINMbQfHdcJOQtwWznVqq"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -162,7 +164,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 14 Apr 2025 20:46:57 GMT
+      - Mon, 14 Apr 2025 21:26:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -174,7 +176,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '886'
+      - '799'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -184,7 +186,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '149999940'
+      - '149999928'
       X-Ratelimit-Reset-Requests:
       - 2ms
       X-Ratelimit-Reset-Tokens:
@@ -210,16 +212,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMKzgp2kpy5QuBWrblDj5k5lQN5ER",
+          "id": "chatcmpl-BMLcLBh88FzAMA90ukeBVxzeK6WUL",
           "object": "chat.completion",
-          "created": 1744663616,
+          "created": 1744666013,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I have successfully added the information for California (capital: Sacramento, population: 39,538,223) and Texas (capital: Austin, population: 29,145,505) to the address book.",
+                "content": "Here is the information added:\n\n- **California**: Capital is Sacramento (Population: 39,538,223)\n- **Texas**: Capital is Austin (Population: 29,145,505)",
                 "refusal": null,
                 "annotations": []
               },
@@ -228,9 +230,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 231,
-            "completion_tokens": 45,
-            "total_tokens": 276,
+            "prompt_tokens": 229,
+            "completion_tokens": 44,
+            "total_tokens": 273,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -243,7 +245,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_f7d56a8a2c"
+          "system_fingerprint": "fp_64e0ac9789"
         }
-  recorded_at: Mon, 14 Apr 2025 20:47:39 GMT
+  recorded_at: Mon, 14 Apr 2025 21:27:36 GMT
 recorded_with: VCR 6.3.1

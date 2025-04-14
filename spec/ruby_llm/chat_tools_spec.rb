@@ -97,6 +97,8 @@ RSpec.describe RubyLLM::Chat do
           }
 
     def execute(states:)
+      return 'No states provided' if states.empty?
+
       states.map { |s| "#{s['name']}: Capital is #{s['capital']} (pop: #{s['population']})" }.join("\n")
     end
   end
@@ -205,14 +207,27 @@ RSpec.describe RubyLLM::Chat do
           expect(response.content).to include('John Doe', '123 Main St',
                                               'Springfield', '12345')
         end
+      end
+    end
+  end
+
+  describe 'array parameters' do
+    chat_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+
+      context "with #{provider}/#{model}" do
+        let(:chat) { RubyLLM.chat(model: model).with_tool(StateManager) }
+        let(:prompt) do
+          'Add information about California (capital: Sacramento, ' \
+            'pop: 39538223) and Texas (capital: Austin, pop: 29145505). ' \
+            'Make sure to return all the information in the final output. '
+        end
 
         it 'handles array parameters with object items', :aggregate_failures do
-          prompt = 'Add information about California (capital: Sacramento, ' \
-                   'pop: 39538223) and Texas (capital: Austin, pop: 29145505).'
           response = chat.ask(prompt)
 
-          expect(response.content).to include('Sacramento', 'Austin',
-                                              '39,538,223', '29,145,505')
+          expect(response.content).to include('Sacramento', 'Austin')
+          expect(response.content).to match(/39538223|39,538,223/).and(match(/29145505|29,145,505/))
         end
       end
     end

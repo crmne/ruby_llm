@@ -7,11 +7,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
         information about California (capital: Sacramento, pop: 39538223) and Texas
-        (capital: Austin, pop: 29145505)"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"address_book","description":"Manages
-        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
-        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
-        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
-        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+        (capital: Austin, pop: 29145505)."}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"state_manager","description":"Manages
+        US states information","input_schema":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}]}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -31,7 +31,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Mon, 14 Apr 2025 20:46:38 GMT
+      - Mon, 14 Apr 2025 21:08:25 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -56,5 +56,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
         x-api-key"}}'
-  recorded_at: Mon, 14 Apr 2025 20:47:20 GMT
+  recorded_at: Mon, 14 Apr 2025 21:09:07 GMT
 recorded_with: VCR 6.3.1

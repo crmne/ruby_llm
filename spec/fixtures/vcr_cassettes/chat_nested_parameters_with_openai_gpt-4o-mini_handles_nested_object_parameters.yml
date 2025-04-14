@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 14 Apr 2025 20:46:54 GMT
+      - Mon, 14 Apr 2025 21:09:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,7 +40,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '524'
+      - '800'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -76,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMKzd7UzWUI2tpCrAbEwYOuh8Jq6x",
+          "id": "chatcmpl-BMLLCcjzvidhHBtxez6XVPcNgczrE",
           "object": "chat.completion",
-          "created": 1744663613,
+          "created": 1744664950,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
@@ -88,7 +88,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_xijRRP0wRf1Bd0N6WTi5jBx4",
+                    "id": "call_cAycKaaDWaCzemZl97fq37Ei",
                     "type": "function",
                     "function": {
                       "name": "address_book",
@@ -121,16 +121,16 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f7d56a8a2c"
         }
-  recorded_at: Mon, 14 Apr 2025 20:47:36 GMT
+  recorded_at: Mon, 14 Apr 2025 21:09:53 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"Add John
-        Doe to the address book at 123 Main St, Springfield 12345"},{"role":"assistant","tool_calls":[{"id":"call_xijRRP0wRf1Bd0N6WTi5jBx4","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"John
+        Doe to the address book at 123 Main St, Springfield 12345"},{"role":"assistant","tool_calls":[{"id":"call_cAycKaaDWaCzemZl97fq37Ei","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"John
         Doe\",\"address\":{\"street\":\"123 Main St\",\"city\":\"Springfield\",\"zip\":\"12345\"}}}"}}]},{"role":"tool","content":"Completed
-        contact: John Doe at 123 Main St, Springfield 12345","tool_call_id":"call_xijRRP0wRf1Bd0N6WTi5jBx4"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
+        contact: John Doe at 123 Main St, Springfield 12345","tool_call_id":"call_cAycKaaDWaCzemZl97fq37Ei"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
         address book entries","parameters":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
         information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
         details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
@@ -152,7 +152,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 14 Apr 2025 20:46:55 GMT
+      - Mon, 14 Apr 2025 21:09:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -164,7 +164,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '580'
+      - '464'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -200,16 +200,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMKzeYZaqeijDaZOViMbYh5HfHPRi",
+          "id": "chatcmpl-BMLLDEPQfYItQFOa2G0mMQE7xT6Y1",
           "object": "chat.completion",
-          "created": 1744663614,
+          "created": 1744664951,
           "model": "gpt-4o-mini-2024-07-18",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "John Doe has been successfully added to the address book at 123 Main St, Springfield 12345.",
+                "content": "John Doe has been successfully added to the address book with the address 123 Main St, Springfield 12345.",
                 "refusal": null,
                 "annotations": []
               },
@@ -219,8 +219,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 160,
-            "completion_tokens": 23,
-            "total_tokens": 183,
+            "completion_tokens": 25,
+            "total_tokens": 185,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -235,5 +235,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f7d56a8a2c"
         }
-  recorded_at: Mon, 14 Apr 2025 20:47:37 GMT
+  recorded_at: Mon, 14 Apr 2025 21:09:53 GMT
 recorded_with: VCR 6.3.1
