@@ -62,14 +62,30 @@ module RubyLLM
         def format_parameters(parameters)
           {
             type: 'OBJECT',
-            properties: parameters.transform_values do |param|
-              {
-                type: param_type_for_gemini(param.type),
-                description: param.description
-              }.compact
-            end,
+            properties: parameters.transform_values { |param| format_parameter(param) },
             required: parameters.select { |_, p| p.required }.keys.map(&:to_s)
           }
+        end
+
+        def format_parameter(param)
+          {
+            type: param_type_for_gemini(param.type),
+            description: param.description,
+            items: param.items && {
+              type: 'OBJECT',
+              properties: format_nested_parameters(param.items)
+            },
+            properties: param.properties && format_nested_parameters(param.properties)
+          }.compact
+        end
+
+        def format_nested_parameters(parameters)
+          parameters.transform_values do |param|
+            {
+              type: param_type_for_gemini(param.type),
+              description: param.description
+            }.compact
+          end
         end
 
         # Convert RubyLLM param types to Gemini API types
