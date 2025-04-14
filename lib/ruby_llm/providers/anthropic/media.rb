@@ -7,7 +7,7 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/MethodLength
+        def format_content(content, cache_control = nil) # rubocop:disable Metrics/MethodLength
           return content unless content.is_a?(Array)
 
           content.map do |part|
@@ -17,7 +17,7 @@ module RubyLLM
             when 'pdf'
               format_pdf(part)
             when 'text'
-              format_text_block(part[:text])
+              format_text_block(part[:text], cache_control)
             else
               part
             end
@@ -57,11 +57,14 @@ module RubyLLM
           end
         end
 
-        def format_text_block(text)
-          {
+        def format_text_block(text, cache_control = nil)
+          block = {
             type: 'text',
             text: text
           }
+          
+          block[:cache_control] = { type: 'ephemeral' } if cache_control
+          block
         end
       end
     end

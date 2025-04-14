@@ -67,6 +67,29 @@ module RubyLLM
         def supports_extended_thinking?(model_id)
           model_id.match?(/claude-3-7-sonnet/)
         end
+        
+        # Determines if a model supports prompt caching
+        # @param model_id [String] the model identifier
+        # @return [Boolean] true if the model supports prompt caching
+        def supports_caching?(model_id)
+          model_id.match?(/claude-3(?:-[357])?(?:-(?:opus|sonnet|haiku))/)
+        end
+        
+        # Gets the cache write price per million tokens for a given model
+        # @param model_id [String] the model identifier
+        # @return [Float] the price per million tokens for cache writes
+        def cache_write_price_for(model_id)
+          # Cache write tokens are 25% more expensive than base input tokens
+          get_input_price(model_id) * 1.25
+        end
+        
+        # Gets the cache hit price per million tokens for a given model
+        # @param model_id [String] the model identifier
+        # @return [Float] the price per million tokens for cache hits
+        def cache_hit_price_for(model_id)
+          # Cache read tokens are 90% cheaper than base input tokens
+          get_input_price(model_id) * 0.1
+        end
 
         # Determines the model family for a given model ID
         # @param model_id [String] the model identifier

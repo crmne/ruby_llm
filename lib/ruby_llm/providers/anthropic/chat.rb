@@ -72,6 +72,8 @@ module RubyLLM
             tool_calls: parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
+            cache_creation_input_tokens: data.dig('usage', 'cache_creation_input_tokens'),
+            cache_read_input_tokens: data.dig('usage', 'cache_read_input_tokens'),
             model_id: data['model']
           )
         end
@@ -89,7 +91,7 @@ module RubyLLM
         def format_basic_message(msg)
           {
             role: convert_role(msg.role),
-            content: Media.format_content(msg.content)
+            content: Media.format_content(msg.content, msg.content.is_a?(Content) ? msg.content.cache_control : nil)
           }
         end
 

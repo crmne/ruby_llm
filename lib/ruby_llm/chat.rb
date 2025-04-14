@@ -26,16 +26,22 @@ module RubyLLM
     end
 
     def ask(message = nil, with: {}, &block)
-      add_message role: :user, content: Content.new(message, with)
+      # Extract cache_control from the with hash if present
+      cache_control = with.delete(:cache_control)
+      
+      # Create a new Content object with the message and attachments
+      content = Content.new(message, with.merge(cache_control: cache_control))
+      
+      add_message role: :user, content: content
       complete(&block)
     end
 
     alias say ask
 
-    def with_instructions(instructions, replace: false)
+    def with_instructions(instructions, replace: false, cache_control: nil)
       @messages = @messages.reject! { |msg| msg.role == :system } if replace
 
-      add_message role: :system, content: instructions
+      add_message role: :system, content: Content.new(instructions, cache_control: cache_control)
       self
     end
 
