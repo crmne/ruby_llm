@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505)"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"address_book","description":"Manages
+        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - test
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Mon, 14 Apr 2025 20:46:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '86'
+      Connection:
+      - keep-alive
+      X-Should-Retry:
+      - 'false'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
+        x-api-key"}}'
+  recorded_at: Mon, 14 Apr 2025 20:47:20 GMT
+recorded_with: VCR 6.3.1
