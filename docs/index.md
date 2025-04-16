@@ -134,7 +134,7 @@ claude_chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 ## Have great conversations
 
 ```ruby
-# Start a chat with the default model (GPT-4o-mini)
+# Start a chat with the default model (gpt-4.1-nano)
 chat = RubyLLM.chat
 
 # Or specify what you want
@@ -177,7 +177,7 @@ class ToolCall < ApplicationRecord
 end
 
 # In a background job
-chat = Chat.create!(model_id: "gpt-4o-mini")
+chat = Chat.create!(model_id: "gpt-4.1-nano")
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(
     chat,

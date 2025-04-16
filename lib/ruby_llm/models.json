@@ -4,7 +4,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Haiku",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_5_haiku",
@@ -34,7 +34,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -47,7 +47,8 @@
       "provider_name": "Anthropic",
       "customizations_supported": [],
       "inference_configurations": [
-        "ON_DEMAND"
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
       ],
       "response_streaming_supported": true,
       "input_modalities": [
@@ -64,7 +65,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -94,7 +95,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -124,7 +125,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -154,7 +155,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet v2",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -184,7 +185,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet v2",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -214,7 +215,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet v2",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -244,7 +245,7 @@
     "created_at": null,
     "display_name": "Claude 3.5 Sonnet v2",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -270,11 +271,11 @@
     }
   },
   {
-    "id": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+    "id": "anthropic.claude-3-7-sonnet-20250219-v1:0",
     "created_at": null,
     "display_name": "Claude 3.7 Sonnet",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude3_sonnet",
@@ -607,13 +608,13 @@
     "created_at": null,
     "display_name": "Claude Instant",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude_instant",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 0.8,
     "output_price_per_million": 2.4,
     "metadata": {
@@ -636,13 +637,13 @@
     "created_at": null,
     "display_name": "Claude Instant",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude_instant",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 0.8,
     "output_price_per_million": 2.4,
     "metadata": {
@@ -665,13 +666,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -694,13 +695,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -723,13 +724,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -752,13 +753,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -781,13 +782,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -810,13 +811,13 @@
     "created_at": null,
     "display_name": "Claude",
     "provider": "bedrock",
-    "context_window": 4096,
+    "context_window": 200000,
     "max_tokens": 4096,
     "type": "chat",
     "family": "claude2",
-    "supports_vision": false,
-    "supports_functions": false,
-    "supports_json_mode": false,
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
     "input_price_per_million": 8.0,
     "output_price_per_million": 24.0,
     "metadata": {
@@ -1613,7 +1614,8 @@
       "output_token_limit": 8192,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -1638,7 +1640,8 @@
       "output_token_limit": 8192,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -1795,6 +1798,31 @@
     }
   },
   {
+    "id": "gemini-2.0-flash-live-001",
+    "created_at": null,
+    "display_name": "Gemini 2.0 Flash 001",
+    "provider": "gemini",
+    "context_window": 131072,
+    "max_tokens": 8192,
+    "type": "chat",
+    "family": "gemini20_flash",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.1,
+    "output_price_per_million": 0.4,
+    "metadata": {
+      "version": "001",
+      "description": "Gemini 2.0 Flash 001",
+      "input_token_limit": 131072,
+      "output_token_limit": 8192,
+      "supported_generation_methods": [
+        "bidiGenerateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
     "id": "gemini-2.0-flash-thinking-exp",
     "created_at": null,
     "display_name": "Gemini 2.0 Flash Thinking Experimental 01-21",
@@ -1945,6 +1973,31 @@
     }
   },
   {
+    "id": "gemini-2.5-pro-preview-03-25",
+    "created_at": null,
+    "display_name": "Gemini 2.5 Pro Preview 03-25",
+    "provider": "gemini",
+    "context_window": 1048576,
+    "max_tokens": 65536,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "2.5-preview-03-25",
+      "description": "Gemini 2.5 Pro Preview 03-25",
+      "input_token_limit": 1048576,
+      "output_token_limit": 65536,
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
     "id": "gemini-embedding-exp",
     "created_at": null,
     "display_name": "Gemini Embedding Experimental",
@@ -1964,7 +2017,8 @@
       "input_token_limit": 8192,
       "output_token_limit": 1,
       "supported_generation_methods": [
-        "embedContent"
+        "embedContent",
+        "countTextTokens"
       ]
     }
   },
@@ -1988,7 +2042,8 @@
       "input_token_limit": 8192,
       "output_token_limit": 1,
       "supported_generation_methods": [
-        "embedContent"
+        "embedContent",
+        "countTextTokens"
       ]
     }
   },
@@ -2043,6 +2098,56 @@
     }
   },
   {
+    "id": "gemma-3-12b-it",
+    "created_at": null,
+    "display_name": "Gemma 3 12B",
+    "provider": "gemini",
+    "context_window": 32768,
+    "max_tokens": 8192,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "001",
+      "description": null,
+      "input_token_limit": 32768,
+      "output_token_limit": 8192,
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
+    "id": "gemma-3-1b-it",
+    "created_at": null,
+    "display_name": "Gemma 3 1B",
+    "provider": "gemini",
+    "context_window": 32768,
+    "max_tokens": 8192,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "001",
+      "description": null,
+      "input_token_limit": 32768,
+      "output_token_limit": 8192,
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
     "id": "gemma-3-27b-it",
     "created_at": null,
     "display_name": "Gemma 3 27B",
@@ -2060,6 +2165,31 @@
       "version": "001",
       "description": null,
       "input_token_limit": 131072,
+      "output_token_limit": 8192,
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
+    "id": "gemma-3-4b-it",
+    "created_at": null,
+    "display_name": "Gemma 3 4B",
+    "provider": "gemini",
+    "context_window": 32768,
+    "max_tokens": 8192,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "001",
+      "description": null,
+      "input_token_limit": 32768,
       "output_token_limit": 8192,
       "supported_generation_methods": [
         "generateContent",
@@ -2309,6 +2439,120 @@
     "supports_json_mode": false,
     "input_price_per_million": 10.0,
     "output_price_per_million": 30.0,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1",
+    "created_at": "2025-04-10T22:22:22+02:00",
+    "display_name": "GPT-4.1",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 2.0,
+    "output_price_per_million": 8.0,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1-2025-04-14",
+    "created_at": "2025-04-10T22:09:06+02:00",
+    "display_name": "GPT-4.1 20250414",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 2.0,
+    "output_price_per_million": 8.0,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1-mini",
+    "created_at": "2025-04-10T22:49:33+02:00",
+    "display_name": "GPT-4.1 Mini",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41_mini",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.4,
+    "output_price_per_million": 1.6,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1-mini-2025-04-14",
+    "created_at": "2025-04-10T22:39:07+02:00",
+    "display_name": "GPT-4.1 Mini 20250414",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41_mini",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.4,
+    "output_price_per_million": 1.6,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1-nano",
+    "created_at": "2025-04-10T23:48:27+02:00",
+    "display_name": "GPT-4.1 Nano",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41_nano",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.1,
+    "output_price_per_million": 0.4,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4.1-nano-2025-04-14",
+    "created_at": "2025-04-10T23:37:05+02:00",
+    "display_name": "GPT-4.1 Nano 20250414",
+    "provider": "openai",
+    "context_window": 1047576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "gpt41_nano",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.1,
+    "output_price_per_million": 0.4,
     "metadata": {
       "object": "model",
       "owned_by": "system"
@@ -3247,6 +3491,30 @@
     "metadata": {
       "object": "model",
       "owned_by": "system"
+    }
+  },
+  {
+    "id": "veo-2.0-generate-001",
+    "created_at": null,
+    "display_name": "Veo 2",
+    "provider": "gemini",
+    "context_window": 480,
+    "max_tokens": 8192,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "2.0",
+      "description": "Vertex served Veo 2 model.",
+      "input_token_limit": 480,
+      "output_token_limit": 8192,
+      "supported_generation_methods": [
+        "predictLongRunning"
+      ]
     }
   },
   {
