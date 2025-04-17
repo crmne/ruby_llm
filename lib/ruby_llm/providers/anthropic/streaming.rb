@@ -18,8 +18,30 @@ module RubyLLM
             content: data.dig('delta', 'text'),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            cache_creation_input_tokens: extract_cache_creation_tokens(data),
+            cache_read_input_tokens: extract_cache_read_tokens(data),
             tool_calls: extract_tool_calls(data)
           )
+        end
+        
+        def extract_model_id(data)
+          data['model']
+        end
+        
+        def extract_input_tokens(data)
+          data.dig('usage', 'input_tokens')
+        end
+        
+        def extract_output_tokens(data)
+          data.dig('usage', 'output_tokens')
+        end
+        
+        def extract_cache_creation_tokens(data)
+          data.dig('usage', 'cache_creation_input_tokens')
+        end
+        
+        def extract_cache_read_tokens(data)
+          data.dig('usage', 'cache_read_input_tokens')
         end
 
         def json_delta?(data)

@@ -5,9 +5,12 @@ module RubyLLM
   # Stores data in a standard internal format, letting providers
   # handle their own formatting needs.
   class Content
+    attr_reader :cache_control
+    
     def initialize(text = nil, attachments = {}) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       @parts = []
       @parts << { type: 'text', text: text } unless text.nil? || text.empty?
+      @cache_control = attachments[:cache_control]
 
       Array(attachments[:image]).each do |source|
         @parts << attach_image(source)
@@ -29,7 +32,7 @@ module RubyLLM
     end
 
     def format
-      return @parts.first[:text] if @parts.size == 1 && @parts.first[:type] == 'text'
+      return @parts.first[:text] if @parts.size == 1 && @parts.first[:type] == 'text' && @cache_control.nil?
 
       to_a
     end
