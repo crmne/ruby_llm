@@ -43,6 +43,7 @@ RSpec.describe RubyLLM::Chat do
       provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
+                      .with_temperature(0.1)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
@@ -55,6 +56,7 @@ RSpec.describe RubyLLM::Chat do
       provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
+                      .with_temperature(0.1)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
@@ -79,7 +81,9 @@ RSpec.describe RubyLLM::Chat do
     chat_models.each do |model| # rubocop:disable Style/CombinableLoops
       provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        chat = RubyLLM.chat(model: model)
+                      .with_temperature(0.1)
+                      .with_tool(BestLanguageToLearn)
         chunks = []
 
         response = chat.ask("What's the best language to learn?") do |chunk|
@@ -104,6 +108,7 @@ RSpec.describe RubyLLM::Chat do
       provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model)
+                      .with_temperature(0.1)
                       .with_tool(Weather)
         chunks = []
 
