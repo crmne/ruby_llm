@@ -37,6 +37,10 @@ module RubyLLM
       def slug
         'perplexity'
       end
+
+      def configuration_requirements
+        %i[perplexity_api_key]
+      end
     end
   end
 end
