@@ -12,12 +12,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250417T143713Z
+      - 20250417T203238Z
       X-Amz-Content-Sha256:
       - 5c2ea06447d05c2419d703ae9e946df8fc5a7c0a2241bc28a6896df40c81dd05
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250417/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=4db101417126b115ba843d543ed21bbbcc967a7b74f208e3729e60aa8329ed97
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=248ee5db3bd4af60ba71873aa36c1ee9f91aa51fdbca93158949081f346c78a2
       Content-Type:
       - application/json
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Thu, 17 Apr 2025 14:37:13 GMT
+      - Thu, 17 Apr 2025 20:32:39 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,14 +38,14 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 420fb7f1-cf97-4282-bc15-a58d8c9f1c2c
+      - 2a150337-9e46-415c-a5fc-d9c8ef9f983b
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
       encoding: UTF-8
       string: '{"message":"Malformed input request: #: subject must not be valid against
-        schema {\"required\":[\"messages\"]}#/messages/0/content: expected type: String,
-        found: JSONObject#/messages/0/content: expected type: JSONArray, found: JSONObject,
+        schema {\"required\":[\"messages\"]}#/messages/0/content: expected type: JSONArray,
+        found: JSONObject#/messages/0/content: expected type: String, found: JSONObject,
         please reformat your input and try again."}'
-  recorded_at: Thu, 17 Apr 2025 14:37:13 GMT
+  recorded_at: Thu, 17 Apr 2025 20:32:39 GMT
 recorded_with: VCR 6.3.1

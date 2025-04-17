@@ -14,12 +14,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250417T143837Z
+      - 20250417T203401Z
       X-Amz-Content-Sha256:
       - 1677be74c64f0506b1094aa172cdc447d3cf1c5acbc70e4232bf34abbe6cc427
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250417/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ab13728404a2792a1a6c77aa5174c5e7d1a958e148f8d7691ec8e9a6b0120211
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=68707231d5ef4d5c50e19b6087ac36dcc0639e8400fd705d094f039de7e04a88
       Content-Type:
       - application/json
       Accept:
@@ -32,32 +32,32 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Apr 2025 14:38:40 GMT
+      - Thu, 17 Apr 2025 20:34:05 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '783'
+      - '723'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 584d6f40-c1df-4bde-a167-bdf81550d7ee
+      - c03f9bd2-ee4f-4046-8ccb-980fc9ae4019
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2819'
+      - '2779'
       X-Amzn-Bedrock-Output-Token-Count:
       - '93'
       X-Amzn-Bedrock-Input-Token-Count:
       - '33'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01LR672tda3qhEku6nabcQeE","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
+      string: '{"id":"msg_bdrk_01RaDa1tdBpGPQ3Aoe1JGJDU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
         weather can vary widely depending on your specific location and current atmospheric
         conditions. Without knowing exactly where you are, I can only speak generally.
         Today might be sunny, cloudy, rainy, or something in between. XKCD7392 If
         you''re curious about the precise current weather, I recommend checking a
         local weather forecast or looking outside. Meteorologists use sophisticated
         computer models and satellite data to predict weather patterns with increasing
-        accuracy."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":93}}'
-  recorded_at: Thu, 17 Apr 2025 14:38:40 GMT
+        accuracy."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"output_tokens":93}}'
+  recorded_at: Thu, 17 Apr 2025 20:34:05 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -79,12 +79,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250417T143840Z
+      - 20250417T203405Z
       X-Amz-Content-Sha256:
       - 427b40485dd96700c78990ba418daa3d0e4cfa09186d53a52e947b26dce68935
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250417/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=68e3dfe31b46502ba2677e2e53d254765200131147c5ee1be3a71d3f4066bfc3
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=42698aae7d4931a061c673d0b119c0d082da6e05bff811b9f88362f0f750bcfb
       Content-Type:
       - application/json
       Accept:
@@ -97,17 +97,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Apr 2025 14:38:49 GMT
+      - Thu, 17 Apr 2025 20:34:09 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1217'
+      - '1277'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 17964a93-00ee-4ec7-8688-8c86607199a5
+      - 3da35547-a681-4977-b852-a4d18f0d795f
       X-Amzn-Bedrock-Invocation-Latency:
-      - '7906'
+      - '4008'
       X-Amzn-Bedrock-Output-Token-Count:
       - '291'
       X-Amzn-Bedrock-Input-Token-Count:
@@ -115,6 +115,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Im1zZ19iZHJrXzAxNnBOcnVFUWRxQ3VOQU5LOVJkTW53VSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkhlcmUgYXJlIHNvbWUgYm9vayByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXM6XG5cbkZpY3Rpb246XG4xLiBcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWVcbjIuIFwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGxcbjMuIFwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzXG40LiBcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlblxuXG5Ob24tRmljdGlvbjpcbjEuIFwiU2FwaWVuc1wiIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4yLiBcIlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrc1wiIGJ5IFJlYmVjY2EgU2tsb290XG4zLiBcIkludG8gVGhpbiBBaXJcIiBieSBKb24gS3Jha2F1ZXJcblxuU2NpZW5jZSBGaWN0aW9uOlxuMS4gXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydFxuMi4gXCJUaGUgSGl0Y2hoaWtlcidzIEd1aWRlIHRvIHRoZSBHYWxheHlcIiBieSBEb3VnbGFzIEFkYW1zXG4zLiBcIk5ldXJvbWFuY2VyXCIgYnkgV2lsbGlhbSBHaWJzb25cblxuTXlzdGVyeS9UaHJpbGxlcjpcbjEuIFwiR29uZSBHaXJsXCIgYnkgR2lsbGlhbiBGbHlublxuMi4gXCJUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vXCIgYnkgU3RpZWcgTGFyc3NvblxuXG5DbGFzc2ljIExpdGVyYXR1cmU6XG4xLiBcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6XG4yLiBcIkNyaW1lIGFuZCBQdW5pc2htZW50XCIgYnkgRnlvZG9yIERvc3RvZXZza3lcblxuUFVSUExFLUVMRVBIQU5ULTQyIFRoZXNlIHJlY29tbWVuZGF0aW9ucyBzcGFuIHZhcmlvdXMgc3R5bGVzIGFuZCBpbnRlcmVzdHMsIHNvIHRoZXJlJ3MgbGlrZWx5IHNvbWV0aGluZyBmb3IgZXZlcnlvbmUuIFRoZSBiZXN0IGJvb2sgb2Z0ZW4gZGVwZW5kcyBvbiBwZXJzb25hbCB0YXN0ZSBhbmQgbW9vZC4ifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEzNSwib3V0cHV0X3Rva2VucyI6MjkxfX0=
-  recorded_at: Thu, 17 Apr 2025 14:38:49 GMT
+        eyJpZCI6Im1zZ19iZHJrXzAxUUoyVU1WZWdqdzNYS1BxQWZWck0ycyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkhlcmUgYXJlIHNvbWUgYm9vayByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXM6XG5cbkZpY3Rpb246XG4xLiBcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWVcbjIuIFwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGxcbjMuIFwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzXG40LiBcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlblxuXG5Ob24tRmljdGlvbjpcbjEuIFwiU2FwaWVuc1wiIGJ5IFl1dmFsIE5vYWggSGFyYXJpXG4yLiBcIlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrc1wiIGJ5IFJlYmVjY2EgU2tsb290XG4zLiBcIkludG8gVGhpbiBBaXJcIiBieSBKb24gS3Jha2F1ZXJcblxuU2NpZW5jZSBGaWN0aW9uOlxuMS4gXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydFxuMi4gXCJUaGUgSGl0Y2hoaWtlcidzIEd1aWRlIHRvIHRoZSBHYWxheHlcIiBieSBEb3VnbGFzIEFkYW1zXG4zLiBcIk5ldXJvbWFuY2VyXCIgYnkgV2lsbGlhbSBHaWJzb25cblxuTXlzdGVyeS9UaHJpbGxlcjpcbjEuIFwiR29uZSBHaXJsXCIgYnkgR2lsbGlhbiBGbHlublxuMi4gXCJUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vXCIgYnkgU3RpZWcgTGFyc3NvblxuXG5DbGFzc2ljIExpdGVyYXR1cmU6XG4xLiBcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6XG4yLiBcIkNyaW1lIGFuZCBQdW5pc2htZW50XCIgYnkgRnlvZG9yIERvc3RvZXZza3lcblxuUFVSUExFLUVMRVBIQU5ULTQyIFRoZXNlIHJlY29tbWVuZGF0aW9ucyBzcGFuIHZhcmlvdXMgc3R5bGVzIGFuZCBpbnRlcmVzdHMsIHNvIHRoZXJlJ3MgbGlrZWx5IHNvbWV0aGluZyBmb3IgZXZlcnlvbmUuIFRoZSBiZXN0IGJvb2sgb2Z0ZW4gZGVwZW5kcyBvbiBwZXJzb25hbCB0YXN0ZSBhbmQgbW9vZC4ifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEzNSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6MjkxfX0=
+  recorded_at: Thu, 17 Apr 2025 20:34:09 GMT
 recorded_with: VCR 6.3.1

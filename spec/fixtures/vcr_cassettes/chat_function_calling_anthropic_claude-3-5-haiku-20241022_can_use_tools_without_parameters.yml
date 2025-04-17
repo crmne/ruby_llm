@@ -23,19 +23,41 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 529
-      message: ''
+      code: 200
+      message: OK
     headers:
       Date:
-      - Thu, 17 Apr 2025 14:40:07 GMT
+      - Thu, 17 Apr 2025 20:35:32 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '75'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      X-Should-Retry:
-      - 'true'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-17T20:35:25Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '100000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '100000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-17T20:35:31Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '20000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '20000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-17T20:35:32Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '120000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '120000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-17T20:35:31Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -51,7 +73,96 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
     body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_015DXfbZsTf65rUAgRnMeict","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01PHHS1v3V1xNw67H2wE1Jrm","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":58}}'
+  recorded_at: Thu, 17 Apr 2025 20:35:32 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
       encoding: UTF-8
-      string: '{"type":"error","error":{"type":"overloaded_error","message":"Overloaded"}}'
-  recorded_at: Thu, 17 Apr 2025 14:40:07 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01PHHS1v3V1xNw67H2wE1Jrm","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01PHHS1v3V1xNw67H2wE1Jrm","content":"Ruby"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 17 Apr 2025 20:35:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-17T20:35:32Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '100000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '100000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-17T20:35:39Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '20000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '20000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-17T20:35:42Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '120000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '120000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-17T20:35:39Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01LBm3ERZaVSkSTCpH5qqaZu","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
+        to the tool, Ruby is the best language to learn! Ruby is a dynamic, object-oriented
+        programming language known for its simplicity and readability. It''s particularly
+        popular for web development, especially with the Ruby on Rails framework.
+        \n\nSome reasons why Ruby might be a great language to learn:\n1. Easy to
+        read and write with a clean, elegant syntax\n2. Great for web development
+        and scripting\n3. Strong community support\n4. Used in many startups and tech
+        companies\n5. Versatile for various types of programming projects\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Game development\n- Career opportunities\n\nWould
+        you like to know more about Ruby or discuss how it might fit your specific
+        learning objectives?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":178}}'
+  recorded_at: Thu, 17 Apr 2025 20:35:42 GMT
 recorded_with: VCR 6.3.1
