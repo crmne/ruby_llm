@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/x-ndjson
       Date:
-      - Fri, 11 Apr 2025 20:25:27 GMT
+      - Thu, 17 Apr 2025 13:50:58 GMT
       Server:
       - Caddy
       Transfer-Encoding:
@@ -33,16 +33,16 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.315789926Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
-        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.325514651Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":185235270,"load_duration":15163241,"prompt_eval_count":155,"prompt_eval_duration":7878737,"eval_count":15,"eval_duration":161808281}
-  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:50:58.362103875Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:50:58.37167292Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":185981356,"load_duration":18824382,"prompt_eval_count":155,"prompt_eval_duration":8264856,"eval_count":15,"eval_duration":158476918}
+  recorded_at: Thu, 17 Apr 2025 13:50:50 GMT
 - request:
     method: post
     uri: http://localhost:11434/api/chat
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -61,33 +61,53 @@ http_interactions:
       Content-Type:
       - application/x-ndjson
       Date:
-      - Fri, 11 Apr 2025 20:25:27 GMT
+      - Thu, 17 Apr 2025 13:51:00 GMT
       Server:
       - Caddy
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.7992387Z","message":{"role":"assistant","content":"This
-        was determined by using a tool that analyzed various programming languages
-        and their uses. The results showed that Ruby is currently one of the most
-        in-demand and versatile languages, making it an excellent choice for beginners
-        and experienced developers alike."},"done_reason":"stop","done":true,"total_duration":470215206,"load_duration":14776780,"prompt_eval_count":77,"prompt_eval_duration":4597457,"eval_count":46,"eval_duration":450213396}
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-17T13:51:00.438423432Z","message":{"role":"assistant","content":"The
+        best language to learn is often subjective and depends on personal goals,
+        interests, and career aspirations. However, based on various sources and industry
+        trends, I would recommend Ruby as a great language to start with.\n\nHere''s
+        why:\n\n1.  **Easy to read and write**: Ruby has a clean syntax that makes
+        it easy for beginners to understand and learn.\n2.  **Versatile**: Ruby can
+        be used for web development (with frameworks like Ruby on Rails), scripting,
+        testing, and even system administration.\n3.  **Large community**: Ruby has
+        an active and supportive community, with many resources available online,
+        including documentation, tutorials, and forums.\n4.  **Job prospects**: Knowledge
+        of Ruby is in demand, especially in the web development industry.\n\nOf course,
+        there are other great languages to learn as well, such as Python, JavaScript,
+        Java, and C++. Ultimately, the best language for you will depend on your specific
+        goals and interests.\n\nWould you like me to suggest some resources to get
+        started with Ruby?"},"done_reason":"stop","done":true,"total_duration":2063456322,"load_duration":14397187,"prompt_eval_count":77,"prompt_eval_duration":4475905,"eval_count":208,"eval_duration":2043982407}
 
         '
-  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+  recorded_at: Thu, 17 Apr 2025 13:50:53 GMT
 - request:
     method: post
     uri: http://localhost:11434/api/chat
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"This
-        was determined by using a tool that analyzed various programming languages
-        and their uses. The results showed that Ruby is currently one of the most
-        in-demand and versatile languages, making it an excellent choice for beginners
-        and experienced developers alike."},{"role":"user","content":"Tell me again:
-        what''s the best language to learn?"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"The
+        best language to learn is often subjective and depends on personal goals,
+        interests, and career aspirations. However, based on various sources and industry
+        trends, I would recommend Ruby as a great language to start with.\n\nHere''s
+        why:\n\n1.  **Easy to read and write**: Ruby has a clean syntax that makes
+        it easy for beginners to understand and learn.\n2.  **Versatile**: Ruby can
+        be used for web development (with frameworks like Ruby on Rails), scripting,
+        testing, and even system administration.\n3.  **Large community**: Ruby has
+        an active and supportive community, with many resources available online,
+        including documentation, tutorials, and forums.\n4.  **Job prospects**: Knowledge
+        of Ruby is in demand, especially in the web development industry.\n\nOf course,
+        there are other great languages to learn as well, such as Python, JavaScript,
+        Java, and C++. Ultimately, the best language for you will depend on your specific
+        goals and interests.\n\nWould you like me to suggest some resources to get
+        started with Ruby?"},{"role":"user","content":"Tell me again: what''s the
+        best language to learn?"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -106,7 +126,7 @@ http_interactions:
       Content-Type:
       - application/x-ndjson
       Date:
-      - Fri, 11 Apr 2025 20:25:27 GMT
+      - Thu, 17 Apr 2025 13:51:00 GMT
       Server:
       - Caddy
       Transfer-Encoding:
@@ -114,21 +134,31 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.986550241Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
-        {"model":"llama3.1:8b","created_at":"2025-04-11T20:25:27.996688354Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":193925963,"load_duration":14787489,"prompt_eval_count":234,"prompt_eval_duration":8799661,"eval_count":15,"eval_duration":169210924}
-  recorded_at: Fri, 11 Apr 2025 20:25:24 GMT
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:51:00.627921622Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"best_language_to_learn","arguments":{}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:51:00.638002163Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":194695887,"load_duration":15619587,"prompt_eval_count":396,"prompt_eval_duration":8968113,"eval_count":15,"eval_duration":168794152}
+  recorded_at: Thu, 17 Apr 2025 13:50:53 GMT
 - request:
     method: post
     uri: http://localhost:11434/api/chat
     body:
       encoding: UTF-8
       string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"This
-        was determined by using a tool that analyzed various programming languages
-        and their uses. The results showed that Ruby is currently one of the most
-        in-demand and versatile languages, making it an excellent choice for beginners
-        and experienced developers alike."},{"role":"user","content":"Tell me again:
-        what''s the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.7},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"},{"role":"assistant","content":"The
+        best language to learn is often subjective and depends on personal goals,
+        interests, and career aspirations. However, based on various sources and industry
+        trends, I would recommend Ruby as a great language to start with.\n\nHere''s
+        why:\n\n1.  **Easy to read and write**: Ruby has a clean syntax that makes
+        it easy for beginners to understand and learn.\n2.  **Versatile**: Ruby can
+        be used for web development (with frameworks like Ruby on Rails), scripting,
+        testing, and even system administration.\n3.  **Large community**: Ruby has
+        an active and supportive community, with many resources available online,
+        including documentation, tutorials, and forums.\n4.  **Job prospects**: Knowledge
+        of Ruby is in demand, especially in the web development industry.\n\nOf course,
+        there are other great languages to learn as well, such as Python, JavaScript,
+        Java, and C++. Ultimately, the best language for you will depend on your specific
+        goals and interests.\n\nWould you like me to suggest some resources to get
+        started with Ruby?"},{"role":"user","content":"Tell me again: what''s the
+        best language to learn?"},{"role":"assistant","content":null},{"role":"tool","content":"Ruby"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -147,18 +177,18 @@ http_interactions:
       Content-Type:
       - application/x-ndjson
       Date:
-      - Fri, 11 Apr 2025 20:25:28 GMT
+      - Thu, 17 Apr 2025 13:51:01 GMT
       Server:
       - Caddy
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"model":"llama3.1:8b","created_at":"2025-04-11T20:25:28.38537108Z","message":{"role":"assistant","content":"The
-        tool analysis still shows that Ruby is a top contender among programming languages
-        due to its simplicity, flexibility, and wide range of applications, making
-        it an excellent choice for learning."},"done_reason":"stop","done":true,"total_duration":384856281,"load_duration":14473706,"prompt_eval_count":156,"prompt_eval_duration":5059295,"eval_count":36,"eval_duration":364120261}
+      string: '{"model":"llama3.1:8b","created_at":"2025-04-17T13:51:01.11680937Z","message":{"role":"assistant","content":"The
+        output from my previous response still stands. Based on various sources and
+        industry trends, I would recommend Ruby as a great language to start with
+        due to its ease of use, versatility, large community, and job prospects."},"done_reason":"stop","done":true,"total_duration":475213661,"load_duration":14607441,"prompt_eval_count":318,"prompt_eval_duration":5120220,"eval_count":45,"eval_duration":453843079}
 
         '
-  recorded_at: Fri, 11 Apr 2025 20:25:25 GMT
+  recorded_at: Thu, 17 Apr 2025 13:50:53 GMT
 recorded_with: VCR 6.3.1
