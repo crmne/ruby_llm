@@ -50,6 +50,9 @@ module RubyLLM
 
     def name
       self.class.name
+          .unicode_normalize(:nfkd)
+          .encode('ASCII', replace: '')
+          .gsub(/[^a-zA-Z0-9_-]/, '-')
           .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
           .gsub(/([a-z\d])([A-Z])/, '\1_\2')
           .downcase
@@ -69,9 +72,6 @@ module RubyLLM
       result = execute(**args.transform_keys(&:to_sym))
       RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
       result
-    rescue StandardError => e
-      RubyLLM.logger.error "Tool #{name} failed with error: #{e.message}"
-      { error: e.message }
     end
 
     def execute(...)

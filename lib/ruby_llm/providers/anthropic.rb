@@ -33,6 +33,10 @@ module RubyLLM
       def slug
         'anthropic'
       end
+
+      def configuration_requirements
+        %i[anthropic_api_key]
+      end
     end
   end
 end

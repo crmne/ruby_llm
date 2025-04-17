@@ -32,6 +32,10 @@ module RubyLLM
       def slug
         'gemini'
       end
+
+      def configuration_requirements
+        %i[gemini_api_key]
+      end
     end
   end
 end

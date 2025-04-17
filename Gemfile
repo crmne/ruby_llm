@@ -13,6 +13,7 @@ group :development do
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
+  gem 'ferrum'
   gem 'irb'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
@@ -27,6 +28,7 @@ group :development do
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
   gem 'sqlite3'
+  gem 'vcr'
   gem 'webmock', '~> 3.18'
   gem 'yard', '>= 0.9'
 end

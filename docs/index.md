@@ -12,7 +12,7 @@ permalink: /
   <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
 </div>
 
-A delightful Ruby way to work with AI through a unified interface to OpenAI, Anthropic, Google, and DeepSeek.
+A delightful Ruby way to work with AI through a unified interface to OpenAI, Anthropic, Google, AWS Bedrock Anthropic, and DeepSeek.
 {: .fs-6 .fw-300 }
 
 
@@ -20,20 +20,25 @@ A delightful Ruby way to work with AI through a unified interface to OpenAI, Ant
   <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
 ---
-<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px;">
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em; margin-bottom: 1em">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Google" height="40" width="120">
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  <div>
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" height="40">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" height="40" width="120">
+  </div>
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
 </div>
 
-<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-<a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
-<a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Total Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
-<a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.2em;">
+  <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
+  <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
+  <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
+  <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+</div>
+
 
 🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
 
@@ -47,7 +52,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ## Features
 
-- 💬 **Chat** with OpenAI, Anthropic, Gemini, and DeepSeek models
+- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, and DeepSeek models
 - 👁️ **Vision and Audio** understanding
 - 📄 **PDF Analysis** for analyzing documents
 - 🖼️ **Image generation** with DALL-E and other providers
@@ -71,6 +76,11 @@ chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
 
 # Analyze documents
 chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
+
+# Stream responses in real-time
+chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+  print chunk.content
+end
 
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
@@ -124,7 +134,7 @@ claude_chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 ## Have great conversations
 
 ```ruby
-# Start a chat with the default model (GPT-4o-mini)
+# Start a chat with the default model (gpt-4.1-nano)
 chat = RubyLLM.chat
 
 # Or specify what you want
@@ -166,8 +176,8 @@ class ToolCall < ApplicationRecord
   acts_as_tool_call
 end
 
-# In your controller
-chat = Chat.create!(model_id: "gpt-4o-mini")
+# In a background job
+chat = Chat.create!(model_id: "gpt-4.1-nano")
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(
     chat,

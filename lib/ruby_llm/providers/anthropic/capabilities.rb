@@ -20,8 +20,8 @@ module RubyLLM
         # @return [Integer] the maximum output tokens
         def determine_max_tokens(model_id)
           case model_id
-          when /claude-3-(7-sonnet|5)/ then 8_192 # Can be increased to 64K with extended thinking
-          else 4_096 # Claude 3 Opus and Haiku
+          when /claude-3-7-sonnet/, /claude-3-5/ then 8_192
+          else 4_096
           end
         end
 
@@ -92,13 +92,12 @@ module RubyLLM
 
         # Pricing information for Anthropic models (per million tokens)
         PRICES = {
-          claude37_sonnet: { input: 3.0, output: 15.0 },   # $3.00/$15.00 per million tokens
-          claude35_sonnet: { input: 3.0, output: 15.0 },   # $3.00/$15.00 per million tokens
-          claude35_haiku: { input: 0.80, output: 4.0 },    # $0.80/$4.00 per million tokens
-          claude3_opus: { input: 15.0, output: 75.0 },     # $15.00/$75.00 per million tokens
-          claude3_sonnet: { input: 3.0, output: 15.0 },    # $3.00/$15.00 per million tokens
-          claude3_haiku: { input: 0.25, output: 1.25 },    # $0.25/$1.25 per million tokens
-          claude2: { input: 3.0, output: 15.0 }            # Default pricing for Claude 2.x models
+          claude37_sonnet: { input: 3.0, output: 15.0 },
+          claude35_sonnet: { input: 3.0, output: 15.0 },
+          claude35_haiku: { input: 0.80, output: 4.0 },
+          claude3_opus: { input: 15.0, output: 75.0 },
+          claude3_haiku: { input: 0.25, output: 1.25 },
+          claude2: { input: 3.0, output: 15.0 }
         }.freeze
 
         # Default input price if model not found in PRICES

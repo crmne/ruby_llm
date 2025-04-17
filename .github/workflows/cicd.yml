@@ -9,16 +9,29 @@ on:
       - 'Gemfile'
       - 'Rakefile'
       - 'ruby_llm.gemspec'
+      - '.github/workflows/cicd.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'lib/**'
+      - 'spec/**'
+      - 'Gemfile'
+      - 'Rakefile'
+      - 'ruby_llm.gemspec'
+      - '.github/workflows/cicd.yml'
   workflow_call:
+
+# Define default permissions for this workflow
+permissions:
+  contents: read
+  packages: write  # Needed for publishing to GitHub Packages
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.1']
+        ruby-version: ['3.1', '3.2', '3.3', '3.4']
 
     steps:
     - uses: actions/checkout@v4
@@ -36,12 +49,6 @@ jobs:
       run: bundle exec rubocop
 
     - name: Run tests
-      env:
-        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
       run: bundle exec rspec
 
     - name: Upload coverage to Codecov
@@ -57,9 +64,6 @@ jobs:
     needs: test
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
     steps:
     - uses: actions/checkout@v4
@@ -70,7 +74,65 @@ jobs:
         ruby-version: '3.3'
         bundler-cache: true
 
+    - name: Check if version needs publishing
+      id: check_version
+      run: |
+        VERSION_FILE="./lib/ruby_llm/version.rb"
+        VERSION=$(ruby -r $VERSION_FILE -e "puts RubyLLM::VERSION" 2>/dev/null)
+
+        if [ -z "$VERSION" ]; then
+          echo "Error: Could not extract VERSION from $VERSION_FILE" >&2
+          exit 1
+        fi
+        echo "Local version: $VERSION"
+
+        GEM_NAME="ruby_llm"
+        echo "Fetching published versions for '$GEM_NAME'..."
+
+        # Combine results from --all and --prerelease, extract, clean, unique sort
+        ALL_PUBLISHED_VERSIONS=$(( \
+          gem list ^${GEM_NAME}$ -r --all 2>/dev/null || true; \
+          gem list ^${GEM_NAME}$ -r --prerelease 2>/dev/null || true; \
+        ) | sed -n 's/.*(\(.*\)).*/\1/p' \
+          | tr ',' '\n' \
+          | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+          | grep . \
+          | sort -u )
+
+        echo "Checking against published versions:"
+        if [ -n "$ALL_PUBLISHED_VERSIONS" ]; then
+            echo "$ALL_PUBLISHED_VERSIONS" | sed 's/^/  /' # Log found versions nicely
+        else
+            echo "  (none found)"
+        fi
+
+        if echo "$ALL_PUBLISHED_VERSIONS" | grep -Fxq "$VERSION"; then
+          echo "Verdict: Version $VERSION already published."
+          echo "version_changed=false" >> $GITHUB_OUTPUT
+        else
+          echo "Verdict: Version $VERSION is new."
+          echo "version_changed=true" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
+
+    - name: Test with real APIs before publishing
+      if: steps.check_version.outputs.version_changed == 'true'
+      run: |
+        echo "Removing all VCR cassettes to test against real APIs..."
+        rm -rf spec/fixtures/vcr_cassettes
+
+        echo "Running tests with real API calls..."
+        env -u CI bundle exec rspec
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     - name: Publish to GPR
+      if: steps.check_version.outputs.version_changed == 'true'
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials
@@ -91,6 +153,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
 
     - name: Publish to RubyGems
+      if: steps.check_version.outputs.version_changed == 'true'
       run: |
         mkdir -p $HOME/.gem
         touch $HOME/.gem/credentials

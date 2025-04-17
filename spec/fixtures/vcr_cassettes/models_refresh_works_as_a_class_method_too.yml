@@ -1,0 +1,1390 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.openai.com/v1/models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:53:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '492'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "object": "list",
+          "data": [
+            {
+              "id": "gpt-4o-realtime-preview-2024-12-17",
+              "object": "model",
+              "created": 1733945430,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-audio-preview-2024-12-17",
+              "object": "model",
+              "created": 1734034239,
+              "owned_by": "system"
+            },
+            {
+              "id": "dall-e-3",
+              "object": "model",
+              "created": 1698785189,
+              "owned_by": "system"
+            },
+            {
+              "id": "dall-e-2",
+              "object": "model",
+              "created": 1698798177,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-audio-preview-2024-10-01",
+              "object": "model",
+              "created": 1727389042,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+              "object": "model",
+              "created": 1734112601,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview",
+              "object": "model",
+              "created": 1734387380,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-realtime-preview-2024-10-01",
+              "object": "model",
+              "created": 1727131766,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-transcribe",
+              "object": "model",
+              "created": 1742068463,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-transcribe",
+              "object": "model",
+              "created": 1742068596,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-realtime-preview",
+              "object": "model",
+              "created": 1727659998,
+              "owned_by": "system"
+            },
+            {
+              "id": "babbage-002",
+              "object": "model",
+              "created": 1692634615,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-tts",
+              "object": "model",
+              "created": 1742403959,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-hd-1106",
+              "object": "model",
+              "created": 1699053533,
+              "owned_by": "system"
+            },
+            {
+              "id": "text-embedding-3-large",
+              "object": "model",
+              "created": 1705953180,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4",
+              "object": "model",
+              "created": 1687882411,
+              "owned_by": "openai"
+            },
+            {
+              "id": "text-embedding-ada-002",
+              "object": "model",
+              "created": 1671217299,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "omni-moderation-latest",
+              "object": "model",
+              "created": 1731689265,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-hd",
+              "object": "model",
+              "created": 1699046015,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-audio-preview",
+              "object": "model",
+              "created": 1734387424,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-audio-preview",
+              "object": "model",
+              "created": 1727460443,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-preview-2024-09-12",
+              "object": "model",
+              "created": 1725648865,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-instruct-0914",
+              "object": "model",
+              "created": 1694122472,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-search-preview",
+              "object": "model",
+              "created": 1741391161,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1-1106",
+              "object": "model",
+              "created": 1699053241,
+              "owned_by": "system"
+            },
+            {
+              "id": "davinci-002",
+              "object": "model",
+              "created": 1692634301,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-1106",
+              "object": "model",
+              "created": 1698959748,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-turbo",
+              "object": "model",
+              "created": 1712361441,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-0125-preview",
+              "object": "model",
+              "created": 1706037612,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-instruct",
+              "object": "model",
+              "created": 1692901427,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo",
+              "object": "model",
+              "created": 1677610602,
+              "owned_by": "openai"
+            },
+            {
+              "id": "gpt-4-turbo-preview",
+              "object": "model",
+              "created": 1706037777,
+              "owned_by": "system"
+            },
+            {
+              "id": "chatgpt-4o-latest",
+              "object": "model",
+              "created": 1723515131,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-search-preview-2025-03-11",
+              "object": "model",
+              "created": 1741390858,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-2024-11-20",
+              "object": "model",
+              "created": 1739331543,
+              "owned_by": "system"
+            },
+            {
+              "id": "whisper-1",
+              "object": "model",
+              "created": 1677532384,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "gpt-3.5-turbo-0125",
+              "object": "model",
+              "created": 1706048358,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-2024-05-13",
+              "object": "model",
+              "created": 1715368132,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-3.5-turbo-16k",
+              "object": "model",
+              "created": 1683758102,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "gpt-4-turbo-2024-04-09",
+              "object": "model",
+              "created": 1712601677,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-1106-preview",
+              "object": "model",
+              "created": 1698957206,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-preview",
+              "object": "model",
+              "created": 1725648897,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-0613",
+              "object": "model",
+              "created": 1686588896,
+              "owned_by": "openai"
+            },
+            {
+              "id": "gpt-4o-search-preview",
+              "object": "model",
+              "created": 1741388720,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.5-preview",
+              "object": "model",
+              "created": 1740623059,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.5-preview-2025-02-27",
+              "object": "model",
+              "created": 1740623304,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-search-preview-2025-03-11",
+              "object": "model",
+              "created": 1741388170,
+              "owned_by": "system"
+            },
+            {
+              "id": "tts-1",
+              "object": "model",
+              "created": 1681940951,
+              "owned_by": "openai-internal"
+            },
+            {
+              "id": "omni-moderation-2024-09-26",
+              "object": "model",
+              "created": 1732734466,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-2024-12-17",
+              "object": "model",
+              "created": 1734326976,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1",
+              "object": "model",
+              "created": 1734375816,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-pro",
+              "object": "model",
+              "created": 1742251791,
+              "owned_by": "system"
+            },
+            {
+              "id": "text-embedding-3-small",
+              "object": "model",
+              "created": 1705948997,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-pro-2025-03-19",
+              "object": "model",
+              "created": 1742251504,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o",
+              "object": "model",
+              "created": 1715367049,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini",
+              "object": "model",
+              "created": 1721172741,
+              "owned_by": "system"
+            },
+            {
+              "id": "o3-mini",
+              "object": "model",
+              "created": 1737146383,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-2024-08-06",
+              "object": "model",
+              "created": 1722814719,
+              "owned_by": "system"
+            },
+            {
+              "id": "o3-mini-2025-01-31",
+              "object": "model",
+              "created": 1738010200,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-2024-07-18",
+              "object": "model",
+              "created": 1721172717,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-mini",
+              "object": "model",
+              "created": 1725649008,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-audio-preview-2024-12-17",
+              "object": "model",
+              "created": 1734115920,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-mini-2024-09-12",
+              "object": "model",
+              "created": 1725648979,
+              "owned_by": "system"
+            }
+          ]
+        }
+  recorded_at: Wed, 02 Apr 2025 17:53:38 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:53:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"type":"model","id":"claude-3-7-sonnet-20250219","display_name":"Claude
+        3.7 Sonnet","created_at":"2025-02-24T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20241022","display_name":"Claude
+        3.5 Sonnet (New)","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-haiku-20241022","display_name":"Claude
+        3.5 Haiku","created_at":"2024-10-22T00:00:00Z"},{"type":"model","id":"claude-3-5-sonnet-20240620","display_name":"Claude
+        3.5 Sonnet (Old)","created_at":"2024-06-20T00:00:00Z"},{"type":"model","id":"claude-3-haiku-20240307","display_name":"Claude
+        3 Haiku","created_at":"2024-03-07T00:00:00Z"},{"type":"model","id":"claude-3-opus-20240229","display_name":"Claude
+        3 Opus","created_at":"2024-02-29T00:00:00Z"},{"type":"model","id":"claude-3-sonnet-20240229","display_name":"Claude
+        3 Sonnet","created_at":"2024-02-29T00:00:00Z"},{"type":"model","id":"claude-2.1","display_name":"Claude
+        2.1","created_at":"2023-11-21T00:00:00Z"},{"type":"model","id":"claude-2.0","display_name":"Claude
+        2.0","created_at":"2023-07-11T00:00:00Z"}],"has_more":false,"first_id":"claude-3-7-sonnet-20250219","last_id":"claude-2.0"}'
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+- request:
+    method: get
+    uri: https://generativelanguage.googleapis.com/v1beta/models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 02 Apr 2025 17:53:39 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=86
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "models": [
+            {
+              "name": "models/chat-bison-001",
+              "version": "001",
+              "displayName": "PaLM 2 Chat (Legacy)",
+              "description": "A legacy text-only model optimized for chat conversations",
+              "inputTokenLimit": 4096,
+              "outputTokenLimit": 1024,
+              "supportedGenerationMethods": [
+                "generateMessage",
+                "countMessageTokens"
+              ],
+              "temperature": 0.25,
+              "topP": 0.95,
+              "topK": 40
+            },
+            {
+              "name": "models/text-bison-001",
+              "version": "001",
+              "displayName": "PaLM 2 (Legacy)",
+              "description": "A legacy model that understands text and generates text as an output",
+              "inputTokenLimit": 8196,
+              "outputTokenLimit": 1024,
+              "supportedGenerationMethods": [
+                "generateText",
+                "countTextTokens",
+                "createTunedTextModel"
+              ],
+              "temperature": 0.7,
+              "topP": 0.95,
+              "topK": 40
+            },
+            {
+              "name": "models/embedding-gecko-001",
+              "version": "001",
+              "displayName": "Embedding Gecko",
+              "description": "Obtain a distributed representation of a text.",
+              "inputTokenLimit": 1024,
+              "outputTokenLimit": 1,
+              "supportedGenerationMethods": [
+                "embedText",
+                "countTextTokens"
+              ]
+            },
+            {
+              "name": "models/gemini-1.0-pro-vision-latest",
+              "version": "001",
+              "displayName": "Gemini 1.0 Pro Vision",
+              "description": "The original Gemini 1.0 Pro Vision model version which was optimized for image understanding. Gemini 1.0 Pro Vision was deprecated on July 12, 2024. Move to a newer Gemini version.",
+              "inputTokenLimit": 12288,
+              "outputTokenLimit": 4096,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 0.4,
+              "topP": 1,
+              "topK": 32
+            },
+            {
+              "name": "models/gemini-pro-vision",
+              "version": "001",
+              "displayName": "Gemini 1.0 Pro Vision",
+              "description": "The original Gemini 1.0 Pro Vision model version which was optimized for image understanding. Gemini 1.0 Pro Vision was deprecated on July 12, 2024. Move to a newer Gemini version.",
+              "inputTokenLimit": 12288,
+              "outputTokenLimit": 4096,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 0.4,
+              "topP": 1,
+              "topK": 32
+            },
+            {
+              "name": "models/gemini-1.5-pro-latest",
+              "version": "001",
+              "displayName": "Gemini 1.5 Pro Latest",
+              "description": "Alias that points to the most recent production (non-experimental) release of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens.",
+              "inputTokenLimit": 2000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-pro-001",
+              "version": "001",
+              "displayName": "Gemini 1.5 Pro 001",
+              "description": "Stable version of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens, released in May of 2024.",
+              "inputTokenLimit": 2000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-pro-002",
+              "version": "002",
+              "displayName": "Gemini 1.5 Pro 002",
+              "description": "Stable version of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens, released in September of 2024.",
+              "inputTokenLimit": 2000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-pro",
+              "version": "001",
+              "displayName": "Gemini 1.5 Pro",
+              "description": "Stable version of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens, released in May of 2024.",
+              "inputTokenLimit": 2000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-latest",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash Latest",
+              "description": "Alias that points to the most recent production (non-experimental) release of Gemini 1.5 Flash, our fast and versatile multimodal model for scaling across diverse tasks.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-001",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash 001",
+              "description": "Stable version of Gemini 1.5 Flash, our fast and versatile multimodal model for scaling across diverse tasks, released in May of 2024.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-001-tuning",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash 001 Tuning",
+              "description": "Version of Gemini 1.5 Flash that supports tuning, our fast and versatile multimodal model for scaling across diverse tasks, released in May of 2024.",
+              "inputTokenLimit": 16384,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createTunedModel"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash",
+              "description": "Alias that points to the most recent stable version of Gemini 1.5 Flash, our fast and versatile multimodal model for scaling across diverse tasks.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-002",
+              "version": "002",
+              "displayName": "Gemini 1.5 Flash 002",
+              "description": "Stable version of Gemini 1.5 Flash, our fast and versatile multimodal model for scaling across diverse tasks, released in September of 2024.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-8b",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash-8B",
+              "description": "Stable version of Gemini 1.5 Flash-8B, our smallest and most cost effective Flash model, released in October of 2024.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "createCachedContent",
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-8b-001",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash-8B 001",
+              "description": "Stable version of Gemini 1.5 Flash-8B, our smallest and most cost effective Flash model, released in October of 2024.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "createCachedContent",
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-8b-latest",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash-8B Latest",
+              "description": "Alias that points to the most recent production (non-experimental) release of Gemini 1.5 Flash-8B, our smallest and most cost effective Flash model, released in October of 2024.",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "createCachedContent",
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-8b-exp-0827",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash 8B Experimental 0827",
+              "description": "Experimental release (August 27th, 2024) of Gemini 1.5 Flash-8B, our smallest and most cost effective Flash model. Replaced by Gemini-1.5-flash-8b-001 (stable).",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-1.5-flash-8b-exp-0924",
+              "version": "001",
+              "displayName": "Gemini 1.5 Flash 8B Experimental 0924",
+              "description": "Experimental release (September 24th, 2024) of Gemini 1.5 Flash-8B, our smallest and most cost effective Flash model. Replaced by Gemini-1.5-flash-8b-001 (stable).",
+              "inputTokenLimit": 1000000,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.5-pro-exp-03-25",
+              "version": "2.5-exp-03-25",
+              "displayName": "Gemini 2.5 Pro Experimental 03-25",
+              "description": "Experimental release (March 25th, 2025) of Gemini 2.5 Pro",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-exp",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash Experimental",
+              "description": "Gemini 2.0 Flash Experimental",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "bidiGenerateContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash",
+              "description": "Gemini 2.0 Flash",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-001",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash 001",
+              "description": "Stable version of Gemini 2.0 Flash, our fast and versatile multimodal model for scaling across diverse tasks, released in January of 2025.",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-exp-image-generation",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash (Image Generation) Experimental",
+              "description": "Gemini 2.0 Flash (Image Generation) Experimental",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "bidiGenerateContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-lite-001",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash-Lite 001",
+              "description": "Stable version of Gemini 2.0 Flash Lite",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-lite",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash-Lite",
+              "description": "Gemini 2.0 Flash-Lite",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-lite-preview-02-05",
+              "version": "preview-02-05",
+              "displayName": "Gemini 2.0 Flash-Lite Preview 02-05",
+              "description": "Preview release (February 5th, 2025) of Gemini 2.0 Flash Lite",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-lite-preview",
+              "version": "preview-02-05",
+              "displayName": "Gemini 2.0 Flash-Lite Preview",
+              "description": "Preview release (February 5th, 2025) of Gemini 2.0 Flash Lite",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 40,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-pro-exp",
+              "version": "2.5-exp-03-25",
+              "displayName": "Gemini 2.0 Pro Experimental",
+              "description": "Experimental release (March 25th, 2025) of Gemini 2.5 Pro",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-pro-exp-02-05",
+              "version": "2.5-exp-03-25",
+              "displayName": "Gemini 2.0 Pro Experimental 02-05",
+              "description": "Experimental release (March 25th, 2025) of Gemini 2.5 Pro",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-exp-1206",
+              "version": "2.5-exp-03-25",
+              "displayName": "Gemini Experimental 1206",
+              "description": "Experimental release (March 25th, 2025) of Gemini 2.5 Pro",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-thinking-exp-01-21",
+              "version": "2.0-exp-01-21",
+              "displayName": "Gemini 2.0 Flash Thinking Experimental 01-21",
+              "description": "Experimental release (January 21st, 2025) of Gemini 2.0 Flash Thinking",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 0.7,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-thinking-exp",
+              "version": "2.0-exp-01-21",
+              "displayName": "Gemini 2.0 Flash Thinking Experimental 01-21",
+              "description": "Experimental release (January 21st, 2025) of Gemini 2.0 Flash Thinking",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 0.7,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.0-flash-thinking-exp-1219",
+              "version": "2.0",
+              "displayName": "Gemini 2.0 Flash Thinking Experimental",
+              "description": "Gemini 2.0 Flash Thinking Experimental",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 0.7,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/learnlm-1.5-pro-experimental",
+              "version": "001",
+              "displayName": "LearnLM 1.5 Pro Experimental",
+              "description": "Alias that points to the most recent stable version of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens.",
+              "inputTokenLimit": 32767,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemma-3-4b-it",
+              "version": "001",
+              "displayName": "Gemma 3 4B",
+              "inputTokenLimit": 32768,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64
+            },
+            {
+              "name": "models/gemma-3-12b-it",
+              "version": "001",
+              "displayName": "Gemma 3 12B",
+              "inputTokenLimit": 32768,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64
+            },
+            {
+              "name": "models/gemma-3-27b-it",
+              "version": "001",
+              "displayName": "Gemma 3 27B",
+              "inputTokenLimit": 131072,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64
+            },
+            {
+              "name": "models/embedding-001",
+              "version": "001",
+              "displayName": "Embedding 001",
+              "description": "Obtain a distributed representation of a text.",
+              "inputTokenLimit": 2048,
+              "outputTokenLimit": 1,
+              "supportedGenerationMethods": [
+                "embedContent"
+              ]
+            },
+            {
+              "name": "models/text-embedding-004",
+              "version": "004",
+              "displayName": "Text Embedding 004",
+              "description": "Obtain a distributed representation of a text.",
+              "inputTokenLimit": 2048,
+              "outputTokenLimit": 1,
+              "supportedGenerationMethods": [
+                "embedContent"
+              ]
+            },
+            {
+              "name": "models/gemini-embedding-exp-03-07",
+              "version": "exp-03-07",
+              "displayName": "Gemini Embedding Experimental 03-07",
+              "description": "Obtain a distributed representation of a text.",
+              "inputTokenLimit": 8192,
+              "outputTokenLimit": 1,
+              "supportedGenerationMethods": [
+                "embedContent"
+              ]
+            },
+            {
+              "name": "models/gemini-embedding-exp",
+              "version": "exp-03-07",
+              "displayName": "Gemini Embedding Experimental",
+              "description": "Obtain a distributed representation of a text.",
+              "inputTokenLimit": 8192,
+              "outputTokenLimit": 1,
+              "supportedGenerationMethods": [
+                "embedContent"
+              ]
+            },
+            {
+              "name": "models/aqa",
+              "version": "001",
+              "displayName": "Model that performs Attributed Question Answering.",
+              "description": "Model trained to return answers to questions that are grounded in provided sources, along with estimating answerable probability.",
+              "inputTokenLimit": 7168,
+              "outputTokenLimit": 1024,
+              "supportedGenerationMethods": [
+                "generateAnswer"
+              ],
+              "temperature": 0.2,
+              "topP": 1,
+              "topK": 40
+            },
+            {
+              "name": "models/imagen-3.0-generate-002",
+              "version": "002",
+              "displayName": "Imagen 3.0 002 model",
+              "description": "Vertex served Imagen 3.0 002 model",
+              "inputTokenLimit": 480,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "predict"
+              ]
+            }
+          ]
+        }
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+- request:
+    method: get
+    uri: https://api.deepseek.com/models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:53:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - eb9c177a0c3141beac66e5213c60ac6a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"object":"list","data":[{"id":"deepseek-chat","object":"model","owned_by":"deepseek"},{"id":"deepseek-reasoner","object":"model","owned_by":"deepseek"}]}'
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+- request:
+    method: get
+    uri: https://bedrock.<AWS_REGION>.amazonaws.com/foundation-models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250402T175339Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5f69d324c05740f272e7c07046b973076335bd284cd150f03901ba9b30a62f4e
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 02 Apr 2025 17:53:40 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '45253'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 62d4de6c-de54-44b7-b02e-51731449128a
+    body:
+      encoding: UTF-8
+      string: '{"modelSummaries":[{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-tg1-large","modelId":"amazon.titan-tg1-large","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text Large","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-g1-text-02","modelId":"amazon.titan-embed-g1-text-02","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text Embeddings v2","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":["FINE_TUNING","CONTINUED_PRE_TRAINING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-text-lite-v1:0:4k","modelId":"amazon.titan-text-lite-v1:0:4k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text G1 - Lite","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-text-lite-v1","modelId":"amazon.titan-text-lite-v1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text G1 - Lite","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING","CONTINUED_PRE_TRAINING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-text-express-v1:0:8k","modelId":"amazon.titan-text-express-v1:0:8k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text G1 - Express","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-text-express-v1","modelId":"amazon.titan-text-express-v1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text G1 - Express","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":true},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE","VIDEO"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.nova-pro-v1:0","modelId":"amazon.nova-pro-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Nova
+        Pro","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":true},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE","VIDEO"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.nova-lite-v1:0","modelId":"amazon.nova-lite-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Nova
+        Lite","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":true},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.nova-micro-v1:0","modelId":"amazon.nova-micro-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Nova
+        Micro","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-text-v1:2:8k","modelId":"amazon.titan-embed-text-v1:2:8k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Embeddings G1 - Text","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-text-v1","modelId":"amazon.titan-embed-text-v1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Embeddings G1 - Text","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-text-v2:0","modelId":"amazon.titan-embed-text-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Text Embeddings V2","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":false},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-image-v1:0","modelId":"amazon.titan-embed-image-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Multimodal Embeddings G1","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-embed-image-v1","modelId":"amazon.titan-embed-image-v1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Multimodal Embeddings G1","outputModalities":["EMBEDDING"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-image-generator-v1:0","modelId":"amazon.titan-image-generator-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Image Generator G1","outputModalities":["IMAGE"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-image-generator-v1","modelId":"amazon.titan-image-generator-v1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Image Generator G1","outputModalities":["IMAGE"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED","ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-image-generator-v2:0","modelId":"amazon.titan-image-generator-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
+        Image Generator G1 v2","outputModalities":["IMAGE"],"providerName":"Amazon","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.rerank-v1:0","modelId":"amazon.rerank-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Rerank
+        1.0","outputModalities":["TEXT"],"providerName":"Amazon","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-diffusion-xl-v1:0","modelId":"stability.stable-diffusion-xl-v1:0","modelLifecycle":{"status":"LEGACY"},"modelName":"SDXL
+        1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-diffusion-xl-v1","modelId":"stability.stable-diffusion-xl-v1","modelLifecycle":{"status":"LEGACY"},"modelName":"SDXL
+        1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.sd3-large-v1:0","modelId":"stability.sd3-large-v1:0","modelLifecycle":{"status":"LEGACY"},"modelName":"SD3
+        Large 1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.sd3-5-large-v1:0","modelId":"stability.sd3-5-large-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Stable
+        Diffusion 3.5 Large","outputModalities":["IMAGE"],"providerName":"Stability
+        AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-image-core-v1:0","modelId":"stability.stable-image-core-v1:0","modelLifecycle":{"status":"LEGACY"},"modelName":"Stable
+        Image Core 1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-image-core-v1:1","modelId":"stability.stable-image-core-v1:1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Stable
+        Image Core 1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-image-ultra-v1:0","modelId":"stability.stable-image-ultra-v1:0","modelLifecycle":{"status":"LEGACY"},"modelName":"Stable
+        Image Ultra 1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/stability.stable-image-ultra-v1:1","modelId":"stability.stable-image-ultra-v1:1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Stable
+        Image Ultra 1.0","outputModalities":["IMAGE"],"providerName":"Stability AI","responseStreamingSupported":null},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:18k","modelId":"anthropic.claude-3-5-sonnet-20241022-v2:0:18k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet v2","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:51k","modelId":"anthropic.claude-3-5-sonnet-20241022-v2:0:51k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet v2","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:200k","modelId":"anthropic.claude-3-5-sonnet-20241022-v2:0:200k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet v2","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0","modelId":"anthropic.claude-3-5-sonnet-20241022-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet v2","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":true},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-7-sonnet-20250219-v1:0","modelId":"anthropic.claude-3-7-sonnet-20250219-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.7 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":true},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0","modelId":"anthropic.claude-3-5-haiku-20241022-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Haiku","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-instant-v1:2:100k","modelId":"anthropic.claude-instant-v1:2:100k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude
+        Instant","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-instant-v1","modelId":"anthropic.claude-instant-v1","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude
+        Instant","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2:0:18k","modelId":"anthropic.claude-v2:0:18k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2:0:100k","modelId":"anthropic.claude-v2:0:100k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2:1:18k","modelId":"anthropic.claude-v2:1:18k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2:1:200k","modelId":"anthropic.claude-v2:1:200k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2:1","modelId":"anthropic.claude-v2:1","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-v2","modelId":"anthropic.claude-v2","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:28k","modelId":"anthropic.claude-3-sonnet-20240229-v1:0:28k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude
+        3 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:200k","modelId":"anthropic.claude-3-sonnet-20240229-v1:0:200k","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude
+        3 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0","modelId":"anthropic.claude-3-sonnet-20240229-v1:0","modelLifecycle":{"status":"LEGACY"},"modelName":"Claude
+        3 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-haiku-20240307-v1:0:48k","modelId":"anthropic.claude-3-haiku-20240307-v1:0:48k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Haiku","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING","DISTILLATION"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-haiku-20240307-v1:0:200k","modelId":"anthropic.claude-3-haiku-20240307-v1:0:200k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Haiku","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-haiku-20240307-v1:0","modelId":"anthropic.claude-3-haiku-20240307-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Haiku","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-opus-20240229-v1:0:12k","modelId":"anthropic.claude-3-opus-20240229-v1:0:12k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Opus","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-opus-20240229-v1:0:28k","modelId":"anthropic.claude-3-opus-20240229-v1:0:28k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Opus","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-opus-20240229-v1:0:200k","modelId":"anthropic.claude-3-opus-20240229-v1:0:200k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Opus","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-opus-20240229-v1:0","modelId":"anthropic.claude-3-opus-20240229-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3 Opus","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:18k","modelId":"anthropic.claude-3-5-sonnet-20240620-v1:0:18k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:51k","modelId":"anthropic.claude-3-5-sonnet-20240620-v1:0:51k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:200k","modelId":"anthropic.claude-3-5-sonnet-20240620-v1:0:200k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND","INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0","modelId":"anthropic.claude-3-5-sonnet-20240620-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Claude
+        3.5 Sonnet","outputModalities":["TEXT"],"providerName":"Anthropic","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-text-v14:7:4k","modelId":"cohere.command-text-v14:7:4k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-text-v14","modelId":"cohere.command-text-v14","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-r-v1:0","modelId":"cohere.command-r-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command
+        R","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-r-plus-v1:0","modelId":"cohere.command-r-plus-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command
+        R+","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-light-text-v14:7:4k","modelId":"cohere.command-light-text-v14:7:4k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command
+        Light","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.command-light-text-v14","modelId":"cohere.command-light-text-v14","modelLifecycle":{"status":"ACTIVE"},"modelName":"Command
+        Light","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.embed-english-v3:0:512","modelId":"cohere.embed-english-v3:0:512","modelLifecycle":{"status":"ACTIVE"},"modelName":"Embed
+        English","outputModalities":["EMBEDDING"],"providerName":"Cohere","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.embed-english-v3","modelId":"cohere.embed-english-v3","modelLifecycle":{"status":"ACTIVE"},"modelName":"Embed
+        English","outputModalities":["EMBEDDING"],"providerName":"Cohere","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.embed-multilingual-v3:0:512","modelId":"cohere.embed-multilingual-v3:0:512","modelLifecycle":{"status":"ACTIVE"},"modelName":"Embed
+        Multilingual","outputModalities":["EMBEDDING"],"providerName":"Cohere","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.embed-multilingual-v3","modelId":"cohere.embed-multilingual-v3","modelLifecycle":{"status":"ACTIVE"},"modelName":"Embed
+        Multilingual","outputModalities":["EMBEDDING"],"providerName":"Cohere","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/cohere.rerank-v3-5:0","modelId":"cohere.rerank-v3-5:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Rerank
+        3.5","outputModalities":["TEXT"],"providerName":"Cohere","responseStreamingSupported":false},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/deepseek.r1-v1:0","modelId":"deepseek.r1-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"DeepSeek-R1","outputModalities":["TEXT"],"providerName":"DeepSeek","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-8b-instruct-v1:0","modelId":"meta.llama3-8b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3 8B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-70b-instruct-v1:0","modelId":"meta.llama3-70b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3 70B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING","DISTILLATION"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-1-8b-instruct-v1:0:128k","modelId":"meta.llama3-1-8b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.1 8B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-1-8b-instruct-v1:0","modelId":"meta.llama3-1-8b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.1 8B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING","DISTILLATION"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-1-70b-instruct-v1:0:128k","modelId":"meta.llama3-1-70b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.1 70B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-1-70b-instruct-v1:0","modelId":"meta.llama3-1-70b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.1 70B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-1-405b-instruct-v1:0","modelId":"meta.llama3-1-405b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.1 405B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-11b-instruct-v1:0:128k","modelId":"meta.llama3-2-11b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 11B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-11b-instruct-v1:0","modelId":"meta.llama3-2-11b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 11B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-90b-instruct-v1:0:128k","modelId":"meta.llama3-2-90b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 90B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-90b-instruct-v1:0","modelId":"meta.llama3-2-90b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 90B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-1b-instruct-v1:0:128k","modelId":"meta.llama3-2-1b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 1B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-1b-instruct-v1:0","modelId":"meta.llama3-2-1b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 1B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":["FINE_TUNING"],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["PROVISIONED"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-3b-instruct-v1:0:128k","modelId":"meta.llama3-2-3b-instruct-v1:0:128k","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 3B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-2-3b-instruct-v1:0","modelId":"meta.llama3-2-3b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.2 3B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":true},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/meta.llama3-3-70b-instruct-v1:0","modelId":"meta.llama3-3-70b-instruct-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Llama
+        3.3 70B Instruct","outputModalities":["TEXT"],"providerName":"Meta","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-7b-instruct-v0:2","modelId":"mistral.mistral-7b-instruct-v0:2","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
+        7B Instruct","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mixtral-8x7b-instruct-v0:1","modelId":"mistral.mixtral-8x7b-instruct-v0:1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mixtral
+        8x7B Instruct","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-large-2402-v1:0","modelId":"mistral.mistral-large-2402-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
+        Large (24.02)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-large-2407-v1:0","modelId":"mistral.mistral-large-2407-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
+        Large (24.07)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/luma.ray-v2:0","modelId":"luma.ray-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Ray
+        v2","outputModalities":["VIDEO"],"providerName":"Luma AI","responseStreamingSupported":false}]}'
+  recorded_at: Wed, 02 Apr 2025 17:53:40 GMT
+recorded_with: VCR 6.3.1

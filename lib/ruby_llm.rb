@@ -16,8 +16,12 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
-  'perplexity' => 'Perplexity'
+  'perplexity' => 'Perplexity',
+  'bedrock' => 'Bedrock'
 )
+loader.ignore("#{__dir__}/tasks")
+loader.ignore("#{__dir__}/ruby_llm/railtie")
+loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -27,8 +31,8 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil)
-      Chat.new(model: model)
+    def chat(model: nil, provider: nil, assume_model_exists: false)
+      Chat.new(model:, provider:, assume_model_exists:)
     end
 
     def embed(...)
@@ -70,6 +74,7 @@ RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
+RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

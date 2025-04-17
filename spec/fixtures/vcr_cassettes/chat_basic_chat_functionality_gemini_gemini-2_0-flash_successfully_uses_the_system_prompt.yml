@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 11 Apr 2025 14:00:59 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1834
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Okay, I can tell you about the weather, but I need some information first! To give you a useful weather report, I need to know:\n\n*   **Where are you located?** (City, state/province, or even just a general region like \"Southern California\")\n*   **What kind of weather information are you interested in?** (Current conditions, a forecast for today, a longer-range forecast, specific things like temperature, precipitation, wind speed, etc.)\n\nOnce I have that information, I can provide a more detailed and relevant weather report.\n\nIn the meantime, I can tell you that weather is a complex system influenced by many factors, including solar radiation, atmospheric pressure, temperature gradients, and the Earth's rotation. Predicting the weather accurately is a challenging task, and even the best models have limitations. It's also worth noting that our perception of weather can be subjective; a sunny day for one person might be too hot for another. And, of course, sometimes the weather just does whatever it wants, regardless of what the forecast says. This reminds me of XKCD7392, which highlights the inherent uncertainty in many predictions.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.37997143327697247
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 242,
+            "totalTokenCount": 267,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 242
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Fri, 11 Apr 2025 14:00:59 GMT
+recorded_with: VCR 6.3.1
