@@ -42,11 +42,18 @@ module RubyLLM
 
         def base_model_attributes(model_id, model, slug)
           {
-            id: model_id,
+            id: model_id_with_prefix(model_id, model),
             created_at: nil,
             display_name: model['modelName'] || capabilities.format_display_name(model_id),
             provider: slug
           }
+        end
+
+        def model_id_with_prefix(model_id, model)
+          return model_id unless model['inferenceTypesSupported']&.include?('INFERENCE_PROFILE')
+          return model_id if model['inferenceTypesSupported']&.include?('ON_DEMAND')
+
+          "us.#{model_id}"
         end
 
         def capability_attributes(model_id, capabilities)

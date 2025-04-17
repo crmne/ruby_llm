@@ -7,303 +7,230 @@ permalink: /guides/error-handling
 ---
 
 # Error Handling
+{: .no_toc }
 
-Proper error handling is crucial when working with AI services. RubyLLM provides a comprehensive error handling system that helps you build robust applications.
+Working with external AI services inevitably involves handling potential errors, from network issues to API key problems or rate limits. RubyLLM provides a structured error hierarchy and automatic retries to help you build robust applications.
+{: .fs-6 .fw-300 }
 
-## Error Hierarchy
+## Table of contents
+{: .no_toc .text-delta }
 
-RubyLLM uses a structured error hierarchy:
+1. TOC
+{:toc}
+
+---
+
+After reading this guide, you will know:
+
+*   RubyLLM's error hierarchy.
+*   How to rescue specific types of errors.
+*   How to access details from the original API response.
+*   How errors are handled during streaming.
+*   Best practices for handling errors within Tools.
+*   RubyLLM's automatic retry behavior.
+*   How to enable debug logging.
+
+## RubyLLM Error Hierarchy
+
+All errors raised directly by RubyLLM inherit from `RubyLLM::Error`. Specific errors map to common HTTP status codes or library-specific issues:
 
 ```ruby
-RubyLLM::Error                    # Base error class
-    RubyLLM::BadRequestError      # Invalid request parameters (400)
-    RubyLLM::UnauthorizedError    # API key issues (401)
-    RubyLLM::PaymentRequiredError # Billing issues (402)
-    RubyLLM::ForbiddenError       # Permission issues (403)
-    RubyLLM::RateLimitError       # Rate limit exceeded (429)
-    RubyLLM::ServerError          # Provider server error (500)
-    RubyLLM::ServiceUnavailableError # Service unavailable (502/503)
-    RubyLLM::OverloadedError      # Service overloaded (529)
-    RubyLLM::ModelNotFoundError   # Invalid model ID
-    RubyLLM::InvalidRoleError     # Invalid message role
+RubyLLM::Error                    # Base error class for API/network issues
+    RubyLLM::BadRequestError      # 400: Invalid request parameters
+    RubyLLM::UnauthorizedError    # 401: API key issues
+    RubyLLM::PaymentRequiredError # 402: Billing issues
+    RubyLLM::ForbiddenError       # 403: Permission issues
+    RubyLLM::RateLimitError       # 429: Rate limit exceeded
+    RubyLLM::ServerError          # 500: Provider server error
+    RubyLLM::ServiceUnavailableError # 502/503: Service unavailable
+    RubyLLM::OverloadedError      # 529: Service overloaded (Specific providers)
+
+# Non-API Errors (inherit from StandardError)
+RubyLLM::ConfigurationError   # Missing required configuration (e.g., API key)
+RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
+RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
+RubyLLM::UnsupportedFunctionsError # Tried to use tools with an unsupported model
 ```
 
 ## Basic Error Handling
 
-Wrap your AI interactions in `begin/rescue` blocks:
+The fundamental way to handle errors is using Ruby's `begin`/`rescue` block. Catching the base `RubyLLM::Error` will handle most API-related issues.
 
 ```ruby
 begin
   chat = RubyLLM.chat
-  response = chat.ask "What's the capital of France?"
+  response = chat.ask "Translate 'hello' to French."
   puts response.content
 rescue RubyLLM::Error => e
-  puts "AI interaction failed: #{e.message}"
+  # Generic handling for API errors
+  puts "An API error occurred: #{e.message}"
+  # Log the error for debugging
+  # logger.error "RubyLLM API Error: #{e.class} - #{e.message}"
+rescue RubyLLM::ConfigurationError => e
+  # Handle missing configuration
+  puts "Configuration missing: #{e.message}"
+  # Abort or prompt for configuration
 end
 ```
 
 ## Handling Specific Errors
 
-Target specific error types for more precise handling:
+For more granular control, rescue specific error classes. This allows you to implement different recovery strategies based on the error type.
 
 ```ruby
 begin
   chat = RubyLLM.chat
-  response = chat.ask "Generate a detailed analysis"
+  response = chat.ask "Generate a complex report."
 rescue RubyLLM::UnauthorizedError
-  puts "Please check your API credentials"
+  puts "Authentication failed. Please check your API key configuration."
+  # Maybe exit or redirect to config settings
 rescue RubyLLM::PaymentRequiredError
-  puts "Payment required - please check your account balance"
+  puts "Payment required. Please check your provider account balance or plan."
+  # Notify admin or user
 rescue RubyLLM::RateLimitError
-  puts "Rate limit exceeded - please try again later"
+  puts "Rate limit hit. Please wait a moment before trying again."
+  # Implement backoff/retry logic (though RubyLLM has some built-in retries)
 rescue RubyLLM::ServiceUnavailableError
-  puts "Service temporarily unavailable - please try again later"
+  puts "The AI service is temporarily unavailable. Please try again later."
+  # Maybe offer a fallback or notify user
 rescue RubyLLM::BadRequestError => e
-  puts "Bad request: #{e.message}"
+  puts "Invalid request sent to the API: #{e.message}"
+  # Check the data being sent
+rescue RubyLLM::ModelNotFoundError => e
+  puts "Error: #{e.message}. Check available models with RubyLLM.models.all"
 rescue RubyLLM::Error => e
-  puts "Other error: #{e.message}"
+  # Catch any other API errors
+  puts "An unexpected API error occurred: #{e.message}"
 end
 ```
 
-## API Response Details
+## Accessing API Response Details
 
-The `Error` class contains the original response, allowing for detailed error inspection:
+Instances of `RubyLLM::Error` (and its subclasses related to API responses) hold the original `Faraday::Response` object in the `response` attribute. This can be useful for debugging or extracting provider-specific error codes.
+
+```ruby
+begin
+  chat = RubyLLM.chat(model: 'gpt-4.1-nano') # Assume this requires a specific org sometimes
+  response = chat.ask "Some specific query"
+rescue RubyLLM::ForbiddenError => e
+  puts "Access forbidden: #{e.message}"
+  # Inspect the raw response body for provider-specific details
+  if e.response&.body&.include?('invalid_organization')
+    puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
+  end
+  puts "Status Code: #{e.response&.status}"
+  # puts "Full Response Body: #{e.response&.body}" # For deep debugging
+end
+```
+
+## Error Handling During Streaming
+
+When using streaming with a block, errors can occur *during* the stream after some chunks have already been processed. The `ask` method will raise the error *after* the block execution finishes or is interrupted by the error.
 
 ```ruby
 begin
   chat = RubyLLM.chat
-  chat.ask "Some question"
-rescue RubyLLM::Error => e
-  puts "Error: #{e.message}"
-  puts "Status: #{e.response.status}"
-  puts "Body: #{e.response.body}"
-end
-```
-
-## Error Handling with Streaming
-
-When using streaming, errors can occur during the stream:
-
-```ruby
-begin
-  chat = RubyLLM.chat
-  chat.ask "Generate a long response" do |chunk|
+  accumulated_content = ""
+  chat.ask "Generate a very long story..." do |chunk|
     print chunk.content
+    accumulated_content << chunk.content
+    # Simulate an error occurring mid-stream (e.g., network drop)
+    # In a real scenario, the error would be raised by the underlying HTTP request
   end
+  puts "\nStream completed successfully."
+rescue RubyLLM::RateLimitError
+  puts "\nStream interrupted by rate limit. Partial content received:"
+  puts accumulated_content
 rescue RubyLLM::Error => e
-  puts "\nStreaming error: #{e.message}"
+  puts "\nStream failed: #{e.message}. Partial content received:"
+  puts accumulated_content
 end
 ```
 
-## Handling Tool Errors
+Your block will execute for chunks received *before* the error. The final return value of `ask` when an error occurs during streaming might be unpredictable (often `nil`), so rely on the rescued exception for error handling.
 
-There are two kinds of errors when working with tools: those the LLM should know about and retry, and those that should bubble up to your application code. Let's handle them appropriately:
+## Handling Errors Within Tools
 
-```ruby
-# Error handling within tools
-class Weather < RubyLLM::Tool
-  description "Gets current weather for a location"
-  param :latitude, desc: "Latitude (e.g., 52.5200)"
-  param :longitude, desc: "Longitude (e.g., 13.4050)"
+When building [Tools]({% link guides/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
 
-  def execute(latitude:, longitude:)
-    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
+1.  **Return Error to LLM:** If the error is something the LLM might be able to recover from (e.g., invalid parameters provided by the LLM, temporary lookup failure), return a Hash containing an `:error` key. The LLM will see this error message as the tool's output and may try again or use a different approach.
 
-    response = Faraday.get(url)
-    JSON.parse(response.body)
-  rescue Faraday::ClientError => e
-    # Return errors the LLM should know about and can retry
-    { error: e.message }
-  end
-end
-```
+    ```ruby
+    class WeatherTool < RubyLLM::Tool
+      # ... params ...
+      def execute(location:)
+        if location.blank?
+          return { error: "Location cannot be blank. Please provide a city name." }
+        end
+        # ... perform API call ...
+      rescue Faraday::TimeoutError
+        { error: "Weather API timed out. Please try again later." }
+      end
+    end
+    ```
 
-Handle program-ending errors at the application level:
+2.  **Raise Error for Application:** If the error indicates a problem with the tool itself or the application's state (e.g., database connection lost, configuration error, unrecoverable external API failure), `raise` an exception as normal. This will halt the RubyLLM interaction and bubble up to your application's main error handling (`begin/rescue`).
 
-```ruby
-begin
-  chat = RubyLLM.chat.with_tool(Calculator)
-  chat.ask "What's 1/0?"
-rescue RubyLLM::Error => e
-  puts "Error using tools: #{e.message}"
-end
-```
+    ```ruby
+    class DatabaseQueryTool < RubyLLM::Tool
+      # ... params ...
+      def execute(query:)
+        User.find_by_sql(query) # Example query
+      rescue ActiveRecord::ConnectionNotEstablished => e
+        # This is likely an application-level problem, not something the LLM can fix.
+        raise e # Let the application's error handling take over.
+      rescue StandardError => e
+        # Maybe return less critical errors to the LLM
+        { error: "Database query failed: #{e.message}" }
+      end
+    end
+    ```
 
-Return errors to the LLM when it should try a different approach (like invalid parameters or temporary failures), but let serious problems bubble up to be handled by your application's error tracking. The LLM is smart enough to work with error messages and try alternative approaches, but it shouldn't have to deal with program-ending problems.
+Distinguishing between these helps the LLM work effectively with recoverable issues while ensuring critical application failures are handled appropriately.
 
 ## Automatic Retries
 
-RubyLLM automatically retries on certain transient errors:
+RubyLLM's underlying HTTP client (Faraday with `faraday-retry`) automatically retries requests that fail due to certain transient network or server issues. This helps improve reliability without requiring manual retry logic in most cases.
+
+Retries are attempted for:
+
+*   Network timeouts (`Timeout::Error`, `Faraday::TimeoutError`, `Errno::ETIMEDOUT`)
+*   Connection failures (`Faraday::ConnectionFailed`)
+*   Rate limit errors (`RubyLLM::RateLimitError` / HTTP 429)
+*   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
+
+You can configure retry behavior via `RubyLLM.configure`:
 
 ```ruby
-# Configure retry behavior
 RubyLLM.configure do |config|
-  config.max_retries = 5 # Maximum number of retries
+  config.max_retries = 5 # Default: 3
+  config.retry_interval = 0.5 # Default: 0.1
+  # config.retry_backoff_factor = 2 # Default: 2
+  # config.retry_interval_randomness = 0.5 # Default: 0.5
 end
 ```
 
-The following errors trigger automatic retries:
-- Network timeouts
-- Connection failures
-- Rate limit errors (429)
-- Server errors (500, 502, 503, 504)
+## Debugging
 
-## Provider-Specific Errors
+If you encounter unexpected errors or behavior, enable debug logging by setting the `RUBYLLM_DEBUG` environment variable:
 
-Each provider may return slightly different error messages. RubyLLM normalizes these into standard error types, but the original error details are preserved:
-
-```ruby
-begin
-  chat = RubyLLM.chat
-  chat.ask "Some question"
-rescue RubyLLM::Error => e
-  if e.response.body.include?("organization_quota_exceeded")
-    puts "Your organization's quota has been exceeded"
-  else
-    puts "Error: #{e.message}"
-  end
-end
+```bash
+export RUBYLLM_DEBUG=true
+# Now run your Ruby script or Rails server
 ```
 
-## Error Handling in Rails
-
-When using RubyLLM in a Rails application, you can handle errors at different levels:
-
-### Controller Level
-
-```ruby
-class ChatController < ApplicationController
-  rescue_from RubyLLM::Error, with: :handle_ai_error
-
-  def create
-    @chat = Chat.create!(chat_params)
-    @chat.ask(params[:message])
-    redirect_to @chat
-  end
-
-  private
-
-  def handle_ai_error(exception)
-    flash[:error] = "AI service error: #{exception.message}"
-    redirect_to chats_path
-  end
-end
-```
-
-### Background Job Level
-
-```ruby
-class AiChatJob < ApplicationJob
-  retry_on RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError,
-           wait: :exponentially_longer, attempts: 5
-
-  discard_on RubyLLM::UnauthorizedError, RubyLLM::BadRequestError
-
-  def perform(chat_id, message)
-    chat = Chat.find(chat_id)
-    chat.ask(message)
-  rescue RubyLLM::Error => e
-    # Log error and notify user
-    ErrorNotifier.notify(chat.user, "AI chat error: #{e.message}")
-  end
-end
-```
-
-## Monitoring Errors
-
-For production applications, monitor AI service errors:
-
-```ruby
-# Custom error handler
-module AiErrorMonitoring
-  def self.track_error(error, context = {})
-    # Record error in your monitoring system
-    Sentry.capture_exception(error, extra: context)
-
-    # Log details
-    Rails.logger.error "[AI Error] #{error.class}: #{error.message}"
-    Rails.logger.error "Context: #{context.inspect}"
-
-    # Return or re-raise as needed
-    error
-  end
-end
-
-# Usage
-begin
-  chat.ask "Some question"
-rescue RubyLLM::Error => e
-  AiErrorMonitoring.track_error(e, {
-    model: chat.model.id,
-    tokens: chat.messages.sum(&:input_tokens)
-  })
-
-  # Show appropriate message to user
-  flash[:error] = "Sorry, we encountered an issue with our AI service"
-end
-```
-
-## Graceful Degradation
-
-For critical applications, implement fallback strategies:
-
-```ruby
-def get_ai_response(question, fallback_message = nil)
-  begin
-    chat = RubyLLM.chat
-    response = chat.ask(question)
-    response.content
-  rescue RubyLLM::Error => e
-    Rails.logger.error "AI error: #{e.message}"
-
-    # Fallback to alternative model
-    begin
-      fallback_chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
-      fallback_response = fallback_chat.ask(question)
-      fallback_response.content
-    rescue RubyLLM::Error => e2
-      Rails.logger.error "Fallback AI error: #{e2.message}"
-      fallback_message || "Sorry, our AI service is currently unavailable"
-    end
-  end
-end
-```
+This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.
 
 ## Best Practices
 
-1. **Always wrap AI calls in error handling** - Don't assume AI services will always be available
-2. **Implement timeouts** - Configure appropriate request timeouts
-3. **Use background jobs** - Process AI requests asynchronously when possible
-4. **Set up monitoring** - Track error rates and response times
-5. **Have fallback content** - Prepare fallback responses when AI services fail
-6. **Gracefully degrade** - Implement multiple fallback strategies
-7. **Communicate to users** - Provide clear error messages when AI services are unavailable
-
-## Error Recovery
-
-When dealing with errors, consider recovery strategies:
-
-```ruby
-MAX_RETRIES = 3
-
-def ask_with_recovery(chat, question, retries = 0)
-  chat.ask(question)
-rescue RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError => e
-  if retries < MAX_RETRIES
-    # Exponential backoff
-    sleep_time = 2 ** retries
-    puts "Error: #{e.message}. Retrying in #{sleep_time} seconds..."
-    sleep sleep_time
-    ask_with_recovery(chat, question, retries + 1)
-  else
-    raise e
-  end
-end
-```
+*   **Be Specific:** Rescue specific error classes whenever possible for tailored recovery logic.
+*   **Log Errors:** Always log errors, including relevant context (model used, input data if safe) for debugging. Consider using the `response` attribute on `RubyLLM::Error` for more details.
+*   **User Feedback:** Provide clear, user-friendly feedback when an AI operation fails. Avoid exposing raw API error messages directly.
+*   **Fallbacks:** Consider fallback mechanisms (e.g., trying a different model, using cached data, providing a default response) if the AI service is critical to your application's function.
+*   **Monitor:** Track the frequency of different error types in production to identify recurring issues with providers or your implementation.
 
 ## Next Steps
 
-Now that you understand error handling in RubyLLM, you might want to explore:
-
-- [Rails Integration]({% link guides/rails.md %}) for using RubyLLM in Rails applications
-- [Tools]({% link guides/tools.md %}) for using tools with error handling
+*   [Using Tools]({% link guides/tools.md %})
+*   [Streaming Responses]({% link guides/streaming.md %})
+*   [Rails Integration]({% link guides/rails.md %})

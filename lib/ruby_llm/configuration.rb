@@ -12,6 +12,7 @@ module RubyLLM
   class Configuration
     # Provider-specific configuration
     attr_accessor :openai_api_key,
+                  :openai_api_base,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
@@ -40,7 +41,7 @@ module RubyLLM
       @retry_interval_randomness = 0.5
 
       # Default models
-      @default_model = 'gpt-4o-mini'
+      @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
     end
