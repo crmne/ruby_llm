@@ -28,9 +28,9 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: data.dig('message', 'content'),
+            model_id: data['model'],
             input_tokens: data['prompt_eval_count'].to_i,
             output_tokens: data['eval_count'].to_i,
-            model_id: data['model'],
             tool_calls: parse_tool_calls(data.dig('message', 'tool_calls'))
           )
         end
