@@ -21,11 +21,6 @@ A delightful Ruby way to work with AI through a unified interface to OpenAI, Ant
 
 ---
 
-{: .warning-title }
-> Coming in v1.1.0
->
-> Amazon Bedrock support is coming in v1.1.0
-
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em; margin-bottom: 1em">
   <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
   <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
@@ -139,7 +134,7 @@ claude_chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 ## Have great conversations
 
 ```ruby
-# Start a chat with the default model (GPT-4o-mini)
+# Start a chat with the default model (gpt-4.1-nano)
 chat = RubyLLM.chat
 
 # Or specify what you want
@@ -182,7 +177,7 @@ class ToolCall < ApplicationRecord
 end
 
 # In a background job
-chat = Chat.create!(model_id: "gpt-4o-mini")
+chat = Chat.create!(model_id: "gpt-4.1-nano")
 chat.ask("What's your favorite Ruby gem?") do |chunk|
   Turbo::StreamsChannel.broadcast_append_to(
     chat,

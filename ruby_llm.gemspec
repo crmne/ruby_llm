@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'event_stream_parser', '~> 1'
   spec.add_dependency 'faraday', '~> 2'
   spec.add_dependency 'faraday-multipart', '~> 1'
+  spec.add_dependency 'faraday-net_http', '~> 3'
   spec.add_dependency 'faraday-retry', '~> 2'
   spec.add_dependency 'zeitwerk', '~> 2'
 end

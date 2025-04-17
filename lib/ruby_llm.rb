@@ -30,8 +30,8 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil, provider: nil)
-      Chat.new(model: model, provider: provider)
+    def chat(model: nil, provider: nil, assume_model_exists: false)
+      Chat.new(model:, provider:, assume_model_exists:)
     end
 
     def embed(...)

@@ -99,7 +99,10 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
-      config.max_retries = 50
+      config.max_retries = 10
+      config.retry_interval = 1
+      config.retry_backoff_factor = 3
+      config.retry_interval_randomness = 0.5
     end
   end
 end

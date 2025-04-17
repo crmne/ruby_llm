@@ -25,13 +25,13 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false) # rubocop:disable Metrics/MethodLength
           include MessageMethods
 
           @chat_class = chat_class.to_s
           @tool_call_class = tool_call_class.to_s
 
-          belongs_to :chat, class_name: @chat_class
+          belongs_to :chat, class_name: @chat_class, touch: touch_chat
           has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
 
           belongs_to :parent_tool_call,

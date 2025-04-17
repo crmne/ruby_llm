@@ -1,309 +1,272 @@
 ---
 layout: default
-title: Chat
+title: Chatting with AI Models
 parent: Guides
 nav_order: 2
 permalink: /guides/chat
 ---
 
 # Chatting with AI Models
+{: .no_toc }
 
-RubyLLM's chat interface provides a natural way to interact with various AI models. This guide covers everything from basic chatting to advanced features like multimodal inputs and streaming responses.
+The heart of RubyLLM is the `Chat` object, providing a unified and intuitive interface for conversational interactions with various AI models.
+{: .fs-6 .fw-300 }
 
-## Basic Chat
+## Table of contents
+{: .no_toc .text-delta }
 
-Creating a chat and asking questions is straightforward:
+1. TOC
+{:toc}
+
+---
+
+After reading this guide, you will know:
+
+*   How to start and continue conversations.
+*   How to use system prompts (instructions) to guide the AI.
+*   How to select specific models and providers.
+*   How to interact with models using images, audio, and PDFs.
+*   How to control response creativity using temperature.
+*   How to track token usage.
+*   How to use chat event handlers.
+
+## Starting a Conversation
+
+The simplest way to begin is with `RubyLLM.chat`, which creates a `Chat` instance using the configured default model (often a capable OpenAI GPT model).
 
 ```ruby
-# Create a chat with the default model
 chat = RubyLLM.chat
 
-# Ask a question
-response = chat.ask "What's the best way to learn Ruby?"
+# The ask method sends a user message and returns the assistant's response
+response = chat.ask "Explain the concept of 'Convention over Configuration' in Rails."
 
-# The response is a Message object
+# The response is a RubyLLM::Message object
 puts response.content
-puts "Role: #{response.role}"
-puts "Model: #{response.model_id}"
-puts "Tokens: #{response.input_tokens} input, #{response.output_tokens} output"
+# => "Convention over Configuration (CoC) is a core principle of Ruby on Rails..."
+
+# The response object contains metadata
+puts "Model Used: #{response.model_id}"
+puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
 ```
 
-## Choosing Models
+The `ask` method (aliased as `say`) adds your message to the conversation history with the `:user` role and then triggers a request to the AI provider. The returned `RubyLLM::Message` object represents the assistant's reply.
 
-You can specify which model to use when creating a chat:
+## Continuing the Conversation
 
-```ruby
-# Create a chat with a specific model
-chat = RubyLLM.chat(model: 'gpt-4o-mini')
-
-# Use Claude instead
-claude_chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
-
-# Or change the model for an existing chat
-chat.with_model('gemini-2.0-flash')
-```
-
-{: .warning-title }
-> Coming in v1.1.0
->
-> The following model aliases and provider selection features are available in the upcoming version.
-
-RubyLLM supports model aliases, so you don't need to remember specific version numbers:
+The `Chat` object maintains the conversation history. Subsequent calls to `ask` build upon the previous messages.
 
 ```ruby
-# Instead of this:
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
+# Continuing the previous chat...
+response = chat.ask "Can you give a specific example in Rails?"
+puts response.content
+# => "Certainly! A classic example is database table naming..."
 
-# You can simply write:
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
-```
-
-You can also specify a specific provider to use with a model:
-
-```ruby
-# Use a specific provider (when the same model is available from multiple providers)
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet', provider: 'bedrock')
-```
-
-See [Working with Models]({% link guides/models.md %}) for more details on model selection.
-
-## Instructions (aka System Prompts)
-
-{: .warning-title }
-> Coming in v1.1.0
->
-> chat.with_instructions is coming in 1.1.0. 1.0.x users should use `add_message role: system, content: PROMPT`
-
-System prompts allow you to set specific instructions or context that guide the AI's behavior throughout the conversation. These prompts are not directly visible to the user but help shape the AI's responses:
-
-```ruby
-# Create a chat instance
-chat = RubyLLM.chat
-
-# Add a system prompt to guide the AI's behavior
-chat.with_instructions "You are a helpful Ruby programming assistant. Always include code examples in your responses and explain them line by line."
-
-# Now the AI will follow these instructions in all responses
-response = chat.ask "How do I handle file operations in Ruby?"
-
-# You can add multiple system messages or update them during the conversation - available from 1.1.0
-chat.with_instructions "Always format your code using proper Ruby style conventions and include comments."
-
-# System prompts are especially useful for:
-# - Setting the AI's persona or tone
-# - Providing domain-specific knowledge
-# - Enforcing specific response formats
-# - Creating specialized assistants
-```
-
-If you want to set up system prompts with persistence, please refer to the [Rails integration guide]({% link guides/rails.md %}#instructions-aka-system-prompts)
-
-## Multi-turn Conversations
-
-Chats maintain conversation history automatically:
-
-```ruby
-chat = RubyLLM.chat
-
-# Start a conversation
-chat.ask "What's your favorite programming language?"
-
-# Follow up
-chat.ask "Why do you like that language?"
-
-# Continue the conversation
-chat.ask "What are its weaknesses?"
-
-# Access the conversation history
+# Access the full conversation history
 chat.messages.each do |message|
-  puts "#{message.role}: #{message.content[0..50]}..."
+  puts "[#{message.role.to_s.upcase}] #{message.content.lines.first.strip}"
 end
+# => [USER] Explain the concept of 'Convention over Configuration' in Rails.
+# => [ASSISTANT] Convention over Configuration (CoC) is a core principle...
+# => [USER] Can you give a specific example in Rails?
+# => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-## Working with Images
+Each call to `ask` sends the *entire* current message history (up to the model's context limit) to the provider, allowing the AI to understand the context of your follow-up questions.
 
-Vision-capable models can understand images:
+## Guiding the AI with Instructions
+
+You can provide instructions, also known as system prompts, to guide the AI's behavior, persona, or response format throughout the conversation. Use the `with_instructions` method.
 
 ```ruby
 chat = RubyLLM.chat
 
-# Ask about an image (local file)
-chat.ask "What's in this image?", with: { image: "path/to/image.jpg" }
+# Set the initial instruction
+chat.with_instructions "You are a helpful assistant that explains Ruby concepts simply, like explaining to a five-year-old."
 
-# Or use an image URL
-chat.ask "Describe this picture", with: { image: "https://example.com/image.jpg" }
+response = chat.ask "What is a variable?"
+puts response.content
+# => "Imagine you have a special box, and you can put things in it..."
 
-# Include multiple images
-chat.ask "Compare these two charts", with: {
-  image: ["chart1.png", "chart2.png"]
-}
+# Use replace: true to ensure only the latest instruction is active
+chat.with_instructions "Always end your response with 'Got it?'", replace: true
 
-# Combine text and image
-chat.ask "Is this the Ruby logo?", with: { image: "logo.png" }
+response = chat.ask "What is a loop?"
+puts response.content
+# => "A loop is like singing your favorite song over and over again... Got it?"
 ```
 
-## Working with Audio
+Instructions are prepended to the conversation history as messages with the `:system` role. They are particularly useful for setting a consistent tone or providing context the AI should always consider. If you are using the [Rails Integration]({% link guides/rails.md %}), these system messages are persisted along with user and assistant messages.
 
-Models with audio capabilities can process spoken content:
+## Selecting Models and Providers
+
+While `RubyLLM.chat` uses the default model, you can easily specify a different one.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o-audio-preview')
+# Use a specific model via ID or alias
+chat_claude = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat_gemini = RubyLLM.chat(model: 'gemini-1.5-pro-latest')
 
-# Analyze audio content
-chat.ask "What's being said in this recording?", with: {
-  audio: "meeting.wav"
-}
+# Change the model on an existing chat instance
+chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+response1 = chat.ask "Initial question for GPT..."
+puts response1.content
 
-# Ask follow-up questions about the audio
-chat.ask "Summarize the key points mentioned"
+response2 = chat.with_model('claude-3-opus-20240229').ask("Follow-up question for Claude...")
+puts response2.content
 ```
 
-## Working with PDFs
+RubyLLM manages a registry of known models and their capabilities. For detailed information on finding models, using aliases, checking capabilities, and working with custom or unlisted models (using `assume_model_exists: true`), please refer to the **[Working with Models Guide]({% link guides/models.md %})**.
 
-Claude and Gemini models support the analysis of PDF documents directly in conversations:
+## Multi-modal Conversations
+
+Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, and even PDFs in your chat messages using the `with:` option in the `ask` method.
+
+### Working with Images
+
+Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-opus`, `gemini-1.5-pro`).
 
 ```ruby
-# Create a chat with Claude
-chat = RubyLLM.chat(model: 'claude-3-7-sonnet-20250219')
+# Ensure you select a vision-capable model
+chat = RubyLLM.chat(model: 'gpt-4o')
 
-# Ask about a PDF document (local file)
-chat.ask "What's in this PDF?", with: { pdf: "path/to/document.pdf" }
+# Ask about a local image file
+response = chat.ask "Describe this logo.", with: { image: "path/to/ruby_logo.png" }
+puts response.content
 
-# Or use a PDF URL
-chat.ask "Summarize this document", with: { pdf: "https://example.com/document.pdf" }
+# Ask about an image from a URL
+response = chat.ask "What kind of architecture is shown here?", with: { image: "https://example.com/eiffel_tower.jpg" }
+puts response.content
 
-# Include multiple PDFs
-chat.ask "Compare these documents", with: {
-  pdf: ["doc1.pdf", "doc2.pdf"]
+# Send multiple images
+response = chat.ask "Compare the user interfaces in these two screenshots.", with: {
+  image: ["screenshot_v1.png", "screenshot_v2.png"]
 }
-
-# Combine PDF and text
-chat.ask "Is the information about widgets correct?", with: { pdf: "catalog.pdf" }
-
-# Control how remote PDFs are handled
-chat.ask "Analyze this online document", with: {
-  pdf: "https://example.com/document.pdf",
-  remote_pdf_strategy: :url  # :url or :download (default)
-}
+puts response.content
 ```
 
-### Provider Compatibility
+RubyLLM handles converting the image source into the format required by the specific provider API.
 
-PDF support is implemented for multiple providers:
+### Working with Audio
 
-| Provider | Support Status |
-|----------|---------------|
-| Anthropic | ✅ Full support for Claude 3 and newer models |
-| Google | ✅ Supported for Gemini models |
-| OpenAI | 🙅 Not supported by provider |
-| DeepSeek | 🙅 Not supported by provider |
-
-### Size Limitations
-
-When using PDFs with Claude, be aware of these limitations:
-- Maximum file size: 10MB per file
-- Token usage: PDFs consume tokens from your context window based on their content
-- Total context: All PDFs must fit within the model's context window (e.g., 200K tokens for Claude 3)
-
-For large documents, consider splitting PDFs into smaller chunks or using a document processing pipeline with embeddings.
-
-## Streaming Responses
-
-For a more interactive experience, you can stream responses as they're generated:
+Provide audio file paths to audio-capable models (like `gpt-4o-audio-preview`).
 
 ```ruby
-chat = RubyLLM.chat
+chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
 
-# Stream the response with a block
-chat.ask "Tell me a story about a Ruby programmer" do |chunk|
-  # Each chunk is a partial response
-  print chunk.content
-end
+# Transcribe or ask questions about audio content
+response = chat.ask "Please transcribe this meeting recording.", with: { audio: "path/to/meeting.mp3" }
+puts response.content
 
-# Useful for long responses or real-time displays
-chat.ask "Write a detailed essay about programming paradigms" do |chunk|
-  add_to_ui(chunk.content) # Your method to update UI
-end
+# Ask follow-up questions based on the audio context
+response = chat.ask "What were the main action items discussed?"
+puts response.content
 ```
 
-## Temperature Control
+### Working with PDFs
 
-Control the creativity and randomness of AI responses:
+Provide PDF paths or URLs to models that support document analysis (currently Claude 3+ and Gemini models).
 
 ```ruby
-# Higher temperature (more creative)
+# Use a model that supports PDFs
+chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
+
+# Ask about a local PDF
+response = chat.ask "Summarize the key findings in this research paper.", with: { pdf: "path/to/paper.pdf" }
+puts response.content
+
+# Ask about a PDF via URL
+response = chat.ask "What are the terms and conditions outlined here?", with: { pdf: "https://example.com/terms.pdf" }
+puts response.content
+
+# Combine text and PDF context
+response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: { pdf: "manual.pdf" }
+puts response.content
+```
+
+{: .note }
+**PDF Limitations:** Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
+
+## Controlling Creativity: Temperature
+
+The `temperature` setting influences the randomness and creativity of the AI's responses. A higher value (e.g., 0.9) leads to more varied and potentially surprising outputs, while a lower value (e.g., 0.1) makes the responses more focused, deterministic, and predictable. The default is generally around 0.7.
+
+```ruby
+# Create a chat with low temperature for factual answers
+factual_chat = RubyLLM.chat.with_temperature(0.2)
+response1 = factual_chat.ask "What is the boiling point of water at sea level in Celsius?"
+puts response1.content
+
+# Create a chat with high temperature for creative writing
 creative_chat = RubyLLM.chat.with_temperature(0.9)
-creative_chat.ask "Write a poem about Ruby programming"
-
-# Lower temperature (more deterministic)
-precise_chat = RubyLLM.chat.with_temperature(0.1)
-precise_chat.ask "Explain how Ruby's garbage collector works"
+response2 = creative_chat.ask "Write a short poem about the color blue."
+puts response2.content
 ```
 
-## Access Token Usage
+You can set the temperature using `with_temperature`, which returns the `Chat` instance for chaining.
 
-RubyLLM automatically tracks token usage for billing and quota management:
+## Tracking Token Usage
+
+Understanding token usage is important for managing costs and staying within context limits. Each `RubyLLM::Message` returned by `ask` includes token counts.
+
+```ruby
+response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
+
+input_tokens = response.input_tokens   # Tokens in the prompt sent TO the model
+output_tokens = response.output_tokens # Tokens in the response FROM the model
+
+puts "Input Tokens: #{input_tokens}"
+puts "Output Tokens: #{output_tokens}"
+puts "Total Tokens for this turn: #{input_tokens + output_tokens}"
+
+# Estimate cost for this turn
+model_info = RubyLLM.models.find(response.model_id)
+if model_info.input_price_per_million && model_info.output_price_per_million
+  input_cost = input_tokens * model_info.input_price_per_million / 1_000_000
+  output_cost = output_tokens * model_info.output_price_per_million / 1_000_000
+  turn_cost = input_cost + output_cost
+  puts "Estimated Cost for this turn: $#{format('%.6f', turn_cost)}"
+else
+  puts "Pricing information not available for #{model_info.id}"
+end
+
+# Total tokens for the entire conversation so far
+total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + (msg.output_tokens || 0) }
+puts "Total Conversation Tokens: #{total_conversation_tokens}"
+```
+
+Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on accessing model-specific pricing.
+
+## Chat Event Handlers
+
+You can register blocks to be called when certain events occur during the chat lifecycle, useful for UI updates or logging.
 
 ```ruby
 chat = RubyLLM.chat
-response = chat.ask "Explain quantum computing"
 
-# Check token usage
-puts "Input tokens: #{response.input_tokens}"
-puts "Output tokens: #{response.output_tokens}"
-puts "Total tokens: #{response.input_tokens + response.output_tokens}"
-
-# Estimate cost (varies by model)
-model = RubyLLM.models.find(response.model_id)
-input_cost = response.input_tokens * model.input_price_per_million / 1_000_000
-output_cost = response.output_tokens * model.output_price_per_million / 1_000_000
-puts "Estimated cost: $#{(input_cost + output_cost).round(6)}"
-```
-
-## Registering Event Handlers
-
-You can register callbacks for chat events:
-
-```ruby
-chat = RubyLLM.chat
-
-# Called when a new assistant message starts
+# Called just before the API request for an assistant message starts
 chat.on_new_message do
   puts "Assistant is typing..."
 end
 
-# Called when a message is complete
+# Called after the complete assistant message (including tool calls/results) is received
 chat.on_end_message do |message|
   puts "Response complete!"
-  puts "Used #{message.input_tokens + message.output_tokens} tokens"
+  # Note: message might be nil if an error occurred during the request
+  if message && message.output_tokens
+    puts "Used #{message.input_tokens + message.output_tokens} tokens"
+  end
 end
 
-# These callbacks work with both streaming and non-streaming responses
-chat.ask "Tell me about Ruby's history"
-```
-
-## Multiple Parallel Chats
-
-You can maintain multiple separate chat instances:
-
-```ruby
-# Create multiple chat instances
-ruby_chat = RubyLLM.chat
-python_chat = RubyLLM.chat
-
-# Each has its own conversation history
-ruby_chat.ask "What's great about Ruby?"
-python_chat.ask "What's great about Python?"
-
-# Continue separate conversations
-ruby_chat.ask "How does Ruby handle metaprogramming?"
-python_chat.ask "How does Python handle decorators?"
+# These callbacks work for both streaming and non-streaming requests
+chat.ask "What is metaprogramming in Ruby?"
 ```
 
 ## Next Steps
 
-Now that you understand chat basics, you might want to explore:
+This guide covered the core `Chat` interface. Now you might want to explore:
 
-- [Using Tools]({% link guides/tools.md %}) to let AI use your Ruby code
-- [Streaming Responses]({% link guides/streaming.md %}) for real-time interactions
-- [Rails Integration]({% link guides/rails.md %}) to persist conversations in your apps
+*   [Working with Models]({% link guides/models.md %}): Learn how to choose the best model and handle custom endpoints.
+*   [Using Tools]({% link guides/tools.md %}): Enable the AI to call your Ruby code.
+*   [Streaming Responses]({% link guides/streaming.md %}): Get real-time feedback from the AI.
+*   [Rails Integration]({% link guides/rails.md %}): Persist your chat conversations easily.
+*   [Error Handling]({% link guides/error-handling.md %}): Build robust applications that handle API issues.

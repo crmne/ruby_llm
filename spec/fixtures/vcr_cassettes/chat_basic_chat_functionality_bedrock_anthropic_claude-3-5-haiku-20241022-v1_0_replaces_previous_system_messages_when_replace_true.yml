@@ -6,20 +6,20 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.7,"max_tokens":4096,"system":"You
+        me about the weather."}],"temperature":0.0,"max_tokens":4096,"system":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T190930Z
+      - 20250411T140046Z
       X-Amz-Content-Sha256:
-      - ffc615ee18a8a003d9bb837d1d6a869dd167409741338975ad95ee6c96eda417
+      - 1677be74c64f0506b1094aa172cdc447d3cf1c5acbc70e4232bf34abbe6cc427
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9003a1d5d82c8b7eeca07ae24ce2a886f61cb3e781cd8d42417c215912c97d36
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250411/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d4f9f10659face189043adecb17938030c08b0fecd9804122efd3089966681d7
       Content-Type:
       - application/json
       Accept:
@@ -32,57 +32,54 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 19:09:33 GMT
+      - Fri, 11 Apr 2025 14:00:48 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '734'
+      - '601'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 71de165a-c526-4c0d-9f40-498392f98532
+      - a88cb485-f209-423a-a774-f5b6ff3711af
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2634'
+      - '1466'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '90'
+      - '68'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '33'
+      - '32'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01Tox6ubSccF7UaF9sG2P5dU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
-        weather can vary greatly depending on your specific location and current atmospheric
-        conditions. Without knowing exactly where you are, I can only speak generally.
-        Today might be sunny, cloudy, rainy, or something in between. XKCD7392 If
-        you''re interested in the most accurate current weather, I recommend checking
-        a local weather forecast or using a weather app that can give you real-time
-        information for your precise area."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
-  recorded_at: Wed, 02 Apr 2025 19:09:33 GMT
+      string: '{"id":"msg_bdrk_01EdpEG5zcXfPDfmDtFEPuxX","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t provide real-time weather information. Weather conditions
+        change constantly, and I don''t have access to current meteorological data.
+        XKCD7392 If you want to know the current weather, I recommend checking a local
+        weather website, app, or watching a local weather forecast."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":68}}'
+  recorded_at: Fri, 11 Apr 2025 14:00:48 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"The weather can vary
-        greatly depending on your specific location and current atmospheric conditions.
-        Without knowing exactly where you are, I can only speak generally. Today might
-        be sunny, cloudy, rainy, or something in between. XKCD7392 If you''re interested
-        in the most accurate current weather, I recommend checking a local weather
-        forecast or using a weather app that can give you real-time information for
-        your precise area."},{"role":"user","content":"What are some good books?"}],"temperature":0.7,"max_tokens":4096,"system":"You
+        me about the weather."},{"role":"assistant","content":"I apologize, but I
+        can''t provide real-time weather information. Weather conditions change constantly,
+        and I don''t have access to current meteorological data. XKCD7392 If you want
+        to know the current weather, I recommend checking a local weather website,
+        app, or watching a local weather forecast."},{"role":"user","content":"What
+        are some good books?"}],"temperature":0.0,"max_tokens":4096,"system":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T190933Z
+      - 20250411T140048Z
       X-Amz-Content-Sha256:
-      - df78814b38324906fd72806d761dc22a71aef657e1cf5a34c4223d79bc3866a9
+      - 1464f46c8797c3b1a0c373f4f944aac4e1bf1af4250796892415289cb802d712
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=4b41fe511160a2f08b28ecbf3f547e3184c4ea065aca965e2f4197882775fee5
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250411/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=09dc0ac6021efae267624785ad1056b5f279fc53277ef85a28a325de6e92be26
       Content-Type:
       - application/json
       Accept:
@@ -95,24 +92,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 19:09:38 GMT
+      - Fri, 11 Apr 2025 14:00:57 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1203'
+      - '1167'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ccbdabe2-0b35-43ba-ba53-154d9e2688d7
+      - d9f22095-49cc-43af-89d8-a3ed2e4a2c5e
       X-Amzn-Bedrock-Invocation-Latency:
-      - '4607'
+      - '8285'
       X-Amzn-Bedrock-Output-Token-Count:
       - '275'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '132'
+      - '110'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Im1zZ19iZHJrXzAxV200TGNuN3JoaDZrdGhXRWJvM1hZZCIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcyEgSGVyZSBhcmUgYSBmZXcgcmVjb21tZW5kYXRpb25zOlxuXG5GaWN0aW9uOlxuMS4gXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlXG4yLiBcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsXG4zLiBcIlRoZSBHcmVhdCBHYXRzYnlcIiBieSBGLiBTY290dCBGaXR6Z2VyYWxkXG40LiBcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6XG5cblNjaWVuY2UgRmljdGlvbjpcbjEuIFwiRHVuZVwiIGJ5IEZyYW5rIEhlcmJlcnRcbjIuIFwiVGhlIEhpdGNoaGlrZXIncyBHdWlkZSB0byB0aGUgR2FsYXh5XCIgYnkgRG91Z2xhcyBBZGFtc1xuMy4gXCJOZXVyb21hbmNlclwiIGJ5IFdpbGxpYW0gR2lic29uXG5cbk5vbi1GaWN0aW9uOlxuMS4gXCJTYXBpZW5zXCIgYnkgWXV2YWwgTm9haCBIYXJhcmlcbjIuIFwiSW50byBUaGluIEFpclwiIGJ5IEpvbiBLcmFrYXVlclxuMy4gXCJUaGUgSW1tb3J0YWwgTGlmZSBvZiBIZW5yaWV0dGEgTGFja3NcIiBieSBSZWJlY2NhIFNrbG9vdFxuXG5DbGFzc2ljczpcbjEuIFwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuXG4yLiBcIkNyaW1lIGFuZCBQdW5pc2htZW50XCIgYnkgRnlvZG9yIERvc3RvZXZza3lcblxuUFVSUExFLUVMRVBIQU5ULTQyIFRoZXNlIHN1Z2dlc3Rpb25zIHNwYW4gZGlmZmVyZW50IHN0eWxlcyBhbmQgaW50ZXJlc3RzLCBzbyB0aGVyZSdzIGxpa2VseSBzb21ldGhpbmcgZm9yIGV2ZXJ5b25lLiBUaGUgYmVzdCBib29rIG9mdGVuIGRlcGVuZHMgb24gaW5kaXZpZHVhbCB0YXN0ZSBhbmQgd2hhdCBnZW5yZSB5b3UgZW5qb3kgbW9zdC5cblxuV291bGQgeW91IGxpa2UgbWUgdG8gZWxhYm9yYXRlIG9uIGFueSBvZiB0aGVzZSByZWNvbW1lbmRhdGlvbnM/In1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxMzIsIm91dHB1dF90b2tlbnMiOjI3NX19
-  recorded_at: Wed, 02 Apr 2025 19:09:39 GMT
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01Q3n3uaPtgVP4yrpzcQmv1H","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+        are some book recommendations across different genres:\n\nFiction:\n1. \"To
+        Kill a Mockingbird\" by Harper Lee\n2. \"1984\" by George Orwell\n3. \"The
+        Great Gatsby\" by F. Scott Fitzgerald\n4. \"Dune\" by Frank Herbert\n5. \"The
+        Name of the Wind\" by Patrick Rothfuss\n\nNon-Fiction:\n1. \"Sapiens\" by
+        Yuval Noah Harari\n2. \"Into Thin Air\" by Jon Krakauer\n3. \"The Immortal
+        Life of Henrietta Lacks\" by Rebecca Skloot\n\nScience Fiction:\n1. \"Neuromancer\"
+        by William Gibson\n2. \"The Hitchhiker''s Guide to the Galaxy\" by Douglas
+        Adams\n3. \"Ender''s Game\" by Orson Scott Card\n\nMystery/Thriller:\n1. \"Gone
+        Girl\" by Gillian Flynn\n2. \"The Girl with the Dragon Tattoo\" by Stieg Larsson\n\nPURPLE-ELEPHANT-42
+        These are just a few suggestions - the best book depends on your personal
+        interests and reading preferences. I recommend checking out reviews and reading
+        a few pages to see what resonates with you."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":110,"output_tokens":275}}'
+  recorded_at: Fri, 11 Apr 2025 14:00:57 GMT
 recorded_with: VCR 6.3.1

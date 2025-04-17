@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   shared_examples 'a chainable chat method' do |method_name, *args|
     it "returns a Chat instance for ##{method_name}" do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       result = chat.public_send(method_name, *args)
       expect(result).to be_a(Chat)
     end
@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   shared_examples 'a chainable callback method' do |callback_name|
     it "supports #{callback_name} callback" do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       result = chat.public_send(callback_name) do
         # no-op for testing
       end
@@ -88,7 +88,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   it 'persists chat history' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    chat = Chat.create!(model_id: 'gpt-4.1-nano')
     chat.ask("What's your favorite Ruby feature?")
 
     expect(chat.messages.count).to eq(2)
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   it 'persists tool calls' do # rubocop:disable RSpec/MultipleExpectations
-    chat = Chat.create!(model_id: 'gpt-4o-mini')
+    chat = Chat.create!(model_id: 'gpt-4.1-nano')
     chat.with_tool(Calculator)
 
     chat.ask("What's 123 * 456?")
@@ -111,13 +111,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'with_tools functionality' do
     it 'returns a Chat instance when using with_tool' do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       with_tool_result = chat.with_tool(Calculator)
       expect(with_tool_result).to be_a(Chat)
     end
 
     it 'persists user messages' do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       chat.with_tool(Calculator).ask("What's 2 + 2?")
       expect(chat.messages.where(role: 'user').first&.content).to eq("What's 2 + 2?")
     end
@@ -126,27 +126,27 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   describe 'chainable methods' do
     it_behaves_like 'a chainable chat method', :with_tool, Calculator
     it_behaves_like 'a chainable chat method', :with_tools, Calculator
-    it_behaves_like 'a chainable chat method', :with_model, 'gpt-4o-mini'
+    it_behaves_like 'a chainable chat method', :with_model, 'gpt-4.1-nano'
     it_behaves_like 'a chainable chat method', :with_temperature, 0.5
 
     it_behaves_like 'a chainable callback method', :on_new_message
     it_behaves_like 'a chainable callback method', :on_end_message
 
     it 'supports method chaining with tools' do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       chat.with_tool(Calculator)
           .with_temperature(0.5)
       expect(chat).to be_a(Chat)
     end
 
     it 'persists messages after chaining' do
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       chat.with_tool(Calculator).ask("What's 3 * 3?")
       expect(chat.messages.where(role: 'user').first&.content).to eq("What's 3 * 3?")
     end
 
     it 'persists system messages' do # rubocop:disable RSpec/MultipleExpectations
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
       chat.with_instructions('You are a Ruby expert')
 
       expect(chat.messages.first.role).to eq('system')
@@ -154,7 +154,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'optionally replaces existing system messages' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
 
       # Add first instruction
       chat.with_instructions('Be helpful')

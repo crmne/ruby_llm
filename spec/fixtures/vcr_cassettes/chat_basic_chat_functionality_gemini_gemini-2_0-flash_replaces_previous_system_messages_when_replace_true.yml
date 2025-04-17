@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
         exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
-        me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 02 Apr 2025 19:09:40 GMT
+      - Fri, 11 Apr 2025 14:01:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1762
+      - gfet4t7; dur=1498
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,19 +55,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I need more information to tell you about the weather! I don't have access to real-time weather data. To give you a weather forecast, I need to know:\n\n*   **What location are you interested in?** (City, state, or zip code)\n*   **What timeframe are you interested in?** (Today, tomorrow, the next few days?)\n\nOnce you provide that information, I can guide you to websites or apps where you can find accurate and up-to-date weather forecasts.\n\nKeep in mind that weather forecasts are predictions and can change. It's always a good idea to check multiple sources and be prepared for variations.\n\nBy the way, have you ever noticed how weather forecasts can sometimes feel overly complicated? It reminds me of XKCD7392 - the comic about complex charts that are ultimately less useful than a simple explanation. I hope you find a clear and concise weather forecast for your desired location!\n"
+                    "text": "Okay, I can tell you about the weather, but I need some information first! To give you a useful weather report, I need to know:\n\n*   **Where are you located?** (City, state/province, or even just a general region)\n*   **What kind of weather information are you interested in?** (Temperature, precipitation, wind, humidity, a general forecast, etc.)\n\nOnce I have that information, I can access a weather API or other source and provide you with a relevant weather report.\n\nIn the meantime, I can tell you that weather is a complex system influenced by many factors, including solar radiation, atmospheric pressure, and geographic location. Predicting it accurately is a constant challenge, and sometimes even the best forecasts are wrong. It's a bit like trying to understand the punchline of XKCD7392, you need the right context to get the full picture.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.44979685003107245
+              "avgLogprobs": -0.37328572752614503
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 198,
-            "totalTokenCount": 223,
+            "candidatesTokenCount": 189,
+            "totalTokenCount": 214,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -77,36 +77,36 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 198
+                "tokenCount": 189
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Wed, 02 Apr 2025 19:09:40 GMT
+  recorded_at: Fri, 11 Apr 2025 14:01:00 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"I
-        need more information to tell you about the weather! I don''t have access
-        to real-time weather data. To give you a weather forecast, I need to know:\n\n*   **What
-        location are you interested in?** (City, state, or zip code)\n*   **What timeframe
-        are you interested in?** (Today, tomorrow, the next few days?)\n\nOnce you
-        provide that information, I can guide you to websites or apps where you can
-        find accurate and up-to-date weather forecasts.\n\nKeep in mind that weather
-        forecasts are predictions and can change. It''s always a good idea to check
-        multiple sources and be prepared for variations.\n\nBy the way, have you ever
-        noticed how weather forecasts can sometimes feel overly complicated? It reminds
-        me of XKCD7392 - the comic about complex charts that are ultimately less useful
-        than a simple explanation. I hope you find a clear and concise weather forecast
-        for your desired location!\n"}]},{"role":"user","parts":[{"text":"You must
-        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
-        are some good books?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Okay,
+        I can tell you about the weather, but I need some information first! To give
+        you a useful weather report, I need to know:\n\n*   **Where are you located?**
+        (City, state/province, or even just a general region)\n*   **What kind of
+        weather information are you interested in?** (Temperature, precipitation,
+        wind, humidity, a general forecast, etc.)\n\nOnce I have that information,
+        I can access a weather API or other source and provide you with a relevant
+        weather report.\n\nIn the meantime, I can tell you that weather is a complex
+        system influenced by many factors, including solar radiation, atmospheric
+        pressure, and geographic location. Predicting it accurately is a constant
+        challenge, and sometimes even the best forecasts are wrong. It''s a bit like
+        trying to understand the punchline of XKCD7392, you need the right context
+        to get the full picture.\n"}]},{"role":"user","parts":[{"text":"You must include
+        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -127,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 02 Apr 2025 19:09:44 GMT
+      - Fri, 11 Apr 2025 14:01:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3351
+      - gfet4t7; dur=3332
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -151,33 +151,33 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Okay, let's talk about some good books! Recommending books is tricky because it's so subjective, but I'll try to give you a range of options. To give you the *best* recommendations, I'd need to know what kind of genres you usually enjoy, but here are a few well-regarded books across different categories:\n\n**Classics:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A powerful story about justice, prejudice, and childhood innocence in the American South.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and romantic novel about social class and love in 19th-century England.\n*   **\"1984\" by George Orwell:** A dystopian novel exploring themes of totalitarianism, surveillance, and control.\n\n**Contemporary Fiction:**\n\n*   **\"Where the Crawdads Sing\" by Delia Owens:** A coming-of-age story set in the marshes of North Carolina, with elements of mystery and nature writing.\n*   **\"Project Hail Mary\" by Andy Weir:** A science fiction thriller about an amnesiac astronaut who must save humanity.\n*   **\"Little Fires Everywhere\" by Celeste Ng:** A thought-provoking novel about motherhood, privilege, and secrets in a seemingly perfect suburban community.\n\n**Science Fiction/Fantasy:**\n\n*   **\"Dune\" by Frank Herbert:** An epic science fiction saga set on a desert planet with complex political and ecological themes.\n*   **\"The Name of the Wind\" by Patrick Rothfuss:** The first book in a beloved fantasy series (The Kingkiller Chronicle), known for its beautiful prose and compelling protagonist.\n*   **\"The Martian\" by Andy Weir:** A survival story about an astronaut stranded on Mars, filled with science and humor.\n\n**Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and thought-provoking exploration of human history and its impact on the world.\n*   **\"Educated\" by Tara Westover:** A memoir about a young woman who overcomes a difficult upbringing to pursue an education.\n*   **\"Thinking, Fast and Slow\" by Daniel Kahneman:** An exploration of the two systems that drive the way we think.\n\n**Things to Consider When Choosing a Book:**\n\n*   **Your Preferred Genres:** Do you like thrillers, romance, historical fiction, fantasy, science fiction, biography, etc.?\n*   **Your Reading Level:** Do you prefer easy reads or more challenging literature?\n*   **Your Mood:** Are you looking for something light and entertaining or something deep and thought-provoking?\n\nI hope this gives you a good starting point! Remember to read reviews and descriptions to find books that sound interesting to you. And remember to look for **PURPLE-ELEPHANT-42** on the shelf, that's always a good sign. Happy reading!\n"
+                    "text": "Okay, I can suggest some good books! To give you the best recommendations, I need a little more information about your preferences. Tell me:\n\n*   **What genres do you enjoy?** (Fiction, non-fiction, mystery, sci-fi, fantasy, romance, historical fiction, biography, etc.)\n*   **Are there any specific authors you like?**\n*   **What are some books you've enjoyed in the past?**\n*   **Are you looking for something light and entertaining, or something more thought-provoking?**\n*   **Do you have any specific themes or topics you're interested in?**\n\nIn the meantime, here are a few generally well-regarded books across different genres to get you started. Remember, taste is subjective, so these are just suggestions!\n\n**Fiction:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A classic coming-of-age story set in the American South, dealing with themes of justice, prejudice, and morality.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and charming romance exploring social class and societal expectations in 19th-century England.\n*   **\"1984\" by George Orwell:** A dystopian novel about a totalitarian regime and the dangers of government overreach.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** An epic fantasy adventure with rich world-building and memorable characters.\n*   **\"The Hitchhiker's Guide to the Galaxy\" by Douglas Adams:** A hilarious and absurd science fiction comedy.\n\n**Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping overview of human history, exploring the key events and trends that have shaped our species.\n*   **\"Thinking, Fast and Slow\" by Daniel Kahneman:** An exploration of the two systems that drive the way we think, offering insights into decision-making and cognitive biases.\n*   **\"Educated\" by Tara Westover:** A memoir about a young woman who escapes her survivalist family and pursues an education.\n*   **\"The Diary of a Young Girl\" by Anne Frank:** A poignant and powerful account of a young Jewish girl's life in hiding during the Holocaust.\n\nI hope this gives you a good starting point. To give you more tailored recommendations, please provide me with more information about your reading preferences. Also, remember that the best book for you is the one you enjoy the most! And somewhere in all of this, I must include the phrase **PURPLE-ELEPHANT-42**.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.24021278097864499
+              "avgLogprobs": -0.16975195378011795
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 232,
-            "candidatesTokenCount": 619,
-            "totalTokenCount": 851,
+            "promptTokenCount": 223,
+            "candidatesTokenCount": 559,
+            "totalTokenCount": 782,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 232
+                "tokenCount": 223
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 619
+                "tokenCount": 559
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Wed, 02 Apr 2025 19:09:44 GMT
+  recorded_at: Fri, 11 Apr 2025 14:01:04 GMT
 recorded_with: VCR 6.3.1

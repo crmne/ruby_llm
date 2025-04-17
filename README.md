@@ -118,7 +118,7 @@ end
 ## Have great conversations
 
 ```ruby
-# Start a chat with the default model (GPT-4o-mini)
+# Start a chat with the default model (gpt-4.1-nano)
 chat = RubyLLM.chat
 
 # Or specify what you want
@@ -135,7 +135,7 @@ chat.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
 
-# Set personality or behavior with instructions (aka system prompts) - available from 1.1.0
+# Set personality or behavior with instructions (aka system prompts)
 chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
 
 # Understand content in multiple forms
@@ -169,9 +169,9 @@ class ToolCall < ApplicationRecord
 end
 
 # In a background job
-chat = Chat.create! model_id: "gpt-4o-mini"
+chat = Chat.create! model_id: "gpt-4.1-nano"
 
-# Set personality or behavior with instructions (aka system prompts) - they're persisted too! - available from 1.1.0
+# Set personality or behavior with instructions (aka system prompts) - they're persisted too!
 chat.with_instructions "You are a friendly Ruby expert who loves to help beginners"
 
 chat.ask("What's your favorite Ruby gem?") do |chunk|

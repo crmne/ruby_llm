@@ -8,14 +8,18 @@ module RubyLLM
   #   chat = RubyLLM.chat
   #   chat.ask "What's the best way to learn Ruby?"
   #   chat.ask "Can you elaborate on that?"
-  class Chat
+  class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil, provider: nil)
+    def initialize(model: nil, provider: nil, assume_model_exists: false) # rubocop:disable Metrics/MethodLength
+      if assume_model_exists && !provider
+        raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
+      end
+
       model_id = model || RubyLLM.config.default_model
-      with_model(model_id, provider: provider)
+      with_model(model_id, provider: provider, assume_exists: assume_model_exists)
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -54,9 +58,18 @@ module RubyLLM
       self
     end
 
-    def with_model(model_id, provider: nil)
-      @model = Models.find model_id, provider
-      @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
+    def with_model(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+      if assume_exists
+        raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
+
+        @provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
+        @model = Struct.new(:id, :provider, :supports_functions, :supports_vision).new(model_id, provider, true, true)
+        RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
+                            'Capabilities may not be accurately reflected.'
+      else
+        @model = Models.find model_id, provider
+        @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
+      end
       self
     end
 

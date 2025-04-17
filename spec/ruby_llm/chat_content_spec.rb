@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Chat do
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
 
   vision_models = %w[claude-3-5-haiku-20241022 anthropic.claude-3-5-sonnet-20240620-v1:0 gemini-2.0-flash
-                     gpt-4o-mini].freeze
+                     gpt-4.1-nano].freeze
   audio_models = %w[gpt-4o-mini-audio-preview gpt-4o-audio-preview].freeze
 
   describe 'vision models' do
