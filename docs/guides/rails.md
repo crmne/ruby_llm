@@ -178,7 +178,7 @@ The `acts_as_chat` helper delegates common `RubyLLM::Chat` methods to your `Chat
 
 ```ruby
 # Create a new chat record
-chat_record = Chat.create!(model_id: 'gpt-4o-mini')
+chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
 
 # The `model_id` should typically be a valid identifier known to RubyLLM.
 # See the [Working with Models Guide]({% link guides/models.md %}) for details.
@@ -206,7 +206,7 @@ puts "Conversation length: #{chat_record.messages.count}" # => 4
 Instructions (system prompts) set via `with_instructions` are also automatically persisted as `Message` records with the `system` role.
 
 ```ruby
-chat_record = Chat.create!(model_id: 'gpt-4o-mini')
+chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
