@@ -69,7 +69,6 @@ module RubyLLM
           false # DeepSeek doesn't support structured output yet
         end
 
-
         # Returns a formatted display name for the model
         # @param model_id [String] the model identifier
         # @return [String] the formatted display name

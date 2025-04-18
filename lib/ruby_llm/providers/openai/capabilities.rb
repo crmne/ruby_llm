@@ -109,7 +109,6 @@ module RubyLLM
           end
         end
 
-
         PRICES = {
           gpt41: { input: 2.0, output: 8.0, cached_input: 0.5 },
           gpt41_mini: { input: 0.4, output: 1.6, cached_input: 0.1 },

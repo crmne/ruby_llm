@@ -19,9 +19,7 @@ module RubyLLM
             temperature: temperature,
             stream: stream
           }.tap do |payload|
-            if tools.any?
-              payload[:tools] = tools.map { |_, tool| format_tool(tool) }
-            end
+            payload[:tools] = tools.map { |_, tool| format_tool(tool) } if tools.any?
           end
         end
       end

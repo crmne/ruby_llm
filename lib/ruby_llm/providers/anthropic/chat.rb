@@ -11,7 +11,7 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
@@ -50,7 +50,7 @@ module RubyLLM
           payload[:system] = system_content unless system_content.empty?
         end
 
-        def parse_completion_response(response, chat: nil)
+        def parse_completion_response(response, chat: nil) # rubocop:disable Lint/UnusedMethodArgument
           data = response.body
           content_blocks = data['content'] || []
 

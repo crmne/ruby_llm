@@ -43,9 +43,9 @@ RSpec.describe 'Chat with structured output', type: :feature do
       # Mock provider to say it doesn't support structured output
       allow_any_instance_of(RubyLLM::Provider::Methods).to receive(:supports_structured_output?).and_return(false)
 
-      expect {
+      expect do
         chat.with_output_schema(schema)
-      }.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
+      end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
     end
 
     it 'raises InvalidStructuredOutput for invalid JSON' do
@@ -78,7 +78,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
           'name' => { 'type' => 'string' },
           'age' => { 'type' => 'number' }
         },
-        'required' => ['name', 'age']
+        'required' => %w[name age]
       }
 
       chat = RubyLLM.chat
@@ -103,10 +103,10 @@ RSpec.describe 'Chat with structured output', type: :feature do
           'name' => { 'type' => 'string' },
           'age' => { 'type' => 'number' }
         },
-        'required' => ['name', 'age']
+        'required' => %w[name age]
       }
 
-      original_instruction = "You are a helpful assistant that specializes in programming languages."
+      original_instruction = 'You are a helpful assistant that specializes in programming languages.'
 
       chat = RubyLLM.chat
       chat.with_instructions(original_instruction)
@@ -138,16 +138,16 @@ RSpec.describe 'Chat with structured output', type: :feature do
           'age' => { 'type' => 'number' },
           'languages' => { 'type' => 'array', 'items' => { 'type' => 'string' } }
         },
-        'required' => ['name', 'languages']
+        'required' => %w[name languages]
       }
     end
 
     context 'with OpenAI' do
       it 'returns structured JSON output', skip: 'Requires API credentials' do
         chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-          .with_output_schema(schema)
+                      .with_output_schema(schema)
 
-        response = chat.ask("Provide info about Ruby programming language")
+        response = chat.ask('Provide info about Ruby programming language')
 
         expect(response.content).to be_a(Hash)
         expect(response.content['name']).to eq('Ruby')
@@ -160,9 +160,9 @@ RSpec.describe 'Chat with structured output', type: :feature do
         # Gemini doesn't support structured output
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 
-        expect {
+        expect do
           chat.with_output_schema(schema)
-        }.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
+        end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
       end
     end
   end

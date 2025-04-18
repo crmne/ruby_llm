@@ -11,7 +11,7 @@ module RubyLLM
           'chat/completions'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/MethodLength,Metrics/ParameterLists
           {
             model: model,
             messages: format_messages(messages),
@@ -25,9 +25,7 @@ module RubyLLM
             payload[:stream_options] = { include_usage: true } if stream
 
             # Add structured output schema if provided
-            if chat&.output_schema
-              payload[:response_format] = { type: 'json_object' }
-            end
+            payload[:response_format] = { type: 'json_object' } if chat&.output_schema
           end
         end
 

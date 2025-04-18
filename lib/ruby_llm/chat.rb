@@ -92,7 +92,8 @@ module RubyLLM
       # Check if model supports structured output
       provider_module = Provider.providers[@model.provider.to_sym]
       if strict && !provider_module.supports_structured_output?(@model.id)
-        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output. \nUse with_output_schema(schema, strict:false) for less stict, more risky mode."
+        raise UnsupportedStructuredOutputError,
+              "Model #{@model.id} doesn't support structured output. \nUse with_output_schema(schema, strict:false) for less stict, more risky mode."
       end
 
       @output_schema = schema

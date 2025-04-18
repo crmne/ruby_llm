@@ -57,10 +57,9 @@ module RubyLLM
         # Determines if the model supports structured outputs
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured JSON output
-        def supports_structured_output?(model_id)
+        def supports_structured_output?(_model_id)
           false
         end
-
 
         # Determines if a model supports extended thinking
         # @param model_id [String] the model identifier

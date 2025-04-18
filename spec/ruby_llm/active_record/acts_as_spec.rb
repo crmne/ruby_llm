@@ -77,7 +77,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
-
   shared_examples 'a chainable callback method' do |callback_name|
     it "supports #{callback_name} callback" do
       chat = Chat.create!(model_id: 'gpt-4.1-nano')

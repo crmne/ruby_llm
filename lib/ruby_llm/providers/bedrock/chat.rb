@@ -77,7 +77,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response, chat: nil)
+        def parse_completion_response(response, chat: nil) # rubocop:disable Lint/UnusedMethodArgument
           data = response.body
           content_blocks = data['content'] || []
 
