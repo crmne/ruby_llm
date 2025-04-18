@@ -86,10 +86,18 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       ---
 
       # Available Models
+      {: .no_toc }
 
       This guide lists all models available in RubyLLM, automatically generated from the current model registry.
+      {: .fs-6 .fw-300 }
 
-      _Last updated: #{Time.now.utc.strftime('%Y-%m-%d')}_
+      ## Table of contents
+      {: .no_toc .text-delta }
+
+      1. TOC
+      {:toc}
+
+      ---
 
       ## Contributing
 
@@ -115,6 +123,10 @@ namespace :models do # rubocop:disable Metrics/BlockLength
       For more information about working with models, see the [Working with Models](/guides/models) guide.
 
       ## Models by Type
+      {: .d-inline-block }
+
+      Last updated: #{Time.now.utc.strftime('%Y-%m-%d')}
+      {: .label .label-green }
 
       ### Chat Models (#{RubyLLM.models.chat_models.count})
 

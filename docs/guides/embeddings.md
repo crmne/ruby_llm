@@ -7,51 +7,78 @@ permalink: /guides/embeddings
 ---
 
 # Embeddings
+{: .no_toc }
 
 Text embeddings are numerical representations of text that capture semantic meaning. RubyLLM makes it easy to generate embeddings for a variety of applications, including semantic search, clustering, and recommendation systems.
+{: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+After reading this guide, you will know:
+
+*   How to generate embeddings for single or multiple texts.
+*   How to choose specific embedding models.
+*   How to use the results, including calculating similarity.
+*   How to handle errors during embedding generation.
+*   Best practices for performance and large datasets.
+*   How to integrate embeddings in a Rails application.
 
 ## Basic Embedding Generation
 
-The simplest way to create an embedding is with the global `embed` method:
+The simplest way to create an embedding is with the global `RubyLLM.embed` method:
 
 ```ruby
 # Create an embedding for a single text
 embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
-# The vector representation
+# The vector representation (an array of floats)
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}"  # => 1536 for text-embedding-3-small
+puts "Vector dimension: #{vector.length}" # e.g., 1536 for text-embedding-3-small
+
+# Access metadata
+puts "Model used: #{embedding.model}"
+puts "Input tokens: #{embedding.input_tokens}"
 ```
 
 ## Embedding Multiple Texts
 
-You can efficiently embed multiple texts at once:
+You can efficiently embed multiple texts in a single API call:
 
 ```ruby
-# Create embeddings for multiple texts
 texts = ["Ruby", "Python", "JavaScript"]
 embeddings = RubyLLM.embed(texts)
 
-# Each text gets its own vector
-puts "Number of vectors: #{embeddings.vectors.length}"  # => 3
+# Each text gets its own vector within the `vectors` array
+puts "Number of vectors: #{embeddings.vectors.length}" # => 3
 puts "First vector dimensions: #{embeddings.vectors.first.length}"
+puts "Model used: #{embeddings.model}"
+puts "Total input tokens: #{embeddings.input_tokens}"
 ```
+
+{: .note }
+Batching multiple texts is generally more performant and cost-effective than making individual requests for each text.
 
 ## Choosing Models
 
-By default, RubyLLM uses OpenAI's `text-embedding-3-small`, but you can specify a different model:
+By default, RubyLLM uses a capable default embedding model (like OpenAI's `text-embedding-3-small`), but you can specify a different one using the `model:` argument.
 
 ```ruby
-# Use a specific model
-embedding = RubyLLM.embed(
+# Use a specific OpenAI model
+embedding_large = RubyLLM.embed(
   "This is a test sentence",
   model: "text-embedding-3-large"
 )
 
 # Or use a Google model
-google_embedding = RubyLLM.embed(
-  "This is a test sentence",
-  model: "text-embedding-004"
+embedding_google = RubyLLM.embed(
+  "This is another test sentence",
+  model: "text-embedding-004" # Google's model
 )
 ```
 
@@ -63,263 +90,106 @@ RubyLLM.configure do |config|
 end
 ```
 
+Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on finding available embedding models and their capabilities.
+
 ## Using Embedding Results
 
-### Vector Properties
-
-The embedding result contains useful information:
+A primary use case for embeddings is measuring the semantic similarity between texts. Cosine similarity is a common metric.
 
 ```ruby
-embedding = RubyLLM.embed("Example text")
+require 'matrix' # Ruby's built-in Vector class requires 'matrix'
 
-# The vector representation
-puts embedding.vectors.class  # => Array
-puts embedding.vectors.first.class  # => Float
-
-# The model used
-puts embedding.model  # => "text-embedding-3-small"
-
-# Token usage
-puts embedding.input_tokens  # => 3
-```
-
-### Calculating Similarity
-
-Embeddings are commonly used to calculate similarity between texts:
-
-```ruby
-require 'matrix'
-
-# Create embeddings for two texts
 embedding1 = RubyLLM.embed("I love Ruby programming")
 embedding2 = RubyLLM.embed("Ruby is my favorite language")
 
-# Convert to Vector objects
+# Convert embedding vectors to Ruby Vector objects
 vector1 = Vector.elements(embedding1.vectors)
 vector2 = Vector.elements(embedding2.vectors)
 
-# Calculate cosine similarity
+# Calculate cosine similarity (value between -1 and 1, closer to 1 means more similar)
 similarity = vector1.inner_product(vector2) / (vector1.norm * vector2.norm)
-puts "Similarity: #{similarity}"  # Higher values (closer to 1) mean more similar
-```
-
-### Simple Semantic Search
-
-```ruby
-# Create a simple search index
-class SearchIndex
-  def initialize(texts, model: nil)
-    @texts = texts
-    @embeddings = RubyLLM.embed(texts, model: model).vectors
-  end
-
-  def search(query, top_k: 3)
-    query_embedding = RubyLLM.embed(query).vectors
-    query_vector = Vector.elements(query_embedding)
-
-    # Calculate similarities
-    similarities = @embeddings.map.with_index do |embedding, idx|
-      vector = Vector.elements(embedding)
-      similarity = query_vector.inner_product(vector) / (query_vector.norm * vector.norm)
-      [idx, similarity]
-    end
-
-    # Return top results
-    similarities.sort_by { |_, similarity| -similarity }
-                .take(top_k)
-                .map { |idx, similarity| { text: @texts[idx], similarity: similarity } }
-  end
-end
-
-# Create an index
-documents = [
-  "Ruby is a dynamic, interpreted language",
-  "Python is known for its readability",
-  "JavaScript runs in the browser",
-  "Ruby on Rails is a web framework",
-  "Django is a Python web framework"
-]
-
-index = SearchIndex.new(documents)
-
-# Search for similar documents
-results = index.search("web development frameworks")
-results.each do |result|
-  puts "#{result[:text]} (Similarity: #{result[:similarity].round(4)})"
-end
+puts "Similarity: #{similarity.round(4)}" # => e.g., 0.9123
 ```
 
 ## Error Handling
 
-Handle errors that may occur during embedding generation:
+Wrap embedding generation calls in `begin/rescue` blocks to handle potential API issues.
 
 ```ruby
 begin
-  embedding = RubyLLM.embed("Example text")
+  embedding = RubyLLM.embed("This might fail")
+  puts "Embedding generated successfully."
 rescue RubyLLM::UnauthorizedError
-  puts "Please check your API key"
+  puts "Error: Invalid API key. Please check your configuration."
+rescue RubyLLM::RateLimitError
+  puts "Error: Rate limit exceeded. Please wait and try again."
 rescue RubyLLM::BadRequestError => e
-  puts "Invalid request: #{e.message}"
+  puts "Error: Invalid request - #{e.message}"
 rescue RubyLLM::Error => e
-  puts "Error generating embedding: #{e.message}"
+  # Catch other RubyLLM-specific errors
+  puts "RubyLLM Error: #{e.message}"
 end
 ```
 
-## Performance Considerations
+See the [Error Handling Guide]({% link guides/error-handling.md %}) for a complete overview of error types.
 
-When working with embeddings, keep these best practices in mind:
+## Performance and Best Practices
 
-1. **Batch processing** - Embedding multiple texts at once is more efficient than making separate calls
-2. **Caching** - Store embeddings in your database rather than regenerating them
-3. **Dimensionality** - Different models produce embeddings with different dimensions
-4. **Normalization** - Consider normalizing vectors to improve similarity calculations
+*   **Batching:** Always embed multiple texts in a single call when possible. `RubyLLM.embed(["text1", "text2"])` is much faster than calling `RubyLLM.embed` twice.
+*   **Caching/Persistence:** Embeddings are generally static for a given text and model. Store generated embeddings in your database or cache instead of regenerating them frequently.
+*   **Dimensionality:** Different models produce vectors of different lengths (dimensions). Ensure your storage and similarity calculation methods handle the correct dimensionality (e.g., `text-embedding-3-small` uses 1536 dimensions, `text-embedding-3-large` uses 3072).
+*   **Normalization:** Some vector databases and similarity algorithms perform better if vectors are normalized (scaled to have a length/magnitude of 1). Check the documentation for your specific use case or database.
 
-## Working with Large Datasets
+## Rails Integration Example
 
-For larger datasets, process embeddings in batches:
-
-```ruby
-def embed_in_batches(texts, batch_size: 100, model: nil)
-  all_embeddings = []
-
-  texts.each_slice(batch_size) do |batch|
-    batch_embeddings = RubyLLM.embed(batch, model: model).vectors
-    all_embeddings.concat(batch_embeddings)
-
-    # Optional: add a small delay to avoid rate limiting
-    sleep(0.1)
-  end
-
-  all_embeddings
-end
-
-# Usage
-documents = File.readlines("documents.txt", chomp: true)
-embeddings = embed_in_batches(documents)
-```
-
-## Rails Integration
-
-In a Rails application, you might integrate embeddings like this:
+In a Rails application using PostgreSQL with the `pgvector` extension, you might store and search embeddings like this:
 
 ```ruby
+# Migration:
+# add_column :documents, :embedding, :vector, limit: 1536 # Match your model's dimensions
+
+# app/models/document.rb
 class Document < ApplicationRecord
-  serialize :embedding, Array
+  has_neighbors :embedding # From the neighbor gem for pgvector
 
-  before_save :generate_embedding, if: -> { content_changed? }
+  # Automatically generate embedding before saving if content changed
+  before_save :generate_embedding, if: :content_changed?
 
-  def self.search(query, limit: 10)
-    # Generate query embedding
-    query_embedding = RubyLLM.embed(query).vectors
-
-    # Convert to SQL for similarity search
-    where.not(embedding: nil)
-         .select("*, (embedding <=> ?) AS similarity", query_embedding)
-         .order("similarity DESC")
-         .limit(limit)
-  end
+  # Scope for nearest neighbor search
+  scope :search_by_similarity, ->(query_text, limit: 5) {
+    query_embedding = RubyLLM.embed(query_text).vectors
+    nearest_neighbors(:embedding, query_embedding, distance: :cosine).limit(limit)
+  }
 
   private
 
   def generate_embedding
     return if content.blank?
-
-    self.embedding = RubyLLM.embed(content).vectors
-  rescue RubyLLM::Error => e
-    errors.add(:base, "Failed to generate embedding: #{e.message}")
-    throw :abort
-  end
-end
-```
-
-Note: The above example assumes you're using PostgreSQL with the `pgvector` extension for vector similarity search.
-
-## Example Use Cases
-
-### Document Classification
-
-```ruby
-# Train a simple classifier
-class SimpleClassifier
-  def initialize
-    @categories = {}
-  end
-
-  def train(text, category)
-    @categories[category] ||= []
-    @categories[category] << RubyLLM.embed(text).vectors
-  end
-
-  def classify(text)
-    # Get embedding for the query text
-    query_embedding = RubyLLM.embed(text).vectors
-    query_vector = Vector.elements(query_embedding)
-
-    # Find the closest category
-    best_similarity = -1
-    best_category = nil
-
-    @categories.each do |category, embeddings|
-      # Calculate average similarity to this category
-      similarity = embeddings.map do |embedding|
-        vector = Vector.elements(embedding)
-        query_vector.inner_product(vector) / (query_vector.norm * vector.norm)
-      end.sum / embeddings.size
-
-      if similarity > best_similarity
-        best_similarity = similarity
-        best_category = category
-      end
+    puts "Generating embedding for Document #{id}..."
+    begin
+      embedding_result = RubyLLM.embed(content) # Uses default embedding model
+      self.embedding = embedding_result.vectors
+    rescue RubyLLM::Error => e
+      errors.add(:base, "Failed to generate embedding: #{e.message}")
+      # Prevent saving if embedding fails (optional, depending on requirements)
+      throw :abort
     end
-
-    { category: best_category, confidence: best_similarity }
   end
 end
 
-# Usage
-classifier = SimpleClassifier.new
-
-# Train with examples
-classifier.train("How do I install Ruby?", :installation)
-classifier.train("Setting up Ruby environment", :installation)
-classifier.train("What are blocks in Ruby?", :language_features)
-classifier.train("Understanding Ruby modules", :language_features)
-
-# Classify new queries
-puts classifier.classify("How to install Ruby on Ubuntu?")
-# => {:category=>:installation, :confidence=>0.92}
+# Usage in controller or console:
+# Document.create(title: "Intro to Ruby", content: "Ruby is a dynamic language...")
+# results = Document.search_by_similarity("What is Ruby?")
+# results.each { |doc| puts "- #{doc.title}" }
 ```
 
-### Content Recommendation
-
-```ruby
-def recommend_similar_content(content_id, library, count: 3)
-  # Get the target content
-  target = library.find(content_id)
-  target_embedding = RubyLLM.embed(target.description).vectors
-  target_vector = Vector.elements(target_embedding)
-
-  # Compare with all other content
-  similarities = library.reject { |item| item.id == content_id }.map do |item|
-    next if item.embedding.nil?
-
-    item_vector = Vector.elements(item.embedding)
-    similarity = target_vector.inner_product(item_vector) / (target_vector.norm * item_vector.norm)
-
-    [item, similarity]
-  end.compact
-
-  # Return top matches
-  similarities.sort_by { |_, similarity| -similarity }
-              .take(count)
-              .map { |item, similarity| { item: item, similarity: similarity } }
-end
-```
+{: .note }
+This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
 
 ## Next Steps
 
 Now that you understand embeddings, you might want to explore:
 
-- [Chat]({% link guides/chat.md %}) for interactive AI conversations
-- [Tools]({% link guides/tools.md %}) to extend AI capabilities
-- [Error Handling]({% link guides/error-handling.md %}) for robust applications
+*   [Chatting with AI Models]({% link guides/chat.md %}) for interactive conversations.
+*   [Using Tools]({% link guides/tools.md %}) to extend AI capabilities.
+*   [Error Handling]({% link guides/error-handling.md %}) for building robust applications.

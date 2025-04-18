@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Error do
       config.openai_api_key = 'invalid-key'
     end
 
-    chat = RubyLLM.chat(model: 'gpt-4o-mini')
+    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
 
     expect do
       chat.ask('Hello')
