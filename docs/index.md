@@ -58,6 +58,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🖼️ **Image generation** with DALL-E and other providers
 - 📊 **Embeddings** for vector search and semantic analysis
 - 🔧 **Tools** that let AI use your Ruby code
+- 📝 **Structured Output** with JSON schema validation
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
 
@@ -105,6 +106,23 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
+
+# Get structured output with JSON schema validation
+schema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    age: { type: "integer" },
+    interests: { 
+      type: "array", 
+      items: { type: "string" }
+    }
+  },
+  required: ["name", "age", "interests"]
+}
+
+# Returns a validated Hash instead of plain text
+user_data = chat.with_output_schema(schema).ask("Create a profile for a Ruby developer")
 ```
 
 ## Quick start

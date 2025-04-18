@@ -25,6 +25,7 @@ After reading this guide, you will know:
 *   How to set up ActiveRecord models for persisting chats and messages.
 *   How to use `acts_as_chat` and `acts_as_message`.
 *   How chat interactions automatically persist data.
+*   How to work with structured output in your Rails models.
 *   A basic approach for integrating streaming responses with Hotwire/Turbo Streams.
 
 ## Setup
@@ -173,6 +174,89 @@ chat_record.with_instructions("You are a concise Ruby expert.", replace: true)
 system_message = chat_record.messages.find_by(role: :system)
 puts system_message.content # => "You are a concise Ruby expert."
 ```
+
+## Working with Structured Output
+
+RubyLLM 1.3.0+ supports structured output with JSON schema validation. This works seamlessly with Rails integration, allowing you to get and persist structured data from AI models.
+
+### Database Considerations
+
+For best results with structured output, use a database that supports JSON data natively:
+
+```ruby
+# For PostgreSQL, use jsonb for the content column
+class CreateMessages < ActiveRecord::Migration[7.1]
+  def change
+    create_table :messages do |t|
+      t.references :chat, null: false, foreign_key: true
+      t.string :role
+      t.jsonb :content # Use jsonb instead of text for PostgreSQL
+      # ...other fields...
+    end
+  end
+end
+```
+
+For databases without native JSON support, you can use text columns with serialization:
+
+```ruby
+# app/models/message.rb
+class Message < ApplicationRecord
+  acts_as_message
+  serialize :content, JSON # Add this for text columns
+end
+```
+
+### Using Structured Output
+
+The `with_output_schema` method is available on your `Chat` model thanks to `acts_as_chat`:
+
+```ruby
+# Make sure to use a model that supports structured output
+chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+
+# Define your JSON schema
+schema = {
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    version: { type: "string" },
+    features: { 
+      type: "array", 
+      items: { type: "string" }
+    }
+  },
+  required: ["name", "version"]
+}
+
+begin
+  # Get structured data instead of plain text
+  response = chat_record.with_output_schema(schema).ask("Tell me about Ruby")
+
+  # The response content is a Hash (or serialized JSON in text columns)
+  response.content # => {"name"=>"Ruby", "version"=>"3.2.0", "features"=>["Blocks", "Procs"]}
+
+  # You can access the persisted message as usual
+  message = chat_record.messages.where(role: 'assistant').last
+  message.content['name'] # => "Ruby"
+
+  # In your views, you can easily display structured data:
+  # <%= message.content['name'] %> <%= message.content['version'] %>
+  # <ul>
+  #   <% message.content['features'].each do |feature| %>
+  #     <li><%= feature %></li>
+  #   <% end %>
+  # </ul>
+rescue RubyLLM::UnsupportedStructuredOutputError => e
+  # Handle case where the model doesn't support structured output
+  puts "This model doesn't support structured output: #{e.message}"
+rescue RubyLLM::InvalidStructuredOutput => e
+  # Handle case where the model returns invalid JSON
+  puts "The model returned invalid JSON: #{e.message}"
+end
+```
+
+With this approach, you can build robust data-driven applications that leverage the structured output capabilities of AI models while properly handling errors.
 
 ## Streaming Responses with Hotwire/Turbo
 
