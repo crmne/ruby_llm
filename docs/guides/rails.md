@@ -7,31 +7,67 @@ permalink: /guides/rails
 ---
 
 # Rails Integration
+
 {: .no_toc }
 
-RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database.
-{: .fs-6 .fw-300 }
+RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database. {: .fs-6 .fw-300 }
 
 ## Table of contents
+
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+1. TOC {:toc}
 
 ---
 
 After reading this guide, you will know:
 
-*   How to set up ActiveRecord models for persisting chats and messages.
-*   How to use `acts_as_chat` and `acts_as_message`.
-*   How chat interactions automatically persist data.
-*   A basic approach for integrating streaming responses with Hotwire/Turbo Streams.
+- How to set up ActiveRecord models for persisting chats and messages.
+- How to use `acts_as_chat` and `acts_as_message`.
+- How chat interactions automatically persist data.
+- A basic approach for integrating streaming responses with Hotwire/Turbo Streams.
 
 ## Setup
 
-### Create Migrations
+### Using the Generator
 
-First, generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
+The simplest way to set up RubyLLM in your Rails application is to use the provided generator:
+
+```bash
+# Generate all necessary models, migrations, and configuration
+rails generate ruby_llm:install
+```
+
+This will create:
+
+- A `Chat` model for storing chat sessions
+- A `Message` model for storing individual messages
+- A `ToolCall` model for storing tool calls
+- Migrations for all these models
+- A RubyLLM initializer
+
+If you need to customize model names to avoid namespace collisions, you can provide options:
+
+```bash
+rails generate ruby_llm:install \
+  --chat-model-name=Conversation \
+  --message-model-name=ChatMessage \
+  --tool-call-model-name=FunctionCall
+```
+
+After running the generator, simply run the migrations:
+
+```bash
+rails db:migrate
+```
+
+### Manual Setup (Alternative)
+
+If you prefer to set up the models manually, follow these steps:
+
+#### Create Migrations
+
+Generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
 
 ```bash
 # Generate basic models and migrations
@@ -88,7 +124,7 @@ end
 
 Run the migrations: `rails db:migrate`
 
-### Set Up Models with `acts_as` Helpers
+#### Set Up Models with `acts_as` Helpers
 
 Include the RubyLLM helpers in your ActiveRecord models.
 
@@ -121,12 +157,20 @@ class ToolCall < ApplicationRecord
 end
 ```
 
-{: .note }
-The `acts_as` helpers primarily handle loading history and saving messages/tool calls related to the chat interaction. Add your application-specific logic (associations, validations, scopes, callbacks) as usual.
+{: .note } The `acts_as` helpers primarily handle loading history and saving messages/tool calls related to the chat interaction. Add your application-specific logic (associations, validations, scopes, callbacks) as usual.
 
 ### Configure RubyLLM
 
 Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Installation Guide]({% link installation.md %}) for details.
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV["OPENAI_API_KEY"]
+  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+  # Add other provider keys as needed
+end
+```
 
 ## Basic Usage
 
@@ -134,7 +178,7 @@ The `acts_as_chat` helper delegates common `RubyLLM::Chat` methods to your `Chat
 
 ```ruby
 # Create a new chat record
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
+chat_record = Chat.create!(model_id: 'gpt-4o-mini')
 
 # The `model_id` should typically be a valid identifier known to RubyLLM.
 # See the [Working with Models Guide]({% link guides/models.md %}) for details.
@@ -162,7 +206,7 @@ puts "Conversation length: #{chat_record.messages.count}" # => 4
 Instructions (system prompts) set via `with_instructions` are also automatically persisted as `Message` records with the `system` role.
 
 ```ruby
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: 'gpt-4o-mini')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
@@ -181,6 +225,18 @@ You can combine `acts_as_chat` with streaming and Turbo Streams for real-time UI
 Here's a simplified approach using a background job:
 
 ```ruby
+# app/jobs/chat_job.rb
+class ChatJob < ApplicationJob
+  def perform(chat_id, question)
+    chat = Chat.find(chat_id)
+    chat.ask(question) do |chunk|
+      Turbo::StreamsChannel.broadcast_append_to(
+        chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+      )
+    end
+  end
+end
+
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
@@ -202,27 +258,6 @@ class Message < ApplicationRecord
       html: chunk_content # Append the raw chunk
   end
 end
-
-# app/jobs/chat_stream_job.rb
-class ChatStreamJob < ApplicationJob
-  queue_as :default
-
-  def perform(chat_id, user_content)
-    chat = Chat.find(chat_id)
-    # The `ask` method automatically saves the user message first.
-    # It then creates the assistant message record *before* streaming starts,
-    # and updates it with the final content/tokens upon completion.
-    chat.ask(user_content) do |chunk|
-      # Get the latest (assistant) message record, which was created by `ask`
-      assistant_message = chat.messages.last
-      if chunk.content && assistant_message
-        # Append the chunk content to the message's target div
-        assistant_message.broadcast_append_chunk(chunk.content)
-      end
-    end
-    # Final assistant message is now fully persisted by acts_as_chat
-  end
-end
 ```
 
 ```erb
@@ -235,7 +270,7 @@ end
 <!-- Your form to submit new messages -->
 <%= form_with(url: chat_messages_path(@chat), method: :post) do |f| %>
   <%= f.text_area :content %>
-  <%= f.submit "Send" %>
+  <%= f.button "Send", disable_with: "Sending..." %>
 <% end %>
 
 <%# app/views/messages/_message.html.erb %>
@@ -243,7 +278,7 @@ end
   <div class="message <%= message.role %>">
     <strong><%= message.role.capitalize %>:</strong>
     <%# Target div for streaming content %>
-    <div id="<%= dom_id(message, "content") %>" style="display: inline;">
+    <div id="<%= dom_id(message, "content") %>" class="message-content">
       <%# Render initial content if not streaming, otherwise job appends here %>
       <%= simple_format(message.content) %>
     </div>
@@ -251,8 +286,7 @@ end
 <% end %>
 ```
 
-{: .note }
-This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators). See the [Streaming Responses Guide]({% link guides/streaming.md %}) for more on streaming itself.
+{: .note } This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators). See the [Streaming Responses Guide]({% link guides/streaming.md %}) for more on streaming itself.
 
 ## Customizing Models
 
@@ -260,8 +294,8 @@ Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. 
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %})
-*   [Using Tools]({% link guides/tools.md %})
-*   [Streaming Responses]({% link guides/streaming.md %})
-*   [Working with Models]({% link guides/models.md %})
-*   [Error Handling]({% link guides/error-handling.md %})
+- [Chatting with AI Models]({% link guides/chat.md %})
+- [Using Tools]({% link guides/tools.md %})
+- [Streaming Responses]({% link guides/streaming.md %})
+- [Working with Models]({% link guides/models.md %})
+- [Error Handling]({% link guides/error-handling.md %})
