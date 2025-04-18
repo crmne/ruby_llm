@@ -14,11 +14,13 @@ module RubyLLM
 
           @message_class = message_class.to_s
           @tool_call_class = tool_call_class.to_s
+          message_foreign_key = "#{to_s.underscore.gsub('/', '_')}_id"
 
           has_many :messages,
                    -> { order(created_at: :asc) },
                    class_name: @message_class,
-                   dependent: :destroy
+                   dependent: :destroy,
+                   foreign_key: message_foreign_key
 
           delegate :complete,
                    :add_message,
@@ -30,9 +32,12 @@ module RubyLLM
 
           @chat_class = chat_class.to_s
           @tool_call_class = tool_call_class.to_s
+          @chat_foreign_key = "#{@chat_class.to_s.underscore.gsub('/', '_')}_id"
+          @message_foreign_key = "#{to_s.underscore.gsub('/', '_')}_id"
 
-          belongs_to :chat, class_name: @chat_class, touch: touch_chat
-          has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
+          belongs_to :chat, class_name: @chat_class, touch: touch_chat, foreign_key: @chat_foreign_key
+
+          has_many :tool_calls, class_name: @tool_call_class, foreign_key: @message_foreign_key, dependent: :destroy
 
           belongs_to :parent_tool_call,
                      class_name: @tool_call_class,
@@ -45,8 +50,9 @@ module RubyLLM
 
         def acts_as_tool_call(message_class: 'Message')
           @message_class = message_class.to_s
+          @message_foreign_key = "#{@message_class.underscore.gsub('/', '_')}_id"
 
-          belongs_to :message, class_name: @message_class
+          belongs_to :message, class_name: @message_class, foreign_key: @message_foreign_key
 
           has_one :result,
                   class_name: @message_class,
