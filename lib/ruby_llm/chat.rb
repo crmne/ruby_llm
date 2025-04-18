@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module RubyLLM
   # Represents a conversation with an AI model. Handles message history,
   # streaming responses, and tool integration with a simple, conversational API.
@@ -94,6 +96,41 @@ module RubyLLM
       end
 
       @output_schema = schema
+      
+      # Always add schema guidance - it will be appended if there's an existing system message
+      add_system_schema_guidance(schema)
+      
+      self
+    end
+    
+    # Adds a system message with guidance for JSON output based on the schema
+    # If a system message already exists, it appends to it rather than replacing
+    def add_system_schema_guidance(schema)
+      # Create a more generalized prompt that works well across all providers
+      # This is particularly helpful for OpenAI which requires "json" in the prompt
+      guidance = <<~GUIDANCE
+        You must format your output as a JSON value that adheres to the following schema:
+        #{JSON.pretty_generate(schema)}
+        
+        Format your entire response as valid JSON that follows this schema exactly.
+        Do not include explanations, markdown formatting, or any text outside the JSON.
+      GUIDANCE
+      
+      # Check if we already have a system message
+      system_message = messages.find { |msg| msg.role == :system }
+      
+      if system_message
+        # Append to existing system message
+        updated_content = "#{system_message.content}\n\n#{guidance}"
+        # Remove the old system message
+        @messages.delete(system_message)
+        # Add the updated system message
+        add_message(role: :system, content: updated_content)
+      else
+        # No system message exists, create a new one
+        with_instructions(guidance)
+      end
+      
       self
     end
 

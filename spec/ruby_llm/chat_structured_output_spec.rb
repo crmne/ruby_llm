@@ -70,6 +70,62 @@ RSpec.describe 'Chat with structured output', type: :feature do
       result = chat.with_output_schema(schema)
       expect(result).to eq(chat)
     end
+    
+    it 'adds system schema guidance when with_output_schema is called' do
+      schema = {
+        'type' => 'object',
+        'properties' => {
+          'name' => { 'type' => 'string' },
+          'age' => { 'type' => 'number' }
+        },
+        'required' => ['name', 'age']
+      }
+      
+      chat = RubyLLM.chat
+      
+      # This should add the system message with schema guidance
+      chat.with_output_schema(schema)
+      
+      # Verify that the system message was added with the schema guidance
+      system_message = chat.messages.find { |msg| msg.role == :system }
+      expect(system_message).not_to be_nil
+      expect(system_message.content).to include('You must format your output as a JSON value')
+      expect(system_message.content).to include('"type": "object"')
+      expect(system_message.content).to include('"name": {')
+      expect(system_message.content).to include('"age": {')
+      expect(system_message.content).to include('Format your entire response as valid JSON')
+    end
+    
+    it 'appends system schema guidance to existing system instructions' do
+      schema = {
+        'type' => 'object',
+        'properties' => {
+          'name' => { 'type' => 'string' },
+          'age' => { 'type' => 'number' }
+        },
+        'required' => ['name', 'age']
+      }
+      
+      original_instruction = "You are a helpful assistant that specializes in programming languages."
+      
+      chat = RubyLLM.chat
+      chat.with_instructions(original_instruction)
+      
+      # This should append the schema guidance to existing instructions
+      chat.with_output_schema(schema)
+      
+      # Verify that the system message contains both the original instructions and schema guidance
+      system_message = chat.messages.find { |msg| msg.role == :system }
+      expect(system_message).not_to be_nil
+      expect(system_message.content).to include(original_instruction)
+      expect(system_message.content).to include('You must format your output as a JSON value')
+      expect(system_message.content).to include('"type": "object"')
+      
+      # Verify order - original instruction should come first, followed by schema guidance
+      instruction_index = system_message.content.index(original_instruction)
+      schema_index = system_message.content.index('You must format your output')
+      expect(instruction_index).to be < schema_index
+    end
   end
   
   describe 'provider-specific functionality', :vcr do
