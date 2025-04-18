@@ -53,14 +53,26 @@ You can disable strict mode by setting `strict: false` when calling `with_output
 
 ```ruby
 # Allow structured output with non-OpenAI models
-chat.with_output_schema(schema, strict: false)
+chat = RubyLLM.chat(model: "gemini-2.0-flash")
+response = chat.with_output_schema(schema, strict: false)
+                .ask("Create a profile for a Ruby developer")
+
+# The response.content will be a Hash if JSON parsing succeeds
+if response.content.is_a?(Hash)
+  puts "Name: #{response.content['name']}"
+  puts "Age: #{response.content['age']}"
+else
+  # Fall back to treating as string if parsing failed
+  puts "Got text response: #{response.content}"
+end
 ```
 
 In non-strict mode:
 - The system will not validate if the model officially supports structured output
 - The schema is still included in the system prompt to guide the model
-- The response might not be properly formatted JSON
-- You may need to handle parsing manually in some cases
+- RubyLLM automatically attempts to handle markdown code blocks (like ````json\n{...}````)
+- JSON is parsed when possible, but might fall back to raw text in some cases
+- Works with Anthropic Claude and Google Gemini models, but results can vary
 
 This is useful for experimentation with models like Anthropic's Claude or Gemini, but should be used with caution in production environments.
 
@@ -177,6 +189,8 @@ The current implementation of structured output in RubyLLM:
 2. **For other providers (with strict: false)**:
    - Includes schema guidance in the system prompt
    - Does not use provider-specific JSON modes
+   - Automatically handles markdown code blocks (like ````json\n{...}````)
+   - Attempts to parse JSON responses when possible
    - Returns varying results depending on the model's capabilities
    - Better suited for experimentation than production use
 

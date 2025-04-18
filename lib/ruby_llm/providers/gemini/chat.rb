@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+
 module RubyLLM
   module Providers
     module Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
         def completion_url
           "models/#{@model}:generateContent"
         end
@@ -98,14 +101,24 @@ module RubyLLM
           data = response.body
           tool_calls = extract_tool_calls(data)
 
+          # Extract the raw text content
+          content = extract_content(data)
+
+          # Parse JSON content if schema was provided
+          content = parse_structured_output(content) if chat&.output_schema && !content.empty?
+
           Message.new(
             role: :assistant,
-            content: extract_content(data),
+            content: content,
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
-            model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
+            model_id: extract_model_id(data, response)
           )
+        end
+        
+        def extract_model_id(data, response)
+          data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
         end
 
         def extract_content(data) # rubocop:disable Metrics/CyclomaticComplexity

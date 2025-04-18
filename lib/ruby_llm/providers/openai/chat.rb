@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+
 module RubyLLM
   module Providers
     module OpenAI
       # Chat methods of the OpenAI API integration
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
         module_function
 
         def completion_url
@@ -29,7 +32,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response, chat: nil) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+        def parse_completion_response(response, chat: nil)
           data = response.body
           return if data.empty?
 
@@ -39,14 +42,7 @@ module RubyLLM
           content = message_data['content']
 
           # Parse JSON content if schema was provided
-          if chat&.output_schema && content
-            begin
-              parsed_json = JSON.parse(content)
-              content = parsed_json
-            rescue JSON::ParserError => e
-              raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}"
-            end
-          end
+          content = parse_structured_output(content) if chat&.output_schema && content
 
           Message.new(
             role: :assistant,
