@@ -1,0 +1,8 @@
+class Create<%= options[:chat_model_name].pluralize %> < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :<%= options[:chat_model_name].tableize %> do |t|
+      t.string :model_id
+      t.timestamps
+    end
+  end
+end
