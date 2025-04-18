@@ -124,10 +124,17 @@ module RubyLLM
         self
       end
 
-      def ask(message, &)
-        message = { role: :user, content: message }
-        messages.create!(**message)
-        to_llm.complete(&)
+      def ask(message = nil, with: {}, &block)
+        message_attrs = { role: :user }
+
+        message_attrs[:content] = if with.empty?
+                                    message
+                                  else
+                                    RubyLLM::Content.new(message, with).format.to_json
+                                  end
+
+        messages.create!(**message_attrs)
+        to_llm.complete(&block)
       end
 
       alias say ask
@@ -174,6 +181,33 @@ module RubyLLM
     # provide a clean interface to the underlying message data.
     module MessageMethods
       extend ActiveSupport::Concern
+
+      define_method(:content_before_type_cast) do
+        super()
+      end
+
+      define_method(:content) do # rubocop:disable Metrics/MethodLength
+        value = content_before_type_cast
+
+        # If it's a JSON string, try to parse it and convert to a Content object
+        if value.is_a?(String) && (value.start_with?('[{') || value.start_with?('{'))
+          begin
+            parsed = JSON.parse(value, { symbolize_names: true })
+
+            if parsed.is_a?(Array)
+              content = RubyLLM::Content.new.tap do |content|
+                content.instance_variable_set(:@parts, parsed)
+              end
+
+              return content.format
+            end
+          rescue JSON::ParserError
+            # Not valid JSON, just return as is
+          end
+        end
+
+        value
+      end
 
       def to_llm
         RubyLLM::Message.new(
