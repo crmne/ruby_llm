@@ -23,12 +23,10 @@ module RubyLLM
             content
           end
         rescue JSON::ParserError => e
-          if raise_on_error
-            raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}"
-          else
-            RubyLLM.logger.warn("Failed to parse JSON from model response: #{e.message}")
-            content
-          end
+          raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}" if raise_on_error
+
+          RubyLLM.logger.warn("Failed to parse JSON from model response: #{e.message}")
+          content
         end
       end
 
@@ -37,18 +35,16 @@ module RubyLLM
       # @return [String] The cleaned text
       def clean_markdown_code_blocks(text)
         return text if text.nil? || text.empty?
-        
+
         # Extract content between markdown code blocks with newlines
         if text =~ /```(?:json)?.*?\n(.*?)\n\s*```/m
           # If we can find a markdown block, extract just the content
-          return $1.strip
+          return ::Regexp.last_match(1).strip
         end
-        
+
         # Handle cases where there are no newlines
-        if text =~ /```(?:json)?(.*?)```/m
-          return $1.strip
-        end
-        
+        return ::Regexp.last_match(1).strip if text =~ /```(?:json)?(.*?)```/m
+
         # No markdown detected, return original
         text
       end
@@ -58,14 +54,14 @@ module RubyLLM
       # @return [Boolean] True if the text appears to be a JSON object
       def json_object?(text)
         return false unless text.is_a?(String)
-        
+
         cleaned = text.strip
-        
+
         # Simple check for JSON object format
         return true if cleaned.start_with?('{') && cleaned.end_with?('}')
-        
+
         # Try to parse as a quick validation (but don't do this for large texts)
-        if cleaned.length < 10000
+        if cleaned.length < 10_000
           begin
             JSON.parse(cleaned)
             return true
@@ -73,7 +69,7 @@ module RubyLLM
             # Not valid JSON - fall through
           end
         end
-        
+
         false
       end
     end

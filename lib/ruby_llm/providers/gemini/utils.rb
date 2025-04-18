@@ -12,10 +12,10 @@ module RubyLLM
         def extract_model_id(data, response = nil)
           # First try to get from modelVersion directly
           return data['modelVersion'] if data['modelVersion']
-          
+
           # Fall back to parsing from URL if response is provided
           return response.env.url.path.split('/')[3].split(':')[0] if response&.env&.url
-          
+
           # Final fallback - just return a generic identifier
           'gemini'
         end

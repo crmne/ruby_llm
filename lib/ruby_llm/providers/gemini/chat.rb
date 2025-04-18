@@ -16,10 +16,10 @@ module RubyLLM
 
         def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
           @model = model
-          
+
           # Store the chat for use in parse_completion_response
           @current_chat = chat
-          
+
           payload = {
             contents: format_messages(messages),
             generationConfig: {
@@ -103,10 +103,14 @@ module RubyLLM
           end
         end
 
+        # Parses the response from a completion API call
+        # @param response [Faraday::Response] The API response
+        # @param chat [RubyLLM::Chat, nil] Chat instance for context
+        # @return [RubyLLM::Message] Processed message with content and metadata
         def parse_completion_response(response, chat: nil)
           # Use the stored chat instance if the parameter is nil
           chat ||= @current_chat
-          
+
           data = response.body
           tool_calls = extract_tool_calls(data)
 
@@ -114,9 +118,7 @@ module RubyLLM
           content = extract_content(data)
 
           # Parse JSON content if schema provided
-          if chat&.output_schema && !content.empty?
-            content = parse_structured_output(content, raise_on_error: true)
-          end
+          content = parse_structured_output(content, raise_on_error: true) if chat&.output_schema && !content.empty?
 
           Message.new(
             role: :assistant,
@@ -128,6 +130,9 @@ module RubyLLM
           )
         end
 
+        # Extracts text content from the response data
+        # @param data [Hash] The response data body
+        # @return [String] The extracted text content or empty string
         def extract_content(data) # rubocop:disable Metrics/CyclomaticComplexity
           candidate = data.dig('candidates', 0)
           return '' unless candidate
@@ -143,6 +148,9 @@ module RubyLLM
           text_parts.map { |p| p['text'] }.join
         end
 
+        # Determines if the candidate contains a function call
+        # @param candidate [Hash] The candidate from the response
+        # @return [Boolean] True if the candidate contains a function call
         def function_call?(candidate)
           parts = candidate.dig('content', 'parts')
           parts&.any? { |p| p['functionCall'] }

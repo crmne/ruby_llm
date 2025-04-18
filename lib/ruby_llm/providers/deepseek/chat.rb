@@ -11,17 +11,6 @@ module RubyLLM
           # DeepSeek doesn't use the new OpenAI convention for system prompts
           role.to_s
         end
-
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil)
-          {
-            model: model,
-            messages: format_messages(messages),
-            temperature: temperature,
-            stream: stream
-          }.tap do |payload|
-            payload[:tools] = tools.map { |_, tool| format_tool(tool) } if tools.any?
-          end
-        end
       end
     end
   end
