@@ -9,7 +9,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
+        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
           @model = model
           payload = {
             contents: format_messages(messages),
@@ -18,21 +18,10 @@ module RubyLLM
             }
           }
 
-          # Add structured output if schema is provided
-          if chat&.output_schema
-            # Use Gemini's structured output response mode
-            payload[:generationConfig][:response_mime_type] = 'application/json'
-
-            # Add the schema for models that support structured output
-            # All Gemini 1.5+ models support the responseSchema parameter
-            payload[:responseSchema] = chat.output_schema if Capabilities.supports_structured_output?(model)
-          end
-
           payload[:tools] = format_tools(tools) if tools.any?
 
           # Store tools for use in generate_completion
           @tools = tools
-          @chat = chat
 
           if block_given?
             stream_response payload, &block
@@ -105,25 +94,13 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def parse_completion_response(response)
           data = response.body
           tool_calls = extract_tool_calls(data)
-          content = extract_content(data)
-
-          # Parse JSON if schema was provided and we have content from a text response
-          if @chat&.output_schema && content.is_a?(String) && !content.empty?
-            begin
-              # Try to parse the JSON from text response
-              parsed_json = JSON.parse(content)
-              content = parsed_json
-            rescue JSON::ParserError => e
-              raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}"
-            end
-          end
 
           Message.new(
             role: :assistant,
-            content: content,
+            content: extract_content(data),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
@@ -135,10 +112,8 @@ module RubyLLM
           candidate = data.dig('candidates', 0)
           return '' unless candidate
 
-          # Handle function calls - they take precedence over text
-          # For function calls without output_schema, return empty content
-          # (the tool calls are handled separately)
-          return '' if function_call?(candidate) && !@chat&.output_schema
+          # Content will be empty for function calls
+          return '' if function_call?(candidate)
 
           # Extract text content
           parts = candidate.dig('content', 'parts')

@@ -79,20 +79,13 @@ module RubyLLM
           model_id.match?(/gemini|pro|flash/)
         end
 
-        # Determines if the model supports structured outputs
+        # Determines if the model supports JSON mode
         # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports structured JSON output
-        def supports_structured_output?(model_id)
-          # All Gemini models from 1.5 generation onward support structured JSON output
-          # Including gemini-1.5-flash, gemini-1.5-flash-8b, gemini-1.5-pro,
-          # gemini-2.0-flash, gemini-2.0-flash-lite, gemini-2.0-flash-live-001,
-          # gemini-2.5-flash-preview, gemini-2.5-pro-preview
-          return false if model_id.match?(/text-embedding|embedding-001|aqa|imagen|gemini-1\.0/)
-
-          # Match all 1.5+ models
-          model_id.match?(/gemini-(?:[1-9]\.[5-9]|[2-9]\.\d)/)
+        # @return [Boolean] true if the model supports JSON mode
+        def supports_json_mode?(_model_id)
+          # Gemini models don't actually support proper JSON mode
+          false
         end
-
 
         # Formats the model ID into a human-readable display name
         # @param model_id [String] the model identifier
