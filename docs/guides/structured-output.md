@@ -68,18 +68,21 @@ This is useful for experimentation with models like Anthropic's Claude or Gemini
 
 RubyLLM has two error types related to structured output:
 
-1. **UnsupportedStructuredOutputError**: Raised when you try to use structured output with a model that doesn't support it:
+1. **UnsupportedStructuredOutputError**: Raised when you try to use structured output with a model that doesn't support it in strict mode:
 
 ```ruby
 begin
-  chat = RubyLLM.chat(model: 'unsupported-model')
+  chat = RubyLLM.chat(model: 'claude-3-5-haiku')
   chat.with_output_schema(schema) # This will raise an error
 rescue RubyLLM::UnsupportedStructuredOutputError => e
   puts "This model doesn't support structured output: #{e.message}"
+  
+  # You can try with strict mode disabled
+  chat.with_output_schema(schema, strict: false)
 end
 ```
 
-2. **InvalidStructuredOutput**: Raised if the model returns invalid JSON that doesn't match your schema:
+2. **InvalidStructuredOutput**: Raised if the model returns invalid JSON:
 
 ```ruby
 begin
@@ -88,6 +91,8 @@ rescue RubyLLM::InvalidStructuredOutput => e
   puts "The model returned invalid JSON: #{e.message}"
 end
 ```
+
+Note that the current implementation only checks that the response is valid JSON that can be parsed. It does not verify that the parsed content conforms to the schema structure (e.g., having all required fields or correct data types). If you need full schema validation, you'll need to implement it using a library like `json-schema`.
 
 ## With ActiveRecord and Rails
 
@@ -160,4 +165,26 @@ schema = {
 inventory = chat.with_output_schema(schema).ask("Create an inventory for a Ruby gem store")
 ```
 
-This feature is currently in alpha and we welcome feedback on how it can be improved.
+## Implementation Details
+
+The current implementation of structured output in RubyLLM:
+
+1. **For OpenAI**: 
+   - Uses OpenAI's native JSON mode via `response_format: {type: "json_object"}`
+   - Returns parsed Hash objects directly
+   - Works reliably in production settings
+
+2. **For other providers (with strict: false)**:
+   - Includes schema guidance in the system prompt
+   - Does not use provider-specific JSON modes
+   - Returns varying results depending on the model's capabilities
+   - Better suited for experimentation than production use
+
+### Limitations
+
+- No schema validation beyond JSON parsing
+- No enforcement of required fields or data types
+- Not all providers support structured output reliably
+- Response format consistency varies between providers
+
+This feature is currently in alpha and we welcome feedback on how it can be improved. Future versions will likely include more robust schema validation and better support for additional providers.
