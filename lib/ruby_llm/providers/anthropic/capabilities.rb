@@ -58,7 +58,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured JSON output
         def supports_structured_output?(model_id)
-          model_id.match?(/claude-3/) # All Claude 3 models support structured output
+          false
         end
 
 

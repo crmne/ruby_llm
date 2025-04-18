@@ -83,7 +83,6 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured JSON output
         def supports_structured_output?(_model_id)
-          # Gemini models don't actually support proper structured JSON output
           false
         end
 

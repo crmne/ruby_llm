@@ -84,7 +84,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured JSON output
         def supports_structured_output?(model_id)
-          model_id.match?(/anthropic\.claude/) # Bedrock Claude models support structured output
+          false
         end
 
 

@@ -85,24 +85,24 @@ module RubyLLM
     # @return [self] Returns self for method chaining
     # @raise [ArgumentError] If the schema is not a Hash or valid JSON string
     # @raise [UnsupportedStructuredOutputError] If the model doesn't support structured output
-    def with_output_schema(schema)
+    def with_output_schema(schema, strict: true)
       schema = JSON.parse(schema) if schema.is_a?(String)
       raise ArgumentError, 'Schema must be a Hash' unless schema.is_a?(Hash)
 
       # Check if model supports structured output
       provider_module = Provider.providers[@model.provider.to_sym]
-      if !provider_module.supports_structured_output?(@model.id)
-        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
+      if strict && !provider_module.supports_structured_output?(@model.id)
+        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output. \nUse with_output_schema(schema, strict:false) for less stict, more risky mode."
       end
 
       @output_schema = schema
-      
+
       # Always add schema guidance - it will be appended if there's an existing system message
       add_system_schema_guidance(schema)
-      
+
       self
     end
-    
+
     # Adds a system message with guidance for JSON output based on the schema
     # If a system message already exists, it appends to it rather than replacing
     def add_system_schema_guidance(schema)
@@ -111,14 +111,14 @@ module RubyLLM
       guidance = <<~GUIDANCE
         You must format your output as a JSON value that adheres to the following schema:
         #{JSON.pretty_generate(schema)}
-        
+
         Format your entire response as valid JSON that follows this schema exactly.
         Do not include explanations, markdown formatting, or any text outside the JSON.
       GUIDANCE
-      
+
       # Check if we already have a system message
       system_message = messages.find { |msg| msg.role == :system }
-      
+
       if system_message
         # Append to existing system message
         updated_content = "#{system_message.content}\n\n#{guidance}"
@@ -130,7 +130,7 @@ module RubyLLM
         # No system message exists, create a new one
         with_instructions(guidance)
       end
-      
+
       self
     end
 
