@@ -133,20 +133,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(result).to be_a(Chat)
     end
 
-    it 'handles JSON content in extract_content' do
+    it 'passes through JSON content without modification' do
       chat = Chat.create!(model_id: 'gpt-4.1-nano')
 
       # Create a message with JSON content directly
       json_content = '{"name":"Ruby","version":"3.2.0","features":["Blocks"]}'
       message = chat.messages.create!(role: 'assistant', content: json_content)
 
-      # Verify the extraction works
+      # Verify the extraction passes through the string unchanged
       llm_message = message.to_llm
-      expect(llm_message.content).to be_a(Hash)
-      expect(llm_message.content['name']).to eq('Ruby')
+      expect(llm_message.content).to eq(json_content)
+      
+      # Even though extract_content doesn't parse JSON, verify it's valid JSON
+      parsed = JSON.parse(llm_message.content)
+      expect(parsed['name']).to eq('Ruby')
     end
 
-    it 'handles Hash content in extract_content' do
+    it 'passes through Hash content without modification' do
       chat = Chat.create!(model_id: 'gpt-4.1-nano')
 
       # SQLite doesn't support JSON natively, so simulate a Hash-like object
@@ -156,9 +159,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Create a message that will use our mocked content
       message = chat.messages.create!(role: 'assistant', content: '{}')
 
-      # Verify the extraction works
+      # Verify the extraction passes through the Hash unchanged
       llm_message = message.to_llm
-      expect(llm_message.content).to be_a(Hash)
+      expect(llm_message.content).to be(mock_hash)
       expect(llm_message.content['name']).to eq('Ruby')
     end
   end
