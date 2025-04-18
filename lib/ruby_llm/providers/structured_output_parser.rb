@@ -11,11 +11,11 @@ module RubyLLM
       # @return [Hash, String] The parsed JSON or the original content if parsing fails
       def parse_structured_output(content, raise_on_error: true)
         return content if content.nil? || content.empty?
-        
+
         begin
           # First, clean any markdown code blocks
           json_text = clean_markdown_code_blocks(content)
-          
+
           # Then parse if it looks like valid JSON
           if json_object?(json_text)
             JSON.parse(json_text)
@@ -31,22 +31,50 @@ module RubyLLM
           end
         end
       end
-      
+
       # Cleans markdown code blocks from text
       # @param text [String] The text to clean
       # @return [String] The cleaned text
       def clean_markdown_code_blocks(text)
-        return text unless text.match?(/```(?:json)?\s*\n/)
+        return text if text.nil? || text.empty?
         
-        text.gsub(/```(?:json)?\s*\n/, '')
-            .gsub(/\n\s*```\s*$/, '')
+        # Extract content between markdown code blocks with newlines
+        if text =~ /```(?:json)?.*?\n(.*?)\n\s*```/m
+          # If we can find a markdown block, extract just the content
+          return $1.strip
+        end
+        
+        # Handle cases where there are no newlines
+        if text =~ /```(?:json)?(.*?)```/m
+          return $1.strip
+        end
+        
+        # No markdown detected, return original
+        text
       end
-      
+
       # Checks if the text appears to be a JSON object
       # @param text [String] The text to check
       # @return [Boolean] True if the text appears to be a JSON object
       def json_object?(text)
-        text.strip.start_with?('{') && text.strip.end_with?('}')
+        return false unless text.is_a?(String)
+        
+        cleaned = text.strip
+        
+        # Simple check for JSON object format
+        return true if cleaned.start_with?('{') && cleaned.end_with?('}')
+        
+        # Try to parse as a quick validation (but don't do this for large texts)
+        if cleaned.length < 10000
+          begin
+            JSON.parse(cleaned)
+            return true
+          rescue JSON::ParserError
+            # Not valid JSON - fall through
+          end
+        end
+        
+        false
       end
     end
   end

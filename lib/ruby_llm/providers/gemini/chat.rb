@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../structured_output_parser'
+require_relative 'utils'
 
 module RubyLLM
   module Providers
@@ -8,12 +9,17 @@ module RubyLLM
       # Chat methods for the Gemini API implementation
       module Chat
         include RubyLLM::Providers::StructuredOutputParser
+        include RubyLLM::Providers::Gemini::Utils
         def completion_url
           "models/#{@model}:generateContent"
         end
 
         def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
           @model = model
+          
+          # Store the chat for use in parse_completion_response
+          @current_chat = chat
+          
           payload = {
             contents: format_messages(messages),
             generationConfig: {
@@ -98,14 +104,19 @@ module RubyLLM
         end
 
         def parse_completion_response(response, chat: nil)
+          # Use the stored chat instance if the parameter is nil
+          chat ||= @current_chat
+          
           data = response.body
           tool_calls = extract_tool_calls(data)
 
           # Extract the raw text content
           content = extract_content(data)
 
-          # Parse JSON content if schema was provided
-          content = parse_structured_output(content) if chat&.output_schema && !content.empty?
+          # Parse JSON content if schema provided
+          if chat&.output_schema && !content.empty?
+            content = parse_structured_output(content, raise_on_error: true)
+          end
 
           Message.new(
             role: :assistant,
@@ -115,10 +126,6 @@ module RubyLLM
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
             model_id: extract_model_id(data, response)
           )
-        end
-        
-        def extract_model_id(data, response)
-          data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
         end
 
         def extract_content(data) # rubocop:disable Metrics/CyclomaticComplexity

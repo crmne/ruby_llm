@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
+require_relative 'utils'
+
 module RubyLLM
   module Providers
     module Gemini
       # Streaming methods for the Gemini API implementation
       module Streaming
+        include RubyLLM::Providers::Gemini::Utils
         def stream_url
           "models/#{@model}:streamGenerateContent?alt=sse"
         end
@@ -21,10 +24,6 @@ module RubyLLM
         end
 
         private
-
-        def extract_model_id(data)
-          data['modelVersion']
-        end
 
         def extract_content(data)
           return nil unless data['candidates']&.any?
