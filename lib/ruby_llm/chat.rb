@@ -87,6 +87,7 @@ module RubyLLM
     # @raise [UnsupportedStructuredOutputError] If the model doesn't support structured output
     def with_output_schema(schema, strict: true)
       schema = JSON.parse(schema) if schema.is_a?(String)
+      schema = schema.json_schema if schema.respond_to?(:json_schema)
       raise ArgumentError, 'Schema must be a Hash' unless schema.is_a?(Hash)
 
       # Check if model supports structured output

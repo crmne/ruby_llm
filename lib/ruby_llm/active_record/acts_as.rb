@@ -153,13 +153,10 @@ module RubyLLM
           tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
         end
 
-        # Get content value which may be structured (Hash) or plain text (String)
-        content_value = message.content
-
         transaction do
           @message.update!(
             role: message.role,
-            content: content_value,
+            content: message.content,
             model_id: message.model_id,
             tool_call_id: tool_call_id,
             input_tokens: message.input_tokens,
