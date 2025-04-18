@@ -2,6 +2,38 @@
 http_interactions:
 - request:
     method: get
+    uri: http://localhost:11434/api/tags
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 27 Mar 2025 20:15:09 GMT
+      Server:
+      - Caddy
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{ "models": [ { "details": { "families": [ "granite", "clip" ], "family": "granite", "format": "gguf", "parameter_size": "2.5B", "parent_model": "", "quantization_level": "Q4_K_M" }, "digest": "3be41a661804ad72cd08269816c5a145f1df6479ad07e2b3a7e29dba575d2669", "model": "granite3.2-vision:2b", "modified_at": "2025-03-27T20:09:18.017039337Z", "name": "granite3.2-vision:2b", "size": 2437852465 }, { "details": { "families": [ "llama" ], "family": "llama", "format": "gguf", "parameter_size": "8.0B", "parent_model": "", "quantization_level": "Q4_K_M" }, "digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e", "model": "llama3.1:8b", "modified_at": "2025-03-27T19:29:58.416254293Z", "name": "llama3.1:8b", "size": 4920753328 }, { "details": { "families": [ "bert" ], "family": "bert", "format": "gguf", "parameter_size": "23M", "parent_model": "", "quantization_level": "F16" }, "digest": "bf75350e17522c7dfe63e98f50457b27fadcfee62f0c0767c1c86053407c2abb", "model": "snowflake-arctic-embed:22m", "modified_at": "2025-03-25T01:52:52.027398285Z", "name": "snowflake-arctic-embed:22m", "size": 45838698 } ] }'
+  recorded_at: Thu, 27 Mar 2025 20:15:02 GMT
+- request:
+    method: get
     uri: https://api.openai.com/v1/models
     body:
       encoding: US-ASCII
@@ -21,7 +53,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:34 GMT
+      - Wed, 02 Apr 2025 17:53:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,7 +65,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '300'
+      - '492'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -432,10 +464,16 @@ http_interactions:
               "object": "model",
               "created": 1725648979,
               "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-nano",
+              "object": "model",
+              "created": 1725648979,
+              "owned_by": "system"
             }
           ]
         }
-  recorded_at: Wed, 02 Apr 2025 17:53:34 GMT
+  recorded_at: Wed, 02 Apr 2025 17:53:38 GMT
 - request:
     method: get
     uri: https://api.anthropic.com/v1/models
@@ -459,7 +497,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:34 GMT
+      - Wed, 02 Apr 2025 17:53:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -492,7 +530,7 @@ http_interactions:
         3 Sonnet","created_at":"2024-02-29T00:00:00Z"},{"type":"model","id":"claude-2.1","display_name":"Claude
         2.1","created_at":"2023-11-21T00:00:00Z"},{"type":"model","id":"claude-2.0","display_name":"Claude
         2.0","created_at":"2023-07-11T00:00:00Z"}],"has_more":false,"first_id":"claude-3-7-sonnet-20250219","last_id":"claude-2.0"}'
-  recorded_at: Wed, 02 Apr 2025 17:53:34 GMT
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
 - request:
     method: get
     uri: https://generativelanguage.googleapis.com/v1beta/models
@@ -520,7 +558,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 02 Apr 2025 17:53:35 GMT
+      - Wed, 02 Apr 2025 17:53:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -530,7 +568,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=18
+      - gfet4t7; dur=86
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -1216,7 +1254,7 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Wed, 02 Apr 2025 17:53:34 GMT
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
 - request:
     method: get
     uri: https://api.deepseek.com/models
@@ -1238,7 +1276,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:36 GMT
+      - Wed, 02 Apr 2025 17:53:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1250,7 +1288,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 9fc4908a7ce654331d05efdbf621423d
+      - eb9c177a0c3141beac66e5213c60ac6a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -1266,7 +1304,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"object":"list","data":[{"id":"deepseek-chat","object":"model","owned_by":"deepseek"},{"id":"deepseek-reasoner","object":"model","owned_by":"deepseek"}]}'
-  recorded_at: Wed, 02 Apr 2025 17:53:36 GMT
+  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
 - request:
     method: get
     uri: http://localhost:11434/api/tags
@@ -1307,12 +1345,12 @@ http_interactions:
       Host:
       - bedrock.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T175336Z
+      - 20250402T175339Z
       X-Amz-Content-Sha256:
       - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5ae523b8e5b3bb53597f2009d8dcb2ffec80cfa7bf939a17c030de0b93619f46
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5f69d324c05740f272e7c07046b973076335bd284cd150f03901ba9b30a62f4e
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -1323,7 +1361,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:37 GMT
+      - Wed, 02 Apr 2025 17:53:40 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -1331,7 +1369,7 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 25889f29-0f4e-40b9-9cd3-bf93006f9f0f
+      - 62d4de6c-de54-44b7-b02e-51731449128a
     body:
       encoding: UTF-8
       string: '{"modelSummaries":[{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-tg1-large","modelId":"amazon.titan-tg1-large","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
@@ -1414,6 +1452,5 @@ http_interactions:
         Large (24.02)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-large-2407-v1:0","modelId":"mistral.mistral-large-2407-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
         Large (24.07)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/luma.ray-v2:0","modelId":"luma.ray-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Ray
         v2","outputModalities":["VIDEO"],"providerName":"Luma AI","responseStreamingSupported":false}]}'
-  recorded_at: Wed, 02 Apr 2025 17:53:37 GMT
+  recorded_at: Wed, 02 Apr 2025 17:53:40 GMT
 recorded_with: VCR 6.3.1
-

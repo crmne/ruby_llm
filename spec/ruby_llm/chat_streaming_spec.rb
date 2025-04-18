@@ -9,7 +9,8 @@ RSpec.describe RubyLLM::Chat do
                    anthropic.claude-3-5-haiku-20241022-v1:0
                    gemini-2.0-flash
                    deepseek-chat
-                   gpt-4.1-nano].freeze
+                   gpt-4.1-nano
+                   llama3.1:8b].freeze
 
   describe 'streaming responses' do
     chat_models.each do |model|

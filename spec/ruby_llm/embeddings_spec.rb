@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Embedding do
   let(:test_text) { "Ruby is a programmer's best friend" }
   let(:test_texts) { %w[Ruby Python JavaScript] }
 
-  embedding_models = %w[text-embedding-004 text-embedding-3-small].freeze
+  embedding_models = %w[text-embedding-004 text-embedding-3-small snowflake-arctic-embed:22m].freeze
 
   describe 'basic functionality' do
     embedding_models.each do |model|

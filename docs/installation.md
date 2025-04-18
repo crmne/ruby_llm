@@ -76,6 +76,7 @@ RubyLLM.configure do |config|
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
 
+
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)
   # if these specific keys aren't set. Region is required if using Bedrock.
@@ -88,6 +89,11 @@ RubyLLM.configure do |config|
   # Use this for Azure OpenAI, proxies, or self-hosted models via OpenAI-compatible APIs.
   # See the "Working with Models" guide for details.
   config.openai_api_base = ENV.fetch('OPENAI_API_BASE', nil) # e.g., "https://your-azure.openai.azure.com"
+
+  # --- Ollama ---
+  # Ollama does not support app level auth; just point to your instance.
+  # Do `RubyLLM.models.refresh!` at runtime to populate available models.
+  config.ollama_api_base_url = ENV.fetch('OLLAMA_BASE_URL', 'http://localhost:11434')
 
   # --- Default Models ---
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.

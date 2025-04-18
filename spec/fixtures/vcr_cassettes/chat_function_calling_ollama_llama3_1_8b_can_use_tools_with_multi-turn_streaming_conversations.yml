@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Thu, 17 Apr 2025 13:53:54 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:53:54.356258926Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:53:54.366147488Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":361042362,"load_duration":14909755,"prompt_eval_count":205,"prompt_eval_duration":34977424,"eval_count":28,"eval_duration":310642005}
+  recorded_at: Thu, 17 Apr 2025 13:53:46 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Thu, 17 Apr 2025 13:53:54 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDQtMTdUMTM6NTM6NTQuNjY3ODg3MjgzWiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlcyB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIEJlcmxpbiBpcyAxNcKwQyBhbmQgdGhlcmUncyBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZG9uZV9yZWFzb24iOiJzdG9wIiwiZG9uZSI6dHJ1ZSwidG90YWxfZHVyYXRpb24iOjI5Nzk3NTgzMCwibG9hZF9kdXJhdGlvbiI6MTUxMTUyODMsInByb21wdF9ldmFsX2NvdW50IjoxMTIsInByb21wdF9ldmFsX2R1cmF0aW9uIjo1ODc1NTIyLCJldmFsX2NvdW50IjoyOCwiZXZhbF9kdXJhdGlvbiI6Mjc2Mzc0OTk0fQo=
+  recorded_at: Thu, 17 Apr 2025 13:53:47 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"role":"assistant","content":"The
+        tool call response indicates that the current temperature in Berlin is 15°C
+        and there''s a wind speed of 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Thu, 17 Apr 2025 13:53:54 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:53:54.990726495Z","message":{"role":"assistant","content":"","tool_calls":[{"function":{"name":"weather","arguments":{"latitude":"48.8575","longitude":"2.3514"}}}]},"done":false}
+        {"model":"llama3.1:8b","created_at":"2025-04-17T13:53:55.000798628Z","message":{"role":"assistant","content":""},"done_reason":"stop","done":true,"total_duration":329360343,"load_duration":14728417,"prompt_eval_count":297,"prompt_eval_duration":11340103,"eval_count":28,"eval_duration":302108158}
+  recorded_at: Thu, 17 Apr 2025 13:53:47 GMT
+- request:
+    method: post
+    uri: http://localhost:11434/api/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"llama3.1:8b","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"role":"assistant","content":"The
+        tool call response indicates that the current temperature in Berlin is 15°C
+        and there''s a wind speed of 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":null},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}],"options":{"temperature":0.1},"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/x-ndjson
+      Date:
+      - Thu, 17 Apr 2025 13:53:55 GMT
+      Server:
+      - Caddy
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImxsYW1hMy4xOjhiIiwiY3JlYXRlZF9hdCI6IjIwMjUtMDQtMTdUMTM6NTM6NTUuMzA2NzQ5ODQyWiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgdG9vbCBjYWxsIHJlc3BvbnNlIGluZGljYXRlcyB0aGF0IHRoZSBjdXJyZW50IHRlbXBlcmF0dXJlIGluIFBhcmlzIGlzIDE1wrBDIGFuZCB0aGVyZSdzIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9LCJkb25lX3JlYXNvbiI6InN0b3AiLCJkb25lIjp0cnVlLCJ0b3RhbF9kdXJhdGlvbiI6MzAxODg0OTYyLCJsb2FkX2R1cmF0aW9uIjoxNTEwMDY4OSwicHJvbXB0X2V2YWxfY291bnQiOjIwNCwicHJvbXB0X2V2YWxfZHVyYXRpb24iOjU4NzAzNDksImV2YWxfY291bnQiOjI4LCJldmFsX2R1cmF0aW9uIjoyNzk2OTU3MzB9Cg==
+  recorded_at: Thu, 17 Apr 2025 13:53:47 GMT
+recorded_with: VCR 6.3.1
