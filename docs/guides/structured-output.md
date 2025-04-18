@@ -39,12 +39,30 @@ puts "Interests: #{response.content['interests'].join(', ')}"
 
 ## Provider Support
 
-RubyLLM works with providers that natively support JSON structured output:
+### Strict Mode (Default)
+
+By default, RubyLLM uses "strict mode" which only allows providers that officially support structured JSON output:
 
 - **OpenAI**: For models that support JSON mode (like GPT-4.1, GPT-4o), RubyLLM uses the native `response_format: {type: "json_object"}` parameter.
-- **Gemini**: For supported models, RubyLLM uses the `response_format: {type: "JSON"}` configuration along with schema validation.
 
-If you try to use an unsupported model, RubyLLM will raise an error (see [Error Handling](#error-handling)).
+If you try to use an unsupported model in strict mode, RubyLLM will raise an `UnsupportedStructuredOutputError` (see [Error Handling](#error-handling)).
+
+### Non-Strict Mode
+
+You can disable strict mode by setting `strict: false` when calling `with_output_schema`:
+
+```ruby
+# Allow structured output with non-OpenAI models
+chat.with_output_schema(schema, strict: false)
+```
+
+In non-strict mode:
+- The system will not validate if the model officially supports structured output
+- The schema is still included in the system prompt to guide the model
+- The response might not be properly formatted JSON
+- You may need to handle parsing manually in some cases
+
+This is useful for experimentation with models like Anthropic's Claude or Gemini, but should be used with caution in production environments.
 
 ## Error Handling
 
