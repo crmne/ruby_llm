@@ -101,6 +101,11 @@ schema = {
 
 # Returns a validated Hash instead of plain text
 user_data = chat.with_output_schema(schema).ask("Create a profile for a Ruby developer")
+
+# Access the structured data using hash keys
+puts "Name: #{user_data.content['name']}"              # => "Jane Smith"
+puts "Age: #{user_data.content['age']}"                # => 32
+puts "Interests: #{user_data.content['interests'].join(', ')}"  # => "Ruby, Rails, API design"
 ```
 
 ## Installation
