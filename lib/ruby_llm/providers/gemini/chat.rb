@@ -9,7 +9,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+        def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
           @model = model
           payload = {
             contents: format_messages(messages),
@@ -94,7 +94,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response)
+        def parse_completion_response(response, chat: nil)
           data = response.body
           tool_calls = extract_tool_calls(data)
 
