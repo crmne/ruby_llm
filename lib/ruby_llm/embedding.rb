@@ -12,12 +12,12 @@ module RubyLLM
       @input_tokens = input_tokens
     end
 
-    def self.embed(text, model: nil)
+    def self.embed(text, model: nil, dimensions: nil)
       model_id = model || RubyLLM.config.default_embedding_model
       Models.find(model_id)
 
       provider = Provider.for(model_id)
-      provider.embed(text, model: model_id)
+      provider.embed(text, model: model_id, dimensions:)
     end
   end
 end

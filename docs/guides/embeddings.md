@@ -92,6 +92,44 @@ end
 
 Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on finding available embedding models and their capabilities.
 
+## Choosing Dimensions
+
+Each embedding model has its own default output dimensions. For example, OpenAI's `text-embedding-3-small` outputs 1536 dimensions by default, while `text-embedding-3-large` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
+
+```ruby
+embedding = RubyLLM.embed(
+  "This is a test sentence",
+  model: "text-embedding-3-small",
+  dimensions: 512
+)
+```
+
+This is particularly useful when:
+- Working with vector databases that have specific dimension requirements
+- Ensuring consistent dimensionality across different requests
+- Optimizing storage and query performance in your vector database
+
+Note that not all models support custom dimensions. If you specify dimensions that aren't supported by the chosen model, RubyLLM will use the model's default dimensions.
+
+## Using Embedding Results
+
+### Vector Properties
+
+The embedding result contains useful information:
+
+```ruby
+embedding = RubyLLM.embed("Example text")
+
+# The vector representation
+puts embedding.vectors.class  # => Array
+puts embedding.vectors.first.class  # => Float
+
+# The vector dimensions
+puts embedding.vectors.first.length # => 1536
+
+# The model used
+puts embedding.model  # => "text-embedding-3-small"
+
 ## Using Embedding Results
 
 A primary use case for embeddings is measuring the semantic similarity between texts. Cosine similarity is a common metric.
