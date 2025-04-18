@@ -114,6 +114,11 @@ module RubyLLM
         self
       end
 
+      def with_output_schema(schema)
+        to_llm.with_output_schema(schema)
+        self
+      end
+
       def on_new_message(&)
         to_llm.on_new_message(&)
         self
@@ -148,10 +153,13 @@ module RubyLLM
           tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
         end
 
+        # Get content value which may be structured (Hash) or plain text (String)
+        content_value = message.content
+
         transaction do
           @message.update!(
             role: message.role,
-            content: message.content,
+            content: content_value,
             model_id: message.model_id,
             tool_call_id: tool_call_id,
             input_tokens: message.input_tokens,
@@ -204,8 +212,25 @@ module RubyLLM
         parent_tool_call&.tool_call_id
       end
 
-      def extract_content
-        content
+      def extract_content # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        # Handle both string content and structured JSON content
+        if content.is_a?(String)
+          # Try to parse JSON if it looks like JSON
+          if content.strip.start_with?('{') && content.strip.end_with?('}')
+            begin
+              JSON.parse(content)
+            rescue JSON::ParserError
+              content
+            end
+          else
+            content
+          end
+        elsif content.respond_to?(:to_h)
+          # Already a hash-like object (e.g., from PostgreSQL jsonb)
+          content.to_h
+        else
+          content
+        end
       end
     end
   end

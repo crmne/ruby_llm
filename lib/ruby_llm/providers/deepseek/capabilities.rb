@@ -62,12 +62,13 @@ module RubyLLM
           model_id.match?(/deepseek-chat/) # Only deepseek-chat supports function calling
         end
 
-        # Determines if the model supports JSON mode
+        # Determines if the model supports structured outputs
         # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports JSON mode
-        def supports_json_mode?(_model_id)
-          false # DeepSeek function calling is unstable
+        # @return [Boolean] true if the model supports structured JSON output
+        def supports_structured_output?(_model_id)
+          false # DeepSeek doesn't support structured output yet
         end
+
 
         # Returns a formatted display name for the model
         # @param model_id [String] the model identifier

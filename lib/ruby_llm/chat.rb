@@ -11,7 +11,7 @@ module RubyLLM
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :output_schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false) # rubocop:disable Metrics/MethodLength
       if assume_model_exists && !provider
@@ -78,6 +78,25 @@ module RubyLLM
       self
     end
 
+    # Specifies a JSON schema for structured output from the model
+    # @param schema [Hash, String] JSON schema as a Hash or JSON string
+    # @return [self] Returns self for method chaining
+    # @raise [ArgumentError] If the schema is not a Hash or valid JSON string
+    # @raise [UnsupportedStructuredOutputError] If the model doesn't support structured output
+    def with_output_schema(schema)
+      schema = JSON.parse(schema) if schema.is_a?(String)
+      raise ArgumentError, 'Schema must be a Hash' unless schema.is_a?(Hash)
+
+      # Check if model supports structured output
+      provider_module = Provider.providers[@model.provider.to_sym]
+      if !provider_module.supports_structured_output?(@model.id)
+        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
+      end
+
+      @output_schema = schema
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -94,7 +113,7 @@ module RubyLLM
 
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, &)
+      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, chat: self, &)
       @on[:end_message]&.call(response)
 
       add_message response

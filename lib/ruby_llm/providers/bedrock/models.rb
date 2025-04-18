@@ -64,7 +64,7 @@ module RubyLLM
             family: capabilities.model_family(model_id).to_s,
             supports_vision: capabilities.supports_vision?(model_id),
             supports_functions: capabilities.supports_functions?(model_id),
-            supports_json_mode: capabilities.supports_json_mode?(model_id)
+            supports_structured_output: capabilities.supports_structured_output?(model_id)
           }
         end
 

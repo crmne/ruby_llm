@@ -10,7 +10,7 @@ module RubyLLM
     module Methods # rubocop:disable Metrics/ModuleLength
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
         normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
                                    capabilities.normalize_temperature(temperature, model)
                                  else
@@ -21,7 +21,11 @@ module RubyLLM
                                  tools: tools,
                                  temperature: normalized_temperature,
                                  model: model,
-                                 stream: block_given?)
+                                 stream: block_given?,
+                                 chat: chat)
+
+        # Store chat in instance variable for use in sync_response
+        @current_chat = chat
 
         if block_given?
           stream_response payload, &block
@@ -55,6 +59,13 @@ module RubyLLM
         missing_configs.empty?
       end
 
+      # Determines if the model supports structured outputs
+      # @param model_id [String] the model identifier
+      # @return [Boolean] true if the model supports structured JSON output
+      def supports_structured_output?(model_id)
+        capabilities.respond_to?(:supports_structured_output?) && capabilities.supports_structured_output?(model_id)
+      end
+
       private
 
       def missing_configs
@@ -79,7 +90,7 @@ module RubyLLM
 
       def sync_response(payload)
         response = post completion_url, payload
-        parse_completion_response response
+        parse_completion_response response, chat: @current_chat
       end
 
       def post(url, payload)

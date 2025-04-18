@@ -54,12 +54,13 @@ module RubyLLM
           model_id.match?(/claude-3/)
         end
 
-        # Determines if a model supports JSON mode
+        # Determines if the model supports structured outputs
         # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports JSON mode
-        def supports_json_mode?(model_id)
-          model_id.match?(/claude-3/)
+        # @return [Boolean] true if the model supports structured JSON output
+        def supports_structured_output?(model_id)
+          model_id.match?(/claude-3/) # All Claude 3 models support structured output
         end
+
 
         # Determines if a model supports extended thinking
         # @param model_id [String] the model identifier
