@@ -50,7 +50,7 @@ module RubyLLM
           payload[:system] = system_content unless system_content.empty?
         end
 
-        def parse_completion_response(response)
+        def parse_completion_response(response, chat: nil)
           data = response.body
           content_blocks = data['content'] || []
 

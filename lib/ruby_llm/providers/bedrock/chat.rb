@@ -77,7 +77,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response)
+        def parse_completion_response(response, chat: nil)
           data = response.body
           content_blocks = data['content'] || []
 
