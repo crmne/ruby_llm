@@ -116,38 +116,42 @@ module RubyLLM
       schema_obj
     end
 
-    # Checks if the model supports structured output
-    # @param strict [Boolean] Whether to enforce the model's support for structured output
-    # @raise [UnsupportedStructuredOutputError] If strict is true and the model doesn't support structured output
-    def check_model_compatibility!(json_mode)
+    # Checks if the model supports the requested format (JSON mode or schema)
+    # @param is_json_mode [Boolean] Whether JSON mode is being used
+    # @raise [UnsupportedJSONModeError] If JSON mode is requested but not supported
+    # @raise [UnsupportedStructuredOutputError] If structured output is requested but not supported
+    def check_model_compatibility!(is_json_mode)
       provider_module = Provider.providers[@model.provider.to_sym]
 
-      if json_mode && !provider_module.supports_json_mode?(@model.id)
-        raise UnsupportedJSONModeError,
-            "Model #{@model.id} doesn't support JSON mode. \n" \
-            'Use with_response_format(:json, strict: false) for less strict, more risky mode.'
-      elsif !provider_module.supports_structured_output?(@model.id)
-        raise UnsupportedStructuredOutputError,
-            "Model #{@model.id} doesn't support structured output. \n" \
-            'Use with_response_format(schema, strict: false) for less strict, more risky mode.'
-      end
+      if is_json_mode
+        return if provider_module.supports_json_mode?(@model.id)
 
+        raise UnsupportedJSONModeError,
+              "Model #{@model.id} doesn't support JSON mode. \n" \
+              'Use with_response_format(:json, strict: false) for less strict, more risky mode.'
+      else
+        return if provider_module.supports_structured_output?(@model.id)
+
+        raise UnsupportedStructuredOutputError,
+              "Model #{@model.id} doesn't support structured output. \n" \
+              'Use with_response_format(schema, strict: false) for less strict, more risky mode.'
+      end
     end
 
-    # Adds a system message with guidance for JSON schema output
+    # Adds system message guidance for schema-based JSON output
     # If a system message already exists, it appends to it rather than replacing
     # @return [self] Returns self for method chaining
     def add_system_format_guidance
-      guidance = create_schema_guidance(@response_format)
+      guidance = <<~GUIDANCE
+        You must format your output as a JSON value that adheres to the following schema:
+        #{JSON.pretty_generate(@response_format)}
+
+        Format your entire response as valid JSON that follows this schema exactly.
+        Do not include explanations, markdown formatting, or any text outside the JSON.
+      GUIDANCE
+
       update_or_create_system_message(guidance)
       self
-    end
-
-    # Creates appropriate guidance text based on the schema
-    # @param schema [Hash] JSON schema
-    # @return [String] Guidance text for system message
-    def create_schema_guidance(schema)
-      create_schema_json_guidance(schema)
     end
 
     # Adds guidance for simple JSON output format
@@ -161,19 +165,6 @@ module RubyLLM
 
       update_or_create_system_message(guidance)
       self
-    end
-
-    # Creates guidance for schema-based JSON output
-    # @param schema [Hash] JSON schema
-    # @return [String] Guidance text for schema-based JSON output
-    def create_schema_json_guidance(schema)
-      <<~GUIDANCE
-        You must format your output as a JSON value that adheres to the following schema:
-        #{JSON.pretty_generate(schema)}
-
-        Format your entire response as valid JSON that follows this schema exactly.
-        Do not include explanations, markdown formatting, or any text outside the JSON.
-      GUIDANCE
     end
 
     # Updates existing system message or creates a new one with the guidance
@@ -191,8 +182,6 @@ module RubyLLM
         with_instructions(guidance)
       end
     end
-
-    public
 
     def on_new_message(&block)
       @on[:new_message] = block
@@ -226,8 +215,6 @@ module RubyLLM
       messages << message
       message
     end
-
-    private
 
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|
