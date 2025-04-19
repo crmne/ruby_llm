@@ -271,36 +271,6 @@
     }
   },
   {
-    "id": "anthropic.claude-3-7-sonnet-20250219-v1:0",
-    "created_at": null,
-    "display_name": "Claude 3.7 Sonnet",
-    "provider": "bedrock",
-    "context_window": 200000,
-    "max_tokens": 4096,
-    "type": "chat",
-    "family": "claude3_sonnet",
-    "supports_vision": true,
-    "supports_functions": true,
-    "supports_json_mode": true,
-    "input_price_per_million": 3.0,
-    "output_price_per_million": 15.0,
-    "metadata": {
-      "provider_name": "Anthropic",
-      "customizations_supported": [],
-      "inference_configurations": [
-        "INFERENCE_PROFILE"
-      ],
-      "response_streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ]
-    }
-  },
-  {
     "id": "anthropic.claude-3-haiku-20240307-v1:0",
     "created_at": null,
     "display_name": "Claude 3 Haiku",
@@ -1918,7 +1888,8 @@
       "output_token_limit": 65536,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -1943,7 +1914,8 @@
       "output_token_limit": 65536,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -1968,7 +1940,8 @@
       "output_token_limit": 65536,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -1993,7 +1966,8 @@
       "output_token_limit": 65536,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -2068,7 +2042,8 @@
       "output_token_limit": 65536,
       "supported_generation_methods": [
         "generateContent",
-        "countTokens"
+        "countTokens",
+        "createCachedContent"
       ]
     }
   },
@@ -3083,6 +3058,31 @@
     }
   },
   {
+    "id": "learnlm-2.0-flash-experimental",
+    "created_at": null,
+    "display_name": "LearnLM 2.0 Flash Experimental",
+    "provider": "gemini",
+    "context_window": 1048576,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.075,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "version": "2.0",
+      "description": "LearnLM 2.0 Flash Experimental",
+      "input_token_limit": 1048576,
+      "output_token_limit": 32768,
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens"
+      ]
+    }
+  },
+  {
     "id": "o1",
     "created_at": "2024-12-16T20:03:36+01:00",
     "display_name": "O1",
@@ -3267,6 +3267,44 @@
     "supports_json_mode": true,
     "input_price_per_million": 1.1,
     "output_price_per_million": 4.4,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "o4-mini",
+    "created_at": "2025-04-09T21:02:31+02:00",
+    "display_name": "O4 Mini",
+    "provider": "openai",
+    "context_window": 4096,
+    "max_tokens": 16384,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.5,
+    "output_price_per_million": 1.5,
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "o4-mini-2025-04-16",
+    "created_at": "2025-04-08T19:31:46+02:00",
+    "display_name": "O4 Mini 20250416",
+    "provider": "openai",
+    "context_window": 4096,
+    "max_tokens": 16384,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.5,
+    "output_price_per_million": 1.5,
     "metadata": {
       "object": "model",
       "owned_by": "system"
@@ -3491,6 +3529,36 @@
     "metadata": {
       "object": "model",
       "owned_by": "system"
+    }
+  },
+  {
+    "id": "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+    "created_at": null,
+    "display_name": "Claude 3.7 Sonnet",
+    "provider": "bedrock",
+    "context_window": 200000,
+    "max_tokens": 4096,
+    "type": "chat",
+    "family": "claude3_sonnet",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 3.0,
+    "output_price_per_million": 15.0,
+    "metadata": {
+      "provider_name": "Anthropic",
+      "customizations_supported": [],
+      "inference_configurations": [
+        "INFERENCE_PROFILE"
+      ],
+      "response_streaming_supported": true,
+      "input_modalities": [
+        "TEXT",
+        "IMAGE"
+      ],
+      "output_modalities": [
+        "TEXT"
+      ]
     }
   },
   {

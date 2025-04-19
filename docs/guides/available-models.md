@@ -46,10 +46,10 @@ For more information about working with models, see the [Working with Models](/g
 ## Models by Type
 {: .d-inline-block }
 
-Last updated: 2025-04-15
+Last updated: 2025-04-17
 {: .label .label-green }
 
-### Chat Models (135)
+### Chat Models (138)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -62,7 +62,6 @@ Last updated: 2025-04-15
 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
-| anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
@@ -176,6 +175,7 @@ Last updated: 2025-04-15
 | gpt-4o-search-preview | chat | GPT-4o Search Preview | openai | 128000 | 16384 | gpt4o_search | 2.50 | 10.00 |
 | gpt-4o-search-preview-2025-03-11 | chat | GPT-4o Search Preview 20250311 | openai | 128000 | 16384 | gpt4o_search | 2.50 | 10.00 |
 | learnlm-1.5-pro-experimental | chat | LearnLM 1.5 Pro Experimental | gemini | 32767 | 8192 | other | 0.08 | 0.30 |
+| learnlm-2.0-flash-experimental | chat | LearnLM 2.0 Flash Experimental | gemini | 1048576 | 32768 | other | 0.08 | 0.30 |
 | o1 | chat | O1 | openai | 200000 | 100000 | o1 | 15.00 | 60.00 |
 | o1-2024-12-17 | chat | O1-20241217 | openai | 200000 | 100000 | o1 | 15.00 | 60.00 |
 | o1-mini | chat | O1-Mini | openai | 128000 | 65536 | o1_mini | 1.10 | 4.40 |
@@ -186,7 +186,10 @@ Last updated: 2025-04-15
 | o1-pro-2025-03-19 | chat | O1-Pro 20250319 | openai | 200000 | 100000 | o1_pro | 150.00 | 600.00 |
 | o3-mini | chat | O3-Mini | openai | 200000 | 100000 | o3_mini | 1.10 | 4.40 |
 | o3-mini-2025-01-31 | chat | O3-Mini 20250131 | openai | 200000 | 100000 | o3_mini | 1.10 | 4.40 |
+| o4-mini | chat | O4 Mini | openai | 4096 | 16384 | other | 0.50 | 1.50 |
+| o4-mini-2025-04-16 | chat | O4 Mini 20250416 | openai | 4096 | 16384 | other | 0.50 | 1.50 |
 | text-bison-001 | chat | PaLM 2 (Legacy) | gemini | 8196 | 1024 | other | 0.08 | 0.30 |
+| us.anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | veo-2.0-generate-001 | chat | Veo 2 | gemini | 480 | 8192 | other | 0.08 | 0.30 |
 
 ### Image Models (3)
@@ -232,7 +235,7 @@ Last updated: 2025-04-15
 
 ## Models by Provider
 
-### Openai Models (69)
+### Openai Models (71)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -295,6 +298,8 @@ Last updated: 2025-04-15
 | o1-pro-2025-03-19 | chat | O1-Pro 20250319 | openai | 200000 | 100000 | o1_pro | 150.00 | 600.00 |
 | o3-mini | chat | O3-Mini | openai | 200000 | 100000 | o3_mini | 1.10 | 4.40 |
 | o3-mini-2025-01-31 | chat | O3-Mini 20250131 | openai | 200000 | 100000 | o3_mini | 1.10 | 4.40 |
+| o4-mini | chat | O4 Mini | openai | 4096 | 16384 | other | 0.50 | 1.50 |
+| o4-mini-2025-04-16 | chat | O4 Mini 20250416 | openai | 4096 | 16384 | other | 0.50 | 1.50 |
 | omni-moderation-2024-09-26 | moderation | Omni Moderation 20240926 | openai |  |  | moderation | 0.00 | 0.00 |
 | omni-moderation-latest | moderation | Omni Moderation Latest | openai |  |  | moderation | 0.00 | 0.00 |
 | text-embedding-3-large | embedding | text-embedding- 3 Large | openai |  |  | embedding3_large | 0.13 | 0.13 |
@@ -320,7 +325,7 @@ Last updated: 2025-04-15
 | claude-3-opus-20240229 | chat | Claude 3 Opus | anthropic | 200000 | 4096 | claude3_opus | 15.00 | 75.00 |
 | claude-3-sonnet-20240229 | chat | Claude 3 Sonnet | anthropic | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 
-### Gemini Models (48)
+### Gemini Models (49)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -369,6 +374,7 @@ Last updated: 2025-04-15
 | gemma-3-4b-it | chat | Gemma 3 4B | gemini | 32768 | 8192 | other | 0.08 | 0.30 |
 | imagen-3.0-generate-002 | image | Imagen 3.0 002 model | gemini | 480 | 8192 | imagen3 | 0.08 | 0.30 |
 | learnlm-1.5-pro-experimental | chat | LearnLM 1.5 Pro Experimental | gemini | 32767 | 8192 | other | 0.08 | 0.30 |
+| learnlm-2.0-flash-experimental | chat | LearnLM 2.0 Flash Experimental | gemini | 1048576 | 32768 | other | 0.08 | 0.30 |
 | text-bison-001 | chat | PaLM 2 (Legacy) | gemini | 8196 | 1024 | other | 0.08 | 0.30 |
 | text-embedding-004 | embedding | Text Embedding 004 | gemini | 2048 | 1 | embedding4 | 0.00 | 0.00 |
 | veo-2.0-generate-001 | chat | Veo 2 | gemini | 480 | 8192 | other | 0.08 | 0.30 |
@@ -393,7 +399,6 @@ Last updated: 2025-04-15
 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | chat | Claude 3.5 Sonnet v2 | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
-| anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | chat | Claude 3 Haiku | bedrock | 200000 | 4096 | claude3_haiku | 0.25 | 1.25 |
@@ -412,4 +417,5 @@ Last updated: 2025-04-15
 | anthropic.claude-v2:1 | chat | Claude | bedrock | 200000 | 4096 | claude2 | 8.00 | 24.00 |
 | anthropic.claude-v2:1:18k | chat | Claude | bedrock | 200000 | 4096 | claude2 | 8.00 | 24.00 |
 | anthropic.claude-v2:1:200k | chat | Claude | bedrock | 200000 | 4096 | claude2 | 8.00 | 24.00 |
+| us.anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 

@@ -215,7 +215,7 @@ module RubyLLM
         end
 
         def normalize_temperature(temperature, model_id)
-          if model_id.match?(/^o[13]/)
+          if model_id.match?(/^o\d/)
             RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
             1.0
           else

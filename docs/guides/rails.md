@@ -100,8 +100,8 @@ class Chat < ApplicationRecord
   acts_as_chat # Assumes Message and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
-  belongs_to :user, optional: true
-  validates :model_id, presence: true
+  belongs_to :user, optional: true # Example
+  validates :model_id, presence: true # Example
 end
 
 # app/models/message.rb
@@ -110,8 +110,6 @@ class Message < ApplicationRecord
   acts_as_message # Assumes Chat and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
-  # Optional: Use Rails enums for roles
-  enum role: { system: 'system', user: 'user', assistant: 'assistant', tool: 'tool' }
 end
 
 # app/models/tool_call.rb (Only if using tools)
