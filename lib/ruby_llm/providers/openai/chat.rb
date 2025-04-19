@@ -28,7 +28,7 @@ module RubyLLM
             payload[:stream_options] = { include_usage: true } if stream
 
             # Add structured output schema if provided
-            payload[:response_format] = { type: 'json_object' } if chat&.response_format
+            payload[:response_format] = format_response_format(chat.response_format) if chat&.response_format
           end
         end
 
@@ -73,6 +73,25 @@ module RubyLLM
             'developer'
           else
             role.to_s
+          end
+        end
+        
+        # Formats the response format for OpenAI API
+        # @param response_format [Hash, Symbol] The response format from the chat object
+        # @return [Hash] The formatted response format for the OpenAI API
+        def format_response_format(response_format)
+          # Handle simple :json case
+          return { type: 'json_object' } if response_format == :json
+
+          # Handle schema case (a Hash)
+          if response_format.is_a?(Hash)
+            {
+              type: 'json_object',
+              schema: response_format
+            }
+          else
+            # Default to JSON mode for any other format
+            { type: 'json_object' }
           end
         end
       end

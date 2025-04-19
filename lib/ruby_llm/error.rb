@@ -26,6 +26,7 @@ module RubyLLM
   class UnsupportedFunctionsError < StandardError; end
   class InvalidStructuredOutput < StandardError; end
   class UnsupportedStructuredOutputError < StandardError; end
+  class UnsupportedJSONModeError < StandardError; end
 
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end

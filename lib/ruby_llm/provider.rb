@@ -66,6 +66,13 @@ module RubyLLM
         capabilities.respond_to?(:supports_structured_output?) && capabilities.supports_structured_output?(model_id)
       end
 
+      # Determines if the model supports JSON mode (simpler structured output)
+      # @param model_id [String] the model identifier
+      # @return [Boolean] true if the model supports JSON mode
+      def supports_json_mode?(model_id)
+        capabilities.respond_to?(:supports_json_mode?) && capabilities.supports_json_mode?(model_id)
+      end
+
       private
 
       def missing_configs
