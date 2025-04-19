@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe 'Chat with structured output', type: :feature do
   include_context 'with configured RubyLLM'
 
-  describe '#with_output_schema' do
+  describe '#with_response_format' do
     before do
       # Mock provider methods for testing
       allow_any_instance_of(RubyLLM::Provider::Methods).to receive(:supports_structured_output?).and_return(true)
@@ -19,21 +19,21 @@ RSpec.describe 'Chat with structured output', type: :feature do
           'name' => { 'type' => 'string' }
         }
       }
-      expect { chat.with_output_schema(schema) }.not_to raise_error
-      expect(chat.output_schema).to eq(schema)
+      expect { chat.with_response_format(schema) }.not_to raise_error
+      expect(chat.response_format).to eq(schema)
     end
 
     it 'accepts a JSON string schema' do
       chat = RubyLLM.chat
       schema_json = '{ "type": "object", "properties": { "name": { "type": "string" } } }'
-      expect { chat.with_output_schema(schema_json) }.not_to raise_error
-      expect(chat.output_schema).to be_a(Hash)
-      expect(chat.output_schema['type']).to eq('object')
+      expect { chat.with_response_format(schema_json) }.not_to raise_error
+      expect(chat.response_format).to be_a(Hash)
+      expect(chat.response_format['type']).to eq('object')
     end
 
     it 'raises ArgumentError for invalid schema type' do
       chat = RubyLLM.chat
-      expect { chat.with_output_schema(123) }.to raise_error(ArgumentError, 'Schema must be a Hash')
+      expect { chat.with_response_format(123) }.to raise_error(ArgumentError, 'Schema must be a Hash')
     end
 
     it 'raises UnsupportedStructuredOutputError when model doesn\'t support structured output' do
@@ -44,7 +44,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
       allow_any_instance_of(RubyLLM::Provider::Methods).to receive(:supports_structured_output?).and_return(false)
 
       expect do
-        chat.with_output_schema(schema)
+        chat.with_response_format(schema)
       end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
     end
 
@@ -67,11 +67,11 @@ RSpec.describe 'Chat with structured output', type: :feature do
     it 'maintains chainability' do
       chat = RubyLLM.chat
       schema = { 'type' => 'object', 'properties' => { 'name' => { 'type' => 'string' } } }
-      result = chat.with_output_schema(schema)
+      result = chat.with_response_format(schema)
       expect(result).to eq(chat)
     end
 
-    it 'adds system schema guidance when with_output_schema is called' do
+    it 'adds system schema guidance when with_response_format is called' do
       schema = {
         'type' => 'object',
         'properties' => {
@@ -84,7 +84,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
       chat = RubyLLM.chat
 
       # This should add the system message with schema guidance
-      chat.with_output_schema(schema)
+      chat.with_response_format(schema)
 
       # Verify that the system message was added with the schema guidance
       system_message = chat.messages.find { |msg| msg.role == :system }
@@ -112,7 +112,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
       chat.with_instructions(original_instruction)
 
       # This should append the schema guidance to existing instructions
-      chat.with_output_schema(schema)
+      chat.with_response_format(schema)
 
       # Verify that the system message contains both the original instructions and schema guidance
       system_message = chat.messages.find { |msg| msg.role == :system }
@@ -145,7 +145,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
     context 'with OpenAI' do
       it 'returns structured JSON output', skip: 'Requires API credentials' do
         chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-                      .with_output_schema(schema)
+                      .with_response_format(schema)
 
         response = chat.ask('Provide info about Ruby programming language')
 
@@ -161,7 +161,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 
         expect do
-          chat.with_output_schema(schema)
+          chat.with_response_format(schema)
         end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
       end
       
@@ -170,7 +170,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
         
         # This should not raise an error
-        expect { chat.with_output_schema(schema, strict: false) }.not_to raise_error
+        expect { chat.with_response_format(schema, strict: false) }.not_to raise_error
         
         # We're not testing the actual response here since it requires API calls
         # but the setup should work without errors

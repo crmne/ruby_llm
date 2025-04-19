@@ -122,7 +122,7 @@ schema = {
 }
 
 # Returns a validated Hash instead of plain text
-user_data = chat.with_output_schema(schema).ask("Create a profile for a Ruby developer")
+user_data = chat.with_response_format(schema).ask("Create a profile for a Ruby developer")
 ```
 
 ## Quick start

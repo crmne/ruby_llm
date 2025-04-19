@@ -7,7 +7,7 @@ nav_order: 7
 
 # Structured Output
 
-RubyLLM allows you to request structured data from language models by providing a JSON schema. When you use the `with_output_schema` method, RubyLLM will ensure the model returns data matching your schema instead of free-form text.
+RubyLLM allows you to request structured data from language models by providing a JSON schema. When you use the `with_response_format` method, RubyLLM will ensure the model returns data matching your schema instead of free-form text.
 
 ## Basic Usage
 
@@ -28,7 +28,7 @@ schema = {
 
 # Get structured output as a Hash
 response = RubyLLM.chat
-  .with_output_schema(schema)
+  .with_response_format(schema)
   .ask("Create a profile for a Ruby developer")
 
 # Access the structured data
@@ -49,12 +49,12 @@ If you try to use an unsupported model in strict mode, RubyLLM will raise an `Un
 
 ### Non-Strict Mode
 
-You can disable strict mode by setting `strict: false` when calling `with_output_schema`:
+You can disable strict mode by setting `strict: false` when calling `with_response_format`:
 
 ```ruby
 # Allow structured output with non-OpenAI models
 chat = RubyLLM.chat(model: "gemini-2.0-flash")
-response = chat.with_output_schema(schema, strict: false)
+response = chat.with_response_format(schema, strict: false)
                 .ask("Create a profile for a Ruby developer")
 
 # The response.content will be a Hash if JSON parsing succeeds
@@ -85,12 +85,12 @@ RubyLLM has two error types related to structured output:
 ```ruby
 begin
   chat = RubyLLM.chat(model: 'claude-3-5-haiku')
-  chat.with_output_schema(schema) # This will raise an error
+  chat.with_response_format(schema) # This will raise an error
 rescue RubyLLM::UnsupportedStructuredOutputError => e
   puts "This model doesn't support structured output: #{e.message}"
   
   # You can try with strict mode disabled
-  chat.with_output_schema(schema, strict: false)
+  chat.with_response_format(schema, strict: false)
 end
 ```
 
@@ -98,7 +98,7 @@ end
 
 ```ruby
 begin
-  response = chat.with_output_schema(schema).ask("Create a profile")
+  response = chat.with_response_format(schema).ask("Create a profile")
 rescue RubyLLM::InvalidStructuredOutput => e
   puts "The model returned invalid JSON: #{e.message}"
 end
@@ -174,7 +174,7 @@ schema = {
   required: ["products", "total_products"]
 }
 
-inventory = chat.with_output_schema(schema).ask("Create an inventory for a Ruby gem store")
+inventory = chat.with_response_format(schema).ask("Create an inventory for a Ruby gem store")
 ```
 
 ## Implementation Details

@@ -13,7 +13,7 @@ module RubyLLM
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :output_schema
+    attr_reader :model, :messages, :tools, :response_format
 
     def initialize(model: nil, provider: nil, assume_model_exists: false) # rubocop:disable Metrics/MethodLength
       if assume_model_exists && !provider
@@ -80,12 +80,12 @@ module RubyLLM
       self
     end
 
-    # Specifies a JSON schema for structured output from the model
+    # Specifies the response format for the model, supporting JSON schema for structured output
     # @param schema [Hash, String] JSON schema as a Hash or JSON string
     # @return [self] Returns self for method chaining
     # @raise [ArgumentError] If the schema is not a Hash or valid JSON string
     # @raise [UnsupportedStructuredOutputError] If the model doesn't support structured output
-    def with_output_schema(schema, strict: true)
+    def with_response_format(schema, strict: true)
       schema = JSON.parse(schema) if schema.is_a?(String)
       schema = schema.json_schema if schema.respond_to?(:json_schema)
       raise ArgumentError, 'Schema must be a Hash' unless schema.is_a?(Hash)
@@ -94,20 +94,21 @@ module RubyLLM
       provider_module = Provider.providers[@model.provider.to_sym]
       if strict && !provider_module.supports_structured_output?(@model.id)
         raise UnsupportedStructuredOutputError,
-              "Model #{@model.id} doesn't support structured output. \nUse with_output_schema(schema, strict:false) for less stict, more risky mode."
+              "Model #{@model.id} doesn't support structured output. \n" \
+              'Use with_response_format(schema, strict:false) for less stict, more risky mode.'
       end
 
-      @output_schema = schema
+      @response_format = schema
 
       # Always add schema guidance - it will be appended if there's an existing system message
-      add_system_schema_guidance(schema)
+      add_system_format_guidance(schema)
 
       self
     end
 
     # Adds a system message with guidance for JSON output based on the schema
     # If a system message already exists, it appends to it rather than replacing
-    def add_system_schema_guidance(schema)
+    def add_system_format_guidance(schema)
       # Create a more generalized prompt that works well across all providers
       # This is particularly helpful for OpenAI which requires "json" in the prompt
       guidance = <<~GUIDANCE

@@ -209,7 +209,7 @@ end
 
 ### Using Structured Output
 
-The `with_output_schema` method is available on your `Chat` model thanks to `acts_as_chat`:
+The `with_response_format` method is available on your `Chat` model thanks to `acts_as_chat`:
 
 ```ruby
 # Make sure to use a model that supports structured output
@@ -231,7 +231,7 @@ schema = {
 
 begin
   # Get structured data instead of plain text
-  response = chat_record.with_output_schema(schema).ask("Tell me about Ruby")
+  response = chat_record.with_response_format(schema).ask("Tell me about Ruby")
 
   # The response content is a Hash (or serialized JSON in text columns)
   response.content # => {"name"=>"Ruby", "version"=>"3.2.0", "features"=>["Blocks", "Procs"]}

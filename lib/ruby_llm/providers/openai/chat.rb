@@ -28,7 +28,7 @@ module RubyLLM
             payload[:stream_options] = { include_usage: true } if stream
 
             # Add structured output schema if provided
-            payload[:response_format] = { type: 'json_object' } if chat&.output_schema
+            payload[:response_format] = { type: 'json_object' } if chat&.response_format
           end
         end
 
@@ -42,7 +42,7 @@ module RubyLLM
           content = message_data['content']
 
           # Parse JSON content if schema was provided
-          if chat&.output_schema && content
+          if chat&.response_format && content
             content = parse_structured_output(content, raise_on_error: true)
           end
 

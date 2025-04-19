@@ -62,7 +62,7 @@ module RubyLLM
 
           # Parse JSON content if schema was provided
           parsed_content = text_content
-          if chat&.output_schema && text_content
+          if chat&.response_format && text_content
             parsed_content = parse_structured_output(text_content, raise_on_error: false)
           end
 

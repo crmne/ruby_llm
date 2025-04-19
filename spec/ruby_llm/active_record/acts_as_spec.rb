@@ -123,13 +123,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
-  describe 'with_output_schema functionality' do
-    it 'supports with_output_schema method' do
+  describe 'with_response_format functionality' do
+    it 'supports with_response_format method' do
       chat = Chat.create!(model_id: 'gpt-4.1-nano')
       schema = { 'type' => 'object', 'properties' => { 'name' => { 'type' => 'string' } } }
 
       # Just verify the method is supported and chainable
-      result = chat.with_output_schema(schema)
+      result = chat.with_response_format(schema)
       expect(result).to be_a(Chat)
     end
 
@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it_behaves_like 'a chainable chat method', :with_tools, Calculator
     it_behaves_like 'a chainable chat method', :with_model, 'gpt-4.1-nano'
     it_behaves_like 'a chainable chat method', :with_temperature, 0.5
-    it_behaves_like 'a chainable chat method', :with_output_schema, { 'type' => 'object' }
+    it_behaves_like 'a chainable chat method', :with_response_format, { 'type' => 'object' }
 
     it_behaves_like 'a chainable callback method', :on_new_message
     it_behaves_like 'a chainable callback method', :on_end_message

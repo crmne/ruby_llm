@@ -114,8 +114,8 @@ module RubyLLM
         self
       end
 
-      def with_output_schema(schema)
-        to_llm.with_output_schema(schema)
+      def with_response_format(schema)
+        to_llm.with_response_format(schema)
         self
       end
 
