@@ -80,12 +80,15 @@ module RubyLLM
       self
     end
 
-    # Specifies the response format for the model, supporting JSON schema for structured output
-    # @param response_format [Hash, String, Symbol] JSON schema as a Hash, JSON string, or :json for JSON mode
-    # @param strict [Boolean] Whether to enforce the model's support for structured output
+    # Specifies the response format for the model
+    # @param response_format [Hash, String, Symbol] Either:
+    #   - :json symbol for JSON mode (model outputs valid JSON object)
+    #   - JSON schema as a Hash or JSON string for schema-based output (model follows the schema)
+    # @param strict [Boolean] Whether to enforce the model's support for the requested format
     # @return [self] Returns self for method chaining
     # @raise [ArgumentError] If the response_format is not a Hash, valid JSON string, or :json symbol
-    # @raise [UnsupportedStructuredOutputError] If strict is true and the model doesn't support structured output
+    # @raise [UnsupportedJSONModeError] If :json is specified, strict is true, and the model doesn't support JSON mode
+    # @raise [UnsupportedStructuredOutputError] If a schema is specified, strict is true, and the model doesn't support structured output
     def with_response_format(response_format, strict: true)
       check_model_compatibility!(response_format == :json) if strict
 
