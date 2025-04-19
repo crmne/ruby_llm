@@ -87,7 +87,10 @@ module RubyLLM
           if response_format.is_a?(Hash)
             {
               type: 'json_schema',
-              json_schema: response_format,
+              json_schema: {
+                name: 'extract',
+                schema: response_format
+              }
             }
           else
             raise ArgumentError, "Invalid response format: #{response_format}"

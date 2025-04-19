@@ -15,12 +15,9 @@ A delightful Ruby way to work with AI. No configuration madness, no complex call
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
 </div>
 
-<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-<a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
-<a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
-<a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a> <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a> <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a> <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 
-🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
+🤺 Battle tested at [💬 Chat with Work](https://chatwithwork.com)
 
 ## The problem with AI libraries
 
@@ -91,8 +88,8 @@ schema = {
   properties: {
     name: { type: "string" },
     age: { type: "integer" },
-    interests: { 
-      type: "array", 
+    interests: {
+      type: "array",
       items: { type: "string" }
     }
   },
@@ -237,6 +234,7 @@ Check out the guides at https://rubyllm.com for deeper dives into conversations 
 We welcome contributions to RubyLLM!
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to:
+
 - Run the test suite
 - Add new features
 - Update documentation
