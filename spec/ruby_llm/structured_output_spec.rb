@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::StructuredOutput::Schema do
+RSpec.describe RubyLLM::StructuredOutput::Schema do # rubocop:disable RSpec/SpecFilePathFormat
   describe 'schema definition' do
-    subject { schema.json_schema }
+    json_output { schema.json_schema }
 
     let(:schema_class) do
       Class.new(described_class) do
@@ -42,13 +42,13 @@ RSpec.describe RubyLLM::StructuredOutput::Schema do
 
     let(:schema) { schema_class.new }
 
-    it 'generates the correct JSON schema' do
-      expect(subject).to include(
+    it 'generates the correct JSON schema' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      expect(json_output).to include(
         name: schema_class.name,
         description: 'Schema for the structured response'
       )
 
-      properties = subject[:schema][:properties]
+      properties = json_output[:schema][:properties]
 
       # Test basic types
       expect(properties[:name]).to eq({ type: 'string', description: "User's name" })
@@ -101,7 +101,7 @@ RSpec.describe RubyLLM::StructuredOutput::Schema do
                                            })
 
       # Test definitions
-      expect(subject[:schema]['$defs']).to include(
+      expect(json_output[:schema]['$defs']).to include(
         location: {
           type: 'object',
           properties: {
@@ -114,13 +114,13 @@ RSpec.describe RubyLLM::StructuredOutput::Schema do
     end
 
     it 'includes all properties in required array' do
-      expect(subject[:schema][:required]).to contain_exactly(
+      expect(json_output[:schema][:required]).to contain_exactly(
         :name, :age, :active, :address, :tags, :contacts, :status, :locations
       )
     end
 
     it 'enforces schema constraints' do
-      expect(subject[:schema]).to include(
+      expect(json_output[:schema]).to include(
         additionalProperties: false,
         strict: true
       )
