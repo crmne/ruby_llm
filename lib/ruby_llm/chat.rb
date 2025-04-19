@@ -81,61 +81,118 @@ module RubyLLM
     end
 
     # Specifies the response format for the model, supporting JSON schema for structured output
-    # @param schema [Hash, String] JSON schema as a Hash or JSON string
+    # @param response_format [Hash, String, Symbol] JSON schema as a Hash, JSON string, or :json for JSON mode
+    # @param strict [Boolean] Whether to enforce the model's support for structured output
     # @return [self] Returns self for method chaining
-    # @raise [ArgumentError] If the schema is not a Hash or valid JSON string
-    # @raise [UnsupportedStructuredOutputError] If the model doesn't support structured output
-    def with_response_format(schema, strict: true)
-      schema = JSON.parse(schema) if schema.is_a?(String)
-      schema = schema.json_schema if schema.respond_to?(:json_schema)
-      raise ArgumentError, 'Schema must be a Hash' unless schema.is_a?(Hash)
+    # @raise [ArgumentError] If the response_format is not a Hash, valid JSON string, or :json symbol
+    # @raise [UnsupportedStructuredOutputError] If strict is true and the model doesn't support structured output
+    def with_response_format(response_format, strict: true)
+      check_model_compatibility!(response_format == :json) if strict
 
-      # Check if model supports structured output
-      provider_module = Provider.providers[@model.provider.to_sym]
-      if strict && !provider_module.supports_structured_output?(@model.id)
-        raise UnsupportedStructuredOutputError,
-              "Model #{@model.id} doesn't support structured output. \n" \
-              'Use with_response_format(schema, strict:false) for less stict, more risky mode.'
+      @response_format = response_format == :json ? :json : normalize_schema(response_format)
+
+      # Add appropriate guidance based on format
+      if response_format == :json
+        add_json_guidance
+      else
+        add_system_format_guidance
       end
-
-      @response_format = schema
-
-      # Always add schema guidance - it will be appended if there's an existing system message
-      add_system_format_guidance(schema)
 
       self
     end
 
-    # Adds a system message with guidance for JSON output based on the schema
+    private
+
+    # Normalizes the schema to a standard format
+    # @param response_format [Hash, String] JSON schema as a Hash or JSON string
+    # @return [Hash] Normalized schema as a Hash
+    # @raise [ArgumentError] If the response_format is not a Hash or valid JSON string
+    def normalize_schema(response_format)
+      schema_obj = response_format.is_a?(String) ? JSON.parse(response_format) : response_format
+      schema_obj = schema_obj.json_schema if schema_obj.respond_to?(:json_schema)
+
+      raise ArgumentError, 'Response format must be a Hash' unless schema_obj.is_a?(Hash)
+
+      schema_obj
+    end
+
+    # Checks if the model supports structured output
+    # @param strict [Boolean] Whether to enforce the model's support for structured output
+    # @raise [UnsupportedStructuredOutputError] If strict is true and the model doesn't support structured output
+    def check_model_compatibility!(json_mode)
+      provider_module = Provider.providers[@model.provider.to_sym]
+
+      if json_mode && !provider_module.supports_json_mode?(@model.id)
+        raise UnsupportedJSONModeError,
+            "Model #{@model.id} doesn't support JSON mode. \n" \
+            'Use with_response_format(:json, strict: false) for less strict, more risky mode.'
+      elsif !provider_module.supports_structured_output?(@model.id)
+        raise UnsupportedStructuredOutputError,
+            "Model #{@model.id} doesn't support structured output. \n" \
+            'Use with_response_format(schema, strict: false) for less strict, more risky mode.'
+      end
+
+    end
+
+    # Adds a system message with guidance for JSON schema output
     # If a system message already exists, it appends to it rather than replacing
-    def add_system_format_guidance(schema)
-      # Create a more generalized prompt that works well across all providers
-      # This is particularly helpful for OpenAI which requires "json" in the prompt
+    # @return [self] Returns self for method chaining
+    def add_system_format_guidance
+      guidance = create_schema_guidance(@response_format)
+      update_or_create_system_message(guidance)
+      self
+    end
+
+    # Creates appropriate guidance text based on the schema
+    # @param schema [Hash] JSON schema
+    # @return [String] Guidance text for system message
+    def create_schema_guidance(schema)
+      create_schema_json_guidance(schema)
+    end
+
+    # Adds guidance for simple JSON output format
+    # @return [self] Returns self for method chaining
+    def add_json_guidance
       guidance = <<~GUIDANCE
+        You must format your output as a valid JSON object.
+        Format your entire response as valid JSON.
+        Do not include explanations, markdown formatting, or any text outside the JSON.
+      GUIDANCE
+
+      update_or_create_system_message(guidance)
+      self
+    end
+
+    # Creates guidance for schema-based JSON output
+    # @param schema [Hash] JSON schema
+    # @return [String] Guidance text for schema-based JSON output
+    def create_schema_json_guidance(schema)
+      <<~GUIDANCE
         You must format your output as a JSON value that adheres to the following schema:
         #{JSON.pretty_generate(schema)}
 
         Format your entire response as valid JSON that follows this schema exactly.
         Do not include explanations, markdown formatting, or any text outside the JSON.
       GUIDANCE
+    end
 
-      # Check if we already have a system message
+    # Updates existing system message or creates a new one with the guidance
+    # @param guidance [String] Guidance text to add to system message
+    def update_or_create_system_message(guidance)
       system_message = messages.find { |msg| msg.role == :system }
 
       if system_message
         # Append to existing system message
         updated_content = "#{system_message.content}\n\n#{guidance}"
-        # Remove the old system message
         @messages.delete(system_message)
-        # Add the updated system message
         add_message(role: :system, content: updated_content)
       else
         # No system message exists, create a new one
         with_instructions(guidance)
       end
-
-      self
     end
+
+    public
 
     def on_new_message(&block)
       @on[:new_message] = block
