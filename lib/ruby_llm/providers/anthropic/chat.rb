@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+
 module RubyLLM
   module Providers
     module Anthropic
-      # Chat methods of the OpenAI API integration
+      # Chat methods of the Anthropic API integration
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
         private
 
         def completion_url
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
@@ -50,14 +53,20 @@ module RubyLLM
           payload[:system] = system_content unless system_content.empty?
         end
 
-        def parse_completion_response(response)
+        def parse_completion_response(response, chat: nil)
           data = response.body
           content_blocks = data['content'] || []
 
           text_content = extract_text_content(content_blocks)
           tool_use = find_tool_use(content_blocks)
 
-          build_message(data, text_content, tool_use)
+          # Parse JSON content if schema was provided
+          parsed_content = text_content
+          if chat&.response_format && text_content
+            parsed_content = parse_structured_output(text_content, raise_on_error: false)
+          end
+
+          build_message(data, parsed_content, tool_use)
         end
 
         def extract_text_content(blocks)

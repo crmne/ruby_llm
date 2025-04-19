@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module RubyLLM
   # Represents a conversation with an AI model. Handles message history,
   # streaming responses, and tool integration with a simple, conversational API.
@@ -11,7 +13,7 @@ module RubyLLM
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :response_format
 
     def initialize(model: nil, provider: nil, assume_model_exists: false) # rubocop:disable Metrics/MethodLength
       if assume_model_exists && !provider
@@ -78,6 +80,112 @@ module RubyLLM
       self
     end
 
+    # Specifies the response format for the model
+    # @param response_format [Hash, String, Symbol] Either:
+    #   - :json symbol for JSON mode (model outputs valid JSON object)
+    #   - JSON schema as a Hash or JSON string for schema-based output (model follows the schema)
+    # @param strict [Boolean] Whether to enforce the model's support for the requested format
+    # @return [self] Returns self for method chaining
+    # @raise [ArgumentError] If the response_format is not a Hash, valid JSON string, or :json symbol
+    # @raise [UnsupportedJSONModeError] If :json is specified, strict is true, and the model doesn't support JSON mode
+    # @raise [UnsupportedStructuredOutputError] If a schema is specified, strict is true, and the model doesn't support structured output
+    def with_response_format(response_format, strict: true)
+      check_model_compatibility!(response_format == :json) if strict
+
+      @response_format = response_format == :json ? :json : normalize_schema(response_format)
+
+      # Add appropriate guidance based on format
+      if response_format == :json
+        add_json_guidance
+      else
+        add_system_format_guidance
+      end
+
+      self
+    end
+
+    private
+
+    # Normalizes the schema to a standard format
+    # @param response_format [Hash, String] JSON schema as a Hash or JSON string
+    # @return [Hash] Normalized schema as a Hash
+    # @raise [ArgumentError] If the response_format is not a Hash or valid JSON string
+    def normalize_schema(response_format)
+      schema_obj = response_format.is_a?(String) ? JSON.parse(response_format) : response_format
+      schema_obj = schema_obj.json_schema if schema_obj.respond_to?(:json_schema)
+
+      raise ArgumentError, 'Response format must be a Hash' unless schema_obj.is_a?(Hash)
+
+      schema_obj
+    end
+
+    # Checks if the model supports the requested format (JSON mode or schema)
+    # @param is_json_mode [Boolean] Whether JSON mode is being used
+    # @raise [UnsupportedJSONModeError] If JSON mode is requested but not supported
+    # @raise [UnsupportedStructuredOutputError] If structured output is requested but not supported
+    def check_model_compatibility!(is_json_mode)
+      provider_module = Provider.providers[@model.provider.to_sym]
+
+      if is_json_mode
+        return if provider_module.supports_json_mode?(@model.id)
+
+        raise UnsupportedJSONModeError,
+              "Model #{@model.id} doesn't support JSON mode. \n" \
+              'Use with_response_format(:json, strict: false) for less strict, more risky mode.'
+      else
+        return if provider_module.supports_structured_output?(@model.id)
+
+        raise UnsupportedStructuredOutputError,
+              "Model #{@model.id} doesn't support structured output. \n" \
+              'Use with_response_format(schema, strict: false) for less strict, more risky mode.'
+      end
+    end
+
+    # Adds system message guidance for schema-based JSON output
+    # If a system message already exists, it appends to it rather than replacing
+    # @return [self] Returns self for method chaining
+    def add_system_format_guidance
+      guidance = <<~GUIDANCE
+        You must format your output as a JSON value that adheres to the following schema:
+        #{JSON.pretty_generate(@response_format)}
+
+        Format your entire response as valid JSON that follows this schema exactly.
+        Do not include explanations, markdown formatting, or any text outside the JSON.
+      GUIDANCE
+
+      update_or_create_system_message(guidance)
+      self
+    end
+
+    # Adds guidance for simple JSON output format
+    # @return [self] Returns self for method chaining
+    def add_json_guidance
+      guidance = <<~GUIDANCE
+        You must format your output as a valid JSON object.
+        Format your entire response as valid JSON.
+        Do not include explanations, markdown formatting, or any text outside the JSON.
+      GUIDANCE
+
+      update_or_create_system_message(guidance)
+      self
+    end
+
+    # Updates existing system message or creates a new one with the guidance
+    # @param guidance [String] Guidance text to add to system message
+    def update_or_create_system_message(guidance)
+      system_message = messages.find { |msg| msg.role == :system }
+
+      if system_message
+        # Append to existing system message
+        updated_content = "#{system_message.content}\n\n#{guidance}"
+        @messages.delete(system_message)
+        add_message(role: :system, content: updated_content)
+      else
+        # No system message exists, create a new one
+        with_instructions(guidance)
+      end
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -94,7 +202,7 @@ module RubyLLM
 
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, &)
+      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, chat: self, &)
       @on[:end_message]&.call(response)
 
       add_message response
@@ -110,8 +218,6 @@ module RubyLLM
       messages << message
       message
     end
-
-    private
 
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|

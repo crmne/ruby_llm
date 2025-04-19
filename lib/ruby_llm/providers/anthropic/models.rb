@@ -25,6 +25,7 @@ module RubyLLM
               supports_vision: capabilities.supports_vision?(model['id']),
               supports_functions: capabilities.supports_functions?(model['id']),
               supports_json_mode: capabilities.supports_json_mode?(model['id']),
+              supports_structured_output: capabilities.supports_structured_output?(model['id']),
               input_price_per_million: capabilities.get_input_price(model['id']),
               output_price_per_million: capabilities.get_output_price(model['id'])
             )

@@ -91,16 +91,32 @@ module RubyLLM
           end
         end
 
-        def supports_structured_output?(model_id)
+        # Determines if the model supports JSON mode
+        # @param model_id [String] the model identifier
+        # @return [Boolean] true if the model supports JSON mode
+        def supports_json_mode?(model_id)
           case model_family(model_id)
-          when 'gpt41', 'gpt41_mini', 'gpt41_nano', 'chatgpt4o', 'gpt4o', 'gpt4o_mini', 'o1', 'o1_pro',
-               'o3_mini' then true
-          else false
+          when 'gpt4', 'gpt35_turbo', 'davinci', 'babbage' then false # Older models don't support JSON mode
+          else true
           end
         end
 
-        def supports_json_mode?(model_id)
-          supports_structured_output?(model_id)
+        # Determines if the model supports structured outputs via JSON mode
+        # @param model_id [String] the model identifier
+        # @return [Boolean] true if the model supports structured JSON output
+        def supports_structured_output?(model_id)
+          # Structured output is officially supported on:
+          # - GPT-4 Turbo (gpt-4-0125-preview, gpt-4-1106-preview)
+          # - GPT-3.5 Turbo (gpt-3.5-turbo-1106)
+          # - Newer models like GPT-4.1, 4o, etc.
+          case model_family(model_id)
+          when 'gpt41', 'gpt41_mini', 'gpt41_nano', 'chatgpt4o', 'gpt4o', 'gpt4o_mini',
+               'o1', 'o1_pro', 'o3_mini', 'gpt4_turbo' then true
+          when 'gpt35_turbo'
+            # Only newer GPT-3.5 Turbo versions support structured output
+            model_id.match?(/-(?:1106|0125)/)
+          else false
+          end
         end
 
         PRICES = {

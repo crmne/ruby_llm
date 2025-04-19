@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+
 module RubyLLM
   module Providers
     module OpenAI
       # Chat methods of the OpenAI API integration
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
         module_function
 
         def completion_url
           'chat/completions'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
+        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/MethodLength,Metrics/ParameterLists
           {
             model: model,
             messages: format_messages(messages),
@@ -23,19 +26,29 @@ module RubyLLM
               payload[:tool_choice] = 'auto'
             end
             payload[:stream_options] = { include_usage: true } if stream
+
+            # Add structured output schema if provided
+            payload[:response_format] = format_response_format(chat.response_format) if chat&.response_format
           end
         end
 
-        def parse_completion_response(response) # rubocop:disable Metrics/MethodLength
+        def parse_completion_response(response, chat: nil)
           data = response.body
           return if data.empty?
 
           message_data = data.dig('choices', 0, 'message')
           return unless message_data
 
+          content = message_data['content']
+
+          # Parse JSON content if schema was provided
+          if chat&.response_format && content
+            content = parse_structured_output(content, raise_on_error: true)
+          end
+
           Message.new(
             role: :assistant,
-            content: message_data['content'],
+            content: content,
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],
@@ -60,6 +73,27 @@ module RubyLLM
             'developer'
           else
             role.to_s
+          end
+        end
+
+        # Formats the response format for OpenAI API
+        # @param response_format [Hash, Symbol] The response format from the chat object
+        # @return [Hash] The formatted response format for the OpenAI API
+        def format_response_format(response_format)
+          # Handle simple :json case
+          return { type: 'json_object' } if response_format == :json
+
+          # Handle schema case (a Hash)
+          if response_format.is_a?(Hash)
+            {
+              type: 'json_schema',
+              json_schema: {
+                name: 'extract',
+                schema: response_format
+              }
+            }
+          else
+            raise ArgumentError, "Invalid response format: #{response_format}"
           end
         end
       end

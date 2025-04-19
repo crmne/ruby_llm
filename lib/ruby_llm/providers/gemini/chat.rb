@@ -1,16 +1,25 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+require_relative 'utils'
+
 module RubyLLM
   module Providers
     module Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
+        include RubyLLM::Providers::Gemini::Utils
         def completion_url
           "models/#{@model}:generateContent"
         end
 
-        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
+        def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
           @model = model
+
+          # Store the chat for use in parse_completion_response
+          @current_chat = chat
+
           payload = {
             contents: format_messages(messages),
             generationConfig: {
@@ -94,20 +103,36 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response)
+        # Parses the response from a completion API call
+        # @param response [Faraday::Response] The API response
+        # @param chat [RubyLLM::Chat, nil] Chat instance for context
+        # @return [RubyLLM::Message] Processed message with content and metadata
+        def parse_completion_response(response, chat: nil)
+          # Use the stored chat instance if the parameter is nil
+          chat ||= @current_chat
+
           data = response.body
           tool_calls = extract_tool_calls(data)
 
+          # Extract the raw text content
+          content = extract_content(data)
+
+          # Parse JSON content if schema provided
+          content = parse_structured_output(content, raise_on_error: true) if chat&.response_format && !content.empty?
+
           Message.new(
             role: :assistant,
-            content: extract_content(data),
+            content: content,
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
-            model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
+            model_id: extract_model_id(data, response)
           )
         end
 
+        # Extracts text content from the response data
+        # @param data [Hash] The response data body
+        # @return [String] The extracted text content or empty string
         def extract_content(data) # rubocop:disable Metrics/CyclomaticComplexity
           candidate = data.dig('candidates', 0)
           return '' unless candidate
@@ -123,6 +148,9 @@ module RubyLLM
           text_parts.map { |p| p['text'] }.join
         end
 
+        # Determines if the candidate contains a function call
+        # @param candidate [Hash] The candidate from the response
+        # @return [Boolean] True if the candidate contains a function call
         def function_call?(candidate)
           parts = candidate.dig('content', 'parts')
           parts&.any? { |p| p['functionCall'] }

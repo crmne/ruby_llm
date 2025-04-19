@@ -33,6 +33,9 @@ Learn how to generate images using DALL-E and other providers.
 ### [Embeddings]({% link guides/embeddings.md %})
 Explore how to create vector embeddings for semantic search and other applications.
 
+### [Structured Output]({% link guides/structured-output.md %})
+Learn how to use JSON schemas to get validated structured data from LLMs.
+
 ### [Error Handling]({% link guides/error-handling.md %})
 Master the techniques for robust error handling in AI applications.
 

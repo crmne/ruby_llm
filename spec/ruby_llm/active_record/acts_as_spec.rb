@@ -123,11 +123,55 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'with_response_format functionality' do
+    it 'supports with_response_format method' do
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
+      schema = { 'type' => 'object', 'properties' => { 'name' => { 'type' => 'string' } } }
+
+      # Just verify the method is supported and chainable
+      result = chat.with_response_format(schema)
+      expect(result).to be_a(Chat)
+    end
+
+    it 'passes through JSON content without modification' do
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
+
+      # Create a message with JSON content directly
+      json_content = '{"name":"Ruby","version":"3.2.0","features":["Blocks"]}'
+      message = chat.messages.create!(role: 'assistant', content: json_content)
+
+      # Verify the extraction passes through the string unchanged
+      llm_message = message.to_llm
+      expect(llm_message.content).to eq(json_content)
+      
+      # Even though extract_content doesn't parse JSON, verify it's valid JSON
+      parsed = JSON.parse(llm_message.content)
+      expect(parsed['name']).to eq('Ruby')
+    end
+
+    it 'passes through Hash content without modification' do
+      chat = Chat.create!(model_id: 'gpt-4.1-nano')
+
+      # SQLite doesn't support JSON natively, so simulate a Hash-like object
+      mock_hash = { 'name' => 'Ruby', 'version' => '3.2.0' }
+      allow_any_instance_of(Message).to receive(:content).and_return(mock_hash)
+
+      # Create a message that will use our mocked content
+      message = chat.messages.create!(role: 'assistant', content: '{}')
+
+      # Verify the extraction passes through the Hash unchanged
+      llm_message = message.to_llm
+      expect(llm_message.content).to be(mock_hash)
+      expect(llm_message.content['name']).to eq('Ruby')
+    end
+  end
+
   describe 'chainable methods' do
     it_behaves_like 'a chainable chat method', :with_tool, Calculator
     it_behaves_like 'a chainable chat method', :with_tools, Calculator
     it_behaves_like 'a chainable chat method', :with_model, 'gpt-4.1-nano'
     it_behaves_like 'a chainable chat method', :with_temperature, 0.5
+    it_behaves_like 'a chainable chat method', :with_response_format, { 'type' => 'object' }
 
     it_behaves_like 'a chainable callback method', :on_new_message
     it_behaves_like 'a chainable callback method', :on_end_message
