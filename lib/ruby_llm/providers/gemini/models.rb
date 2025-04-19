@@ -36,6 +36,7 @@ module RubyLLM
               supports_vision: capabilities.supports_vision?(model_id),
               supports_functions: capabilities.supports_functions?(model_id),
               supports_structured_output: capabilities.supports_structured_output?(model_id),
+              supports_json_mode: capabilities.supports_json_mode?(model_id),
               input_price_per_million: capabilities.input_price_for(model_id),
               output_price_per_million: capabilities.output_price_for(model_id)
             )
