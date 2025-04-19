@@ -1,0 +1,126 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"address_book","description":"Manages
+        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250414T210946Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 20bc836937097802a104c9ae3c86ad4f5f74750c68d26050182b4720a23eba7b
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250414/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=a5df834cb610f068397cb62fe151c75110efa170b1fe4a42ce795d46a3705e61
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 14 Apr 2025 21:09:06 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '655'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 5e77035b-9fb7-4f9a-a5d7-31d91b879490
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '2425'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '140'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '444'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01Ko7AtCEYwWGeWASuiHmuSq","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you add John Doe to the address book using the `address_book` function.
+        I''ll parse the address details you provided and create a contact entry."},{"type":"tool_use","id":"toolu_bdrk_016zu287CPSP7fc7whbMpAZm","name":"address_book","input":{"contact":{"name":"John
+        Doe","address":{"street":"123 Main St","city":"Springfield","zip":"12345"}}}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":444,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":140}}'
+  recorded_at: Mon, 14 Apr 2025 21:09:48 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you add John Doe to the address book using the `address_book` function.
+        I''ll parse the address details you provided and create a contact entry."},{"type":"tool_use","id":"toolu_bdrk_016zu287CPSP7fc7whbMpAZm","name":"address_book","input":{"contact":{"name":"John
+        Doe","address":{"street":"123 Main St","city":"Springfield","zip":"12345"}}}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_016zu287CPSP7fc7whbMpAZm","content":"Completed
+        contact: John Doe at 123 Main St, Springfield 12345"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"address_book","description":"Manages
+        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250414T210948Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 2826a3b34811574291899c05638d0d60f20dc746eeb29235ced9f7fc1e09ed94
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250414/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=7475450c7cd8c01a696d678566c9b4677f18f452d9925d4f28be69d5d4cbf934
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 14 Apr 2025 21:09:08 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '542'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - fb2c2301-2178-4b18-8f3f-2702d4fc5ea7
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1306'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '66'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '594'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01EB71hKVYvuo5J2f9B2rpXm","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ve
+        added John Doe to the address book with the following details:\n- Name: John
+        Doe\n- Street: 123 Main St\n- City: Springfield\n- ZIP Code: 12345\n\nThe
+        contact has been successfully saved. Is there anything else I can help you
+        with?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":594,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":66}}'
+  recorded_at: Mon, 14 Apr 2025 21:09:50 GMT
+recorded_with: VCR 6.3.1

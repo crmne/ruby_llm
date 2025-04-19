@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505)."}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer test
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Mon, 14 Apr 2025 21:08:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '149'
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - f561e72cb0f2899eff06e3264398bacc
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: '{"error":{"message":"Authentication Fails, Your api key: test is invalid","type":"authentication_error","param":null,"code":"invalid_request_error"}}'
+  recorded_at: Mon, 14 Apr 2025 21:09:13 GMT
+recorded_with: VCR 6.3.1

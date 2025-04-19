@@ -25,7 +25,12 @@ module RubyLLM
         def param_schema(param)
           {
             type: param.type,
-            description: param.description
+            description: param.description,
+            items: param.items && {
+              type: 'object',
+              properties: param.items.transform_values { |p| param_schema(p) }
+            },
+            properties: param.properties&.transform_values { |p| param_schema(p) }
           }.compact
         end
 
