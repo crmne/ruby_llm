@@ -114,8 +114,14 @@ module RubyLLM
         self
       end
 
-      def with_response_format(schema)
-        to_llm.with_response_format(schema)
+      # Specifies the response format for the chat (JSON mode or JSON schema)
+      # @param response_format [Hash, String, Symbol] The response format, either:
+      #   - :json for simple JSON mode
+      #   - JSON schema as a Hash or JSON string for schema-based output
+      # @param strict [Boolean] Whether to enforce model compatibility (default: true)
+      # @return [self] Chainable chat instance
+      def with_response_format(response_format, strict: true)
+        to_llm.with_response_format(response_format, strict: strict)
         self
       end
 
