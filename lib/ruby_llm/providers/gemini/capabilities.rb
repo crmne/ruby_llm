@@ -79,6 +79,13 @@ module RubyLLM
           model_id.match?(/gemini|pro|flash/)
         end
 
+        # Determines if the model supports JSON mode
+        # @param model_id [String] the model identifier
+        # @return [Boolean] true if the model supports JSON mode
+        def supports_json_mode?(model_id)
+          false
+        end
+
         # Determines if the model supports structured outputs
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured JSON output
