@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Error do
   it 'handles invalid API keys gracefully' do # rubocop:disable RSpec/ExampleLength
@@ -9,7 +8,7 @@ RSpec.describe RubyLLM::Error do
       config.openai_api_key = 'invalid-key'
     end
 
-    chat = RubyLLM.chat(model: 'gpt-4o-mini')
+    chat = RubyLLM.chat(model: 'gpt-4.1-nano')
 
     expect do
       chat.ask('Hello')

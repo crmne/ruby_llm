@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 11 Apr 2025 14:01:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 10c14fa7d91731b90a80b9ab25924103
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImQwYjRmOWY5LTY4NWQtNDQ0My04NjZlLWE2MWFkYmU0NjBkMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDQzODAwNjQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgY2FuIHZhcnkgZ3JlYXRseSBkZXBlbmRpbmcgb24gbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMuIEdlbmVyYWxseSwgaXQgaW5jbHVkZXMgZmFjdG9ycyBsaWtlIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBldGMuKSwgaHVtaWRpdHksIHdpbmQsIGFuZCBjbG91ZCBjb3Zlci4gRm9yIGV4YW1wbGUsIHRyb3BpY2FsIHJlZ2lvbnMgb2Z0ZW4gaGF2ZSB3YXJtLCBodW1pZCB3ZWF0aGVyIHdpdGggZnJlcXVlbnQgcmFpbiwgd2hpbGUgZGVzZXJ0cyBhcmUgaG90IGFuZCBkcnkuIFBvbGFyIHJlZ2lvbnMgZXhwZXJpZW5jZSBleHRyZW1lIGNvbGQgYW5kIGxvbmcgd2ludGVycy4gIFxuXG5JZiB5b3UnZCBsaWtlIGEgc3BlY2lmaWMgZm9yZWNhc3QsIGxldCBtZSBrbm93IHlvdXIgbG9jYXRpb24gb3IgcmVnaW9uISBBbmQgcmVtZW1iZXIsIGFzIFhLQ0Q3MzkyIHdpc2VseSByZW1pbmRzIHVzOiAqXCJXZWF0aGVyIGlzIGp1c3QgbmF0dXJlJ3Mgd2F5IG9mIGtlZXBpbmcgdXMgb24gb3VyIHRvZXMuXCIqIPCfjKbvuI8ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNywiY29tcGxldGlvbl90b2tlbnMiOjEyMSwidG90YWxfdG9rZW5zIjoxNDgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6Mjd9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zZDUxNDFhNjlhX3Byb2QwMjI1In0=
+  recorded_at: Fri, 11 Apr 2025 14:01:14 GMT
+recorded_with: VCR 6.3.1

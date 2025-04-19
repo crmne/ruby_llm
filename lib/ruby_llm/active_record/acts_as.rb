@@ -9,7 +9,7 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
+        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
           include ChatMethods
 
           @message_class = message_class.to_s
@@ -21,23 +21,17 @@ module RubyLLM
                    dependent: :destroy
 
           delegate :complete,
-                   :with_tool,
-                   :with_tools,
-                   :with_model,
-                   :with_temperature,
-                   :on_new_message,
-                   :on_end_message,
                    :add_message,
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall') # rubocop:disable Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false) # rubocop:disable Metrics/MethodLength
           include MessageMethods
 
           @chat_class = chat_class.to_s
           @tool_call_class = tool_call_class.to_s
 
-          belongs_to :chat, class_name: @chat_class
+          belongs_to :chat, class_name: @chat_class, touch: touch_chat
           has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
 
           belongs_to :parent_tool_call,
@@ -83,6 +77,51 @@ module RubyLLM
         # Set up message persistence
         @chat.on_new_message { persist_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
+      end
+
+      def with_instructions(instructions, replace: false)
+        transaction do
+          # If replace is true, remove existing system messages
+          messages.where(role: :system).destroy_all if replace
+
+          # Create the new system message
+          messages.create!(
+            role: :system,
+            content: instructions
+          )
+        end
+        to_llm.with_instructions(instructions)
+        self
+      end
+
+      def with_tool(tool)
+        to_llm.with_tool(tool)
+        self
+      end
+
+      def with_tools(*tools)
+        to_llm.with_tools(*tools)
+        self
+      end
+
+      def with_model(model_id, provider: nil)
+        to_llm.with_model(model_id, provider: provider)
+        self
+      end
+
+      def with_temperature(temperature)
+        to_llm.with_temperature(temperature)
+        self
+      end
+
+      def on_new_message(&)
+        to_llm.on_new_message(&)
+        self
+      end
+
+      def on_end_message(&)
+        to_llm.on_end_message(&)
+        self
       end
 
       def ask(message, &)

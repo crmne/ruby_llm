@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'lib/tasks/models_docs.rake'
       - '.github/workflows/docs.yml'
   workflow_dispatch:
 
@@ -23,19 +24,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Ruby
+
+      - name: Setup Ruby for models guide generation (ruby_llm environment)
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Run models:docs rake task
+        run: bundle exec rake models:docs
+
+      - name: Setup Ruby for Jekyll build (ruby_llm environment)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
           working-directory: docs
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
       - name: Build with Jekyll
         working-directory: docs
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

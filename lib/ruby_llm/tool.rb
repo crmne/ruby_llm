@@ -72,9 +72,6 @@ module RubyLLM
       result = execute(**args.transform_keys(&:to_sym))
       RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
       result
-    rescue StandardError => e
-      RubyLLM.logger.error "Tool #{name} failed with error: #{e.message}"
-      { error: e.message }
     end
 
     def execute(...)

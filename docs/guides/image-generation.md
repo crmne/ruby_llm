@@ -7,34 +7,74 @@ permalink: /guides/image-generation
 ---
 
 # Image Generation
+{: .no_toc }
 
-RubyLLM makes it easy to generate images using AI models like DALL-E. This guide explains how to create images and customize the generation process.
+RubyLLM makes it easy to generate images using AI models like DALL-E 3 and Google's Imagen. This guide explains how to create images and customize the generation process.
+{: .fs-6 .fw-300 }
+
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+---
+
+After reading this guide, you will know:
+
+*   How to generate images from text prompts.
+*   How to select different image generation models.
+*   How to specify image sizes (for supported models).
+*   How to access and save generated image data (URL or Base64).
+*   How to integrate image generation with Rails Active Storage.
+*   Tips for writing effective image prompts.
+*   How to handle errors during image generation.
 
 ## Basic Image Generation
 
-The simplest way to generate an image is using the global `paint` method:
+The simplest way to generate an image is using the global `RubyLLM.paint` method:
 
 ```ruby
-# Generate an image with DALL-E
-image = RubyLLM.paint("a sunset over mountains")
+# Generate an image using the default image model (usually DALL-E 3)
+image = RubyLLM.paint("A photorealistic image of a red panda coding Ruby on a laptop")
 
-# The URL where you can view/download the image
-puts image.url  # => "https://..."
+# For models returning a URL (like DALL-E):
+if image.url
+  puts "Image URL: #{image.url}"
+  # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
+end
 
-# How the model interpreted your prompt
-puts image.revised_prompt  # => "A breathtaking sunset painting the sky with warm..."
+# For models returning Base64 data (like Imagen):
+if image.base64?
+  puts "MIME Type: #{image.mime_type}" # => "image/png" or similar
+  puts "Data size: ~#{image.data.length} bytes"
+end
+
+# Some models revise the prompt for better results (DALL-E 3 does this)
+if image.revised_prompt
+  puts "Revised Prompt: #{image.revised_prompt}"
+  # => "A photorealistic depiction of a red panda intently coding Ruby..."
+end
+
+puts "Model Used: #{image.model_id}"
 ```
 
-The `paint` method handles all the complexities of connecting to the right provider and processing the request.
+The `paint` method abstracts the differences between provider APIs.
 
 ## Choosing Models
 
-By default, RubyLLM uses DALL-E 3, but you can specify a different model:
+By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `dall-e-3`), but you can specify a different one.
 
 ```ruby
-# Use Gemini's Imagen 3 (see details below)
-image = RubyLLM.paint(
-  "a cyberpunk city at night",
+# Explicitly use DALL-E 3
+image_dalle = RubyLLM.paint(
+  "Impressionist painting of a Parisian cafe",
+  model: "dall-e-3"
+)
+
+# Use Google's Imagen 3
+image_imagen = RubyLLM.paint(
+  "Cyberpunk city street at night, raining, neon signs",
   model: "imagen-3.0-generate-002"
 )
 ```
@@ -43,259 +83,194 @@ You can configure the default model globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_image_model = "dall-e-3"
+  config.default_image_model = "dall-e-3" # Or another available image model ID
 end
 ```
+
+Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link guides/available-models.md %}) to find image models.
 
 ## Image Sizes
 
-You can control the size of the generated image:
+Some models, like DALL-E 3, allow you to specify the desired image dimensions via the `size:` argument.
 
 ```ruby
-# Standard size (1024x1024)
-image = RubyLLM.paint("a white siamese cat")
+# Standard square (1024x1024 - default for DALL-E 3)
+image_square = RubyLLM.paint("a fluffy white cat", size: "1024x1024")
 
-# Landscape (1792x1024)
-landscape = RubyLLM.paint(
-  "a panoramic mountain landscape",
+# Wide landscape (1792x1024 for DALL-E 3)
+image_landscape = RubyLLM.paint(
+  "a panoramic mountain landscape at dawn",
   size: "1792x1024"
 )
 
-# Portrait (1024x1792)
-portrait = RubyLLM.paint(
-  "a tall redwood tree",
+# Tall portrait (1024x1792 for DALL-E 3)
+image_portrait = RubyLLM.paint(
+  "a knight standing before a castle gate",
   size: "1024x1792"
-)
-
-# Square with custom size
-square = RubyLLM.paint(
-  "a perfect square mandala",
-  size: "1024x1024" # standard square
 )
 ```
 
-Available sizes depend on the model. DALL-E 3 supports:
-- `"1024x1024"` - Standard square (default)
-- `"1792x1024"` - Wide landscape
-- `"1024x1792"` - Tall portrait
+{: .note }
+Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link guides/available-models.md %}) for supported sizes.
 
 ## Working with Generated Images
 
-The `Image` object returned by `paint` contains information about the generated image:
+The `RubyLLM::Image` object provides access to the generated image data and metadata.
 
-```ruby
-image = RubyLLM.paint("a cyberpunk cityscape")
+### Accessing Image Data
 
-# For url-based images (like DALL-E)
-if image.url && !image.base64?
-  puts "Image URL: #{image.url}"
-end
-
-# For base64 images (like Gemini's Imagen)
-if image.base64?
-  puts "MIME type: #{image.mime_type}"
-  puts "Base64 data available"
-end
-
-# How the model interpreted/enhanced your prompt
-enhanced_prompt = image.revised_prompt
-
-# The model used to generate the image
-model_used = image.model_id
-```
+*   `image.url`: Returns the URL for providers like OpenAI (DALL-E). `nil` otherwise.
+*   `image.data`: Returns the Base64-encoded image data string for providers like Google (Imagen). `nil` otherwise.
+*   `image.mime_type`: Returns the MIME type (e.g., `"image/png"`, `"image/jpeg"`).
+*   `image.base64?`: Returns `true` if the image data is Base64-encoded, `false` otherwise.
 
 ### Saving Images Locally
 
-To save the generated image to a local file (works with both URL and base64 images):
+The `save` method works regardless of whether the image was delivered via URL or Base64. It fetches the data if necessary and writes it to the specified file path.
 
 ```ruby
-# Generate an image
-image = RubyLLM.paint("a sunset over mountains")
+# Generate an image (works for DALL-E or Imagen)
+image = RubyLLM.paint("A steampunk mechanical owl")
 
-# Save to a file - works with both URL and base64 images
-image.save("sunset.png")
+# Save the image to a local file
+begin
+  saved_path = image.save("steampunk_owl.png")
+  puts "Image saved to #{saved_path}"
+rescue => e
+  puts "Failed to save image: #{e.message}"
+end
+```
+
+### Getting Raw Image Blob
+
+The `to_blob` method returns the raw binary image data (decoded from Base64 or downloaded from URL). This is useful for integration with other libraries or frameworks.
+
+```ruby
+image = RubyLLM.paint("Abstract geometric patterns in pastel colors")
+image_blob = image.to_blob
+
+# Now you can use image_blob, e.g., upload to S3, process with MiniMagick, etc.
+puts "Image blob size: #{image_blob.bytesize} bytes"
 ```
 
 ### Rails Active Storage Integration
 
-The `to_blob` method makes it easy to integrate with Rails' Active Storage:
+Use `to_blob` to easily attach generated images to Active Storage attributes.
 
 ```ruby
-# In a Rails controller or job
-def generate_image_for_product(product, prompt)
-  # Generate the image with RubyLLM
-  image = RubyLLM.paint(prompt)
+# In a Rails model or job
+class Product < ApplicationRecord
+  has_one_attached :generated_image
+end
 
-  # Create a filename based on product and timestamp
+def generate_and_attach_image(product, prompt)
+  puts "Generating image for Product #{product.id}..."
+  image = RubyLLM.paint(prompt, model: 'dall-e-3') # Or another model
+
   filename = "#{product.slug}-#{Time.current.to_i}.png"
 
-  # Attach the image directly to the product using Active Storage
-  product.image.attach(
-    io: StringIO.new(image.to_blob),
+  # Use StringIO to provide an IO object to Active Storage
+  image_io = StringIO.new(image.to_blob)
+
+  product.generated_image.attach(
+    io: image_io,
     filename: filename,
-    content_type: image.mime_type || 'image/png'
+    content_type: image.mime_type || 'image/png' # Use detected MIME type or default
   )
 
-  # You could also record the generation prompt, model, etc.
+  puts "Image attached successfully."
+
+  # Optionally save metadata
   product.update(
     image_prompt: prompt,
     image_revised_prompt: image.revised_prompt,
     image_model: image.model_id
   )
+rescue RubyLLM::Error => e
+  puts "Image generation failed: #{e.message}"
+  # Handle error appropriately
+rescue => e
+  puts "Failed to attach image: #{e.message}"
+  # Handle attachment error
 end
+
+# Usage:
+# product = Product.find(1)
+# generate_and_attach_image(product, "A sleek, modern logo for 'RubyLLM'")
 ```
 
 ## Prompt Engineering for Images
 
-Crafting effective prompts is crucial for getting the best results:
+Crafting effective prompts is key to getting the desired image. Be descriptive!
 
 ```ruby
-# Basic prompt
-image = RubyLLM.paint("cat")
+# Simple prompt - often yields generic results
+image1 = RubyLLM.paint("dog")
 
-# Detailed prompt
-image = RubyLLM.paint(
-  "A fluffy orange tabby cat sitting on a windowsill, " \
-  "looking out at a rainy day. Soft lighting, detailed fur, " \
-  "photorealistic style."
+# Detailed prompt - better results
+image2 = RubyLLM.paint(
+  "A photorealistic image of a golden retriever puppy playing fetch " \
+  "in a sunny park, shallow depth of field, captured with a DSLR camera."
+)
+
+# Specify style
+image3 = RubyLLM.paint(
+  "A majestic mountain range, oil painting in the style of Bob Ross"
 )
 ```
 
-### Tips for Better Prompts
+**Tips for Better Prompts:**
 
-1. **Be specific** about subject, setting, lighting, style, and perspective
-2. **Specify artistic style** (e.g., "oil painting", "digital art", "photorealistic")
-3. **Include lighting details** ("soft morning light", "dramatic sunset")
-4. **Add composition details** ("close-up", "wide angle", "overhead view")
-5. **Specify mood or atmosphere** ("serene", "mysterious", "cheerful")
+*   **Subject:** Be specific (e.g., "red panda" vs. "animal").
+*   **Action/Setting:** Describe what's happening and where (e.g., "coding on a laptop in a cozy library").
+*   **Style:** Specify artistic style ("photorealistic", "watercolor", "pixel art", "impressionist painting", "3D render").
+*   **Details:** Add adjectives ("fluffy", "ancient", "glowing", "minimalist").
+*   **Composition:** Mention framing ("close-up", "wide angle", "overhead shot").
+*   **Lighting:** Describe the light ("soft morning light", "dramatic sunset", "neon glow").
+*   **Mood:** Convey the feeling ("serene", "chaotic", "mysterious").
 
 ## Error Handling
 
-Handle errors that may occur during image generation:
+Wrap `paint` calls in `begin/rescue` blocks.
 
 ```ruby
 begin
-  image = RubyLLM.paint("a sunset over mountains")
-  puts "Image generated: #{image.url}"
+  image = RubyLLM.paint("A plausible prompt")
+  puts "Image URL: #{image.url}"
 rescue RubyLLM::UnauthorizedError
-  puts "Please check your API key"
+  puts "Error: Invalid API key."
 rescue RubyLLM::BadRequestError => e
-  puts "Invalid request: #{e.message}"
+  # Often indicates a content policy violation
+  puts "Error: Bad Request - #{e.message}"
+  puts "Check if your prompt violates content safety policies."
+rescue RubyLLM::RateLimitError
+  puts "Error: Rate limit exceeded."
 rescue RubyLLM::Error => e
-  puts "Error generating image: #{e.message}"
+  puts "Image generation failed: #{e.message}"
 end
 ```
 
-Common errors include:
-- `UnauthorizedError` - Invalid API key
-- `BadRequestError` - Content policy violation
-- `RateLimitError` - Too many requests
-- `ServiceUnavailableError` - Service temporarily unavailable
+See the [Error Handling Guide]({% link guides/error-handling.md %}) for more details.
 
 ## Content Safety
 
-Image generation models have built-in safety filters. If your prompt violates content policies, you'll receive an error.
+AI image generation services have content safety filters. Prompts requesting harmful, explicit, or otherwise prohibited content will usually result in a `BadRequestError`. Avoid generating:
 
-To avoid content policy violations:
-- Avoid requesting violent, adult, or disturbing content
-- Don't ask for images of real public figures
-- Avoid copyrighted characters and content
-- Be mindful of sensitive subject matter
+*   Violent or hateful imagery.
+*   Sexually explicit content.
+*   Images of real people (especially public figures without consent, though policies vary).
+*   Direct copies of copyrighted characters or artwork.
 
 ## Performance Considerations
 
-Image generation typically takes 5-15 seconds. Consider these best practices:
+Image generation can take several seconds (typically 5-20 seconds depending on the model and load).
 
-1. **Handle asynchronously** - Don't block your application while waiting
-2. **Implement timeouts** - Set appropriate request timeouts
-3. **Cache results** - Save images to your server rather than regenerating
-4. **Implement retries** - Retry on temporary failures
-
-## Rails Integration
-
-In a Rails application, you might implement image generation like this:
-
-```ruby
-class ImagesController < ApplicationController
-  def create
-    GenerateImageJob.perform_later(
-      prompt: params[:prompt],
-      user_id: current_user.id
-    )
-
-    redirect_to images_path, notice: "Your image is being generated..."
-  end
-end
-
-class GenerateImageJob < ApplicationJob
-  queue_as :default
-
-  def perform(prompt:, user_id:)
-    user = User.find(user_id)
-
-    begin
-      image = RubyLLM.paint(prompt)
-
-      # Download and store the image
-      image_file = URI.open(image.url)
-
-      # Create record in your database
-      user.images.create!(
-        prompt: prompt,
-        revised_prompt: image.revised_prompt,
-        file: image_file,
-        model: image.model_id
-      )
-
-      # Notify user
-      UserMailer.image_ready(user, prompt).deliver_later
-    rescue RubyLLM::Error => e
-      ErrorLogger.log(e, context: { prompt: prompt, user_id: user_id })
-      UserMailer.image_failed(user, prompt, e.message).deliver_later
-    end
-  end
-end
-```
-
-## Example Use Cases
-
-### Product Visualization
-
-```ruby
-def visualize_product(product_name, description)
-  prompt = "#{product_name}: #{description}. " \
-           "Professional product photography on white background, " \
-           "detailed, commercial quality."
-
-  RubyLLM.paint(prompt, size: "1024x1024")
-end
-
-image = visualize_product(
-  "Ergonomic Office Chair",
-  "Modern mesh back office chair with adjustable armrests and lumbar support"
-)
-```
-
-### Art Generation for Content
-
-```ruby
-def generate_article_header(title, style)
-  prompt = "Header image for an article titled '#{title}'. " \
-           "Style: #{style}. Wide format, suitable for a blog header."
-
-  RubyLLM.paint(prompt, size: "1792x1024")
-end
-
-image = generate_article_header(
-  "The Future of Renewable Energy",
-  "Minimalist digital illustration with clean lines and a blue-green color palette"
-)
-```
+*   **Use Background Jobs:** In web applications, always perform image generation in a background job (like Sidekiq or GoodJob) to avoid blocking web requests.
+*   **Timeouts:** Configure appropriate network timeouts in RubyLLM (see [Installation Guide]({% link installation.md %})).
+*   **Caching:** Store generated images (e.g., using Active Storage, cloud storage) rather than regenerating them frequently if the prompt is the same.
 
 ## Next Steps
 
-Now that you understand image generation, you might want to explore:
-
-- [Embeddings]({% link guides/embeddings.md %}) for vector representations
-- [Chat with Images]({% link guides/chat.md %}#working-with-images) to analyze images with AI
-- [Error Handling]({% link guides/error-handling.md %}) for robust applications
+*   [Chatting with AI Models]({% link guides/chat.md %}): Learn about conversational AI.
+*   [Embeddings]({% link guides/embeddings.md %}): Explore text vector representations.
+*   [Error Handling]({% link guides/error-handling.md %}): Master handling API errors.

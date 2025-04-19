@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'dotenv/load'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
@@ -9,10 +8,10 @@ RSpec.describe RubyLLM::Chat do
   describe '#with_tool unsupported functions' do
     it "raises UnsupportedFunctionsError when model doesn't support functions" do # rubocop:disable RSpec/ExampleLength
       # Create a non-function-calling model by patching the supports_functions attribute
-      model = RubyLLM.models.find('gpt-4o-mini')
+      model = RubyLLM.models.find('gpt-4.1-nano')
       allow(model).to receive(:supports_functions).and_return(false)
 
-      chat = described_class.new(model: 'gpt-4o-mini')
+      chat = described_class.new(model: 'gpt-4.1-nano')
       # Replace the model with our modified version
       chat.instance_variable_set(:@model, model)
 
@@ -43,7 +42,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_model' do
     it 'changes the model and returns self' do # rubocop:disable RSpec/MultipleExpectations
-      chat = described_class.new(model: 'gpt-4o-mini')
+      chat = described_class.new(model: 'gpt-4.1-nano')
       result = chat.with_model('claude-3-5-haiku-20241022')
 
       expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
