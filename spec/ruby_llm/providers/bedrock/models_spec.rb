@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       model_family: :claude,
       supports_vision?: false,
       supports_functions?: false,
+      supports_json_mode?: false,
       supports_structured_output?: false,
       input_price_for: 0.0,
       output_price_for: 0.0,
