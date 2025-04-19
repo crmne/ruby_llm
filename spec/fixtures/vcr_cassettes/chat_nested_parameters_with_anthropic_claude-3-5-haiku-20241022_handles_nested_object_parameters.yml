@@ -1,0 +1,171 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"address_book","description":"Manages
+        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:12:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-19T20:12:22Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-19T20:12:22Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-19T20:12:23Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-19T20:12:22Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 1e1d231c-90fe-4375-9772-cb9f1cf081f0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01H4bBNC7UHEcP4pTima1KPA","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you add John Doe to the address book using the `address_book` function.
+        I''ll structure the contact information with the provided details."},{"type":"tool_use","id":"toolu_01UsthiZzNnu7UnyMGSm7Lfi","name":"address_book","input":{"contact":{"name":"John
+        Doe","address":{"street":"123 Main St","city":"Springfield","zip":"12345"}}}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":444,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":137}}'
+  recorded_at: Sat, 19 Apr 2025 20:12:23 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you add John Doe to the address book using the `address_book` function.
+        I''ll structure the contact information with the provided details."},{"type":"tool_use","id":"toolu_01UsthiZzNnu7UnyMGSm7Lfi","name":"address_book","input":{"contact":{"name":"John
+        Doe","address":{"street":"123 Main St","city":"Springfield","zip":"12345"}}}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01UsthiZzNnu7UnyMGSm7Lfi","content":"Completed
+        contact: John Doe at 123 Main St, Springfield 12345"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"address_book","description":"Manages
+        address book entries","input_schema":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:12:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-19T20:12:25Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-19T20:12:26Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-19T20:12:27Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-19T20:12:26Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 1e1d231c-90fe-4375-9772-cb9f1cf081f0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_017FjbqneUCMw1nizqpPpjhC","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ve
+        added John Doe to the address book with the following details:\n- Name: John
+        Doe\n- Street: 123 Main St\n- City: Springfield\n- ZIP: 12345\n\nThe contact
+        has been successfully saved. Is there anything else I can help you with?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":591,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":65}}'
+  recorded_at: Sat, 19 Apr 2025 20:12:27 GMT
+recorded_with: VCR 6.3.1

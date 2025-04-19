@@ -1,0 +1,249 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Add information
+        about California (capital: Sacramento, pop: 39538223) and Texas (capital:
+        Austin, pop: 29145505). Make sure to return all the information in the final
+        output. "}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '351'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999953'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BO8u0BjKwkacpjBMv3Voo4gkPicU7",
+          "object": "chat.completion",
+          "created": 1745093792,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_qgm7FWk4nAD1088mfK1Y2V6Z",
+                    "type": "function",
+                    "function": {
+                      "name": "state_manager",
+                      "arguments": "{\"states\": [{\"name\": \"California\", \"capital\": \"Sacramento\", \"population\": 39538223}, {\"name\": \"Texas\", \"capital\": \"Austin\", \"population\": 29145505}]}"
+                    }
+                  },
+                  {
+                    "id": "call_nE7Iusgl605qGA1YhG03HB2h",
+                    "type": "function",
+                    "function": {
+                      "name": "state_manager",
+                      "arguments": "{\"states\": []}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 91,
+            "completion_tokens": 74,
+            "total_tokens": 165,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_20621fa8f3"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:16:32 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Add information
+        about California (capital: Sacramento, pop: 39538223) and Texas (capital:
+        Austin, pop: 29145505). Make sure to return all the information in the final
+        output. "},{"role":"assistant","tool_calls":[{"id":"call_qgm7FWk4nAD1088mfK1Y2V6Z","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[{\"name\":\"California\",\"capital\":\"Sacramento\",\"population\":39538223},{\"name\":\"Texas\",\"capital\":\"Austin\",\"population\":29145505}]}"}},{"id":"call_nE7Iusgl605qGA1YhG03HB2h","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[]}"}}]},{"role":"tool","content":"California:
+        Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)","tool_call_id":"call_qgm7FWk4nAD1088mfK1Y2V6Z"},{"role":"tool","content":"No
+        states provided","tool_call_id":"call_nE7Iusgl605qGA1YhG03HB2h"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '292'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999924'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BO8u0afKOxVRBem7FmHfCXE59Xcam",
+          "object": "chat.completion",
+          "created": 1745093792,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "California: Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 206,
+            "completion_tokens": 28,
+            "total_tokens": 234,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_20621fa8f3"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:16:32 GMT
+recorded_with: VCR 6.3.1

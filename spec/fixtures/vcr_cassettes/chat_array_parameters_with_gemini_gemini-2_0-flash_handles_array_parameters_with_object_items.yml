@@ -1,0 +1,198 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Add information about
+        California (capital: Sacramento, pop: 39538223) and Texas (capital: Austin,
+        pop: 29145505). Make sure to return all the information in the final output.
+        "}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"OBJECT","properties":{"states":{"type":"ARRAY","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 19 Apr 2025 20:29:42 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=807
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "state_manager",
+                      "args": {
+                        "states": [
+                          {
+                            "capital": "Sacramento",
+                            "population": 39538223,
+                            "name": "California"
+                          },
+                          {
+                            "capital": "Austin",
+                            "name": "Texas",
+                            "population": 29145505
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.00050646079970257621
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 77,
+            "candidatesTokenCount": 14,
+            "totalTokenCount": 91,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 77
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 14
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:29:42 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Add information about
+        California (capital: Sacramento, pop: 39538223) and Texas (capital: Austin,
+        pop: 29145505). Make sure to return all the information in the final output.
+        "}]},{"role":"model","parts":[{"functionCall":{"name":"state_manager","args":{"states":[{"capital":"Sacramento","population":39538223,"name":"California"},{"capital":"Austin","name":"Texas","population":29145505}]}}}]},{"role":"user","parts":[{"functionResponse":{"name":"2eb7c64c-828e-4561-bf2b-0caf322f9ebc","response":{"name":"2eb7c64c-828e-4561-bf2b-0caf322f9ebc","content":"California:
+        Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"OBJECT","properties":{"states":{"type":"ARRAY","description":"List
+        of states","items":{"type":"object","properties":{"name":{"type":"string","description":"The
+        state name"},"capital":{"type":"string","description":"The capital city"},"population":{"type":"number","description":"Population
+        count"}}}}},"required":["states"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 19 Apr 2025 20:29:42 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=646
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "California: Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.00013679095641954948
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 192,
+            "candidatesTokenCount": 38,
+            "totalTokenCount": 230,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 192
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 38
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:29:42 GMT
+recorded_with: VCR 6.3.1

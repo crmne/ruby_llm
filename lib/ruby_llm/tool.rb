@@ -3,15 +3,40 @@
 module RubyLLM
   # Parameter definition for Tool methods. Specifies type constraints,
   # descriptions, and whether parameters are required.
+  #
+  # @!attribute name [r]
+  #   @return [Symbol]
+  # @!attribute required [r]
+  #   @return [Boolean]
+  # @!attribute schema [r]
+  #   @return [RubyLLM::Schema]
   class Parameter
-    attr_reader :name, :type, :description, :required
+    attr_reader :name, :required, :schema
 
-    def initialize(name, type: 'string', desc: nil, required: true)
+    # If providing schema directly MAKE SURE TO USE STRING KEYS.
+    # Also note that under_scored keys are NOT automatically transformed to camelCase.
+    # @param name [Symbol]
+    # @param schema [Hash{String|Symbol => String|Array|Hash|Boolean|NilClass}, NilClass]
+    def initialize(name, required: true, **schema)
       @name = name
-      @type = type
-      @description = desc
       @required = required
+
+      @schema = Schema.new(schema)
+      @schema[:description] ||= @schema.delete(:desc) if @schema.key?(:desc)
+      @schema[:type] ||= :string
     end
+
+    # @return [String]
+    def type
+      @schema[:type]
+    end
+
+    # @return [String, NilClass]
+    def description
+      @schema[:description]
+    end
+
+    alias required? required
   end
 
   # Base class for creating tools that AI models can use. Provides a simple
@@ -39,8 +64,24 @@ module RubyLLM
         @description = text
       end
 
-      def param(name, **options)
-        parameters[name] = Parameter.new(name, **options)
+      # Define a parameter for the tool.
+      # Examples:
+      # ```ruby
+      #   param :latitude, desc: "Latitude (e.g., 52.5200)" # Shorthand format
+      #
+      #   param :longitude, type: 'number', description: "Longitude (e.g., 13.4050)", required: false # Longer format
+      #
+      #   param :unit, type: :string, enum: %w[f c], description: "Temperature unit (e.g., celsius, fahrenheit)"
+      #
+      #   param :location, type: :object, desc: "Country and city where weather is requested.", properties: {
+      #     country: { type: :string, description: "Full name of the country." },
+      #     city: { type: :string, description: "Full name of the city." }
+      #   }
+      # ```
+      # @param name [Symbol]
+      # @param schema [Hash{String|Symbol => String|Numeric|Boolean|Hash|Array|NilClass}, NilClass]
+      def param(name, required: true, **schema)
+        parameters[name] = Parameter.new(name, required: required, **schema)
       end
 
       def parameters

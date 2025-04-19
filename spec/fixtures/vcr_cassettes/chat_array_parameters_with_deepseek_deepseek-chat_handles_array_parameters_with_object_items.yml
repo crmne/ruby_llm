@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505). Make sure to return all the information
+        in the final output. "}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - c90c5ea31d4f0840e14db076340daac6
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"015c760d-2c9e-4cec-83bf-cd3d0d608807","object":"chat.completion","created":1745093779,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_d9274728-663f-42ad-acc1-78cae2f79d58","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[{\"name\":\"California\",\"capital\":\"Sacramento\",\"population\":39538223},{\"name\":\"Texas\",\"capital\":\"Austin\",\"population\":29145505}]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":226,"completion_tokens":47,"total_tokens":273,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":226},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
+  recorded_at: Sat, 19 Apr 2025 20:16:26 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505). Make sure to return all the information
+        in the final output. "},{"role":"assistant","tool_calls":[{"id":"call_0_d9274728-663f-42ad-acc1-78cae2f79d58","type":"function","function":{"name":"state_manager","arguments":"{\"states\":[{\"name\":\"California\",\"capital\":\"Sacramento\",\"population\":39538223},{\"name\":\"Texas\",\"capital\":\"Austin\",\"population\":29145505}]}"}}]},{"role":"tool","content":"California:
+        Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)","tool_call_id":"call_0_d9274728-663f-42ad-acc1-78cae2f79d58"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"state_manager","description":"Manages
+        US states information","parameters":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - f90a62b23012402d54df8a947c872d7c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8d39c1fb-b4eb-4f49-a8b5-2223ca250096","object":"chat.completion","created":1745093786,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Here
+        is the information you requested:\n\n- **California**: Capital is Sacramento
+        (population: 39,538,223)\n- **Texas**: Capital is Austin (population: 29,145,505)"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":304,"completion_tokens":41,"total_tokens":345,"prompt_tokens_details":{"cached_tokens":256},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":48},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
+  recorded_at: Sat, 19 Apr 2025 20:16:32 GMT
+recorded_with: VCR 6.3.1

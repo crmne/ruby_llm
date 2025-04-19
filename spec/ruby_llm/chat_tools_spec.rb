@@ -31,6 +31,75 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class AddressBook < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Manages address book entries'
+
+    param :contact,
+          type: 'object',
+          description: 'Contact information',
+          properties: {
+            name: {
+              type: 'string',
+              description: 'Full name'
+            },
+            address: {
+              type: 'object',
+              description: 'Address details',
+              properties: {
+                street: {
+                  type: 'string',
+                  description: 'Street address'
+                },
+                city: {
+                  type: 'string',
+                  description: 'City name'
+                },
+                zip: {
+                  type: 'string',
+                  description: 'ZIP/Postal code'
+                }
+              }
+            }
+          }
+
+    def execute(contact:)
+      address = contact['address']
+      "Completed contact: #{contact['name']} at #{address['street']}, " \
+        "#{address['city']} #{address['zip']}"
+    end
+  end
+
+  class StateManager < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Manages US states information'
+
+    param :states,
+          type: 'array',
+          description: 'List of states',
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'The state name'
+              },
+              capital: {
+                type: 'string',
+                description: 'The capital city'
+              },
+              population: {
+                type: 'number',
+                description: 'Population count'
+              }
+            }
+          }
+
+    def execute(states:)
+      return 'No states provided' if states.empty?
+
+      states.map { |s| "#{s['name']}: Capital is #{s['capital']} (pop: #{s['population']})" }.join("\n")
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -127,6 +196,46 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+    end
+  end
+
+  describe 'nested parameters' do
+    chat_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+
+      context "with #{provider}/#{model}" do
+        let(:chat) { RubyLLM.chat(model: model).with_tool(AddressBook) }
+
+        it 'handles nested object parameters', :aggregate_failures do
+          prompt = 'Add John Doe to the address book at 123 Main St, Springfield 12345'
+          response = chat.ask(prompt)
+
+          expect(response.content).to include('John Doe', '123 Main St',
+                                              'Springfield', '12345')
+        end
+      end
+    end
+  end
+
+  describe 'array parameters' do
+    chat_models.each do |model|
+      provider = RubyLLM::Models.provider_for(model).slug
+
+      context "with #{provider}/#{model}" do
+        let(:chat) { RubyLLM.chat(model: model).with_tool(StateManager) }
+        let(:prompt) do
+          'Add information about California (capital: Sacramento, ' \
+            'pop: 39538223) and Texas (capital: Austin, pop: 29145505). ' \
+            'Make sure to return all the information in the final output. '
+        end
+
+        it 'handles array parameters with object items', :aggregate_failures do
+          response = chat.ask(prompt)
+
+          expect(response.content).to include('Sacramento', 'Austin')
+          expect(response.content).to match(/39538223|39,538,223/).and(match(/29145505|29,145,505/))
+        end
       end
     end
   end

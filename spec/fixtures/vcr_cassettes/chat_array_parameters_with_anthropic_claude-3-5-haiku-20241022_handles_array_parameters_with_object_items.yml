@@ -1,0 +1,172 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505). Make sure to return all the information
+        in the final output. "}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"state_manager","description":"Manages
+        US states information","input_schema":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-19T20:16:09Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-19T20:16:09Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-19T20:16:11Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-19T20:16:09Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 1e1d231c-90fe-4375-9772-cb9f1cf081f0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01HUHyBJf62tCMPECQyubQLX","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you add information about California and Texas using the state_manager
+        tool. I''ll input the states with their respective capitals and populations."},{"type":"tool_use","id":"toolu_01TtUtAd1BAtDzy2tXm3iU7M","name":"state_manager","input":{"states":[{"name":"California","capital":"Sacramento","population":39538223},{"name":"Texas","capital":"Austin","population":29145505}]}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":431,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":147}}'
+  recorded_at: Sat, 19 Apr 2025 20:16:11 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Add
+        information about California (capital: Sacramento, pop: 39538223) and Texas
+        (capital: Austin, pop: 29145505). Make sure to return all the information
+        in the final output. "},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you add information about California and Texas using the state_manager
+        tool. I''ll input the states with their respective capitals and populations."},{"type":"tool_use","id":"toolu_01TtUtAd1BAtDzy2tXm3iU7M","name":"state_manager","input":{"states":[{"name":"California","capital":"Sacramento","population":39538223},{"name":"Texas","capital":"Austin","population":29145505}]}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01TtUtAd1BAtDzy2tXm3iU7M","content":"California:
+        Capital is Sacramento (pop: 39538223)\nTexas: Capital is Austin (pop: 29145505)"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"state_manager","description":"Manages
+        US states information","input_schema":{"type":"object","properties":{"states":{"type":"array","description":"List
+        of states","items":{"name":{"type":"string","description":"The state name"},"capital":{"type":"string","description":"The
+        capital city"},"population":{"type":"number","description":"Population count"}}}},"required":["states"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:16:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-19T20:16:12Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-19T20:16:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-19T20:16:14Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-19T20:16:13Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - 1e1d231c-90fe-4375-9772-cb9f1cf081f0
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_017tba9nRK7xxyys3XaqEw4t","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ve
+        added the information for California and Texas to the state manager. The output
+        confirms the details:\n- California: \n  - Capital: Sacramento\n  - Population:
+        39,538,223\n- Texas:\n  - Capital: Austin\n  - Population: 29,145,505\n\nIs
+        there anything else you would like me to do with this information?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":592,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":82}}'
+  recorded_at: Sat, 19 Apr 2025 20:16:14 GMT
+recorded_with: VCR 6.3.1
