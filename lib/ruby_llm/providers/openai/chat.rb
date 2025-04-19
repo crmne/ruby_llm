@@ -75,7 +75,7 @@ module RubyLLM
             role.to_s
           end
         end
-        
+
         # Formats the response format for OpenAI API
         # @param response_format [Hash, Symbol] The response format from the chat object
         # @return [Hash] The formatted response format for the OpenAI API
@@ -86,12 +86,11 @@ module RubyLLM
           # Handle schema case (a Hash)
           if response_format.is_a?(Hash)
             {
-              type: 'json_object',
-              schema: response_format
+              type: 'json_schema',
+              json_schema: response_format,
             }
           else
-            # Default to JSON mode for any other format
-            { type: 'json_object' }
+            raise ArgumentError, "Invalid response format: #{response_format}"
           end
         end
       end
