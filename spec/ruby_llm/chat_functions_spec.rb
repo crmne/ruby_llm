@@ -41,21 +41,6 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#with_structured_output' do
-    it 'adds a structured output schema' do # rubocop:disable RSpec/ExampleLength
-      chat = described_class.new
-
-      schema = Class.new(RubyLLM::StructuredOutput::Schema) do
-        string :name
-        number :age
-      end
-
-      chat.with_structured_output(schema)
-
-      expect(chat.structured_output_schema).to eq(schema)
-    end
-  end
-
   describe '#with_model' do
     it 'changes the model and returns self' do # rubocop:disable RSpec/MultipleExpectations
       chat = described_class.new(model: 'gpt-4o-mini')

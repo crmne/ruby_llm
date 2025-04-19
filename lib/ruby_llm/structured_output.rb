@@ -136,7 +136,7 @@ module RubyLLM
         validate_schema
       end
 
-      def to_hash
+      def json_schema
         {
           name: @name,
           description: 'Schema for the structured response',
