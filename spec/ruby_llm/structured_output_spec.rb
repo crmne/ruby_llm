@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::StructuredOutput::Schema do
   describe 'schema definition' do
-    subject { schema.to_hash }
+    subject { schema.json_schema }
 
     let(:schema_class) do
       Class.new(described_class) do
