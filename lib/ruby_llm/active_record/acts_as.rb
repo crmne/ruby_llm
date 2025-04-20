@@ -75,7 +75,7 @@ module RubyLLM
         end
 
         # Set up message persistence
-        @chat.on_new_message { persist_new_message }
+        @chat.on_new_message { build_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
       end
 
@@ -134,8 +134,8 @@ module RubyLLM
 
       private
 
-      def persist_new_message
-        @message = messages.create!(
+      def build_new_message
+        @message = messages.build(
           role: :assistant,
           content: String.new
         )
