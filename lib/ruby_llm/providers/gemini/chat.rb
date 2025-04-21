@@ -103,7 +103,7 @@ module RubyLLM
           content = extract_content(data)
 
           # Parse JSON content if schema provided
-          content = parse_structured_output(content, raise_on_error: true) if response_format && !content.empty?
+          content = parse_structured_output(content) if response_format && !content.empty?
 
           Message.new(
             role: :assistant,

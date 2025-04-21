@@ -64,7 +64,7 @@ module RubyLLM
           # Parse JSON content if schema was provided
           parsed_content = text_content
           if response_format && text_content
-            parsed_content = parse_structured_output(text_content, raise_on_error: false)
+            parsed_content = parse_structured_output(text_content)
           end
 
           build_message(data, parsed_content, tool_use)

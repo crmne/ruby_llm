@@ -7,9 +7,8 @@ module RubyLLM
     module StructuredOutputParser
       # Parses structured output based on the response content
       # @param content [String] The content to parse
-      # @param raise_on_error [Boolean] Whether to raise errors (true) or just log them (false)
-      # @return [Hash, String] The parsed JSON or the original content if parsing fails
-      def parse_structured_output(content, raise_on_error: true)
+      # @return [Hash, String] The parsed JSON or raises InvalidStructuredOutput on parsing failure
+      def parse_structured_output(content)
         return content if content.nil? || content.empty?
 
         begin
@@ -23,10 +22,7 @@ module RubyLLM
             content
           end
         rescue JSON::ParserError => e
-          raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}" if raise_on_error
-
-          RubyLLM.logger.warn("Failed to parse JSON from model response: #{e.message}")
-          content
+          raise InvalidStructuredOutput, "Failed to parse JSON from model response: #{e.message}"
         end
       end
 
