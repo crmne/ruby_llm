@@ -105,7 +105,8 @@ module RubyLLM
       # Add appropriate guidance based on format
       if response_format == :json
         add_json_guidance
-      else
+      elsif assume_supported
+        # Needed for models that don't support structured output
         add_system_format_guidance
       end
 
@@ -188,7 +189,7 @@ module RubyLLM
         updated_content = "#{system_message.content}\n\n#{guidance}"
         @messages.delete(system_message)
         add_message(role: :system, content: updated_content)
-      else
+      elsif
         # No system message exists, create a new one
         with_instructions(guidance)
       end
