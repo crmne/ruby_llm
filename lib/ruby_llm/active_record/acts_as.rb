@@ -93,6 +93,12 @@ module RubyLLM
         self
       end
 
+      # @see LlmChat#with_response_format
+      def with_response_format(...)
+        to_llm.with_response_format(...)
+        self
+      end
+
       def with_tool(...)
         to_llm.with_tool(...)
         self
@@ -158,14 +164,19 @@ module RubyLLM
         end
 
         transaction do
-          @message.update!(
-            role: message.role,
-            content: message.content,
-            model_id: message.model_id,
-            tool_call_id: tool_call_id,
-            input_tokens: message.input_tokens,
-            output_tokens: message.output_tokens
-          )
+          # These are required fields:
+          @message.role = message.role
+          @message.content = message.content
+
+          # These are optional fields:
+          @message.try('model_id=', message.model_id)
+          @message.try('tool_call_id=', tool_call_id)
+          @message.try('input_tokens=', message.input_tokens)
+          @message.try('output_tokens=', message.output_tokens)
+          @message.try('content_schema=', message.content_schema)
+
+          @message.save!
+
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
         end
       end

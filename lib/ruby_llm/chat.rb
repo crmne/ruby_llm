@@ -31,6 +31,56 @@ module RubyLLM
       }
     end
 
+    ##
+    # This method lets you ensure the responses follow a schema you define like this:
+    #
+    #   chat.with_response_format(:integer).ask("What is 2 + 2?").to_i
+    #   # => 4
+    #   chat.with_response_format(:string).ask("Say 'Hello World' and nothing else.").content
+    #   # => "Hello World"
+    #   chat.with_response_format(:array, items: { type: :string })
+    #   chat.ask('What are the 2 largest countries? Only respond with country names.').content
+    #   # => ["Russia", "Canada"]
+    #   chat.with_response_format(:object, properties: { age: { type: :integer } })
+    #   chat.ask('Provide sample customer age between 10 and 100.').content
+    #   # => { "age" => 42 }
+    #   chat.with_response_format(
+    #     :object,
+    #     properties: { hobbies: { type: :array, items: { type: :string, enum: %w[Soccer Golf Hockey] } } }
+    #   )
+    #   chat.ask('Provide at least 1 hobby.').content
+    #   # => { "hobbies" => ["Soccer"] }
+    #
+    # You can also provide the JSON schema you want directly to the method like this:
+    #   chat.with_response_format(type: :object, properties: { age: { type: :integer } })
+    #   # => { "age" => 31 }
+    #
+    # In this example the code is automatically switching to OpenAI's json_mode since no object
+    # properties are requested:
+    #   chat.with_response_format(:json) # Don't care about structure, just give me JSON
+    #   chat.ask('Provide a sample customer data object with name and email keys.').content
+    #   # => { "name" => "Tobias", "email" => "tobias@example.com" }
+    #   chat.ask('Provide a sample customer data object with name and email keys.').content
+    #   # => { "first_name" => "Michael", "email_address" => "michael@example.com" }
+    #
+    # @param type [Symbol] (optional) This can be anything supported by the API JSON schema types (integer, object, etc)
+    # @param schema [Hash] The schema for the response format. It can be a JSON schema or a simple hash.
+    # @return [Chat] (self)
+    def with_response_format(type = nil, **schema)
+      schema_hash = if type.is_a?(Symbol) || type.is_a?(String)
+                      { type: type == :json ? :object : type }
+                    elsif type.is_a?(Hash)
+                      type
+                    else
+                      {}
+                    end.merge(schema)
+
+      @response_schema = Schema.new(schema_hash)
+
+      self
+    end
+    alias with_structured_response with_response_format
+
     def ask(message = nil, with: {}, &)
       add_message role: :user, content: Content.new(message, with)
       complete(&)
@@ -86,17 +136,23 @@ module RubyLLM
 
     def complete(&) # rubocop:disable Metrics/MethodLength
       @on[:new_message]&.call
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model.id,
-        connection: @connection,
-        &
-      )
+      response = @provider.with_response_schema(@response_schema) do
+        @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model.id,
+          connection: @connection,
+          &
+        )
+      end
+
       @on[:end_message]&.call(response)
 
       add_message response
+
+      @response_schema = nil # Reset the response schema after completion of this chat thread
+
       if response.tool_call?
         handle_tool_calls(response, &)
       else

@@ -7,7 +7,9 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :content, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id
+    attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id, :content_schema
+
+    delegate :to_i, :to_a, :to_s, to: :content
 
     def initialize(options = {})
       @role = options[:role].to_sym
@@ -17,8 +19,20 @@ module RubyLLM
       @output_tokens = options[:output_tokens]
       @model_id = options[:model_id]
       @tool_call_id = options[:tool_call_id]
+      @content_schema = options[:content_schema]
 
       ensure_valid_role
+    end
+
+    def content
+      return @content unless @content_schema.present?
+      return @content if @content.nil?
+
+      if @content_schema[:type].to_s == :object.to_s && @content_schema[:properties].to_h.keys.none?
+        json_response
+      else
+        structured_content
+      end
     end
 
     def tool_call?
@@ -46,6 +60,18 @@ module RubyLLM
     end
 
     private
+
+    def json_response
+      return nil if @content.nil?
+
+      JSON.parse(@content)
+    end
+
+    def structured_content
+      return nil if @content.nil?
+
+      json_response['result']
+    end
 
     def normalize_content(content)
       case content

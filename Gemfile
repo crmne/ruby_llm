@@ -18,6 +18,7 @@ group :development do
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
   gem 'pry', '>= 0.14'
+  gem 'pry-byebug', '>= 3.11'
   gem 'rake', '>= 13.0'
   gem 'rdoc'
   gem 'reline'
