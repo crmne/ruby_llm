@@ -208,7 +208,14 @@ module RubyLLM
 
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, chat: self, &)
+      response = @provider.complete(
+        messages, 
+        tools: @tools, 
+        temperature: @temperature, 
+        model: @model.id, 
+        response_format: @response_format,
+        &
+      )
       @on[:end_message]&.call(response)
 
       add_message response
