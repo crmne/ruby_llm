@@ -16,8 +16,7 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, response_format: nil) # rubocop:disable Lint/UnusedMethodArgument
           @model = model # Store model for completion_url/stream_url
-          # Store the response_format for use in parse_completion_response
-          @response_format = response_format
+          # Don't store response_format as instance variable, it will be passed as parameter
           payload = {
             contents: format_messages(messages),
             generationConfig: {
@@ -97,9 +96,6 @@ module RubyLLM
         # @param response_format [Hash, Symbol, nil] Response format for structured output
         # @return [RubyLLM::Message] Processed message with content and metadata
         def parse_completion_response(response, response_format: nil)
-          # Use the stored response_format if the parameter is nil
-          response_format ||= @response_format
-
           data = response.body
           tool_calls = extract_tool_calls(data)
 

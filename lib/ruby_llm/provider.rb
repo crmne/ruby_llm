@@ -20,13 +20,10 @@ module RubyLLM
                                  stream: block_given?,
                                  response_format: response_format)
 
-        # Store response_format in instance variable for use in sync_response
-        @response_format = response_format
-
         if block_given?
           stream_response connection, payload, &
         else
-          sync_response connection, payload
+          sync_response connection, payload, response_format
         end
       end
 
@@ -82,9 +79,9 @@ module RubyLLM
         end
       end
 
-      def sync_response(connection, payload)
+      def sync_response(connection, payload, response_format = nil)
         response = connection.post completion_url, payload
-        parse_completion_response response, response_format: @response_format
+        parse_completion_response response, response_format: response_format
       end
     end
 
