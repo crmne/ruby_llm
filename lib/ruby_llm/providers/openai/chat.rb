@@ -85,7 +85,7 @@ module RubyLLM
           # Handle schema case (a Hash)
           raise ArgumentError, "Invalid response format: #{response_format}" unless response_format.is_a?(Hash)
 
-          # Support to provide full response format, must include name and schema
+          # Support to provide full response format, must include type: json_schema and json_schema: { name: 'Name', schema: ... }
           return response_format if response_format.key?(:schema)
 
           {
