@@ -87,12 +87,18 @@ module RubyLLM
     # @param assume_supported [Boolean] Whether to assume the model supports the requested format
     # @return [self] Returns self for method chaining
     # @raise [ArgumentError] If the response_format is not a Hash, valid JSON string, or :json symbol
-    # @raise [UnsupportedJSONModeError] If :json is specified, assume_supported is false, and the model doesn't support JSON mode
-    # @raise [UnsupportedStructuredOutputError] If a schema is specified, assume_supported is false, and the model doesn't support structured output
+    # @raise [UnsupportedJSONModeError] If :json is requested without model support
+    # @raise [UnsupportedStructuredOutputError] If schema output is requested without model support
     def with_response_format(response_format, assume_supported: false)
-      check_model_compatibility!(response_format == :json) unless assume_supported
+      unless assume_supported
+        if response_format == :json
+          ensure_json_mode_support
+        else
+          ensure_response_format_support
+        end
+      end
 
-      @response_format = response_format == :json ? :json : normalize_schema(response_format)
+      @response_format = response_format == :json ? :json : normalize_response_format(response_format)
 
       # Add appropriate guidance based on format
       if response_format == :json
@@ -106,11 +112,11 @@ module RubyLLM
 
     private
 
-    # Normalizes the schema to a standard format
+    # Normalizes the response format to a standard format
     # @param response_format [Hash, String] JSON schema as a Hash or JSON string
     # @return [Hash] Normalized schema as a Hash
     # @raise [ArgumentError] If the response_format is not a Hash or valid JSON string
-    def normalize_schema(response_format)
+    def normalize_response_format(response_format)
       schema_obj = response_format.is_a?(String) ? JSON.parse(response_format) : response_format
       schema_obj = schema_obj.json_schema if schema_obj.respond_to?(:json_schema)
 
@@ -119,26 +125,26 @@ module RubyLLM
       schema_obj
     end
 
-    # Checks if the model supports the requested format (JSON mode or schema)
-    # @param is_json_mode [Boolean] Whether JSON mode is being used
-    # @raise [UnsupportedJSONModeError] If JSON mode is requested but not supported
-    # @raise [UnsupportedStructuredOutputError] If structured output is requested but not supported
-    def check_model_compatibility!(is_json_mode)
+    # Checks if the model supports JSON mode
+    # @raise [UnsupportedJSONModeError] If JSON mode is not supported by the model
+    def ensure_json_mode_support
       provider_module = Provider.providers[@model.provider.to_sym]
+      return if provider_module.supports_json_mode?(@model.id)
 
-      if is_json_mode
-        return if provider_module.supports_json_mode?(@model.id)
+      raise UnsupportedJSONModeError,
+            "Model #{@model.id} doesn't support JSON mode. \n" \
+            'Use with_response_format(:json, assume_supported: true) to skip compatibility check.'
+    end
 
-        raise UnsupportedJSONModeError,
-              "Model #{@model.id} doesn't support JSON mode. \n" \
-              'Use with_response_format(:json, assume_supported: true) to skip compatibility check.'
-      else
-        return if provider_module.supports_structured_output?(@model.id)
+    # Checks if the model supports structured output with JSON schema
+    # @raise [UnsupportedStructuredOutputError] If structured output is not supported by the model
+    def ensure_response_format_support
+      provider_module = Provider.providers[@model.provider.to_sym]
+      return if provider_module.supports_structured_output?(@model.id)
 
-        raise UnsupportedStructuredOutputError,
-              "Model #{@model.id} doesn't support structured output. \n" \
-              'Use with_response_format(schema, assume_supported: true) to skip compatibility check.'
-      end
+      raise UnsupportedStructuredOutputError,
+            "Model #{@model.id} doesn't support structured output. \n" \
+            'Use with_response_format(schema, assume_supported: true) to skip compatibility check.'
     end
 
     # Adds system message guidance for schema-based JSON output
