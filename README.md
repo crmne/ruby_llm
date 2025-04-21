@@ -15,9 +15,12 @@ A delightful Ruby way to work with AI. No configuration madness, no complex call
   <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
 </div>
 
-<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a> <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a> <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a> <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+<a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
+<a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
+<a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
+<a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 
-🤺 Battle tested at [💬 Chat with Work](https://chatwithwork.com)
+🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
 
 ## The problem with AI libraries
 
@@ -33,7 +36,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🖼️ **Image generation** with DALL-E and other providers
 - 📊 **Embeddings** for vector search and semantic analysis
 - 🔧 **Tools** that let AI use your Ruby code
-- 📝 **Structured Output** with JSON schema validation
+- 📝 **Structured Output** with JSON schemas
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
 
@@ -81,28 +84,6 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
-
-# Get structured output with JSON schema validation
-schema = {
-  type: "object",
-  properties: {
-    name: { type: "string" },
-    age: { type: "integer" },
-    interests: {
-      type: "array",
-      items: { type: "string" }
-    }
-  },
-  required: ["name", "age", "interests"]
-}
-
-# Returns a validated Hash instead of plain text
-user_data = chat.with_response_format(schema).ask("Create a profile for a Ruby developer")
-
-# Access the structured data using hash keys
-puts "Name: #{user_data.content['name']}"              # => "Jane Smith"
-puts "Age: #{user_data.content['age']}"                # => 32
-puts "Interests: #{user_data.content['interests'].join(', ')}"  # => "Ruby, Rails, API design"
 ```
 
 ## Installation
@@ -234,7 +215,6 @@ Check out the guides at https://rubyllm.com for deeper dives into conversations 
 We welcome contributions to RubyLLM!
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to:
-
 - Run the test suite
 - Add new features
 - Update documentation
