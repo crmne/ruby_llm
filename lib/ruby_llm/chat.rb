@@ -113,6 +113,43 @@ module RubyLLM
       self
     end
 
+    def on_new_message(&block)
+      @on[:new_message] = block
+      self
+    end
+
+    def on_end_message(&block)
+      @on[:end_message] = block
+      self
+    end
+
+    def complete(&) # rubocop:disable Metrics/MethodLength
+      @on[:new_message]&.call
+      response = @provider.complete(
+        messages,
+        tools: @tools,
+        temperature: @temperature,
+        model: @model.id,
+        response_format: @response_format,
+        connection: @connection,
+        &
+      )
+      @on[:end_message]&.call(response)
+
+      add_message response
+      if response.tool_call?
+        handle_tool_calls(response, &)
+      else
+        response
+      end
+    end
+
+    def add_message(message_or_attributes)
+      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      messages << message
+      message
+    end
+
     private
 
     # Normalizes the response format to a standard format
@@ -193,47 +230,6 @@ module RubyLLM
         # No system message exists, create a new one
         with_instructions(guidance)
       end
-    end
-
-    def on_new_message(&block)
-      @on[:new_message] = block
-      self
-    end
-
-    def on_end_message(&block)
-      @on[:end_message] = block
-      self
-    end
-
-    def each(&)
-      messages.each(&)
-    end
-
-    def complete(&) # rubocop:disable Metrics/MethodLength
-      @on[:new_message]&.call
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model.id,
-        response_format: @response_format,
-        connection: @connection,
-        &
-      )
-      @on[:end_message]&.call(response)
-
-      add_message response
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
-      end
-    end
-
-    def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
-      messages << message
-      message
     end
 
     def handle_tool_calls(response, &)
