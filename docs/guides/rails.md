@@ -176,8 +176,12 @@ puts system_message.content # => "You are a concise Ruby expert."
 ```
 
 ## Working with Structured Output
+{: .d-inline-block }
 
-RubyLLM 1.3.0+ supports structured output with JSON schema validation. This works seamlessly with Rails integration, allowing you to get and persist structured data from AI models.
+New (v1.3.0)
+{: .label .label-green }
+
+RubyLLM supports structured output with JSON schema validation. This works seamlessly with Rails integration, allowing you to get and persist structured data from AI models. See the [Structured Output guide]({% link guides/structured-output.md %}) for more details on schemas and compatibility.
 
 ### Database Considerations
 
@@ -348,4 +352,5 @@ Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. 
 *   [Using Tools]({% link guides/tools.md %})
 *   [Streaming Responses]({% link guides/streaming.md %})
 *   [Working with Models]({% link guides/models.md %})
+*   [Structured Output]({% link guides/structured-output.md %})
 *   [Error Handling]({% link guides/error-handling.md %})
