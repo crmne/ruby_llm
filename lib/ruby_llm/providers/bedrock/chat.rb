@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+require_relative '../structured_output_parser'
+
 module RubyLLM
   module Providers
     module Bedrock
       # Chat methods for the AWS Bedrock API implementation
       module Chat
+        include RubyLLM::Providers::StructuredOutputParser
+        
         private
 
         def completion_url
@@ -77,12 +81,19 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response, response_format: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_completion_response(response, response_format: nil)
           data = response.body
           content_blocks = data['content'] || []
 
           text_content = extract_text_content(content_blocks)
           tool_use = find_tool_use(content_blocks)
+          
+          # Parse JSON content if schema provided
+          # Even though Bedrock doesn't officially support structured output,
+          # we can still try to parse JSON responses when requested
+          if response_format && !text_content.empty?
+            text_content = parse_structured_output(text_content)
+          end
 
           build_message(data, text_content, tool_use)
         end
