@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Accept-Encoding:
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:38 GMT
+      - Fri, 18 Apr 2025 18:38:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,7 +33,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '492'
+      - '2908'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -56,12 +56,6 @@ http_interactions:
           "object": "list",
           "data": [
             {
-              "id": "gpt-4o-realtime-preview-2024-12-17",
-              "object": "model",
-              "created": 1733945430,
-              "owned_by": "system"
-            },
-            {
               "id": "gpt-4o-audio-preview-2024-12-17",
               "object": "model",
               "created": 1734034239,
@@ -74,9 +68,21 @@ http_interactions:
               "owned_by": "system"
             },
             {
+              "id": "text-embedding-3-large",
+              "object": "model",
+              "created": 1705953180,
+              "owned_by": "system"
+            },
+            {
               "id": "dall-e-2",
               "object": "model",
               "created": 1698798177,
+              "owned_by": "system"
+            },
+            {
+              "id": "o4-mini-2025-04-16",
+              "object": "model",
+              "created": 1744133506,
               "owned_by": "system"
             },
             {
@@ -86,33 +92,39 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+              "id": "o4-mini",
               "object": "model",
-              "created": 1734112601,
+              "created": 1744225351,
               "owned_by": "system"
             },
             {
-              "id": "gpt-4o-mini-realtime-preview",
+              "id": "o3-mini",
               "object": "model",
-              "created": 1734387380,
+              "created": 1737146383,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-nano",
+              "object": "model",
+              "created": 1744321707,
+              "owned_by": "system"
+            },
+            {
+              "id": "o3-mini-2025-01-31",
+              "object": "model",
+              "created": 1738010200,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-nano-2025-04-14",
+              "object": "model",
+              "created": 1744321025,
               "owned_by": "system"
             },
             {
               "id": "gpt-4o-realtime-preview-2024-10-01",
               "object": "model",
               "created": 1727131766,
-              "owned_by": "system"
-            },
-            {
-              "id": "gpt-4o-transcribe",
-              "object": "model",
-              "created": 1742068463,
-              "owned_by": "system"
-            },
-            {
-              "id": "gpt-4o-mini-transcribe",
-              "object": "model",
-              "created": 1742068596,
               "owned_by": "system"
             },
             {
@@ -128,21 +140,9 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "gpt-4o-mini-tts",
-              "object": "model",
-              "created": 1742403959,
-              "owned_by": "system"
-            },
-            {
               "id": "tts-1-hd-1106",
               "object": "model",
               "created": 1699053533,
-              "owned_by": "system"
-            },
-            {
-              "id": "text-embedding-3-large",
-              "object": "model",
-              "created": 1705953180,
               "owned_by": "system"
             },
             {
@@ -158,9 +158,21 @@ http_interactions:
               "owned_by": "openai-internal"
             },
             {
-              "id": "omni-moderation-latest",
+              "id": "o1-2024-12-17",
               "object": "model",
-              "created": 1731689265,
+              "created": 1734326976,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1-pro-2025-03-19",
+              "object": "model",
+              "created": 1742251504,
+              "owned_by": "system"
+            },
+            {
+              "id": "o1",
+              "object": "model",
+              "created": 1734375816,
               "owned_by": "system"
             },
             {
@@ -176,6 +188,12 @@ http_interactions:
               "owned_by": "system"
             },
             {
+              "id": "o1-pro",
+              "object": "model",
+              "created": 1742251791,
+              "owned_by": "system"
+            },
+            {
               "id": "gpt-4o-audio-preview",
               "object": "model",
               "created": 1727460443,
@@ -185,6 +203,24 @@ http_interactions:
               "id": "o1-preview-2024-09-12",
               "object": "model",
               "created": 1725648865,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview",
+              "object": "model",
+              "created": 1734387380,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-mini",
+              "object": "model",
+              "created": 1744318173,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+              "object": "model",
+              "created": 1734112601,
               "owned_by": "system"
             },
             {
@@ -200,9 +236,21 @@ http_interactions:
               "owned_by": "system"
             },
             {
+              "id": "gpt-4.1-mini-2025-04-14",
+              "object": "model",
+              "created": 1744317547,
+              "owned_by": "system"
+            },
+            {
               "id": "tts-1-1106",
               "object": "model",
               "created": 1699053241,
+              "owned_by": "system"
+            },
+            {
+              "id": "chatgpt-4o-latest",
+              "object": "model",
+              "created": 1723515131,
               "owned_by": "system"
             },
             {
@@ -218,15 +266,21 @@ http_interactions:
               "owned_by": "system"
             },
             {
+              "id": "gpt-4o-search-preview",
+              "object": "model",
+              "created": 1741388720,
+              "owned_by": "system"
+            },
+            {
               "id": "gpt-4-turbo",
               "object": "model",
               "created": 1712361441,
               "owned_by": "system"
             },
             {
-              "id": "gpt-4-0125-preview",
+              "id": "gpt-4o-realtime-preview-2024-12-17",
               "object": "model",
-              "created": 1706037612,
+              "created": 1733945430,
               "owned_by": "system"
             },
             {
@@ -248,15 +302,15 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "chatgpt-4o-latest",
-              "object": "model",
-              "created": 1723515131,
-              "owned_by": "system"
-            },
-            {
               "id": "gpt-4o-mini-search-preview-2025-03-11",
               "object": "model",
               "created": 1741390858,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-0125-preview",
+              "object": "model",
+              "created": 1706037612,
               "owned_by": "system"
             },
             {
@@ -272,22 +326,10 @@ http_interactions:
               "owned_by": "openai-internal"
             },
             {
-              "id": "gpt-3.5-turbo-0125",
-              "object": "model",
-              "created": 1706048358,
-              "owned_by": "system"
-            },
-            {
               "id": "gpt-4o-2024-05-13",
               "object": "model",
               "created": 1715368132,
               "owned_by": "system"
-            },
-            {
-              "id": "gpt-3.5-turbo-16k",
-              "object": "model",
-              "created": 1683758102,
-              "owned_by": "openai-internal"
             },
             {
               "id": "gpt-4-turbo-2024-04-09",
@@ -296,10 +338,10 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "gpt-4-1106-preview",
+              "id": "gpt-3.5-turbo-16k",
               "object": "model",
-              "created": 1698957206,
-              "owned_by": "system"
+              "created": 1683758102,
+              "owned_by": "openai-internal"
             },
             {
               "id": "o1-preview",
@@ -312,12 +354,6 @@ http_interactions:
               "object": "model",
               "created": 1686588896,
               "owned_by": "openai"
-            },
-            {
-              "id": "gpt-4o-search-preview",
-              "object": "model",
-              "created": 1741388720,
-              "owned_by": "system"
             },
             {
               "id": "gpt-4.5-preview",
@@ -350,33 +386,15 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "o1-2024-12-17",
-              "object": "model",
-              "created": 1734326976,
-              "owned_by": "system"
-            },
-            {
-              "id": "o1",
-              "object": "model",
-              "created": 1734375816,
-              "owned_by": "system"
-            },
-            {
-              "id": "o1-pro",
-              "object": "model",
-              "created": 1742251791,
-              "owned_by": "system"
-            },
-            {
               "id": "text-embedding-3-small",
               "object": "model",
               "created": 1705948997,
               "owned_by": "system"
             },
             {
-              "id": "o1-pro-2025-03-19",
+              "id": "gpt-4o-mini-tts",
               "object": "model",
-              "created": 1742251504,
+              "created": 1742403959,
               "owned_by": "system"
             },
             {
@@ -392,27 +410,39 @@ http_interactions:
               "owned_by": "system"
             },
             {
-              "id": "o3-mini",
-              "object": "model",
-              "created": 1737146383,
-              "owned_by": "system"
-            },
-            {
               "id": "gpt-4o-2024-08-06",
               "object": "model",
               "created": 1722814719,
               "owned_by": "system"
             },
             {
-              "id": "o3-mini-2025-01-31",
+              "id": "gpt-4.1",
               "object": "model",
-              "created": 1738010200,
+              "created": 1744316542,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-transcribe",
+              "object": "model",
+              "created": 1742068463,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4.1-2025-04-14",
+              "object": "model",
+              "created": 1744315746,
               "owned_by": "system"
             },
             {
               "id": "gpt-4o-mini-2024-07-18",
               "object": "model",
               "created": 1721172717,
+              "owned_by": "system"
+            },
+            {
+              "id": "gpt-4o-mini-transcribe",
+              "object": "model",
+              "created": 1742068596,
               "owned_by": "system"
             },
             {
@@ -428,14 +458,32 @@ http_interactions:
               "owned_by": "system"
             },
             {
+              "id": "gpt-3.5-turbo-0125",
+              "object": "model",
+              "created": 1706048358,
+              "owned_by": "system"
+            },
+            {
               "id": "o1-mini-2024-09-12",
               "object": "model",
               "created": 1725648979,
               "owned_by": "system"
+            },
+            {
+              "id": "gpt-4-1106-preview",
+              "object": "model",
+              "created": 1698957206,
+              "owned_by": "system"
+            },
+            {
+              "id": "omni-moderation-latest",
+              "object": "model",
+              "created": 1731689265,
+              "owned_by": "system"
             }
           ]
         }
-  recorded_at: Wed, 02 Apr 2025 17:53:38 GMT
+  recorded_at: Fri, 18 Apr 2025 18:38:46 GMT
 - request:
     method: get
     uri: https://api.anthropic.com/v1/models
@@ -444,7 +492,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -459,7 +507,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:39 GMT
+      - Fri, 18 Apr 2025 18:38:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -492,7 +540,7 @@ http_interactions:
         3 Sonnet","created_at":"2024-02-29T00:00:00Z"},{"type":"model","id":"claude-2.1","display_name":"Claude
         2.1","created_at":"2023-11-21T00:00:00Z"},{"type":"model","id":"claude-2.0","display_name":"Claude
         2.0","created_at":"2023-07-11T00:00:00Z"}],"has_more":false,"first_id":"claude-3-7-sonnet-20250219","last_id":"claude-2.0"}'
-  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+  recorded_at: Fri, 18 Apr 2025 18:38:46 GMT
 - request:
     method: get
     uri: https://generativelanguage.googleapis.com/v1beta/models
@@ -501,7 +549,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Accept-Encoding:
@@ -520,7 +568,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 02 Apr 2025 17:53:39 GMT
+      - Fri, 18 Apr 2025 18:38:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -530,7 +578,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=86
+      - gfet4t7; dur=85
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -854,7 +902,42 @@ http_interactions:
               "outputTokenLimit": 65536,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.5-pro-preview-03-25",
+              "version": "2.5-preview-03-25",
+              "displayName": "Gemini 2.5 Pro Preview 03-25",
+              "description": "Gemini 2.5 Pro Preview 03-25",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemini-2.5-flash-preview-04-17",
+              "version": "2.5-preview-04-17",
+              "displayName": "Gemini 2.5 Flash Preview 04-17",
+              "description": "Preview release (April 17th, 2025) of Gemini 2.5 Flash",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 65536,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens",
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -887,7 +970,8 @@ http_interactions:
               "outputTokenLimit": 8192,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
+                "countTokens",
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -903,24 +987,8 @@ http_interactions:
               "outputTokenLimit": 8192,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
-              ],
-              "temperature": 1,
-              "topP": 0.95,
-              "topK": 40,
-              "maxTemperature": 2
-            },
-            {
-              "name": "models/gemini-2.0-flash-exp-image-generation",
-              "version": "2.0",
-              "displayName": "Gemini 2.0 Flash (Image Generation) Experimental",
-              "description": "Gemini 2.0 Flash (Image Generation) Experimental",
-              "inputTokenLimit": 1048576,
-              "outputTokenLimit": 8192,
-              "supportedGenerationMethods": [
-                "generateContent",
                 "countTokens",
-                "bidiGenerateContent"
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -1000,7 +1068,8 @@ http_interactions:
               "outputTokenLimit": 65536,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
+                "countTokens",
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -1016,7 +1085,8 @@ http_interactions:
               "outputTokenLimit": 65536,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
+                "countTokens",
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -1032,7 +1102,8 @@ http_interactions:
               "outputTokenLimit": 65536,
               "supportedGenerationMethods": [
                 "generateContent",
-                "countTokens"
+                "countTokens",
+                "createCachedContent"
               ],
               "temperature": 1,
               "topP": 0.95,
@@ -1102,6 +1173,36 @@ http_interactions:
               "topP": 0.95,
               "topK": 64,
               "maxTemperature": 2
+            },
+            {
+              "name": "models/learnlm-2.0-flash-experimental",
+              "version": "2.0",
+              "displayName": "LearnLM 2.0 Flash Experimental",
+              "description": "LearnLM 2.0 Flash Experimental",
+              "inputTokenLimit": 1048576,
+              "outputTokenLimit": 32768,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
+            },
+            {
+              "name": "models/gemma-3-1b-it",
+              "version": "001",
+              "displayName": "Gemma 3 1B",
+              "inputTokenLimit": 32768,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "generateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64
             },
             {
               "name": "models/gemma-3-4b-it",
@@ -1175,7 +1276,8 @@ http_interactions:
               "inputTokenLimit": 8192,
               "outputTokenLimit": 1,
               "supportedGenerationMethods": [
-                "embedContent"
+                "embedContent",
+                "countTextTokens"
               ]
             },
             {
@@ -1186,7 +1288,8 @@ http_interactions:
               "inputTokenLimit": 8192,
               "outputTokenLimit": 1,
               "supportedGenerationMethods": [
-                "embedContent"
+                "embedContent",
+                "countTextTokens"
               ]
             },
             {
@@ -1213,10 +1316,37 @@ http_interactions:
               "supportedGenerationMethods": [
                 "predict"
               ]
+            },
+            {
+              "name": "models/veo-2.0-generate-001",
+              "version": "2.0",
+              "displayName": "Veo 2",
+              "description": "Vertex served Veo 2 model.",
+              "inputTokenLimit": 480,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "predictLongRunning"
+              ]
+            },
+            {
+              "name": "models/gemini-2.0-flash-live-001",
+              "version": "001",
+              "displayName": "Gemini 2.0 Flash 001",
+              "description": "Gemini 2.0 Flash 001",
+              "inputTokenLimit": 131072,
+              "outputTokenLimit": 8192,
+              "supportedGenerationMethods": [
+                "bidiGenerateContent",
+                "countTokens"
+              ],
+              "temperature": 1,
+              "topP": 0.95,
+              "topK": 64,
+              "maxTemperature": 2
             }
           ]
         }
-  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+  recorded_at: Fri, 18 Apr 2025 18:38:47 GMT
 - request:
     method: get
     uri: https://api.deepseek.com/models
@@ -1225,7 +1355,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Accept-Encoding:
@@ -1238,7 +1368,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:39 GMT
+      - Fri, 18 Apr 2025 18:38:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -1250,7 +1380,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - eb9c177a0c3141beac66e5213c60ac6a
+      - 48c44d5c0502f37b6d0564945c35ffe6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -1266,7 +1396,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"object":"list","data":[{"id":"deepseek-chat","object":"model","owned_by":"deepseek"},{"id":"deepseek-reasoner","object":"model","owned_by":"deepseek"}]}'
-  recorded_at: Wed, 02 Apr 2025 17:53:39 GMT
+  recorded_at: Fri, 18 Apr 2025 18:38:47 GMT
 - request:
     method: get
     uri: https://bedrock.<AWS_REGION>.amazonaws.com/foundation-models
@@ -1275,16 +1405,16 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Host:
       - bedrock.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250402T175339Z
+      - 20250418T183847Z
       X-Amz-Content-Sha256:
       - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250402/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5f69d324c05740f272e7c07046b973076335bd284cd150f03901ba9b30a62f4e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250418/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=21a90f41948a8b435159848eb9f4dc6ce9d76a2bb82c57f37e99e9761b9b5ac9
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -1295,15 +1425,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:53:40 GMT
+      - Fri, 18 Apr 2025 18:38:47 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '45253'
+      - '45785'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 62d4de6c-de54-44b7-b02e-51731449128a
+      - dde30f57-ff02-48c0-82d0-3251f7e9ee75
     body:
       encoding: UTF-8
       string: '{"modelSummaries":[{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/amazon.titan-tg1-large","modelId":"amazon.titan-tg1-large","modelLifecycle":{"status":"ACTIVE"},"modelName":"Titan
@@ -1384,7 +1514,8 @@ http_interactions:
         7B Instruct","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mixtral-8x7b-instruct-v0:1","modelId":"mistral.mixtral-8x7b-instruct-v0:1","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mixtral
         8x7B Instruct","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-large-2402-v1:0","modelId":"mistral.mistral-large-2402-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
         Large (24.02)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.mistral-large-2407-v1:0","modelId":"mistral.mistral-large-2407-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Mistral
-        Large (24.07)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/luma.ray-v2:0","modelId":"luma.ray-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Ray
+        Large (24.07)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":true,"inferenceTypesSupported":["INFERENCE_PROFILE"],"inputModalities":["TEXT","IMAGE"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/mistral.pixtral-large-2502-v1:0","modelId":"mistral.pixtral-large-2502-v1:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Pixtral
+        Large (25.02)","outputModalities":["TEXT"],"providerName":"Mistral AI","responseStreamingSupported":true},{"customizationsSupported":[],"explicitPromptCaching":{"isSupported":false},"guardrailsSupported":false,"inferenceTypesSupported":["ON_DEMAND"],"inputModalities":["TEXT"],"intelligentPromptRouting":{"isSupported":false},"modelArn":"arn:aws:bedrock:<AWS_REGION>::foundation-model/luma.ray-v2:0","modelId":"luma.ray-v2:0","modelLifecycle":{"status":"ACTIVE"},"modelName":"Ray
         v2","outputModalities":["VIDEO"],"providerName":"Luma AI","responseStreamingSupported":false}]}'
-  recorded_at: Wed, 02 Apr 2025 17:53:40 GMT
+  recorded_at: Fri, 18 Apr 2025 18:38:48 GMT
 recorded_with: VCR 6.3.1

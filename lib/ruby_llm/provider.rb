@@ -7,15 +7,11 @@ module RubyLLM
   module Provider
     # Common functionality for all LLM providers. Implements the core provider
     # interface so specific providers only need to implement a few key methods.
-    module Methods # rubocop:disable Metrics/ModuleLength
+    module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
-        normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
-                                   capabilities.normalize_temperature(temperature, model)
-                                 else
-                                   temperature
-                                 end
+      def complete(messages, tools:, temperature:, model:, connection:, &) # rubocop:disable Metrics/MethodLength
+        normalized_temperature = maybe_normalize_temperature(temperature, model)
 
         payload = render_payload(messages,
                                  tools: tools,
@@ -24,112 +20,53 @@ module RubyLLM
                                  stream: block_given?)
 
         if block_given?
-          stream_response payload, &block
+          stream_response connection, payload, &
         else
-          sync_response payload
+          sync_response connection, payload
         end
       end
 
-      def list_models
-        response = connection.get(models_url) do |req|
-          req.headers.merge! headers
-        end
-
+      def list_models(connection:)
+        response = connection.get models_url
         parse_list_models_response response, slug, capabilities
       end
 
-      def embed(text, model:)
-        payload = render_embedding_payload text, model: model
-        response = post embedding_url, payload
+      def embed(text, model:, connection:)
+        payload = render_embedding_payload(text, model:)
+        response = connection.post embedding_url, payload
         parse_embedding_response response
       end
 
-      def paint(prompt, model:, size:)
+      def paint(prompt, model:, size:, connection:)
         payload = render_image_payload(prompt, model:, size:)
-
-        response = post(images_url, payload)
-        parse_image_response(response)
+        response = connection.post images_url, payload
+        parse_image_response response
       end
 
-      def configured?
-        missing_configs.empty?
+      def configured?(config)
+        missing_configs(config).empty?
       end
 
       private
 
-      def missing_configs
+      def maybe_normalize_temperature(temperature, model)
+        if capabilities.respond_to?(:normalize_temperature)
+          capabilities.normalize_temperature(temperature, model)
+        else
+          temperature
+        end
+      end
+
+      def missing_configs(config)
         configuration_requirements.select do |key|
-          value = RubyLLM.config.send(key)
+          value = config.send(key)
           value.nil? || value.empty?
         end
       end
 
-      def ensure_configured!
-        return if configured?
-
-        config_block = <<~RUBY
-          RubyLLM.configure do |config|
-            #{missing_configs.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
-          end
-        RUBY
-
-        raise ConfigurationError,
-              "#{slug} provider is not configured. Add this to your initialization:\n\n#{config_block}"
-      end
-
-      def sync_response(payload)
-        response = post completion_url, payload
+      def sync_response(connection, payload)
+        response = connection.post completion_url, payload
         parse_completion_response response
-      end
-
-      def post(url, payload)
-        connection.post url, payload do |req|
-          req.headers.merge! headers
-          yield req if block_given?
-        end
-      end
-
-      def connection # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
-        ensure_configured!
-
-        @connection ||= Faraday.new(api_base) do |f| # rubocop:disable Metrics/BlockLength
-          f.options.timeout = RubyLLM.config.request_timeout
-
-          f.response :logger,
-                     RubyLLM.logger,
-                     bodies: true,
-                     response: true,
-                     errors: true,
-                     headers: false,
-                     log_level: :debug do |logger|
-            logger.filter(%r{"[A-Za-z0-9+/=]{100,}"}, 'data":"[BASE64 DATA]"')
-            logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
-          end
-
-          f.request :retry, {
-            max: RubyLLM.config.max_retries,
-            interval: RubyLLM.config.retry_interval,
-            interval_randomness: RubyLLM.config.retry_interval_randomness,
-            backoff_factor: RubyLLM.config.retry_backoff_factor,
-            exceptions: [
-              Errno::ETIMEDOUT,
-              Timeout::Error,
-              Faraday::TimeoutError,
-              Faraday::ConnectionFailed,
-              Faraday::RetriableResponse,
-              RubyLLM::RateLimitError,
-              RubyLLM::ServerError,
-              RubyLLM::ServiceUnavailableError,
-              RubyLLM::OverloadedError
-            ],
-            retry_statuses: [429, 500, 502, 503, 504, 529]
-          }
-
-          f.request :json
-          f.response :json
-          f.adapter Faraday.default_adapter
-          f.use :llm_errors, provider: self
-        end
       end
     end
 
@@ -167,6 +104,10 @@ module RubyLLM
       nil
     end
 
+    def connection(config)
+      @connection ||= Connection.new(self, config)
+    end
+
     class << self
       def extended(base)
         base.extend(Methods)
@@ -186,8 +127,8 @@ module RubyLLM
         @providers ||= {}
       end
 
-      def configured_providers
-        providers.select { |_name, provider| provider.configured? }.values
+      def configured_providers(config)
+        providers.select { |_name, provider| provider.configured?(config) }.values
       end
     end
   end

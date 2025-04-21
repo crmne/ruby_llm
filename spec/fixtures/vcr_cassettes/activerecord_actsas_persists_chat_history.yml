@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
         your favorite Ruby feature?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:47:14 GMT
+      - Fri, 18 Apr 2025 18:29:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,19 +36,19 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4129'
+      - '930'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '500'
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9999'
+      - '499'
       X-Ratelimit-Remaining-Tokens:
       - '199988'
       X-Ratelimit-Reset-Requests:
-      - 8.64s
+      - 120ms
       X-Ratelimit-Reset-Tokens:
       - 3ms
       X-Request-Id:
@@ -72,16 +72,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHwT8M9ZNb6UxGjuXkSUUO2Pq4jFS",
+          "id": "chatcmpl-BNkl0q0vRT2aA9lk8Hi91Nu70NjEu",
           "object": "chat.completion",
-          "created": 1743616030,
-          "model": "gpt-4o-mini-2024-07-18",
+          "created": 1745000978,
+          "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "One of my favorite features of Ruby is its emphasis on readability and expressiveness, particularly through its elegant syntax and the principle of \"convention over configuration.\" This makes it easy for developers to write clean and understandable code. \n\nAdditionally, Ruby's support for metaprogramming allows developers to write code that can modify itself at runtime, leading to highly flexible and dynamic applications. The use of blocks and iterators also enhances the language's expressiveness, enabling concise and powerful ways to handle collections of data.\n\nOverall, Ruby's focus on simplicity and productivity is a standout feature that resonates well with many developers.",
+                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. These features make writing concise and readable code straightforward. For example, methods like `each`, `map`, and `select` allow you to perform complex data transformations with minimal syntax:\n\n```ruby\nnumbers = [1, 2, 3, 4, 5]\nsquares = numbers.map { |n| n * n }\nputs squares.inspect  # Output: [1, 4, 9, 16, 25]\n```\n\nThis blend of simplicity and power makes Ruby particularly enjoyable to work with!",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,8 +91,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 122,
-            "total_tokens": 135,
+            "completion_tokens": 130,
+            "total_tokens": 143,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -105,7 +105,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_b376dfbbd5"
+          "system_fingerprint": "fp_20621fa8f3"
         }
-  recorded_at: Wed, 02 Apr 2025 17:47:14 GMT
+  recorded_at: Fri, 18 Apr 2025 18:29:39 GMT
 recorded_with: VCR 6.3.1

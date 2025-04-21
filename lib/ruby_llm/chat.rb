@@ -13,13 +13,15 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false) # rubocop:disable Metrics/MethodLength
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil) # rubocop:disable Metrics/MethodLength
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
 
-      model_id = model || RubyLLM.config.default_model
+      @config = context&.config || RubyLLM.config
+      model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
+      @connection = context ? context.connection_for(@provider) : @provider.connection(@config)
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -92,9 +94,16 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&)
+    def complete(&) # rubocop:disable Metrics/MethodLength
       @on[:new_message]&.call
-      response = @provider.complete(messages, tools: @tools, temperature: @temperature, model: @model.id, &)
+      response = @provider.complete(
+        messages,
+        tools: @tools,
+        temperature: @temperature,
+        model: @model.id,
+        connection: @connection,
+        &
+      )
       @on[:end_message]&.call(response)
 
       add_message response

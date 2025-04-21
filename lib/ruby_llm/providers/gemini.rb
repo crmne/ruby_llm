@@ -15,13 +15,13 @@ module RubyLLM
 
       module_function
 
-      def api_base
+      def api_base(_config)
         'https://generativelanguage.googleapis.com/v1beta'
       end
 
-      def headers
+      def headers(config)
         {
-          'x-goog-api-key' => RubyLLM.config.gemini_api_key
+          'x-goog-api-key' => config.gemini_api_key
         }
       end
 

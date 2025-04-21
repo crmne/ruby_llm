@@ -142,9 +142,6 @@ model_bedrock = RubyLLM.models.find('claude-3-5-sonnet', :bedrock)
 ## Connecting to Custom Endpoints & Using Unlisted Models
 {: .d-inline-block }
 
-New (v1.2.0)
-{: .label .label-green }
-
 Sometimes you need to interact with models or endpoints not covered by the standard registry, such as:
 
 *   Azure OpenAI Service endpoints.
@@ -186,11 +183,11 @@ chat = RubyLLM.chat(
 response = chat.ask("Internal knowledge query...")
 puts response.content
 
-# Example: Using a hypothetical new model
-chat_new = RubyLLM.chat(
+# You can also use it in .with_model
+chat.with_model(
   model: 'gpt-5-alpha',
   provider: :openai,                # MUST specify provider
-  assume_model_exists: true
+  assume_exists: true
 )
 ```
 

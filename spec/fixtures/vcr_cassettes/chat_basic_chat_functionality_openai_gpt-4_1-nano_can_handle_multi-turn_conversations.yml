@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 15 Apr 2025 12:12:06 GMT
+      - Fri, 18 Apr 2025 18:33:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '240'
+      - '360'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -46,7 +46,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199991'
+      - '199992'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -72,16 +72,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMZR0fOSWQGr62JeYVdI7PuRGBBWf",
+          "id": "chatcmpl-BNkonwtPouGYTQcjjQv30Jg8kpJ90",
           "object": "chat.completion",
-          "created": 1744719126,
+          "created": 1745001213,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby's creator is Yukihiro Matsumoto, commonly known as \"Matz.\" He designed the Ruby programming language and released its first version in 1995.",
+                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto.",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,8 +91,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 35,
-            "total_tokens": 48,
+            "completion_tokens": 16,
+            "total_tokens": 29,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -107,17 +107,15 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_c1fb89028d"
         }
-  recorded_at: Tue, 15 Apr 2025 12:12:06 GMT
+  recorded_at: Fri, 18 Apr 2025 18:33:34 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Who was
-        Ruby''s creator?"},{"role":"assistant","content":"Ruby''s creator is Yukihiro
-        Matsumoto, commonly known as \"Matz.\" He designed the Ruby programming language
-        and released its first version in 1995."},{"role":"user","content":"What year
-        did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by Yukihiro
+        \"Matz\" Matsumoto."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.0
@@ -135,7 +133,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 15 Apr 2025 12:12:07 GMT
+      - Fri, 18 Apr 2025 18:33:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -147,7 +145,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '443'
+      - '410'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -157,11 +155,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199946'
+      - '199971'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 16ms
+      - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -183,16 +181,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BMZR0eIrqlykT66cPKgPSCuxZQGOH",
+          "id": "chatcmpl-BNkooGg6MyJ7eq4xgr1e1F9OS3EdS",
           "object": "chat.completion",
-          "created": 1744719126,
+          "created": 1745001214,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Yukihiro Matsumoto (Matz) created Ruby in 1995.",
+                "content": "Yukihiro \"Matz\" Matsumoto began developing Ruby in 1993, and it was officially released to the public in 1995.",
                 "refusal": null,
                 "annotations": []
               },
@@ -201,9 +199,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 62,
-            "completion_tokens": 19,
-            "total_tokens": 81,
+            "prompt_tokens": 43,
+            "completion_tokens": 33,
+            "total_tokens": 76,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -218,5 +216,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_c1fb89028d"
         }
-  recorded_at: Tue, 15 Apr 2025 12:12:07 GMT
+  recorded_at: Fri, 18 Apr 2025 18:33:34 GMT
 recorded_with: VCR 6.3.1
