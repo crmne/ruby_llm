@@ -11,7 +11,7 @@ module RubyLLM
           "model/#{@model_id}/invoke"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, response_format: nil) # rubocop:disable Lint/UnusedMethodArgument
           # Hold model_id in instance variable for use in completion_url and stream_url
           @model_id = model
 
@@ -77,7 +77,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response, chat: nil) # rubocop:disable Lint/UnusedMethodArgument
+        def parse_completion_response(response, response_format: nil) # rubocop:disable Lint/UnusedMethodArgument
           data = response.body
           content_blocks = data['content'] || []
 

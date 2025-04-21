@@ -8,13 +8,14 @@ module RubyLLM
       # Chat methods of the Anthropic API integration
       module Chat
         include RubyLLM::Providers::StructuredOutputParser
+
         private
 
         def completion_url
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, response_format: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
@@ -53,7 +54,7 @@ module RubyLLM
           payload[:system] = system_content unless system_content.empty?
         end
 
-        def parse_completion_response(response, chat: nil)
+        def parse_completion_response(response, response_format: nil)
           data = response.body
           content_blocks = data['content'] || []
 
@@ -62,7 +63,7 @@ module RubyLLM
 
           # Parse JSON content if schema was provided
           parsed_content = text_content
-          if chat&.response_format && text_content
+          if response_format && text_content
             parsed_content = parse_structured_output(text_content, raise_on_error: false)
           end
 

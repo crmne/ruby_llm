@@ -10,7 +10,7 @@ module RubyLLM
     module Methods # rubocop:disable Metrics/ModuleLength
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, response_format: nil, &block) # rubocop:disable Metrics/MethodLength
         normalized_temperature = if capabilities.respond_to?(:normalize_temperature)
                                    capabilities.normalize_temperature(temperature, model)
                                  else
@@ -22,10 +22,10 @@ module RubyLLM
                                  temperature: normalized_temperature,
                                  model: model,
                                  stream: block_given?,
-                                 chat: chat)
+                                 response_format: response_format)
 
-        # Store chat in instance variable for use in sync_response
-        @current_chat = chat
+        # Store response_format in instance variable for use in sync_response
+        @response_format = response_format
 
         if block_given?
           stream_response payload, &block
@@ -97,7 +97,7 @@ module RubyLLM
 
       def sync_response(payload)
         response = post completion_url, payload
-        parse_completion_response response, chat: @current_chat
+        parse_completion_response response, response_format: @response_format
       end
 
       def post(url, payload)

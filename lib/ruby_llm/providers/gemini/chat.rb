@@ -14,11 +14,11 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def complete(messages, tools:, temperature:, model:, chat: nil, &block) # rubocop:disable Metrics/MethodLength
+        def complete(messages, tools:, temperature:, model:, response_format: nil, &block) # rubocop:disable Metrics/MethodLength
           @model = model
 
-          # Store the chat for use in parse_completion_response
-          @current_chat = chat
+          # Store the response_format for use in parse_completion_response
+          @response_format = response_format
 
           payload = {
             contents: format_messages(messages),
@@ -105,11 +105,11 @@ module RubyLLM
 
         # Parses the response from a completion API call
         # @param response [Faraday::Response] The API response
-        # @param chat [RubyLLM::Chat, nil] Chat instance for context
+        # @param response_format [Hash, Symbol, nil] Response format for structured output
         # @return [RubyLLM::Message] Processed message with content and metadata
-        def parse_completion_response(response, chat: nil)
-          # Use the stored chat instance if the parameter is nil
-          chat ||= @current_chat
+        def parse_completion_response(response, response_format: nil)
+          # Use the stored response_format if the parameter is nil
+          response_format ||= @response_format
 
           data = response.body
           tool_calls = extract_tool_calls(data)
@@ -118,7 +118,7 @@ module RubyLLM
           content = extract_content(data)
 
           # Parse JSON content if schema provided
-          content = parse_structured_output(content, raise_on_error: true) if chat&.response_format && !content.empty?
+          content = parse_structured_output(content, raise_on_error: true) if response_format && !content.empty?
 
           Message.new(
             role: :assistant,

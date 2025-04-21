@@ -8,13 +8,14 @@ module RubyLLM
       # Chat methods of the OpenAI API integration
       module Chat
         include RubyLLM::Providers::StructuredOutputParser
+
         module_function
 
         def completion_url
           'chat/completions'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, chat: nil) # rubocop:disable Metrics/MethodLength,Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, response_format: nil) # rubocop:disable Metrics/MethodLength,Metrics/ParameterLists
           {
             model: model,
             messages: format_messages(messages),
@@ -28,11 +29,11 @@ module RubyLLM
             payload[:stream_options] = { include_usage: true } if stream
 
             # Add structured output schema if provided
-            payload[:response_format] = format_response_format(chat.response_format) if chat&.response_format
+            payload[:response_format] = format_response_format(response_format) if response_format
           end
         end
 
-        def parse_completion_response(response, chat: nil)
+        def parse_completion_response(response, response_format: nil)
           data = response.body
           return if data.empty?
 
@@ -42,9 +43,7 @@ module RubyLLM
           content = message_data['content']
 
           # Parse JSON content if schema was provided
-          if chat&.response_format && content
-            content = parse_structured_output(content, raise_on_error: true)
-          end
+          content = parse_structured_output(content, raise_on_error: true) if response_format && content
 
           Message.new(
             role: :assistant,
@@ -84,17 +83,15 @@ module RubyLLM
           return { type: 'json_object' } if response_format == :json
 
           # Handle schema case (a Hash)
-          if response_format.is_a?(Hash)
-            {
-              type: 'json_schema',
-              json_schema: {
-                name: 'extract',
-                schema: response_format
-              }
+          raise ArgumentError, "Invalid response format: #{response_format}" unless response_format.is_a?(Hash)
+
+          {
+            type: 'json_schema',
+            json_schema: {
+              name: 'extract',
+              schema: response_format
             }
-          else
-            raise ArgumentError, "Invalid response format: #{response_format}"
-          end
+          }
         end
       end
     end
