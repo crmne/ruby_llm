@@ -1,0 +1,78 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# Response Format Handling
+
+This rule explains how response formats and schemas are handled in the Ruby LLM codebase.
+
+## Schema Handling
+
+In [lib/ruby_llm/providers/openai/chat.rb](mdc:lib/ruby_llm/providers/openai/chat.rb), the OpenAI provider has specific handling for structured output formats:
+
+```ruby
+def format_response_format(response_format)
+  # Handle simple :json case
+  return { type: 'json_object' } if response_format == :json
+
+  # Handle schema case (a Hash)
+  raise ArgumentError, "Invalid response format: #{response_format}" unless response_format.is_a?(Hash)
+
+  # Support to provide full response format, must include type: json_schema and json_schema: { name: 'Name', schema: ... }
+  return response_format if response_format.key?(:json_schema)
+
+  {
+    type: 'json_schema',
+    json_schema: {
+      name: 'extract',
+      schema: response_format
+    }
+  }
+end
+```
+
+## Response Format Types
+
+The codebase supports two main response format types:
+
+1. Simple JSON format (`:json`)
+2. Schema-based JSON format (Hash with schema definition)
+
+## Provider-Specific Implementations
+
+Different providers implement structured output differently:
+
+- **OpenAI**: Uses `response_format` parameter with `json_object` or `json_schema` types
+- **Anthropic**: Uses system prompts or special Claude JSON mode
+- **Other providers**: May have different implementations
+
+## Usage in Application Code
+
+When using structured output in your application:
+
+```ruby
+# Simple JSON output
+chat.with_response_format(:json)
+
+# Schema-based output
+chat.with_response_format({
+  json_schema: {
+    type: "object",
+    properties: {
+      name: { type: "string" },
+      age: { type: "integer" }
+    },
+    required: ["name", "age"]
+  }
+})
+```
+
+## Parsing Logic
+
+The response parsing is handled by the `parse_structured_output` method in the `StructuredOutputParser` module, which:
+
+1. Detects and extracts JSON content
+2. Handles potential edge cases in model responses
+3. Returns parsed structured data

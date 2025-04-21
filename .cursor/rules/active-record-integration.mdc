@@ -1,0 +1,102 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# ActiveRecord Integration
+
+This rule explains how the Ruby LLM codebase integrates with ActiveRecord for database persistence.
+
+## ActiveRecord Mixin Pattern
+
+The codebase uses a mixin pattern in [lib/ruby_llm/active_record/acts_as.rb](mdc:lib/ruby_llm/active_record/acts_as.rb) to provide seamless integration between Ruby LLM and database models.
+
+## Available Mixins
+
+Three main acts_as methods are provided:
+
+1. `acts_as_chat` - For chat models that contain messages
+2. `acts_as_message` - For message models associated with chats and tool calls
+3. `acts_as_tool_call` - For tool call models that bridge messages and tools
+
+## Usage in Rails Applications
+
+To use these mixins in a Rails application:
+
+```ruby
+# app/models/chat.rb
+class Chat < ApplicationRecord
+  acts_as_chat
+end
+
+# app/models/message.rb
+class Message < ApplicationRecord
+  acts_as_message
+end
+
+# app/models/tool_call.rb
+class ToolCall < ApplicationRecord
+  acts_as_tool_call
+end
+```
+
+## Required Schema Structure
+
+Your database schema needs to include:
+
+```ruby
+create_table :chats do |t|
+  t.string :model_id
+  t.timestamps
+end
+
+create_table :messages do |t|
+  t.references :chat
+  t.string :role
+  t.text :content
+  t.string :model_id
+  t.integer :input_tokens
+  t.integer :output_tokens
+  t.references :tool_call
+  t.timestamps
+end
+
+create_table :tool_calls do |t|
+  t.references :message
+  t.string :tool_call_id
+  t.string :name
+  t.json :arguments
+  t.timestamps
+end
+```
+
+## Additional Features
+
+The mixins provide:
+
+- Automatic persistence of chat history
+- Tool call tracking and management
+- Token usage tracking
+- Chainable API methods:
+  - `with_tool`
+  - `with_model`
+  - `with_temperature`
+  - `with_response_format`
+  - `ask`/`say`
+
+## Automatic Rails Integration
+
+When using the Ruby LLM gem in a Rails application, the modules are automatically included through the Railtie in [lib/ruby_llm/railtie.rb](mdc:lib/ruby_llm/railtie.rb):
+
+```ruby
+module RubyLLM
+  class Railtie < Rails::Railtie
+    initializer 'ruby_llm.active_record' do
+      ActiveSupport.on_load :active_record do
+        include RubyLLM::ActiveRecord::ActsAs
+      end
+    end
+  end
+end
+```
