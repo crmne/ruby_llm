@@ -164,14 +164,14 @@ RSpec.describe 'Chat with structured output', type: :feature do
           chat.with_response_format(schema)
         end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
       end
-      
+
       it 'allows structured output when assuming support', skip: 'Requires API credentials' do
         # Gemini can be used with structured output when we assume it's supported
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
-        
+
         # This should not raise an error
         expect { chat.with_response_format(schema, assume_supported: true) }.not_to raise_error
-        
+
         # We're not testing the actual response here since it requires API calls
         # but the setup should work without errors
       end

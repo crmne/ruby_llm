@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Verify the extraction passes through the string unchanged
       llm_message = message.to_llm
       expect(llm_message.content).to eq(json_content)
-      
+
       # Even though extract_content doesn't parse JSON, verify it's valid JSON
       parsed = JSON.parse(llm_message.content)
       expect(parsed['name']).to eq('Ruby')

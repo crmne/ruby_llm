@@ -83,7 +83,7 @@ module RubyLLM
         # Determines if the model supports JSON mode
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports JSON mode
-        def supports_json_mode?(model_id)
+        def supports_json_mode?(_model_id)
           false
         end
 
