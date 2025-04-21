@@ -58,7 +58,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🖼️ **Image generation** with DALL-E and other providers
 - 📊 **Embeddings** for vector search and semantic analysis
 - 🔧 **Tools** that let AI use your Ruby code
-- 📝 **Structured Output** with JSON schema validation
+- 📝 **Structured Output** with JSON schema
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
 
