@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":{"type":"text","wrong":"format"}},{"role":"user","content":"hi"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unprocessable Entity
     headers:
       Date:
-      - Fri, 04 Apr 2025 08:06:28 GMT
+      - Fri, 18 Apr 2025 18:30:53 GMT
       Content-Type:
       - text/plain; charset=utf-8
       Content-Length:
@@ -35,7 +35,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5cd5682be26f2a2a03cfc7944b1d328e
+      - cd9e7449c476e7b15b5fda3c33fe9448
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -53,5 +53,5 @@ http_interactions:
       string: 'Failed to deserialize the JSON body into the target type: messages[0]:
         data did not match any variant of untagged enum ChatCompletionRequestContent
         at line 1 column 96'
-  recorded_at: Fri, 04 Apr 2025 08:06:28 GMT
+  recorded_at: Fri, 18 Apr 2025 18:30:53 GMT
 recorded_with: VCR 6.3.1

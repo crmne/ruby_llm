@@ -6,7 +6,7 @@ module RubyLLM
       # Embeddings methods for the Gemini API integration
       module Embeddings
         # Must be public for Provider module
-        def embed(text, model:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def embed(text, model:, connection:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           payload = {
             content: {
               parts: format_text_for_embedding(text)
@@ -14,13 +14,13 @@ module RubyLLM
           }
 
           url = "models/#{model}:embedContent"
-          response = post(url, payload)
+          response = connection.post url, payload
 
           if text.is_a?(Array)
             # We need to make separate calls for each text with Gemini
             embeddings = text.map do |t|
               single_payload = { content: { parts: [{ text: t.to_s }] } }
-              single_response = post(url, single_payload)
+              single_response = connection.post url, single_payload
               single_response.body.dig('embedding', 'values')
             end
 

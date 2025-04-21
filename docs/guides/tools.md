@@ -77,6 +77,37 @@ end
 {: .note }
 The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
 
+## Custom Initialization
+
+Tools can have custom initialization:
+
+```ruby
+class DocumentSearch < RubyLLM::Tool
+  description "Searches documents by relevance"
+
+  param :query,
+    desc: "The search query"
+
+  param :limit,
+    type: :integer,
+    desc: "Maximum number of results",
+    required: false
+
+  def initialize(database)
+    @database = database
+  end
+
+  def execute(query:, limit: 5)
+    # Search in @database
+    @database.search(query, limit: limit)
+  end
+end
+
+# Initialize with dependencies
+search_tool = DocumentSearch.new(MyDatabase)
+chat.with_tool(search_tool)
+```
+
 ## Using Tools in Chat
 
 Attach tools to a `Chat` instance using `with_tool` or `with_tools`.

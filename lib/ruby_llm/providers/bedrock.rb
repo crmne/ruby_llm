@@ -20,12 +20,12 @@ module RubyLLM
 
       module_function
 
-      def api_base
-        @api_base ||= "https://bedrock-runtime.#{RubyLLM.config.bedrock_region}.amazonaws.com"
+      def api_base(config)
+        @api_base ||= "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
       end
 
-      def post(url, payload)
-        signature = sign_request("#{connection.url_prefix}#{url}", payload:)
+      def post(connection, config, url, payload)
+        signature = sign_request("#{connection.url_prefix}#{url}", config:, payload:)
         connection.post url, payload do |req|
           req.headers.merge! build_headers(signature.headers, streaming: block_given?)
 
@@ -49,25 +49,25 @@ module RubyLLM
         end
       end
 
-      def sign_request(url, method: :post, payload: nil)
-        signer = create_signer
-        request = build_request(url, method:, payload:)
+      def sign_request(url, config:, method: :post, payload: nil)
+        signer = create_signer(config)
+        request = build_request(url, config:, method:, payload:)
         signer.sign_request(request)
       end
 
-      def create_signer
+      def create_signer(config)
         Signing::Signer.new({
-                              access_key_id: RubyLLM.config.bedrock_api_key,
-                              secret_access_key: RubyLLM.config.bedrock_secret_key,
-                              session_token: RubyLLM.config.bedrock_session_token,
-                              region: RubyLLM.config.bedrock_region,
+                              access_key_id: config.bedrock_api_key,
+                              secret_access_key: config.bedrock_secret_key,
+                              session_token: config.bedrock_session_token,
+                              region: config.bedrock_region,
                               service: 'bedrock'
                             })
       end
 
-      def build_request(url, method: :post, payload: nil)
+      def build_request(url, config:, method: :post, payload: nil)
         {
-          connection: connection,
+          connection: connection(config),
           http_method: method,
           url: url || completion_url,
           body: payload ? JSON.generate(payload, ascii_only: false) : nil

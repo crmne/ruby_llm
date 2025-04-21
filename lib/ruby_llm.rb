@@ -30,8 +30,14 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil, provider: nil, assume_model_exists: false)
-      Chat.new(model:, provider:, assume_model_exists:)
+    def context
+      context_config = config.dup
+      yield context_config if block_given?
+      Context.new(context_config)
+    end
+
+    def chat(...)
+      Chat.new(...)
     end
 
     def embed(...)
