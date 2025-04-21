@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it_behaves_like 'a chainable chat method', :with_tools, Calculator
     it_behaves_like 'a chainable chat method', :with_model, 'gpt-4.1-nano'
     it_behaves_like 'a chainable chat method', :with_temperature, 0.5
-    it_behaves_like 'a chainable chat method', :with_response_format, { 'type' => 'object' }
+    it_behaves_like 'a chainable chat method', :with_response_format, { 'type' => 'object' }, assume_supported: true
 
     it_behaves_like 'a chainable callback method', :on_new_message
     it_behaves_like 'a chainable callback method', :on_end_message

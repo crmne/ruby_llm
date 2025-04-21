@@ -118,10 +118,10 @@ module RubyLLM
       # @param response_format [Hash, String, Symbol] The response format, either:
       #   - :json for simple JSON mode
       #   - JSON schema as a Hash or JSON string for schema-based output
-      # @param strict [Boolean] Whether to enforce model compatibility (default: true)
+      # @param assume_supported [Boolean] Whether to assume the model supports the requested format (default: false)
       # @return [self] Chainable chat instance
-      def with_response_format(response_format, strict: true)
-        to_llm.with_response_format(response_format, strict: strict)
+      def with_response_format(response_format, assume_supported: false)
+        to_llm.with_response_format(response_format, assume_supported: assume_supported)
         self
       end
 

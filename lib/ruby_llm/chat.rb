@@ -84,13 +84,13 @@ module RubyLLM
     # @param response_format [Hash, String, Symbol] Either:
     #   - :json symbol for JSON mode (model outputs valid JSON object)
     #   - JSON schema as a Hash or JSON string for schema-based output (model follows the schema)
-    # @param strict [Boolean] Whether to enforce the model's support for the requested format
+    # @param assume_supported [Boolean] Whether to assume the model supports the requested format
     # @return [self] Returns self for method chaining
     # @raise [ArgumentError] If the response_format is not a Hash, valid JSON string, or :json symbol
-    # @raise [UnsupportedJSONModeError] If :json is specified, strict is true, and the model doesn't support JSON mode
-    # @raise [UnsupportedStructuredOutputError] If a schema is specified, strict is true, and the model doesn't support structured output
-    def with_response_format(response_format, strict: true)
-      check_model_compatibility!(response_format == :json) if strict
+    # @raise [UnsupportedJSONModeError] If :json is specified, assume_supported is false, and the model doesn't support JSON mode
+    # @raise [UnsupportedStructuredOutputError] If a schema is specified, assume_supported is false, and the model doesn't support structured output
+    def with_response_format(response_format, assume_supported: false)
+      check_model_compatibility!(response_format == :json) unless assume_supported
 
       @response_format = response_format == :json ? :json : normalize_schema(response_format)
 
@@ -131,13 +131,13 @@ module RubyLLM
 
         raise UnsupportedJSONModeError,
               "Model #{@model.id} doesn't support JSON mode. \n" \
-              'Use with_response_format(:json, strict: false) for less strict, more risky mode.'
+              'Use with_response_format(:json, assume_supported: true) to skip compatibility check.'
       else
         return if provider_module.supports_structured_output?(@model.id)
 
         raise UnsupportedStructuredOutputError,
               "Model #{@model.id} doesn't support structured output. \n" \
-              'Use with_response_format(schema, strict: false) for less strict, more risky mode.'
+              'Use with_response_format(schema, assume_supported: true) to skip compatibility check.'
       end
     end
 

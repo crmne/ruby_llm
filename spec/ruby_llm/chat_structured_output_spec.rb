@@ -33,7 +33,7 @@ RSpec.describe 'Chat with structured output', type: :feature do
 
     it 'raises ArgumentError for invalid schema type' do
       chat = RubyLLM.chat
-      expect { chat.with_response_format(123) }.to raise_error(ArgumentError, 'Schema must be a Hash')
+      expect { chat.with_response_format(123) }.to raise_error(ArgumentError, 'Response format must be a Hash')
     end
 
     it 'raises UnsupportedStructuredOutputError when model doesn\'t support structured output' do
@@ -156,8 +156,8 @@ RSpec.describe 'Chat with structured output', type: :feature do
     end
 
     context 'with Gemini' do
-      it 'raises an UnsupportedStructuredOutputError in strict mode' do
-        # Gemini doesn't support structured output in strict mode
+      it 'raises an UnsupportedStructuredOutputError when compatibility is checked' do
+        # Gemini doesn't support structured output when compatibility is checked
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 
         expect do
@@ -165,12 +165,12 @@ RSpec.describe 'Chat with structured output', type: :feature do
         end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
       end
       
-      it 'allows structured output in non-strict mode', skip: 'Requires API credentials' do
-        # Gemini can be used with structured output in non-strict mode
+      it 'allows structured output when assuming support', skip: 'Requires API credentials' do
+        # Gemini can be used with structured output when we assume it's supported
         chat = RubyLLM.chat(model: 'gemini-2.0-flash')
         
         # This should not raise an error
-        expect { chat.with_response_format(schema, strict: false) }.not_to raise_error
+        expect { chat.with_response_format(schema, assume_supported: true) }.not_to raise_error
         
         # We're not testing the actual response here since it requires API calls
         # but the setup should work without errors

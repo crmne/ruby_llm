@@ -47,20 +47,20 @@ response = RubyLLM.chat(model: "gpt-4.1-nano")
 
 This uses OpenAI's `response_format: {type: "json_object"}` parameter, works with most OpenAI models, and guarantees valid JSON without enforcing a specific structure.
 
-## Strict and Non-Strict Modes
+## Model Compatibility Checks
 
-By default, RubyLLM operates in "strict mode" which only allows models that officially support the requested output format. If you try to use a schema with a model that doesn't support schema validation, RubyLLM will raise an `UnsupportedStructuredOutputError`.
+By default, RubyLLM checks if a model officially supports the requested output format. If you try to use a schema with a model that doesn't support schema validation, RubyLLM will raise an `UnsupportedStructuredOutputError`.
 
-For broader compatibility, you can disable strict mode:
+For broader compatibility, you can skip this compatibility check:
 
 ```ruby
-# Use schema with a model that doesn't currently support schema validation on RubyLLM
+# Use schema with a model that doesn't currently support schema validation in RubyLLM
 response = RubyLLM.chat(model: "gemini-2.0-flash")
-  .with_response_format(schema, strict: false)
+  .with_response_format(schema, assume_supported: true)
   .ask("Create a profile for a Ruby developer")
 ```
 
-In non-strict mode:
+When `assume_supported` is set to `true`:
 
 - RubyLLM doesn't validate if the model supports the requested format
 - The schema is automatically added to the system message
@@ -73,7 +73,7 @@ This allows you to use schema-based output with a wider range of models, though 
 
 RubyLLM provides two main error types for structured output:
 
-1. **UnsupportedStructuredOutputError**: Raised when using schema-based output with a model that doesn't support it in strict mode:
+1. **UnsupportedStructuredOutputError**: Raised when using schema-based output with a model that doesn't support it (when `assume_supported` is false):
 2. **InvalidStructuredOutput**: Raised if the model returns invalid JSON:
 
 Note: RubyLLM checks that responses are valid JSON but doesn't verify conformance to the schema structure. For full schema validation, use a library like `json-schema`.
