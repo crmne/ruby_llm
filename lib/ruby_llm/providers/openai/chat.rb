@@ -92,7 +92,7 @@ module RubyLLM
             type: 'json_schema',
             json_schema: {
               name: 'extract',
-              schema: response_format[:json_schema]
+              schema: response_format
             }
           }
         end
