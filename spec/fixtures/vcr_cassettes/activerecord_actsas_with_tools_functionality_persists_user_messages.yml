@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
         2 + 2?"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:47:17 GMT
+      - Fri, 18 Apr 2025 18:29:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,19 +38,19 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '547'
+      - '201'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '500'
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9996'
+      - '499'
       X-Ratelimit-Remaining-Tokens:
       - '199993'
       X-Ratelimit-Reset-Requests:
-      - 28.424s
+      - 120ms
       X-Ratelimit-Reset-Tokens:
       - 1ms
       X-Request-Id:
@@ -74,10 +74,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHwTEwGmXoeRJiNzsbNWExBaO4EY7",
+          "id": "chatcmpl-BNkl3k6SVkAeBQTSHyO1hdPGvQtzY",
           "object": "chat.completion",
-          "created": 1743616036,
-          "model": "gpt-4o-mini-2024-07-18",
+          "created": 1745000981,
+          "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
@@ -86,7 +86,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_B7XAL7pmdpa6poG1zDLwKvF8",
+                    "id": "call_duLTBR0VfbQNTTOT8ETH5nPe",
                     "type": "function",
                     "function": {
                       "name": "calculator",
@@ -117,22 +117,22 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_b376dfbbd5"
+          "system_fingerprint": "fp_20621fa8f3"
         }
-  recorded_at: Wed, 02 Apr 2025 17:47:17 GMT
+  recorded_at: Fri, 18 Apr 2025 18:29:41 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"What''s
-        2 + 2?"},{"role":"assistant","tool_calls":[{"id":"call_B7XAL7pmdpa6poG1zDLwKvF8","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"2
-        + 2\"}"}}]},{"role":"tool","content":"4","tool_call_id":"call_B7XAL7pmdpa6poG1zDLwKvF8"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
+        2 + 2?"},{"role":"assistant","tool_calls":[{"id":"call_duLTBR0VfbQNTTOT8ETH5nPe","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"2
+        + 2\"}"}}]},{"role":"tool","content":"4","tool_call_id":"call_duLTBR0VfbQNTTOT8ETH5nPe"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.12.2
+      - Faraday v2.13.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -147,7 +147,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Apr 2025 17:47:18 GMT
+      - Fri, 18 Apr 2025 18:29:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -159,19 +159,19 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '429'
+      - '199'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
-      - '10000'
+      - '500'
       X-Ratelimit-Limit-Tokens:
       - '200000'
       X-Ratelimit-Remaining-Requests:
-      - '9995'
+      - '499'
       X-Ratelimit-Remaining-Tokens:
       - '199992'
       X-Ratelimit-Reset-Requests:
-      - 36.226s
+      - 120ms
       X-Ratelimit-Reset-Tokens:
       - 2ms
       X-Request-Id:
@@ -195,10 +195,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BHwTF8tdOO0lMTLVwS0e6kNiDyE9P",
+          "id": "chatcmpl-BNkl4bSip7Lh67L232hgZDHc7BIQS",
           "object": "chat.completion",
-          "created": 1743616037,
-          "model": "gpt-4o-mini-2024-07-18",
+          "created": 1745000982,
+          "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
@@ -228,7 +228,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_b376dfbbd5"
+          "system_fingerprint": "fp_20621fa8f3"
         }
-  recorded_at: Wed, 02 Apr 2025 17:47:18 GMT
+  recorded_at: Fri, 18 Apr 2025 18:29:42 GMT
 recorded_with: VCR 6.3.1

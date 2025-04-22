@@ -5,34 +5,46 @@ nav_order: 1
 description: "RubyLLM is a delightful Ruby way to work with AI."
 permalink: /
 ---
-<div markdown=1 style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em;">
 
+<div class="logo-container">
   <img src="/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
-
   <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
 </div>
 
-A delightful Ruby way to work with AI through a unified interface to OpenAI, Anthropic, Google, AWS Bedrock Anthropic, and DeepSeek.
+A delightful Ruby way to work with AI through a unified interface to OpenAI, Anthropic, Google, AWS Bedrock Anthropic, OpenRouter, and DeepSeek.
 {: .fs-6 .fw-300 }
 
-
-  <a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
-  <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
+<a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
+<a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
 ---
 
-<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 1em; margin-bottom: 1em">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Google" height="40" width="120">
-  <div>
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" height="40">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" height="40" width="120">
+<div class="provider-icons">
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
   </div>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Google" class="logo-large">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-color.svg" alt="DeepSeek" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
+  </div>
 </div>
 
-<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.2em;">
+<div class="badge-container">
   <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
   <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
   <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
@@ -52,7 +64,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ## Features
 
-- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, and DeepSeek models
+- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, OpenRouter, and DeepSeek models
 - 👁️ **Vision and Audio** understanding
 - 📄 **PDF Analysis** for analyzing documents
 - 🖼️ **Image generation** with DALL-E and other providers

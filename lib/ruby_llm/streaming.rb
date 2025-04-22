@@ -8,10 +8,10 @@ module RubyLLM
   module Streaming
     module_function
 
-    def stream_response(payload, &block)
+    def stream_response(connection, payload, &block)
       accumulator = StreamAccumulator.new
 
-      post stream_url, payload do |req|
+      connection.post stream_url, payload do |req|
         req.options.on_data = handle_stream do |chunk|
           accumulator.add chunk
           block.call chunk

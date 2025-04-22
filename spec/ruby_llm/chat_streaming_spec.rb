@@ -10,6 +10,7 @@ RSpec.describe RubyLLM::Chat do
                    gemini-2.0-flash
                    deepseek-chat
                    gpt-4.1-nano
+                   google/gemini-2.0-flash-001
                    llama3.1:8b].freeze
 
   describe 'streaming responses' do

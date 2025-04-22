@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'ruby_llm'
+require 'dotenv/load'
 require 'fileutils'
 
 MODEL_KEYS_TO_DISPLAY = %i[

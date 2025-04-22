@@ -3,16 +3,22 @@
 A delightful Ruby way to work with AI. No configuration madness, no complex callbacks, no handler hell – just beautiful, expressive Ruby code.
 
 <div style="display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 1em">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI" height="40" width="120">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" height="40">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" height="40" width="120">
   &nbsp;&nbsp;
-  <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Anthropic_logo.svg" alt="Anthropic" height="40" width="120">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" height="40" width="120">
   &nbsp;&nbsp;
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg" alt="Google" height="40" width="120">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" height="40" width="120">
   &nbsp;&nbsp;
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" height="40">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" height="40" width="120">
   &nbsp;&nbsp;
-  <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/DeepSeek_logo.svg" alt="DeepSeek" height="40" width="120">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" height="40">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" height="40" width="120">
+  &nbsp;&nbsp;
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-color.svg" alt="DeepSeek" height="40">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" height="40" width="120">
+  &nbsp;&nbsp;
 </div>
 
 <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
@@ -30,7 +36,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ## Features
 
-- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, and DeepSeek models
+- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, OpenRouter, and DeepSeek models
 - 👁️ **Vision and Audio** understanding
 - 📄 **PDF Analysis** for analyzing documents
 - 🖼️ **Image generation** with DALL-E and other providers

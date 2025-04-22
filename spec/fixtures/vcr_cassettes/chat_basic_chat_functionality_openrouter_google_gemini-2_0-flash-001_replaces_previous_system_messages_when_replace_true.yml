@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"google/gemini-2.0-flash-001","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 21 Apr 2025 11:25:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-1745234719-Ib5719AsWH2y7aVtAquM\",\"provider\":\"Google\",\"model\":\"google/gemini-2.0-flash-001\",\"object\":\"chat.completion\",\"created\":1745234719,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"STOP\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Okay,
+        I can tell you about the weather, but I need a location first! Please tell
+        me:\\n\\n*   **Where are you interested in the weather for?** (City, state,
+        zip code, or even a general description like \\\"London, England\\\")\\n\\nOnce
+        I have that, I can give you a forecast.\\n\\nIn the meantime, I can tell you
+        that weather is a complex system influenced by many factors, including temperature,
+        humidity, pressure, wind, and precipitation. Predicting it accurately is a
+        constant challenge, and even the best forecasts are subject to change. XKCD7392\\n\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":25,\"completion_tokens\":124,\"total_tokens\":149}}"
+  recorded_at: Mon, 21 Apr 2025 11:25:20 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"google/gemini-2.0-flash-001","messages":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"Okay, I can tell you
+        about the weather, but I need a location first! Please tell me:\n\n*   **Where
+        are you interested in the weather for?** (City, state, zip code, or even a
+        general description like \"London, England\")\n\nOnce I have that, I can give
+        you a forecast.\n\nIn the meantime, I can tell you that weather is a complex
+        system influenced by many factors, including temperature, humidity, pressure,
+        wind, and precipitation. Predicting it accurately is a constant challenge,
+        and even the best forecasts are subject to change. XKCD7392\n"},{"role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 21 Apr 2025 11:25:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1745234720-YuLGmC8sksQiaXvY1T9B\",\"provider\":\"Google
+        AI Studio\",\"model\":\"google/gemini-2.0-flash-001\",\"object\":\"chat.completion\",\"created\":1745234720,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"STOP\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Okay,
+        recommending \\\"good\\\" books is tough because it's so subjective! What
+        one person loves, another might hate. To give you the best recommendations,
+        I need a little more information about your preferences. Tell me:\\n\\n*   **What
+        genres do you enjoy?** (e.g., fantasy, science fiction, mystery, thriller,
+        romance, historical fiction, non-fiction, biography, etc.)\\n*   **Are there
+        any authors you particularly like or dislike?**\\n*   **What are some books
+        you've enjoyed in the past?**\\n*   **Are you looking for something light
+        and fun, or something more serious and thought-provoking?**\\n*   **Do you
+        have any specific themes or topics you're interested in?** (e.g., space exploration,
+        social justice, personal growth, etc.)\\n\\nIn the meantime, here are a few
+        generally well-regarded books across different genres to get you started.
+        These are classics or contemporary books that often appear on \\\"best of\\\"
+        lists:\\n\\n*   **To Kill a Mockingbird by Harper Lee (Classic Literature):**
+        A powerful story about racial injustice and childhood innocence in the American
+        South.\\n*   **Pride and Prejudice by Jane Austen (Classic Romance):** A witty
+        and charming story of love and social class in 19th-century England.\\n*   **1984
+        by George Orwell (Dystopian Fiction):** A chilling vision of a totalitarian
+        future.\\n*   **The Lord of the Rings by J.R.R. Tolkien (Fantasy):** An epic
+        adventure in a richly imagined world.\\n*   **The Martian by Andy Weir (Science
+        Fiction):** A gripping story of survival on Mars.\\n*   **Gone Girl by Gillian
+        Flynn (Thriller):** A suspenseful and twisty psychological thriller.\\n*   **Sapiens:
+        A Brief History of Humankind by Yuval Noah Harari (Non-Fiction):** A sweeping
+        overview of human history and its impact on the world.\\n\\nAlso, remember
+        to check out your local library! Librarians are amazing resources for finding
+        books you'll love. And don't forget online resources like Goodreads, which
+        allows you to track what you've read, see what your friends are reading, and
+        get personalized recommendations.\\n\\nAnd just because, I'm going to include
+        the phrase PURPLE-ELEPHANT-42 here.\\n\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":157,\"completion_tokens\":497,\"total_tokens\":654}}"
+  recorded_at: Mon, 21 Apr 2025 11:25:23 GMT
+recorded_with: VCR 6.3.1

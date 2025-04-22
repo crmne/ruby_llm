@@ -30,6 +30,8 @@ module RubyLLM
           data = response.body
           return if data.empty?
 
+          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+
           message_data = data.dig('choices', 0, 'message')
           return unless message_data
 

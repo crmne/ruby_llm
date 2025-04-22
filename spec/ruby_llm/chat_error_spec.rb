@@ -35,6 +35,7 @@ RSpec.describe RubyLLM::Chat do
     gemini-2.0-flash
     deepseek-chat
     gpt-4.1-nano
+    anthropic/claude-3.5-sonnet
   ].freeze
 
   describe 'error handling' do
@@ -45,17 +46,8 @@ RSpec.describe RubyLLM::Chat do
 
         before do
           # Sabotage the API key after initialization
-          case provider
-          when 'openai'
-            RubyLLM.config.openai_api_key = 'invalid-key'
-          when 'anthropic'
-            RubyLLM.config.anthropic_api_key = 'invalid-key'
-          when 'gemini'
-            RubyLLM.config.gemini_api_key = 'invalid-key'
-          when 'deepseek'
-            RubyLLM.config.deepseek_api_key = 'invalid-key'
-          when 'bedrock'
-            RubyLLM.config.bedrock_api_key = 'invalid-key'
+          RubyLLM::Provider.providers.each_key do |slug|
+            RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key')
           end
         end
 
@@ -82,6 +74,7 @@ RSpec.describe RubyLLM::Chat do
         let(:chat) { RubyLLM.chat(model: model) }
 
         it 'handles invalid message format errors' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+          skip('OpenRouter gets stuck with an invalid message format') if provider == 'openrouter'
           # Try to mess up the message format
           bad_content = { type: 'text', wrong: 'format' }
           chat.add_message(role: :user, content: bad_content)
@@ -128,7 +121,7 @@ RSpec.describe RubyLLM::Chat do
               expect(e.message).to include_words('token')
             when 'openai'
               expect(e.message).to include_words('large')
-            when 'deepseek'
+            when 'deepseek', 'openrouter'
               expect(e.message).to include_words('tokens', 'length')
             else
               expect(e.message).to include_words('limit')

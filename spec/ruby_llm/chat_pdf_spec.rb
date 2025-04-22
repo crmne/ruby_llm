@@ -7,7 +7,10 @@ RSpec.describe RubyLLM::Chat do
 
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
 
-  pdf_models = %w[claude-3-5-haiku-20241022 gemini-2.0-flash].freeze
+  pdf_models = %w[claude-3-5-haiku-20241022
+                  gemini-2.0-flash
+                  gpt-4.1-nano
+                  google/gemini-2.0-flash-001].freeze
 
   describe 'pdf model' do
     pdf_models.each do |model|
