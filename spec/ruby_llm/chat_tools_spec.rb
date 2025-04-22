@@ -82,10 +82,6 @@ RSpec.describe RubyLLM::Chat do
     chat_models.each do |model| # rubocop:disable Style/CombinableLoops
       provider = RubyLLM::Models.provider_for(model).slug
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        if provider == 'anthropic' && model == 'claude-3-5-haiku-20241022'
-          pending('Anthropic frequently returns 529 OverloadedError mid-stream for this specific test. ' \
-                  'This appears to be provider-side flakiness. Skipping only for this model to allow release 1.2.0.')
-        end
         chat = RubyLLM.chat(model: model)
                       .with_temperature(0.1)
                       .with_tool(BestLanguageToLearn)
