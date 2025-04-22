@@ -20,7 +20,7 @@ module RubyLLM
         config.ollama_api_base_url
       end
 
-      def headers(config)
+      def headers(_config)
         {}
       end
 
