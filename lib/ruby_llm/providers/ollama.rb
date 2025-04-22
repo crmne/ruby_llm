@@ -14,11 +14,13 @@ module RubyLLM
 
       module_function
 
-      def api_base
-        RubyLLM.config.ollama_api_base_url
+      def api_base(config)
+        # no default since this is the only configuration for this provider,
+        # so it must be provided deliberately
+        config.ollama_api_base_url
       end
 
-      def headers
+      def headers(config)
         {}
       end
 

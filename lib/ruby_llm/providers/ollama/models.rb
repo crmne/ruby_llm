@@ -25,9 +25,10 @@ module RubyLLM
         # and thus no Ollama models will be known at runtime, so you'll need a
         # `RubyLLM.models.refresh!` to populate your instance's models.
 
-        def list_models
+        def list_models(connection:)
+          config = connection.config
           response = connection.get('api/tags') do |req|
-            req.headers.merge! headers
+            req.headers.merge!(headers(config))
           end
 
           parse_list_models_response(response, slug, capabilities)
