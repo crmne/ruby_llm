@@ -11333,10 +11333,17 @@
         "web_search": "0",
         "internal_reasoning": "0"
       },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": null,
-        "is_moderated": false
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
       }
     }
   },
@@ -11376,10 +11383,17 @@
         "web_search": "0",
         "internal_reasoning": "0"
       },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": null,
-        "is_moderated": false
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
       }
     }
   },
@@ -11761,6 +11775,112 @@
   {
     "id": "cognitivecomputations/dolphin-mixtral-8x7b",
     "display_name": "Dolphin 2.6 Mixtral 8x7B 🐬",
+    "provider": "openrouter",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "modalities": {
+      "text": {
+        "input": null,
+        "output": null
+      },
+      "image": {
+        "input": null,
+        "output": null
+      },
+      "audio": {
+        "input": null,
+        "output": null
+      }
+    },
+    "embeddings_output": null,
+    "capabilities": {
+      "function_calling": null,
+      "structured_output": null,
+      "batch": null
+    },
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      },
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      }
+    }
+  },
+  {
+    "id": "cognitivecomputations/dolphin3.0-mistral-24b:free",
+    "display_name": "Dolphin3.0 Mistral 24B (free)",
+    "provider": "openrouter",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "modalities": {
+      "text": {
+        "input": null,
+        "output": null
+      },
+      "image": {
+        "input": null,
+        "output": null
+      },
+      "audio": {
+        "input": null,
+        "output": null
+      }
+    },
+    "embeddings_output": null,
+    "capabilities": {
+      "function_calling": null,
+      "structured_output": null,
+      "batch": null
+    },
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      },
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      }
+    }
+  },
+  {
+    "id": "cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
+    "display_name": "Dolphin3.0 R1 Mistral 24B (free)",
     "provider": "openrouter",
     "context_window": 32768,
     "max_output_tokens": null,
@@ -17275,6 +17395,59 @@
     }
   },
   {
+    "id": "microsoft/mai-ds-r1:free",
+    "display_name": "Microsoft: MAI DS R1 (free)",
+    "provider": "openrouter",
+    "context_window": 163840,
+    "max_output_tokens": null,
+    "modalities": {
+      "text": {
+        "input": null,
+        "output": null
+      },
+      "image": {
+        "input": null,
+        "output": null
+      },
+      "audio": {
+        "input": null,
+        "output": null
+      }
+    },
+    "embeddings_output": null,
+    "capabilities": {
+      "function_calling": null,
+      "structured_output": null,
+      "batch": null
+    },
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      },
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
+      }
+    }
+  },
+  {
     "id": "microsoft/phi-3-medium-128k-instruct",
     "display_name": "Microsoft: Phi-3 Medium 128K Instruct",
     "provider": "openrouter",
@@ -20172,10 +20345,17 @@
         "web_search": "0",
         "internal_reasoning": "0"
       },
-      "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": null,
-        "is_moderated": false
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
       }
     }
   },
@@ -25895,10 +26075,17 @@
         "web_search": "0",
         "internal_reasoning": "0"
       },
-      "top_provider": {
-        "context_length": 32000,
-        "max_completion_tokens": null,
-        "is_moderated": false
+      "embeddings": {
+        "standard": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        },
+        "batch": {
+          "input_per_million": null,
+          "cached_input_per_million": null,
+          "output_per_million": null
+        }
       }
     }
   },
