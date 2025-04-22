@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::Chat do
         before do
           # Sabotage the API key after initialization
           RubyLLM::Provider.providers.each_key do |slug|
-            RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key')
+            RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key') if RubyLLM.config.respond_to?("#{slug}_api_key=")
           end
         end
 
