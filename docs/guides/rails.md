@@ -153,12 +153,17 @@ chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
 #    messages in your database.
 # 6. Returns the final `RubyLLM::Message` object on success, or raises the
 #    `RubyLLM::Error` on failure.
-response = chat_record.ask "What is the capital of France?"
-
-# `response` is the RubyLLM::Message object from the API call.
-# The persisted record is associated with `chat_record`.
-assistant_message_record = chat_record.messages.last
-puts assistant_message_record.content # => "The capital of France is Paris."
+begin
+  response = chat_record.ask "What is the capital of France?"
+  # `response` is the RubyLLM::Message object from the successful API call.
+  # The assistant message is now fully persisted.
+  assistant_message_record = chat_record.messages.last
+  puts assistant_message_record.content # => "The capital of France is Paris."
+rescue RubyLLM::Error => e
+  # The empty assistant message record has been cleaned up automatically.
+  # Only the user message remains for this turn.
+  puts "API Call Failed: #{e.message}"
+end
 
 # Continue the conversation
 chat_record.ask "Tell me more about that city"
