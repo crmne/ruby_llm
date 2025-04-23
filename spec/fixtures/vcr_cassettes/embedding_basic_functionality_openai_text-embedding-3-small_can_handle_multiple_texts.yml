@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"text-embedding-3-small","input":["Ruby","Python","JavaScript"]}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:31:12 GMT
+      - Wed, 23 Apr 2025 18:59:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +39,25 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '145'
+      - '120'
       Openai-Version:
       - '2020-10-01'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Via:
-      - envoy-router-8fc744945-wm8vs
+      - envoy-router-8485d9cb86-54n2n
       X-Envoy-Upstream-Service-Time:
-      - '52'
+      - '47'
       X-Ratelimit-Limit-Requests:
-      - '3000'
+      - '10000'
       X-Ratelimit-Limit-Tokens:
-      - '1000000'
+      - '10000000'
       X-Ratelimit-Remaining-Requests:
-      - '2999'
+      - '9999'
       X-Ratelimit-Remaining-Tokens:
-      - '999994'
+      - '9999994'
       X-Ratelimit-Reset-Requests:
-      - 20ms
+      - 6ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -4714,5 +4714,5 @@ http_interactions:
             "total_tokens": 3
           }
         }
-  recorded_at: Wed, 23 Apr 2025 11:31:13 GMT
+  recorded_at: Wed, 23 Apr 2025 18:59:13 GMT
 recorded_with: VCR 6.3.1

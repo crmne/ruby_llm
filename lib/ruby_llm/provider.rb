@@ -31,10 +31,10 @@ module RubyLLM
         parse_list_models_response response, slug
       end
 
-      def embed(text, model:, connection:)
-        payload = render_embedding_payload(text, model:)
-        response = connection.post embedding_url, payload
-        parse_embedding_response response
+      def embed(text, model:, connection:, dimensions:)
+        payload = render_embedding_payload(text, model:, dimensions:)
+        response = connection.post(embedding_url(model:), payload)
+        parse_embedding_response(response, model:)
       end
 
       def paint(prompt, model:, size:, connection:)
