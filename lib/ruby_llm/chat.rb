@@ -31,9 +31,9 @@ module RubyLLM
       }
     end
 
-    def ask(message = nil, with: {}, &block)
+    def ask(message = nil, with: {}, &)
       add_message role: :user, content: Content.new(message, with)
-      complete(&block)
+      complete(&)
     end
 
     alias say ask
