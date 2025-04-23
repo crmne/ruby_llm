@@ -119,7 +119,8 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'mistral-small3.1' }
+  { provider: :ollama, model: 'mistral-small3.1' },
+  { provider: :perplexity, model: 'gpt-4.1-nano', }
 ].freeze
 
 PDF_MODELS = [
