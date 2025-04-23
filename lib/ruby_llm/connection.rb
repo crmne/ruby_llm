@@ -3,7 +3,7 @@
 module RubyLLM
   # Connection class for managing API connections to various providers.
   class Connection
-    attr_reader :provider, :config
+    attr_reader :provider, :connection, :config
 
     def initialize(provider, config)
       @provider = provider
@@ -18,7 +18,7 @@ module RubyLLM
       end
     end
 
-    def post(url, payload)
+    def post(url, payload, &)
       body = payload.is_a?(Hash) ? JSON.generate(payload, ascii_only: false) : payload
       @connection.post url, body do |req|
         req.headers.merge! @provider.headers(@config) if @provider.respond_to?(:headers)
@@ -26,7 +26,7 @@ module RubyLLM
       end
     end
 
-    def get(url)
+    def get(url, &)
       @connection.get url do |req|
         req.headers.merge! @provider.headers(@config) if @provider.respond_to?(:headers)
         yield req if block_given?

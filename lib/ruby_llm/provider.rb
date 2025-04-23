@@ -31,10 +31,10 @@ module RubyLLM
         parse_list_models_response response, slug, capabilities
       end
 
-      def embed(text, model:, connection:)
-        payload = render_embedding_payload(text, model:)
-        response = connection.post embedding_url, payload
-        parse_embedding_response response
+      def embed(text, model:, connection:, dimensions:)
+        payload = render_embedding_payload(text, model:, dimensions:)
+        response = connection.post(embedding_url(model:), payload)
+        parse_embedding_response(response, model:)
       end
 
       def paint(prompt, model:, size:, connection:)
@@ -43,8 +43,24 @@ module RubyLLM
         parse_image_response response
       end
 
-      def configured?(config)
+      def configured?(config = nil)
+        config ||= RubyLLM.config
         missing_configs(config).empty?
+      end
+
+      def missing_configs(config)
+        configuration_requirements.select do |key|
+          value = config.send(key)
+          value.nil? || value.empty?
+        end
+      end
+
+      def local?
+        false
+      end
+
+      def remote?
+        !local?
       end
 
       private
@@ -54,13 +70,6 @@ module RubyLLM
           capabilities.normalize_temperature(temperature, model)
         else
           temperature
-        end
-      end
-
-      def missing_configs(config)
-        configuration_requirements.select do |key|
-          value = config.send(key)
-          value.nil? || value.empty?
         end
       end
 
@@ -127,8 +136,16 @@ module RubyLLM
         @providers ||= {}
       end
 
-      def configured_providers(config)
-        providers.select { |_name, provider| provider.configured?(config) }.values
+      def local_providers
+        providers.select { |_slug, provider| provider.local? }
+      end
+
+      def remote_providers
+        providers.select { |_slug, provider| provider.remote? }
+      end
+
+      def configured_providers(config = nil)
+        providers.select { |_slug, provider| provider.configured?(config) }.values
       end
     end
   end

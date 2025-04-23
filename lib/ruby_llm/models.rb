@@ -41,7 +41,7 @@ module RubyLLM
 
         all = (preserved + configured.flat_map do |p|
           p.list_models(connection: p.connection(global_config))
-        end).sort_by(&:id)
+        end).sort_by { |m| [m.provider, m.id] }
         @instance = new(all)
         @instance
       end

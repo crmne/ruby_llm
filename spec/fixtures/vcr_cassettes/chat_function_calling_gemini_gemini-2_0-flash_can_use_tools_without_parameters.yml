@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 18 Apr 2025 18:35:47 GMT
+      - Wed, 23 Apr 2025 11:28:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=477
+      - gfet4t7; dur=520
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.00014370836184493134
+              "avgLogprobs": -0.00011707750880824668
             }
           ],
           "usageMetadata": {
@@ -86,14 +86,14 @@ http_interactions:
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Fri, 18 Apr 2025 18:35:47 GMT
+  recorded_at: Wed, 23 Apr 2025 11:28:40 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"dc990e89-d9fb-4ade-b13b-6d220618d2bc","response":{"name":"dc990e89-d9fb-4ade-b13b-6d220618d2bc","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"84801db8-f4dd-4af4-8d13-369b346b18d4","response":{"name":"84801db8-f4dd-4af4-8d13-369b346b18d4","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -118,7 +118,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 18 Apr 2025 18:35:47 GMT
+      - Wed, 23 Apr 2025 11:28:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -128,7 +128,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=561
+      - gfet4t7; dur=584
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -148,17 +148,17 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.086932063102722168
+              "avgLogprobs": -0.11464322697032582
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 94,
+            "promptTokenCount": 98,
             "candidatesTokenCount": 11,
-            "totalTokenCount": 105,
+            "totalTokenCount": 109,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 94
+                "tokenCount": 98
               }
             ],
             "candidatesTokensDetails": [
@@ -170,5 +170,5 @@ http_interactions:
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Fri, 18 Apr 2025 18:35:47 GMT
+  recorded_at: Wed, 23 Apr 2025 11:28:40 GMT
 recorded_with: VCR 6.3.1

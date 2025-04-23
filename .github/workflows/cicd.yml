@@ -50,6 +50,8 @@ jobs:
 
     - name: Run tests
       run: bundle exec rspec
+      env:
+        OLLAMA_API_BASE: http://localhost:11434/v1 # dummy
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
@@ -118,8 +120,8 @@ jobs:
     - name: Test with real APIs before publishing
       if: steps.check_version.outputs.version_changed == 'true'
       run: |
-        echo "Removing all VCR cassettes to test against real APIs..."
-        rm -rf spec/fixtures/vcr_cassettes
+        echo "Removing VCR cassettes except Ollama ones..."
+        find spec/fixtures/vcr_cassettes -type f ! -name '*ollama*' -delete
 
         echo "Running tests with real API calls..."
         env -u CI bundle exec rspec --fail-fast
@@ -128,6 +130,8 @@ jobs:
         ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        OLLAMA_API_BASE: http://localhost:11434/v1 # dummy
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
