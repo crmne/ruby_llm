@@ -21,16 +21,7 @@ module RubyLLM
       module_function
 
       def api_base(config)
-        @api_base ||= "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
-      end
-
-      def post(connection, config, url, payload)
-        signature = sign_request("#{connection.url_prefix}#{url}", config:, payload:)
-        connection.post url, payload do |req|
-          req.headers.merge! build_headers(signature.headers, streaming: block_given?)
-
-          yield req if block_given?
-        end
+        "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
       end
 
       def parse_error(response) # rubocop:disable Metrics/MethodLength
