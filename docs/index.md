@@ -11,7 +11,7 @@ permalink: /
   <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
 </div>
 
-A delightful Ruby way to work with AI through a unified interface to Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, and OpenRouter.
+A delightful Ruby way to work with AI through a unified interface to Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, OpenRouter, and any OpenAI-compatible API.
 {: .fs-6 .fw-300 }
 
 <a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
@@ -32,15 +32,15 @@ A delightful Ruby way to work with AI through a unified interface to Anthropic, 
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   </div>
   <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
-  </div>
-  <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
@@ -55,7 +55,6 @@ A delightful Ruby way to work with AI through a unified interface to Anthropic, 
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
 
-
 🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
 
 ---
@@ -65,17 +64,6 @@ A delightful Ruby way to work with AI through a unified interface to Anthropic, 
 Every AI provider comes with its own client library, its own response format, its own conventions for streaming, and its own way of handling errors. Want to use multiple providers? Prepare to juggle incompatible APIs and bloated dependencies.
 
 RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies — just Faraday and Zeitwerk. Because working with AI should be a joy, not a chore.
-
-## Features
-
-- 💬 **Chat** with OpenAI, Anthropic, Gemini, AWS Bedrock Anthropic, OpenRouter, and DeepSeek models
-- 👁️ **Vision and Audio** understanding
-- 📄 **PDF Analysis** for analyzing documents
-- 🖼️ **Image generation** with DALL-E and other providers
-- 📊 **Embeddings** for vector search and semantic analysis
-- 🔧 **Tools** that let AI use your Ruby code
-- 🚂 **Rails integration** to persist chats and messages with ActiveRecord
-- 🌊 **Streaming** responses with proper Ruby patterns
 
 ## What makes it great
 
@@ -123,93 +111,88 @@ end
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
 ```
 
-## Quick start
+## Core Capabilities
 
+*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
+*   👁️ **Vision:** Analyze images within chats.
+*   🔊 **Audio:** Transcribe and understand audio content.
+*   📄 **PDF Analysis:** Extract information and summarize PDF documents.
+*   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
+*   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
+*   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
+*   🚂 **Rails Integration:** Easily persist chats, messages, and tool calls using `acts_as_chat` and `acts_as_message`.
+*   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
+
+## Installation
+
+Add to your Gemfile:
 ```ruby
-require 'ruby_llm'
+gem 'ruby_llm'
+```
+Then `bundle install`.
 
-# Configure your API keys
+Configure your API keys (using environment variables is recommended):
+```ruby
+# config/initializers/ruby_llm.rb or similar
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY')
-  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY')
+  config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+  # Add keys ONLY for providers you intend to use
+  # config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+  # ... see Configuration guide for all options ...
 end
-
-# Start chatting
-chat = RubyLLM.chat
-response = chat.ask "What's the best way to learn Ruby?"
-
-# Generate images
-image = RubyLLM.paint "a sunset over mountains"
-puts image.url
-
-# Analyze PDF documents with Claude
-claude_chat = RubyLLM.chat(model: 'claude-3-7-sonnet-20250219')
-claude_chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
 ```
+See the [Installation Guide](https://rubyllm.com/installation) for full details.
 
-## Have great conversations
+## Rails Integration
 
-```ruby
-# Start a chat with the default model (gpt-4.1-nano)
-chat = RubyLLM.chat
-
-# Or specify what you want
-chat = RubyLLM.chat(model: 'claude-3-7-sonnet-20250219')
-
-# Simple questions just work
-chat.ask "What's the difference between attr_reader and attr_accessor?"
-
-# Multi-turn conversations are seamless
-chat.ask "Could you give me an example?"
-
-# Stream responses in real-time
-chat.ask "Tell me a story about a Ruby programmer" do |chunk|
-  print chunk.content
-end
-
-# Need a different model mid-conversation? No problem
-chat.with_model('gemini-2.0-flash').ask "What's your favorite algorithm?"
-```
-
-## Rails integration that makes sense
+Add persistence to your chat models effortlessly:
 
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord
-  acts_as_chat
-
-  # Works great with Turbo
-  broadcasts_to ->(chat) { "chat_#{chat.id}" }
+  acts_as_chat # Automatically saves messages & tool calls
+  # ... your other model logic ...
 end
 
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
+  # ...
 end
 
-# app/models/tool_call.rb
+# app/models/tool_call.rb (if using tools)
 class ToolCall < ApplicationRecord
   acts_as_tool_call
+  # ...
 end
 
-# In a background job
-chat = Chat.create!(model_id: "gpt-4.1-nano")
-chat.ask("What's your favorite Ruby gem?") do |chunk|
-  Turbo::StreamsChannel.broadcast_append_to(
-    chat,
-    target: "response",
-    partial: "messages/chunk",
-    locals: { chunk: chunk }
-  )
-end
-
-# That's it - chat history is automatically saved
+# Now interacting with a Chat record persists the conversation:
+chat_record = Chat.create!(model_id: "gpt-4.1-nano")
+chat_record.ask("Explain Active Record callbacks.") # User & Assistant messages saved
 ```
+Check the [Rails Integration Guide](https://rubyllm.com/guides/rails) for more.
 
-## Learn more
+## Learn More
 
-- [Installation]({% link installation.md %})
-- [Guides]({% link guides/index.md %})
+Dive deeper with the official documentation:
+
+-   [Installation](https://rubyllm.com/installation)
+-   [Configuration](https://rubyllm.com/configuration)
+-   **Guides:**
+    -   [Getting Started](https://rubyllm.com/guides/getting-started)
+    -   [Chatting with AI Models](https://rubyllm.com/guides/chat)
+    -   [Using Tools](https://rubyllm.com/guides/tools)
+    -   [Streaming Responses](https://rubyllm.com/guides/streaming)
+    -   [Rails Integration](https://rubyllm.com/guides/rails)
+    -   [Image Generation](https://rubyllm.com/guides/image-generation)
+    -   [Embeddings](https://rubyllm.com/guides/embeddings)
+    -   [Working with Models](https://rubyllm.com/guides/models)
+    -   [Error Handling](https://rubyllm.com/guides/error-handling)
+    -   [Available Models](https://rubyllm.com/guides/available-models)
+
+## Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on setup, testing, and contribution guidelines.
 
 ## License
 

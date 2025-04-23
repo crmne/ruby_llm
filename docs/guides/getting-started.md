@@ -9,7 +9,7 @@ permalink: /guides/getting-started
 # Getting Started with RubyLLM
 {: .no_toc }
 
-Welcome to RubyLLM! This guide will get you up and running quickly. We'll cover installing the gem, configuring your first API key, and making basic chat, image, and embedding requests.
+Welcome to RubyLLM! This guide will get you up and running quickly. We'll cover installing the gem, minimal configuration, and making your first chat, image, and embedding requests.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -23,10 +23,10 @@ Welcome to RubyLLM! This guide will get you up and running quickly. We'll cover 
 After reading this guide, you will know:
 
 *   How to install RubyLLM.
-*   How to configure API keys.
+*   How to perform minimal configuration.
 *   How to start a simple chat conversation.
 *   How to generate an image.
-*   How to create text embeddings.
+*   How to create a text embedding.
 
 ## Installation
 
@@ -38,34 +38,33 @@ gem 'ruby_llm'
 
 Then run `bundle install`.
 
-Alternatively, install it manually: `gem install ruby_llm`
-
 (For full details, see the [Installation Guide]({% link installation.md %})).
 
-## Configuration
+## Minimal Configuration
 
-RubyLLM needs API keys for the AI providers you want to use. Configure them, typically in an initializer (`config/initializers/ruby_llm.rb` in Rails) or at the start of your script.
+RubyLLM needs API keys for the AI providers you want to use. Configure them once, typically when your application starts.
 
 ```ruby
+# config/initializers/ruby_llm.rb (in Rails) or at the start of your script
 require 'ruby_llm'
 
 RubyLLM.configure do |config|
-  # Add keys for the providers you plan to use.
-  # Using environment variables is recommended.
+  # Add keys ONLY for the providers you intend to use.
+  # Using environment variables is highly recommended.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
   # config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  # ... add other provider keys as needed
 end
 ```
 
-You only need to configure keys for the providers you intend to use. See the [Installation Guide]({% link installation.md %}#configuration) for all configuration options.
+{: .note }
+You only need to configure keys for the providers you actually plan to use. See the [Configuration Guide]({% link configuration.md %}) for all options, including setting defaults and connecting to custom endpoints.
 
 ## Your First Chat
 
-The primary way to interact with language models is through the `RubyLLM.chat` interface.
+Interact with language models using `RubyLLM.chat`.
 
 ```ruby
-# Create a chat instance (uses the default model, usually GPT)
+# Create a chat instance (uses the configured default model)
 chat = RubyLLM.chat
 
 # Ask a question
@@ -74,62 +73,58 @@ response = chat.ask "What is Ruby on Rails?"
 # The response is a RubyLLM::Message object
 puts response.content
 # => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
-
-# Continue the conversation naturally
-response = chat.ask "What are its main advantages?"
-puts response.content
-# => "Some key advantages of Ruby on Rails include..."
 ```
 
-RubyLLM automatically handles conversation history. Dive deeper in the [Chatting with AI Models Guide]({% link guides/chat.md %}).
+RubyLLM handles the conversation history automatically. See the [Chatting with AI Models Guide]({% link guides/chat.md %}) for more details.
 
 ## Generating an Image
 
-You can generate images using models like DALL-E 3 via the `RubyLLM.paint` method.
+Generate images using models like DALL-E 3 via `RubyLLM.paint`.
 
 ```ruby
-# Generate an image (uses the default image model, usually DALL-E 3)
-image = RubyLLM.paint("A futuristic cityscape at sunset, watercolor style")
+# Generate an image (uses the default image model)
+image = RubyLLM.paint("A photorealistic red panda coding Ruby")
 
-# Access the image URL
-puts image.url
-# => "https://oaidalleapiprodscus.blob.core.windows.net/..."
+# Access the image URL (or Base64 data depending on provider)
+if image.url
+  puts image.url
+  # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
+else
+  puts "Image data received (Base64)."
+end
 
-# See the potentially revised prompt the model used
-puts image.revised_prompt
-# => "A watercolor painting of a futuristic cityscape bathed in the warm hues of a setting sun..."
+# Save the image locally
+image.save("red_panda.png")
 ```
 
 Learn more in the [Image Generation Guide]({% link guides/image-generation.md %}).
 
-## Creating Embeddings
+## Creating an Embedding
 
-Embeddings represent text as numerical vectors, useful for tasks like semantic search. Use `RubyLLM.embed`.
+Create numerical vector representations of text using `RubyLLM.embed`.
 
 ```ruby
-# Create an embedding for a single piece of text
+# Create an embedding (uses the default embedding model)
 embedding = RubyLLM.embed("Ruby is optimized for programmer happiness.")
 
 # Access the vector (an array of floats)
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}" # e.g., 1536 for text-embedding-3-small
+puts "Vector dimension: #{vector.length}" # e.g., 1536
 
-# Embed multiple texts at once
-texts = ["Convention over configuration", "Model-View-Controller", "Metaprogramming"]
-embeddings = RubyLLM.embed(texts)
-
-puts "Generated #{embeddings.vectors.length} vectors." # => 3
+# Access metadata
+puts "Model used: #{embedding.model}"
 ```
 
 Explore further in the [Embeddings Guide]({% link guides/embeddings.md %}).
 
 ## What's Next?
 
-You've seen the basics! Now you're ready to explore RubyLLM's features in more detail:
+You've covered the basics! Now you're ready to explore RubyLLM's features in more detail:
 
 *   [Chatting with AI Models]({% link guides/chat.md %})
 *   [Working with Models]({% link guides/models.md %}) (Choosing models, custom endpoints)
 *   [Using Tools]({% link guides/tools.md %}) (Letting AI call your code)
 *   [Streaming Responses]({% link guides/streaming.md %})
 *   [Rails Integration]({% link guides/rails.md %})
+*   [Configuration]({% link configuration.md %})
 *   [Error Handling]({% link guides/error-handling.md %})
