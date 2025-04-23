@@ -170,4 +170,31 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.find_by(role: 'system').content).to eq('Be awesome')
     end
   end
+
+  describe 'acts_as_chat error handling' do
+    let!(:chat_record) { Chat.create!(model_id: 'gpt-4.1-nano') }
+    let(:provider_instance) { RubyLLM::Provider.for(chat_record.model_id) }
+    let(:api_base) { provider_instance.api_base(RubyLLM.config) }
+    let(:completion_url_regex) { %r{#{api_base}/#{provider_instance.completion_url}} }
+
+    before do
+      stub_request(:post, completion_url_regex)
+        .to_return(
+          status: 500,
+          body: { error: { message: 'API go boom' } }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+    end
+
+    it 'destroys the empty assistant message record on API failure' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      expect do
+        chat_record.ask('This one will fail')
+      end.to raise_error(RubyLLM::ServerError, /API go boom/)
+      expect(Message.where(chat_id: chat_record.id).count).to eq(1)
+      remaining_message = Message.find_by(chat_id: chat_record.id)
+      expect(remaining_message.role).to eq('user')
+      expect(remaining_message.content).to eq('This one will fail')
+      expect(Message.where(chat_id: chat_record.id, role: 'assistant').count).to eq(0)
+    end
+  end
 end

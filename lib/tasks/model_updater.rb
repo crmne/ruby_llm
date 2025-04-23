@@ -19,6 +19,7 @@ class ModelUpdater # rubocop:disable Style/Documentation
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+      config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
       configure_bedrock(config)
       config.request_timeout = 30
     end
@@ -57,10 +58,20 @@ class ModelUpdater # rubocop:disable Style/Documentation
     RubyLLM::Provider.providers.each_key do |sym|
       name = sym.to_s.capitalize
       count = provider_counts[sym.to_s] || 0
-      status = RubyLLM::Provider.providers[sym].configured? ? '(OK)' : '(SKIP)'
+      status = status(sym)
       puts "  #{name}: #{count} models #{status}"
     end
 
     puts 'Refresh complete.'
+  end
+
+  def status(provider_sym)
+    if RubyLLM::Provider.providers[provider_sym].local?
+      ' (LOCAL - SKIP)'
+    elsif RubyLLM::Provider.providers[provider_sym].configured?
+      ' (OK)'
+    else
+      ' (NOT CONFIGURED)'
+    end
   end
 end

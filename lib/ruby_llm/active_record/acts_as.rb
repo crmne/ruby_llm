@@ -20,8 +20,7 @@ module RubyLLM
                    class_name: @message_class,
                    dependent: :destroy
 
-          delegate :complete,
-                   :add_message,
+          delegate :add_message,
                    to: :to_llm
         end
 
@@ -94,40 +93,50 @@ module RubyLLM
         self
       end
 
-      def with_tool(tool)
-        to_llm.with_tool(tool)
+      def with_tool(...)
+        to_llm.with_tool(...)
         self
       end
 
-      def with_tools(*tools)
-        to_llm.with_tools(*tools)
+      def with_tools(...)
+        to_llm.with_tools(...)
         self
       end
 
-      def with_model(model_id, provider: nil)
-        to_llm.with_model(model_id, provider: provider)
+      def with_model(...)
+        to_llm.with_model(...)
         self
       end
 
-      def with_temperature(temperature)
-        to_llm.with_temperature(temperature)
+      def with_temperature(...)
+        to_llm.with_temperature(...)
         self
       end
 
-      def on_new_message(&)
-        to_llm.on_new_message(&)
+      def on_new_message(...)
+        to_llm.on_new_message(...)
         self
       end
 
-      def on_end_message(&)
-        to_llm.on_end_message(&)
+      def on_end_message(...)
+        to_llm.on_end_message(...)
         self
       end
 
       def ask(message, &)
         message = { role: :user, content: message }
         messages.create!(**message)
-        to_llm.complete(&)
+        complete(&)
+      end
+
+      def complete(...)
+        to_llm.complete(...)
+      rescue RubyLLM::Error => e
+        if @message&.persisted? && @message.content.blank?
+          RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
+          @message.destroy
+        end
+        raise e
       end
 
       alias say ask

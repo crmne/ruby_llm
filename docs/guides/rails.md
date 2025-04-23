@@ -100,8 +100,8 @@ class Chat < ApplicationRecord
   acts_as_chat # Assumes Message and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
-  belongs_to :user, optional: true
-  validates :model_id, presence: true
+  belongs_to :user, optional: true # Example
+  validates :model_id, presence: true # Example
 end
 
 # app/models/message.rb
@@ -110,8 +110,6 @@ class Message < ApplicationRecord
   acts_as_message # Assumes Chat and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
-  # Optional: Use Rails enums for roles
-  enum role: { system: 'system', user: 'user', assistant: 'assistant', tool: 'tool' }
 end
 
 # app/models/tool_call.rb (Only if using tools)
@@ -141,16 +139,31 @@ chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
 # The `model_id` should typically be a valid identifier known to RubyLLM.
 # See the [Working with Models Guide]({% link guides/models.md %}) for details.
 
-# Ask a question. This automatically:
-# 1. Saves the user message ("What is the capital...")
-# 2. Makes the API call with history
-# 3. Saves the assistant message (the response)
-response = chat_record.ask "What is the capital of France?"
-
-# `response` is the RubyLLM::Message object from the API call.
-# The persisted record is associated with `chat_record`.
-assistant_message_record = chat_record.messages.last
-puts assistant_message_record.content # => "The capital of France is Paris."
+# Ask a question. This automatically handles persistence:
+# 1. Saves the user message ("What is the capital of France?") to the database.
+# 2. Creates an *empty* assistant message record. This allows real-time UI
+#    updates (e.g., using Turbo Streams with `after_create_commit` on the
+#    Message model) by providing a target DOM ID *before* the API call.
+# 3. Makes the API call to the provider with the conversation history.
+# 4. **On Success:** Updates the previously created assistant message record
+#    with the actual content, token counts, and any tool call information.
+# 5. **On Failure:** If the API call raises an error (e.g., network issue,
+#    invalid key, provider error), the empty assistant message record created
+#    in step 2 is **automatically destroyed**. This prevents orphaned empty
+#    messages in your database.
+# 6. Returns the final `RubyLLM::Message` object on success, or raises the
+#    `RubyLLM::Error` on failure.
+begin
+  response = chat_record.ask "What is the capital of France?"
+  # `response` is the RubyLLM::Message object from the successful API call.
+  # The assistant message is now fully persisted.
+  assistant_message_record = chat_record.messages.last
+  puts assistant_message_record.content # => "The capital of France is Paris."
+rescue RubyLLM::Error => e
+  # The empty assistant message record has been cleaned up automatically.
+  # Only the user message remains for this turn.
+  puts "API Call Failed: #{e.message}"
+end
 
 # Continue the conversation
 chat_record.ask "Tell me more about that city"
