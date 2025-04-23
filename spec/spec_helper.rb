@@ -47,6 +47,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
+  config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', nil) }
 
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
@@ -95,6 +96,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
+      config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
@@ -108,3 +110,33 @@ RSpec.shared_context 'with configured RubyLLM' do
     end
   end
 end
+
+CHAT_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
+  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :openai, model: 'gpt-4.1-nano' },
+  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
+  { provider: :ollama, model: 'mistral-small3.1' }
+].freeze
+
+PDF_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :openai, model: 'gpt-4.1-nano' },
+  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' }
+].freeze
+
+VISION_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :bedrock, model: 'anthropic.claude-3-5-sonnet-20241022-v2:0' },
+  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :openai, model: 'gpt-4.1-nano' },
+  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
+  { provider: :ollama, model: 'mistral-small3.1' }
+].freeze
+
+AUDIO_MODELS = [
+  { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
+].freeze

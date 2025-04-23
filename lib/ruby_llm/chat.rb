@@ -61,6 +61,8 @@ module RubyLLM
     end
 
     def with_model(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+      assume_exists = true if provider && Provider.providers[provider.to_sym].local?
+
       if assume_exists
         raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 

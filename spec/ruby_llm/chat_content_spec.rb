@@ -8,15 +8,12 @@ RSpec.describe RubyLLM::Chat do
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
 
-  vision_models = %w[claude-3-5-haiku-20241022 anthropic.claude-3-5-sonnet-20240620-v1:0 gemini-2.0-flash
-                     gpt-4.1-nano google/gemini-2.0-flash-001].freeze
-  audio_models = %w[gpt-4o-mini-audio-preview gpt-4o-audio-preview].freeze
-
   describe 'vision models' do
-    vision_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    VISION_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can understand images" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
 
         expect(response.content).to be_present
@@ -27,10 +24,11 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'audio models' do
-    audio_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    AUDIO_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can understand audio" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is being said?', with: { audio: audio_path })
 
         expect(response.content).to be_present

@@ -11,7 +11,7 @@ permalink: /
   <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
 </div>
 
-A delightful Ruby way to work with AI through a unified interface to OpenAI, Anthropic, Google, AWS Bedrock Anthropic, OpenRouter, and DeepSeek.
+A delightful Ruby way to work with AI through a unified interface to Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, and OpenRouter.
 {: .fs-6 .fw-300 }
 
 <a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
@@ -21,26 +21,30 @@ A delightful Ruby way to work with AI through a unified interface to OpenAI, Ant
 
 <div class="provider-icons">
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
-  </div>
-  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
-  </div>
-  <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Google" class="logo-large">
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
-  </div>
-  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-color.svg" alt="DeepSeek" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
   </div>
 </div>
 

@@ -30,10 +30,10 @@ After reading this guide, you will know:
 
 ## Global Configuration (`RubyLLM.configure`)
 
-{: .note-title }
-> Coming in v1.3.0
+{: .warning }
+> Native OpenRouter and Ollama support is coming in v1.3.0
 >
-> OpenRouter support is coming in v1.3.0
+> Consider using `openai_api_base` in the meantime.
 
 The primary way to configure RubyLLM is using the `RubyLLM.configure` block. This typically runs once when your application starts (e.g., in `config/initializers/ruby_llm.rb` for Rails apps, or at the top of a script).
 
@@ -49,6 +49,7 @@ RubyLLM.configure do |config|
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+  config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)
@@ -89,6 +90,7 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `gemini_api_key`
 *   `deepseek_api_key`
 *   `openrouter_api_key`
+*   `ollama_api_base`
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
 
 ## Custom OpenAI API Base (`openai_api_base`)

@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:37:00 GMT
+      - Wed, 23 Apr 2025 11:30:02 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -38,30 +38,30 @@ http_interactions:
       - keep-alive
       Cache-Control:
       - no-cache
-      Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
-      Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
-      Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-18T18:36:55Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-18T18:36:55Z'
+      - '2025-04-23T11:30:00Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '16000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-18T18:37:08Z'
+      - '2025-04-23T11:30:13Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-23T11:30:00Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '116000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-18T18:36:55Z'
+      - '2025-04-23T11:30:00Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -80,81 +80,78 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"msg_01Fr6PqS8zogzA8sTYWvqeqm","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":1}}    }
+        data: {"type":"message_start","message":{"id":"msg_01NTRXdcANTwrpn1E7JndZgK","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":1}}          }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}   }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}       }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I"}    }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I"}         }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'ll"}          }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'ll"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" help"}}
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" help"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you check"}               }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you check"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the current"}  }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the current"}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" weather in Berlin using"}             }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" weather in Berlin using"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the provide"}   }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the provide"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d coordinates"}          }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"d coordinates"}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"."}    }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"."}               }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0               }
+        data: {"type":"content_block_stop","index":0       }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","name":"weather","input":{}}    }
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","name":"weather","input":{}}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}    }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"lat"}  }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"latitude\":"} }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"itude\": \""}      }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":" \""}          }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"52.5200\""}          }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"52.5200\""}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":", \"lon"}  }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":", \"longitu"}       }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"gitud"}       }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"de\": \"13"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"e\": \"1"}     }
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"3.4050\"}"}      }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":".4050\"}"}       }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":1           }
+        data: {"type":"content_block_stop","index":1}
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"output_tokens":90}             }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"output_tokens":90}         }
 
         event: message_stop
         data: {"type":"message_stop" }
 
-  recorded_at: Fri, 18 Apr 2025 18:37:02 GMT
+  recorded_at: Wed, 23 Apr 2025 11:30:03 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -162,7 +159,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","content":"Current
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"stream":true,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -186,7 +183,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:37:07 GMT
+      - Wed, 23 Apr 2025 11:30:06 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -195,30 +192,30 @@ http_interactions:
       - keep-alive
       Cache-Control:
       - no-cache
-      Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
-      Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
-      Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-18T18:37:02Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-18T18:37:02Z'
+      - '2025-04-23T11:30:03Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '16000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-18T18:37:15Z'
+      - '2025-04-23T11:30:16Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-23T11:30:03Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '116000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-18T18:37:02Z'
+      - '2025-04-23T11:30:03Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -236,8 +233,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiJtc2dfMDE4OUJFZnM1SE5hNWtrNjNtcG1NZHp2IiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwiY29udGVudCI6W10sInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUxOCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6Mn19ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19zdGFydApkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX3N0YXJ0IiwiaW5kZXgiOjAsImNvbnRlbnRfYmxvY2siOnsidHlwZSI6InRleHQiLCJ0ZXh0IjoiIn0gICAgICAgfQoKZXZlbnQ6IHBpbmcKZGF0YTogeyJ0eXBlIjogInBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJCYXNlIn0gICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImQgb24gdGhlIHdlYXRoZXIifSAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGluZm9ybWF0aW9uLCJ9ICAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBpdCdzIn0gICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBjdXJyZW50bHkgMTXCsEMifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgKCJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI1OcKwRikgaW4ifSAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIEJlcmxpbiB3aXRoIGEgd2luZCBzcGVlIn0gICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJkIG9mIDEwIGttIn0gICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIvaC4ifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgSXQifSAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBzZWVtcyBsaWtlIGEgbWlsIn0gfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJkIGRheSJ9ICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdpdGggbW9kZXJhdGUifSAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdpbiJ9ICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiZCBjb25kaXRpb25zIn0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiLiJ9ICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIFdvdWwifSAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImQgeW91IGxpa2UgdG8ifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIga25vdyBhbnl0aGluZyJ9ICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBlbHNlIGFib3V0IHRoZSB3ZWF0aGVyPyJ9fQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RvcApkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX3N0b3AiLCJpbmRleCI6MCAgICAgICAgICAgICB9CgpldmVudDogbWVzc2FnZV9kZWx0YQpkYXRhOiB7InR5cGUiOiJtZXNzYWdlX2RlbHRhIiwiZGVsdGEiOnsic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGx9LCJ1c2FnZSI6eyJvdXRwdXRfdG9rZW5zIjo1OH0gICAgICAgfQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AiICB9Cgo=
-  recorded_at: Fri, 18 Apr 2025 18:37:08 GMT
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiJtc2dfMDE5ZkFRRXo1OEFZNGVyUGRWcVdTTHVCIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwiY29udGVudCI6W10sInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUxOCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6Mn19ICAgICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9fQoKZXZlbnQ6IHBpbmcKZGF0YTogeyJ0eXBlIjogInBpbmcifQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJCYXNlIn19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImQgb24gdGhlIHdlYXRoZXIifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgZGF0YSwifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGhlcmUifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIncyJ9ICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiJ9ICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI6In0gICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IlxuLSJ9ICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgVGVtcGVyYXR1cmUifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI6IDE1wrBDIn0gICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiICgifSAgICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI1OcKwRikifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJcbi0gV2luZCBTcGVlIn0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiZDogMTAga20ifSAgICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiL2gifSAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJcblxuSXQifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHNlZW1zIn0gIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGxpa2UifSAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgYSJ9ICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIG1pbCJ9ICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJkIGRheSBpbiBCZXJsaW4gd2l0aCJ9ICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBhIG1vZGVyYXRlIn0gICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBicmUifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJlemUuIFRoZSJ9ICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgdGVtcGVyYXR1cmUgaXMgY29tZm9ydGFibGUsIn0gICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBuZWl0aGVyIn0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHRvbyBjb2wifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJkIG5vciB0b28gd2FybSJ9ICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIuIEEifSAgICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGxpZ2h0In0gIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGphY2tldCJ9ICAgICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgbWlnaHQifSAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgYmUgc3VpdGFibGUifSAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBpZiJ9ICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgeW91J3JlIn0gIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHBsYW5uaW5nIn0gICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgdG8gZ28ifSB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBvdXRzaWRlIn0gICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6Ii4ifSAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX3N0b3AKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdG9wIiwiaW5kZXgiOjAgICAgfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsfSwidXNhZ2UiOnsib3V0cHV0X3Rva2VucyI6ODN9ICAgICAgICAgICAgICB9CgpldmVudDogbWVzc2FnZV9zdG9wCmRhdGE6IHsidHlwZSI6Im1lc3NhZ2Vfc3RvcCIgICAgICAgIH0KCg==
+  recorded_at: Wed, 23 Apr 2025 11:30:07 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -245,11 +242,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","content":"Current
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"role":"assistant","content":"Based
-        on the weather information, it''s currently 15°C (59°F) in Berlin with a wind
-        speed of 10 km/h. It seems like a mild day with moderate wind conditions.
-        Would you like to know anything else about the weather?"},{"role":"user","content":"What''s
+        on the weather data, here''s the current weather in Berlin:\n- Temperature:
+        15°C (59°F)\n- Wind Speed: 10 km/h\n\nIt seems like a mild day in Berlin with
+        a moderate breeze. The temperature is comfortable, neither too cold nor too
+        warm. A light jacket might be suitable if you''re planning to go outside."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"temperature":0.7,"stream":true,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -273,7 +271,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:37:11 GMT
+      - Wed, 23 Apr 2025 11:30:09 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -282,30 +280,30 @@ http_interactions:
       - keep-alive
       Cache-Control:
       - no-cache
-      Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
-      Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
-      Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-18T18:37:08Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '99000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-18T18:37:08Z'
+      - '2025-04-23T11:30:08Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '16000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-18T18:37:21Z'
+      - '2025-04-23T11:30:21Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-23T11:30:08Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '116000'
+      - '115000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-18T18:37:08Z'
+      - '2025-04-23T11:30:08Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -324,75 +322,75 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message_start
-        data: {"type":"message_start","message":{"id":"msg_01Y6wyHevBqGAUhAEaND7DGD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":598,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":2}}    }
+        data: {"type":"message_start","message":{"id":"msg_01XYTEoNyCibE9334wLim6sh","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":623,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":1}}}
 
         event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}             }
+        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""}         }
 
         event: ping
         data: {"type": "ping"}
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I'll"}              }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"I"}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" retrieve"}         }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"'ll"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the current weather information"}            }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" retrieve"}            }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" for Paris using"}   }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the current weather information"}           }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the coordinates"}            }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" for Paris using"}          }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" you"}          }
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" provided."}             }
+        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":" the provided coordinates."} }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":0            }
+        data: {"type":"content_block_stop","index":0   }
 
         event: content_block_start
-        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_018n5zLGXzQ7B62iRVV571Mt","name":"weather","input":{}}            }
+        data: {"type":"content_block_start","index":1,"content_block":{"type":"tool_use","id":"toolu_015nbs3ftACx5nn5C28oMPKB","name":"weather","input":{}}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}            }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":""}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"l"}             }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"{\"latitude"}               }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"atitude"}              }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\": \"48.8"}       }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\": "}         }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"575"}   }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\"48.8575\""}            }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"\""}             }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":", \"longit"}               }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":", \"l"}     }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"ude\": \"2."}        }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"on"}  }
 
         event: content_block_delta
-        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"3514\"}"} }
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"gitude\": \"2."}            }
+
+        event: content_block_delta
+        data: {"type":"content_block_delta","index":1,"delta":{"type":"input_json_delta","partial_json":"3514\"}"}            }
 
         event: content_block_stop
-        data: {"type":"content_block_stop","index":1            }
+        data: {"type":"content_block_stop","index":1   }
 
         event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"output_tokens":90}       }
+        data: {"type":"message_delta","delta":{"stop_reason":"tool_use","stop_sequence":null},"usage":{"output_tokens":89}       }
 
         event: message_stop
-        data: {"type":"message_stop"             }
+        data: {"type":"message_stop"           }
 
-  recorded_at: Fri, 18 Apr 2025 18:37:12 GMT
+  recorded_at: Wed, 23 Apr 2025 11:30:10 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -400,14 +398,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01WHAHoQMHdzvESiJ9q3A4hB","content":"Current
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01AEHG7AWwWgwrFFYQEFLivq","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]},{"role":"assistant","content":"Based
-        on the weather information, it''s currently 15°C (59°F) in Berlin with a wind
-        speed of 10 km/h. It seems like a mild day with moderate wind conditions.
-        Would you like to know anything else about the weather?"},{"role":"user","content":"What''s
+        on the weather data, here''s the current weather in Berlin:\n- Temperature:
+        15°C (59°F)\n- Wind Speed: 10 km/h\n\nIt seems like a mild day in Berlin with
+        a moderate breeze. The temperature is comfortable, neither too cold nor too
+        warm. A light jacket might be suitable if you''re planning to go outside."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        retrieve the current weather information for Paris using the coordinates you
-        provided."},{"type":"tool_use","id":"toolu_018n5zLGXzQ7B62iRVV571Mt","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_018n5zLGXzQ7B62iRVV571Mt","content":"Current
+        retrieve the current weather information for Paris using the provided coordinates."},{"type":"tool_use","id":"toolu_015nbs3ftACx5nn5C28oMPKB","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015nbs3ftACx5nn5C28oMPKB","content":"Current
         weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"stream":true,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -431,7 +429,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:37:23 GMT
+      - Wed, 23 Apr 2025 11:30:14 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -440,30 +438,30 @@ http_interactions:
       - keep-alive
       Cache-Control:
       - no-cache
-      Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
-      Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
-      Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-18T18:37:13Z'
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '99000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-18T18:37:13Z'
+      - '2025-04-23T11:30:11Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '16000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-18T18:37:26Z'
+      - '2025-04-23T11:30:24Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-23T11:30:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '115000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-18T18:37:13Z'
+      - '2025-04-23T11:30:11Z'
       Request-Id:
       - "<REQUEST_ID>"
       Anthropic-Organization-Id:
@@ -481,6 +479,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiJtc2dfMDEzaHU5cGkzVnN4dWdZaGtCRHpldGNxIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwiY29udGVudCI6W10sInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjcyNywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6Mn19ICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfc3RhcnQKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdGFydCIsImluZGV4IjowLCJjb250ZW50X2Jsb2NrIjp7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiJ9ICAgICAgICAgICB9CgpldmVudDogcGluZwpkYXRhOiB7InR5cGUiOiAicGluZyJ9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IlRoZSJ9IH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyBpcyJ9ICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiAxNcKwQyAoIn0gICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiI1OcKwRikgd2l0aCJ9ICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGEgd2luZCBzcGVlZCBvZiAifSAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIxMCBrbS9oIn0gICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiLiJ9ICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgSW50ZXIifSAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImVzdGluZ2x5LCB0aGUgd2VhdGhlciJ9ICAgICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgY29uZGl0aW9ucyJ9IH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGFyZSJ9ICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHF1aXRlIHNpbWlsYXIifSAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgdG8gd2hhdCJ9ICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdlIHNhdyJ9IH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGluIEJlcmxpbiAtIGEifSAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBtaWxkIHRlbXBlcmF0dXJlIn0gICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgYW5kIG1vZGVyYXRlIHdpbmQuIElzIn0gICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHRoZXJlIGFueXRoaW5nIGVsc2UgeW91JyJ9ICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiZCBsaWtlIHRvIGtub3cgYWJvdXQgdGhlIn0gICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdlYXRoZXI/In0gICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX3N0b3AKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19zdG9wIiwiaW5kZXgiOjAgICAgICB9CgpldmVudDogbWVzc2FnZV9kZWx0YQpkYXRhOiB7InR5cGUiOiJtZXNzYWdlX2RlbHRhIiwiZGVsdGEiOnsic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGx9LCJ1c2FnZSI6eyJvdXRwdXRfdG9rZW5zIjo2OX0gICAgICAgICAgICAgfQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AiICAgIH0KCg==
-  recorded_at: Fri, 18 Apr 2025 18:37:24 GMT
+        ZXZlbnQ6IG1lc3NhZ2Vfc3RhcnQKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9zdGFydCIsIm1lc3NhZ2UiOnsiaWQiOiJtc2dfMDEzV1ZFZUppUk5nb1V2SDlVblhVSGJVIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwibW9kZWwiOiJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwiY29udGVudCI6W10sInN0b3BfcmVhc29uIjpudWxsLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjc1MSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6Mn19ICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX3N0YXJ0CmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RhcnQiLCJpbmRleCI6MCwiY29udGVudF9ibG9jayI6eyJ0eXBlIjoidGV4dCIsInRleHQiOiIifSAgICB9CgpldmVudDogcGluZwpkYXRhOiB7InR5cGUiOiAicGluZyJ9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IkhlcmUifSAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIncyJ9ICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiB0aGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIn0gICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiOlxuLSBUZW1wZXJhdHVyZToifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgMTXCsEMgKCJ9ICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiNTnCsEYpIn0gIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiXG4tIFdpbmQgU3BlZWQ6ICJ9ICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IjEwIGttL2gifSAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJcblxuSW50ZXIifSAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImVzdGluZ2x5LCB0aGUifSAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdlYXRoZXIgaW4gUGFyaXMgaXMgcXVpdGUifSAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHNpbWlsYXIifSAgICAgICAgICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIgdG8gd2hhdCJ9ICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdlIn0gICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBqdXN0In19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBzYXcgaW4gQmVybGluIC0gYSJ9ICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIG1pbGQgdGVtcGVyYXR1cmUifSAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdpdGgifSAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGEgbGlnaHQgYnJlZXplLiJ9IH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIEl0In0gfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIncyBhIHBsZWFzYW50IGRheSB0aGF0In0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIHdvdWxkIGJlIGNvbWZvcnRhYmxlIn0gICAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGZvciB3YWxraW5nIn0gICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBhcm91bmQgYW4ifSB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6ImQgZXhwbG9yaW5nIn19CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiB0aGUgY2l0eS4ifSAgICAgICAgICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBZb3UifSB9CgpldmVudDogY29udGVudF9ibG9ja19kZWx0YQpkYXRhOiB7InR5cGUiOiJjb250ZW50X2Jsb2NrX2RlbHRhIiwiaW5kZXgiOjAsImRlbHRhIjp7InR5cGUiOiJ0ZXh0X2RlbHRhIiwidGV4dCI6IiBtaWdodCB3YW50IHRvIGJyaW5nIn0gICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGEgbGlnaHQgbGF5ZXIifX0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGxpa2UifSAgICAgICAgICAgIH0KCmV2ZW50OiBjb250ZW50X2Jsb2NrX2RlbHRhCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfZGVsdGEiLCJpbmRleCI6MCwiZGVsdGEiOnsidHlwZSI6InRleHRfZGVsdGEiLCJ0ZXh0IjoiIGEgc3dlIn0gICAgICAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiJhdGVyIG9yIGphY2tldCwifSAgfQoKZXZlbnQ6IGNvbnRlbnRfYmxvY2tfZGVsdGEKZGF0YTogeyJ0eXBlIjoiY29udGVudF9ibG9ja19kZWx0YSIsImluZGV4IjowLCJkZWx0YSI6eyJ0eXBlIjoidGV4dF9kZWx0YSIsInRleHQiOiIganVzdCBpbiBjYXNlLiJ9ICAgICB9CgpldmVudDogY29udGVudF9ibG9ja19zdG9wCmRhdGE6IHsidHlwZSI6ImNvbnRlbnRfYmxvY2tfc3RvcCIsImluZGV4IjowICAgICAgICAgfQoKZXZlbnQ6IG1lc3NhZ2VfZGVsdGEKZGF0YTogeyJ0eXBlIjoibWVzc2FnZV9kZWx0YSIsImRlbHRhIjp7InN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsfSwidXNhZ2UiOnsib3V0cHV0X3Rva2VucyI6MTAyfSAgICAgICAgICAgICAgfQoKZXZlbnQ6IG1lc3NhZ2Vfc3RvcApkYXRhOiB7InR5cGUiOiJtZXNzYWdlX3N0b3AiICAgICAgIH0KCg==
+  recorded_at: Wed, 23 Apr 2025 11:30:15 GMT
 recorded_with: VCR 6.3.1

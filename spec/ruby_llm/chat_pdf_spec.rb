@@ -7,16 +7,12 @@ RSpec.describe RubyLLM::Chat do
 
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
 
-  pdf_models = %w[claude-3-5-haiku-20241022
-                  gemini-2.0-flash
-                  gpt-4.1-nano
-                  google/gemini-2.0-flash-001].freeze
-
   describe 'pdf model' do
-    pdf_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    PDF_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} understands PDFs" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
         expect(response.content).not_to be_empty
 
@@ -25,7 +21,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} handles multiple PDFs" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
         # Using same file twice for testing
         response = chat.ask('Compare these documents', with: { pdf: [pdf_path, pdf_path] })
         expect(response.content).not_to be_empty

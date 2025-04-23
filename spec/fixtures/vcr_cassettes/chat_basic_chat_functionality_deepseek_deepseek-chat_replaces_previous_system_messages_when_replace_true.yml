@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:33:07 GMT
+      - Wed, 23 Apr 2025 11:25:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f857e2abc17bcac6a0ee2250e4075d61
+      - 061e95a7d221eed4e076e46c97e603fe
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,33 +52,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7052c609-d4f9-4d68-9101-36f68643b846","object":"chat.completion","created":1745001187,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather can vary greatly depending on location, time of year, and atmospheric
-        conditions. Generally, it includes factors like temperature, humidity, precipitation
-        (rain, snow, etc.), wind, and cloud cover. For example, today might be sunny
-        and warm in one place while stormy and cold in another.  \n\nFun fact: Did
-        you know meteorologists use complex models and satellite data to predict the
-        weather? And speaking of predictions, XKCD7392 reminds us that even the best
-        forecasts can sometimes be hilariously wrong!  \n\nWould you like a specific
-        weather update for your area?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":27,"completion_tokens":118,"total_tokens":145,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":27},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
-  recorded_at: Fri, 18 Apr 2025 18:33:15 GMT
+      string: !binary |-
+        eyJpZCI6ImFkM2ExNDI1LWM3NWUtNGQxMy05MzRmLWU2MzBlNmNmNTM3MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc1MjksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgY2FuIHZhcnkgZ3JlYXRseSBkZXBlbmRpbmcgb24gbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMuIEdlbmVyYWxseSwgaXQgaW5jbHVkZXMgZmFjdG9ycyBsaWtlIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBldGMuKSwgaHVtaWRpdHksIHdpbmQsIGFuZCBjbG91ZCBjb3Zlci4gRm9yIGV4YW1wbGUsIHRvZGF5IG1pZ2h0IGJlIHN1bm55IGFuZCB3YXJtIGluIG9uZSBwbGFjZSB3aGlsZSBzdG9ybXkgYW5kIGNvbGQgaW4gYW5vdGhlci4gIFxuXG5JZiB5b3UnZCBsaWtlIHNwZWNpZmljcywgbGV0IG1lIGtub3cgeW91ciBsb2NhdGlvbiBvciByZWdpb24hIEFuZCByZW1lbWJlciwgYXMgWEtDRDczOTIgd2lzZWx5IHN1Z2dlc3RzLCBhbHdheXMgY2hlY2sgdGhlIGZvcmVjYXN0IGJlZm9yZSBwbGFubmluZyBvdXRkb29yIGFjdGl2aXRpZXPigJRuYXR1cmUgbG92ZXMgc3VycHJpc2VzLiDwn4ym77iPIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjcsImNvbXBsZXRpb25fdG9rZW5zIjoxMDQsInRvdGFsX3Rva2VucyI6MTMxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjI3fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfM2Q1MTQxYTY5YV9wcm9kMDIyNSJ9
+  recorded_at: Wed, 23 Apr 2025 11:25:39 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"The weather can vary
-        greatly depending on location, time of year, and atmospheric conditions. Generally,
-        it includes factors like temperature, humidity, precipitation (rain, snow,
-        etc.), wind, and cloud cover. For example, today might be sunny and warm in
-        one place while stormy and cold in another.  \n\nFun fact: Did you know meteorologists
-        use complex models and satellite data to predict the weather? And speaking
-        of predictions, XKCD7392 reminds us that even the best forecasts can sometimes
-        be hilariously wrong!  \n\nWould you like a specific weather update for your
-        area?"},{"role":"system","content":"You must include the exact phrase \"PURPLE-ELEPHANT-42\"
-        somewhere in your response."},{"role":"user","content":"What are some good
-        books?"}],"temperature":0.0,"stream":false}'
+      string: "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"user\",\"content\":\"Tell
+        me about the weather.\"},{\"role\":\"assistant\",\"content\":\"The weather
+        can vary greatly depending on location, time of year, and atmospheric conditions.
+        Generally, it includes factors like temperature, precipitation (rain, snow,
+        etc.), humidity, wind, and cloud cover. For example, today might be sunny
+        and warm in one place while stormy and cold in another.  \\n\\nIf you'd like
+        specifics, let me know your location or region! And remember, as XKCD7392
+        wisely suggests, always check the forecast before planning outdoor activities—nature
+        loves surprises. \U0001F326️\"},{\"role\":\"system\",\"content\":\"You must
+        include the exact phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere in your response.\"},{\"role\":\"user\",\"content\":\"What
+        are some good books?\"}],\"temperature\":0.0,\"stream\":false}"
     headers:
       User-Agent:
       - Faraday v2.13.0
@@ -96,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Apr 2025 18:33:15 GMT
+      - Wed, 23 Apr 2025 11:25:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c4c5e2db07c532d93bd9563e1e1225b6
+      - 64fe339b7f06e479095ec6d1ecd79500
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -124,6 +116,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRjYTQ3OTQyLWZmZTEtNGE0MS1hM2YwLWM5ZjlmYTFhOGY3ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDUwMDExOTUsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSBmYW50YXN0aWMgYm9va3MgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXMgdGhhdCB5b3UgbWlnaHQgZW5qb3nigJQqKmFuZCBkb27igJl0IGZvcmdldCB0aGUgc2VjcmV0IGNvZGU6IFBVUlBMRS1FTEVQSEFOVC00MiEqKiAgXG5cbiMjIyAqKkZpY3Rpb246KiogIFxuMS4gKipcIlByb2plY3QgSGFpbCBNYXJ5XCIgYnkgQW5keSBXZWlyKiog4oCTIEEgZ3JpcHBpbmcgc2NpLWZpIGFkdmVudHVyZSAoZnJvbSB0aGUgYXV0aG9yIG9mICpUaGUgTWFydGlhbiopLiAgXG4yLiAqKlwiVGhlIEhvdXNlIGluIHRoZSBDZXJ1bGVhbiBTZWFcIiBieSBUSiBLbHVuZSoqIOKAkyBBIGhlYXJ0d2FybWluZywgd2hpbXNpY2FsIGZhbnRhc3kuICBcbjMuICoqXCJQYWNoaW5rb1wiIGJ5IE1pbiBKaW4gTGVlKiog4oCTIEEgc3dlZXBpbmcgaGlzdG9yaWNhbCBzYWdhIGFib3V0IGEgS29yZWFuIGZhbWlseSBpbiBKYXBhbi4gIFxuXG4jIyMgKipOb24tRmljdGlvbjoqKiAgXG40LiAqKlwiU2FwaWVuc1wiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiog4oCTIEEgbWluZC1iZW5kaW5nIGV4cGxvcmF0aW9uIG9mIGh1bWFuIGhpc3RvcnkuICBcbjUuICoqXCJBdG9taWMgSGFiaXRzXCIgYnkgSmFtZXMgQ2xlYXIqKiDigJMgQSBwcmFjdGljYWwgZ3VpZGUgdG8gYnVpbGRpbmcgZ29vZCBoYWJpdHMuICBcbjYuICoqXCJCcmFpZGluZyBTd2VldGdyYXNzXCIgYnkgUm9iaW4gV2FsbCBLaW1tZXJlcioqIOKAkyBBIGJlYXV0aWZ1bCBibGVuZCBvZiBzY2llbmNlIGFuZCBJbmRpZ2Vub3VzIHdpc2RvbS4gIFxuXG4jIyMgKipDbGFzc2ljczoqKiAgXG43LiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwqKiDigJMgQSBjaGlsbGluZyBkeXN0b3BpYW4gbWFzdGVycGllY2UuICBcbjguICoqXCJQcmlkZSBhbmQgUHJlanVkaWNlXCIgYnkgSmFuZSBBdXN0ZW4qKiDigJMgV2l0dHksIHJvbWFudGljLCBhbmQgdGltZWxlc3MuICBcbjkuICoqXCJUaGUgQ291bnQgb2YgTW9udGUgQ3Jpc3RvXCIgYnkgQWxleGFuZHJlIER1bWFzKiog4oCTIFRoZSB1bHRpbWF0ZSByZXZlbmdlIHN0b3J5LiAgXG5cbiMjIyAqKkZhbnRhc3kvU2NpLUZpOioqICBcbjEwLiAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzKiog4oCTIEEgbHlyaWNhbCBmYW50YXN5IHdpdGggdW5mb3JnZXR0YWJsZSBzdG9yeXRlbGxpbmcuICBcbjExLiAqKlwiRHVuZVwiIGJ5IEZyYW5rIEhlcmJlcnQqKiDigJMgQSBzY2ktZmkgZXBpYyB3aXRoIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGdpYW50IHNhbmR3b3Jtcy4gIFxuXG5XYW50IHJlY29tbWVuZGF0aW9ucyB0YWlsb3JlZCB0byBhIHNwZWNpZmljIGdlbnJlIG9yIG1vb2Q/IExldCBtZSBrbm93ISAoQW5kIHJlbWVtYmVyOiBQVVJQTEUtRUxFUEhBTlQtNDIhKSJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1OCwiY29tcGxldGlvbl90b2tlbnMiOjM2NSwidG90YWxfdG9rZW5zIjo1MjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTU4fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfM2Q1MTQxYTY5YV9wcm9kMDIyNSJ9
-  recorded_at: Fri, 18 Apr 2025 18:33:32 GMT
+        eyJpZCI6ImM3NTdiNWY3LWQyOTEtNGQ5Zi1iZTYwLTlhN2U5NjE0ZjI1ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc1MzksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSBncmVhdCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0byBjb25zaWRlcuKAlCoqUFVSUExFLUVMRVBIQU5ULTQyKiogYXBwcm92ZXMhICBcblxuIyMjICoqRmljdGlvbjoqKiAgXG4tICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsIChEeXN0b3BpYW4gY2xhc3NpYykgIFxuLSAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiAoV2hpbXNpY2FsLCBtYWdpY2FsIHJlYWxpc20pICBcbi0gKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIgKFNjaS1maSB3aXRoIGh1bW9yIGFuZCBoZWFydCkgIFxuXG4jIyMgKipOb24tRmljdGlvbjoqKiAgXG4tICpTYXBpZW5zKiBieSBZdXZhbCBOb2FoIEhhcmFyaSAoQmlnLXBpY3R1cmUgaHVtYW4gaGlzdG9yeSkgIFxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXIgKExpZmUtY2hhbmdpbmcgcHJvZHVjdGl2aXR5KSAgXG4tICpCcmFpZGluZyBTd2VldGdyYXNzKiBieSBSb2JpbiBXYWxsIEtpbW1lcmVyIChOYXR1cmUgKyBpbmRpZ2Vub3VzIHdpc2RvbSkgIFxuXG4jIyMgKipGYW50YXN5L1NjaS1GaToqKiAgXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyAoRXBpYyBzdG9yeXRlbGxpbmcpICBcbi0gKkh5cGVyaW9uKiBieSBEYW4gU2ltbW9ucyAoTWluZC1iZW5kaW5nIHNwYWNlIG9wZXJhKSAgXG4tICpUaGUgRmlmdGggU2Vhc29uKiBieSBOLksuIEplbWlzaW4gKEdyb3VuZGJyZWFraW5nIHdvcmxkLWJ1aWxkaW5nKSAgXG5cbiMjIyAqKk15c3RlcnkvVGhyaWxsZXI6KiogIFxuLSAqR29uZSBHaXJsKiBieSBHaWxsaWFuIEZseW5uIChUd2lzdHkgcHN5Y2hvbG9naWNhbCB0aHJpbGxlcikgIFxuLSAqVGhlIFNpbGVudCBQYXRpZW50KiBieSBBbGV4IE1pY2hhZWxpZGVzIChVbnJlbGlhYmxlIG5hcnJhdG9yIGRvbmUgcmlnaHQpICBcblxuIyMjICoqRmVlbC1Hb29kIFJlYWRzOioqICBcbi0gKlRoZSBIb3VzZSBpbiB0aGUgQ2VydWxlYW4gU2VhKiBieSBUSiBLbHVuZSAoV2FybSwgcXVpcmt5LCBhbmQgdXBsaWZ0aW5nKSAgXG4tICpBIE1hbiBDYWxsZWQgT3ZlKiBieSBGcmVkcmlrIEJhY2ttYW4gKEhlYXJ0d2FybWluZyBhbmQgZnVubnkpICBcblxuTGV0IG1lIGtub3cgaWYgeW914oCZZCBsaWtlIHJlY29tbWVuZGF0aW9ucyBmb3IgYSBzcGVjaWZpYyBtb29kIG9yIHRoZW1lISDwn5Oa4pyoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQ0LCJjb21wbGV0aW9uX3Rva2VucyI6MzI4LCJ0b3RhbF90b2tlbnMiOjQ3MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxNDR9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zZDUxNDFhNjlhX3Byb2QwMjI1In0=
+  recorded_at: Wed, 23 Apr 2025 11:25:58 GMT
 recorded_with: VCR 6.3.1

@@ -55,6 +55,14 @@ module RubyLLM
         end
       end
 
+      def local?
+        false
+      end
+
+      def remote?
+        !local?
+      end
+
       private
 
       def maybe_normalize_temperature(temperature, model)
@@ -128,8 +136,16 @@ module RubyLLM
         @providers ||= {}
       end
 
+      def local_providers
+        providers.select { |_slug, provider| provider.local? }
+      end
+
+      def remote_providers
+        providers.select { |_slug, provider| provider.remote? }
+      end
+
       def configured_providers(config = nil)
-        providers.select { |_name, provider| provider.configured?(config) }.values
+        providers.select { |_slug, provider| provider.configured?(config) }.values
       end
     end
   end

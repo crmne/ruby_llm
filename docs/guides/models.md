@@ -9,7 +9,7 @@ permalink: /guides/models
 # Working with AI Models
 {: .no_toc }
 
-RubyLLM provides a unified interface to a wide array of AI models from different providers like OpenAI, Anthropic, Google, AWS Bedrock, OpenRouter and DeepSeek. This guide covers how RubyLLM discovers, manages, and allows you to interact with these models, including advanced scenarios like custom endpoints.
+RubyLLM provides a unified interface to a wide array of AI models from different providers like Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, and OpenRouter. This guide covers how RubyLLM discovers, manages, and allows you to interact with these models, including advanced scenarios like custom endpoints.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

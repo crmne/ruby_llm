@@ -81,6 +81,7 @@ RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
+RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

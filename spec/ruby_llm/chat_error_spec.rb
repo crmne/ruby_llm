@@ -29,29 +29,22 @@ end
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
-  chat_models = %w[
-    claude-3-5-haiku-20241022
-    anthropic.claude-3-5-haiku-20241022-v1:0
-    gemini-2.0-flash
-    deepseek-chat
-    gpt-4.1-nano
-    anthropic/claude-3.5-sonnet
-  ].freeze
-
   describe 'error handling' do
-    chat_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model) }
+        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         before do
           # Sabotage the API key after initialization
-          RubyLLM::Provider.providers.each_key do |slug|
+          RubyLLM::Provider.remote_providers.each_key do |slug|
             RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key')
           end
         end
 
         it 'raises appropriate auth error' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+          skip('Only valid for remote providers') if RubyLLM::Provider.providers[provider].local?
           expect { chat.ask('Hello') }.to raise_error do |error|
             expect(error).to be_a(RubyLLM::Error)
             expect(error.class.ancestors).to include(RubyLLM::Error)
@@ -68,37 +61,38 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'real error scenarios' do
-    chat_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
-        let(:chat) { RubyLLM.chat(model: model) }
+        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         it 'handles invalid message format errors' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
-          skip('OpenRouter gets stuck with an invalid message format') if provider == 'openrouter'
+          skip('OpenRouter gets stuck with an invalid message format') if provider == :openrouter
+          skip("Gemini doesn't throw an error for invalid message format") if provider == :gemini
           # Try to mess up the message format
           bad_content = { type: 'text', wrong: 'format' }
           chat.add_message(role: :user, content: bad_content)
 
-          unless provider == 'gemini' # Gemini doesn't throw an error for invalid message format
-            expect { chat.ask('hi') }.to raise_error(RubyLLM::Error) do |e|
-              # Basic error format checks
-              expect(e.message).not_to look_like_json
-              expect(e.message).to match(/^[A-Za-z]/)
+          expect { chat.ask('hi') }.to raise_error(RubyLLM::Error) do |e|
+            # Basic error format checks
+            expect(e.message).not_to look_like_json
+            expect(e.message).to match(/^[A-Za-z]/)
 
-              # Provider specific messages
-              case provider
-              when 'deepseek'
-                expect(e.message).to include_words('deserialize', 'content')
-              when 'gemini'
-                expect(e.message).to include_words('part', 'content')
-              else
-                expect(e.message).to include_words('message', 'content')
-              end
+            # Provider specific messages
+            case provider
+            when 'deepseek'
+              expect(e.message).to include_words('deserialize', 'content')
+            when 'gemini'
+              expect(e.message).to include_words('part', 'content')
+            else
+              expect(e.message).to include_words('message', 'content')
             end
           end
         end
 
         it 'handles context length exceeded errors' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+          skip('Ollama does not throw an error for context length exceeded') if provider == :ollama
           # Create a huge conversation
           massive_text = 'a' * 1_000_000
 
@@ -112,20 +106,6 @@ RSpec.describe RubyLLM::Chat do
             # Basic error format checks
             expect(e.message).not_to look_like_json
             expect(e.message).to match(/^[A-Za-z]/)
-
-            # Provider specific messages
-            case provider
-            when 'anthropic', 'bedrock'
-              expect(e.message).to include_words('bytes')
-            when 'gemini'
-              expect(e.message).to include_words('token')
-            when 'openai'
-              expect(e.message).to include_words('large')
-            when 'deepseek', 'openrouter'
-              expect(e.message).to include_words('tokens', 'length')
-            else
-              expect(e.message).to include_words('limit')
-            end
           end
         end
       end

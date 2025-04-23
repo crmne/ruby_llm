@@ -11,8 +11,8 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Beautiful Ruby interface to modern AI'
   spec.description   = 'A delightful Ruby way to work with AI. Chat in text, analyze and generate ' \
                        'images, understand audio, and use tools through a unified interface to ' \
-                       'OpenAI, Anthropic, Google, AWS Bedrock Anthropic, OpenRouter, and DeepSeek. Built for ' \
-                       'developer happiness with automatic token counting, proper streaming, and ' \
+                       'Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, and OpenRouter. ' \
+                       'Built for developer happiness with automatic token counting, proper streaming, and ' \
                        'Rails integration. No wrapping your head around multiple APIs - just clean ' \
                        'Ruby code that works.'
   spec.homepage      = 'https://rubyllm.com'
