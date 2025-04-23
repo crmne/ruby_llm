@@ -75,7 +75,7 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
+  config.perplexity_api_key = ENV.fetch['PERPLEXITY_API_KEY', nil]
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)

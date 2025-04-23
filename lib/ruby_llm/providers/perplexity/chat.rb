@@ -11,15 +11,6 @@ module RubyLLM
           'chat/completions'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
-          {
-            model: model,
-            messages: format_messages(messages),
-            temperature: temperature,
-            stream: stream
-          }
-        end
-
         def parse_completion_response(response)
           data = response.body
           return if data.empty?
@@ -29,7 +20,7 @@ module RubyLLM
 
           # Create a message with citations if available
           content = message_data['content']
-          
+
           Message.new(
             role: :assistant,
             content: content,
@@ -45,9 +36,11 @@ module RubyLLM
         def format_messages(messages)
           messages.map do |msg|
             {
-              role: msg.role.to_s,
-              content: msg.content
-            }
+              role: format_role(msg.role),
+              content: Media.format_content(msg.content),
+              tool_calls: format_tool_calls(msg.tool_calls),
+              tool_call_id: msg.tool_call_id
+            }.compact
           end
         end
       end
