@@ -23,12 +23,12 @@ After reading this guide, you will know:
 
 *   RubyLLM's prerequisites.
 *   How to install RubyLLM using Bundler or manually.
-*   How to configure API keys and other settings.
+*   Where to find configuration details.
 
 ## Prerequisites
 
 *   Ruby 3.1 or later.
-*   An API key from at least one supported provider (OpenAI, Anthropic, Google Gemini, AWS Bedrock, DeepSeek).
+*   API keys for the AI providers you plan to use (e.g., OpenAI, Anthropic).
 
 ## Installation Methods
 
@@ -58,56 +58,27 @@ gem install ruby_llm
 
 You'll then need to `require 'ruby_llm'` in your script.
 
-## Configuration
+## Basic Configuration (Required)
 
-RubyLLM needs API keys to communicate with AI providers. You configure these using `RubyLLM.configure`, typically once when your application starts (e.g., in `config/initializers/ruby_llm.rb` for Rails apps, or at the top of a script).
+RubyLLM needs API keys to communicate with AI providers. You **must** configure keys for the services you intend to use.
 
-Here are all the available configuration options:
+Here's a minimal example showing how to configure the OpenAI key:
 
 ```ruby
+# config/initializers/ruby_llm.rb (in Rails) or at the start of your script
 require 'ruby_llm'
 
 RubyLLM.configure do |config|
-  # --- Provider API Keys ---
-  # Provide keys ONLY for the providers you intend to use.
-  # Using environment variables (ENV.fetch) is highly recommended.
+  # Set keys for the providers you need. Using environment variables is best practice.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
-  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-
-  # --- AWS Bedrock Credentials ---
-  # Uses standard AWS credential chain (environment, shared config, IAM role)
-  # if these specific keys aren't set. Region is required if using Bedrock.
-  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
-  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-  config.bedrock_region = ENV.fetch('AWS_REGION', nil) # e.g., 'us-west-2'
-  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil) # For temporary credentials
-
-  # --- Custom OpenAI Endpoint --- New in v1.2.0
-  # Use this for Azure OpenAI, proxies, or self-hosted models via OpenAI-compatible APIs.
-  # See the "Working with Models" guide for details.
-  config.openai_api_base = ENV.fetch('OPENAI_API_BASE', nil) # e.g., "https://your-azure.openai.azure.com"
-
-  # --- Default Models ---
-  # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
-  config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
-  config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'dall-e-3'            # Default: 'dall-e-3'
-
-  # --- Connection Settings ---
-  config.request_timeout = 120  # Request timeout in seconds (default: 120)
-  config.max_retries = 3        # Max retries on transient network errors (default: 3)
-  config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
-  config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
-  config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
+  # Add other keys like config.anthropic_api_key if needed
 end
 ```
 
 {: .note }
-You only need to set the API keys for the providers you actually use. RubyLLM will raise a `ConfigurationError` if you attempt to use a provider whose key is not configured.
+RubyLLM will raise a `ConfigurationError` if you attempt to use a provider whose key is not configured.
 
-For advanced configuration options like `openai_api_base`, refer to the [Working with Models guide]({% link guides/models.md %}#connecting-to-custom-endpoints--using-unlisted-models).
+For a complete list of all configuration options, including setting default models, timeouts, custom endpoints, and using configuration contexts, please refer to the **[Configuration Guide]({% link configuration.md %})**.
 
 ## Verifying Installation
 
@@ -133,11 +104,12 @@ RubyLLM.models.chat_models.each do |model|
 end
 ```
 
-If this runs without errors and prints a response and model list, you're ready to go!
+If this runs without configuration errors and prints a response (or a specific API error like 'Invalid API key'), the gem is installed correctly.
 
 ## Next Steps
 
-Now that you've installed and configured RubyLLM, dive into the specific features:
+Now that you've installed RubyLLM:
 
-*   [Getting Started Guide]({% link guides/getting-started.md %})
-*   [Chatting with AI Models Guide]({% link guides/chat.md %})
+*   Read the **[Configuration Guide]({% link configuration.md %})** for all setup options.
+*   Check out the **[Getting Started Guide]({% link guides/getting-started.md %})** for basic usage examples.
+*   Explore other **[Guides]({% link guides/index.md %})** for specific features like Chat, Tools, Embeddings, etc.

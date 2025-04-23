@@ -20,6 +20,8 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :openrouter_api_key,
+                  :ollama_api_base,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -43,6 +45,24 @@ module RubyLLM
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+    end
+
+    def inspect # rubocop:disable Metrics/MethodLength
+      redacted = lambda do |name, value|
+        if name.match?(/_key|_secret|_token$/)
+          value.nil? ? 'nil' : '[FILTERED]'
+        else
+          value
+        end
+      end
+
+      inspection = instance_variables.map do |ivar|
+        name = ivar.to_s.delete_prefix('@')
+        value = redacted[name, instance_variable_get(ivar)]
+        "#{name}: #{value}"
+      end.join(', ')
+
+      "#<#{self.class}:0x#{object_id.to_s(16)} #{inspection}>"
     end
   end
 end

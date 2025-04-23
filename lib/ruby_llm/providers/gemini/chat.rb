@@ -9,25 +9,16 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def complete(messages, tools:, temperature:, model:, &block) # rubocop:disable Metrics/MethodLength
-          @model = model
+        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
+          @model = model # Store model for completion_url/stream_url
           payload = {
             contents: format_messages(messages),
             generationConfig: {
               temperature: temperature
             }
           }
-
           payload[:tools] = format_tools(tools) if tools.any?
-
-          # Store tools for use in generate_completion
-          @tools = tools
-
-          if block_given?
-            stream_response payload, &block
-          else
-            sync_response payload
-          end
+          payload
         end
 
         # Format methods can be private

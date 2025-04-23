@@ -16,7 +16,8 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
-  'bedrock' => 'Bedrock'
+  'bedrock' => 'Bedrock',
+  'openrouter' => 'OpenRouter'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/ruby_llm/railtie")
@@ -30,8 +31,14 @@ module RubyLLM
   class Error < StandardError; end
 
   class << self
-    def chat(model: nil, provider: nil, assume_model_exists: false)
-      Chat.new(model:, provider:, assume_model_exists:)
+    def context
+      context_config = config.dup
+      yield context_config if block_given?
+      Context.new(context_config)
+    end
+
+    def chat(...)
+      Chat.new(...)
     end
 
     def embed(...)
@@ -73,6 +80,8 @@ RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
+RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
+RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
