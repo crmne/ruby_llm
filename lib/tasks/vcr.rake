@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'dotenv/load'
+
 # Helper functions at the top level
 def record_all_cassettes(cassette_dir)
   # Re-record all cassettes

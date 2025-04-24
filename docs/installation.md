@@ -6,30 +6,43 @@ permalink: /installation
 ---
 
 # Installation
+{: .no_toc }
 
-RubyLLM is packaged as a Ruby gem, making it easy to install in your projects.
+This guide covers how to install RubyLLM.
+{: .fs-6 .fw-300 }
 
-## Requirements
+## Table of contents
+{: .no_toc .text-delta }
 
-* Ruby 3.1 or later
-* An API key from at least one of the supported providers:
-  * OpenAI
-  * Anthropic
-  * Google (Gemini)
-  * AWS Bedrock
-  * DeepSeek
+1. TOC
+{:toc}
+
+---
+
+After reading this guide, you will know:
+
+*   RubyLLM's prerequisites.
+*   How to install RubyLLM using Bundler or manually.
+*   Where to find configuration details.
+
+## Prerequisites
+
+*   Ruby 3.1 or later.
+*   API keys for the AI providers you plan to use (e.g., OpenAI, Anthropic).
 
 ## Installation Methods
 
-### Using Bundler (recommended)
+### Using Bundler (Recommended)
 
-Add RubyLLM to your project's Gemfile:
+The standard way to manage gem dependencies in Ruby projects.
+
+Add RubyLLM to your project's `Gemfile`:
 
 ```ruby
 gem 'ruby_llm'
 ```
 
-Then install the dependencies:
+Then, from your terminal, install the dependencies:
 
 ```bash
 bundle install
@@ -37,48 +50,39 @@ bundle install
 
 ### Manual Installation
 
-If you're not using Bundler, you can install RubyLLM directly:
+If you're not using Bundler (e.g., for a simple script), you can install RubyLLM directly using the `gem` command:
 
 ```bash
 gem install ruby_llm
 ```
 
-## Configuration
+You'll then need to `require 'ruby_llm'` in your script.
 
-After installing RubyLLM, you'll need to configure it with your API keys:
+## Basic Configuration (Required)
+
+RubyLLM needs API keys to communicate with AI providers. You **must** configure keys for the services you intend to use.
+
+Here's a minimal example showing how to configure the OpenAI key:
 
 ```ruby
+# config/initializers/ruby_llm.rb (in Rails) or at the start of your script
 require 'ruby_llm'
 
 RubyLLM.configure do |config|
-  # Required: At least one API key
+  # Set keys for the providers you need. Using environment variables is best practice.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
-  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-
-  # Bedrock
-  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
-  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-  config.bedrock_region = ENV.fetch('AWS_REGION', nil)
-  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
-
-  # Optional: Set default models
-  config.default_model = 'gpt-4o-mini'               # Default chat model
-  config.default_embedding_model = 'text-embedding-3-small'  # Default embedding model
-  config.default_image_model = 'dall-e-3'            # Default image generation model
-
-  # Optional: Configure request settings
-  config.request_timeout = 120  # Request timeout in seconds
-  config.max_retries = 3        # Number of retries on failures
+  # Add other keys like config.anthropic_api_key if needed
 end
 ```
 
-We recommend storing your API keys as environment variables rather than hardcoding them in your application.
+{: .note }
+RubyLLM will raise a `ConfigurationError` if you attempt to use a provider whose key is not configured.
+
+For a complete list of all configuration options, including setting default models, timeouts, custom endpoints, and using configuration contexts, please refer to the **[Configuration Guide]({% link configuration.md %})**.
 
 ## Verifying Installation
 
-You can verify that RubyLLM is correctly installed and configured by running a simple test:
+You can quickly verify your setup by running a simple query. Make sure you have configured at least one API key (like `openai_api_key` in the example below).
 
 ```ruby
 require 'ruby_llm'
@@ -100,6 +104,12 @@ RubyLLM.models.chat_models.each do |model|
 end
 ```
 
+If this runs without configuration errors and prints a response (or a specific API error like 'Invalid API key'), the gem is installed correctly.
+
 ## Next Steps
 
-Once you've successfully installed RubyLLM, check out the [Getting Started guide]({% link guides/getting-started.md %}) to learn how to use it in your applications.
+Now that you've installed RubyLLM:
+
+*   Read the **[Configuration Guide]({% link configuration.md %})** for all setup options.
+*   Check out the **[Getting Started Guide]({% link guides/getting-started.md %})** for basic usage examples.
+*   Explore other **[Guides]({% link guides/index.md %})** for specific features like Chat, Tools, Embeddings, etc.

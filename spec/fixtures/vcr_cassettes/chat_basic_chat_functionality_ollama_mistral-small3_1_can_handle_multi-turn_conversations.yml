@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Apr 2025 11:26:25 GMT
+      Content-Length:
+      - '546'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-260","object":"chat.completion","created":1745407585,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by Yukihiro \"Matz\" Matsumoto. He began work on Ruby in the mid-1990s
+        and officially released it in 1995. Matsumoto designed Ruby with an emphasis
+        on simplicity and productivity, aiming to make programming more enjoyable
+        and intuitive."},"finish_reason":"stop"}],"usage":{"prompt_tokens":364,"completion_tokens":63,"total_tokens":427}}
+
+        '
+  recorded_at: Wed, 23 Apr 2025 11:26:25 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
+        Yukihiro \"Matz\" Matsumoto. He began work on Ruby in the mid-1990s and officially
+        released it in 1995. Matsumoto designed Ruby with an emphasis on simplicity
+        and productivity, aiming to make programming more enjoyable and intuitive."},{"role":"user","content":"What
+        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 23 Apr 2025 11:26:26 GMT
+      Content-Length:
+      - '333'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-629","object":"chat.completion","created":1745407586,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        Matsumoto created Ruby in 1995."},"finish_reason":"stop"}],"usage":{"prompt_tokens":436,"completion_tokens":17,"total_tokens":453}}
+
+        '
+  recorded_at: Wed, 23 Apr 2025 11:26:26 GMT
+recorded_with: VCR 6.3.1

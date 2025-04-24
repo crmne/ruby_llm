@@ -89,8 +89,8 @@ module RubyLLM
     end
 
     def count_tokens(chunk)
-      @input_tokens += chunk.input_tokens if chunk.input_tokens
-      @output_tokens += chunk.output_tokens if chunk.output_tokens
+      @input_tokens = chunk.input_tokens if chunk.input_tokens
+      @output_tokens = chunk.output_tokens if chunk.output_tokens
     end
   end
 end
