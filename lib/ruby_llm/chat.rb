@@ -60,20 +60,8 @@ module RubyLLM
       self
     end
 
-    def with_model(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-      assume_exists = true if provider && Provider.providers[provider.to_sym].local?
-
-      if assume_exists
-        raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
-
-        @provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
-        @model = Struct.new(:id, :provider, :supports_functions, :supports_vision).new(model_id, provider, true, true)
-        RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
-                            'Capabilities may not be accurately reflected.'
-      else
-        @model = Models.find model_id, provider
-        @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
-      end
+    def with_model(model_id, provider: nil, assume_exists: false)
+      @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
       self
     end
 
