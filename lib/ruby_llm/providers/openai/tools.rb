@@ -54,8 +54,12 @@ module RubyLLM
                 id: tc['id'],
                 name: tc.dig('function', 'name'),
                 arguments: if parse_arguments
-                             JSON.parse(tc.dig('function',
-                                               'arguments'))
+                             if tc.dig('function', 'arguments').empty?
+                               {}
+                             else
+                               JSON.parse(tc.dig('function',
+                                                 'arguments'))
+                             end
                            else
                              tc.dig('function', 'arguments')
                            end

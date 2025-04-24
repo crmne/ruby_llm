@@ -16,6 +16,8 @@ module RubyLLM
               format_image(part)
             when 'input_audio'
               format_audio(part)
+            when 'pdf'
+              format_pdf(part)
             else
               part
             end
@@ -36,6 +38,16 @@ module RubyLLM
           {
             type: 'input_audio',
             input_audio: part[:input_audio]
+          }
+        end
+
+        def format_pdf(part)
+          {
+            type: 'file',
+            file: {
+              filename: File.basename(part[:source]),
+              file_data: "data:application/pdf;base64,#{Base64.strict_encode64(part[:content])}"
+            }
           }
         end
 

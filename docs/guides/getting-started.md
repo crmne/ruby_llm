@@ -7,164 +7,124 @@ permalink: /guides/getting-started
 ---
 
 # Getting Started with RubyLLM
+{: .no_toc }
 
-This guide will help you get up and running with RubyLLM, showing you the basics of chatting with AI models, generating images, and creating embeddings.
+Welcome to RubyLLM! This guide will get you up and running quickly. We'll cover installing the gem, minimal configuration, and making your first chat, image, and embedding requests.
+{: .fs-6 .fw-300 }
 
-## Prerequisites
+## Table of contents
+{: .no_toc .text-delta }
 
-Before starting, make sure you have:
+1. TOC
+{:toc}
 
-1. Installed the RubyLLM gem (see the [Installation guide]({% link installation.md %}))
-2. At least one API key from a supported provider (OpenAI, Anthropic, Google, AWS Bedrock, or DeepSeek)
+---
 
-## Basic Configuration
+After reading this guide, you will know:
 
-Let's start by setting up RubyLLM with your API keys:
+*   How to install RubyLLM.
+*   How to perform minimal configuration.
+*   How to start a simple chat conversation.
+*   How to generate an image.
+*   How to create a text embedding.
+
+## Installation
+
+Add RubyLLM to your Gemfile:
 
 ```ruby
+gem 'ruby_llm'
+```
+
+Then run `bundle install`.
+
+(For full details, see the [Installation Guide]({% link installation.md %})).
+
+## Minimal Configuration
+
+RubyLLM needs API keys for the AI providers you want to use. Configure them once, typically when your application starts.
+
+```ruby
+# config/initializers/ruby_llm.rb (in Rails) or at the start of your script
 require 'ruby_llm'
 
 RubyLLM.configure do |config|
-  # Add the API keys you have available
+  # Add keys ONLY for the providers you intend to use.
+  # Using environment variables is highly recommended.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
-  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-
-  # Bedrock
-  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
-  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-  config.bedrock_region = ENV.fetch('AWS_REGION', nil)
-  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+  # config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
 end
 ```
+
+{: .note }
+You only need to configure keys for the providers you actually plan to use. See the [Configuration Guide]({% link configuration.md %}) for all options, including setting defaults and connecting to custom endpoints.
 
 ## Your First Chat
 
-Let's start with a simple chat interaction:
+Interact with language models using `RubyLLM.chat`.
 
 ```ruby
-# Create a chat (uses the default model)
+# Create a chat instance (uses the configured default model)
 chat = RubyLLM.chat
 
 # Ask a question
-response = chat.ask "What's the capital of France?"
-puts response.content
-# => "The capital of France is Paris."
+response = chat.ask "What is Ruby on Rails?"
 
-# Continue the conversation
-response = chat.ask "What's the population of that city?"
+# The response is a RubyLLM::Message object
 puts response.content
-# => "Paris has a population of approximately 2.1 million people..."
+# => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
 ```
 
-### Using a Specific Model
+RubyLLM handles the conversation history automatically. See the [Chatting with AI Models Guide]({% link guides/chat.md %}) for more details.
 
-You can specify which model you want to use:
+## Generating an Image
 
-```ruby
-# Use Claude
-claude_chat = RubyLLM.chat(model: 'claude-3-5-sonnet-20241022')
-claude_chat.ask "Tell me about Ruby programming language"
-
-# Use Gemini
-gemini_chat = RubyLLM.chat(model: 'gemini-2.0-flash')
-gemini_chat.ask "What are the best Ruby gems for machine learning?"
-```
-
-## Exploring Available Models
-
-RubyLLM gives you access to models from multiple providers. You can see what's available:
+Generate images using models like DALL-E 3 via `RubyLLM.paint`.
 
 ```ruby
-# List all models
-all_models = RubyLLM.models.all
-puts "Total models: #{all_models.count}"
+# Generate an image (uses the default image model)
+image = RubyLLM.paint("A photorealistic red panda coding Ruby")
 
-# List chat models
-chat_models = RubyLLM.models.chat_models
-puts "Chat models:"
-chat_models.each do |model|
-  puts "- #{model.id} (#{model.provider})"
+# Access the image URL (or Base64 data depending on provider)
+if image.url
+  puts image.url
+  # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
+else
+  puts "Image data received (Base64)."
 end
 
-# List embedding models
-RubyLLM.models.embedding_models.each do |model|
-  puts "- #{model.id} (#{model.provider})"
-end
-
-# Find info about a specific model
-gpt = RubyLLM.models.find('gpt-4o-mini')
-puts "Context window: #{gpt.context_window}"
-puts "Max tokens: #{gpt.max_tokens}"
-puts "Pricing: $#{gpt.input_price_per_million} per million input tokens"
+# Save the image locally
+image.save("red_panda.png")
 ```
 
-## Generating Images
+Learn more in the [Image Generation Guide]({% link guides/image-generation.md %}).
 
-RubyLLM makes it easy to generate images with DALL-E:
+## Creating an Embedding
 
-```ruby
-# Generate an image
-image = RubyLLM.paint("a sunset over mountains")
-
-# The URL where you can view/download the image
-puts image.url
-
-# How the model interpreted your prompt
-puts image.revised_prompt
-
-# Generate a larger image
-large_image = RubyLLM.paint(
-  "a cyberpunk city at night with neon lights",
-  size: "1792x1024"
-)
-```
-
-## Creating Embeddings
-
-Embeddings are vector representations of text that can be used for semantic search, classification, and more:
+Create numerical vector representations of text using `RubyLLM.embed`.
 
 ```ruby
-# Create an embedding for a single text
-embedding = RubyLLM.embed("Ruby is a programmer's best friend")
+# Create an embedding (uses the default embedding model)
+embedding = RubyLLM.embed("Ruby is optimized for programmer happiness.")
 
-# The vector representation
+# Access the vector (an array of floats)
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}"
+puts "Vector dimension: #{vector.length}" # e.g., 1536
 
-# Create embeddings for multiple texts
-texts = ["Ruby", "Python", "JavaScript"]
-embeddings = RubyLLM.embed(texts)
-
-# Each text gets its own vector
-puts "Number of vectors: #{embeddings.vectors.length}"
+# Access metadata
+puts "Model used: #{embedding.model}"
 ```
 
-## Working with Conversations
-
-Here's how to have a multi-turn conversation:
-
-```ruby
-chat = RubyLLM.chat
-
-# First message
-chat.ask "What are the benefits of Ruby on Rails?"
-
-# Follow-up questions
-chat.ask "How does that compare to Django?"
-chat.ask "Which one would you recommend for a new web project?"
-
-# You can check all messages in the conversation
-chat.messages.each do |message|
-  puts "#{message.role}: #{message.content[0..100]}..."
-end
-```
+Explore further in the [Embeddings Guide]({% link guides/embeddings.md %}).
 
 ## What's Next?
 
-Now that you've got the basics down, you're ready to explore more advanced features:
+You've covered the basics! Now you're ready to explore RubyLLM's features in more detail:
 
-- [Chatting with AI]({% link guides/chat.md %}) - Learn more about chat capabilities
-- [Using Tools]({% link guides/tools.md %}) - Let AI use your Ruby code
-- [Rails Integration]({% link guides/rails.md %}) - Persist chats in your Rails apps
+*   [Chatting with AI Models]({% link guides/chat.md %})
+*   [Working with Models]({% link guides/models.md %}) (Choosing models, custom endpoints)
+*   [Using Tools]({% link guides/tools.md %}) (Letting AI call your code)
+*   [Streaming Responses]({% link guides/streaming.md %})
+*   [Rails Integration]({% link guides/rails.md %})
+*   [Configuration]({% link configuration.md %})
+*   [Error Handling]({% link guides/error-handling.md %})

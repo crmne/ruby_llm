@@ -153,7 +153,7 @@ RSpec.describe RubyLLM::Models do
       family_models = RubyLLM.models.by_family(family)
 
       expect(family_models).to be_a(described_class)
-      expect(family_models.all).to all(have_attributes(family: family))
+      expect(family_models.all).to all(have_attributes(family: family.to_s))
       expect(family_models.all).not_to be_empty
     end
   end

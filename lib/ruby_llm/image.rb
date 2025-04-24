@@ -36,12 +36,14 @@ module RubyLLM
       path
     end
 
-    def self.paint(prompt, model: nil, size: '1024x1024')
-      model_id = model || RubyLLM.config.default_image_model
-      Models.find(model_id) # Validate model exists
+    def self.paint(prompt, model: nil, provider: nil, size: '1024x1024', context: nil)
+      config = context&.config || RubyLLM.config
+      model_id = model || config.default_image_model
+      Models.find(model_id, provider) # Validate model exists
 
       provider = Provider.for(model_id)
-      provider.paint(prompt, model: model_id, size: size)
+      connection = context ? context.connection_for(provider) : provider.connection(config)
+      provider.paint(prompt, model: model_id, size:, connection:)
     end
   end
 end

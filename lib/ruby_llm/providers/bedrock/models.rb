@@ -5,15 +5,14 @@ module RubyLLM
     module Bedrock
       # Models methods for the AWS Bedrock API implementation
       module Models
-        def list_models
-          @connection = nil # reset connection since base url is different
-          @api_base = "https://bedrock.#{RubyLLM.config.bedrock_region}.amazonaws.com"
-          full_models_url = "#{@api_base}/#{models_url}"
-          signature = sign_request(full_models_url, method: :get)
-          response = connection.get(models_url) do |req|
+        def list_models(connection:)
+          config = connection.config
+          mgmt_api_base = "https://bedrock.#{config.bedrock_region}.amazonaws.com"
+          full_models_url = "#{mgmt_api_base}/#{models_url}"
+          signature = sign_request(full_models_url, config:, method: :get)
+          response = connection.get(full_models_url) do |req|
             req.headers.merge! signature.headers
           end
-          @connection = nil # reset connection since base url is different
 
           parse_list_models_response(response, slug, capabilities)
         end
@@ -42,11 +41,18 @@ module RubyLLM
 
         def base_model_attributes(model_id, model, slug)
           {
-            id: model_id,
+            id: model_id_with_prefix(model_id, model),
             created_at: nil,
             display_name: model['modelName'] || capabilities.format_display_name(model_id),
             provider: slug
           }
+        end
+
+        def model_id_with_prefix(model_id, model)
+          return model_id unless model['inferenceTypesSupported']&.include?('INFERENCE_PROFILE')
+          return model_id if model['inferenceTypesSupported']&.include?('ON_DEMAND')
+
+          "us.#{model_id}"
         end
 
         def capability_attributes(model_id, capabilities)

@@ -5,6 +5,15 @@ module RubyLLM
     module Bedrock
       # Chat methods for the AWS Bedrock API implementation
       module Chat
+        def sync_response(connection, payload)
+          signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", config: connection.config,
+                                                                                           payload:)
+          response = connection.post completion_url, payload do |req|
+            req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+          end
+          parse_completion_response response
+        end
+
         private
 
         def completion_url

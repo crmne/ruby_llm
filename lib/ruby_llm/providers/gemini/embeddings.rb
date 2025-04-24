@@ -5,47 +5,31 @@ module RubyLLM
     module Gemini
       # Embeddings methods for the Gemini API integration
       module Embeddings
-        # Must be public for Provider module
-        def embed(text, model:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          payload = {
-            content: {
-              parts: format_text_for_embedding(text)
-            }
-          }
+        module_function
 
-          url = "models/#{model}:embedContent"
-          response = post(url, payload)
+        def embedding_url(model:)
+          "models/#{model}:batchEmbedContents"
+        end
 
-          if text.is_a?(Array)
-            # We need to make separate calls for each text with Gemini
-            embeddings = text.map do |t|
-              single_payload = { content: { parts: [{ text: t.to_s }] } }
-              single_response = post(url, single_payload)
-              single_response.body.dig('embedding', 'values')
-            end
+        def render_embedding_payload(text, model:, dimensions:)
+          { requests: [text].flatten.map { |t| single_embedding_payload(t, model:, dimensions:) } }
+        end
 
-            Embedding.new(
-              vectors: embeddings,
-              model: model,
-              input_tokens: response.body.dig('usageMetadata', 'promptTokenCount') || 0
-            )
-          else
-            Embedding.new(
-              vectors: response.body.dig('embedding', 'values'),
-              model: model,
-              input_tokens: response.body.dig('usageMetadata', 'promptTokenCount') || 0
-            )
-          end
+        def parse_embedding_response(response, model:)
+          vectors = response.body['embeddings']&.map { |e| e['values'] }
+          vectors in [vectors]
+
+          Embedding.new(vectors:, model:, input_tokens: 0)
         end
 
         private
 
-        def format_text_for_embedding(text)
-          if text.is_a?(Array)
-            text.map { |t| { text: t.to_s } }
-          else
-            [{ text: text.to_s }]
-          end
+        def single_embedding_payload(text, model:, dimensions:)
+          {
+            model: "models/#{model}",
+            content: { parts: [{ text: text.to_s }] },
+            outputDimensionality: dimensions
+          }.compact
         end
       end
     end

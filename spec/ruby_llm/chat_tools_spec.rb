@@ -5,12 +5,6 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
-  chat_models = %w[claude-3-5-haiku-20241022
-                   anthropic.claude-3-5-haiku-20241022-v1:0
-                   gemini-2.0-flash
-                   deepseek-chat
-                   gpt-4o-mini].freeze
-
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets current weather for a location'
     param :latitude, desc: 'Latitude (e.g., 52.5200)'
@@ -55,19 +49,24 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'function calling' do
-    chat_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+    end
 
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
@@ -78,15 +77,28 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+    end
 
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
-        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        skip 'Ollama models do not reliably use tools without parameters' if provider == :ollama
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(BestLanguageToLearn)
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
+    end
 
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model).with_tool(BestLanguageToLearn)
+        skip 'Ollama models do not reliably use tools without parameters' if provider == :ollama
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(BestLanguageToLearn)
+                      .with_instructions('You must use tools whenever possible.')
         chunks = []
 
         response = chat.ask("What's the best language to learn?") do |chunk|
@@ -105,9 +117,13 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('Ruby')
       end
+    end
 
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        chat = RubyLLM.chat(model: model)
+        chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         chunks = []
 

@@ -29,6 +29,22 @@ module RubyLLM
             "model/#{@model_id}/invoke-with-response-stream"
           end
 
+          def stream_response(connection, payload, &block) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+            signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", config: connection.config,
+                                                                                         payload:)
+            accumulator = StreamAccumulator.new
+
+            connection.post stream_url, payload do |req|
+              req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+              req.options.on_data = handle_stream do |chunk|
+                accumulator.add chunk
+                block.call chunk
+              end
+            end
+
+            accumulator.to_message
+          end
+
           def handle_stream(&block)
             buffer = String.new
             proc do |chunk, _bytes, env|

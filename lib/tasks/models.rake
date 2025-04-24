@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'dotenv/load'
 require_relative 'model_updater'
 require_relative 'capability_scraper'
 require_relative 'capability_generator'
