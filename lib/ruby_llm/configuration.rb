@@ -22,6 +22,8 @@ module RubyLLM
                   :bedrock_session_token,
                   :openrouter_api_key,
                   :ollama_api_base,
+                  # Default tool configuration
+                  :max_tool_completions,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -29,7 +31,6 @@ module RubyLLM
                   # Connection configuration
                   :request_timeout,
                   :max_retries,
-                  :max_tool_completions,
                   :retry_interval,
                   :retry_backoff_factor,
                   :retry_interval_randomness
