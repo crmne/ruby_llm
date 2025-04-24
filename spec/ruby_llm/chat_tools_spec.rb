@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Chat do
           { title: Faker::Name.name, score: rand(1000) }
         ],
         next_page: "t3_abc123_#{rand(1000)}",
-        message: "More posts are available using the next_page token."
+        message: 'More posts are available using the next_page token.'
       }
     end
   end
@@ -146,12 +146,16 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('10')
       end
 
-      it "#{model} can use tools with a tool completions limit" do
-        chat = RubyLLM.chat(model: model, max_tool_completions: 5)
+      it "#{model} can use tools with a tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
+                      .with_max_tool_completions(5)
                       .with_tools(LoopingAnswer, Weather)
 
         expect do
-          chat.ask("Fetch all of the posts from r/RandomNames. Fetch the next_page listed in the response until it responds with an empty array")
+          chat.ask(
+            'Fetch all of the posts from r/RandomNames. ' \
+            'Fetch the next_page listed in the response until it responds with an empty array'
+          )
         end.to raise_error(RubyLLM::ToolCallCompletionsLimitReachedError)
 
         # Ensure it does not break the next ask.

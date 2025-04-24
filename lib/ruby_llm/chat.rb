@@ -29,13 +29,13 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
-      @max_tool_completions = max_tool_completions
+      @max_tool_completions = config.max_tool_completions
       @number_of_tool_completions = 0
     end
 
-    def ask(message = nil, with: {}, &block)
+    def ask(message = nil, with: {}, &)
       @number_of_tool_completions = 0
-  
+
       add_message role: :user, content: Content.new(message, with)
       complete(&)
     end
@@ -61,6 +61,11 @@ module RubyLLM
 
     def with_tools(*tools)
       tools.each { |tool| with_tool tool }
+      self
+    end
+
+    def with_max_tool_completions(max_tool_completions)
+      @max_tool_completions = max_tool_completions
       self
     end
 
@@ -128,7 +133,7 @@ module RubyLLM
 
     private
 
-    def handle_tool_calls(response, &)
+    def handle_tool_calls(response, &) # rubocop:disable Metrics/MethodLength
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
