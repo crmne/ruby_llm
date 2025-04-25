@@ -17,6 +17,13 @@ bundle install
 # Set up git hooks
 overcommit --install
 
+# Set up .env and set default value for ollama
+touch .env
+
+```
+OLLAMA_API_BASE=http://localhost:11434/v1
+```
+
 # Run the tests (uses VCR cassettes)
 bundle exec rspec
 ```
