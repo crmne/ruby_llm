@@ -269,7 +269,7 @@ Last updated: 2025-04-25
 | anthropic.claude-v2:1:18k |  | Claude | bedrock |  |  |  |  |  |
 | anthropic.claude-v2:1:200k |  | Claude | bedrock |  |  |  |  |  |
 
-### Openrouter Models (301)
+### Openrouter Models (303)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |

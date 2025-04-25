@@ -24539,6 +24539,49 @@
     }
   },
   {
+    "id": "thudm/glm-4-32b",
+    "created_at": "2025-04-17T22:15:15+02:00",
+    "display_name": "THUDM: GLM 4 32B",
+    "provider": "openrouter",
+    "context_window": 32000,
+    "max_tokens": null,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.24,
+    "output_price_per_million": 0.24,
+    "metadata": {
+      "object": null,
+      "description": "GLM-4-32B-0414 is a 32B bilingual (Chinese-English) open-weight language model optimized for code generation, function calling, and agent-style tasks. Pretrained on 15T of high-quality and reasoning-heavy data, it was further refined using human preference alignment, rejection sampling, and reinforcement learning. The model excels in complex reasoning, artifact generation, and structured output tasks, achieving performance comparable to GPT-4o and DeepSeek-V3-0324 across several benchmarks.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "pricing": {
+        "prompt": "0.00000024",
+        "completion": "0.00000024",
+        "request": "0",
+        "image": "0",
+        "web_search": "0",
+        "internal_reasoning": "0"
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      }
+    }
+  },
+  {
     "id": "thudm/glm-4-32b:free",
     "display_name": "THUDM: GLM 4 32B (free)",
     "provider": "openrouter",
@@ -24588,6 +24631,49 @@
           "cached_input_per_million": null,
           "output_per_million": null
         }
+      }
+    }
+  },
+  {
+    "id": "thudm/glm-z1-32b",
+    "created_at": "2025-04-17T23:09:08+02:00",
+    "display_name": "THUDM: GLM Z1 32B",
+    "provider": "openrouter",
+    "context_window": 32000,
+    "max_tokens": null,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.24,
+    "output_price_per_million": 0.24,
+    "metadata": {
+      "object": null,
+      "description": "GLM-Z1-32B-0414 is an enhanced reasoning variant of GLM-4-32B, built for deep mathematical, logical, and code-oriented problem solving. It applies extended reinforcement learning—both task-specific and general pairwise preference-based—to improve performance on complex multi-step tasks. Compared to the base GLM-4-32B model, Z1 significantly boosts capabilities in structured reasoning and formal domains.\n\nThe model supports enforced “thinking” steps via prompt engineering and offers improved coherence for long-form outputs. It’s optimized for use in agentic workflows, and includes support for long context (via YaRN), JSON tool calling, and fine-grained sampling configuration for stable inference. Ideal for use cases requiring deliberate, multi-step reasoning or formal derivations.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": "deepseek-r1"
+      },
+      "pricing": {
+        "prompt": "0.00000024",
+        "completion": "0.00000024",
+        "request": "0",
+        "image": "0",
+        "web_search": "0",
+        "internal_reasoning": "0"
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
       }
     }
   },
