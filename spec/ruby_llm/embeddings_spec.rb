@@ -9,7 +9,11 @@ RSpec.describe RubyLLM::Embedding do
   let(:test_texts) { %w[Ruby Python JavaScript] }
   let(:test_dimensions) { 768 }
 
-  embedding_models = %w[text-embedding-004 text-embedding-3-small].freeze
+  embedding_models = [
+    "text-embedding-004", # gemini
+    "text-embedding-3-small", # openai
+    "mistral-embed", # mistral (added from other branch)
+  ].freeze
 
   describe 'basic functionality' do
     embedding_models.each do |model|

@@ -66,6 +66,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
+  config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
 
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
@@ -116,6 +117,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+      config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
@@ -137,7 +139,8 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'mistral-small3.1' }
+  { provider: :ollama, model: 'mistral-small3.1' },
+  { provider: :mistral, model: 'mistral-small' }
 ].freeze
 
 PDF_MODELS = [
@@ -153,7 +156,8 @@ VISION_MODELS = [
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'mistral-small3.1' }
+  { provider: :ollama, model: 'mistral-small3.1' },
+  { provider: :mistral, model: 'mistralai/mistral-small' }
 ].freeze
 
 AUDIO_MODELS = [
