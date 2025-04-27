@@ -5,18 +5,25 @@ module RubyLLM
       module Embeddings
         module_function
 
-        def embedding_url
-          "#{Mistral.api_base}/embeddings"
+        # Accept optional `model:` keyword argument to match Provider interface call
+        def embedding_url(model: nil)
+          # NOTE: The model argument is accepted for interface compatibility but not used,
+          # as the Mistral embedding endpoint isn't model-specific in the URL.
+          "#{Mistral.api_base(RubyLLM.config)}/embeddings"
         end
 
-        def render_embedding_payload(text, model:)
+        # Accept optional `dimensions:` keyword argument for interface compatibility
+        def render_embedding_payload(text, model:, dimensions: nil)
+          # NOTE: dimensions is ignored as Mistral API doesn't support it.
           {
             model: model,
             input: text,
           }
         end
 
-        def parse_embedding_response(response)
+        # Accept optional `model:` keyword argument for interface compatibility
+        def parse_embedding_response(response, model: nil)
+          # NOTE: model argument is ignored; we get it from the response body.
           data = response.body
           model_id = data["model"]
           input_tokens = data.dig("usage", "prompt_tokens") || 0
@@ -29,7 +36,7 @@ module RubyLLM
 
           Embedding.new(
             vectors: vectors,
-            model: model_id,
+            model: model_id, # Use model_id from response
             input_tokens: input_tokens,
           )
         end
