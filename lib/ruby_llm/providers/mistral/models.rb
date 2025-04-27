@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def models_url
-          "#{api_base}/models"
+          "#{Mistral.api_base(RubyLLM.config)}/models"
         end
 
         def parse_list_models_response(response, slug, capabilities)
