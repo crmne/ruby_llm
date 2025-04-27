@@ -140,14 +140,15 @@ CHAT_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :ollama, model: 'mistral-small3.1' },
-  { provider: :mistral, model: 'mistral-small' }
+  { provider: :mistral, model: 'mistral-small-latest' }
 ].freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'google/gemini-2.5-flash-preview' }
+  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' }
+  # { provider: :mistral, model: 'mistral-ocr' } # Only supports URLs
 ].freeze
 
 VISION_MODELS = [
@@ -157,7 +158,7 @@ VISION_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :ollama, model: 'mistral-small3.1' },
-  { provider: :mistral, model: 'mistralai/mistral-small' }
+  { provider: :mistral, model: 'mistral-small-latest' }
 ].freeze
 
 AUDIO_MODELS = [

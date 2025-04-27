@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 10:36:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967994'
+      Ratelimitbysize-Remaining:
+      - '1967994'
+      Ratelimitbysize-Reset:
+      - '49'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9999967994'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      Ratelimitbysize-Query-Cost:
+      - '32006'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Envoy-Upstream-Service-Time:
+      - '627'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '629'
+      X-Kong-Proxy-Latency:
+      - '9'
+      X-Kong-Request-Id:
+      - 23d2fc65d9246e43df01b069b731706f
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"a3eaebc2b157433ab161524bcb001ad1","object":"chat.completion","created":1745750171,"model":"mistral-small","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
+        sum of 2 + 2 is 4. Is there anything else you would like to know about mathematics,
+        or anything else? I''m here to help with any questions you have to the best
+        of my ability."},"finish_reason":"stop"}],"usage":{"prompt_tokens":17,"total_tokens":65,"completion_tokens":48}}'
+  recorded_at: Sun, 27 Apr 2025 10:36:12 GMT
+recorded_with: VCR 6.3.1

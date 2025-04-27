@@ -1,0 +1,172 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 10:36:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Remaining-Month:
+      - '9992970022'
+      Ratelimitbysize-Remaining:
+      - '1967994'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967994'
+      Ratelimitbysize-Reset:
+      - '48'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32006'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Envoy-Upstream-Service-Time:
+      - '1656'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '1657'
+      X-Kong-Proxy-Latency:
+      - '7'
+      X-Kong-Request-Id:
+      - 78b1063c65e4e07487a3b039e06feb40
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"90da2a2ef3354c90934cac47886416cd","object":"chat.completion","created":1745750172,"model":"mistral-small","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Ruby
+        was created by Yukihiro \"Matz\" Matsumoto, a Japanese programmer. He started
+        working on Ruby in the mid-1990s and first released it in 1995. Matsumoto
+        wanted to create a programming language that was easy to use and fun for developers,
+        with a focus on productivity and simplicity. He was inspired by a number of
+        other programming languages, including Perl, Smalltalk, Eiffel, Ada, and Lisp.
+        Over the years, Ruby has gained a dedicated following and is now used for
+        a wide variety of applications, including web development, data analysis,
+        and scripting."},"finish_reason":"stop"}],"usage":{"prompt_tokens":15,"total_tokens":152,"completion_tokens":137}}'
+  recorded_at: Sun, 27 Apr 2025 10:36:14 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
+        Yukihiro \"Matz\" Matsumoto, a Japanese programmer. He started working on
+        Ruby in the mid-1990s and first released it in 1995. Matsumoto wanted to create
+        a programming language that was easy to use and fun for developers, with a
+        focus on productivity and simplicity. He was inspired by a number of other
+        programming languages, including Perl, Smalltalk, Eiffel, Ada, and Lisp. Over
+        the years, Ruby has gained a dedicated following and is now used for a wide
+        variety of applications, including web development, data analysis, and scripting."},{"role":"user","content":"What
+        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 10:36:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Remaining-Month:
+      - '9992937893'
+      Ratelimitbysize-Remaining:
+      - '1935854'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1935854'
+      Ratelimitbysize-Reset:
+      - '46'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32140'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Envoy-Upstream-Service-Time:
+      - '1959'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '1960'
+      X-Kong-Proxy-Latency:
+      - '7'
+      X-Kong-Request-Id:
+      - d617a96d8fa4506e1e4f5d6d514fa926
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"db75307f43754af9ba62cc41bab504e3","object":"chat.completion","created":1745750174,"model":"mistral-small","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
+        \"Matz\" Matsumoto, the creator of Ruby, first started working on the language
+        in the mid-1990s. He released the first version of Ruby to the public in 1995.
+        At the time, Matsumoto was working as a programmer and was looking for a programming
+        language that was easy to use and fun for developers. He was inspired by a
+        number of other languages, including Perl, Smalltalk, Eiffel, Ada, and Lisp,
+        and wanted to create a language that combined the best features of these languages
+        in a single, cohesive package. Over the years, Ruby has gained a dedicated
+        following and is now used for a wide variety of applications, including web
+        development, data analysis, and scripting."},"finish_reason":"stop"}],"usage":{"prompt_tokens":166,"total_tokens":332,"completion_tokens":166}}'
+  recorded_at: Sun, 27 Apr 2025 10:36:16 GMT
+recorded_with: VCR 6.3.1

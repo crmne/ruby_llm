@@ -1,0 +1,413 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"any"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 20:25:21 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967990'
+      Ratelimitbysize-Reset:
+      - '39'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9999967990'
+      Ratelimitbysize-Remaining:
+      - '1967990'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32010'
+      X-Envoy-Upstream-Service-Time:
+      - '323'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '324'
+      X-Kong-Proxy-Latency:
+      - '6'
+      X-Kong-Request-Id:
+      - a9e72d0e71a0f01346f0636700626d38
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"44f66fd105084bf9b777e7791904c868","object":"chat.completion.chunk","created":1745785521,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"44f66fd105084bf9b777e7791904c868","object":"chat.completion.chunk","created":1745785521,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"M8SDHl3au","function":{"name":"weather","arguments":"{\"latitude\": \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}]},"finish_reason":"tool_calls","logprobs":null}],"usage":{"prompt_tokens":137,"total_tokens":174,"completion_tokens":37}}
+
+        data: [DONE]
+
+  recorded_at: Sun, 27 Apr 2025 20:25:21 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"M8SDHl3au","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"M8SDHl3au","name":"tool"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"any"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 20:25:22 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Ratelimitbysize-Remaining:
+      - '1967978'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Reset:
+      - '38'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9990053959'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32022'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967978'
+      X-Envoy-Upstream-Service-Time:
+      - '211'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '211'
+      X-Kong-Proxy-Latency:
+      - '7'
+      X-Kong-Request-Id:
+      - d821585eb29332340f496426864a2152
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"0578d70f3c2f4bdabf6eacd34b10980e","object":"chat.completion.chunk","created":1745785522,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"0578d70f3c2f4bdabf6eacd34b10980e","object":"chat.completion.chunk","created":1745785522,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"qDX7XTr9b","function":{"name":"web_search","arguments":"{\"query\": \"weather in Berlin\"}"},"index":0}]},"finish_reason":"tool_calls","logprobs":null}],"usage":{"prompt_tokens":229,"total_tokens":251,"completion_tokens":22}}
+
+        data: [DONE]
+
+  recorded_at: Sun, 27 Apr 2025 20:25:22 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"M8SDHl3au","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"M8SDHl3au","name":"tool"},{"role":"assistant","tool_calls":[{"id":"qDX7XTr9b","type":"function","function":{"name":"web_search","arguments":{"query":"weather
+        in Berlin"}}}]},{"role":"tool","content":"Tool ''web_search'' not found. Available
+        tools: weather","tool_call_id":"qDX7XTr9b","name":"tool"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 20:44:11 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      Ratelimitbysize-Reset:
+      - '49'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9999967968'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967968'
+      Ratelimitbysize-Query-Cost:
+      - '32032'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Remaining:
+      - '1967968'
+      X-Envoy-Upstream-Service-Time:
+      - '55'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '56'
+      X-Kong-Proxy-Latency:
+      - '6'
+      X-Kong-Request-Id:
+      - 8c1cd0404968027b044f9c02ac72287f
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiVGhlIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdlYXRoZXIifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiI1YTI1YWIyZGRjMzU0YzRiOWQ5MjdlNTZhOWZlNjEzMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpbiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIEJlcmxpbiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGlzIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiI1In0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiLCsEMifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiI1YTI1YWIyZGRjMzU0YzRiOWQ5MjdlNTZhOWZlNjEzMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3aXRoIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdpbmQifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiI1YTI1YWIyZGRjMzU0YzRiOWQ5MjdlNTZhOWZlNjEzMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzcGVlZCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6IjVhMjVhYjJkZGMzNTRjNGI5ZDkyN2U1NmE5ZmU2MTMzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIG9mIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIwIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIga20ifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiI1YTI1YWIyZGRjMzU0YzRiOWQ5MjdlNTZhOWZlNjEzMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii9oIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIuIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiNWEyNWFiMmRkYzM1NGM0YjlkOTI3ZTU2YTlmZTYxMzMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJsb2dwcm9icyI6bnVsbH1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyODUsInRvdGFsX3Rva2VucyI6MzA3LCJjb21wbGV0aW9uX3Rva2VucyI6MjJ9fQoKZGF0YTogW0RPTkVdCgo=
+  recorded_at: Sun, 27 Apr 2025 20:44:11 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"M8SDHl3au","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"M8SDHl3au","name":"tool"},{"role":"assistant","tool_calls":[{"id":"qDX7XTr9b","type":"function","function":{"name":"web_search","arguments":{"query":"weather
+        in Berlin"}}}]},{"role":"tool","content":"Tool ''web_search'' not found. Available
+        tools: weather","tool_call_id":"qDX7XTr9b","name":"tool"},{"role":"assistant","content":"The
+        current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 20:44:11 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Ratelimitbysize-Remaining:
+      - '1967938'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Reset:
+      - '49'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9999967938'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1967938'
+      Ratelimitbysize-Query-Cost:
+      - '32062'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      X-Envoy-Upstream-Service-Time:
+      - '308'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '309'
+      X-Kong-Proxy-Latency:
+      - '9'
+      X-Kong-Request-Id:
+      - 950bf5786644ec73512e54597ff21e5d
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"683082bfef0b427c9effec88ee67fea1","object":"chat.completion.chunk","created":1745786651,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"683082bfef0b427c9effec88ee67fea1","object":"chat.completion.chunk","created":1745786651,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"RRWC4YuBy","function":{"name":"weather","arguments":"{\"latitude\": \"48.8575\", \"longitude\": \"2.3514\"}"},"index":0}]},"finish_reason":"tool_calls","logprobs":null}],"usage":{"prompt_tokens":333,"total_tokens":369,"completion_tokens":36}}
+
+        data: [DONE]
+
+  recorded_at: Sun, 27 Apr 2025 20:44:11 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"M8SDHl3au","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"M8SDHl3au","name":"tool"},{"role":"assistant","tool_calls":[{"id":"qDX7XTr9b","type":"function","function":{"name":"web_search","arguments":{"query":"weather
+        in Berlin"}}}]},{"role":"tool","content":"Tool ''web_search'' not found. Available
+        tools: weather","tool_call_id":"qDX7XTr9b","name":"tool"},{"role":"assistant","content":"The
+        current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"RRWC4YuBy","type":"function","function":{"name":"weather","arguments":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"RRWC4YuBy","name":"tool"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 27 Apr 2025 20:44:11 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1564637'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32074'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Remaining:
+      - '1564637'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9993708926'
+      Ratelimitbysize-Reset:
+      - '49'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Envoy-Upstream-Service-Time:
+      - '63'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '64'
+      X-Kong-Proxy-Latency:
+      - '6'
+      X-Kong-Request-Id:
+      - 97f3141a1eabe417b14595787f499565
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiVGhlIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2IxOWVjNjM0NzYwNDAxYThjZmRiZjEwNDMyODI5YzQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdlYXRoZXIifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpbiJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIFBhcmlzIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2IxOWVjNjM0NzYwNDAxYThjZmRiZjEwNDMyODI5YzQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgaXMifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjEifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjUifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IsKwQyJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdpdGgifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBhIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2IxOWVjNjM0NzYwNDAxYThjZmRiZjEwNDMyODI5YzQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2luZCJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHNwZWVkIn0sImZpbmlzaF9yZWFzb24iOm51bGwsImxvZ3Byb2JzIjpudWxsfV19CgpkYXRhOiB7ImlkIjoiY2IxOWVjNjM0NzYwNDAxYThjZmRiZjEwNDMyODI5YzQiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ1Nzg2NjUxLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwtbGF0ZXN0IiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgb2YifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjEifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjAifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBrbSJ9LCJmaW5pc2hfcmVhc29uIjpudWxsLCJsb2dwcm9icyI6bnVsbH1dfQoKZGF0YTogeyJpZCI6ImNiMTllYzYzNDc2MDQwMWE4Y2ZkYmYxMDQzMjgyOWM0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NTc4NjY1MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiL2gifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii4ifSwiZmluaXNoX3JlYXNvbiI6bnVsbCwibG9ncHJvYnMiOm51bGx9XX0KCmRhdGE6IHsiaWQiOiJjYjE5ZWM2MzQ3NjA0MDFhOGNmZGJmMTA0MzI4MjljNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDU3ODY2NTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbC1sYXRlc3QiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImxvZ3Byb2JzIjpudWxsfV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQxOSwidG90YWxfdG9rZW5zIjo0NDEsImNvbXBsZXRpb25fdG9rZW5zIjoyMn19CgpkYXRhOiBbRE9ORV0KCg==
+  recorded_at: Sun, 27 Apr 2025 20:44:12 GMT
+recorded_with: VCR 6.3.1

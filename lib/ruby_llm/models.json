@@ -18980,8 +18980,62 @@
     }
   },
   {
-    "id": "mistralai/mistral-embed",
-    "created_at": "2024-03-15T00:00:00Z",
+    "id": "mistral-tiny",
+    "created_at": "2024-12-23T00:00:00Z",
+    "display_name": "Mistral Tiny",
+    "provider": "mistral",
+    "context_window": 32768,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "mistral_tiny",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.14,
+    "output_price_per_million": 0.42,
+    "metadata": {
+      "description": "Most affordable model in the Mistral lineup"
+    }
+  },
+  {
+    "id": "pixtral-large",
+    "created_at": "2024-11-24T00:00:00Z",
+    "display_name": "Pixtral Large",
+    "provider": "mistral",
+    "context_window": 131072,
+    "max_tokens": 131072,
+    "type": "chat",
+    "family": "pixtral_large",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 3,
+    "output_price_per_million": 9,
+    "metadata": {
+      "description": "Pixtral Large - frontier-class multimodal model"
+    }
+  },
+  {
+    "id": "codestral",
+    "created_at": "2025-01-25T00:00:00Z",
+    "display_name": "Codestral",
+    "provider": "mistral",
+    "context_window": 262144,
+    "max_tokens": 262144,
+    "type": "chat",
+    "family": "codestral",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 1,
+    "output_price_per_million": 3,
+    "metadata": {
+      "description": "Codestral - specialized model for code generation"
+    }
+  },
+  {
+    "id": "mistral-embed",
+    "created_at": "2023-12-23T00:00:00Z",
     "display_name": "Mistral Embed",
     "provider": "mistral",
     "context_window": 32768,
@@ -18995,6 +19049,114 @@
     "output_price_per_million": 0.01,
     "metadata": {
       "description": "Mistral Embed - specialized model for generating text embeddings"
+    }
+  },
+  {
+    "id": "mistral-large-latest",
+    "created_at": "2024-11-24T00:00:00Z",
+    "display_name": "Mistral Large (Latest)",
+    "provider": "mistral",
+    "context_window": 131072,
+    "max_tokens": 131072,
+    "type": "chat",
+    "family": "mistral_large",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 3,
+    "output_price_per_million": 9,
+    "metadata": {
+      "description": "Mistral Large 2 - top-tier reasoning model for high-complexity tasks"
+    }
+  },
+  {
+    "id": "mistral-small-latest",
+    "created_at": "2025-03-25T00:00:00Z",
+    "display_name": "Mistral Small (Latest)",
+    "provider": "mistral",
+    "context_window": 131072,
+    "max_tokens": 131072,
+    "type": "chat",
+    "family": "mistral_small",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.2,
+    "output_price_per_million": 0.6,
+    "metadata": {
+      "description": "Mistral Small (Latest) - balanced model with good performance/cost ratio"
+    }
+  },
+  {
+    "id": "pixtral-12b-latest",
+    "created_at": "2024-09-25T00:00:00Z",
+    "display_name": "Pixtral 12B (Latest)",
+    "provider": "mistral",
+    "context_window": 131072,
+    "max_tokens": 131072,
+    "type": "chat",
+    "family": "pixtral",
+    "supports_vision": true,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.15,
+    "output_price_per_million": 0.15,
+    "metadata": {
+      "description": "Pixtral 12B - Mistral's first multimodal model with vision capabilities"
+    }
+  },
+  {
+    "id": "mistral-saba",
+    "created_at": "2025-02-25T00:00:00Z",
+    "display_name": "Mistral Saba",
+    "provider": "mistral",
+    "context_window": 32768,
+    "max_tokens": 32768,
+    "type": "chat",
+    "family": "mistral_saba",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.3,
+    "output_price_per_million": 0.3,
+    "metadata": {
+      "description": "Mistral Saba - powerful and efficient model for languages from the Middle East and South Asia"
+    }
+  },
+  {
+    "id": "mistral-moderation",
+    "created_at": "2024-11-24T00:00:00Z",
+    "display_name": "Mistral Moderation",
+    "provider": "mistral",
+    "context_window": 32768,
+    "max_tokens": 32768,
+    "type": "moderation",
+    "family": "mistral_moderation",
+    "supports_vision": false,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.0,
+    "output_price_per_million": 0.0,
+    "metadata": {
+      "description": "Mistral Moderation - service that enables users to detect harmful text content"
+    }
+  },
+  {
+    "id": "mistral-ocr",
+    "created_at": "2025-03-25T00:00:00Z",
+    "display_name": "Mistral OCR",
+    "provider": "mistral",
+    "context_window": 32768,
+    "max_tokens": 32768,
+    "type": "ocr",
+    "family": "mistral_ocr",
+    "supports_vision": true,
+    "supports_functions": false,
+    "supports_json_mode": false,
+    "input_price_per_million": 0.0,
+    "output_price_per_million": 0.0,
+    "metadata": {
+      "description": "Mistral OCR - service that enables users to extract interleaved text and images"
     }
   },
   {

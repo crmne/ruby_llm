@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{provider}/#{model} successfully uses the system prompt" do
         skip 'System prompt can be flaky for Ollama models' if provider == :ollama
+        skip 'Mistral API does not allow system messages after assistant messages' if provider == :mistral
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
@@ -42,6 +43,8 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         skip 'System prompt can be flaky for Ollama models' if provider == :ollama
+        skip 'Mistral does not allow for system prompt after user prompt' if provider == :mistral
+
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally

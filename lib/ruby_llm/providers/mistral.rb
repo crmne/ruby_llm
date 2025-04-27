@@ -11,6 +11,7 @@ module RubyLLM
       extend Mistral::Tools
       extend Mistral::Capabilities
       extend Mistral::Media
+      # Mistral::Images removed as API doesn't support image generation
 
       def self.extended(base)
         base.extend(Provider)
@@ -25,13 +26,42 @@ module RubyLLM
 
       module_function
 
-      def api_base
-        'https://api.mistral.ai/v1'
+      def api_base(config)
+        config.mistral_api_base || 'https://api.mistral.ai/v1'
       end
 
-      def headers
+      # Add provider-specific error parsing
+      def parse_error(response)
+        return if response.body.empty?
+
+        body = try_parse_json(response.body)
+        error_message = case body
+        when Hash
+          # Check for standard { detail: [{ msg: ... }] } structure
+          if body['detail'].is_a?(Array)
+            body['detail'].map { |err| err['msg'] }.join("; ")
+          # Check for simple { message: ... } structure (some Mistral errors use this)
+          elsif body['message']
+            body['message']
+          # Fallback for other hash structures
+          else
+            body.to_s
+          end
+        else
+          body.to_s # Return raw body if not a hash
+        end
+
+        # Format the error message
+        if error_message.include?('Input should be a valid')
+          "Invalid message format: The message content is not properly formatted"
+        else
+          error_message
+        end
+      end
+
+      def headers(config)
         {
-          'Authorization' => "Bearer #{RubyLLM.config.mistral_api_key}"
+          'Authorization' => "Bearer #{config.mistral_api_key}"
         }
       end
 

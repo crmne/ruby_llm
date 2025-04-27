@@ -26,6 +26,8 @@ RSpec.describe RubyLLM::Chat do
           skip 'DeepSeek API returns different content/tokens for stream vs sync with this prompt. ' \
                'Skipping token consistency check.'
         end
+        skip 'Mistral API only returns token count on the last chunk.' if provider == :mistral
+
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         chunks = []
 

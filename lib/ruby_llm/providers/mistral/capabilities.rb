@@ -51,17 +51,8 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision
         def supports_vision?(model_id)
-          # Check for all vision-capable models in Mistral's lineup
-          #
-          # NOTE: While this correctly identifies models that support vision capabilities,
-          # there are currently issues with the image handling in the test suite.
-          # The 'pixtral-12b-latest can understand images' test fails because image data
-          # isn't properly passed to the API. This requires fixes in the core Content handling code.
-          #
-          # Known vision-capable models in Mistral's lineup:
-          # - pixtral-12b-latest
-          # - pixtral-large-latest
-          model_id.match?(/pixtral|mistral-large-vision|other-vision-models/)
+          # Determine vision support based on model ID pattern
+          model_id.match?(/pixtral/)
         end
 
         # Determines if the model supports function calling
