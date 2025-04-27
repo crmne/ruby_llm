@@ -50,5 +50,21 @@ module RubyLLM
       connection = context ? context.connection_for(provider) : provider.connection(config)
       provider.paint(prompt, model: model_id, size:, connection:)
     end
+
+    def self.edit(prompt, # rubocop:disable Metrics/ParameterLists,Metrics/CyclomaticComplexity
+                  model: nil,
+                  provider: nil,
+                  assume_model_exists: false,
+                  size: '1024x1024',
+                  context: nil,
+                  with: {})
+      config = context&.config || RubyLLM.config
+      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists) if model
+      model_id = model&.id || config.default_image_model
+
+      provider = Provider.for(model_id) if provider.nil?
+      connection = context ? context.connection_for(provider) : provider.connection(config)
+      provider.edit(prompt, model: model_id, size:, with:, connection:)
+    end
   end
 end

@@ -43,6 +43,13 @@ module RubyLLM
         parse_image_response response
       end
 
+      def edit(prompt, model:, size:, with:, connection:)
+        payload = render_edit_payload(prompt, model:, size:, with:)
+
+        response = connection.post(edits_url, payload)
+        parse_edit_response(response)
+      end
+
       def configured?(config = nil)
         config ||= RubyLLM.config
         missing_configs(config).empty?

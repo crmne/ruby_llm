@@ -63,5 +63,38 @@ RSpec.describe RubyLLM::Image do
         RubyLLM.paint('a cat', model: 'invalid-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
+
+    it 'gpt-image-1 supports image edits with a single image' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      image = RubyLLM.edit('turn this into a cat',
+                           with: { image: 'spec/fixtures/ruby.png' },
+                           model: 'gpt-image-1')
+
+      puts "image: #{image.inspect}"
+      expect(image.base64?).to be(true)
+      expect(image.mime_type).to include('image')
+
+      save_and_verify_image image
+    end
+
+    it 'gpt-image-1 supports image edits with multiple images' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      image = RubyLLM.edit('Transform this into Studio Ghibli style',
+                           with: { image: ['spec/fixtures/ruby.png', 'spec/fixtures/ruby.png'] },
+                           model: 'gpt-image-1')
+
+      expect(image.base64?).to be(true)
+      expect(image.url).to start_with('https://')
+      expect(image.mime_type).to include('image')
+      expect(image.revised_prompt).to include('Ghibli')
+
+      save_and_verify_image image
+    end
+
+    it 'gemini rejects image edits' do
+      expect do
+        RubyLLM.edit('Transform this',
+                     with: { image: 'spec/fixtures/test_image.jpg' },
+                     model: 'imagen-3.0-generate-002')
+      end.to raise_error(RubyLLM::Error, /Gemini does not support image variations/)
+    end
   end
 end
