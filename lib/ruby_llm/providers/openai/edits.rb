@@ -14,15 +14,15 @@ module RubyLLM
         end
 
         def render_edit_payload(prompt, model:, size:, with:)
-          image_path = Array(with[:image])
+          images = Array(with[:image])
           mask_path = with[:mask]
 
-          raise ArgumentError, 'Missing required :image path in `with` argument' if image_path.empty?
+          raise ArgumentError, 'Missing required :image path in `with` argument' if images.empty?
 
           payload = {
             model:,
             prompt:,
-            image: image_path.map { |path| attach_image(path) },
+            image: images.map { |image| attach_image(image) },
             size: size,
             n: 1
           }

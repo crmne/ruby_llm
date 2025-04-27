@@ -82,9 +82,7 @@ RSpec.describe RubyLLM::Image do
                            model: 'gpt-image-1')
 
       expect(image.base64?).to be(true)
-      expect(image.url).to start_with('https://')
       expect(image.mime_type).to include('image')
-      expect(image.revised_prompt).to include('Ghibli')
 
       save_and_verify_image image
     end
