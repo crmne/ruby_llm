@@ -46,7 +46,7 @@ module RubyLLM
       def edit(prompt, model:, size:, with:, connection:)
         payload = render_edit_payload(prompt, model:, size:, with:)
 
-        response = connection.post(edits_url, payload)
+        response = connection.post_multipart(edits_url, payload)
         parse_edit_response(response)
       end
 
