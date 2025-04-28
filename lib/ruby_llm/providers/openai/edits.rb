@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'faraday/multipart'
-
 module RubyLLM
   module Providers
     module OpenAI
@@ -10,65 +8,59 @@ module RubyLLM
         module_function
 
         def edits_url
-          'images/edits'
+          'v1/images/edits' # Added v1 prefix, common practice
         end
 
         def render_edit_payload(prompt, model:, size:, with:)
           images = Array(with[:image])
-          mask_path = with[:mask]
+          mask_source = with[:mask] # Renamed from mask_path
 
-          raise ArgumentError, 'Missing required :image path in `with` argument' if images.empty?
+          raise ArgumentError, 'Missing required :image in `with` argument' if images.empty?
+          # OpenAI edits API only supports ONE image
+          raise ArgumentError, 'OpenAI image edits currently support only one input image.' if images.length > 1
+
+          image_source = images.first
+
+          # Use ImageAttachment to prepare the image part
+          image_part = ImageAttachment.new(image_source, :image).prepare
 
           payload = {
-            model:,
-            prompt:,
-            image: images.map { |image| attach_image(image) },
+            model: model,
+            prompt: prompt,
+            image: image_part,
             size: size,
-            n: 1
+            n: 1, # OpenAI Edits API always returns 1 image
+            response_format: 'b64_json' # Match parser expectation
           }
-          payload[:mask] = attach_image(mask_path) if mask_path.is_a?(String)
-
-          payload # Return the hash directly
-        end
-
-        def attach_image(source)
-          # Disallow remote URLs for now, as FilePart expects a local path
-          if source.start_with?('http://') || source.start_with?('https://')
-            raise ArgumentError, "Remote URLs are not supported for image edits: #{source}"
+          # Handle mask: must be PNG < 4MB, can be URL or path
+          if mask_source
+            # Use ImageAttachment to prepare the mask part
+            mask_part = ImageAttachment.new(mask_source, :mask).prepare
+            payload[:mask] = mask_part
           end
 
-          expanded_path = File.expand_path(source)
-          raise ArgumentError, "Image file not found: #{expanded_path}" unless File.exist?(expanded_path)
-
-          # Use Faraday::Multipart::FilePart for compatibility with newer Faraday versions
-          Faraday::Multipart::FilePart.new(
-            expanded_path,
-            mime_type_for_image(expanded_path),
-            File.basename(expanded_path)
-          )
+          payload
         end
 
-        def mime_type_for_image(path)
-          ext = File.extname(path).downcase.delete('.')
-          case ext
-          when 'png' then 'image/png' # OpenAI requires PNG for edits
-          when 'webp' then 'image/webp'
-          when 'jpeg' then 'image/jpeg'
-          else
-            raise ArgumentError, "Invalid image format for edits: '#{ext}'. Only PNG, WebP, and JPEG are supported."
-          end
-        end
-
-        # Assuming parse_image_response exists elsewhere or is handled by the generic provider
         def parse_edit_response(response)
           data = response.body
+          # Improved error checking based on response status and body structure
+          unless response.success? && data.is_a?(Hash) && data['data']&.first
+            api_error_message = data.is_a?(Hash) && data['error'] ? data['error']['message'] : response.body.to_s
+            raise RubyLLM::ApiError, "OpenAI image edit failed: #{response.status} - #{api_error_message}"
+          end
+
           image_data = data['data'].first
 
+          # Expecting PNG from the edits endpoint
+          mime_type = ImageAttachment::REQUIRED_MIME_TYPE
+
           Image.new(
-            data: image_data['b64_json'],
-            mime_type: 'image/png', # DALL-E typically returns PNGs
-            revised_prompt: image_data['revised_prompt'],
-            model_id: data['model']
+            data: image_data['b64_json'], # Edits API returns base64 when requested
+            mime_type: mime_type,
+            revised_prompt: image_data['revised_prompt'], # May or may not be present
+            # Attempt to get model from headers, fallback needed? API might not return it consistently here.
+            model_id: response.headers['openai-model'] || response.headers['x-request-id'] # Placeholder if model isn't in header
           )
         end
       end
