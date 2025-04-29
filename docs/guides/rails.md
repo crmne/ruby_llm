@@ -7,7 +7,6 @@ permalink: /guides/rails
 ---
 
 # Rails Integration
-
 {: .no_toc }
 
 RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database.
