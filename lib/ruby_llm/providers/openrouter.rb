@@ -6,6 +6,7 @@ module RubyLLM
     module OpenRouter
       extend OpenAI
       extend OpenRouter::Models
+      extend OpenRouter::Media
 
       module_function
 

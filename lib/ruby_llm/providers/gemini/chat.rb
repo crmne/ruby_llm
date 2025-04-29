@@ -75,11 +75,11 @@ module RubyLLM
           when 'text'
             { text: part[:text] }
           when 'image'
-            Media.format_image(part)
+            self::Media.format_image(part)
           when 'pdf'
-            Media.format_pdf(part)
+            self::Media.format_pdf(part)
           when 'audio'
-            Media.format_audio(part)
+            self::Media.format_audio(part)
           else
             { text: part.to_s }
           end
