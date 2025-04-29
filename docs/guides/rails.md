@@ -124,7 +124,7 @@ end
 
 Run the migrations: `rails db:migrate`
 
-#### Set Up Models with `acts_as` Helpers
+### Set Up Models with `acts_as` Helpers
 
 Include the RubyLLM helpers in your ActiveRecord models.
 
@@ -157,9 +157,12 @@ class ToolCall < ApplicationRecord
 end
 ```
 
-{: .note } The `acts_as` helpers primarily handle loading history and saving messages/tool calls related to the chat interaction. Add your application-specific logic (associations, validations, scopes, callbacks) as usual.
+{: .note }
+The `acts_as` helpers primarily handle loading history and saving messages/tool calls related to the chat interaction. Add your application-specific logic (associations, validations, scopes, callbacks) as usual.
 
+### Configure RubyLLM
 
+Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Installation Guide]({% link installation.md %}) for details.
 
 ## Basic Usage
 
