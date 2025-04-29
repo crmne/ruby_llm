@@ -14,7 +14,6 @@ RubyLLM offers seamless integration with Ruby on Rails applications through help
 {: .fs-6 .fw-300 }
 
 ## Table of contents
-
 {: .no_toc .text-delta }
 
 1. TOC

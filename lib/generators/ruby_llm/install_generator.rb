@@ -71,22 +71,19 @@ module RubyLLM
     def create_migration_files
       # Create migrations with timestamps to ensure proper order
       # First create chats table
+      timestamp = Time.now.utc
       migration_template 'create_chats_migration.rb.tt', 
-                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:chat_model_name].tableize}.rb"
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:chat_model_name].tableize}.rb"
       
-      # Wait 1 second to ensure different timestamp
-      sleep 1
-      
-      # Then create tool_calls table
+      # Then create tool_calls table with timestamp + 1 second
+      timestamp += 1
       migration_template 'create_tool_calls_migration.rb.tt',
-                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:tool_call_model_name].tableize}.rb"
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:tool_call_model_name].tableize}.rb"
       
-      # Wait 1 second to ensure different timestamp
-      sleep 1
-      
-      # Finally create messages table which references both previous tables
+      # Finally create messages table with timestamp + 2 seconds
+      timestamp += 1
       migration_template 'create_messages_migration.rb.tt',
-                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:message_model_name].tableize}.rb"
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:message_model_name].tableize}.rb"
     end
 
     def create_model_files
