@@ -61,7 +61,7 @@ module RubyLLM
               }
             }]
           else
-            Media.format_content(msg.content)
+            self::Media.format_content(msg.content)
           end
         end
 
