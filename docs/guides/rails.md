@@ -10,13 +10,15 @@ permalink: /guides/rails
 
 {: .no_toc }
 
-RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database. {: .fs-6 .fw-300 }
+RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database.
+{: .fs-6 .fw-300 }
 
 ## Table of contents
 
 {: .no_toc .text-delta }
 
-1. TOC {:toc}
+1. TOC
+{:toc}
 
 ---
 
@@ -25,7 +27,6 @@ After reading this guide, you will know:
 - How to set up ActiveRecord models for persisting chats and messages.
 - How to use `acts_as_chat` and `acts_as_message`.
 - How chat interactions automatically persist data.
-- A basic approach for integrating streaming responses with Hotwire/Turbo Streams.
 
 ## Setup
 
@@ -159,18 +160,7 @@ end
 
 {: .note } The `acts_as` helpers primarily handle loading history and saving messages/tool calls related to the chat interaction. Add your application-specific logic (associations, validations, scopes, callbacks) as usual.
 
-### Configure RubyLLM
 
-Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Installation Guide]({% link installation.md %}) for details.
-
-```ruby
-# config/initializers/ruby_llm.rb
-RubyLLM.configure do |config|
-  config.openai_api_key = ENV["OPENAI_API_KEY"]
-  config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-  # Add other provider keys as needed
-end
-```
 
 ## Basic Usage
 
@@ -307,7 +297,7 @@ end
 <% end %>
 ```
 
-{: .note } This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators). See the [Streaming Responses Guide]({% link guides/streaming.md %}) for more on streaming itself.
+{: .note } This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators).
 
 ## Customizing Models
 
@@ -317,6 +307,4 @@ Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. 
 
 - [Chatting with AI Models]({% link guides/chat.md %})
 - [Using Tools]({% link guides/tools.md %})
-- [Streaming Responses]({% link guides/streaming.md %})
 - [Working with Models]({% link guides/models.md %})
-- [Error Handling]({% link guides/error-handling.md %})

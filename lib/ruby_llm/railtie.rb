@@ -9,9 +9,10 @@ module RubyLLM
       end
     end
 
-    # Include rake tasks if applicable
+    # Include rake tasks
     rake_tasks do
-      # Task definitions go here if needed
+      path = File.expand_path(__dir__)
+      Dir.glob("#{path}/tasks/**/*.rake").each { |f| load f }
     end
 
     # Register generators

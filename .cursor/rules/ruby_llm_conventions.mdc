@@ -1,0 +1,45 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# RubyLLM Project Conventions
+
+This document outlines key conventions and practices for developing the `ruby_llm` project.
+
+## Overview
+
+`ruby_llm` is a Ruby gem providing a unified interface for various AI LLMs (OpenAI, Anthropic, Gemini, Bedrock, DeepSeek). See the [README.md](mdc:README.md) for a full feature list and basic usage examples.
+
+## Dependencies & Setup
+
+- Dependencies are managed via [Gemfile](mdc:Gemfile) and installed using `bundle install`.
+- API keys are configured via environment variables (see [README.md](mdc:README.md)).
+- Development setup involves cloning, `bundle install`, and setting up git hooks with `overcommit --install`. See [CONTRIBUTING.md](mdc:CONTRIBUTING.md) for details.
+
+## Testing
+
+- Tests are run using `bundle exec rspec`.
+- HTTP interactions are mocked using VCR. Cassettes are stored in `spec/fixtures/vcr_cassettes/`.
+- Re-record VCR cassettes using `bundle exec rake vcr:record[provider_name]` or `bundle exec rake vcr:record[all]` after setting necessary API keys as environment variables. Review new cassettes carefully.
+- Refer to [CONTRIBUTING.md](mdc:CONTRIBUTING.md) for the full testing workflow.
+
+## Coding Style & Conventions
+
+- **Style:** Adhere strictly to [Standard Ruby](https://github.com/testdouble/standard). Use `bundle exec rubocop` to check and `bundle exec rubocop -A` to fix. Git hooks (`overcommit`) enforce style.
+- **Model Naming:** Use normalized model IDs (e.g., `claude-3-5-sonnet`) and specify the provider separately (e.g., `provider: :bedrock`). See [CONTRIBUTING.md](mdc:CONTRIBUTING.md) for details on provider implementation and `aliases.json`. Do not edit `models.json` manually; use `rake models:update`.
+- **Documentation:** Use YARD for inline comments. Update guides in `docs/guides/`.
+- **Git:** Use feature branches, preferably linked to GitHub issues. Follow conventional commit messages. See [CONTRIBUTING.md](mdc:CONTRIBUTING.md).
+
+## Key Files
+
+- [README.md](mdc:README.md): Project overview, installation, basic usage.
+- [CONTRIBUTING.md](mdc:CONTRIBUTING.md): Detailed contribution guidelines, development setup, testing, conventions.
+- [Gemfile](mdc:Gemfile): Project dependencies.
+- [.rubocop.yml](mdc:.rubocop.yml), [.overcommit.yml](mdc:.overcommit.yml): Style and git hook configuration.
+- [.rspec](mdc:.rspec): RSpec configuration.
+- [Rakefile](mdc:Rakefile): Defines Rake tasks, including VCR management.
+- `lib/`: Main source code directory.
+- `spec/`: Test files directory.
+- `docs/`: Documentation guides.

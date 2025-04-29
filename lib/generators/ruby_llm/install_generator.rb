@@ -69,13 +69,24 @@ module RubyLLM
     end
 
     def create_migration_files
-      migration_template 'create_chats_migration.rb.tt', "db/migrate/create_#{options[:chat_model_name].tableize}.rb"
-
-      migration_template 'create_messages_migration.rb.tt',
-                         "db/migrate/create_#{options[:message_model_name].tableize}.rb"
-
+      # Create migrations with timestamps to ensure proper order
+      # First create chats table
+      migration_template 'create_chats_migration.rb.tt', 
+                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:chat_model_name].tableize}.rb"
+      
+      # Wait 1 second to ensure different timestamp
+      sleep 1
+      
+      # Then create tool_calls table
       migration_template 'create_tool_calls_migration.rb.tt',
-                         "db/migrate/create_#{options[:tool_call_model_name].tableize}.rb"
+                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:tool_call_model_name].tableize}.rb"
+      
+      # Wait 1 second to ensure different timestamp
+      sleep 1
+      
+      # Finally create messages table which references both previous tables
+      migration_template 'create_messages_migration.rb.tt',
+                         "db/migrate/#{Time.now.utc.strftime('%Y%m%d%H%M%S')}_create_#{options[:message_model_name].tableize}.rb"
     end
 
     def create_model_files
@@ -88,8 +99,8 @@ module RubyLLM
       template 'initializer.rb.tt', 'config/initializers/ruby_llm.rb'
     end
 
-    def show_readme
-      content = ERB.new(File.read(source_paths.first + '/README.md.tt')).result(binding)
+    def show_install_info
+      content = ERB.new(File.read(source_paths.first + '/INSTALL_INFO.md.tt')).result(binding)
       say content
     end
   end
