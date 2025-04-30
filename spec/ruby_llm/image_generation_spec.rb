@@ -97,6 +97,12 @@ RSpec.describe RubyLLM::Image do
 
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
+        expect(image.usage).to eq({
+                                    'input_tokens' => 362,
+                                    'input_tokens_details' => { 'image_tokens' => 323, 'text_tokens' => 39 },
+                                    'output_tokens' => 4160,
+                                    'total_tokens' => 4522
+                                  })
         save_and_verify_image image
       end
 
