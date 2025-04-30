@@ -23,6 +23,8 @@ module RubyLLM
                   :bedrock_region,
                   :bedrock_session_token,
                   :openrouter_api_key,
+                  :openrouter_referer,
+                  :openrouter_title,
                   :ollama_api_base,
                   # Default models
                   :default_model,
