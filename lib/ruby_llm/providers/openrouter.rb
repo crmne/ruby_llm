@@ -5,6 +5,7 @@ module RubyLLM
     # OpenRouter API integration.
     module OpenRouter
       extend OpenAI
+      extend OpenRouter::Chat
       extend OpenRouter::Models
       extend OpenRouter::Media
 

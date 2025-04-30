@@ -55,8 +55,15 @@ RubyLLM.configure do |config|
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
 
   # --- Open Router Configuration ---
-  config.openrouter_referer = 'https://rubyllm.com'
-  config.openrouter_title   = 'RubyLLM'
+  config.openrouter_referer                     = 'https://rubyllm.com'
+  config.openrouter_title                       = 'RubyLLM'
+  config.openrouter_provider_order              = nil
+  config.openrouter_provider_allow_fallbacks    = true
+  config.openrouter_provider_require_parameters = false
+  config.openrouter_provider_data_collection    = 'allow'
+  config.openrouter_provider_ignore             = nil
+  config.openrouter_provider_quantizations      = nil
+  config.openrouter_provider_sort               = nil
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)
