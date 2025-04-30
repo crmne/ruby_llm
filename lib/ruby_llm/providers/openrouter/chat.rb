@@ -2,8 +2,8 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
-      # Chat methods of the OpenAI API integration
+    module OpenRouter
+      # Chat methods of the OpenRouter API integration
       module Chat
         def completion_url
           'chat/completions'
@@ -16,7 +16,8 @@ module RubyLLM
             model: model,
             messages: format_messages(messages),
             temperature: temperature,
-            stream: stream
+            stream: stream,
+            provider: format_provider_options # @todo Allow for assistant overriding
           }.tap do |payload|
             if tools.any?
               payload[:tools] = tools.map { |_, tool| tool_for(tool) }
@@ -63,6 +64,18 @@ module RubyLLM
           else
             role.to_s
           end
+        end
+
+        def format_provider_options
+          {
+            order: @connection.config.openrouter_provider_order,
+            allow_fallbacks: @connection.config.openrouter_provider_allow_fallbacks,
+            require_parameters: @connection.config.openrouter_provider_require_parameters,
+            data_collection: @connection.config.openrouter_provider_data_collection,
+            ignore: @connection.config.openrouter_provider_ignore,
+            quantizations: @connection.config.openrouter_provider_quantizations,
+            sort: @connection.config.openrouter_provider_sort
+          }.compact
         end
       end
     end

@@ -2,8 +2,8 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
-      # Handles formatting of media content (images, audio) for OpenAI APIs
+    module OpenRouter
+      # Handles formatting of media content (images, audio) for OpenRouter APIs
       module Media
         module_function
 
@@ -24,14 +24,23 @@ module RubyLLM
           end
         end
 
+        # @see https://openrouter.ai/docs/features/images-and-pdfs#image-inputs
         def format_image(part)
           {
             type: 'image_url',
             image_url: {
-              url: format_data_url(part[:source]),
+              url: format_image_url(part[:source]),
               detail: 'auto'
             }
           }
+        end
+
+        def format_image_url(source)
+          if source[:type] == 'base64'
+            "data:#{source[:media_type]};base64,#{source[:data]}"
+          else
+            source[:url]
+          end
         end
 
         def format_audio(part)
@@ -41,23 +50,21 @@ module RubyLLM
           }
         end
 
-        # @see https://platform.openai.com/docs/guides/pdf-files?api-mode=chat#base64-encoded-files
+        # @see https://openrouter.ai/docs/features/images-and-pdfs#pdf-support
         def format_pdf(part)
           {
             type: 'file',
             file: {
               filename: File.basename(part[:source]),
-              file_data: "data:application/pdf;base64,#{Base64.strict_encode64(part[:content])}"
+              file_data: format_file_data(part[:content] || part[:source])
             }
           }
         end
 
-        def format_data_url(source)
-          if source[:type] == 'base64'
-            "data:#{source[:media_type]};base64,#{source[:data]}"
-          else
-            source[:url]
-          end
+        def format_file_data(source)
+          source = Faraday.get(source).body if source.start_with?('http')
+
+          "data:application/pdf;base64,#{Base64.strict_encode64(source)}"
         end
       end
     end
