@@ -5,15 +5,15 @@ module RubyLLM
   # Provides an interface to image generation capabilities
   # from providers like DALL-E and Gemini's Imagen.
   class Image
-    attr_reader :url, :data, :mime_type, :revised_prompt, :model_id, :usage
+    attr_reader :url, :data, :mime_type, :revised_prompt, :model, :usage
 
-    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil, usage: {})
+    def initialize(model:, url: nil, data: nil, mime_type: nil, revised_prompt: nil, usage: {})
       @url = url
       @data = data
       @mime_type = mime_type
       @revised_prompt = revised_prompt
-      @model_id = model_id
       @usage = usage
+      @model = model
     end
 
     def base64?
@@ -66,6 +66,22 @@ module RubyLLM
       provider = Provider.for(model_id) if provider.nil?
       connection = context ? context.connection_for(provider) : provider.connection(config)
       provider.edit(prompt, model: model_id, size:, with:, connection:)
+    end
+
+    def total_cost
+      input_cost + output_cost
+    end
+
+    def model_info
+      @model_info ||= RubyLLM.models.find(model)
+    end
+
+    def input_cost
+      usage['input_tokens'] * model_info.input_price_per_million / 1_000_000
+    end
+
+    def output_cost
+      usage['output_tokens'] * model_info.output_price_per_million / 1_000_000
     end
   end
 end

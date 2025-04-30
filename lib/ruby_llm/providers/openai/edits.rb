@@ -21,7 +21,7 @@ module RubyLLM
           }
         end
 
-        def parse_edit_response(response)
+        def parse_edit_response(response, model:)
           data = response.body
           image_data = data['data'].first
           Image.new(
@@ -30,7 +30,7 @@ module RubyLLM
             usage: data['usage'],
             revised_prompt: image_data['revised_prompt'], # May or may not be present
             # Attempt to get model from headers, fallback needed? API might not return it consistently here.
-            model_id: response.headers['openai-model'] || response.headers['x-request-id'] # Placeholder if model isn't in header
+            model:
           )
         end
       end

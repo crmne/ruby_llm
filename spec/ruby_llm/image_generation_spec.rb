@@ -103,6 +103,9 @@ RSpec.describe RubyLLM::Image do
                                     'output_tokens' => 4160,
                                     'total_tokens' => 4522
                                   })
+        expect(image.total_cost).to eq(0.17002)
+        expect(image.input_cost).to eq(0.00362)
+        expect(image.output_cost).to eq(0.1664)
         save_and_verify_image image
       end
 
