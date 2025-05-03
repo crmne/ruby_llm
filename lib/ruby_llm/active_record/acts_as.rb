@@ -103,6 +103,11 @@ module RubyLLM
         self
       end
 
+      def with_max_tool_completions(...)
+        to_llm.with_max_tool_completions(...)
+        self
+      end
+
       def with_model(...)
         to_llm.with_model(...)
         self
