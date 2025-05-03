@@ -46,10 +46,10 @@ For more information about working with models, see the [Working with Models](/g
 ## Models by Type
 {: .d-inline-block }
 
-Last updated: 2025-04-23
+Last updated: 2025-04-25
 {: .label .label-green }
 
-### Chat Models (440)
+### Chat Models (441)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -309,7 +309,7 @@ Last updated: 2025-04-23
 | liquid/lfm-40b | chat | Liquid: LFM 40B MoE | openrouter | 32768 |  | other | 0.15 | 0.15 |
 | liquid/lfm-7b | chat | Liquid: LFM 7B | openrouter | 32768 |  | other | 0.01 | 0.01 |
 | mancer/weaver | chat | Mancer: Weaver (alpha) | openrouter | 8000 | 1000 | other | 1.12 | 1.12 |
-| meta-llama/llama-2-13b-chat | chat | Meta: Llama 2 13B Chat | openrouter | 4096 | 2048 | other | 0.22 | 0.22 |
+| meta-llama/llama-2-13b-chat | chat | Meta: Llama 2 13B Chat | openrouter | 4096 |  | other | 0.30 | 0.30 |
 | meta-llama/llama-2-70b-chat | chat | Meta: Llama 2 70B Chat | openrouter | 4096 |  | other | 0.90 | 0.90 |
 | meta-llama/llama-3-70b-instruct | chat | Meta: Llama 3 70B Instruct | openrouter | 8192 | 16384 | other | 0.30 | 0.40 |
 | meta-llama/llama-3-8b-instruct | chat | Meta: Llama 3 8B Instruct | openrouter | 8192 | 16384 | other | 0.03 | 0.06 |
@@ -322,7 +322,7 @@ Last updated: 2025-04-23
 | meta-llama/llama-3.2-11b-vision-instruct | chat | Meta: Llama 3.2 11B Vision Instruct | openrouter | 131072 | 16384 | other | 0.05 | 0.05 |
 | meta-llama/llama-3.2-11b-vision-instruct:free | chat | Meta: Llama 3.2 11B Vision Instruct (free) | openrouter | 131072 | 2048 | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-1b-instruct | chat | Meta: Llama 3.2 1B Instruct | openrouter | 131072 |  | other | 0.01 | 0.01 |
-| meta-llama/llama-3.2-1b-instruct:free | chat | Meta: Llama 3.2 1B Instruct (free) | openrouter | 131072 | 131072 | other | 0.00 | 0.00 |
+| meta-llama/llama-3.2-1b-instruct:free | chat | Meta: Llama 3.2 1B Instruct (free) | openrouter | 131000 |  | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-3b-instruct | chat | Meta: Llama 3.2 3B Instruct | openrouter | 131072 | 131072 | other | 0.02 | 0.02 |
 | meta-llama/llama-3.2-3b-instruct:free | chat | Meta: Llama 3.2 3B Instruct (free) | openrouter | 20000 | 20000 | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-90b-vision-instruct | chat | Meta: Llama 3.2 90B Vision Instruct | openrouter | 131072 |  | other | 0.90 | 0.90 |
@@ -357,7 +357,7 @@ Last updated: 2025-04-23
 | mistralai/mistral-large-2407 | chat | Mistral Large 2407 | openrouter | 131072 |  | other | 2.00 | 6.00 |
 | mistralai/mistral-large-2411 | chat | Mistral Large 2411 | openrouter | 131072 |  | other | 2.00 | 6.00 |
 | mistralai/mistral-medium | chat | Mistral Medium | openrouter | 32768 |  | other | 2.75 | 8.10 |
-| mistralai/mistral-nemo | chat | Mistral: Mistral Nemo | openrouter | 131072 | 16384 | other | 0.04 | 0.08 |
+| mistralai/mistral-nemo | chat | Mistral: Mistral Nemo | openrouter | 98304 | 49152 | other | 0.03 | 0.07 |
 | mistralai/mistral-nemo:free | chat | Mistral: Mistral Nemo (free) | openrouter | 128000 | 128000 | other | 0.00 | 0.00 |
 | mistralai/mistral-saba | chat | Mistral: Saba | openrouter | 32768 |  | other | 0.20 | 0.60 |
 | mistralai/mistral-small | chat | Mistral Small | openrouter | 32768 |  | other | 0.20 | 0.60 |
@@ -391,7 +391,6 @@ Last updated: 2025-04-23
 | nvidia/llama-3.1-nemotron-ultra-253b-v1:free | chat | NVIDIA: Llama 3.1 Nemotron Ultra 253B v1 (free) | openrouter | 131072 |  | other | 0.00 | 0.00 |
 | nvidia/llama-3.3-nemotron-super-49b-v1:free | chat | NVIDIA: Llama 3.3 Nemotron Super 49B v1 (free) | openrouter | 131072 |  | other | 0.00 | 0.00 |
 | open-r1/olympiccoder-32b:free | chat | OlympicCoder 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
-| open-r1/olympiccoder-7b:free | chat | OlympicCoder 7B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | openai/chatgpt-4o-latest | chat | OpenAI: ChatGPT-4o | openrouter | 128000 | 16384 | other | 5.00 | 15.00 |
 | openai/gpt-3.5-turbo | chat | OpenAI: GPT-3.5 Turbo | openrouter | 16385 | 4096 | other | 0.50 | 1.50 |
 | openai/gpt-3.5-turbo-0125 | chat | OpenAI: GPT-3.5 Turbo 16k | openrouter | 16385 | 4096 | other | 0.50 | 1.50 |
@@ -483,7 +482,9 @@ Last updated: 2025-04-23
 | thedrummer/rocinante-12b | chat | Rocinante 12B | openrouter | 32768 |  | other | 0.25 | 0.50 |
 | thedrummer/skyfall-36b-v2 | chat | TheDrummer: Skyfall 36B V2 | openrouter | 32768 | 32768 | other | 0.50 | 0.80 |
 | thedrummer/unslopnemo-12b | chat | Unslopnemo 12B | openrouter | 32000 |  | other | 0.50 | 0.50 |
+| thudm/glm-4-32b | chat | THUDM: GLM 4 32B | openrouter | 32000 |  | other | 0.24 | 0.24 |
 | thudm/glm-4-32b:free | chat | THUDM: GLM 4 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
+| thudm/glm-z1-32b | chat | THUDM: GLM Z1 32B | openrouter | 32000 |  | other | 0.24 | 0.24 |
 | thudm/glm-z1-32b:free | chat | THUDM: GLM Z1 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | undi95/remm-slerp-l2-13b | chat | ReMM SLERP 13B | openrouter | 6144 | 1024 | other | 0.56 | 1.12 |
 | undi95/toppy-m-7b | chat | Toppy M 7B | openrouter | 4096 |  | other | 0.07 | 0.07 |
@@ -721,7 +722,7 @@ Last updated: 2025-04-23
 | anthropic.claude-v2:1:200k | chat | Claude | bedrock | 200000 | 4096 | claude2 | 8.00 | 24.00 |
 | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 
-### Openrouter Models (302)
+### Openrouter Models (303)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -843,7 +844,7 @@ Last updated: 2025-04-23
 | liquid/lfm-40b | chat | Liquid: LFM 40B MoE | openrouter | 32768 |  | other | 0.15 | 0.15 |
 | liquid/lfm-7b | chat | Liquid: LFM 7B | openrouter | 32768 |  | other | 0.01 | 0.01 |
 | mancer/weaver | chat | Mancer: Weaver (alpha) | openrouter | 8000 | 1000 | other | 1.12 | 1.12 |
-| meta-llama/llama-2-13b-chat | chat | Meta: Llama 2 13B Chat | openrouter | 4096 | 2048 | other | 0.22 | 0.22 |
+| meta-llama/llama-2-13b-chat | chat | Meta: Llama 2 13B Chat | openrouter | 4096 |  | other | 0.30 | 0.30 |
 | meta-llama/llama-2-70b-chat | chat | Meta: Llama 2 70B Chat | openrouter | 4096 |  | other | 0.90 | 0.90 |
 | meta-llama/llama-3-70b-instruct | chat | Meta: Llama 3 70B Instruct | openrouter | 8192 | 16384 | other | 0.30 | 0.40 |
 | meta-llama/llama-3-8b-instruct | chat | Meta: Llama 3 8B Instruct | openrouter | 8192 | 16384 | other | 0.03 | 0.06 |
@@ -856,7 +857,7 @@ Last updated: 2025-04-23
 | meta-llama/llama-3.2-11b-vision-instruct | chat | Meta: Llama 3.2 11B Vision Instruct | openrouter | 131072 | 16384 | other | 0.05 | 0.05 |
 | meta-llama/llama-3.2-11b-vision-instruct:free | chat | Meta: Llama 3.2 11B Vision Instruct (free) | openrouter | 131072 | 2048 | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-1b-instruct | chat | Meta: Llama 3.2 1B Instruct | openrouter | 131072 |  | other | 0.01 | 0.01 |
-| meta-llama/llama-3.2-1b-instruct:free | chat | Meta: Llama 3.2 1B Instruct (free) | openrouter | 131072 | 131072 | other | 0.00 | 0.00 |
+| meta-llama/llama-3.2-1b-instruct:free | chat | Meta: Llama 3.2 1B Instruct (free) | openrouter | 131000 |  | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-3b-instruct | chat | Meta: Llama 3.2 3B Instruct | openrouter | 131072 | 131072 | other | 0.02 | 0.02 |
 | meta-llama/llama-3.2-3b-instruct:free | chat | Meta: Llama 3.2 3B Instruct (free) | openrouter | 20000 | 20000 | other | 0.00 | 0.00 |
 | meta-llama/llama-3.2-90b-vision-instruct | chat | Meta: Llama 3.2 90B Vision Instruct | openrouter | 131072 |  | other | 0.90 | 0.90 |
@@ -891,7 +892,7 @@ Last updated: 2025-04-23
 | mistralai/mistral-large-2407 | chat | Mistral Large 2407 | openrouter | 131072 |  | other | 2.00 | 6.00 |
 | mistralai/mistral-large-2411 | chat | Mistral Large 2411 | openrouter | 131072 |  | other | 2.00 | 6.00 |
 | mistralai/mistral-medium | chat | Mistral Medium | openrouter | 32768 |  | other | 2.75 | 8.10 |
-| mistralai/mistral-nemo | chat | Mistral: Mistral Nemo | openrouter | 131072 | 16384 | other | 0.04 | 0.08 |
+| mistralai/mistral-nemo | chat | Mistral: Mistral Nemo | openrouter | 98304 | 49152 | other | 0.03 | 0.07 |
 | mistralai/mistral-nemo:free | chat | Mistral: Mistral Nemo (free) | openrouter | 128000 | 128000 | other | 0.00 | 0.00 |
 | mistralai/mistral-saba | chat | Mistral: Saba | openrouter | 32768 |  | other | 0.20 | 0.60 |
 | mistralai/mistral-small | chat | Mistral Small | openrouter | 32768 |  | other | 0.20 | 0.60 |
@@ -925,7 +926,6 @@ Last updated: 2025-04-23
 | nvidia/llama-3.1-nemotron-ultra-253b-v1:free | chat | NVIDIA: Llama 3.1 Nemotron Ultra 253B v1 (free) | openrouter | 131072 |  | other | 0.00 | 0.00 |
 | nvidia/llama-3.3-nemotron-super-49b-v1:free | chat | NVIDIA: Llama 3.3 Nemotron Super 49B v1 (free) | openrouter | 131072 |  | other | 0.00 | 0.00 |
 | open-r1/olympiccoder-32b:free | chat | OlympicCoder 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
-| open-r1/olympiccoder-7b:free | chat | OlympicCoder 7B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | openai/chatgpt-4o-latest | chat | OpenAI: ChatGPT-4o | openrouter | 128000 | 16384 | other | 5.00 | 15.00 |
 | openai/gpt-3.5-turbo | chat | OpenAI: GPT-3.5 Turbo | openrouter | 16385 | 4096 | other | 0.50 | 1.50 |
 | openai/gpt-3.5-turbo-0125 | chat | OpenAI: GPT-3.5 Turbo 16k | openrouter | 16385 | 4096 | other | 0.50 | 1.50 |
@@ -1017,7 +1017,9 @@ Last updated: 2025-04-23
 | thedrummer/rocinante-12b | chat | Rocinante 12B | openrouter | 32768 |  | other | 0.25 | 0.50 |
 | thedrummer/skyfall-36b-v2 | chat | TheDrummer: Skyfall 36B V2 | openrouter | 32768 | 32768 | other | 0.50 | 0.80 |
 | thedrummer/unslopnemo-12b | chat | Unslopnemo 12B | openrouter | 32000 |  | other | 0.50 | 0.50 |
+| thudm/glm-4-32b | chat | THUDM: GLM 4 32B | openrouter | 32000 |  | other | 0.24 | 0.24 |
 | thudm/glm-4-32b:free | chat | THUDM: GLM 4 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
+| thudm/glm-z1-32b | chat | THUDM: GLM Z1 32B | openrouter | 32000 |  | other | 0.24 | 0.24 |
 | thudm/glm-z1-32b:free | chat | THUDM: GLM Z1 32B (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | undi95/remm-slerp-l2-13b | chat | ReMM SLERP 13B | openrouter | 6144 | 1024 | other | 0.56 | 1.12 |
 | undi95/toppy-m-7b | chat | Toppy M 7B | openrouter | 4096 |  | other | 0.07 | 0.07 |

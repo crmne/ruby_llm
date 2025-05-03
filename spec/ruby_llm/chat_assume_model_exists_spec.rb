@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Chat do
   describe '#assume_model_exists' do
     let(:real_model) { 'gpt-4.1-nano' }
     let(:custom_model) { 'my-custom-model' }
-    let(:provider) { :openai }
+    let(:provider) { 'openai' }
     # Keep a reference to the original models for cleanup
     let!(:original_models) { RubyLLM::Models.instance.all.dup }
 
@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Chat do
       )
 
       expect(chat.model.id).to eq(custom_model)
-      expect(chat.model.provider).to eq(provider)
+      expect(chat.model.provider.slug).to eq(provider)
     end
 
     it 'works with RubyLLM.chat convenience method' do # rubocop:disable RSpec/ExampleLength
@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Chat do
       chat.with_model(custom_model, provider: provider, assume_exists: true)
 
       expect(chat.model.id).to eq(custom_model)
-      expect(chat.model.provider).to eq(provider)
+      expect(chat.model.provider.slug).to eq(provider)
     end
   end
 end
