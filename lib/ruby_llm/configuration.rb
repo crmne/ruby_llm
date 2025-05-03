@@ -31,7 +31,10 @@ module RubyLLM
                   :max_retries,
                   :retry_interval,
                   :retry_backoff_factor,
-                  :retry_interval_randomness
+                  :retry_interval_randomness,
+                  # Logging configuration
+                  :log_file,
+                  :log_level
 
     def initialize
       # Connection configuration
@@ -45,6 +48,10 @@ module RubyLLM
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+
+      # Logging configuration
+      @log_file = $stdout
+      @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
     end
 
     def inspect # rubocop:disable Metrics/MethodLength
