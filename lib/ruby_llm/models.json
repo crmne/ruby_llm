@@ -11298,6 +11298,49 @@
     }
   },
   {
+    "id": "arcee-ai/arcee-blitz",
+    "created_at": "2025-05-05T20:35:00+02:00",
+    "display_name": "Arcee AI: Arcee Blitz",
+    "provider": "openrouter",
+    "context_window": 32768,
+    "max_tokens": null,
+    "type": "chat",
+    "family": "other",
+    "supports_vision": false,
+    "supports_functions": true,
+    "supports_json_mode": true,
+    "input_price_per_million": 0.44999999999999996,
+    "output_price_per_million": 0.75,
+    "metadata": {
+      "object": null,
+      "description": "Arcee-Blitz (24B) is a 24B-parameter instruct model built on Mistral-Small-24B and distilled from DeepSeek-V3. It emphasizes speed and practicality, with strong performance across general tasks and notable gains in world knowledge benchmarks. The model uses DeepSeek logits as pretraining targets and underwent additional fine-tuning to improve instruction-following and reasoning capabilities.\n\nBenchmarks show consistent improvements over Mistral-Small-3, particularly on MMLU-Pro, Math, and MixEval. Arcee-Blitz supports a 32k context length and is released under the Apache 2.0 license.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "pricing": {
+        "prompt": "0.00000045",
+        "completion": "0.00000075",
+        "request": "0",
+        "image": "0",
+        "web_search": "0",
+        "internal_reasoning": "0"
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      }
+    }
+  },
+  {
     "id": "arliai/qwq-32b-arliai-rpr-v1:free",
     "display_name": "ArliAI: QwQ 32B RpR v1 (free)",
     "provider": "openrouter",
