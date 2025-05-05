@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"any"}'
@@ -27,39 +27,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:06:03 GMT
+      - Mon, 05 May 2025 20:08:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Ratelimitbysize-Limit:
-      - '2000000'
-      X-Ratelimitbysize-Limit-Minute:
-      - '2000000'
-      X-Ratelimitbysize-Remaining-Minute:
-      - '1502570'
-      Ratelimitbysize-Reset:
-      - '58'
       X-Ratelimitbysize-Limit-Month:
       - '10000000000'
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1844757'
+      Ratelimitbysize-Reset:
+      - '28'
       X-Ratelimitbysize-Remaining-Month:
-      - '9991808484'
-      Ratelimitbysize-Remaining:
-      - '1502570'
+      - '9958183515'
       Ratelimitbysize-Query-Cost:
       - '32010'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Remaining:
+      - '1844757'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
       X-Envoy-Upstream-Service-Time:
-      - '751'
+      - '475'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '751'
+      - '475'
       X-Kong-Proxy-Latency:
-      - '4'
+      - '6'
       X-Kong-Request-Id:
-      - 9896b3654d475b3eec5f1927f48a4326
+      - bb52ee63d2650c1be341cd0b43d94e00
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,20 +73,20 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b111bf130f71474ab7fb78b8c5e52757","object":"chat.completion","created":1745784362,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":[{"id":"A8aVPPTUe","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"0107232d12834e429ee165ceb0b94c19","object":"chat.completion","created":1746475712,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":[{"id":"JfAir9aUj","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""},"finish_reason":"tool_calls","logprobs":null}],"usage":{"prompt_tokens":137,"total_tokens":174,"completion_tokens":37}}'
-  recorded_at: Sun, 27 Apr 2025 20:06:03 GMT
+  recorded_at: Mon, 05 May 2025 20:08:32 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"A8aVPPTUe","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"A8aVPPTUe","name":"tool"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"JfAir9aUj","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"JfAir9aUj"}],"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"any"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:06:06 GMT
+      - Mon, 05 May 2025 20:08:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,110 +112,31 @@ http_interactions:
       Connection:
       - keep-alive
       X-Ratelimitbysize-Remaining-Minute:
-      - '1967978'
-      X-Ratelimitbysize-Remaining-Month:
-      - '9999967978'
+      - '1796627'
       Ratelimitbysize-Reset:
-      - '57'
+      - '28'
       Ratelimitbysize-Remaining:
-      - '1967978'
+      - '1796627'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9954585604'
+      Ratelimitbysize-Query-Cost:
+      - '32022'
       Ratelimitbysize-Limit:
       - '2000000'
       X-Ratelimitbysize-Limit-Month:
       - '10000000000'
-      Ratelimitbysize-Query-Cost:
-      - '32022'
       X-Ratelimitbysize-Limit-Minute:
       - '2000000'
       X-Envoy-Upstream-Service-Time:
-      - '3228'
+      - '246'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '3229'
+      - '255'
       X-Kong-Proxy-Latency:
       - '5'
       X-Kong-Request-Id:
-      - cf9f6a4342cd5535c223a542ff97727b
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"24c41a0250a448be86c02fc8c4d4f750","object":"chat.completion","created":1745784363,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":[{"id":"LJiGGRnC0","function":{"name":"web_search","arguments":"{\"query\":
-        \"weather in Berlin\"}"},"index":0}],"content":""},"finish_reason":"tool_calls","logprobs":null}],"usage":{"prompt_tokens":229,"total_tokens":251,"completion_tokens":22}}'
-  recorded_at: Sun, 27 Apr 2025 20:06:06 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"A8aVPPTUe","type":"function","function":{"name":"weather","arguments":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"A8aVPPTUe","name":"tool"},{"role":"assistant","tool_calls":[{"id":"LJiGGRnC0","type":"function","function":{"name":"web_search","arguments":{"query":"weather
-        in Berlin"}}}]},{"role":"tool","content":"Tool ''web_search'' not found. Available
-        tools: weather","tool_call_id":"LJiGGRnC0","name":"tool"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <MISTRAL_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 27 Apr 2025 20:42:26 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Ratelimitbysize-Remaining-Month:
-      - '9988349184'
-      Ratelimitbysize-Remaining:
-      - '1478803'
-      Ratelimitbysize-Limit:
-      - '2000000'
-      Ratelimitbysize-Reset:
-      - '35'
-      Ratelimitbysize-Query-Cost:
-      - '32032'
-      X-Ratelimitbysize-Remaining-Minute:
-      - '1478803'
-      X-Ratelimitbysize-Limit-Minute:
-      - '2000000'
-      X-Ratelimitbysize-Limit-Month:
-      - '10000000000'
-      X-Envoy-Upstream-Service-Time:
-      - '202'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '203'
-      X-Kong-Proxy-Latency:
-      - '7'
-      X-Kong-Request-Id:
-      - 16c7d90372d81262fe29e76a6738ed7b
+      - 5df8cd14bff9280e964eaa56be8aca78
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -230,6 +151,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNlZGVhZDVlZTY5OTRhMDc4Y2YwODIzYTMyYjliM2YyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0NTc4NjU0NSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImxvZ3Byb2JzIjpudWxsfV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NSwidG90YWxfdG9rZW5zIjozMDUsImNvbXBsZXRpb25fdG9rZW5zIjoyMH19
-  recorded_at: Sun, 27 Apr 2025 20:42:26 GMT
+        eyJpZCI6IjgxYTAxZTNiMDgwZTRmODdiZmUxY2Q0NDM2ZDhkNjc2Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0NjQ3NTcxMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJsb2dwcm9icyI6bnVsbH1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMjksInRvdGFsX3Rva2VucyI6MjUxLCJjb21wbGV0aW9uX3Rva2VucyI6MjJ9fQ==
+  recorded_at: Mon, 05 May 2025 20:08:33 GMT
 recorded_with: VCR 6.3.1

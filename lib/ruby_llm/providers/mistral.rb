@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RubyLLM
   module Providers
     # Mistral API integration. Handles chat completion, embeddings,
@@ -36,24 +38,24 @@ module RubyLLM
 
         body = try_parse_json(response.body)
         error_message = case body
-        when Hash
-          # Check for standard { detail: [{ msg: ... }] } structure
-          if body['detail'].is_a?(Array)
-            body['detail'].map { |err| err['msg'] }.join("; ")
-          # Check for simple { message: ... } structure (some Mistral errors use this)
-          elsif body['message']
-            body['message']
-          # Fallback for other hash structures
-          else
-            body.to_s
-          end
-        else
-          body.to_s # Return raw body if not a hash
-        end
+                        when Hash
+                          # Check for standard { detail: [{ msg: ... }] } structure
+                          if body['detail'].is_a?(Array)
+                            body['detail'].map { |err| err['msg'] }.join('; ')
+                          # Check for simple { message: ... } structure (some Mistral errors use this)
+                          elsif body['message']
+                            body['message']
+                          # Fallback for other hash structures
+                          else
+                            body.to_s
+                          end
+                        else
+                          body.to_s # Return raw body if not a hash
+                        end
 
         # Format the error message
         if error_message.include?('Input should be a valid')
-          "Invalid message format: The message content is not properly formatted"
+          'Invalid message format: The message content is not properly formatted'
         else
           error_message
         end

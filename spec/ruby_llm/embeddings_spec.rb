@@ -10,9 +10,9 @@ RSpec.describe RubyLLM::Embedding do
   let(:test_dimensions) { 768 }
 
   embedding_models = [
-    "text-embedding-004", # gemini
-    "text-embedding-3-small", # openai
-    "mistral-embed", # mistral (added from other branch)
+    'text-embedding-004', # gemini
+    'text-embedding-3-small', # openai
+    'mistral-embed' # mistral (added from other branch)
   ].freeze
 
   describe 'basic functionality' do
@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle a single text with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations
-        skip "Mistral embed does not support custom dimensions" if provider == :mistral
+        skip 'Mistral embed does not support custom dimensions' if provider == 'mistral'
         embedding = RubyLLM.embed(test_text, model: model, dimensions: test_dimensions)
         expect(embedding.vectors).to be_an(Array)
         expect(embedding.vectors.length).to eq(test_dimensions)
@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations
-        skip "Mistral embed does not support custom dimensions" if provider == :mistral
+        skip 'Mistral embed does not support custom dimensions' if provider == 'mistral'
         embeddings = RubyLLM.embed(test_texts, model: model, dimensions: test_dimensions)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|
