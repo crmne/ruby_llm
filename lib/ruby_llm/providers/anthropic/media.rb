@@ -8,53 +8,21 @@ module RubyLLM
         module_function
 
         def format_content(content) # rubocop:disable Metrics/MethodLength
-          return content unless content.is_a?(Array)
+          return content unless content.is_a?(Content)
 
-          content.map do |part|
-            case part[:type]
-            when 'image'
-              format_image(part)
-            when 'pdf'
-              format_pdf(part)
-            when 'text'
-              format_text_block(part[:text])
-            else
-              part
+          parts = []
+          parts << format_text_block(content.text) if content.text
+
+          content.attachments.each do |attachment|
+            case attachment
+            when Attachments::Image
+              parts << format_image(attachment)
+            when Attachments::PDF
+              parts << format_pdf(attachment)
             end
           end
-        end
 
-        def format_image(part)
-          # Handle image formatting for Anthropic
-          # This is just a placeholder - implement based on Anthropic's requirements
-          part
-        end
-
-        def format_pdf(part) # rubocop:disable Metrics/MethodLength
-          source = part[:source]
-
-          if source.start_with?('http')
-            # For URLs - add "type": "url" here
-            {
-              type: 'document',
-              source: {
-                type: 'url', # This line is missing in the current implementation
-                url: source
-              }
-            }
-          else
-            # For local files
-            data = Base64.strict_encode64(part[:content])
-
-            {
-              type: 'document',
-              source: {
-                type: 'base64',
-                media_type: 'application/pdf',
-                data: data
-              }
-            }
-          end
+          parts
         end
 
         def format_text_block(text)
@@ -62,6 +30,48 @@ module RubyLLM
             type: 'text',
             text: text
           }
+        end
+
+        def format_image(image) # rubocop:disable Metrics/MethodLength
+          if image.url?
+            {
+              type: 'image',
+              source: {
+                type: 'url',
+                url: image.source
+              }
+            }
+          else
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: image.mime_type,
+                data: image.encoded
+              }
+            }
+          end
+        end
+
+        def format_pdf(pdf) # rubocop:disable Metrics/MethodLength
+          if pdf.url?
+            {
+              type: 'document',
+              source: {
+                type: 'url',
+                url: pdf.source
+              }
+            }
+          else
+            {
+              type: 'document',
+              source: {
+                type: 'base64',
+                media_type: 'application/pdf',
+                data: pdf.encoded
+              }
+            }
+          end
         end
       end
     end
