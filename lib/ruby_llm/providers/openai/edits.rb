@@ -11,14 +11,18 @@ module RubyLLM
           'images/edits'
         end
 
-        def render_edit_payload(prompt, model:, size:, with:)
-          payload = {
-            model: model,
-            prompt: prompt,
-            image: ImageAttachments.new(with[:image]).format,
-            size: size,
-            n: 1
-          }
+        # Options:
+        # - size: '1024x1024'
+        # - quality: 'low'
+        # - user: 'user_123'
+        # See https://platform.openai.com/docs/api-reference/images/createEdit
+        def render_edit_payload(prompt, model:, with:, options:)
+          options.merge({
+                          model:,
+                          prompt:,
+                          image: ImageAttachments.new(with[:image]).format,
+                          n: 1
+                        })
         end
 
         def parse_edit_response(response, model:)
@@ -28,8 +32,6 @@ module RubyLLM
             data: image_data['b64_json'], # Edits API returns base64 when requested
             mime_type: 'image/png',
             usage: data['usage'],
-            revised_prompt: image_data['revised_prompt'], # May or may not be present
-            # Attempt to get model from headers, fallback needed? API might not return it consistently here.
             model:
           )
         end

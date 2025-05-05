@@ -89,6 +89,14 @@ RSpec.describe RubyLLM::Image do
           RubyLLM.edit(prompt, with: { image: 'spec/fixtures/nonexistent.png' }, model: model)
         end.to raise_error(Errno::ENOENT, /No such file or directory/)
       end
+
+      it 'customizes image output' do
+        image = RubyLLM.edit(prompt, with: { image: 'spec/fixtures/ruby.png' }, model: model,
+                                     options: { size: '1024x1024', quality: 'low' })
+        expect(image.base64?).to be(true)
+        expect(image.mime_type).to eq('image/png')
+        expect(image.usage['output_tokens']).to eq(272)
+      end
     end
 
     context 'with remote URLs' do

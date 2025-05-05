@@ -43,8 +43,8 @@ module RubyLLM
         parse_image_response(response, model:)
       end
 
-      def edit(prompt, model:, size:, with:, connection:)
-        payload = render_edit_payload(prompt, model:, size:, with:)
+      def edit(prompt, model:, with:, options:, connection:)
+        payload = render_edit_payload(prompt, model:, with:, options:)
 
         response = connection.post_multipart(edits_url, payload)
         parse_edit_response(response, model:)
