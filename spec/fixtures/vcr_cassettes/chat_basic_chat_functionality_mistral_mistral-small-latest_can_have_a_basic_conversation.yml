@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"temperature":0.7,"stream":false}'
+        2 + 2?"}],"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -24,39 +24,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:01:59 GMT
+      - Mon, 05 May 2025 20:08:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Ratelimitbysize-Limit:
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1852801'
+      Ratelimitbysize-Remaining:
+      - '1852801'
+      X-Ratelimitbysize-Limit-Minute:
       - '2000000'
       X-Ratelimitbysize-Limit-Month:
       - '10000000000'
       X-Ratelimitbysize-Remaining-Month:
-      - '9999967994'
-      X-Ratelimitbysize-Limit-Minute:
+      - '9954649606'
+      Ratelimitbysize-Limit:
       - '2000000'
-      X-Ratelimitbysize-Remaining-Minute:
-      - '1967994'
       Ratelimitbysize-Reset:
-      - '2'
-      Ratelimitbysize-Remaining:
-      - '1967994'
+      - '32'
       Ratelimitbysize-Query-Cost:
       - '32006'
       X-Envoy-Upstream-Service-Time:
-      - '377'
+      - '244'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '378'
+      - '387'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '14'
       X-Kong-Request-Id:
-      - c94166447f52c0210b922510f54e290a
+      - fb64905931a0b77328ac33370865da01
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -70,7 +70,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2b11b38c20cc44178077e87c3d3c3312","object":"chat.completion","created":1745784118,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"814b85a3b66a46549982cd6978e70d44","object":"chat.completion","created":1746475708,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is 4. Here it is:\n\n 2\n+2\n____\n 4"},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":11,"total_tokens":38,"completion_tokens":27}}'
-  recorded_at: Sun, 27 Apr 2025 20:01:59 GMT
+  recorded_at: Mon, 05 May 2025 20:08:28 GMT
 recorded_with: VCR 6.3.1

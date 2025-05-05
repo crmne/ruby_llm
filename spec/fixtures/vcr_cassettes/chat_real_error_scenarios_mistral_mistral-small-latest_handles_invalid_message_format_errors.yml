@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":{"type":"text","wrong":"format"}},{"role":"user","content":"hi"}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":{"type":"text","wrong":"format"}},{"role":"user","content":"hi"}],"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -23,7 +23,7 @@ http_interactions:
       message: Unprocessable Entity
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:01:54 GMT
+      - Mon, 05 May 2025 20:08:21 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -33,29 +33,29 @@ http_interactions:
       X-Ratelimitbysize-Limit-Minute:
       - '2000000'
       X-Ratelimitbysize-Remaining-Minute:
-      - '1967999'
-      Ratelimitbysize-Reset:
-      - '6'
-      Ratelimitbysize-Remaining:
-      - '1967999'
-      X-Ratelimitbysize-Limit-Month:
-      - '10000000000'
+      - '1874134'
       X-Ratelimitbysize-Remaining-Month:
-      - '9992806629'
+      - '9954681575'
+      Ratelimitbysize-Reset:
+      - '39'
       Ratelimitbysize-Query-Cost:
       - '32001'
       Ratelimitbysize-Limit:
       - '2000000'
+      Ratelimitbysize-Remaining:
+      - '1874134'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
       X-Envoy-Upstream-Service-Time:
-      - '3'
+      - '4'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
       - '5'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '5'
       X-Kong-Request-Id:
-      - 1494e5341cc107655b463c2eb84f3c1e
+      - e90afe278b5c46547989934cf403816f
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,5 +72,5 @@ http_interactions:
       string: '{"detail":[{"type":"string_type","loc":["body","messages",0,"user","content","str"],"msg":"Input
         should be a valid string","input":{"type":"text","wrong":"format"}},{"type":"list_type","loc":["body","messages",0,"user","content","list[tagged-union[TextChunk,ImageURLChunk,DocumentURLChunk,ReferenceChunk,BBoxChunk,FileURLChunk,AudioChunk]]"],"msg":"Input
         should be a valid list","input":{"type":"text","wrong":"format"}}]}'
-  recorded_at: Sun, 27 Apr 2025 20:01:54 GMT
+  recorded_at: Mon, 05 May 2025 20:08:21 GMT
 recorded_with: VCR 6.3.1

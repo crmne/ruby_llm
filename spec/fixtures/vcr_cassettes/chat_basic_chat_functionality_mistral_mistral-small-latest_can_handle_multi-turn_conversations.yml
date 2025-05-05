@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
+        was Ruby''s creator?"}],"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -24,39 +24,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:02:04 GMT
+      - Mon, 05 May 2025 20:08:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1853623'
+      Ratelimitbysize-Reset:
+      - '32'
+      Ratelimitbysize-Remaining:
+      - '1853623'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9954649609'
+      Ratelimitbysize-Query-Cost:
+      - '32006'
       Ratelimitbysize-Limit:
       - '2000000'
       X-Ratelimitbysize-Limit-Month:
       - '10000000000'
-      X-Ratelimitbysize-Remaining-Month:
-      - '9992742635'
       X-Ratelimitbysize-Limit-Minute:
       - '2000000'
-      X-Ratelimitbysize-Remaining-Minute:
-      - '1903978'
-      Ratelimitbysize-Reset:
-      - '1'
-      Ratelimitbysize-Remaining:
-      - '1903978'
-      Ratelimitbysize-Query-Cost:
-      - '32006'
       X-Envoy-Upstream-Service-Time:
-      - '5256'
+      - '1450'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '5257'
+      - '1451'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '5'
       X-Kong-Request-Id:
-      - 2de1c609e72c8349c889066d68ba6108
+      - 0675627a73e58542ad94a2183013b734
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -70,14 +70,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"58491650f3264d5dbcf7262d8618158b","object":"chat.completion","created":1745784119,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Ruby
+      string: '{"id":"cadbe8afb5e04dbdbc6d44b6b2d3ac6b","object":"chat.completion","created":1746475708,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Ruby
         was created by Yukihiro \"Matz\" Matsumoto. Matsumoto began working on Ruby
-        in the mid-1990s and officially released it in 1995. Ruby is a high-level,
-        interpreted programming language known for its simplicity and productivity,
-        with a strong emphasis on readability and developer happiness. Matsumoto designed
-        Ruby to be a language that is both powerful and easy to use, drawing inspiration
-        from various other languages such as Perl, Smalltalk, and Lisp."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":9,"total_tokens":113,"completion_tokens":104}}'
-  recorded_at: Sun, 27 Apr 2025 20:02:04 GMT
+        in the mid-1990s and officially released it in 1995. Ruby is known for its
+        simplicity and productivity, and it has been widely used in web development,
+        particularly with the Ruby on Rails framework. Matsumoto''s design philosophy
+        emphasizes developer happiness and productivity, which has contributed to
+        Ruby''s popularity in the programming community."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":9,"total_tokens":103,"completion_tokens":94}}'
+  recorded_at: Mon, 05 May 2025 20:08:30 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -86,12 +86,11 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Who
         was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
         Yukihiro \"Matz\" Matsumoto. Matsumoto began working on Ruby in the mid-1990s
-        and officially released it in 1995. Ruby is a high-level, interpreted programming
-        language known for its simplicity and productivity, with a strong emphasis
-        on readability and developer happiness. Matsumoto designed Ruby to be a language
-        that is both powerful and easy to use, drawing inspiration from various other
-        languages such as Perl, Smalltalk, and Lisp."},{"role":"user","content":"What
-        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        and officially released it in 1995. Ruby is known for its simplicity and productivity,
+        and it has been widely used in web development, particularly with the Ruby
+        on Rails framework. Matsumoto''s design philosophy emphasizes developer happiness
+        and productivity, which has contributed to Ruby''s popularity in the programming
+        community."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -109,39 +108,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:02:05 GMT
+      - Mon, 05 May 2025 20:08:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Ratelimitbysize-Reset:
-      - '56'
-      X-Ratelimitbysize-Limit-Minute:
-      - '2000000'
       X-Ratelimitbysize-Remaining-Minute:
-      - '1967888'
+      - '1967898'
+      Ratelimitbysize-Reset:
+      - '30'
+      Ratelimitbysize-Remaining:
+      - '1967898'
       X-Ratelimitbysize-Remaining-Month:
-      - '9999967888'
-      X-Ratelimitbysize-Limit-Month:
-      - '10000000000'
+      - '9999967898'
       Ratelimitbysize-Query-Cost:
-      - '32112'
+      - '32102'
       Ratelimitbysize-Limit:
       - '2000000'
-      Ratelimitbysize-Remaining:
-      - '1967888'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
       X-Envoy-Upstream-Service-Time:
-      - '491'
+      - '533'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '492'
+      - '534'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '7'
       X-Kong-Request-Id:
-      - dce3450d8acd053f76565636e7a80b18
+      - 7825233311f90902cd3d765e8ae19e7a
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -155,10 +154,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"16cc62b8d35f42dfb24b0284aee4c50c","object":"chat.completion","created":1745784124,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
-        \"Matz\" Matsumoto began working on Ruby in the mid-1990s. The first public
-        release of Ruby was in December 1995. This initial release laid the foundation
-        for the language, which has since evolved and gained popularity for its simplicity
-        and productivity."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":122,"total_tokens":186,"completion_tokens":64}}'
-  recorded_at: Sun, 27 Apr 2025 20:02:05 GMT
+      string: '{"id":"37dcb62a7d7f4b91b07b397d022165f0","object":"chat.completion","created":1746475710,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
+        \"Matz\" Matsumoto began working on Ruby in the early 1990s. The first public
+        release of Ruby was in December 1995. This initial release marked the beginning
+        of Ruby''s journey as a programming language, and it has since evolved significantly
+        with numerous updates and improvements."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":112,"total_tokens":180,"completion_tokens":68}}'
+  recorded_at: Mon, 05 May 2025 20:08:30 GMT
 recorded_with: VCR 6.3.1

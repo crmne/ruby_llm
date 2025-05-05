@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:01:53 GMT
+      - Mon, 05 May 2025 20:08:21 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -35,9 +35,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Response-Latency:
-      - '5'
+      - '6'
       X-Kong-Request-Id:
-      - cfd061050555145edb4e574c99014d47
+      - 696869367bc8da6c8ed65c2e6fcc8216
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -54,7 +54,7 @@ http_interactions:
       string: |-
         {
           "message":"Unauthorized",
-          "request_id":"cfd061050555145edb4e574c99014d47"
+          "request_id":"696869367bc8da6c8ed65c2e6fcc8216"
         }
-  recorded_at: Sun, 27 Apr 2025 20:01:53 GMT
+  recorded_at: Mon, 05 May 2025 20:08:21 GMT
 recorded_with: VCR 6.3.1

@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.0,"stream":false}'
+        me about the weather."}],"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -25,39 +25,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 27 Apr 2025 20:02:07 GMT
+      - Mon, 05 May 2025 20:08:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Ratelimitbysize-Reset:
-      - '55'
       X-Ratelimitbysize-Remaining-Month:
-      - '9999807761'
+      - '9958215525'
       Ratelimitbysize-Query-Cost:
       - '32022'
       Ratelimitbysize-Limit:
       - '2000000'
       Ratelimitbysize-Remaining:
-      - '1967978'
-      X-Ratelimitbysize-Limit-Month:
-      - '10000000000'
+      - '1873518'
+      Ratelimitbysize-Reset:
+      - '30'
       X-Ratelimitbysize-Limit-Minute:
       - '2000000'
       X-Ratelimitbysize-Remaining-Minute:
-      - '1967978'
+      - '1873518'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
       X-Envoy-Upstream-Service-Time:
-      - '1790'
+      - '1067'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1802'
+      - '1068'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '5'
       X-Kong-Request-Id:
-      - 85528c7ef4adc3333c64a87af4ae934a
+      - a683e2177fbb423c52ab4b6faf8a7004
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,7 +71,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2e084da411bf44158b7586551105228e","object":"chat.completion","created":1745784125,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"I''m
+      string: '{"id":"7e5cef39bb1e447c808361318c38b81a","object":"chat.completion","created":1746475710,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"I''m
         an AI and I don''t have real-time or location-based data, so I can''t provide
         you with the current weather. However, I can tell you about general weather
         patterns or how to find out the weather for yourself. For instance, you can
@@ -80,5 +80,5 @@ http_interactions:
         you might enjoy XKCD7392, which humorously depicts a weather-related scenario.
         To get the actual weather, you''ll need to use a service that provides real-time
         data."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":31,"total_tokens":158,"completion_tokens":127}}'
-  recorded_at: Sun, 27 Apr 2025 20:02:07 GMT
+  recorded_at: Mon, 05 May 2025 20:08:31 GMT
 recorded_with: VCR 6.3.1
