@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
-        skip 'Mistral does not reliably support tool usage' if provider == :mistral
+        #skip 'Mistral does not reliably support tool usage' if provider == :mistral
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
         skip 'Ollama models do not reliably use tools without parameters' if provider == :ollama
-        skip 'Mistral does not reliably support tool usage' if provider == :mistral
+        #skip 'Mistral does not reliably support tool usage' if provider == :mistral
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
         response = chat.ask("What's the best language to learn?")

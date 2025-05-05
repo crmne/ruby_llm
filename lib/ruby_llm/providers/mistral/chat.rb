@@ -25,7 +25,7 @@ module RubyLLM
               Array(tools)
             end
 
-          puts "\n[DEBUG] Available tools: #{tools_array&.map { |t| t.name.to_s }}" if ENV["DEBUG"]
+          RubyLLM.logger.debug  "[DEBUG] Available tools: #{tools_array&.map { |t| t.name.to_s }}"
 
           # Use "any" for tool_choice when tools are available
           effective_tool_choice = if tool_choice
@@ -36,7 +36,7 @@ module RubyLLM
               "none"
             end
 
-          puts "[DEBUG] Tool choice: #{effective_tool_choice.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug "[DEBUG] Tool choice: #{effective_tool_choice.inspect}"
 
           payload = {
             model: model,
@@ -55,7 +55,7 @@ module RubyLLM
             frequency_penalty: frequency_penalty,
           }.compact
 
-          puts "[DEBUG] Full payload: #{payload.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug  "[DEBUG] Full payload: #{payload.inspect}"
 
           payload
         end
@@ -110,7 +110,7 @@ module RubyLLM
               arguments: tool_call.arguments,
             },
           }
-          puts "[DEBUG] Rendered tool call: #{tool_call_spec.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug "[DEBUG] Rendered tool call: #{tool_call_spec.inspect}"
           tool_call_spec
         end
 
@@ -132,7 +132,7 @@ module RubyLLM
               }
             }
           }
-          puts "[DEBUG] Rendered tool spec: #{tool_spec.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug "[DEBUG] Rendered tool spec: #{tool_spec.inspect}"
           tool_spec
         end
 
@@ -144,7 +144,7 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          puts "\n[DEBUG] Raw response: #{response.body.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug "\n[DEBUG] Raw response: #{response.body.inspect}"
 
           if response.body["error"]
             error_message = response.body.dig("error", "message")
@@ -166,10 +166,10 @@ module RubyLLM
           message = choice.dig("message")
           return unless message
 
-          puts "[DEBUG] Message from model: #{message.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug "[DEBUG] Message from model: #{message.inspect}"
 
           tool_calls = Mistral::Tools.parse_tool_calls(message["tool_calls"])
-          puts "[DEBUG] Parsed tool calls: #{tool_calls.inspect}" if ENV["DEBUG"]
+          RubyLLM.logger.debug  "[DEBUG] Parsed tool calls: #{tool_calls.inspect}"
 
           content = message["content"]
 
