@@ -19,6 +19,9 @@ class CapabilityScraper # rubocop:disable Metrics/ClassLength,Style/Documentatio
     },
     deepseek: {
       url: 'https://api-docs.deepseek.com/quick_start/pricing'
+    },
+    mistral: {
+      url: 'https://docs.mistral.ai/getting-started/models/models_overview/'
     }
   }.freeze
 
