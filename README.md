@@ -60,6 +60,9 @@ chat.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
 
+# Get structured responses easily (OpenAI only for now)
+chat.with_response_format(:integer).ask("What is 2 + 2?").to_i # => 4
+
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 

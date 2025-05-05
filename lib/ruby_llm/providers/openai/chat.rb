@@ -22,11 +22,14 @@ module RubyLLM
               payload[:tools] = tools.map { |_, tool| tool_for(tool) }
               payload[:tool_choice] = 'auto'
             end
+
+            add_response_schema_to_payload(payload) if response_schema.present?
+
             payload[:stream_options] = { include_usage: true } if stream
           end
         end
 
-        def parse_completion_response(response) # rubocop:disable Metrics/MethodLength
+        def parse_completion_response(response) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize -- ABC is high because of the JSON parsing which is better in 1 method
           data = response.body
           return if data.empty?
 
@@ -37,6 +40,7 @@ module RubyLLM
 
           Message.new(
             role: :assistant,
+            content_schema: response_schema,
             content: message_data['content'],
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
@@ -63,6 +67,54 @@ module RubyLLM
           else
             role.to_s
           end
+        end
+
+        private
+
+        ##
+        # @param [Hash] payload
+        def add_response_schema_to_payload(payload)
+          payload[:response_format] = gen_response_format_request
+
+          return unless payload[:response_format][:type] == :json_object
+
+          # NOTE: this is required by the Open AI API when requesting arbitrary JSON.
+          payload[:messages].unshift({ role: :developer, content: <<~GUIDANCE
+            You must format your output as a valid JSON object.
+            Format your entire response as valid JSON.
+            Do not include explanations, markdown formatting, or any text outside the JSON.
+          GUIDANCE
+          })
+        end
+
+        ##
+        # @return [Hash]
+        def gen_response_format_request
+          if response_schema[:type].to_s == :object.to_s && response_schema[:properties].to_h.keys.none?
+            { type: :json_object } # Assume we just want json_mode
+          else
+            gen_json_schema_format_request
+          end
+        end
+
+        def gen_json_schema_format_request # rubocop:disable Metrics/MethodLength -- because it's mostly the standard hash
+          result_schema = response_schema.dup # so we don't modify the original in the thread
+          result_schema.add_to_each_object_type!(:additionalProperties, false)
+          result_schema.add_to_each_object_type!(:required, ->(schema) { schema[:properties].to_h.keys })
+
+          {
+            type: :json_schema,
+            json_schema: {
+              name: :response,
+              schema: {
+                type: :object,
+                properties: { result: result_schema.to_h },
+                additionalProperties: false,
+                required: [:result]
+              },
+              strict: true
+            }
+          }
         end
       end
     end

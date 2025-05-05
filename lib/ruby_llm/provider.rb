@@ -31,6 +31,29 @@ module RubyLLM
         parse_list_models_response response, slug, capabilities
       end
 
+      ##
+      # @return [::RubyLLM::Schema, NilClass]
+      def response_schema
+        Thread.current['RubyLLM::Provider::Methods.response_schema']
+      end
+
+      ##
+      # @param response_schema [::RubyLLM::Schema]
+      def with_response_schema(response_schema)
+        prev_response_schema = Thread.current['RubyLLM::Provider::Methods.response_schema']
+
+        result = nil
+        begin
+          Thread.current['RubyLLM::Provider::Methods.response_schema'] = response_schema
+
+          result = yield
+        ensure
+          Thread.current['RubyLLM::Provider::Methods.response_schema'] = prev_response_schema
+        end
+
+        result
+      end
+
       def embed(text, model:, connection:, dimensions:)
         payload = render_embedding_payload(text, model:, dimensions:)
         response = connection.post(embedding_url(model:), payload)
