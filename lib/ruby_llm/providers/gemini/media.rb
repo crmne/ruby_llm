@@ -8,10 +8,10 @@ module RubyLLM
         module_function
 
         def format_content(content) # rubocop:disable Metrics/MethodLength
-          return { text: content } unless content.is_a?(Content)
+          return [format_text(content)] unless content.is_a?(Content)
 
           parts = []
-          parts << { text: content.text } if content.text
+          parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
             case attachment
@@ -51,6 +51,12 @@ module RubyLLM
               mime_type: "audio/#{audio.format}",
               data: audio.encoded
             }
+          }
+        end
+
+        def format_text(text)
+          {
+            text: text
           }
         end
       end

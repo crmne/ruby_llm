@@ -10,10 +10,10 @@ module RubyLLM
         module_function
 
         def format_content(content) # rubocop:disable Metrics/MethodLength
-          return content unless content.is_a?(Content)
+          return [Anthropic::Media.format_text(content)] unless content.is_a?(Content)
 
           parts = []
-          parts << Anthropic::Media.format_text_block(content.text) if content.text
+          parts << Anthropic::Media.format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
             case attachment
