@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# lib/ruby_llm/providers/openai/media.rb
 module RubyLLM
   module Providers
     module OpenAI
@@ -8,55 +9,53 @@ module RubyLLM
         module_function
 
         def format_content(content) # rubocop:disable Metrics/MethodLength
-          return content unless content.is_a?(Array)
+          return content unless content.is_a?(Content)
 
-          content.map do |part|
-            case part[:type]
-            when 'image'
-              format_image(part)
-            when 'input_audio'
-              format_audio(part)
-            when 'pdf'
-              format_pdf(part)
-            else
-              part
+          parts = []
+          parts << content.text if content.text
+
+          content.attachments.each do |attachment|
+            case attachment
+            when Attachments::Image
+              parts << format_image(attachment)
+            when Attachments::PDF
+              parts << format_pdf(attachment)
+            when Attachments::Audio
+              parts << format_audio(attachment)
             end
           end
+
+          parts
         end
 
-        def format_image(part)
+        def format_image(image)
           {
             type: 'image_url',
             image_url: {
-              url: format_data_url(part[:source]),
+              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}",
               detail: 'auto'
             }
           }
         end
 
-        def format_audio(part)
-          {
-            type: 'input_audio',
-            input_audio: part[:input_audio]
-          }
-        end
-
-        def format_pdf(part)
+        def format_pdf(pdf)
           {
             type: 'file',
             file: {
-              filename: File.basename(part[:source]),
-              file_data: "data:application/pdf;base64,#{Base64.strict_encode64(part[:content])}"
+              filename: File.basename(pdf.source),
+              file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
             }
           }
         end
 
-        def format_data_url(source)
-          if source[:type] == 'base64'
-            "data:#{source[:media_type]};base64,#{source[:data]}"
-          else
-            source[:url]
-          end
+        def format_audio(audio)
+          {
+            type: 'input_audio',
+            input_audio: {
+              data: audio.encoded,
+              format: audio.format
+            }
+          }
         end
       end
     end

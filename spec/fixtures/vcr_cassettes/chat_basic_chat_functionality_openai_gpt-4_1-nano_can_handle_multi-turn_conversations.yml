@@ -9,7 +9,7 @@ http_interactions:
         Ruby''s creator?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:25:59 GMT
+      - Mon, 05 May 2025 19:18:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '193'
+      - '322'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -72,16 +72,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BPSWl6jJvzAzDwxVkOl9wSCjEl9oQ",
+          "id": "chatcmpl-BTvcewvQJMTX7Vcjq1w5x8Khx5dtO",
           "object": "chat.completion",
-          "created": 1745407559,
+          "created": 1746472712,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto, a Japanese computer scientist and software programmer.",
+                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto.",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,8 +91,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 24,
-            "total_tokens": 37,
+            "completion_tokens": 16,
+            "total_tokens": 29,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -105,9 +105,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_8fd43718b3"
+          "system_fingerprint": "fp_eede8f0d45"
         }
-  recorded_at: Wed, 23 Apr 2025 11:25:59 GMT
+  recorded_at: Mon, 05 May 2025 19:18:33 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -115,11 +115,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Who was
         Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by Yukihiro
-        \"Matz\" Matsumoto, a Japanese computer scientist and software programmer."},{"role":"user","content":"What
-        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        \"Matz\" Matsumoto."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -134,7 +133,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:26:00 GMT
+      - Mon, 05 May 2025 19:18:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -146,7 +145,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '193'
+      - '339'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -156,11 +155,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199957'
+      - '199971'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 12ms
+      - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -182,9 +181,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BPSWlL8ssGu5qfuOj1a8wXqOEDP0C",
+          "id": "chatcmpl-BTvcfO5ZTlWvussB3smcS7msEJA8G",
           "object": "chat.completion",
-          "created": 1745407559,
+          "created": 1746472713,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -200,9 +199,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 51,
+            "prompt_tokens": 43,
             "completion_tokens": 19,
-            "total_tokens": 70,
+            "total_tokens": 62,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -217,5 +216,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_eede8f0d45"
         }
-  recorded_at: Wed, 23 Apr 2025 11:26:00 GMT
+  recorded_at: Mon, 05 May 2025 19:18:33 GMT
 recorded_with: VCR 6.3.1

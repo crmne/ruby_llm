@@ -5,10 +5,10 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":{"text":"Who was Ruby''s creator?"}}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 23 Apr 2025 11:24:42 GMT
+      - Mon, 05 May 2025 19:17:27 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=556
+      - gfet4t7; dur=497
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -81,18 +81,18 @@ http_interactions:
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Wed, 23 Apr 2025 11:24:42 GMT
+  recorded_at: Mon, 05 May 2025 19:17:27 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto**.\n"}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":{"text":"Who was Ruby''s creator?"}},{"role":"model","parts":{"text":"Ruby
+        was created by **Yukihiro \"Matz\" Matsumoto**.\n"}},{"role":"user","parts":{"text":"What
+        year did he create Ruby?"}}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -113,7 +113,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 23 Apr 2025 11:24:42 GMT
+      - Mon, 05 May 2025 19:17:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -123,7 +123,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=369
+      - gfet4t7; dur=540
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -143,7 +143,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.07983620961507161
+              "avgLogprobs": -0.14531470934549967
             }
           ],
           "usageMetadata": {
@@ -165,5 +165,5 @@ http_interactions:
           },
           "modelVersion": "gemini-2.0-flash"
         }
-  recorded_at: Wed, 23 Apr 2025 11:24:42 GMT
+  recorded_at: Mon, 05 May 2025 19:17:28 GMT
 recorded_with: VCR 6.3.1

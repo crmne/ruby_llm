@@ -10,16 +10,16 @@ http_interactions:
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250423T131302Z
+      - 20250505T192327Z
       X-Amz-Content-Sha256:
       - 5470b3b9e786d362a84d10e00f2ca7de6f684b36347b98361f45534636f69c1a
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250423/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=54b56168270d9e1905deaf5a86cff486dc2aef50995b0874f0587a10e0a88408
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250505/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a26615e444459d0a5f56658ae9aee34d657b048324c45e3a9be3ca6ea0020013
       Content-Type:
       - application/json
       Accept:
@@ -32,26 +32,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 13:13:04 GMT
+      - Mon, 05 May 2025 19:23:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '476'
+      - '430'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 05d7e958-75fe-4e2e-a541-d46be8b80915
+      - bd166ae5-3be8-4246-80e5-2b853e7d2f91
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1237'
+      - '1588'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '59'
+      - '58'
       X-Amzn-Bedrock-Input-Token-Count:
       - '327'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_017Shc6p48qy6aRRd4bHNEz5","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        help you find out by using the best_language_to_learn tool."},{"type":"tool_use","id":"toolu_bdrk_01QbnVjM5rkN7oYYE9m3pEkb","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":59}}'
-  recorded_at: Wed, 23 Apr 2025 13:13:04 GMT
+      string: '{"id":"msg_bdrk_01Qxw53vnWrT6HXLYAkfYHqk","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_bdrk_0193pnvvYE78BWdRzAvdGsSw","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"output_tokens":58}}'
+  recorded_at: Mon, 05 May 2025 19:23:29 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -59,20 +59,20 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"What''s
         the best language to learn?"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you find out by using the best_language_to_learn tool."},{"type":"tool_use","id":"toolu_bdrk_01QbnVjM5rkN7oYYE9m3pEkb","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01QbnVjM5rkN7oYYE9m3pEkb","content":"Ruby"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"best_language_to_learn","description":"Gets
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_bdrk_0193pnvvYE78BWdRzAvdGsSw","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0193pnvvYE78BWdRzAvdGsSw","content":"Ruby"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250423T131304Z
+      - 20250505T192329Z
       X-Amz-Content-Sha256:
-      - b63730276a78567bf960f3616ed2be2d294bd124e3232cedc526757c47e829da
+      - 762dcec7e77f1ad105d13127048f6478b52d78c516b18a61284e773edaf33861
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250423/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5ab0793cd8fa2625cf51beb280b3a4fb26f712a86f39c13b4c06e842808ad1e0
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250505/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=6f96b7588a45dd86011607e0702f0377633f413a0333a301a833f099a38be8d3
       Content-Type:
       - application/json
       Accept:
@@ -85,34 +85,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 13:13:08 GMT
+      - Mon, 05 May 2025 19:23:34 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1110'
+      - '1077'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2ffe7096-147b-478d-96ee-0426fb3b1417
+      - f708305e-b896-4f43-b20d-4d9ceafdb183
       X-Amzn-Bedrock-Invocation-Latency:
-      - '3161'
+      - '3862'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '172'
+      - '180'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '398'
+      - '397'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01WiCsznrdSLyE4rcT8pL3yQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
-        to the tool, Ruby is the best language to learn! Ruby is a dynamic, object-oriented
-        programming language known for its simplicity and readability. It''s particularly
-        popular for web development, especially with the Ruby on Rails framework.
-        \n\nSome reasons why Ruby might be a great language to learn include:\n1.
-        Easy to read and write syntax\n2. Strong community support\n3. Great for web
-        development\n4. Versatile and used in various domains like web applications,
-        scripting, and automation\n\nHowever, the \"best\" language can depend on
-        your specific goals, such as:\n- Web development\n- Data science\n- Mobile
-        app development\n- Game development\n\nWould you like to know more about why
-        Ruby might be a good choice for you, or are you interested in exploring other
-        programming languages?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":398,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":172}}'
-  recorded_at: Wed, 23 Apr 2025 13:13:08 GMT
+      string: '{"id":"msg_bdrk_01TpEx28JmWAqLDKQkJBhBWc","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
+        to the tool, Ruby is the best language to learn right now. Ruby is a dynamic,
+        object-oriented programming language known for its simplicity and readability.
+        It''s particularly popular for web development, especially with the Ruby on
+        Rails framework. \n\nSome reasons why Ruby might be a great language to learn
+        include:\n1. Easy to read and write syntax\n2. Strong community support\n3.
+        Versatile for web development\n4. Used in many startups and tech companies\n5.
+        Good for beginners due to its intuitive nature\n\nHowever, the \"best\" language
+        can depend on your specific goals, such as web development, data science,
+        mobile apps, or game development. If you have a particular area of interest,
+        you might want to consider other languages as well. But for a general recommendation,
+        Ruby seems to be an excellent choice!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"output_tokens":180}}'
+  recorded_at: Mon, 05 May 2025 19:23:34 GMT
 recorded_with: VCR 6.3.1

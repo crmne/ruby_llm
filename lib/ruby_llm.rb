@@ -19,6 +19,7 @@ loader.inflector.inflect(
   'bedrock' => 'Bedrock',
   'openrouter' => 'OpenRouter',
   'gpustack' => 'GPUStack',
+  'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/ruby_llm/railtie")

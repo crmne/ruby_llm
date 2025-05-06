@@ -125,7 +125,7 @@ PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' }
+  { provider: :openrouter, model: 'google/gemini-2.5-flash-preview' }
 ].freeze
 
 VISION_MODELS = [

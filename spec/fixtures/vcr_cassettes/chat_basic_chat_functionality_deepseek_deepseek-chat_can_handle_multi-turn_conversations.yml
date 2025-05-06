@@ -9,7 +9,7 @@ http_interactions:
         was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:24:55 GMT
+      - Mon, 05 May 2025 19:17:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5fa60c77a72618ecbdf4c0972ba0d9bd
+      - 1530a3516cb6584de4fdae042edcd606
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,26 +51,30 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImQ1ODRjOGUxLWIzNjYtNGJlOC04NTJhLWU3YjgwMjFhMzY4NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc0OTUsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIEphcGFuLiBIZSByZWxlYXNlZCB0aGUgZmlyc3QgdmVyc2lvbiBvZiBSdWJ5ICgwLjk1KSBpbiAqKjE5OTUqKi4gTWF0eiBkZXNpZ25lZCBSdWJ5IHdpdGggYSBmb2N1cyBvbiBzaW1wbGljaXR5LCBwcm9kdWN0aXZpdHksIGFuZCBwcm9ncmFtbWVyIGhhcHBpbmVzcywgYmxlbmRpbmcgZWxlbWVudHMgZnJvbSBQZXJsLCBTbWFsbHRhbGssIEVpZmZlbCwgQWRhLCBhbmQgTGlzcC4gXG5cbkhpcyBndWlkaW5nIHByaW5jaXBsZSB3YXM6ICBcbipcIlJ1YnkgaXMgZGVzaWduZWQgdG8gbWFrZSBwcm9ncmFtbWVycyBoYXBweS5cIiogIFxuXG5NYXR6IHJlbWFpbnMgYW4gaW5mbHVlbnRpYWwgZmlndXJlIGluIHRoZSBSdWJ5IGNvbW11bml0eSBhbmQgY29udGludWVzIHRvIGNvbnRyaWJ1dGUgdG8gaXRzIGRldmVsb3BtZW50LiDwn5qAIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OSwiY29tcGxldGlvbl90b2tlbnMiOjExMSwidG90YWxfdG9rZW5zIjoxMjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6OX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzNkNTE0MWE2OWFfcHJvZDAyMjUifQ==
-  recorded_at: Wed, 23 Apr 2025 11:25:09 GMT
+      string: '{"id":"dbe0d6c8-b45c-4236-bf11-d0473b329e10","object":"chat.completion","created":1746472661,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first
+        version of Ruby in **1995**. Matz designed Ruby with a focus on simplicity,
+        productivity, and programmer happiness, blending elements from Perl, Smalltalk,
+        Eiffel, Ada, and Lisp. \n\nHis famous motto is:  \n*\"Ruby is designed to
+        make programmers happy.\"*  \n\nWould you like details on Ruby''s design philosophy
+        or its evolution over time?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":100,"total_tokens":109,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Mon, 05 May 2025 19:17:48 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
-        was Ruby's creator?\"},{\"role\":\"assistant\",\"content\":\"Ruby was created
-        by **Yukihiro \\\"Matz\\\" Matsumoto** in Japan. He released the first version
-        of Ruby (0.95) in **1995**. Matz designed Ruby with a focus on simplicity,
-        productivity, and programmer happiness, blending elements from Perl, Smalltalk,
-        Eiffel, Ada, and Lisp. \\n\\nHis guiding principle was:  \\n*\\\"Ruby is designed
-        to make programmers happy.\\\"*  \\n\\nMatz remains an influential figure
-        in the Ruby community and continues to contribute to its development. \U0001F680\"},{\"role\":\"user\",\"content\":\"What
-        year did he create Ruby?\"}],\"temperature\":0.7,\"stream\":false}"
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
+        **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first version of
+        Ruby in **1995**. Matz designed Ruby with a focus on simplicity, productivity,
+        and programmer happiness, blending elements from Perl, Smalltalk, Eiffel,
+        Ada, and Lisp. \n\nHis famous motto is:  \n*\"Ruby is designed to make programmers
+        happy.\"*  \n\nWould you like details on Ruby''s design philosophy or its
+        evolution over time?"},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -85,7 +89,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:25:10 GMT
+      - Mon, 05 May 2025 19:17:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -97,7 +101,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8d31e5b504339c8b77e6dd207828dea9
+      - a47003016af43c3336c98b6ad99f8957
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -113,6 +117,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjcwYjhmNzI1LWI3MjUtNGEzNi05NWRhLWExZjc1NTBiMzRhYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc1MTAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqc3RhcnRlZCBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyoqIGFuZCBvZmZpY2lhbGx5ICoqcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uIChSdWJ5IDAuOTUpIG9uIERlY2VtYmVyIDIxLCAxOTk1KiouICBcblxuU28sIHdoaWxlIHRoZSBkZXNpZ24gd29yayBiZWdhbiBpbiAqKjE5OTMqKiwgdGhlIGxhbmd1YWdlIHdhcyBmaXJzdCBzaGFyZWQgd2l0aCB0aGUgd29ybGQgaW4gKioxOTk1KiouIPCfjokgIFxuXG5GdW4gZmFjdDogVGhlIG5hbWUgXCJSdWJ5XCIgd2FzIGNob3NlbiBhcyBhIHBsYXlmdWwgcmVmZXJlbmNlIHRvIFBlcmwgKGFub3RoZXIgZ2Vtc3RvbmUtaW5zcGlyZWQgbGFuZ3VhZ2UpLCBhbmQgaXQgYWxzbyBtYXRjaGVkIHRoZSBiaXJ0aHN0b25lIG9mIGEgY29sbGVhZ3VlIG9mIE1hdHouIPCfko4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzAsImNvbXBsZXRpb25fdG9rZW5zIjoxMTUsInRvdGFsX3Rva2VucyI6MjQ1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NjR9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NjQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NjZ9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zZDUxNDFhNjlhX3Byb2QwMjI1In0=
-  recorded_at: Wed, 23 Apr 2025 11:25:19 GMT
+        eyJpZCI6IjIxNzY4OWIxLTk3MDctNGRmNC1hYzRiLWIyYWNmZWJiOTU5YiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDY0NzI2NjksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqY3JlYXRlZCBSdWJ5IGluIDE5OTMqKiBhbmQgKipyZWxlYXNlZCB0aGUgZmlyc3QgcHVibGljIHZlcnNpb24gKDAuOTUpIGluIDE5OTUqKi4gIFxuXG4jIyMgS2V5IFRpbWVsaW5lOiAgXG4tICoqMTk5MyoqOiBEZXZlbG9wbWVudCBiZWdhbiAoTWF0eiB3YW50ZWQgYSBsYW5ndWFnZSBtb3JlIHBvd2VyZnVsIHRoYW4gUGVybCBhbmQgbW9yZSBvYmplY3Qtb3JpZW50ZWQgdGhhbiBQeXRob24pLiAgXG4tICoqRGVjZW1iZXIgMTk5NSoqOiBSdWJ5IDAuOTUgbGF1bmNoZWQsIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZS4gIFxuLSAqKjE5OTYqKjogUnVieSBnYWluZWQgdHJhY3Rpb24gaW4gSmFwYW4uICBcbi0gKipMYXRlIDE5OTBz4oCTMjAwMHMqKjogU3ByZWFkIGdsb2JhbGx5LCBlc3BlY2lhbGx5IGFmdGVyIHRoZSByZWxlYXNlIG9mICoqUnVieSBvbiBSYWlscyAoMjAwNCkqKi4gIFxuXG5GdW4gZmFjdDogTWF0eiBuYW1lZCBpdCBcIlJ1YnlcIiBhcyBhIHBsYXlmdWwgbm9kIHRvIFBlcmwgKGEgZ2Vtc3RvbmUgdGhlbWUpIGFuZCBiZWNhdXNlIGl0IHdhcyBib3JuIGluIEp1bmUgKHBlYXJsIGlzIEp1bmXigJlzIGJpcnRoc3RvbmUsIHJ1YnkgaXMgSnVseeKAmXMpLiAgXG5cbldvdWxkIHlvdSBsaWtlIGRldGFpbHMgb24gUnVieeKAmXMgZWFybHkgZGVzaWduIGdvYWxzIG9yIGl0cyBncm93dGg/In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTE5LCJjb21wbGV0aW9uX3Rva2VucyI6MTkxLCJ0b3RhbF90b2tlbnMiOjMxMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjY0fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjY0LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjU1fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDQyNWZwOCJ9
+  recorded_at: Mon, 05 May 2025 19:17:59 GMT
 recorded_with: VCR 6.3.1
