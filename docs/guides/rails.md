@@ -22,16 +22,51 @@ RubyLLM offers seamless integration with Ruby on Rails applications through help
 
 After reading this guide, you will know:
 
-*   How to set up ActiveRecord models for persisting chats and messages.
-*   How to use `acts_as_chat` and `acts_as_message`.
-*   How chat interactions automatically persist data.
-*   A basic approach for integrating streaming responses with Hotwire/Turbo Streams.
+- How to set up ActiveRecord models for persisting chats and messages.
+- How to use `acts_as_chat` and `acts_as_message`.
+- How chat interactions automatically persist data.
 
 ## Setup
 
-### Create Migrations
+### Using the Generator
 
-First, generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
+The simplest way to set up RubyLLM in your Rails application is to use the provided generator:
+
+```bash
+# Generate all necessary models, migrations, and configuration
+rails generate ruby_llm:install
+```
+
+This will create:
+
+- A `Chat` model for storing chat sessions
+- A `Message` model for storing individual messages
+- A `ToolCall` model for storing tool calls
+- Migrations for all these models
+- A RubyLLM initializer
+
+If you need to customize model names to avoid namespace collisions, you can provide options:
+
+```bash
+rails generate ruby_llm:install \
+  --chat-model-name=Conversation \
+  --message-model-name=ChatMessage \
+  --tool-call-model-name=FunctionCall
+```
+
+After running the generator, simply run the migrations:
+
+```bash
+rails db:migrate
+```
+
+### Manual Setup (Alternative)
+
+If you prefer to set up the models manually, follow these steps:
+
+#### Create Migrations
+
+Generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
 
 ```bash
 # Generate basic models and migrations
@@ -196,6 +231,18 @@ You can combine `acts_as_chat` with streaming and Turbo Streams for real-time UI
 Here's a simplified approach using a background job:
 
 ```ruby
+# app/jobs/chat_job.rb
+class ChatJob < ApplicationJob
+  def perform(chat_id, question)
+    chat = Chat.find(chat_id)
+    chat.ask(question) do |chunk|
+      Turbo::StreamsChannel.broadcast_append_to(
+        chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+      )
+    end
+  end
+end
+
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
@@ -250,7 +297,7 @@ end
 <!-- Your form to submit new messages -->
 <%= form_with(url: chat_messages_path(@chat), method: :post) do |f| %>
   <%= f.text_area :content %>
-  <%= f.submit "Send" %>
+  <%= f.button "Send", disable_with: "Sending..." %>
 <% end %>
 
 <%# app/views/messages/_message.html.erb %>
@@ -258,7 +305,7 @@ end
   <div class="message <%= message.role %>">
     <strong><%= message.role.capitalize %>:</strong>
     <%# Target div for streaming content %>
-    <div id="<%= dom_id(message, "content") %>" style="display: inline;">
+    <div id="<%= dom_id(message, "content") %>" class="message-content">
       <%# Render initial content if not streaming, otherwise job appends here %>
       <%= simple_format(message.content) %>
     </div>
@@ -266,8 +313,7 @@ end
 <% end %>
 ```
 
-{: .note }
-This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators). See the [Streaming Responses Guide]({% link guides/streaming.md %}) for more on streaming itself.
+{: .note } This example shows the core idea. You'll need to adapt the broadcasting, targets, and partials for your specific UI needs (e.g., handling Markdown rendering, adding styling, showing typing indicators).
 
 ## Customizing Models
 
@@ -275,8 +321,6 @@ Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. 
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %})
-*   [Using Tools]({% link guides/tools.md %})
-*   [Streaming Responses]({% link guides/streaming.md %})
-*   [Working with Models]({% link guides/models.md %})
-*   [Error Handling]({% link guides/error-handling.md %})
+- [Chatting with AI Models]({% link guides/chat.md %})
+- [Using Tools]({% link guides/tools.md %})
+- [Working with Models]({% link guides/models.md %})
