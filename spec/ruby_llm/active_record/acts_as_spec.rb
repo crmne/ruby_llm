@@ -99,6 +99,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat.messages.last.output_tokens).to be_positive
   end
 
+  it 'to_llm returns the correct amount of messages' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+    chat = Chat.create!(model_id: 'gpt-4.1-nano')
+    chat.ask("What's your favorite Ruby feature?")
+
+    expect(chat.messages.count).to eq(2)
+    expect(chat.to_llm.messages.count).to eq(2)
+
+    chat.ask('Again?')
+
+    expect(chat.messages.count).to eq(4)
+    expect(chat.to_llm.messages.count).to eq(4)
+  end
+
   it 'persists tool calls' do # rubocop:disable RSpec/MultipleExpectations
     chat = Chat.create!(model_id: 'gpt-4.1-nano')
     chat.with_tool(Calculator)

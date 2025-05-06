@@ -67,6 +67,7 @@ module RubyLLM
 
       def to_llm
         @chat ||= RubyLLM.chat(model: model_id)
+        @chat.reset_messages!
 
         # Load existing messages into chat
         messages.each do |msg|
