@@ -46,10 +46,10 @@ For more information about working with models, see the [Working with Models](/g
 ## Models by Type
 {: .d-inline-block }
 
-Last updated: 2025-05-05
+Last updated: 2025-05-06
 {: .label .label-green }
 
-### Chat Models (458)
+### Chat Models (464)
 
 | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -238,6 +238,12 @@ Last updated: 2025-05-05
 | anthropic/claude-3.7-sonnet:beta | chat | Anthropic: Claude 3.7 Sonnet (self-moderated) | openrouter | 200000 | 128000 | other | 3.00 | 15.00 |
 | anthropic/claude-3.7-sonnet:thinking | chat | Anthropic: Claude 3.7 Sonnet (thinking) | openrouter | 200000 | 64000 | other | 3.00 | 15.00 |
 | arcee-ai/arcee-blitz | chat | Arcee AI: Arcee Blitz | openrouter | 32768 |  | other | 0.45 | 0.75 |
+| arcee-ai/caller-large | chat | Arcee AI: Caller Large | openrouter | 32768 |  | other | 0.55 | 0.85 |
+| arcee-ai/coder-large | chat | Arcee AI: Coder Large | openrouter | 32768 |  | other | 0.50 | 0.80 |
+| arcee-ai/maestro-reasoning | chat | Arcee AI: Maestro Reasoning | openrouter | 131072 |  | other | 0.90 | 3.30 |
+| arcee-ai/spotlight | chat | Arcee AI: Spotlight | openrouter | 131072 |  | other | 0.18 | 0.18 |
+| arcee-ai/virtuoso-large | chat | Arcee AI: Virtuoso Large | openrouter | 131072 |  | other | 0.75 | 1.20 |
+| arcee-ai/virtuoso-medium-v2 | chat | Arcee AI: Virtuoso Medium V2 | openrouter | 131072 |  | other | 0.50 | 0.80 |
 | arliai/qwq-32b-arliai-rpr-v1:free | chat | ArliAI: QwQ 32B RpR v1 (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | bytedance-research/ui-tars-72b:free | chat | Bytedance: UI-TARS 72B  (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | cognitivecomputations/dolphin-mixtral-8x22b | chat | Dolphin 2.9.2 Mixtral 8x22B 🐬 | openrouter | 16000 |  | other | 0.90 | 0.90 |
@@ -740,7 +746,7 @@ Last updated: 2025-05-05
 | anthropic.claude-v2:1:200k | chat | Claude | bedrock | 200000 | 4096 | claude2 | 8.00 | 24.00 |
 | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | chat | Claude 3.7 Sonnet | bedrock | 200000 | 4096 | claude3_sonnet | 3.00 | 15.00 |
 
-### Openrouter Models (319)
+### Openrouter Models (325)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
@@ -790,6 +796,12 @@ Last updated: 2025-05-05
 | anthropic/claude-3.7-sonnet:beta | chat | Anthropic: Claude 3.7 Sonnet (self-moderated) | openrouter | 200000 | 128000 | other | 3.00 | 15.00 |
 | anthropic/claude-3.7-sonnet:thinking | chat | Anthropic: Claude 3.7 Sonnet (thinking) | openrouter | 200000 | 64000 | other | 3.00 | 15.00 |
 | arcee-ai/arcee-blitz | chat | Arcee AI: Arcee Blitz | openrouter | 32768 |  | other | 0.45 | 0.75 |
+| arcee-ai/caller-large | chat | Arcee AI: Caller Large | openrouter | 32768 |  | other | 0.55 | 0.85 |
+| arcee-ai/coder-large | chat | Arcee AI: Coder Large | openrouter | 32768 |  | other | 0.50 | 0.80 |
+| arcee-ai/maestro-reasoning | chat | Arcee AI: Maestro Reasoning | openrouter | 131072 |  | other | 0.90 | 3.30 |
+| arcee-ai/spotlight | chat | Arcee AI: Spotlight | openrouter | 131072 |  | other | 0.18 | 0.18 |
+| arcee-ai/virtuoso-large | chat | Arcee AI: Virtuoso Large | openrouter | 131072 |  | other | 0.75 | 1.20 |
+| arcee-ai/virtuoso-medium-v2 | chat | Arcee AI: Virtuoso Medium V2 | openrouter | 131072 |  | other | 0.50 | 0.80 |
 | arliai/qwq-32b-arliai-rpr-v1:free | chat | ArliAI: QwQ 32B RpR v1 (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | bytedance-research/ui-tars-72b:free | chat | Bytedance: UI-TARS 72B  (free) | openrouter | 32768 |  | other | 0.00 | 0.00 |
 | cognitivecomputations/dolphin-mixtral-8x22b | chat | Dolphin 2.9.2 Mixtral 8x22B 🐬 | openrouter | 16000 |  | other | 0.90 | 0.90 |
