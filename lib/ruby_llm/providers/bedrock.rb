@@ -13,9 +13,7 @@ module RubyLLM
       extend Bedrock::Streaming
       extend Bedrock::Models
       extend Bedrock::Signing
-
-      # This provider currently only supports Anthropic models, so the tools/media implementation is shared
-      extend Anthropic::Media
+      extend Bedrock::Media
       extend Anthropic::Tools
 
       module_function

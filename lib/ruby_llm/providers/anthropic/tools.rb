@@ -5,7 +5,7 @@ module RubyLLM
     module Anthropic
       # Tools methods of the Anthropic API integration
       module Tools
-        private
+        module_function
 
         def find_tool_use(blocks)
           blocks.find { |c| c['type'] == 'tool_use' }
@@ -17,7 +17,7 @@ module RubyLLM
           {
             role: 'assistant',
             content: [
-              format_text_block(msg.content),
+              Media.format_text(msg.content),
               format_tool_use_block(tool_call)
             ]
           }

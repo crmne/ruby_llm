@@ -9,16 +9,16 @@ http_interactions:
         2 + 2?"}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250423T131033Z
+      - 20250505T191708Z
       X-Amz-Content-Sha256:
       - b5957298a88788e861cf24c2faff82644662c726eed2de6599a41f3789caa703
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250423/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=13b69d9f4be753ba4ccbf8b56b2d729cbb4b57d874dc1cd43a2414ea4e0d8a35
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250505/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a20d55b5df3669c458d130615a3925672729221f10d9d93d43ef5a9a10432690
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 13:10:35 GMT
+      - Mon, 05 May 2025 19:17:09 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,15 +39,15 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 48d8f50d-147e-4de7-9008-b5672ce69725
+      - 750e2e3d-7f11-4a01-9ed7-9200c6e8acd7
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1199'
+      - '342'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01DT1h5trR3jPujKf2TsYERe","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"output_tokens":5}}'
-  recorded_at: Wed, 23 Apr 2025 13:10:35 GMT
+      string: '{"id":"msg_bdrk_01SBTXZcqhc55TrWLZY4ovry","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"output_tokens":5}}'
+  recorded_at: Mon, 05 May 2025 19:17:09 GMT
 recorded_with: VCR 6.3.1

@@ -5,6 +5,8 @@ module RubyLLM
     module Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        module_function
+
         def completion_url
           "models/#{@model}:generateContent"
         end
@@ -21,7 +23,6 @@ module RubyLLM
           payload
         end
 
-        # Format methods can be private
         private
 
         def format_messages(messages)
@@ -41,9 +42,8 @@ module RubyLLM
           end
         end
 
-        def format_parts(msg) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def format_parts(msg) # rubocop:disable Metrics/MethodLength
           if msg.tool_call?
-            # Handle function calls
             [{
               functionCall: {
                 name: msg.tool_calls.values.first.name,
@@ -51,7 +51,6 @@ module RubyLLM
               }
             }]
           elsif msg.tool_result?
-            # Handle function responses
             [{
               functionResponse: {
                 name: msg.tool_call_id,
@@ -61,27 +60,8 @@ module RubyLLM
                 }
               }
             }]
-          elsif msg.content.is_a?(Array)
-            # Handle multi-part content (text, images, etc.)
-            msg.content.map { |part| format_part(part) }
           else
-            # Simple text content
-            [{ text: msg.content.to_s }]
-          end
-        end
-
-        def format_part(part) # rubocop:disable Metrics/MethodLength
-          case part[:type]
-          when 'text'
-            { text: part[:text] }
-          when 'image'
-            Media.format_image(part)
-          when 'pdf'
-            Media.format_pdf(part)
-          when 'audio'
-            Media.format_audio(part)
-          else
-            { text: part.to_s }
+            Media.format_content(msg.content)
           end
         end
 
