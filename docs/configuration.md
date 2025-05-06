@@ -27,6 +27,7 @@ After reading this guide, you will know:
 *   How to customize connection timeouts and retries.
 *   How to connect to custom endpoints (like Azure OpenAI).
 *   How to use temporary, scoped configurations with `RubyLLM.context`.
+*   How to configure the logging location.
 
 ## Global Configuration (`RubyLLM.configure`)
 
@@ -75,6 +76,10 @@ RubyLLM.configure do |config|
   config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
   config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
   config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
+
+  # --- Logging Settings ---
+  config.log_file = '/logs/ruby_llm.log'
+  config.level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
 end
 ```
 
@@ -134,6 +139,31 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 
 Adjust these based on network conditions and provider reliability.
 
+## Logging Settings
+
+RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level.
+
+```ruby
+RubyLLM.configure do |config|
+  # --- Logging Settings ---
+  config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
+  config.level = :debug  # Log level (:debug, :info, :warn)
+end
+```
+
+### Log File Configuration
+
+* `config.log_file`: Specifies the path where logs should be written. If not set, logs will be written to STDOUT.
+* The log file will be created if it doesn't exist, and logs will be appended to it.
+
+### Log Levels
+
+* `:debug`: Most verbose level, includes detailed request/response information as provided by the faraday client
+* `:info`: General operational information
+* `:warn`: Warning messages for non-critical issues that may need attention
+
+You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
+
 ## Scoped Configuration with Contexts
 {: .d-inline-block }
 
@@ -179,3 +209,4 @@ default_response = default_chat.ask("Query using global production settings...")
 *   **Thread Safety:** Each context is independent, making them safe for use across different threads.
 
 Contexts provide a clean and safe mechanism for managing diverse configuration needs within a single application.
+
