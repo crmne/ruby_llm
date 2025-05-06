@@ -9,7 +9,7 @@ module RubyLLM
   #   RubyLLM.models.chat_models                          # Models that support chat
   #   RubyLLM.models.by_provider('openai').chat_models    # OpenAI chat models
   #   RubyLLM.models.find('claude-3')                     # Get info about a specific model
-  class Models
+  class Models # rubocop:disable Metrics/ClassLength
     include Enumerable
 
     # Delegate class methods to the singleton instance
@@ -44,6 +44,23 @@ module RubyLLM
         end).sort_by { |m| [m.provider, m.id] }
         @instance = new(all)
         @instance
+      end
+
+      def resolve(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        assume_exists = true if provider && Provider.providers[provider.to_sym].local?
+
+        if assume_exists
+          raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
+
+          provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
+          model = Struct.new(:id, :provider, :supports_functions, :supports_vision).new(model_id, provider, true, true)
+          RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
+                              'Capabilities may not be accurately reflected.'
+        else
+          model = Models.find model_id, provider
+          provider = Provider.providers[model.provider.to_sym] || raise(Error, "Unknown provider: #{model.provider}")
+        end
+        [model, provider]
       end
 
       def method_missing(method, ...)

@@ -18,7 +18,8 @@ loader.inflector.inflect(
   'deepseek' => 'DeepSeek',
   'perplexity' => 'Perplexity',
   'bedrock' => 'Bedrock',
-  'openrouter' => 'OpenRouter'
+  'openrouter' => 'OpenRouter',
+  'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/ruby_llm/railtie")

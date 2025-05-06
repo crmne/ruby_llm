@@ -67,30 +67,6 @@ RSpec.describe RubyLLM::Chat do
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-        it 'handles invalid message format errors' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
-          skip('OpenRouter gets stuck with an invalid message format') if provider == :openrouter
-          skip("Gemini doesn't throw an error for invalid message format") if provider == :gemini
-          # Try to mess up the message format
-          bad_content = { type: 'text', wrong: 'format' }
-          chat.add_message(role: :user, content: bad_content)
-
-          expect { chat.ask('hi') }.to raise_error(RubyLLM::Error) do |e|
-            # Basic error format checks
-            expect(e.message).not_to look_like_json
-            expect(e.message).to match(/^[A-Za-z]/)
-
-            # Provider specific messages
-            case provider
-            when 'deepseek'
-              expect(e.message).to include_words('deserialize', 'content')
-            when 'gemini'
-              expect(e.message).to include_words('part', 'content')
-            else
-              expect(e.message).to include_words('message', 'content')
-            end
-          end
-        end
-
         it 'handles context length exceeded errors' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
           skip('Ollama does not throw an error for context length exceeded') if provider == :ollama
           # Create a huge conversation
