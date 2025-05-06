@@ -11,7 +11,7 @@ module RubyLLM
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :number_of_tool_completions
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil) # rubocop:disable Metrics/MethodLength
       if assume_model_exists && !provider
@@ -29,9 +29,13 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
+      @max_tool_completions = config.max_tool_completions
+      @number_of_tool_completions = 0
     end
 
     def ask(message = nil, with: {}, &)
+      @number_of_tool_completions = 0
+
       add_message role: :user, content: Content.new(message, with)
       complete(&)
     end
@@ -57,6 +61,11 @@ module RubyLLM
 
     def with_tools(*tools)
       tools.each { |tool| with_tool tool }
+      self
+    end
+
+    def with_max_tool_completions(max_tool_completions)
+      @max_tool_completions = max_tool_completions
       self
     end
 
@@ -112,7 +121,7 @@ module RubyLLM
 
     private
 
-    def handle_tool_calls(response, &)
+    def handle_tool_calls(response, &) # rubocop:disable Metrics/MethodLength
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
@@ -120,6 +129,11 @@ module RubyLLM
         @on[:end_message]&.call(message)
       end
 
+      if max_tool_completions_reached?
+        raise ToolCallCompletionsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
+      end
+
+      @number_of_tool_completions += 1
       complete(&)
     end
 
@@ -135,6 +149,12 @@ module RubyLLM
         content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
         tool_call_id: tool_use_id
       )
+    end
+
+    def max_tool_completions_reached?
+      return false unless @max_tool_completions
+
+      @number_of_tool_completions >= @max_tool_completions
     end
   end
 end

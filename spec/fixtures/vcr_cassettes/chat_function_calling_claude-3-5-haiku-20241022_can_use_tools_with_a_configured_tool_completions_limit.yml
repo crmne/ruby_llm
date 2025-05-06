@@ -1,0 +1,786 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:32Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:33Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:30Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:32Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_014XS6Nk5ruJKvCnE3Ngd2o3","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":450,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":77}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:33 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:35Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:36Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:35Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:35Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01BWUa8rG7ccBeSdxcWxByLn","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":627,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":59}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:36 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:40Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:41Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:38Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:40Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01BduqXqqkeg55JTNvHpKvhb","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":784,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":45}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:41 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","content":"{:posts=>[{:title=>\"Brittni
+        Torp\", :score=>576}, {:title=>\"Kathe Wiza\", :score=>718}, {:title=>\"Margarett
+        Cole\", :score=>591}], :next_page=>\"t3_abc123_69\", :message=>\"More posts
+        are available using the next_page token.\"}"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:44Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:44Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:42Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:44Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01YTpUCWG9Pj1QMBjsJAbobM","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":921,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":44}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:44 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","content":"{:posts=>[{:title=>\"Brittni
+        Torp\", :score=>576}, {:title=>\"Kathe Wiza\", :score=>718}, {:title=>\"Margarett
+        Cole\", :score=>591}], :next_page=>\"t3_abc123_69\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","content":"{:posts=>[{:title=>\"Ivan
+        Tremblay\", :score=>806}, {:title=>\"Shantay Hermann JD\", :score=>94}, {:title=>\"Tawnya
+        Barton\", :score=>797}], :next_page=>\"t3_abc123_451\", :message=>\"More posts
+        are available using the next_page token.\"}"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:46Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:46Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:46Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:46Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_013y76EZh1F4K5LngpSYedWT","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        fetch one more time:"},{"type":"tool_use","id":"toolu_015zUxXzMQLsoHC4tK8FqncT","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":1060,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":46}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:46 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","content":"{:posts=>[{:title=>\"Brittni
+        Torp\", :score=>576}, {:title=>\"Kathe Wiza\", :score=>718}, {:title=>\"Margarett
+        Cole\", :score=>591}], :next_page=>\"t3_abc123_69\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","content":"{:posts=>[{:title=>\"Ivan
+        Tremblay\", :score=>806}, {:title=>\"Shantay Hermann JD\", :score=>94}, {:title=>\"Tawnya
+        Barton\", :score=>797}], :next_page=>\"t3_abc123_451\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch one more time:"},{"type":"tool_use","id":"toolu_015zUxXzMQLsoHC4tK8FqncT","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015zUxXzMQLsoHC4tK8FqncT","content":"{:posts=>[{:title=>\"Amb.
+        Leonila Morar\", :score=>383}, {:title=>\"Stefania Hills PhD\", :score=>115},
+        {:title=>\"Carlos Ritchie\", :score=>384}], :next_page=>\"t3_abc123_209\",
+        :message=>\"More posts are available using the next_page token.\"}"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:48Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:48Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:47Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:48Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01HEZyLWy33YYcVkqMZeBZQV","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_01Q1SNHg8zNysRKygAVNpbzE","name":"looping_answer","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":1201,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":44}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:48 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","content":"{:posts=>[{:title=>\"Brittni
+        Torp\", :score=>576}, {:title=>\"Kathe Wiza\", :score=>718}, {:title=>\"Margarett
+        Cole\", :score=>591}], :next_page=>\"t3_abc123_69\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","content":"{:posts=>[{:title=>\"Ivan
+        Tremblay\", :score=>806}, {:title=>\"Shantay Hermann JD\", :score=>94}, {:title=>\"Tawnya
+        Barton\", :score=>797}], :next_page=>\"t3_abc123_451\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch one more time:"},{"type":"tool_use","id":"toolu_015zUxXzMQLsoHC4tK8FqncT","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015zUxXzMQLsoHC4tK8FqncT","content":"{:posts=>[{:title=>\"Amb.
+        Leonila Morar\", :score=>383}, {:title=>\"Stefania Hills PhD\", :score=>115},
+        {:title=>\"Carlos Ritchie\", :score=>384}], :next_page=>\"t3_abc123_209\",
+        :message=>\"More posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_01Q1SNHg8zNysRKygAVNpbzE","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Q1SNHg8zNysRKygAVNpbzE","content":"{:posts=>[{:title=>\"Nicolas
+        Brekke\", :score=>439}, {:title=>\"Rev. Garry Marks\", :score=>839}, {:title=>\"Melodi
+        Weber\", :score=>223}], :next_page=>\"t3_abc123_768\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:09:56 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:09:55Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:09:56Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:50Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:09:55Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_018eLJsyPC8ftr3vNbC3sA9K","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        fetch the current weather for Berlin using its coordinates:"},{"type":"tool_use","id":"toolu_01Q7ea5kfTeXJodDvvWTw49Y","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":1362,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":87}}'
+  recorded_at: Thu, 24 Apr 2025 12:09:56 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you fetch all the posts from r/RandomNames by repeatedly calling the
+        `looping_answer` function until we receive an empty array. Here''s how we''ll
+        do it:"},{"type":"tool_use","id":"toolu_017Nr3y43V1gyPgAHrFsvKji","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_017Nr3y43V1gyPgAHrFsvKji","content":"{:posts=>[{:title=>\"Christel
+        Stehr\", :score=>101}, {:title=>\"Mrs. Roxana D''Amore\", :score=>571}, {:title=>\"Miss
+        Desirae Kris\", :score=>929}], :next_page=>\"t3_abc123_365\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        see there are more posts available. I''ll continue fetching with the next_page
+        token:"},{"type":"tool_use","id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011gJTVBPtR1xbuAoJE9P8yw","content":"{:posts=>[{:title=>\"Sharita
+        Ziemann\", :score=>417}, {:title=>\"Ervin Wilkinson I\", :score=>261}, {:title=>\"Johnathan
+        Rohan Esq.\", :score=>425}], :next_page=>\"t3_abc123_384\", :message=>\"More
+        posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        continue fetching:"},{"type":"tool_use","id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0151hgmrEfJ2j8X9AcYSku7V","content":"{:posts=>[{:title=>\"Brittni
+        Torp\", :score=>576}, {:title=>\"Kathe Wiza\", :score=>718}, {:title=>\"Margarett
+        Cole\", :score=>591}], :next_page=>\"t3_abc123_69\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_016F7k3i4NEQw31KaKgL5Xzh","content":"{:posts=>[{:title=>\"Ivan
+        Tremblay\", :score=>806}, {:title=>\"Shantay Hermann JD\", :score=>94}, {:title=>\"Tawnya
+        Barton\", :score=>797}], :next_page=>\"t3_abc123_451\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch one more time:"},{"type":"tool_use","id":"toolu_015zUxXzMQLsoHC4tK8FqncT","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_015zUxXzMQLsoHC4tK8FqncT","content":"{:posts=>[{:title=>\"Amb.
+        Leonila Morar\", :score=>383}, {:title=>\"Stefania Hills PhD\", :score=>115},
+        {:title=>\"Carlos Ritchie\", :score=>384}], :next_page=>\"t3_abc123_209\",
+        :message=>\"More posts are available using the next_page token.\"}"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch again:"},{"type":"tool_use","id":"toolu_01Q1SNHg8zNysRKygAVNpbzE","name":"looping_answer","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Q1SNHg8zNysRKygAVNpbzE","content":"{:posts=>[{:title=>\"Nicolas
+        Brekke\", :score=>439}, {:title=>\"Rev. Garry Marks\", :score=>839}, {:title=>\"Melodi
+        Weber\", :score=>223}], :next_page=>\"t3_abc123_768\", :message=>\"More posts
+        are available using the next_page token.\"}"}]},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        fetch the current weather for Berlin using its coordinates:"},{"type":"tool_use","id":"toolu_01Q7ea5kfTeXJodDvvWTw49Y","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Q7ea5kfTeXJodDvvWTw49Y","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","input_schema":{"type":"object","properties":{},"required":[]}},{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:02 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-04-24T12:10:02Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-04-24T12:10:02Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-04-24T12:09:57Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-04-24T12:10:02Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ18wMVBqVkdVTGpTVlFHVnpld3p3azNnbmIiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6MTQ4OCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6MjZ9fQ==
+  recorded_at: Thu, 24 Apr 2025 12:10:02 GMT
+recorded_with: VCR 6.3.1

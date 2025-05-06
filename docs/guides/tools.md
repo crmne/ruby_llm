@@ -196,6 +196,44 @@ Proper error handling within your `execute` method is crucial.
 
 See the [Error Handling Guide]({% link guides/error-handling.md %}#handling-errors-within-tools) for more discussion.
 
+## Maximum Tool Completion Limiting
+
+When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit of 25, which can be overridden or turned off entirely.
+
+This can be performed on a per chat basis or provided in the global configuration.
+
+```ruby
+# Set a maximum number of tool completions per instantiated chat object
+chat = RubyLLM.chat.with_max_tool_completions(5)
+chat.ask "Question that triggers tools loop"
+# => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallCompletionsReachedError)
+```
+
+If you wish to remove this safe-guard you can set the max_tool_completions to `nil`.
+```ruby
+chat = RubyLLM.chat.with_max_tool_completions(nil)
+chat.ask "Question that triggers tools loop"
+# Loops until you've used all your credit...
+```
+
+### Global Configuration
+
+You can set a default maximum tool completion limit for all chats through the global configuration:
+
+```ruby
+RubyLLM.configure do |config|
+  # Default is 25 calls per conversation
+  config.max_tool_completions = 10  # Set a more conservative limit
+end
+```
+
+This setting can still be overridden per-chat when needed:
+
+```ruby
+# Override the global setting for this specific chat
+chat = RubyLLM.chat.with_max_tool_completions(5)
+```
+
 ## Security Considerations
 
 {: .warning }
@@ -204,6 +242,7 @@ Treat any arguments passed to your `execute` method as potentially untrusted use
 *   **NEVER** use methods like `eval`, `system`, `send`, or direct SQL interpolation with raw arguments from the AI.
 *   **Validate and Sanitize:** Always validate parameter types, ranges, formats, and allowed values. Sanitize strings to prevent injection attacks if they are used in database queries or system commands (though ideally, avoid direct system commands).
 *   **Principle of Least Privilege:** Ensure the code within `execute` only has access to the resources it absolutely needs.
+*   **Cost-based Denial of Service:** Ensure protection against malicious input or usage, particularly when used in conjunction with tool completions if you remove the default limit
 
 ## Next Steps
 

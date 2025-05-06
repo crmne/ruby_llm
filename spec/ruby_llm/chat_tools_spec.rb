@@ -23,6 +23,23 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class LoopingAnswer < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Fetches posts from the r/RandomNames Reddit community.'
+
+    def execute
+      # Fake some posts encouraging fetching the next page
+      {
+        posts: [
+          { title: Faker::Name.name, score: rand(1000) },
+          { title: Faker::Name.name, score: rand(1000) },
+          { title: Faker::Name.name, score: rand(1000) }
+        ],
+        next_page: "t3_abc123_#{rand(1000)}",
+        message: 'More posts are available using the next_page token.'
+      }
+    end
+  end
+
   class BrokenTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets current weather'
 
@@ -127,6 +144,45 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{model} can use tools with a configured tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        RubyLLM.configure do |config|
+          config.max_tool_completions = 5
+        end
+
+        chat = RubyLLM.chat(model: model)
+                      .with_tools(LoopingAnswer, Weather)
+
+        expect do
+          chat.ask(
+            'Fetch all of the posts from r/RandomNames. ' \
+            'Fetch the next_page listed in the response until it responds with an empty array'
+          )
+        end.to raise_error(RubyLLM::ToolCallCompletionsLimitReachedError)
+
+        # Ensure it does not break the next ask.
+        next_response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        expect(next_response.content).to include('15')
+        expect(next_response.content).to include('10')
+      end
+
+      it "#{model} can use tools with a tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model)
+                      .with_max_tool_completions(5)
+                      .with_tools(LoopingAnswer, Weather)
+
+        expect do
+          chat.ask(
+            'Fetch all of the posts from r/RandomNames. ' \
+            'Fetch the next_page listed in the response until it responds with an empty array'
+          )
+        end.to raise_error(RubyLLM::ToolCallCompletionsLimitReachedError)
+
+        # Ensure it does not break the next ask.
+        next_response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        expect(next_response.content).to include('15')
+        expect(next_response.content).to include('10')
       end
     end
   end

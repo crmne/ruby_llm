@@ -1,0 +1,1155 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '502'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199967'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 9ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNRQ3Kf2ZNayo7EwLW9yYCndgty",
+          "object": "chat.completion",
+          "created": 1745495393,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_d8qx8jbBFXzZh329crhwdAo2",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_nrzB09UlqiWoGXhixAb04sEC",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 116,
+            "completion_tokens": 42,
+            "total_tokens": 158,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:54 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '511'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199845'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 46ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNS9Akp4Qv04BV0VZAMSLYd7uiN",
+          "object": "chat.completion",
+          "created": 1745495394,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_jGIjYrxdxDZCoHhyEcNhaTKp",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_3CdHeNDzCWeNWK4lcE4Oqbb6",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 328,
+            "completion_tokens": 42,
+            "total_tokens": 370,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:54 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '494'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199728'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 81ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNTPowUpnBC6JpnieMvwiOT8KjJ",
+          "object": "chat.completion",
+          "created": 1745495395,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_HdJrQKB0CdKBjQqwhR7DfuMl",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_QAScwdX87rVNoMe3ssPl7iQs",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 528,
+            "completion_tokens": 42,
+            "total_tokens": 570,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:55 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"},{"role":"assistant","tool_calls":[{"id":"call_HdJrQKB0CdKBjQqwhR7DfuMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_QAScwdX87rVNoMe3ssPl7iQs","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Quintin
+        Crooks CPA\", :score=>661}, {:title=>\"Diego Conn\", :score=>441}, {:title=>\"Pres.
+        Darin Macejkovic\", :score=>454}], :next_page=>\"t3_abc123_514\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_HdJrQKB0CdKBjQqwhR7DfuMl"},{"role":"tool","content":"{:posts=>[{:title=>\"Mary
+        Conroy\", :score=>797}, {:title=>\"Miss Halley Swift\", :score=>3}, {:title=>\"Mrs.
+        Rene Schmitt\", :score=>260}], :next_page=>\"t3_abc123_900\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_QAScwdX87rVNoMe3ssPl7iQs"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '691'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199608'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 117ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNUwNwXUdXoYi0Yzn2QSOqctZt9",
+          "object": "chat.completion",
+          "created": 1745495396,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_KKc6pmjmScPWptd3wVWM1yEs",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_xdn8oJDDQnAnpdR4ZsoU4rWL",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 736,
+            "completion_tokens": 42,
+            "total_tokens": 778,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:56 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"},{"role":"assistant","tool_calls":[{"id":"call_HdJrQKB0CdKBjQqwhR7DfuMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_QAScwdX87rVNoMe3ssPl7iQs","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Quintin
+        Crooks CPA\", :score=>661}, {:title=>\"Diego Conn\", :score=>441}, {:title=>\"Pres.
+        Darin Macejkovic\", :score=>454}], :next_page=>\"t3_abc123_514\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_HdJrQKB0CdKBjQqwhR7DfuMl"},{"role":"tool","content":"{:posts=>[{:title=>\"Mary
+        Conroy\", :score=>797}, {:title=>\"Miss Halley Swift\", :score=>3}, {:title=>\"Mrs.
+        Rene Schmitt\", :score=>260}], :next_page=>\"t3_abc123_900\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_QAScwdX87rVNoMe3ssPl7iQs"},{"role":"assistant","tool_calls":[{"id":"call_KKc6pmjmScPWptd3wVWM1yEs","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Kasey
+        Gerhold\", :score=>196}, {:title=>\"Karri Bahringer\", :score=>392}, {:title=>\"Rev.
+        Jeffrey Crona\", :score=>653}], :next_page=>\"t3_abc123_22\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_KKc6pmjmScPWptd3wVWM1yEs"},{"role":"tool","content":"{:posts=>[{:title=>\"Gov.
+        Demarcus Emmerich\", :score=>568}, {:title=>\"Gerry Bradtke DVM\", :score=>393},
+        {:title=>\"Ethel Hammes DVM\", :score=>702}], :next_page=>\"t3_abc123_148\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '721'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199488'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 153ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNVjbf4UQZRQFzopwSVQ8LK6rG6",
+          "object": "chat.completion",
+          "created": 1745495397,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_XUfo5dMMm1gmfae28rfynI3G",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_Ib84TlF5oUBAEOUdRRUIQKf4",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 949,
+            "completion_tokens": 42,
+            "total_tokens": 991,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:57 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"},{"role":"assistant","tool_calls":[{"id":"call_HdJrQKB0CdKBjQqwhR7DfuMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_QAScwdX87rVNoMe3ssPl7iQs","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Quintin
+        Crooks CPA\", :score=>661}, {:title=>\"Diego Conn\", :score=>441}, {:title=>\"Pres.
+        Darin Macejkovic\", :score=>454}], :next_page=>\"t3_abc123_514\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_HdJrQKB0CdKBjQqwhR7DfuMl"},{"role":"tool","content":"{:posts=>[{:title=>\"Mary
+        Conroy\", :score=>797}, {:title=>\"Miss Halley Swift\", :score=>3}, {:title=>\"Mrs.
+        Rene Schmitt\", :score=>260}], :next_page=>\"t3_abc123_900\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_QAScwdX87rVNoMe3ssPl7iQs"},{"role":"assistant","tool_calls":[{"id":"call_KKc6pmjmScPWptd3wVWM1yEs","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Kasey
+        Gerhold\", :score=>196}, {:title=>\"Karri Bahringer\", :score=>392}, {:title=>\"Rev.
+        Jeffrey Crona\", :score=>653}], :next_page=>\"t3_abc123_22\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_KKc6pmjmScPWptd3wVWM1yEs"},{"role":"tool","content":"{:posts=>[{:title=>\"Gov.
+        Demarcus Emmerich\", :score=>568}, {:title=>\"Gerry Bradtke DVM\", :score=>393},
+        {:title=>\"Ethel Hammes DVM\", :score=>702}], :next_page=>\"t3_abc123_148\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL"},{"role":"assistant","tool_calls":[{"id":"call_XUfo5dMMm1gmfae28rfynI3G","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ib84TlF5oUBAEOUdRRUIQKf4","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Joslyn
+        McCullough IV\", :score=>325}, {:title=>\"Emmanuel Swift II\", :score=>469},
+        {:title=>\"Lonny Jakubowski PhD\", :score=>467}], :next_page=>\"t3_abc123_208\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_XUfo5dMMm1gmfae28rfynI3G"},{"role":"tool","content":"{:posts=>[{:title=>\"Dr.
+        Alissa Denesik\", :score=>665}, {:title=>\"Emil Gleichner\", :score=>283},
+        {:title=>\"Lakiesha Funk\", :score=>186}], :next_page=>\"t3_abc123_801\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Ib84TlF5oUBAEOUdRRUIQKf4"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '572'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199367'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 189ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNWfx17JSlItbDfJ58V0R2o0fuv",
+          "object": "chat.completion",
+          "created": 1745495398,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_0wUmxw4Zgw2d6fbfb8a6sOVB",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_jz73d0gM9I95M4c3sZWAOf2J",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1159,
+            "completion_tokens": 42,
+            "total_tokens": 1201,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:58 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"},{"role":"assistant","tool_calls":[{"id":"call_HdJrQKB0CdKBjQqwhR7DfuMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_QAScwdX87rVNoMe3ssPl7iQs","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Quintin
+        Crooks CPA\", :score=>661}, {:title=>\"Diego Conn\", :score=>441}, {:title=>\"Pres.
+        Darin Macejkovic\", :score=>454}], :next_page=>\"t3_abc123_514\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_HdJrQKB0CdKBjQqwhR7DfuMl"},{"role":"tool","content":"{:posts=>[{:title=>\"Mary
+        Conroy\", :score=>797}, {:title=>\"Miss Halley Swift\", :score=>3}, {:title=>\"Mrs.
+        Rene Schmitt\", :score=>260}], :next_page=>\"t3_abc123_900\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_QAScwdX87rVNoMe3ssPl7iQs"},{"role":"assistant","tool_calls":[{"id":"call_KKc6pmjmScPWptd3wVWM1yEs","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Kasey
+        Gerhold\", :score=>196}, {:title=>\"Karri Bahringer\", :score=>392}, {:title=>\"Rev.
+        Jeffrey Crona\", :score=>653}], :next_page=>\"t3_abc123_22\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_KKc6pmjmScPWptd3wVWM1yEs"},{"role":"tool","content":"{:posts=>[{:title=>\"Gov.
+        Demarcus Emmerich\", :score=>568}, {:title=>\"Gerry Bradtke DVM\", :score=>393},
+        {:title=>\"Ethel Hammes DVM\", :score=>702}], :next_page=>\"t3_abc123_148\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL"},{"role":"assistant","tool_calls":[{"id":"call_XUfo5dMMm1gmfae28rfynI3G","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ib84TlF5oUBAEOUdRRUIQKf4","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Joslyn
+        McCullough IV\", :score=>325}, {:title=>\"Emmanuel Swift II\", :score=>469},
+        {:title=>\"Lonny Jakubowski PhD\", :score=>467}], :next_page=>\"t3_abc123_208\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_XUfo5dMMm1gmfae28rfynI3G"},{"role":"tool","content":"{:posts=>[{:title=>\"Dr.
+        Alissa Denesik\", :score=>665}, {:title=>\"Emil Gleichner\", :score=>283},
+        {:title=>\"Lakiesha Funk\", :score=>186}], :next_page=>\"t3_abc123_801\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Ib84TlF5oUBAEOUdRRUIQKf4"},{"role":"assistant","tool_calls":[{"id":"call_0wUmxw4Zgw2d6fbfb8a6sOVB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_jz73d0gM9I95M4c3sZWAOf2J","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Sen.
+        Paris Effertz\", :score=>649}, {:title=>\"Rachal Farrell Jr.\", :score=>670},
+        {:title=>\"Kiesha Quitzon\", :score=>393}], :next_page=>\"t3_abc123_247\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_0wUmxw4Zgw2d6fbfb8a6sOVB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ms.
+        Tamica Denesik\", :score=>556}, {:title=>\"Maxie Homenick\", :score=>719},
+        {:title=>\"Ingeborg Sanford III\", :score=>961}], :next_page=>\"t3_abc123_901\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jz73d0gM9I95M4c3sZWAOf2J"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:49:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '441'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199233'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 229ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpNXH91MxYK9r2EwmH6at3AlYARs",
+          "object": "chat.completion",
+          "created": 1745495399,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_WhsB6G8UcXtSXxgHsxr2K3xE",
+                    "type": "function",
+                    "function": {
+                      "name": "weather",
+                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1391,
+            "completion_tokens": 24,
+            "total_tokens": 1415,
+            "prompt_tokens_details": {
+              "cached_tokens": 1152,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 11:49:59 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_d8qx8jbBFXzZh329crhwdAo2","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_nrzB09UlqiWoGXhixAb04sEC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Ayanna
+        Kutch\", :score=>828}, {:title=>\"Jaclyn Huel Ret.\", :score=>116}, {:title=>\"Vincenzo
+        Stoltenberg Ret.\", :score=>452}], :next_page=>\"t3_abc123_754\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_d8qx8jbBFXzZh329crhwdAo2"},{"role":"tool","content":"{:posts=>[{:title=>\"Sherrie
+        Dickinson\", :score=>310}, {:title=>\"Ezra Gorczany Esq.\", :score=>897},
+        {:title=>\"Kathryne Lockman\", :score=>252}], :next_page=>\"t3_abc123_507\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nrzB09UlqiWoGXhixAb04sEC"},{"role":"assistant","tool_calls":[{"id":"call_jGIjYrxdxDZCoHhyEcNhaTKp","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Louis
+        Hansen\", :score=>809}, {:title=>\"Sen. Douglas Stiedemann\", :score=>640},
+        {:title=>\"Fr. Isaias Parker\", :score=>817}], :next_page=>\"t3_abc123_679\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jGIjYrxdxDZCoHhyEcNhaTKp"},{"role":"tool","content":"{:posts=>[{:title=>\"Emerita
+        Toy\", :score=>302}, {:title=>\"Thomas Effertz\", :score=>168}, {:title=>\"Shasta
+        Hayes\", :score=>720}], :next_page=>\"t3_abc123_25\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_3CdHeNDzCWeNWK4lcE4Oqbb6"},{"role":"assistant","tool_calls":[{"id":"call_HdJrQKB0CdKBjQqwhR7DfuMl","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_QAScwdX87rVNoMe3ssPl7iQs","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Quintin
+        Crooks CPA\", :score=>661}, {:title=>\"Diego Conn\", :score=>441}, {:title=>\"Pres.
+        Darin Macejkovic\", :score=>454}], :next_page=>\"t3_abc123_514\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_HdJrQKB0CdKBjQqwhR7DfuMl"},{"role":"tool","content":"{:posts=>[{:title=>\"Mary
+        Conroy\", :score=>797}, {:title=>\"Miss Halley Swift\", :score=>3}, {:title=>\"Mrs.
+        Rene Schmitt\", :score=>260}], :next_page=>\"t3_abc123_900\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_QAScwdX87rVNoMe3ssPl7iQs"},{"role":"assistant","tool_calls":[{"id":"call_KKc6pmjmScPWptd3wVWM1yEs","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Kasey
+        Gerhold\", :score=>196}, {:title=>\"Karri Bahringer\", :score=>392}, {:title=>\"Rev.
+        Jeffrey Crona\", :score=>653}], :next_page=>\"t3_abc123_22\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_KKc6pmjmScPWptd3wVWM1yEs"},{"role":"tool","content":"{:posts=>[{:title=>\"Gov.
+        Demarcus Emmerich\", :score=>568}, {:title=>\"Gerry Bradtke DVM\", :score=>393},
+        {:title=>\"Ethel Hammes DVM\", :score=>702}], :next_page=>\"t3_abc123_148\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_xdn8oJDDQnAnpdR4ZsoU4rWL"},{"role":"assistant","tool_calls":[{"id":"call_XUfo5dMMm1gmfae28rfynI3G","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ib84TlF5oUBAEOUdRRUIQKf4","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Joslyn
+        McCullough IV\", :score=>325}, {:title=>\"Emmanuel Swift II\", :score=>469},
+        {:title=>\"Lonny Jakubowski PhD\", :score=>467}], :next_page=>\"t3_abc123_208\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_XUfo5dMMm1gmfae28rfynI3G"},{"role":"tool","content":"{:posts=>[{:title=>\"Dr.
+        Alissa Denesik\", :score=>665}, {:title=>\"Emil Gleichner\", :score=>283},
+        {:title=>\"Lakiesha Funk\", :score=>186}], :next_page=>\"t3_abc123_801\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Ib84TlF5oUBAEOUdRRUIQKf4"},{"role":"assistant","tool_calls":[{"id":"call_0wUmxw4Zgw2d6fbfb8a6sOVB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_jz73d0gM9I95M4c3sZWAOf2J","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Sen.
+        Paris Effertz\", :score=>649}, {:title=>\"Rachal Farrell Jr.\", :score=>670},
+        {:title=>\"Kiesha Quitzon\", :score=>393}], :next_page=>\"t3_abc123_247\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_0wUmxw4Zgw2d6fbfb8a6sOVB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ms.
+        Tamica Denesik\", :score=>556}, {:title=>\"Maxie Homenick\", :score=>719},
+        {:title=>\"Ingeborg Sanford III\", :score=>961}], :next_page=>\"t3_abc123_901\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_jz73d0gM9I95M4c3sZWAOf2J"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_WhsB6G8UcXtSXxgHsxr2K3xE","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_WhsB6G8UcXtSXxgHsxr2K3xE"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 11:50:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '686'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199216'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 234ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CUHBOWWc1T2tKR3BCZnprd3NLOFhNMWxwa3dEcCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0NTQ5NTQwMCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQ0NiwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIxLAogICAgInRvdGFsX3Rva2VucyI6IDE0NjcsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDEyODAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9lZWRlOGYwZDQ1Igp9Cg==
+  recorded_at: Thu, 24 Apr 2025 11:50:00 GMT
+recorded_with: VCR 6.3.1

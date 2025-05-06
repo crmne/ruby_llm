@@ -1,0 +1,1155 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '473'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199967'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 9ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPpgzCYjBgXUbsZXET0lKeFenvjLG",
+          "object": "chat.completion",
+          "created": 1745496605,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_iARhGzusOhmEcNQugV7JTGSB",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_oXlLzIpxHahjlnNrxGcC1I3p",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 116,
+            "completion_tokens": 42,
+            "total_tokens": 158,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:06 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '899'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199851'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 44ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph0v9BBQHFF7YMKMx7ykWazGEN2",
+          "object": "chat.completion",
+          "created": 1745496606,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_LAO3pFk25C7hl69JlTCRGPhi",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_mb2F7VaGnluAWBqYRrkpyvFQ",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 317,
+            "completion_tokens": 42,
+            "total_tokens": 359,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:07 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:09 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1309'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199733'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 80ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph2m5rdp0ywjqtaaSoAKl92BSkh",
+          "object": "chat.completion",
+          "created": 1745496608,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_khi5QnW0YeTby4CvDmpQIB8P",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_Ec7bc3HczHltwTN6L2g292U0",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 523,
+            "completion_tokens": 42,
+            "total_tokens": 565,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:09 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"},{"role":"assistant","tool_calls":[{"id":"call_khi5QnW0YeTby4CvDmpQIB8P","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ec7bc3HczHltwTN6L2g292U0","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Lance
+        Ondricka\", :score=>478}, {:title=>\"Len Rath\", :score=>718}, {:title=>\"Keitha
+        McKenzie\", :score=>126}], :next_page=>\"t3_abc123_848\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_khi5QnW0YeTby4CvDmpQIB8P"},{"role":"tool","content":"{:posts=>[{:title=>\"Lacy
+        Rohan\", :score=>534}, {:title=>\"Syreeta Paucek\", :score=>324}, {:title=>\"Glenn
+        Bins\", :score=>716}], :next_page=>\"t3_abc123_795\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_Ec7bc3HczHltwTN6L2g292U0"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '432'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199620'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 114ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph3UoK72hHmTwzQCRQr98GClRKJ",
+          "object": "chat.completion",
+          "created": 1745496609,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_PicL6zj98mGQJefPtyw4yUwy",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_1IfRSvwuy5WwD3a4k0BP8tNQ",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 725,
+            "completion_tokens": 42,
+            "total_tokens": 767,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:10 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"},{"role":"assistant","tool_calls":[{"id":"call_khi5QnW0YeTby4CvDmpQIB8P","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ec7bc3HczHltwTN6L2g292U0","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Lance
+        Ondricka\", :score=>478}, {:title=>\"Len Rath\", :score=>718}, {:title=>\"Keitha
+        McKenzie\", :score=>126}], :next_page=>\"t3_abc123_848\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_khi5QnW0YeTby4CvDmpQIB8P"},{"role":"tool","content":"{:posts=>[{:title=>\"Lacy
+        Rohan\", :score=>534}, {:title=>\"Syreeta Paucek\", :score=>324}, {:title=>\"Glenn
+        Bins\", :score=>716}], :next_page=>\"t3_abc123_795\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_Ec7bc3HczHltwTN6L2g292U0"},{"role":"assistant","tool_calls":[{"id":"call_PicL6zj98mGQJefPtyw4yUwy","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Maximo
+        Lakin\", :score=>255}, {:title=>\"Earlean Ullrich\", :score=>346}, {:title=>\"Rodrigo
+        Wuckert\", :score=>63}], :next_page=>\"t3_abc123_354\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_PicL6zj98mGQJefPtyw4yUwy"},{"role":"tool","content":"{:posts=>[{:title=>\"Deena
+        Lesch\", :score=>797}, {:title=>\"Zenaida Keeling\", :score=>51}, {:title=>\"Ollie
+        Hagenes\", :score=>797}], :next_page=>\"t3_abc123_129\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '493'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199503'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 148ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph4pBgaIQ6GNWAMZZrAFd8osA98",
+          "object": "chat.completion",
+          "created": 1745496610,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_0rnA4WJVpv8uddjL5VUvF4PV",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_kxD1dJUdlGedwrDPUjRiUcdj",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 931,
+            "completion_tokens": 42,
+            "total_tokens": 973,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:11 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"},{"role":"assistant","tool_calls":[{"id":"call_khi5QnW0YeTby4CvDmpQIB8P","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ec7bc3HczHltwTN6L2g292U0","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Lance
+        Ondricka\", :score=>478}, {:title=>\"Len Rath\", :score=>718}, {:title=>\"Keitha
+        McKenzie\", :score=>126}], :next_page=>\"t3_abc123_848\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_khi5QnW0YeTby4CvDmpQIB8P"},{"role":"tool","content":"{:posts=>[{:title=>\"Lacy
+        Rohan\", :score=>534}, {:title=>\"Syreeta Paucek\", :score=>324}, {:title=>\"Glenn
+        Bins\", :score=>716}], :next_page=>\"t3_abc123_795\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_Ec7bc3HczHltwTN6L2g292U0"},{"role":"assistant","tool_calls":[{"id":"call_PicL6zj98mGQJefPtyw4yUwy","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Maximo
+        Lakin\", :score=>255}, {:title=>\"Earlean Ullrich\", :score=>346}, {:title=>\"Rodrigo
+        Wuckert\", :score=>63}], :next_page=>\"t3_abc123_354\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_PicL6zj98mGQJefPtyw4yUwy"},{"role":"tool","content":"{:posts=>[{:title=>\"Deena
+        Lesch\", :score=>797}, {:title=>\"Zenaida Keeling\", :score=>51}, {:title=>\"Ollie
+        Hagenes\", :score=>797}], :next_page=>\"t3_abc123_129\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ"},{"role":"assistant","tool_calls":[{"id":"call_0rnA4WJVpv8uddjL5VUvF4PV","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_kxD1dJUdlGedwrDPUjRiUcdj","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Jude
+        Klein\", :score=>818}, {:title=>\"Mercy Lynch\", :score=>940}, {:title=>\"Josiah
+        Bartell\", :score=>442}], :next_page=>\"t3_abc123_553\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_0rnA4WJVpv8uddjL5VUvF4PV"},{"role":"tool","content":"{:posts=>[{:title=>\"Daphne
+        Treutel\", :score=>672}, {:title=>\"Shanelle Herman\", :score=>253}, {:title=>\"Dr.
+        Serena Bradtke\", :score=>7}], :next_page=>\"t3_abc123_540\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_kxD1dJUdlGedwrDPUjRiUcdj"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:11 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '512'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199388'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 183ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph5pIgT4QLsDkatOWsmg0MLcUKy",
+          "object": "chat.completion",
+          "created": 1745496611,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_iZkAio8U8tRHZomLAFFDuNIV",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  },
+                  {
+                    "id": "call_Tmf0sooEevILL1QzITsxmmqd",
+                    "type": "function",
+                    "function": {
+                      "name": "looping_answer",
+                      "arguments": "{}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1133,
+            "completion_tokens": 42,
+            "total_tokens": 1175,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:11 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"},{"role":"assistant","tool_calls":[{"id":"call_khi5QnW0YeTby4CvDmpQIB8P","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ec7bc3HczHltwTN6L2g292U0","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Lance
+        Ondricka\", :score=>478}, {:title=>\"Len Rath\", :score=>718}, {:title=>\"Keitha
+        McKenzie\", :score=>126}], :next_page=>\"t3_abc123_848\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_khi5QnW0YeTby4CvDmpQIB8P"},{"role":"tool","content":"{:posts=>[{:title=>\"Lacy
+        Rohan\", :score=>534}, {:title=>\"Syreeta Paucek\", :score=>324}, {:title=>\"Glenn
+        Bins\", :score=>716}], :next_page=>\"t3_abc123_795\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_Ec7bc3HczHltwTN6L2g292U0"},{"role":"assistant","tool_calls":[{"id":"call_PicL6zj98mGQJefPtyw4yUwy","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Maximo
+        Lakin\", :score=>255}, {:title=>\"Earlean Ullrich\", :score=>346}, {:title=>\"Rodrigo
+        Wuckert\", :score=>63}], :next_page=>\"t3_abc123_354\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_PicL6zj98mGQJefPtyw4yUwy"},{"role":"tool","content":"{:posts=>[{:title=>\"Deena
+        Lesch\", :score=>797}, {:title=>\"Zenaida Keeling\", :score=>51}, {:title=>\"Ollie
+        Hagenes\", :score=>797}], :next_page=>\"t3_abc123_129\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ"},{"role":"assistant","tool_calls":[{"id":"call_0rnA4WJVpv8uddjL5VUvF4PV","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_kxD1dJUdlGedwrDPUjRiUcdj","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Jude
+        Klein\", :score=>818}, {:title=>\"Mercy Lynch\", :score=>940}, {:title=>\"Josiah
+        Bartell\", :score=>442}], :next_page=>\"t3_abc123_553\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_0rnA4WJVpv8uddjL5VUvF4PV"},{"role":"tool","content":"{:posts=>[{:title=>\"Daphne
+        Treutel\", :score=>672}, {:title=>\"Shanelle Herman\", :score=>253}, {:title=>\"Dr.
+        Serena Bradtke\", :score=>7}], :next_page=>\"t3_abc123_540\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_kxD1dJUdlGedwrDPUjRiUcdj"},{"role":"assistant","tool_calls":[{"id":"call_iZkAio8U8tRHZomLAFFDuNIV","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Tmf0sooEevILL1QzITsxmmqd","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Calvin
+        Carter\", :score=>501}, {:title=>\"Wilber Schaden MD\", :score=>331}, {:title=>\"Chance
+        Grady\", :score=>881}], :next_page=>\"t3_abc123_690\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_iZkAio8U8tRHZomLAFFDuNIV"},{"role":"tool","content":"{:posts=>[{:title=>\"Lesa
+        Cummerata\", :score=>202}, {:title=>\"Philip Medhurst\", :score=>318}, {:title=>\"Emmitt
+        Block MD\", :score=>505}], :next_page=>\"t3_abc123_993\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_Tmf0sooEevILL1QzITsxmmqd"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '603'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199258'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 222ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-BPph6G7SnVyXbBbREGM0CiT9ysYue",
+          "object": "chat.completion",
+          "created": 1745496612,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_vQVi7SowdPFzXp5HCPhNbKvO",
+                    "type": "function",
+                    "function": {
+                      "name": "weather",
+                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 1355,
+            "completion_tokens": 24,
+            "total_tokens": 1379,
+            "prompt_tokens_details": {
+              "cached_tokens": 1024,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Thu, 24 Apr 2025 12:10:12 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array"},{"role":"assistant","tool_calls":[{"id":"call_iARhGzusOhmEcNQugV7JTGSB","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_oXlLzIpxHahjlnNrxGcC1I3p","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Karol
+        Rosenbaum\", :score=>215}, {:title=>\"Leeanne Schaden Ret.\", :score=>949},
+        {:title=>\"Nathaniel Tromp\", :score=>137}], :next_page=>\"t3_abc123_583\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_iARhGzusOhmEcNQugV7JTGSB"},{"role":"tool","content":"{:posts=>[{:title=>\"Ada
+        Abbott\", :score=>195}, {:title=>\"Kurtis King\", :score=>353}, {:title=>\"Dylan
+        Feest\", :score=>940}], :next_page=>\"t3_abc123_34\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_oXlLzIpxHahjlnNrxGcC1I3p"},{"role":"assistant","tool_calls":[{"id":"call_LAO3pFk25C7hl69JlTCRGPhi","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_mb2F7VaGnluAWBqYRrkpyvFQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Donella
+        Dickens\", :score=>43}, {:title=>\"Detra Kutch\", :score=>815}, {:title=>\"Rep.
+        Rudolph Kihn\", :score=>189}], :next_page=>\"t3_abc123_944\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_LAO3pFk25C7hl69JlTCRGPhi"},{"role":"tool","content":"{:posts=>[{:title=>\"Chung
+        Kassulke\", :score=>325}, {:title=>\"Dr. Jorge Thiel\", :score=>751}, {:title=>\"Christiana
+        Mayert MD\", :score=>727}], :next_page=>\"t3_abc123_555\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_mb2F7VaGnluAWBqYRrkpyvFQ"},{"role":"assistant","tool_calls":[{"id":"call_khi5QnW0YeTby4CvDmpQIB8P","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Ec7bc3HczHltwTN6L2g292U0","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Lance
+        Ondricka\", :score=>478}, {:title=>\"Len Rath\", :score=>718}, {:title=>\"Keitha
+        McKenzie\", :score=>126}], :next_page=>\"t3_abc123_848\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_khi5QnW0YeTby4CvDmpQIB8P"},{"role":"tool","content":"{:posts=>[{:title=>\"Lacy
+        Rohan\", :score=>534}, {:title=>\"Syreeta Paucek\", :score=>324}, {:title=>\"Glenn
+        Bins\", :score=>716}], :next_page=>\"t3_abc123_795\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_Ec7bc3HczHltwTN6L2g292U0"},{"role":"assistant","tool_calls":[{"id":"call_PicL6zj98mGQJefPtyw4yUwy","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Maximo
+        Lakin\", :score=>255}, {:title=>\"Earlean Ullrich\", :score=>346}, {:title=>\"Rodrigo
+        Wuckert\", :score=>63}], :next_page=>\"t3_abc123_354\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_PicL6zj98mGQJefPtyw4yUwy"},{"role":"tool","content":"{:posts=>[{:title=>\"Deena
+        Lesch\", :score=>797}, {:title=>\"Zenaida Keeling\", :score=>51}, {:title=>\"Ollie
+        Hagenes\", :score=>797}], :next_page=>\"t3_abc123_129\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_1IfRSvwuy5WwD3a4k0BP8tNQ"},{"role":"assistant","tool_calls":[{"id":"call_0rnA4WJVpv8uddjL5VUvF4PV","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_kxD1dJUdlGedwrDPUjRiUcdj","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Jude
+        Klein\", :score=>818}, {:title=>\"Mercy Lynch\", :score=>940}, {:title=>\"Josiah
+        Bartell\", :score=>442}], :next_page=>\"t3_abc123_553\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_0rnA4WJVpv8uddjL5VUvF4PV"},{"role":"tool","content":"{:posts=>[{:title=>\"Daphne
+        Treutel\", :score=>672}, {:title=>\"Shanelle Herman\", :score=>253}, {:title=>\"Dr.
+        Serena Bradtke\", :score=>7}], :next_page=>\"t3_abc123_540\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_kxD1dJUdlGedwrDPUjRiUcdj"},{"role":"assistant","tool_calls":[{"id":"call_iZkAio8U8tRHZomLAFFDuNIV","type":"function","function":{"name":"looping_answer","arguments":"{}"}},{"id":"call_Tmf0sooEevILL1QzITsxmmqd","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Calvin
+        Carter\", :score=>501}, {:title=>\"Wilber Schaden MD\", :score=>331}, {:title=>\"Chance
+        Grady\", :score=>881}], :next_page=>\"t3_abc123_690\", :message=>\"More posts
+        are available using the next_page token.\"}","tool_call_id":"call_iZkAio8U8tRHZomLAFFDuNIV"},{"role":"tool","content":"{:posts=>[{:title=>\"Lesa
+        Cummerata\", :score=>202}, {:title=>\"Philip Medhurst\", :score=>318}, {:title=>\"Emmitt
+        Block MD\", :score=>505}], :next_page=>\"t3_abc123_993\", :message=>\"More
+        posts are available using the next_page token.\"}","tool_call_id":"call_Tmf0sooEevILL1QzITsxmmqd"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_vQVi7SowdPFzXp5HCPhNbKvO","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_vQVi7SowdPFzXp5HCPhNbKvO"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 24 Apr 2025 12:10:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '480'
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199242'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 227ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CUHBoN2hlODEyN3BUalQ4SjFwbTNTd1Z3RjhjciIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0NTQ5NjYxMywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQxMCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIxLAogICAgInRvdGFsX3Rva2VucyI6IDE0MzEsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDEyODAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9lZWRlOGYwZDQ1Igp9Cg==
+  recorded_at: Thu, 24 Apr 2025 12:10:13 GMT
+recorded_with: VCR 6.3.1

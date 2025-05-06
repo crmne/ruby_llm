@@ -22,6 +22,8 @@ module RubyLLM
                   :bedrock_session_token,
                   :openrouter_api_key,
                   :ollama_api_base,
+                  # Default tool configuration
+                  :max_tool_completions,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -45,6 +47,7 @@ module RubyLLM
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+      @max_tool_completions = 25
     end
 
     def inspect # rubocop:disable Metrics/MethodLength
