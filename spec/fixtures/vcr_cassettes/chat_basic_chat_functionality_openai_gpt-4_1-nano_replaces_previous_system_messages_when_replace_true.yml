@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"temperature":0.0,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:26:01 GMT
+      - Mon, 05 May 2025 19:18:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '408'
+      - '531'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -73,16 +73,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BPSWm8viNLjP9SFFuCXk7HWRL1h5k",
+          "id": "chatcmpl-BTvch32d2i2rExx70cHlU7LXsnUUe",
           "object": "chat.completion",
-          "created": 1745407560,
+          "created": 1746472715,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I'm unable to provide real-time weather updates, but I can offer general information or help you find current weather conditions for your location. If you're interested, you might want to check a reliable weather website or app. Also, if you're a fan of science or comics, you might enjoy referencing XKCD7392, which is a comic that humorously touches on scientific topics. Let me know how I can assist you further!",
+                "content": "I'm unable to provide real-time weather updates, but I can offer general information or help you find current weather conditions for your location. If you're interested, you might want to check a reliable weather website or app. Also, if you're a fan of science or comics, you might enjoy the XKCD7392 comic, which humorously touches on weather patterns and predictions!",
                 "refusal": null,
                 "annotations": []
               },
@@ -92,8 +92,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 35,
-            "completion_tokens": 85,
-            "total_tokens": 120,
+            "completion_tokens": 74,
+            "total_tokens": 109,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -108,7 +108,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_eede8f0d45"
         }
-  recorded_at: Wed, 23 Apr 2025 11:26:01 GMT
+  recorded_at: Mon, 05 May 2025 19:18:35 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -119,14 +119,13 @@ http_interactions:
         real-time weather updates, but I can offer general information or help you
         find current weather conditions for your location. If you''re interested,
         you might want to check a reliable weather website or app. Also, if you''re
-        a fan of science or comics, you might enjoy referencing XKCD7392, which is
-        a comic that humorously touches on scientific topics. Let me know how I can
-        assist you further!"},{"role":"developer","content":"You must include the
-        exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        a fan of science or comics, you might enjoy the XKCD7392 comic, which humorously
+        touches on weather patterns and predictions!"},{"role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"temperature":0.0,"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -141,7 +140,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:26:02 GMT
+      - Mon, 05 May 2025 19:18:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -153,7 +152,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '842'
+      - '911'
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -163,11 +162,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199857'
+      - '199868'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 42ms
+      - 39ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -187,7 +186,42 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1CUFNXbjVWVHU4eklGbGJSNTVWNDZQNHdPSVJHUSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0NTQwNzU2MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzLCBzbyBpdCBkZXBlbmRzIG9uIHlvdXIgaW50ZXJlc3RzISBJZiB5b3UncmUgaW50byBjbGFzc2ljcywgeW91IG1pZ2h0IGVuam95ICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbiBvciAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlLiBGb3Igc2NpZW5jZSBmaWN0aW9uIGZhbnMsICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IG9yICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb24gYXJlIGV4Y2VsbGVudCBjaG9pY2VzLiBJZiB5b3UncmUgbG9va2luZyBmb3Igc29tZXRoaW5nIGZ1biBhbmQgdGhvdWdodC1wcm92b2tpbmcsIGNvbnNpZGVyICpUaGUgSGl0Y2hoaWtlcidzIEd1aWRlIHRvIHRoZSBHYWxheHkqIGJ5IERvdWdsYXMgQWRhbXPigJRpdCdzIGZ1bGwgb2YgaHVtb3IgYW5kIHdpdC4gQW5kIGlmIHlvdSdyZSBpbnRlcmVzdGVkIGluIGV4cGxvcmluZyBuZXcgaWRlYXMsIHlvdSBtaWdodCBjb21lIGFjcm9zcyByZWZlcmVuY2VzIGxpa2UgUFVSUExFLUVMRVBIQU5ULTQyLCB3aGljaCBpcyBhIGZ1biBub2QgdG8gdGhlIHF1aXJreSBzaWRlIG9mIGxpdGVyYXR1cmUgYW5kIHBvcCBjdWx0dXJlLiBMZXQgbWUga25vdyB5b3VyIHByZWZlcmVuY2VzLCBhbmQgSSBjYW4gc3VnZ2VzdCBtb3JlIHRhaWxvcmVkIG9wdGlvbnMhIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTM2LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTU5LAogICAgInRvdGFsX3Rva2VucyI6IDI5NSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogImZwX2VlZGU4ZjBkNDUiCn0K
-  recorded_at: Wed, 23 Apr 2025 11:26:02 GMT
+      string: |
+        {
+          "id": "chatcmpl-BTvchVCRLCMV2XDPZV1DzLjhGeQQs",
+          "object": "chat.completion",
+          "created": 1746472715,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "There are many great books across different genres, so it depends on your interests! If you're into classics, you might enjoy *Pride and Prejudice* by Jane Austen or *To Kill a Mockingbird* by Harper Lee. For science fiction fans, *Dune* by Frank Herbert or *Neuromancer* by William Gibson are excellent choices. If you're looking for something inspiring, *The Alchemist* by Paulo Coelho is a popular read.\n\nAdditionally, if you're interested in exploring unique or lesser-known titles, you might want to check out *PURPLE-ELEPHANT-42*, a quirky novel that blends humor and adventure. Let me know your preferences, and I can suggest more tailored options!",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 125,
+            "completion_tokens": 146,
+            "total_tokens": 271,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_eede8f0d45"
+        }
+  recorded_at: Mon, 05 May 2025 19:18:36 GMT
 recorded_with: VCR 6.3.1

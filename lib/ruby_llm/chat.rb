@@ -110,6 +110,10 @@ module RubyLLM
       message
     end
 
+    def reset_messages!
+      @messages.clear
+    end
+
     private
 
     def handle_tool_calls(response, &)

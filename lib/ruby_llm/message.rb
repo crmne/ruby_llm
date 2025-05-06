@@ -7,7 +7,7 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :content, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id
+    attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id
 
     def initialize(options = {})
       @role = options[:role].to_sym
@@ -19,6 +19,14 @@ module RubyLLM
       @tool_call_id = options[:tool_call_id]
 
       ensure_valid_role
+    end
+
+    def content
+      if @content.is_a?(Content) && @content.text && @content.attachments.empty?
+        @content.text
+      else
+        @content
+      end
     end
 
     def tool_call?
@@ -49,9 +57,9 @@ module RubyLLM
 
     def normalize_content(content)
       case content
-      when Content then content.format
-      when String then Content.new(content).format
-      else content
+      when String then Content.new(content)
+      when Hash then Content.new(content[:text], content)
+      else content # Pass through nil, Content, or other types
       end
     end
 
