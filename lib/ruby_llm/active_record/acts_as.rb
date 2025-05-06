@@ -28,28 +28,41 @@ module RubyLLM
           include MessageMethods
 
           @chat_class = chat_class.to_s
+          @chat_foreign_key = "#{@chat_class.underscore}_id"
           @tool_call_class = tool_call_class.to_s
+          @tool_call_foreign_key = "#{@tool_call_class.underscore}_id"
 
-          belongs_to :chat, class_name: @chat_class, touch: touch_chat
-          has_many :tool_calls, class_name: @tool_call_class, dependent: :destroy
+          belongs_to :chat,
+                     class_name: @chat_class,
+                     foreign_key: @chat_foreign_key,
+                     inverse_of: :messages,
+                     touch: touch_chat
+
+          has_many :tool_calls,
+                   class_name: @tool_call_class,
+                   dependent: :destroy
 
           belongs_to :parent_tool_call,
                      class_name: @tool_call_class,
-                     foreign_key: 'tool_call_id',
+                     foreign_key: @tool_call_foreign_key,
                      optional: true,
                      inverse_of: :result
 
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
         end
 
-        def acts_as_tool_call(message_class: 'Message')
+        def acts_as_tool_call(message_class: 'Message') # rubocop:disable Metrics/MethodLength
           @message_class = message_class.to_s
+          @message_foreign_key = "#{@message_class.underscore}_id"
 
-          belongs_to :message, class_name: @message_class
+          belongs_to :message,
+                     class_name: @message_class,
+                     foreign_key: @message_foreign_key,
+                     inverse_of: :tool_calls
 
           has_one :result,
                   class_name: @message_class,
-                  foreign_key: 'tool_call_id',
+                  foreign_key: @message_foreign_key,
                   inverse_of: :parent_tool_call,
                   dependent: :nullify
         end
@@ -159,14 +172,15 @@ module RubyLLM
         end
 
         transaction do
-          @message.update!(
+          @message.update(
             role: message.role,
             content: message.content,
             model_id: message.model_id,
-            tool_call_id: tool_call_id,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens
           )
+          @message.write_attribute(@message.class.tool_call_foreign_key, tool_call_id) if tool_call_id
+          @message.save!
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
         end
       end
@@ -184,6 +198,11 @@ module RubyLLM
     # provide a clean interface to the underlying message data.
     module MessageMethods
       extend ActiveSupport::Concern
+
+      class_methods do
+        attr_reader :chat_class, :tool_call_class
+        attr_reader :chat_foreign_key, :tool_call_foreign_key
+      end
 
       def to_llm
         RubyLLM::Message.new(
