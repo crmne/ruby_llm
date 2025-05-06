@@ -46,7 +46,7 @@ For more information about working with models, see the [Working with Models](/g
 ## Models by Type
 {: .d-inline-block }
 
-Last updated: 2025-05-05
+Last updated: 2025-05-06
 {: .label .label-green }
 
 ### Chat Models (0)
@@ -269,7 +269,7 @@ Last updated: 2025-05-05
 | anthropic.claude-v2:1:18k |  | Claude | bedrock |  |  |  |  |  |
 | anthropic.claude-v2:1:200k |  | Claude | bedrock |  |  |  |  |  |
 
-### Openrouter Models (319)
+### Openrouter Models (325)
 
   | ID | Type | Name | Provider | Context | MaxTok | Family | In$/M | Out$/M |
 | :-- | :-- | :-- | :-- | --: | --: | :-- | --: | --: |
