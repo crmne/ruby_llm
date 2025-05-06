@@ -2,9 +2,11 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    module Ollama
       # Handles formatting of media content (images, audio) for OpenAI APIs
       module Media
+        extend OpenAI::Media
+
         module_function
 
         def format_content(content) # rubocop:disable Metrics/MethodLength
@@ -16,7 +18,7 @@ module RubyLLM
           content.attachments.each do |attachment|
             case attachment
             when Attachments::Image
-              parts << format_image(attachment)
+              parts << Ollama::Media.format_image(attachment)
             when Attachments::PDF
               parts << format_pdf(attachment)
             when Attachments::Audio
@@ -31,36 +33,9 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}",
+              url: "data:#{image.mime_type};base64,#{image.encoded}",
               detail: 'auto'
             }
-          }
-        end
-
-        def format_pdf(pdf)
-          {
-            type: 'file',
-            file: {
-              filename: File.basename(pdf.source),
-              file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
-            }
-          }
-        end
-
-        def format_audio(audio)
-          {
-            type: 'input_audio',
-            input_audio: {
-              data: audio.encoded,
-              format: audio.format
-            }
-          }
-        end
-
-        def format_text(text)
-          {
-            type: 'text',
-            text: text
           }
         end
       end
