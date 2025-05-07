@@ -53,7 +53,8 @@ module RubyLLM
 
         def acts_as_tool_call(message_class: 'Message', **options) # rubocop:disable Metrics/MethodLength
           @message_class = message_class.to_s
-          @message_foreign_key = options[:message_foreign_key] || "#{@message_class.underscore}_id"
+          @message_foreign_key = options[:message_foreign_key] || @message_class.foreign_key
+          @result_foreign_key = options[:result_foreign_key] || 'id'
 
           belongs_to :message,
                      class_name: @message_class,
@@ -62,7 +63,7 @@ module RubyLLM
 
           has_one :result,
                   class_name: @message_class,
-                  foreign_key: @message_foreign_key,
+                  foreign_key: @result_foreign_key,
                   inverse_of: :parent_tool_call,
                   dependent: :nullify
         end
