@@ -42,7 +42,7 @@ module RubyLLM
 
     private
 
-    def tool_calls_from_stream # rubocop:disable Metrics/MethodLength
+    def tool_calls_from_stream
       tool_calls.transform_values do |tc|
         arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
                       JSON.parse(tc.arguments)
@@ -60,7 +60,7 @@ module RubyLLM
       end
     end
 
-    def accumulate_tool_calls(new_tool_calls) # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+    def accumulate_tool_calls(new_tool_calls)
       RubyLLM.logger.debug "Accumulating tool calls: #{new_tool_calls}"
       new_tool_calls.each_value do |tool_call|
         if tool_call.id

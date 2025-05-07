@@ -73,13 +73,13 @@ module RubyLLM
         # @return [Symbol] the model family identifier
         def model_family(model_id)
           case model_id
-          when /claude-3-7-sonnet/  then :claude37_sonnet
-          when /claude-3-5-sonnet/  then :claude35_sonnet
-          when /claude-3-5-haiku/   then :claude35_haiku
-          when /claude-3-opus/      then :claude3_opus
-          when /claude-3-sonnet/    then :claude3_sonnet
-          when /claude-3-haiku/     then :claude3_haiku
-          else :claude2
+          when /claude-3-7-sonnet/  then 'claude-3-7-sonnet'
+          when /claude-3-5-sonnet/  then 'claude-3-5-sonnet'
+          when /claude-3-5-haiku/   then 'claude-3-5-haiku'
+          when /claude-3-opus/      then 'claude-3-opus'
+          when /claude-3-sonnet/    then 'claude-3-sonnet'
+          when /claude-3-haiku/     then 'claude-3-haiku'
+          else 'claude-2'
           end
         end
 
@@ -92,12 +92,12 @@ module RubyLLM
 
         # Pricing information for Anthropic models (per million tokens)
         PRICES = {
-          claude37_sonnet: { input: 3.0, output: 15.0 },
-          claude35_sonnet: { input: 3.0, output: 15.0 },
-          claude35_haiku: { input: 0.80, output: 4.0 },
-          claude3_opus: { input: 15.0, output: 75.0 },
-          claude3_haiku: { input: 0.25, output: 1.25 },
-          claude2: { input: 3.0, output: 15.0 }
+          'claude-3-7-sonnet': { input: 3.0, output: 15.0 },
+          'claude-3-5-sonnet': { input: 3.0, output: 15.0 },
+          'claude-3-5-haiku': { input: 0.80, output: 4.0 },
+          'claude-3-opus': { input: 15.0, output: 75.0 },
+          'claude-3-haiku': { input: 0.25, output: 1.25 },
+          'claude-2': { input: 3.0, output: 15.0 }
         }.freeze
 
         # Default input price if model not found in PRICES
@@ -110,6 +110,69 @@ module RubyLLM
         # @return [Float] default price per million tokens for output
         def default_output_price
           15.0
+        end
+
+        def modalities_for(model_id)
+          modalities = {
+            input: ['text'],
+            output: ['text']
+          }
+
+          # All Claude 3+ models support vision
+          unless model_id.match?(/claude-[12]/)
+            modalities[:input] << 'image'
+            modalities[:input] << 'pdf'
+          end
+
+          modalities
+        end
+
+        def capabilities_for(model_id)
+          capabilities = ['streaming']
+
+          # Function calling for Claude 3+
+          if model_id.match?(/claude-3/)
+            capabilities << 'function_calling'
+            capabilities << 'structured_output'
+            capabilities << 'batch'
+          end
+
+          # Extended thinking (reasoning) for Claude 3.7
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7/)
+
+          # Citations
+          capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7/)
+
+          capabilities
+        end
+
+        def pricing_for(model_id)
+          family = model_family(model_id)
+          prices = PRICES.fetch(family.to_sym, { input: default_input_price, output: default_output_price })
+
+          standard_pricing = {
+            input_per_million: prices[:input],
+            output_per_million: prices[:output]
+          }
+
+          # Batch is typically half the price
+          batch_pricing = {
+            input_per_million: prices[:input] * 0.5,
+            output_per_million: prices[:output] * 0.5
+          }
+
+          # Add reasoning output pricing for 3.7 models
+          if model_id.match?(/claude-3-7/)
+            standard_pricing[:reasoning_output_per_million] = prices[:output] * 2.5
+            batch_pricing[:reasoning_output_per_million] = prices[:output] * 1.25
+          end
+
+          {
+            text_tokens: {
+              standard: standard_pricing,
+              batch: batch_pricing
+            }
+          }
         end
       end
     end

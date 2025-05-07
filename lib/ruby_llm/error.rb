@@ -50,7 +50,7 @@ module RubyLLM
     end
 
     class << self
-      def parse_error(provider:, response:) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/AbcSize,Metrics/PerceivedComplexity
+      def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
         message = provider&.parse_error(response)
 
         case response.status

@@ -65,7 +65,7 @@ module RubyLLM
       faraday.use :llm_errors, provider: @provider
     end
 
-    def retry_exceptions # rubocop:disable Metrics/MethodLength
+    def retry_exceptions
       [
         Errno::ETIMEDOUT,
         Timeout::Error,

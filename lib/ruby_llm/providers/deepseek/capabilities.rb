@@ -114,8 +114,6 @@ module RubyLLM
           }
         }.freeze
 
-        private
-
         # Default input price when model family can't be determined
         # @return [Float] the default input price
         def default_input_price
@@ -132,6 +130,41 @@ module RubyLLM
         # @return [Float] the default cache hit price
         def default_cache_hit_price
           0.07 # Default to chat cache hit price
+        end
+
+        def modalities_for(_model_id)
+          {
+            input: ['text'],
+            output: ['text']
+          }
+        end
+
+        def capabilities_for(model_id)
+          capabilities = ['streaming']
+
+          # Function calling for chat models
+          capabilities << 'function_calling' if model_id.match?(/deepseek-chat/)
+
+          capabilities
+        end
+
+        def pricing_for(model_id)
+          family = model_family(model_id)
+          prices = PRICES.fetch(family, { input_miss: default_input_price, output: default_output_price })
+
+          standard_pricing = {
+            input_per_million: prices[:input_miss],
+            output_per_million: prices[:output]
+          }
+
+          # Add cached pricing if available
+          standard_pricing[:cached_input_per_million] = prices[:input_hit] if prices[:input_hit]
+
+          {
+            text_tokens: {
+              standard: standard_pricing
+            }
+          }
         end
       end
     end

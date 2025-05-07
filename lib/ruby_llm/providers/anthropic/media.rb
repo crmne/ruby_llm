@@ -7,11 +7,11 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/MethodLength
-          return content unless content.is_a?(Content)
+        def format_content(content)
+          return [format_text(content)] unless content.is_a?(Content)
 
           parts = []
-          parts << format_text_block(content.text) if content.text
+          parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
             case attachment
@@ -25,14 +25,14 @@ module RubyLLM
           parts
         end
 
-        def format_text_block(text)
+        def format_text(text)
           {
             type: 'text',
             text: text
           }
         end
 
-        def format_image(image) # rubocop:disable Metrics/MethodLength
+        def format_image(image)
           if image.url?
             {
               type: 'image',
@@ -53,7 +53,7 @@ module RubyLLM
           end
         end
 
-        def format_pdf(pdf) # rubocop:disable Metrics/MethodLength
+        def format_pdf(pdf)
           if pdf.url?
             {
               type: 'document',

@@ -17,7 +17,7 @@ module RubyLLM
           {
             role: 'assistant',
             content: [
-              Media.format_text_block(msg.content),
+              Media.format_text(msg.content),
               format_tool_use_block(tool_call)
             ]
           }

@@ -33,8 +33,8 @@ RSpec.describe RubyLLM::Models do
       expect(provider_counts.keys).to include('openai', 'anthropic')
 
       # Select only models with vision support
-      vision_models = RubyLLM.models.select(&:supports_vision)
-      expect(vision_models).to all(have_attributes(supports_vision: true))
+      vision_models = RubyLLM.models.select(&:supports_vision?)
+      expect(vision_models).to all(have_attributes(supports_vision?: true))
     end
   end
 

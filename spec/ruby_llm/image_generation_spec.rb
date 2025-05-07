@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'tempfile'
 
-def save_and_verify_image(image) # rubocop:disable Metrics/MethodLength
+def save_and_verify_image(image)
   # Create a temp file to save to
   temp_file = Tempfile.new(['image', '.png'])
   temp_path = temp_file.path

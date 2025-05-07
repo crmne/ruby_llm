@@ -36,15 +36,16 @@ module RubyLLM
       path
     end
 
-    def self.paint(prompt, # rubocop:disable Metrics/ParameterLists,Metrics/CyclomaticComplexity
+    def self.paint(prompt, # rubocop:disable Metrics/ParameterLists
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
                    size: '1024x1024',
                    context: nil)
       config = context&.config || RubyLLM.config
-      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists) if model
-      model_id = model&.id || config.default_image_model
+      model ||= config.default_image_model
+      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists)
+      model_id = model.id
 
       provider = Provider.for(model_id) if provider.nil?
       connection = context ? context.connection_for(provider) : provider.connection(config)

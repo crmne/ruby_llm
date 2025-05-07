@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
+        def render_payload(messages, tools:, temperature:, model:, stream: false)
           {
             model: model,
             messages: format_messages(messages),
@@ -26,7 +26,7 @@ module RubyLLM
           end
         end
 
-        def parse_completion_response(response) # rubocop:disable Metrics/MethodLength
+        def parse_completion_response(response)
           data = response.body
           return if data.empty?
 

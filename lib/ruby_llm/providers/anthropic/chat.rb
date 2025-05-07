@@ -99,13 +99,6 @@ module RubyLLM
           else 'assistant'
           end
         end
-
-        def format_text_block(content)
-          {
-            type: 'text',
-            text: content
-          }
-        end
       end
     end
   end

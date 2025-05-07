@@ -12,15 +12,16 @@ module RubyLLM
       @input_tokens = input_tokens
     end
 
-    def self.embed(text, # rubocop:disable Metrics/ParameterLists,Metrics/CyclomaticComplexity
+    def self.embed(text, # rubocop:disable Metrics/ParameterLists
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
                    context: nil,
                    dimensions: nil)
       config = context&.config || RubyLLM.config
-      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists) if model
-      model_id = model&.id || config.default_embedding_model
+      model ||= config.default_embedding_model
+      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists)
+      model_id = model.id
 
       provider = Provider.for(model_id) if provider.nil?
       connection = context ? context.connection_for(provider) : provider.connection(config)
