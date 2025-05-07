@@ -51,8 +51,14 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision
         def supports_vision?(model_id)
-          # Determine vision support based on model ID pattern
-          model_id.match?(/pixtral/)
+          # Explicitly match the known vision-capable models
+          vision_models = [
+            'pixtral-12b-latest',
+            'pixtral-large-latest',
+            'mistral-medium-latest',
+            'mistral-small-latest'
+          ]
+          vision_models.any? { |id| model_id.include?(id) }
         end
 
         # Determines if the model supports function calling
@@ -96,10 +102,11 @@ module RubyLLM
         end
 
         # Determines if the model supports structured output
+        # based on the docs in https://docs.mistral.ai/capabilities/structured-output/structured_output_overview/ all mistral models support JSON mode
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports structured output
         def supports_structured_output?(model_id)
-          !model_id.match?(/embed|moderation/)
+          true
         end
 
         # Determines the model family for pricing and capability lookup
