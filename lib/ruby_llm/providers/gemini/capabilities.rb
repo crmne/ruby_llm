@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     module Gemini
       # Determines capabilities and pricing for Google Gemini models
-      module Capabilities # rubocop:disable Metrics/ModuleLength
+      module Capabilities
         module_function
 
         # Returns the context window size (input token limit) for the given model
@@ -144,7 +144,7 @@ module RubyLLM
         # Returns the model family identifier
         # @param model_id [String] the model identifier
         # @return [String] the model family identifier
-        def model_family(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def model_family(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/ then 'gemini25_pro_exp'
           when /gemini-2\.0-flash-lite/ then 'gemini20_flash_lite'
@@ -164,7 +164,7 @@ module RubyLLM
         # Returns the pricing family identifier for the model
         # @param model_id [String] the model identifier
         # @return [Symbol] the pricing family identifier
-        def pricing_family(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def pricing_family(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/ then :pro_2_5 # rubocop:disable Naming/VariableNumber
           when /gemini-2\.0-flash-lite/ then :flash_lite_2 # rubocop:disable Naming/VariableNumber
@@ -260,6 +260,87 @@ module RubyLLM
         # @return [Float] the default output price per million tokens
         def default_output_price
           0.30 # Default to Flash pricing
+        end
+
+        def modalities_for(model_id)
+          modalities = {
+            input: ['text'],
+            output: ['text']
+          }
+
+          # Vision support
+          if supports_vision?(model_id)
+            modalities[:input] << 'image'
+            modalities[:input] << 'pdf'
+          end
+
+          # Audio support
+          modalities[:input] << 'audio' if model_id.match?(/audio/)
+
+          # Embedding output
+          modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
+
+          modalities
+        end
+
+        def capabilities_for(model_id)
+          capabilities = ['streaming']
+
+          # Function calling
+          capabilities << 'function_calling' if supports_functions?(model_id)
+
+          # JSON mode
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+
+          # Batch processing
+          capabilities << 'batch' if model_id.match?(/embedding|flash/)
+
+          # Caching
+          capabilities << 'caching' if supports_caching?(model_id)
+
+          # Tuning
+          capabilities << 'fine_tuning' if supports_tuning?(model_id)
+
+          capabilities
+        end
+
+        def pricing_for(model_id)
+          family = pricing_family(model_id)
+          prices = PRICES.fetch(family, { input: default_input_price, output: default_output_price })
+
+          standard_pricing = {
+            input_per_million: prices[:input],
+            output_per_million: prices[:output]
+          }
+
+          # Add cached pricing if available
+          standard_pricing[:cached_input_per_million] = prices[:input_hit] if prices[:input_hit]
+
+          # Batch pricing (typically 50% discount)
+          batch_pricing = {
+            input_per_million: (standard_pricing[:input_per_million] || 0) * 0.5,
+            output_per_million: (standard_pricing[:output_per_million] || 0) * 0.5
+          }
+
+          if standard_pricing[:cached_input_per_million]
+            batch_pricing[:cached_input_per_million] = standard_pricing[:cached_input_per_million] * 0.5
+          end
+
+          pricing = {
+            text_tokens: {
+              standard: standard_pricing,
+              batch: batch_pricing
+            }
+          }
+
+          # Add embedding pricing if applicable
+          if model_id.match?(/embedding|gemini-embedding/)
+            pricing[:embeddings] = {
+              standard: { input_per_million: prices[:price] || 0.002 }
+            }
+          end
+
+          pricing
         end
       end
     end

@@ -24,7 +24,7 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', **options) # rubocop:disable Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', **options)
           include MessageMethods
 
           @chat_class = chat_class.to_s
@@ -51,9 +51,10 @@ module RubyLLM
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
         end
 
-        def acts_as_tool_call(message_class: 'Message', **options) # rubocop:disable Metrics/MethodLength
+        def acts_as_tool_call(message_class: 'Message', **options)
           @message_class = message_class.to_s
-          @message_foreign_key = options[:message_foreign_key] || "#{@message_class.underscore}_id"
+          @message_foreign_key = options[:message_foreign_key] || @message_class.foreign_key
+          @result_foreign_key = options[:result_foreign_key] || 'id'
 
           belongs_to :message,
                      class_name: @message_class,
@@ -62,7 +63,7 @@ module RubyLLM
 
           has_one :result,
                   class_name: @message_class,
-                  foreign_key: @message_foreign_key,
+                  foreign_key: @result_foreign_key,
                   inverse_of: :parent_tool_call,
                   dependent: :nullify
         end
@@ -171,7 +172,7 @@ module RubyLLM
         )
       end
 
-      def persist_message_completion(message) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+      def persist_message_completion(message)
         return unless message
 
         if message.tool_call_id

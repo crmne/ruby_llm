@@ -5,28 +5,28 @@ module RubyLLM
     module Anthropic
       # Models methods of the Anthropic API integration
       module Models
-        private
+        module_function
 
         def models_url
           '/v1/models'
         end
 
-        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          (response.body['data'] || []).map do |model|
+        def parse_list_models_response(response, slug, capabilities)
+          Array(response.body['data']).map do |model_data|
+            model_id = model_data['id']
+
             ModelInfo.new(
-              id: model['id'],
-              created_at: Time.parse(model['created_at']),
-              display_name: model['display_name'],
+              id: model_id,
+              name: model_data['display_name'],
               provider: slug,
-              type: capabilities.model_type(model['id']),
-              family: capabilities.model_family(model['id']),
-              context_window: capabilities.determine_context_window(model['id']),
-              max_tokens: capabilities.determine_max_tokens(model['id']),
-              supports_vision: capabilities.supports_vision?(model['id']),
-              supports_functions: capabilities.supports_functions?(model['id']),
-              supports_json_mode: capabilities.supports_json_mode?(model['id']),
-              input_price_per_million: capabilities.get_input_price(model['id']),
-              output_price_per_million: capabilities.get_output_price(model['id'])
+              family: capabilities.model_family(model_id),
+              created_at: Time.parse(model_data['created_at']),
+              context_window: capabilities.determine_context_window(model_id),
+              max_output_tokens: capabilities.determine_max_tokens(model_id),
+              modalities: capabilities.modalities_for(model_id),
+              capabilities: capabilities.capabilities_for(model_id),
+              pricing: capabilities.pricing_for(model_id),
+              metadata: {}
             )
           end
         end

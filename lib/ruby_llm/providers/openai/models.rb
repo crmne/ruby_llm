@@ -11,26 +11,25 @@ module RubyLLM
           'models'
         end
 
-        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          (response.body['data'] || []).map do |model|
+        def parse_list_models_response(response, slug, capabilities)
+          Array(response.body['data']).map do |model_data|
+            model_id = model_data['id']
+
             ModelInfo.new(
-              id: model['id'],
-              created_at: model['created'] ? Time.at(model['created']) : nil,
-              display_name: capabilities.format_display_name(model['id']),
+              id: model_id,
+              name: capabilities.format_display_name(model_id),
               provider: slug,
-              type: capabilities.model_type(model['id']),
-              family: capabilities.model_family(model['id']),
+              family: capabilities.model_family(model_id),
+              created_at: model_data['created'] ? Time.at(model_data['created']) : nil,
+              context_window: capabilities.context_window_for(model_id),
+              max_output_tokens: capabilities.max_tokens_for(model_id),
+              modalities: capabilities.modalities_for(model_id),
+              capabilities: capabilities.capabilities_for(model_id),
+              pricing: capabilities.pricing_for(model_id),
               metadata: {
-                object: model['object'],
-                owned_by: model['owned_by']
-              },
-              context_window: capabilities.context_window_for(model['id']),
-              max_tokens: capabilities.max_tokens_for(model['id']),
-              supports_vision: capabilities.supports_vision?(model['id']),
-              supports_functions: capabilities.supports_functions?(model['id']),
-              supports_json_mode: capabilities.supports_json_mode?(model['id']),
-              input_price_per_million: capabilities.input_price_for(model['id']),
-              output_price_per_million: capabilities.output_price_for(model['id'])
+                object: model_data['object'],
+                owned_by: model_data['owned_by']
+              }
             )
           end
         end

@@ -42,7 +42,7 @@ module RubyLLM
           end
         end
 
-        def format_parts(msg) # rubocop:disable Metrics/MethodLength
+        def format_parts(msg)
           if msg.tool_call?
             [{
               functionCall: {
@@ -79,7 +79,7 @@ module RubyLLM
           )
         end
 
-        def extract_content(data) # rubocop:disable Metrics/CyclomaticComplexity
+        def extract_content(data)
           candidate = data.dig('candidates', 0)
           return '' unless candidate
 

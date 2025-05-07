@@ -9,10 +9,9 @@ module RubyLLM
   #   RubyLLM.models.chat_models                          # Models that support chat
   #   RubyLLM.models.by_provider('openai').chat_models    # OpenAI chat models
   #   RubyLLM.models.find('claude-3')                     # Get info about a specific model
-  class Models # rubocop:disable Metrics/ClassLength
+  class Models
     include Enumerable
 
-    # Delegate class methods to the singleton instance
     class << self
       def instance
         @instance ||= new
@@ -26,34 +25,41 @@ module RubyLLM
         File.expand_path('models.json', __dir__)
       end
 
-      def refresh! # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity,Metrics/MethodLength
-        global_config = RubyLLM.config
-        configured = Provider.configured_providers global_config
+      def refresh!
+        # Collect models from both sources
+        provider_models = fetch_from_providers
+        parsera_models = fetch_from_parsera
 
-        # Log provider status
-        skipped = Provider.providers.values - configured
-        RubyLLM.logger.info "Refreshing models from #{configured.map(&:slug).join(', ')}" if configured.any?
-        RubyLLM.logger.info "Skipping #{skipped.map(&:slug).join(', ')} - providers not configured" if skipped.any?
+        # Merge with parsera data taking precedence
+        merged_models = merge_models(provider_models, parsera_models)
 
-        # Store current models except from configured providers
-        current = instance.load_models
-        preserved = current.reject { |m| configured.map(&:slug).include?(m.provider) }
-
-        all = (preserved + configured.flat_map do |p|
-          p.list_models(connection: p.connection(global_config))
-        end).sort_by { |m| [m.provider, m.id] }
-        @instance = new(all)
-        @instance
+        @instance = new(merged_models)
       end
 
-      def resolve(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+      def fetch_from_providers
+        configured = Provider.configured_providers(RubyLLM.config)
+
+        RubyLLM.logger.info "Fetching models from providers: #{configured.map(&:slug).join(', ')}"
+
+        configured.flat_map do |provider|
+          provider.list_models(connection: provider.connection(RubyLLM.config))
+        end
+      end
+
+      def resolve(model_id, provider: nil, assume_exists: false)
         assume_exists = true if provider && Provider.providers[provider.to_sym].local?
 
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
           provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
-          model = Struct.new(:id, :provider, :supports_functions, :supports_vision).new(model_id, provider, true, true)
+          model = Struct.new(:id, :provider, :capabilities, :modalities, :supports_vision?, :supports_functions?)
+                        .new(model_id,
+                             provider,
+                             %w[function_calling streaming],
+                             RubyLLM::Modalities.new({ input: %w[text image], output: %w[text] }),
+                             true,
+                             true)
           RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
                               'Capabilities may not be accurately reflected.'
         else
@@ -74,6 +80,61 @@ module RubyLLM
       def respond_to_missing?(method, include_private = false)
         instance.respond_to?(method, include_private) || super
       end
+
+      def fetch_from_parsera
+        RubyLLM.logger.info 'Fetching models from Parsera API...'
+
+        connection = Faraday.new('https://api.parsera.org') do |f|
+          f.request :json
+          f.response :json
+          f.response :raise_error
+          f.adapter Faraday.default_adapter
+        end
+
+        response = connection.get('/v1/llm-specs')
+        response.body.map { |data| ModelInfo.new(Utils.deep_symbolize_keys(data)) }
+      end
+
+      def merge_models(provider_models, parsera_models)
+        # Create lookups for both sets of models
+        parsera_by_key = index_by_key(parsera_models)
+        provider_by_key = index_by_key(provider_models)
+
+        # All keys from both sources
+        all_keys = parsera_by_key.keys | provider_by_key.keys
+
+        # Merge data, with parsera taking precedence
+        models = all_keys.map do |key|
+          if (parsera_model = parsera_by_key[key])
+            # Parsera has this model - use it as the base
+            if (provider_model = provider_by_key[key])
+              # Both sources have this model, add provider metadata
+              add_provider_metadata(parsera_model, provider_model)
+            else
+              # Only parsera has this model
+              parsera_model
+            end
+          else
+            # Only provider has this model
+            provider_by_key[key]
+          end
+        end
+
+        models.sort_by { |m| [m.provider, m.id] }
+      end
+
+      def index_by_key(models)
+        models.each_with_object({}) do |model, hash|
+          hash["#{model.provider}:#{model.id}"] = model
+        end
+      end
+
+      def add_provider_metadata(parsera_model, provider_model)
+        # Create a new ModelInfo with parsera data but include provider metadata
+        data = parsera_model.to_h
+        data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
+        ModelInfo.new(data)
+      end
     end
 
     # Initialize with optional pre-filtered models
@@ -84,7 +145,7 @@ module RubyLLM
     # Load models from the JSON file
     def load_models
       data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
-      JSON.parse(data).map { |model| ModelInfo.new(model.transform_keys(&:to_sym)) }
+      JSON.parse(data).map { |model| ModelInfo.new(Utils.deep_symbolize_keys(model)) }
     rescue JSON::ParserError
       []
     end

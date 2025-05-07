@@ -54,7 +54,7 @@ module RubyLLM
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
     end
 
-    def inspect # rubocop:disable Metrics/MethodLength
+    def inspect
       redacted = lambda do |name, value|
         if name.match?(/_key|_secret|_token$/)
           value.nil? ? 'nil' : '[FILTERED]'

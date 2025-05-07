@@ -8,12 +8,12 @@ module RubyLLM
   #   chat = RubyLLM.chat
   #   chat.ask "What's the best way to learn Ruby?"
   #   chat.ask "Can you elaborate on that?"
-  class Chat # rubocop:disable Metrics/ClassLength
+  class Chat
     include Enumerable
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil) # rubocop:disable Metrics/MethodLength
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
@@ -46,7 +46,7 @@ module RubyLLM
     end
 
     def with_tool(tool)
-      unless @model.supports_functions
+      unless @model.supports_functions?
         raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
       end
 
@@ -84,7 +84,7 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/MethodLength
+    def complete(&)
       @on[:new_message]&.call
       response = @provider.complete(
         messages,

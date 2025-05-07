@@ -149,8 +149,6 @@ module RubyLLM
           0.2
         end
 
-        private
-
         # Converts a model ID to a human-readable format
         # @param id [String] the model identifier
         # @return [String] the humanized model name
@@ -161,6 +159,67 @@ module RubyLLM
             .split
             .map(&:capitalize)
             .join(' ')
+        end
+
+        def modalities_for(model_id)
+          modalities = {
+            input: ['text'],
+            output: ['text']
+          }
+
+          # Vision support for Claude models
+          if model_id.match?(/anthropic\.claude/) && supports_vision?(model_id)
+            modalities[:input] << 'image'
+            modalities[:input] << 'pdf'
+          end
+
+          modalities
+        end
+
+        def capabilities_for(model_id)
+          capabilities = []
+
+          # Streaming
+          capabilities << 'streaming' if model_id.match?(/anthropic\.claude/)
+
+          # Function calling & structured output
+          capabilities << 'function_calling' if supports_functions?(model_id)
+
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+
+          # Extended thinking for 3.7 models
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7/)
+
+          # Batch capabilities for newer Claude models
+          if model_id.match?(/claude-3\.5|claude-3-7/)
+            capabilities << 'batch'
+            capabilities << 'citations'
+          end
+
+          capabilities
+        end
+
+        def pricing_for(model_id)
+          family = model_family(model_id)
+          prices = PRICES.fetch(family, { input: default_input_price, output: default_output_price })
+
+          standard_pricing = {
+            input_per_million: prices[:input],
+            output_per_million: prices[:output]
+          }
+
+          # Batch pricing - typically 50% of standard
+          batch_pricing = {
+            input_per_million: prices[:input] * 0.5,
+            output_per_million: prices[:output] * 0.5
+          }
+
+          {
+            text_tokens: {
+              standard: standard_pricing,
+              batch: batch_pricing
+            }
+          }
         end
       end
     end
