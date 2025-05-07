@@ -24,7 +24,7 @@ module RubyLLM
           }
         end
 
-        def parse_image_response(response) # rubocop:disable Metrics/MethodLength
+        def parse_image_response(response, model:) # rubocop:disable Metrics/MethodLength
           data = response.body
           image_data = data['predictions']&.first
 
@@ -38,7 +38,8 @@ module RubyLLM
 
           Image.new(
             data: base64_data,
-            mime_type: mime_type
+            mime_type: mime_type,
+            model:
           )
         end
       end

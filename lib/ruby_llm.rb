@@ -4,6 +4,8 @@ require 'base64'
 require 'event_stream_parser'
 require 'faraday'
 require 'faraday/retry'
+require 'faraday/multipart'
+
 require 'json'
 require 'logger'
 require 'securerandom'
@@ -48,6 +50,10 @@ module RubyLLM
 
     def paint(...)
       Image.paint(...)
+    end
+
+    def edit(...)
+      Image.edit(...)
     end
 
     def models
