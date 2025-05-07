@@ -53,19 +53,34 @@ module RubyLLM
         def supports_vision?(model_id)
           # Explicitly match the known vision-capable models
           vision_models = [
-            'pixtral-12b-latest',
-            'pixtral-large-latest',
-            'mistral-medium-latest',
-            'mistral-small-latest'
+            'pixtral-12b',
+            'pixtral-large',
+            'mistral-medium',
+            'mistral-small'
           ]
-          vision_models.any? { |id| model_id.include?(id) }
+          model_id = model_id.to_s.split('/').last
+          result = vision_models.any? { |id| model_id.match?(/^#{Regexp.escape(id)}/) }
+          result
         end
 
         # Determines if the model supports function calling
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports functions
         def supports_functions?(model_id)
-          !model_id.match?(/embed|moderation/)
+          function_calling_models = [
+            'mistral-large',
+            'mistral-medium',
+            'mistral-small',
+            'codestral',
+            'ministral-8b',
+            'ministral-3b',
+            'pixtral-12b',
+            'pixtral-large',
+            'mistral-nemo'
+          ]
+          model_id = model_id.to_s.split('/').last
+          result = function_calling_models.any? { |id| model_id.match?(/^#{Regexp.escape(id)}/) }
+          result
         end
 
         # Determines if the model supports audio input/output
@@ -167,6 +182,14 @@ module RubyLLM
             .gsub("Pixtral ", "Pixtral-")
             .gsub("Mathstral ", "Mathstral-")
             .gsub("Embed ", "Embed-")
+        end
+
+        def capabilities_for(model_id)
+          capabilities = ['streaming']
+          capabilities << 'function_calling' if supports_functions?(model_id)
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+          # Add more as needed (e.g., 'batch', 'caching', etc.)
+          capabilities
         end
       end
     end
