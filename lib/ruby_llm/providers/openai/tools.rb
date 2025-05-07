@@ -15,18 +15,11 @@ module RubyLLM
               description: tool.description,
               parameters: {
                 type: 'object',
-                properties: tool.parameters.transform_values { |param| param_schema(param) },
+                properties: tool.parameters.transform_values(&:schema),
                 required: tool.parameters.select { |_, p| p.required }.keys
               }
             }
           }
-        end
-
-        def param_schema(param)
-          {
-            type: param.type,
-            description: param.description
-          }.compact
         end
 
         def format_tool_calls(tool_calls) # rubocop:disable Metrics/MethodLength

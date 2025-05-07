@@ -53,26 +53,60 @@ class Weather < RubyLLM::Tool
   param :longitude, desc: "Longitude (e.g., 13.4050)"
 
   def execute(latitude:, longitude:)
+    puts "Requested weather for #{location[:city]}, #{location[:country]}" if location
+    puts "Use unit: #{unit}" if unit
+    
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
 
     response = Faraday.get(url)
-    data = JSON.parse(response.body)
+    JSON.parse(response.body)
   rescue => e
     { error: e.message }
   end
 end
 ```
 
-### Tool Components
+### 1. Inherit from `RubyLLM::Tool`.
+**Inheritance:** Must inherit from `RubyLLM::Tool`.
+### 2. Use the **`description`** to describe the tool.
+Use the **`description`** class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
 
-1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
-2.  **`description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
-3.  **`param`:** A class method used to define each input parameter.
-    *   **Name:** The first argument (a symbol) is the parameter name. It will become a keyword argument in the `execute` method.
-    *   **`type:`:** (Optional, defaults to `:string`) The expected data type. Common types include `:string`, `:integer`, `:number` (float), `:boolean`. Provider support for complex types like `:array` or `:object` varies. Stick to simple types for broad compatibility.
-    *   **`desc:`:** (Required) A clear description of the parameter, explaining its purpose and expected format (e.g., "The city and state, e.g., San Francisco, CA").
-    *   **`required:`:** (Optional, defaults to `true`) Whether the AI *must* provide this parameter when calling the tool. Set to `false` for optional parameters and provide a default value in your `execute` method signature.
-4.  **`execute` Method:** The instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
+### 3. Define params with **`param`**
+Define parameters with **`param`** class method.
+
+* The first param is always the name of the parameter.
+* The remaining arguments are a hash representing the JSON schema of the parameter.
+  * Note 1: The root `required:` option isn't included in the schema.
+    * It specifies whether the AI *must* provide this parameter when calling the tool. 
+    * It defaults to `true` (required)
+    * Set to `false` for optional parameters and provide a default value in your `execute` method signature.
+  * Note 2: `desc:` is automatically converted to `description:` in the schema. 
+    * Only root level `desc:` is supported. 
+    * If using more complex schemas, use `description:` instead.
+
+#### Short form example:
+Define simple parameters with the shorthand format:
+```ruby
+  param :latitude, desc: "Latitude (e.g., 52.5200)"
+```
+
+#### More complex examples:
+More complex JSON schemas are supported simply by defining them here as well:
+```ruby
+  param :longitude, type: 'number', description: "Longitude (e.g., 13.4050)", required: true
+
+  param :unit, type: :string, enum: %w[f c], description: "Temperature unit (e.g., celsius, fahrenheit)", required: false
+
+  param :location, type: :object, desc: "Country and city where weather is requested.", required: false, properties: {
+    country: { type: :string, description: "Full name of the country." },
+    city: { type: :string, description: "Full name of the city." }
+  }
+```
+Remember, `required:` at the root is not part of the JSON schema and automatically removed before sending to the LLM API.
+Also, `desc` at the root level is converted to `description`.
+
+### 3. Define `execute` method
+Define the `execute` instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
 
 {: .note }
 The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).

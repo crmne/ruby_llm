@@ -59,17 +59,41 @@ module RubyLLM
         end
 
         # Format tool parameters for Gemini API
+        # @param parameters [Hash{Symbol => RubyLLM::Parameter}]
+        # @return [Hash{String => String|Array|Hash|Boolean|NilClass}]
         def format_parameters(parameters)
           {
             type: 'OBJECT',
             properties: parameters.transform_values do |param|
-              {
-                type: param_type_for_gemini(param.type),
-                description: param.description
-              }.compact
+              convert_gemini_types(param.schema)
             end,
             required: parameters.select { |_, p| p.required }.keys.map(&:to_s)
           }
+        end
+
+        ##
+        # Convert JSON schema types to Gemini API types
+        # @param schema [Hash]
+        def convert_gemini_types(schema)
+          schema = schema.dup
+
+          schema['type'] = param_type_for_gemini(schema['type']) if schema.key?('type')
+          schema[:type] = param_type_for_gemini(schema[:type]) if schema.key?(:type)
+
+          schema.transform_values { |schema_value| convert_schema_value(schema_value) }
+        end
+
+        ##
+        # Convert schema values to Gemini API types
+        # @param schema_value [String|Array|Hash|Boolean|NilClass]
+        def convert_schema_value(schema_value)
+          if schema_value.is_a?(Hash)
+            convert_gemini_types(schema_value.to_h)
+          elsif schema_value.is_a?(Array)
+            schema_value.map { |v| convert_gemini_types(v) }
+          else
+            schema_value
+          end
         end
 
         # Convert RubyLLM param types to Gemini API types

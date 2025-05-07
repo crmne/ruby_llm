@@ -1,0 +1,191 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Add John Doe to the address
+        book at 123 Main St, Springfield 12345"}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"address_book","description":"Manages
+        address book entries","parameters":{"type":"OBJECT","properties":{"contact":{"type":"OBJECT","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 19 Apr 2025 20:29:46 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=628
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "address_book",
+                      "args": {
+                        "contact": {
+                          "address": {
+                            "street": "123 Main St",
+                            "zip": "12345",
+                            "city": "Springfield"
+                          },
+                          "name": "John Doe"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -2.3544138953597709e-05
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 51,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 73,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 51
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 22
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:29:46 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Add John Doe to the address
+        book at 123 Main St, Springfield 12345"}]},{"role":"model","parts":[{"functionCall":{"name":"address_book","args":{"contact":{"address":{"street":"123
+        Main St","zip":"12345","city":"Springfield"},"name":"John Doe"}}}}]},{"role":"user","parts":[{"functionResponse":{"name":"23736de4-17ac-4b9c-856a-d84a93283c1a","response":{"name":"23736de4-17ac-4b9c-856a-d84a93283c1a","content":"Completed
+        contact: John Doe at 123 Main St, Springfield 12345"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"address_book","description":"Manages
+        address book entries","parameters":{"type":"OBJECT","properties":{"contact":{"type":"OBJECT","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sat, 19 Apr 2025 20:29:47 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=511
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "OK. I've added John Doe to the address book at 123 Main St, Springfield 12345.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -2.1892696105200669e-05
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 163,
+            "candidatesTokenCount": 29,
+            "totalTokenCount": 192,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 163
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 29
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Sat, 19 Apr 2025 20:29:47 GMT
+recorded_with: VCR 6.3.1

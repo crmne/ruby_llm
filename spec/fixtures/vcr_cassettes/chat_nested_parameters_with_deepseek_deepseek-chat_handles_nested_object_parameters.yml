@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
+        address book entries","parameters":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:12:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 283170d60537d2595a01025fcd7f9e9a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8cfbb05a-4b59-4d97-965d-79622cf6d903","object":"chat.completion","created":1745093553,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_3238e74f-5d38-4a16-be63-6d62b6854230","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"John
+        Doe\",\"address\":{\"street\":\"123 Main St\",\"city\":\"Springfield\",\"zip\":\"12345\"}}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":252,"completion_tokens":43,"total_tokens":295,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":60},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
+  recorded_at: Sat, 19 Apr 2025 20:12:39 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Add
+        John Doe to the address book at 123 Main St, Springfield 12345"},{"role":"assistant","tool_calls":[{"id":"call_0_3238e74f-5d38-4a16-be63-6d62b6854230","type":"function","function":{"name":"address_book","arguments":"{\"contact\":{\"name\":\"John
+        Doe\",\"address\":{\"street\":\"123 Main St\",\"city\":\"Springfield\",\"zip\":\"12345\"}}}"}}]},{"role":"tool","content":"Completed
+        contact: John Doe at 123 Main St, Springfield 12345","tool_call_id":"call_0_3238e74f-5d38-4a16-be63-6d62b6854230"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"address_book","description":"Manages
+        address book entries","parameters":{"type":"object","properties":{"contact":{"type":"object","description":"Contact
+        information","properties":{"name":{"type":"string","description":"Full name"},"address":{"type":"object","description":"Address
+        details","properties":{"street":{"type":"string","description":"Street address"},"city":{"type":"string","description":"City
+        name"},"zip":{"type":"string","description":"ZIP/Postal code"}}}}}},"required":["contact"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 19 Apr 2025 20:12:40 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - d8562146b8d18e8233f704249399c64b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5100a489-c8e1-424c-a3aa-4a6214e854d7","object":"chat.completion","created":1745093559,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"John
+        Doe has been successfully added to the address book with the address: 123
+        Main St, Springfield, 12345."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":313,"completion_tokens":25,"total_tokens":338,"prompt_tokens_details":{"cached_tokens":256},"prompt_cache_hit_tokens":256,"prompt_cache_miss_tokens":57},"system_fingerprint":"fp_3d5141a69a_prod0225"}'
+  recorded_at: Sat, 19 Apr 2025 20:12:44 GMT
+recorded_with: VCR 6.3.1

@@ -53,7 +53,7 @@ module RubyLLM
             description: tool.description,
             input_schema: {
               type: 'object',
-              properties: clean_parameters(tool.parameters),
+              properties: tool.parameters.transform_values(&:schema),
               required: required_parameters(tool.parameters)
             }
           }
@@ -77,15 +77,6 @@ module RubyLLM
               arguments: content_block['input']
             )
           }
-        end
-
-        def clean_parameters(parameters)
-          parameters.transform_values do |param|
-            {
-              type: param.type,
-              description: param.description
-            }.compact
-          end
         end
 
         def required_parameters(parameters)
