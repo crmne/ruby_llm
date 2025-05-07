@@ -10,14 +10,14 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:, &) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, connection:, options: {}, &) # rubocop:disable Metrics/MethodLength
         normalized_temperature = maybe_normalize_temperature(temperature, model)
 
         payload = render_payload(messages,
                                  tools: tools,
                                  temperature: normalized_temperature,
                                  model: model,
-                                 stream: block_given?)
+                                 stream: block_given?).merge(options)
 
         if block_given?
           stream_response connection, payload, &
