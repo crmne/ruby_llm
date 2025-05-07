@@ -170,6 +170,32 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     expect(chat.messages.any?(&:tool_calls)).to be true
   end
 
+  describe 'asking with attachments' do
+    let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
+
+    it 'supports asking with file attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      options = { with: { image: image_path } }
+
+      response = chat.ask('What do you see in this image?', **options)
+      expect(response.content).to be_present
+      expect(response.content).not_to include('RubyLLM::Content')
+      expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+      expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Image)
+    end
+
+    it 'supports asking with multiple remote images' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      chat = Chat.create!(model_id: 'gpt-4o-mini')
+      options = { with: { image: ['https://www.ruby-lang.org/images/header-ruby-logo@2x.png', 'https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png'] } }
+
+      response = chat.ask('What do you see in this image?', **options)
+      expect(response.content).to be_present
+      expect(response.content).not_to include('RubyLLM::Content')
+      expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+      expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Image)
+    end
+  end
+
   describe 'with_tools functionality' do
     it 'returns a Chat instance when using with_tool' do
       [Chat, BotChat].each do |chat_class|

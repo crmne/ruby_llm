@@ -7,6 +7,20 @@ module RubyLLM
   class Content
     attr_reader :text, :attachments
 
+    class << self
+      def from_json(json)
+        text = json.delete(:text)
+        attachments = {}
+        unless Array(json[:attachments]).empty?
+          attachments = json[:attachments]
+                        .group_by { |attachment| attachment[:type].to_sym }
+                        .transform_values { |sources| sources.map { |a| a[:source] } }
+        end
+
+        new(text, attachments)
+      end
+    end
+
     def initialize(text = nil, attachments = {})
       @text = text
       @attachments = []

@@ -137,9 +137,16 @@ module RubyLLM
         self
       end
 
-      def ask(message, &)
-        message = { role: :user, content: message }
-        messages.create!(**message)
+      def ask(message = nil, with: {}, &)
+        message_attrs = { role: :user }
+
+        message_attrs[:content] = if with.empty?
+                                    message
+                                  else
+                                    RubyLLM::Content.new(message, with).format.to_json
+                                  end
+
+        messages.create!(**message_attrs)
         complete(&)
       end
 
@@ -202,6 +209,22 @@ module RubyLLM
       class_methods do
         attr_reader :chat_class, :tool_call_class
         attr_reader :chat_foreign_key, :tool_call_foreign_key
+      end
+
+      def content
+        value = content_before_type_cast
+
+        # If it's a JSON string, try to parse it and convert to a Content object
+        if value.is_a?(String) && value.start_with?('{')
+          value = begin
+            json = JSON.parse(value, { symbolize_names: true })
+            RubyLLM::Content.from_json(json)
+          rescue JSON::ParserError
+            # Not valid JSON, just return as is
+          end
+        end
+
+        value
       end
 
       def to_llm
