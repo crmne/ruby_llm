@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":[{"type":"text","text":"What
+        do you see in this image?"},{"type":"image_url","image_url":"https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png"}]}],"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 07 May 2025 19:05:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimitbysize-Remaining-Minute:
+      - '1968000'
+      X-Ratelimitbysize-Limit-Minute:
+      - '2000000'
+      Ratelimitbysize-Query-Cost:
+      - '32000'
+      Ratelimitbysize-Limit:
+      - '2000000'
+      Ratelimitbysize-Remaining:
+      - '1968000'
+      X-Ratelimitbysize-Remaining-Month:
+      - '9999968000'
+      Ratelimitbysize-Reset:
+      - '19'
+      X-Ratelimitbysize-Limit-Month:
+      - '10000000000'
+      X-Envoy-Upstream-Service-Time:
+      - '2731'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '2732'
+      X-Kong-Proxy-Latency:
+      - '9'
+      X-Kong-Request-Id:
+      - b593430158e71b6da7795437c8b29528
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"0fb8fde26c6d4fb8af3390357e6ecb95","object":"chat.completion","created":1746644741,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
+        image depicts a stylized, abstract representation of a red gemstone, likely
+        a ruby. The gemstone has a smooth, rounded top and a faceted, geometric base.
+        The lighting highlights the facets, creating a play of light and shadow that
+        emphasizes the gemstone''s reflective and transparent qualities. The overall
+        color is a deep, rich red with gradations that add depth and dimension to
+        the image."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":1343,"total_tokens":1425,"completion_tokens":82}}'
+  recorded_at: Wed, 07 May 2025 19:05:44 GMT
+recorded_with: VCR 6.3.1

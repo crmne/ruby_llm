@@ -61,25 +61,27 @@ module RubyLLM
           result = {}
           result[:role] = message.role
 
-          # Handle content formatting (text or multimodal array)
-          if message.content.is_a?(Array)
-            # Multimodal content: format each part
-            formatted_content = message.content.compact.map do |item|
-              if item.is_a?(Hash) && item[:type] == "image"
-                # Use the media helper to format image data correctly for Mistral
-                Mistral::Media.format_image_content(item)
-              elsif item.is_a?(Hash) && item[:type] == "text"
-                # Pass through text hashes
-                item
-              elsif item.is_a?(String)
-                 # Wrap plain strings in the text hash format
-                 { type: "text", text: item }
-              else
-                # Skip unknown item types in content array
-                RubyLLM.logger.warn "[MISTRAL WARN] Unknown item type in message content array: #{item.inspect}"
-                nil
+          # If the message content is a RubyLLM::Content with attachments, convert to multimodal array
+          if message.content.is_a?(RubyLLM::Content)
+            content = message.content
+            if content.attachments.any?
+              multimodal = []
+              multimodal << { type: "text", text: content.text } if content.text
+              content.attachments.each do |attachment|
+                case attachment
+                when RubyLLM::Attachments::Image
+                  multimodal << { type: "image", source: attachment.url? ? { url: attachment.source } : { type: 'base64', media_type: attachment.mime_type, data: attachment.encoded } }
+                # Add more attachment types if Mistral supports them
+                end
               end
-            end.compact # Remove any nils from formatting errors
+              # Always format multimodal for Mistral
+              result[:content] = Mistral::Media.format_content(multimodal)
+            else
+              result[:content] = content.text
+            end
+          elsif message.content.is_a?(Array)
+            # Multimodal content: format each part
+            formatted_content = Mistral::Media.format_content(message.content.compact)
             result[:content] = formatted_content unless formatted_content.empty?
           else
             # Simple text content
