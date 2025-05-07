@@ -33,11 +33,7 @@ module RubyLLM
             },
             context_window: capabilities.context_window_for(id),
             max_tokens: capabilities.max_tokens_for(id),
-            supports_vision: capabilities.supports_vision?(id),
-            supports_functions: capabilities.supports_functions?(id),
-            supports_json_mode: capabilities.supports_json_mode?(id),
-            input_price_per_million: capabilities.input_price_for(id),
-            output_price_per_million: capabilities.output_price_for(id),
+            capabilities: capabilities.capabilities_for(id),
           )
         end
       end
