@@ -24,19 +24,19 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', touch_chat: false) # rubocop:disable Metrics/MethodLength
+        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', **options) # rubocop:disable Metrics/MethodLength
           include MessageMethods
 
           @chat_class = chat_class.to_s
-          @chat_foreign_key = "#{@chat_class.underscore}_id"
+          @chat_foreign_key = options[:chat_foreign_key] || @chat_class.foreign_key
           @tool_call_class = tool_call_class.to_s
-          @tool_call_foreign_key = "#{@tool_call_class.underscore}_id"
+          @tool_call_foreign_key = options[:tool_call_foreign_key] || @tool_call_class.foreign_key
 
           belongs_to :chat,
                      class_name: @chat_class,
                      foreign_key: @chat_foreign_key,
                      inverse_of: :messages,
-                     touch: touch_chat
+                     touch: options[:touch_chat]
 
           has_many :tool_calls,
                    class_name: @tool_call_class,
@@ -51,9 +51,9 @@ module RubyLLM
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
         end
 
-        def acts_as_tool_call(message_class: 'Message') # rubocop:disable Metrics/MethodLength
+        def acts_as_tool_call(message_class: 'Message', **options) # rubocop:disable Metrics/MethodLength
           @message_class = message_class.to_s
-          @message_foreign_key = "#{@message_class.underscore}_id"
+          @message_foreign_key = options[:message_foreign_key] || "#{@message_class.underscore}_id"
 
           belongs_to :message,
                      class_name: @message_class,

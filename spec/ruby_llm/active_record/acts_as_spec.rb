@@ -74,9 +74,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     acts_as_chat
   end
 
-  class BotChat < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    include RubyLLM::ActiveRecord::ActsAs
-    acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
+  module Assistants # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    class BotChat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+      self.table_name = 'bot_chats'
+      include RubyLLM::ActiveRecord::ActsAs
+      acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
+    end
   end
 
   class Message < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
@@ -86,7 +89,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   class BotMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     include RubyLLM::ActiveRecord::ActsAs
-    acts_as_message chat_class: 'BotChat', tool_call_class: 'BotToolCall'
+    acts_as_message chat_class: 'Assistants::BotChat', tool_call_class: 'BotToolCall'
   end
 
   class ToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
@@ -115,7 +118,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   shared_examples 'a chainable chat method' do |method_name, *args|
     it "returns a Chat instance for ##{method_name}" do
-      [Chat, BotChat].each do |chat_class|
+      [Chat, Assistants::BotChat].each do |chat_class|
         chat = chat_class.create!(model_id: 'gpt-4.1-nano')
         result = chat.public_send(method_name, *args)
         expect(result).to be_a(chat_class)
@@ -125,7 +128,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   shared_examples 'a chainable callback method' do |callback_name|
     it "supports #{callback_name} callback" do # rubocop:disable RSpec/ExampleLength
-      [Chat, BotChat].each do |chat_class|
+      [Chat, Assistants::BotChat].each do |chat_class|
         chat = chat_class.create!(model_id: 'gpt-4.1-nano')
         result = chat.public_send(callback_name) do
           # no-op for testing
@@ -172,7 +175,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'with_tools functionality' do
     it 'returns a Chat instance when using with_tool' do
-      [Chat, BotChat].each do |chat_class|
+      [Chat, Assistants::BotChat].each do |chat_class|
         chat = chat_class.create!(model_id: 'gpt-4.1-nano')
         with_tool_result = chat.with_tool(Calculator)
         expect(with_tool_result).to be_a(chat_class)
@@ -196,7 +199,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it_behaves_like 'a chainable callback method', :on_end_message
 
     it 'supports method chaining with tools' do # rubocop:disable RSpec/ExampleLength
-      [Chat, BotChat].each do |chat_class|
+      [Chat, Assistants::BotChat].each do |chat_class|
         chat = chat_class.create!(model_id: 'gpt-4.1-nano')
         chat.with_tool(Calculator)
             .with_temperature(0.5)
