@@ -58,7 +58,7 @@ module RubyLLM
 
     def inspect
       redacted = lambda do |name, value|
-        if name.match?(/_key|_secret|_token$/)
+        if name.match?(/_id|_key|_secret|_token$/)
           value.nil? ? 'nil' : '[FILTERED]'
         else
           value
