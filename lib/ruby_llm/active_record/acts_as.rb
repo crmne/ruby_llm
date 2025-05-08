@@ -54,7 +54,7 @@ module RubyLLM
         def acts_as_tool_call(message_class: 'Message', **options)
           @message_class = message_class.to_s
           @message_foreign_key = options[:message_foreign_key] || @message_class.foreign_key
-          @result_foreign_key = options[:result_foreign_key] || 'id'
+          @result_foreign_key = options[:result_foreign_key] || @tool_call_foreign_key
 
           belongs_to :message,
                      class_name: @message_class,
