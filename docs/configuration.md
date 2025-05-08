@@ -46,6 +46,8 @@ RubyLLM.configure do |config|
   # Provide keys ONLY for the providers you intend to use.
   # Using environment variables (ENV.fetch) is highly recommended.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+  config.openai_organization_id = ENV.fetch('OPENAI_ORGANIZATION_ID', nil)
+  config.openai_project_id = ENV.fetch('OPENAI_PROJECT_ID', nil)
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
@@ -116,6 +118,15 @@ end
 ```
 
 This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link guides/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
+
+## Optional OpenAI Headers
+
+OpenAI supports additional headers for organization and project management:
+
+*   `openai_organization_id`: Specifies the billing organization for API usage when multiple organizations are accessible.
+*   `openai_project_id`: Tracks API usage for a project.
+
+These headers are optional and only need to be set if you want to use organization or project-specific billing.
 
 ## Default Models
 

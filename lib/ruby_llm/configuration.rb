@@ -13,6 +13,8 @@ module RubyLLM
     # Provider-specific configuration
     attr_accessor :openai_api_key,
                   :openai_api_base,
+                  :openai_organization_id,
+                  :openai_project_id,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
