@@ -93,6 +93,10 @@ end
 Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on finding available embedding models and their capabilities.
 
 ## Choosing Dimensions
+{: .d-inline-block }
+
+Coming in v1.3.0
+{: .label .label-yellow }
 
 Each embedding model has its own default output dimensions. For example, OpenAI's `text-embedding-3-small` outputs 1536 dimensions by default, while `text-embedding-3-large` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
 

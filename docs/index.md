@@ -171,29 +171,3 @@ chat_record = Chat.create!(model_id: "gpt-4.1-nano")
 chat_record.ask("Explain Active Record callbacks.") # User & Assistant messages saved
 ```
 Check the [Rails Integration Guide](https://rubyllm.com/guides/rails) for more.
-
-## Learn More
-
-Dive deeper with the official documentation:
-
--   [Installation](https://rubyllm.com/installation)
--   [Configuration](https://rubyllm.com/configuration)
--   **Guides:**
-    -   [Getting Started](https://rubyllm.com/guides/getting-started)
-    -   [Chatting with AI Models](https://rubyllm.com/guides/chat)
-    -   [Using Tools](https://rubyllm.com/guides/tools)
-    -   [Streaming Responses](https://rubyllm.com/guides/streaming)
-    -   [Rails Integration](https://rubyllm.com/guides/rails)
-    -   [Image Generation](https://rubyllm.com/guides/image-generation)
-    -   [Embeddings](https://rubyllm.com/guides/embeddings)
-    -   [Working with Models](https://rubyllm.com/guides/models)
-    -   [Error Handling](https://rubyllm.com/guides/error-handling)
-    -   [Available Models](https://rubyllm.com/guides/available-models)
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on setup, testing, and contribution guidelines.
-
-## License
-
-Released under the MIT License.

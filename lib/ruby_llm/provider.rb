@@ -10,7 +10,7 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:, &) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, connection:, &)
         normalized_temperature = maybe_normalize_temperature(temperature, model)
 
         payload = render_payload(messages,
@@ -87,7 +87,7 @@ module RubyLLM
       maybe_json
     end
 
-    def parse_error(response) # rubocop:disable Metrics/MethodLength
+    def parse_error(response)
       return if response.body.empty?
 
       body = try_parse_json(response.body)
