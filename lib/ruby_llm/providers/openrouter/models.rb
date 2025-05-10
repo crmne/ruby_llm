@@ -20,25 +20,18 @@ module RubyLLM
             }
 
             # Construct pricing from API data, only adding non-zero values
-            pricing = {}
+            pricing = { text_tokens: { standard: {} } }
 
-            if model_data.dig('pricing',
-                              'prompt').to_f.positive? || model_data.dig('pricing', 'completion').to_f.positive?
-              pricing[:text_tokens] = {
-                standard: {}
-              }
+            pricing_types = {
+              prompt: :input_per_million,
+              completion: :output_per_million,
+              input_cache_read: :cached_input_per_million,
+              internal_reasoning: :reasoning_output_per_million
+            }
 
-              pricing_types = {
-                prompt: :input_per_million,
-                completion: :output_per_million,
-                input_cache_read: :cached_input_per_million,
-                internal_reasoning: :reasoning_output_per_million
-              }
-
-              pricing_types.each do |source_key, target_key|
-                value = model_data.dig('pricing', source_key).to_f
-                pricing[:text_tokens][:standard][target_key] = value * 1_000_000 if value.positive?
-              end
+            pricing_types.each do |source_key, target_key|
+              value = model_data.dig('pricing', source_key.to_s).to_f
+              pricing[:text_tokens][:standard][target_key] = value * 1_000_000 if value.positive?
             end
 
             # Convert OpenRouter's supported parameters to our capability format
