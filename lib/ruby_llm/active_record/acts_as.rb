@@ -24,19 +24,24 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', **options)
+        def acts_as_message(chat_class: 'Chat',
+                            chat_foreign_key: nil,
+                            tool_call_class: 'ToolCall',
+                            tool_call_foreign_key: nil,
+                            touch_chat: false)
           include MessageMethods
 
           @chat_class = chat_class.to_s
-          @chat_foreign_key = options[:chat_foreign_key] || @chat_class.foreign_key
+          @chat_foreign_key = chat_foreign_key || ActiveSupport::Inflector.foreign_key(@chat_class)
+
           @tool_call_class = tool_call_class.to_s
-          @tool_call_foreign_key = options[:tool_call_foreign_key] || @tool_call_class.foreign_key
+          @tool_call_foreign_key = tool_call_foreign_key || ActiveSupport::Inflector.foreign_key(@tool_call_class)
 
           belongs_to :chat,
                      class_name: @chat_class,
                      foreign_key: @chat_foreign_key,
                      inverse_of: :messages,
-                     touch: options[:touch_chat]
+                     touch: touch_chat
 
           has_many :tool_calls,
                    class_name: @tool_call_class,
@@ -51,10 +56,10 @@ module RubyLLM
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
         end
 
-        def acts_as_tool_call(message_class: 'Message', **options)
+        def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
           @message_class = message_class.to_s
-          @message_foreign_key = options[:message_foreign_key] || @message_class.foreign_key
-          @result_foreign_key = options[:result_foreign_key] || 'id'
+          @message_foreign_key = message_foreign_key || ActiveSupport::Inflector.foreign_key(@message_class)
+          @result_foreign_key = result_foreign_key || ActiveSupport::Inflector.foreign_key(name)
 
           belongs_to :message,
                      class_name: @message_class,
@@ -169,7 +174,7 @@ module RubyLLM
         return unless message
 
         if message.tool_call_id
-          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
+          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id)&.id
         end
 
         transaction do
@@ -201,8 +206,7 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do
-        attr_reader :chat_class, :tool_call_class
-        attr_reader :chat_foreign_key, :tool_call_foreign_key
+        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
       end
 
       def to_llm
