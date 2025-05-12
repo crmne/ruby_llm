@@ -7,61 +7,71 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/MethodLength
-          return content unless content.is_a?(Array)
+        def format_content(content)
+          return [format_text(content)] unless content.is_a?(Content)
 
-          content.map do |part|
-            case part[:type]
-            when 'image'
-              format_image(part)
-            when 'pdf'
-              format_pdf(part)
-            when 'text'
-              format_text_block(part[:text])
-            else
-              part
+          parts = []
+          parts << format_text(content.text) if content.text
+
+          content.attachments.each do |attachment|
+            case attachment
+            when Attachments::Image
+              parts << format_image(attachment)
+            when Attachments::PDF
+              parts << format_pdf(attachment)
             end
           end
+
+          parts
         end
 
-        def format_image(part)
-          # Handle image formatting for Anthropic
-          # This is just a placeholder - implement based on Anthropic's requirements
-          part
+        def format_text(text)
+          {
+            type: 'text',
+            text: text
+          }
         end
 
-        def format_pdf(part) # rubocop:disable Metrics/MethodLength
-          source = part[:source]
-
-          if source.start_with?('http')
-            # For URLs - add "type": "url" here
+        def format_image(image)
+          if image.url?
             {
-              type: 'document',
+              type: 'image',
               source: {
-                type: 'url', # This line is missing in the current implementation
-                url: source
+                type: 'url',
+                url: image.source
               }
             }
           else
-            # For local files
-            data = Base64.strict_encode64(part[:content])
+            {
+              type: 'image',
+              source: {
+                type: 'base64',
+                media_type: image.mime_type,
+                data: image.encoded
+              }
+            }
+          end
+        end
 
+        def format_pdf(pdf)
+          if pdf.url?
+            {
+              type: 'document',
+              source: {
+                type: 'url',
+                url: pdf.source
+              }
+            }
+          else
             {
               type: 'document',
               source: {
                 type: 'base64',
                 media_type: 'application/pdf',
-                data: data
+                data: pdf.encoded
               }
             }
           end
-        end
-
-        def format_text_block(text)
-          {
-            type: 'text',
-            text: text
-          }
         end
       end
     end

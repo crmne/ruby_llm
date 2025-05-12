@@ -5,7 +5,7 @@ module RubyLLM
     module Anthropic
       # Chat methods of the OpenAI API integration
       module Chat
-        private
+        module_function
 
         def completion_url
           '/v1/messages'
@@ -41,12 +41,12 @@ module RubyLLM
             messages: chat_messages.map { |msg| format_message(msg) },
             temperature: temperature,
             stream: stream,
-            max_tokens: RubyLLM.models.find(model).max_tokens
+            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
         def add_optional_fields(payload, system_content:, tools:)
-          payload[:tools] = tools.values.map { |t| function_for(t) } if tools.any?
+          payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
         end
 
@@ -55,7 +55,7 @@ module RubyLLM
           content_blocks = data['content'] || []
 
           text_content = extract_text_content(content_blocks)
-          tool_use = find_tool_use(content_blocks)
+          tool_use = Tools.find_tool_use(content_blocks)
 
           build_message(data, text_content, tool_use)
         end
@@ -69,7 +69,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: content,
-            tool_calls: parse_tool_calls(tool_use),
+            tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
             model_id: data['model']
@@ -78,9 +78,9 @@ module RubyLLM
 
         def format_message(msg)
           if msg.tool_call?
-            format_tool_call(msg)
+            Tools.format_tool_call(msg)
           elsif msg.tool_result?
-            format_tool_result(msg)
+            Tools.format_tool_result(msg)
           else
             format_basic_message(msg)
           end
@@ -98,13 +98,6 @@ module RubyLLM
           when :tool, :user then 'user'
           else 'assistant'
           end
-        end
-
-        def format_text_block(content)
-          {
-            type: 'text',
-            text: content
-          }
         end
       end
     end

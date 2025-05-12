@@ -13,9 +13,7 @@ module RubyLLM
       extend Bedrock::Streaming
       extend Bedrock::Models
       extend Bedrock::Signing
-
-      # This provider currently only supports Anthropic models, so the tools/media implementation is shared
-      extend Anthropic::Media
+      extend Bedrock::Media
       extend Anthropic::Tools
 
       module_function
@@ -24,7 +22,7 @@ module RubyLLM
         "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
       end
 
-      def parse_error(response) # rubocop:disable Metrics/MethodLength
+      def parse_error(response)
         return if response.body.empty?
 
         body = try_parse_json(response.body)

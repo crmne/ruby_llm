@@ -3,7 +3,8 @@
 module RubyLLM
   module Providers
     module OpenAI
-      module Capabilities # rubocop:disable Metrics/ModuleLength,Style/Documentation
+      # Determines capabilities and pricing for OpenAI models
+      module Capabilities
         module_function
 
         MODEL_PATTERNS = {
@@ -40,7 +41,7 @@ module RubyLLM
           moderation: /^(?:omni|text)-moderation/
         }.freeze
 
-        def context_window_for(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def context_window_for(model_id)
           case model_family(model_id)
           when 'gpt41', 'gpt41_mini', 'gpt41_nano' then 1_047_576
           when 'chatgpt4o', 'gpt4_turbo', 'gpt4o', 'gpt4o_audio', 'gpt4o_mini',
@@ -56,7 +57,7 @@ module RubyLLM
           end
         end
 
-        def max_tokens_for(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def max_tokens_for(model_id)
           case model_family(model_id)
           when 'gpt41', 'gpt41_mini', 'gpt41_nano' then 32_768
           when 'chatgpt4o', 'gpt4o', 'gpt4o_mini', 'gpt4o_mini_search' then 16_384
@@ -221,6 +222,80 @@ module RubyLLM
           else
             temperature
           end
+        end
+
+        def modalities_for(model_id)
+          modalities = {
+            input: ['text'],
+            output: ['text']
+          }
+
+          # Vision support
+          modalities[:input] << 'image' if supports_vision?(model_id)
+
+          # Audio support
+          modalities[:input] << 'audio' if model_id.match?(/whisper|audio|tts|transcribe/)
+
+          # PDF support
+          modalities[:input] << 'pdf' if supports_vision?(model_id)
+
+          # Output modalities
+          modalities[:output] << 'audio' if model_id.match?(/tts|audio/)
+
+          modalities[:output] << 'image' if model_id.match?(/dall-e|image/)
+
+          modalities[:output] << 'embeddings' if model_id.match?(/embedding/)
+
+          modalities[:output] << 'moderation' if model_id.match?(/moderation/)
+
+          modalities
+        end
+
+        def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
+          capabilities = []
+
+          # Common capabilities
+          capabilities << 'streaming' unless model_id.match?(/moderation|embedding/)
+          capabilities << 'function_calling' if supports_functions?(model_id)
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+          capabilities << 'batch' if model_id.match?(/embedding|batch/)
+
+          # Advanced capabilities
+          capabilities << 'reasoning' if model_id.match?(/o1/)
+
+          if model_id.match?(/gpt-4-turbo|gpt-4o|claude/)
+            capabilities << 'image_generation' if model_id.match?(/vision/)
+            capabilities << 'speech_generation' if model_id.match?(/audio/)
+            capabilities << 'transcription' if model_id.match?(/audio/)
+          end
+
+          capabilities
+        end
+
+        def pricing_for(model_id)
+          standard_pricing = {
+            input_per_million: input_price_for(model_id),
+            output_per_million: output_price_for(model_id)
+          }
+
+          # Add cached pricing if available
+          if respond_to?(:cached_input_price_for)
+            cached_price = cached_input_price_for(model_id)
+            standard_pricing[:cached_input_per_million] = cached_price if cached_price
+          end
+
+          # Pricing structure
+          pricing = { text_tokens: { standard: standard_pricing } }
+
+          # Add batch pricing if applicable
+          if model_id.match?(/embedding|batch/)
+            pricing[:text_tokens][:batch] = {
+              input_per_million: standard_pricing[:input_per_million] * 0.5,
+              output_per_million: standard_pricing[:output_per_million] * 0.5
+            }
+          end
+
+          pricing
         end
       end
     end

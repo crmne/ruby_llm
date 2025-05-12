@@ -5,39 +5,33 @@ module RubyLLM
     module Gemini
       # Models methods for the Gemini API integration
       module Models
-        # Methods needed by Provider - must be public
+        module_function
+
         def models_url
           'models'
         end
 
-        private
-
-        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-          (response.body['models'] || []).map do |model|
+        def parse_list_models_response(response, slug, capabilities)
+          Array(response.body['models']).map do |model_data|
             # Extract model ID without "models/" prefix
-            model_id = model['name'].gsub('models/', '')
+            model_id = model_data['name'].gsub('models/', '')
 
             ModelInfo.new(
               id: model_id,
-              created_at: nil,
-              display_name: model['displayName'],
+              name: model_data['displayName'],
               provider: slug,
-              type: capabilities.model_type(model_id),
               family: capabilities.model_family(model_id),
+              created_at: nil, # Gemini API doesn't provide creation date
+              context_window: model_data['inputTokenLimit'] || capabilities.context_window_for(model_id),
+              max_output_tokens: model_data['outputTokenLimit'] || capabilities.max_tokens_for(model_id),
+              modalities: capabilities.modalities_for(model_id),
+              capabilities: capabilities.capabilities_for(model_id),
+              pricing: capabilities.pricing_for(model_id),
               metadata: {
-                version: model['version'],
-                description: model['description'],
-                input_token_limit: model['inputTokenLimit'],
-                output_token_limit: model['outputTokenLimit'],
-                supported_generation_methods: model['supportedGenerationMethods']
-              },
-              context_window: model['inputTokenLimit'] || capabilities.context_window_for(model_id),
-              max_tokens: model['outputTokenLimit'] || capabilities.max_tokens_for(model_id),
-              supports_vision: capabilities.supports_vision?(model_id),
-              supports_functions: capabilities.supports_functions?(model_id),
-              supports_json_mode: capabilities.supports_json_mode?(model_id),
-              input_price_per_million: capabilities.input_price_for(model_id),
-              output_price_per_million: capabilities.output_price_for(model_id)
+                version: model_data['version'],
+                description: model_data['description'],
+                supported_generation_methods: model_data['supportedGenerationMethods']
+              }
             )
           end
         end

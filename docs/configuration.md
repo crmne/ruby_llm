@@ -27,6 +27,7 @@ After reading this guide, you will know:
 *   How to customize connection timeouts and retries.
 *   How to connect to custom endpoints (like Azure OpenAI).
 *   How to use temporary, scoped configurations with `RubyLLM.context`.
+*   How to configure the logging location.
 
 ## Global Configuration (`RubyLLM.configure`)
 
@@ -45,6 +46,8 @@ RubyLLM.configure do |config|
   # Provide keys ONLY for the providers you intend to use.
   # Using environment variables (ENV.fetch) is highly recommended.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+  config.openai_organization_id = ENV.fetch('OPENAI_ORGANIZATION_ID', nil)
+  config.openai_project_id = ENV.fetch('OPENAI_PROJECT_ID', nil)
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
@@ -75,6 +78,10 @@ RubyLLM.configure do |config|
   config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
   config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
   config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
+
+  # --- Logging Settings ---
+  config.log_file = '/logs/ruby_llm.log'
+  config.level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
 end
 ```
 
@@ -112,6 +119,19 @@ end
 
 This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link guides/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
 
+## Optional OpenAI Headers
+{: .d-inline-block }
+
+Coming in v1.3.0
+{: .label .label-yellow }
+
+OpenAI supports additional headers for organization and project management:
+
+*   `openai_organization_id`: Specifies the billing organization for API usage when multiple organizations are accessible.
+*   `openai_project_id`: Tracks API usage for a project.
+
+These headers are optional and only need to be set if you want to use organization or project-specific billing.
+
 ## Default Models
 
 These settings determine which models are used by the top-level helper methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`) when no specific `model:` argument is provided.
@@ -133,6 +153,31 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 *   `config.retry_interval_randomness`: Factor to add jitter to retry delays, preventing thundering herd issues. Default: `0.5`.
 
 Adjust these based on network conditions and provider reliability.
+
+## Logging Settings
+
+RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level.
+
+```ruby
+RubyLLM.configure do |config|
+  # --- Logging Settings ---
+  config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
+  config.level = :debug  # Log level (:debug, :info, :warn)
+end
+```
+
+### Log File Configuration
+
+* `config.log_file`: Specifies the path where logs should be written. If not set, logs will be written to STDOUT.
+* The log file will be created if it doesn't exist, and logs will be appended to it.
+
+### Log Levels
+
+* `:debug`: Most verbose level, includes detailed request/response information as provided by the faraday client
+* `:info`: General operational information
+* `:warn`: Warning messages for non-critical issues that may need attention
+
+You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
 
 ## Scoped Configuration with Contexts
 {: .d-inline-block }
@@ -179,3 +224,4 @@ default_response = default_chat.ask("Query using global production settings...")
 *   **Thread Safety:** Each context is independent, making them safe for use across different threads.
 
 Contexts provide a clean and safe mechanism for managing diverse configuration needs within a single application.
+

@@ -29,7 +29,7 @@ module RubyLLM
 
     private
 
-    def to_json_stream(&block) # rubocop:disable Metrics/MethodLength
+    def to_json_stream(&block)
       buffer = String.new
       parser = EventStreamParser::Parser.new
 
