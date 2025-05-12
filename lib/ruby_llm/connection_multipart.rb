@@ -3,6 +3,7 @@ module RubyLLM
     def post(url, payload, &)
       @connection.post url, payload do |req|
         req.headers.merge! @provider.headers(@config) if @provider.respond_to?(:headers)
+        req.headers['Content-Type'] = 'multipart/form-data'
         yield req if block_given?
       end
     end
