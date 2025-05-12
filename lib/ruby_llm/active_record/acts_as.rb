@@ -218,12 +218,14 @@ module RubyLLM
       end
 
       def process_attachments(attachments) # rubocop:disable Metrics/PerceivedComplexity
+        puts "PROCESS ATTACHMENTS: #{attachments.inspect}"
         return {} if attachments.nil?
 
         result = {}
         files = Array(attachments)
 
         files.each do |file|
+          puts "FILE: #{file.inspect}"
           content_type = if file.respond_to?(:content_type)
                            file.content_type
                          elsif file.is_a?(ActiveStorage::Attachment)
@@ -278,9 +280,11 @@ module RubyLLM
             filename: extract_filename(file_source),
             content_type: RubyLLM::MimeTypes.detect_from_path(extract_filename(file_source))
           ) # Already a file-like object
-        elsif file_source.is_a?(::ActiveStorage::Attachment) || file_source.is_a?(::ActiveStorage::Blob)
+        elsif file_source.is_a?(::ActiveStorage::Attachment)
           # Copy from existing ActiveStorage attachment
           message.attachments.attach(file_source.blob)
+        elsif file_source.is_a?(::ActiveStorage::Blob)
+          message.attachments.attach(file_source)
         else
           # Local file path
           message.attachments.attach(
