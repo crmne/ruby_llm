@@ -218,14 +218,12 @@ module RubyLLM
       end
 
       def process_attachments(attachments) # rubocop:disable Metrics/PerceivedComplexity
-        puts "PROCESS ATTACHMENTS: #{attachments.inspect}"
         return {} if attachments.nil?
 
         result = {}
         files = Array(attachments)
 
         files.each do |file|
-          puts "FILE: #{file.inspect}"
           content_type = if file.respond_to?(:content_type)
                            file.content_type
                          elsif file.is_a?(ActiveStorage::Attachment)
