@@ -46,7 +46,7 @@ module RubyLLM
       def edit(prompt, model:, with:, options:, connection:)
         payload = render_edit_payload(prompt, model:, with:, options:)
 
-        response = connection.post_multipart(edits_url, payload)
+        response = connection.post(edits_url, payload)
         parse_edit_response(response, model:)
       end
 
@@ -122,6 +122,10 @@ module RubyLLM
 
     def connection(config)
       @connection ||= Connection.new(self, config)
+    end
+
+    def connection_multipart(config)
+      @connection_multipart ||= ConnectionMultipart.new(self, config)
     end
 
     class << self

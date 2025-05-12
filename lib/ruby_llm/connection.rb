@@ -26,14 +26,6 @@ module RubyLLM
       end
     end
 
-    def post_multipart(url, payload, &)
-      @connection.post url, payload do |req|
-        req.headers.merge! @provider.headers(@config) if @provider.respond_to?(:headers)
-        req.headers['Content-Type'] = 'multipart/form-data'
-        yield req if block_given?
-      end
-    end
-
     def get(url, &)
       @connection.get url do |req|
         req.headers.merge! @provider.headers(@config) if @provider.respond_to?(:headers)
@@ -67,8 +59,7 @@ module RubyLLM
     end
 
     def setup_middleware(faraday)
-      # faraday.request :json
-      faraday.request :multipart, content_type: 'multipart/form-data'
+      faraday.request :json
       faraday.response :json
       faraday.adapter Faraday.default_adapter
       faraday.use :llm_errors, provider: @provider
