@@ -26,15 +26,6 @@ module RubyLLM
   class UnsupportedFunctionsError < StandardError; end
   class NetworkError < StandardError; end
 
-  # Errors related to Image Attachment processing
-  class ImageAttachmentError < ArgumentError; end
-  class InvalidSourceTypeError < ImageAttachmentError; end
-  class InvalidAttachmentTypeError < ImageAttachmentError; end
-  class FileNotFoundError < ImageAttachmentError; end
-  class InvalidImageFormatError < ImageAttachmentError; end
-  class InvalidImageContentTypeError < ImageAttachmentError; end
-  class ImageTooLargeError < ImageAttachmentError; end
-
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end
   class ForbiddenError < Error; end
