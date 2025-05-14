@@ -12,9 +12,18 @@ module RubyLLM
       accumulator = StreamAccumulator.new
 
       connection.post stream_url, payload do |req|
-        req.options.on_data = handle_stream do |chunk|
-          accumulator.add chunk
-          block.call chunk
+        if Faraday::VERSION.start_with?('1')
+          # Handle Faraday 1.x streaming with :on_data key
+          req.options[:on_data] = handle_stream do |chunk|
+            accumulator.add chunk
+            block.call chunk
+          end
+        else
+          # Handle Faraday 2.x streaming with on_data method
+          req.options.on_data = handle_stream do |chunk|
+            accumulator.add chunk
+            block.call chunk
+          end
         end
       end
 
@@ -33,15 +42,29 @@ module RubyLLM
       buffer = String.new
       parser = EventStreamParser::Parser.new
 
-      proc do |chunk, _bytes, env|
-        RubyLLM.logger.debug "Received chunk: #{chunk}"
+      if Faraday::VERSION.start_with?('1')
+        # Faraday 1.x: on_data receives (chunk, size)
+        proc do |chunk, size|
+          RubyLLM.logger.debug "Received chunk: #{chunk}"
 
-        if error_chunk?(chunk)
-          handle_error_chunk(chunk, env)
-        elsif env&.status != 200
-          handle_failed_response(chunk, buffer, env)
-        else
-          yield handle_sse(chunk, parser, env, &block)
+          if error_chunk?(chunk)
+            handle_error_chunk(chunk, nil)
+          else
+            yield handle_sse(chunk, parser, nil, &block)
+          end
+        end
+      else
+        # Faraday 2.x: on_data receives (chunk, bytes, env)
+        proc do |chunk, _bytes, env|
+          RubyLLM.logger.debug "Received chunk: #{chunk}"
+
+          if error_chunk?(chunk)
+            handle_error_chunk(chunk, env)
+          elsif env&.status != 200
+            handle_failed_response(chunk, buffer, env)
+          else
+            yield handle_sse(chunk, parser, env, &block)
+          end
         end
       end
     end
