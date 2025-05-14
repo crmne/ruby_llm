@@ -38,33 +38,45 @@ module RubyLLM
 
     private
 
-    def to_json_stream(&block)
+    def to_json_stream(&)
       buffer = String.new
       parser = EventStreamParser::Parser.new
 
+      create_stream_processor(parser, buffer, &)
+    end
+
+    def create_stream_processor(parser, buffer, &)
       if Faraday::VERSION.start_with?('1')
         # Faraday 1.x: on_data receives (chunk, size)
-        proc do |chunk, size|
-          RubyLLM.logger.debug "Received chunk: #{chunk}"
-
-          if error_chunk?(chunk)
-            handle_error_chunk(chunk, nil)
-          else
-            yield handle_sse(chunk, parser, nil, &block)
-          end
-        end
+        legacy_stream_processor(parser, &)
       else
         # Faraday 2.x: on_data receives (chunk, bytes, env)
-        proc do |chunk, _bytes, env|
-          RubyLLM.logger.debug "Received chunk: #{chunk}"
+        stream_processor(parser, buffer, &)
+      end
+    end
 
-          if error_chunk?(chunk)
-            handle_error_chunk(chunk, env)
-          elsif env&.status != 200
-            handle_failed_response(chunk, buffer, env)
-          else
-            yield handle_sse(chunk, parser, env, &block)
-          end
+    def process_stream_chunk(chunk, parser, _env, &)
+      RubyLLM.logger.debug "Received chunk: #{chunk}"
+
+      if error_chunk?(chunk)
+        handle_error_chunk(chunk, nil)
+      else
+        yield handle_sse(chunk, parser, nil, &)
+      end
+    end
+
+    def legacy_stream_processor(parser, &block)
+      proc do |chunk, _size|
+        process_stream_chunk(chunk, parser, nil, &block)
+      end
+    end
+
+    def stream_processor(parser, buffer, &block)
+      proc do |chunk, _bytes, env|
+        if env&.status == 200
+          process_stream_chunk(chunk, parser, env, &block)
+        else
+          handle_failed_response(chunk, buffer, env)
         end
       end
     end
