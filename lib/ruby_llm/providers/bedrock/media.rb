@@ -4,6 +4,7 @@ module RubyLLM
   module Providers
     module Bedrock
       # Media handling methods for the Bedrock API integration
+      # NOTE: Bedrock does not support url attachments
       module Media
         extend Anthropic::Media
 
@@ -21,8 +22,10 @@ module RubyLLM
               parts << format_image(attachment)
             when Attachments::PDF
               parts << format_pdf(attachment)
+            when Attachments::Text
+              parts << Anthropic::Media.format_text_file(attachment)
             else
-              raise "Unsupported attachment type: #{attachment.class}"
+              raise UnsupportedAttachmentError, attachment.class
             end
           end
 

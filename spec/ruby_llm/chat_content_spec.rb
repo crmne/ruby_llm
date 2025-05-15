@@ -8,9 +8,45 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
+  let(:text_path) { File.expand_path('../fixtures/ruby.txt', __dir__) }
+  let(:xml_path) { File.expand_path('../fixtures/ruby.xml', __dir__) }
   let(:remote_image_path) { 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png' }
   let(:remote_audio_path) { 'https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-AcpoKrane-ruby.wav' }
   let(:remote_pdf_path) { 'https://pdfobject.com/pdf/sample.pdf' }
+  let(:remote_text_path) { 'https://www.ruby-lang.org/en/about/license.txt' }
+
+  describe 'text models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} can understand text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask("What's in this file?", with: text_path)
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Text)
+
+        response = chat.ask('and in this one?', with: xml_path)
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Text)
+      end
+
+      it "#{provider}/#{model} can understand remote text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask("What's in this file?", with: remote_text_path)
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Text)
+      end
+    end
+  end
 
   describe 'vision models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     VISION_MODELS.each do |model_info|

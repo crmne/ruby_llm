@@ -1,0 +1,138 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 May 2025 09:36:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1747301800-lLrJM4IudJ1Qz6JJZncx\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747301801,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Based
+        on the content of the 'ruby.txt' file, Ruby appears to be something that is
+        considered \\\"the best\\\" by the file's author. However, I can provide a
+        more comprehensive explanation about Ruby:\\n\\nRuby is a dynamic, object-oriented
+        programming language created by Yukihiro Matsumoto (often called \\\"Matz\\\")
+        in Japan during the mid-1990s. It is designed to be simple, productive, and
+        enjoyable to use. Some key characteristics of Ruby include:\\n\\n1. Object-Oriented:
+        Everything in Ruby is an object\\n2. Dynamic typing\\n3. Interpreted language\\n4.
+        Known for its elegant and readable syntax\\n5. Supports multiple programming
+        paradigms\\n6. Popular for web development (especially with the Ruby on Rails
+        framework)\\n7. Used for scripting, web applications, data processing, and
+        more\\n\\nRuby emphasizes the principle of \\\"developer happiness\\\" and
+        aims to make programming more intuitive and pleasant. It has a strong community
+        and is used by many companies for web development and other software applications.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":26,\"completion_tokens\":226,\"total_tokens\":252}}"
+  recorded_at: Thu, 15 May 2025 09:36:45 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]},{"role":"assistant","content":"Based
+        on the content of the ''ruby.txt'' file, Ruby appears to be something that
+        is considered \"the best\" by the file''s author. However, I can provide a
+        more comprehensive explanation about Ruby:\n\nRuby is a dynamic, object-oriented
+        programming language created by Yukihiro Matsumoto (often called \"Matz\")
+        in Japan during the mid-1990s. It is designed to be simple, productive, and
+        enjoyable to use. Some key characteristics of Ruby include:\n\n1. Object-Oriented:
+        Everything in Ruby is an object\n2. Dynamic typing\n3. Interpreted language\n4.
+        Known for its elegant and readable syntax\n5. Supports multiple programming
+        paradigms\n6. Popular for web development (especially with the Ruby on Rails
+        framework)\n7. Used for scripting, web applications, data processing, and
+        more\n\nRuby emphasizes the principle of \"developer happiness\" and aims
+        to make programming more intuitive and pleasant. It has a strong community
+        and is used by many companies for web development and other software applications."},{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.xml''><truism>Ruby
+        is the best</truism></file>"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 May 2025 09:36:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1747301806-uyUa4rOoQDCeMCig1Dvs\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747301806,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        'ruby.xml' file contains an XML document with a single element:\\n\\n- Root
+        element: `<truism>`\\n- Content of the element: \\\"Ruby is the best\\\"\\n\\nThe
+        XML structure uses a custom tag `<truism>` to wrap the statement \\\"Ruby
+        is the best\\\". This is a simple XML file with a single element and text
+        content.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":282,\"completion_tokens\":82,\"total_tokens\":364}}"
+  recorded_at: Thu, 15 May 2025 09:36:49 GMT
+recorded_with: VCR 6.3.1

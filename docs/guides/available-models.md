@@ -33,7 +33,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 ## Last Updated
 {: .d-inline-block }
 
-2025-05-14
+2025-05-15
 {: .label .label-green }
 
 ## Models by Provider
@@ -98,7 +98,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | TTS-1 HD | tts-1-hd | openai | - | - | In: $30.00 |
 | TTS-1 HD 1106 | tts-1-hd-1106 | openai | - | - | In: $30.00, Out: $30.00 |
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
-| babbage-002 | babbage-002 | openai | - | 16384 | In: $0.40, Out: $0.40 |
+| babbage-002 | babbage-002 | openai | 16384 | 16384 | In: $0.40, Out: $0.40 |
 | computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | computer-use-preview | computer-use-preview-2025-03-11 | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | davinci-002 | davinci-002 | openai | - | 16384 | In: $2.00, Out: $2.00 |
@@ -140,7 +140,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Claude 3.7 Sonnet | claude-3-7-sonnet-latest | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 
 
-### Gemini (55)
+### Gemini (54)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -191,7 +191,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Gemma 3 27B | gemma-3-27b-it | gemini | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3 4B | gemma-3-4b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
 | Imagen 3 | imagen-3.0-generate-002 | gemini | - | - | - |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Model that performs Attributed Question Answering. | aqa | gemini | 7168 | 1024 | - |
 | PaLM 2 (Legacy) | text-bison-001 | gemini | 8196 | 1024 | In: $0.08, Out: $0.30 |
@@ -330,7 +329,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | EVA Qwen2.5 72B | eva-unit-01/eva-qwen-2.5-72b | openrouter | 16384 | 4096 | In: $4.00, Out: $6.00 |
 | EleutherAI: Llemma 7b | eleutherai/llemma_7b | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
 | Fimbulvetr 11B v2 | sao10k/fimbulvetr-11b-v2 | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
-| Goliath 120B | alpindale/goliath-120b | openrouter | 6144 | 512 | In: $6.56, Out: $9.38 |
+| Goliath 120B | alpindale/goliath-120b | openrouter | 6144 | 512 | In: $7.50, Out: $9.38 |
 | Google: Gemini 1.5 Flash  | google/gemini-flash-1.5 | openrouter | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Google: Gemini 1.5 Flash 8B | google/gemini-flash-1.5-8b | openrouter | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
 | Google: Gemini 1.5 Pro | google/gemini-pro-1.5 | openrouter | 2000000 | 8192 | In: $1.25, Out: $5.00 |
@@ -362,7 +361,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Llama Guard 3 8B | meta-llama/llama-guard-3-8b | openrouter | 131072 | - | In: $0.02, Out: $0.06 |
 | Magnum 72B | alpindale/magnum-72b | openrouter | 16384 | 4096 | In: $4.00, Out: $6.00 |
 | Magnum v2 72B | anthracite-org/magnum-v2-72b | openrouter | 32768 | - | In: $3.00, Out: $3.00 |
-| Magnum v4 72B | anthracite-org/magnum-v4-72b | openrouter | 16384 | 1024 | In: $1.50, Out: $2.25 |
+| Magnum v4 72B | anthracite-org/magnum-v4-72b | openrouter | 16384 | 1024 | In: $1.88, Out: $2.25 |
 | Mancer: Weaver (alpha) | mancer/weaver | openrouter | 8000 | 1000 | In: $1.12, Out: $1.12 |
 | Meta: Llama 2 70B Chat | meta-llama/llama-2-70b-chat | openrouter | 4096 | - | In: $0.90, Out: $0.90 |
 | Meta: Llama 3 70B Instruct | meta-llama/llama-3-70b-instruct | openrouter | 8192 | 16384 | In: $0.30, Out: $0.40 |
@@ -381,9 +380,9 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.2 3B Instruct (free) | meta-llama/llama-3.2-3b-instruct:free | openrouter | 20000 | 20000 | - |
 | Meta: Llama 3.2 90B Vision Instruct | meta-llama/llama-3.2-90b-vision-instruct | openrouter | 131072 | 2048 | In: $1.20, Out: $1.20 |
 | Meta: Llama 3.3 70B Instruct | meta-llama/llama-3.3-70b-instruct | openrouter | 131000 | 131000 | In: $0.07, Out: $0.33 |
-| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 8000 | 8000 | - |
+| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 512000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -436,11 +435,11 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | NVIDIA: Llama 3.3 Nemotron Super 49B v1 | nvidia/llama-3.3-nemotron-super-49b-v1 | openrouter | 131072 | - | In: $0.13, Out: $0.40 |
 | NVIDIA: Llama 3.3 Nemotron Super 49B v1 (free) | nvidia/llama-3.3-nemotron-super-49b-v1:free | openrouter | 131072 | - | - |
 | NeverSleep: Llama 3 Lumimaid 70B | neversleep/llama-3-lumimaid-70b | openrouter | 8192 | 4096 | In: $4.00, Out: $6.00 |
-| NeverSleep: Llama 3 Lumimaid 8B | neversleep/llama-3-lumimaid-8b | openrouter | 24576 | 2048 | In: $0.09, Out: $0.75 |
-| NeverSleep: Llama 3 Lumimaid 8B (extended) | neversleep/llama-3-lumimaid-8b:extended | openrouter | 24576 | 2048 | In: $0.09, Out: $0.75 |
-| NeverSleep: Lumimaid v0.2 70B | neversleep/llama-3.1-lumimaid-70b | openrouter | 16384 | 2048 | In: $1.50, Out: $2.25 |
-| NeverSleep: Lumimaid v0.2 8B | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 2048 | In: $0.09, Out: $0.75 |
-| Noromaid 20B | neversleep/noromaid-20b | openrouter | 8192 | 2048 | In: $0.75, Out: $1.50 |
+| NeverSleep: Llama 3 Lumimaid 8B | neversleep/llama-3-lumimaid-8b | openrouter | 24576 | 2048 | In: $0.15, Out: $0.94 |
+| NeverSleep: Llama 3 Lumimaid 8B (extended) | neversleep/llama-3-lumimaid-8b:extended | openrouter | 24576 | 2048 | In: $0.15, Out: $0.94 |
+| NeverSleep: Lumimaid v0.2 70B | neversleep/llama-3.1-lumimaid-70b | openrouter | 16384 | 2048 | In: $1.88, Out: $2.25 |
+| NeverSleep: Lumimaid v0.2 8B | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 2048 | In: $0.15, Out: $0.94 |
+| Noromaid 20B | neversleep/noromaid-20b | openrouter | 8192 | 2048 | In: $0.94, Out: $1.50 |
 | Nous: DeepHermes 3 Llama 3 8B Preview (free) | nousresearch/deephermes-3-llama-3-8b-preview:free | openrouter | 131072 | - | - |
 | Nous: DeepHermes 3 Mistral 24B Preview (free) | nousresearch/deephermes-3-mistral-24b-preview:free | openrouter | 32768 | - | - |
 | Nous: Hermes 2 Mixtral 8x7B DPO | nousresearch/nous-hermes-2-mixtral-8x7b-dpo | openrouter | 32768 | 2048 | In: $0.60, Out: $0.60 |
@@ -537,7 +536,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Qwen: Qwen3 8B | qwen/qwen3-8b | openrouter | 128000 | - | In: $0.04, Out: $0.14 |
 | Qwen: Qwen3 8B (free) | qwen/qwen3-8b:free | openrouter | 40960 | 40960 | - |
 | Qwerky 72B (free) | featherless/qwerky-72b:free | openrouter | 32768 | 4096 | - |
-| ReMM SLERP 13B | undi95/remm-slerp-l2-13b | openrouter | 6144 | 1024 | In: $0.56, Out: $1.12 |
+| ReMM SLERP 13B | undi95/remm-slerp-l2-13b | openrouter | 6144 | 1024 | In: $0.56, Out: $0.84 |
 | Reka: Flash 3 (free) | rekaai/reka-flash-3:free | openrouter | 32768 | - | - |
 | Rocinante 12B | thedrummer/rocinante-12b | openrouter | 32768 | - | In: $0.25, Out: $0.50 |
 | Sao10K: Llama 3 8B Lunaris | sao10k/l3-lunaris-8b | openrouter | 8192 | - | In: $0.02, Out: $0.05 |
@@ -571,7 +570,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
 ## Models by Capability
 
-### Function Calling (234)
+### Function Calling (233)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -649,7 +648,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Gemini 2.5 Pro Preview 03-25 | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
@@ -811,7 +809,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | xAI: Grok Beta | x-ai/grok-beta | openrouter | 131072 | - | In: $5.00, Out: $15.00 |
 
 
-### Structured Output (250)
+### Structured Output (249)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -877,7 +875,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Gemini 2.5 Pro Preview 03-25 | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -959,9 +956,9 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.2 3B Instruct | meta-llama/llama-3.2-3b-instruct | openrouter | 131072 | 16384 | In: $0.01, Out: $0.02 |
 | Meta: Llama 3.2 90B Vision Instruct | meta-llama/llama-3.2-90b-vision-instruct | openrouter | 131072 | 2048 | In: $1.20, Out: $1.20 |
 | Meta: Llama 3.3 70B Instruct | meta-llama/llama-3.3-70b-instruct | openrouter | 131000 | 131000 | In: $0.07, Out: $0.33 |
-| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 8000 | 8000 | - |
+| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 512000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -1067,7 +1064,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (410)
+### Streaming (409)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1136,7 +1133,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Gemma 3 1B | gemma-3-1b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3 27B | gemma-3-27b-it | gemini | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3 4B | gemma-3-4b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Model that performs Attributed Question Answering. | aqa | gemini | 7168 | 1024 | - |
 | PaLM 2 (Legacy) | text-bison-001 | gemini | 8196 | 1024 | In: $0.08, Out: $0.30 |
@@ -1244,7 +1240,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | EVA Qwen2.5 72B | eva-unit-01/eva-qwen-2.5-72b | openrouter | 16384 | 4096 | In: $4.00, Out: $6.00 |
 | EleutherAI: Llemma 7b | eleutherai/llemma_7b | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
 | Fimbulvetr 11B v2 | sao10k/fimbulvetr-11b-v2 | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
-| Goliath 120B | alpindale/goliath-120b | openrouter | 6144 | 512 | In: $6.56, Out: $9.38 |
+| Goliath 120B | alpindale/goliath-120b | openrouter | 6144 | 512 | In: $7.50, Out: $9.38 |
 | Google: Gemini 1.5 Flash  | google/gemini-flash-1.5 | openrouter | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Google: Gemini 1.5 Flash 8B | google/gemini-flash-1.5-8b | openrouter | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
 | Google: Gemini 1.5 Pro | google/gemini-pro-1.5 | openrouter | 2000000 | 8192 | In: $1.25, Out: $5.00 |
@@ -1276,7 +1272,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Llama Guard 3 8B | meta-llama/llama-guard-3-8b | openrouter | 131072 | - | In: $0.02, Out: $0.06 |
 | Magnum 72B | alpindale/magnum-72b | openrouter | 16384 | 4096 | In: $4.00, Out: $6.00 |
 | Magnum v2 72B | anthracite-org/magnum-v2-72b | openrouter | 32768 | - | In: $3.00, Out: $3.00 |
-| Magnum v4 72B | anthracite-org/magnum-v4-72b | openrouter | 16384 | 1024 | In: $1.50, Out: $2.25 |
+| Magnum v4 72B | anthracite-org/magnum-v4-72b | openrouter | 16384 | 1024 | In: $1.88, Out: $2.25 |
 | Mancer: Weaver (alpha) | mancer/weaver | openrouter | 8000 | 1000 | In: $1.12, Out: $1.12 |
 | Meta: Llama 2 70B Chat | meta-llama/llama-2-70b-chat | openrouter | 4096 | - | In: $0.90, Out: $0.90 |
 | Meta: Llama 3 70B Instruct | meta-llama/llama-3-70b-instruct | openrouter | 8192 | 16384 | In: $0.30, Out: $0.40 |
@@ -1295,9 +1291,9 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.2 3B Instruct (free) | meta-llama/llama-3.2-3b-instruct:free | openrouter | 20000 | 20000 | - |
 | Meta: Llama 3.2 90B Vision Instruct | meta-llama/llama-3.2-90b-vision-instruct | openrouter | 131072 | 2048 | In: $1.20, Out: $1.20 |
 | Meta: Llama 3.3 70B Instruct | meta-llama/llama-3.3-70b-instruct | openrouter | 131000 | 131000 | In: $0.07, Out: $0.33 |
-| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 8000 | 8000 | - |
+| Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 512000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -1350,11 +1346,11 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | NVIDIA: Llama 3.3 Nemotron Super 49B v1 | nvidia/llama-3.3-nemotron-super-49b-v1 | openrouter | 131072 | - | In: $0.13, Out: $0.40 |
 | NVIDIA: Llama 3.3 Nemotron Super 49B v1 (free) | nvidia/llama-3.3-nemotron-super-49b-v1:free | openrouter | 131072 | - | - |
 | NeverSleep: Llama 3 Lumimaid 70B | neversleep/llama-3-lumimaid-70b | openrouter | 8192 | 4096 | In: $4.00, Out: $6.00 |
-| NeverSleep: Llama 3 Lumimaid 8B | neversleep/llama-3-lumimaid-8b | openrouter | 24576 | 2048 | In: $0.09, Out: $0.75 |
-| NeverSleep: Llama 3 Lumimaid 8B (extended) | neversleep/llama-3-lumimaid-8b:extended | openrouter | 24576 | 2048 | In: $0.09, Out: $0.75 |
-| NeverSleep: Lumimaid v0.2 70B | neversleep/llama-3.1-lumimaid-70b | openrouter | 16384 | 2048 | In: $1.50, Out: $2.25 |
-| NeverSleep: Lumimaid v0.2 8B | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 2048 | In: $0.09, Out: $0.75 |
-| Noromaid 20B | neversleep/noromaid-20b | openrouter | 8192 | 2048 | In: $0.75, Out: $1.50 |
+| NeverSleep: Llama 3 Lumimaid 8B | neversleep/llama-3-lumimaid-8b | openrouter | 24576 | 2048 | In: $0.15, Out: $0.94 |
+| NeverSleep: Llama 3 Lumimaid 8B (extended) | neversleep/llama-3-lumimaid-8b:extended | openrouter | 24576 | 2048 | In: $0.15, Out: $0.94 |
+| NeverSleep: Lumimaid v0.2 70B | neversleep/llama-3.1-lumimaid-70b | openrouter | 16384 | 2048 | In: $1.88, Out: $2.25 |
+| NeverSleep: Lumimaid v0.2 8B | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 2048 | In: $0.15, Out: $0.94 |
+| Noromaid 20B | neversleep/noromaid-20b | openrouter | 8192 | 2048 | In: $0.94, Out: $1.50 |
 | Nous: DeepHermes 3 Llama 3 8B Preview (free) | nousresearch/deephermes-3-llama-3-8b-preview:free | openrouter | 131072 | - | - |
 | Nous: DeepHermes 3 Mistral 24B Preview (free) | nousresearch/deephermes-3-mistral-24b-preview:free | openrouter | 32768 | - | - |
 | Nous: Hermes 2 Mixtral 8x7B DPO | nousresearch/nous-hermes-2-mixtral-8x7b-dpo | openrouter | 32768 | 2048 | In: $0.60, Out: $0.60 |
@@ -1451,7 +1447,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Qwen: Qwen3 8B | qwen/qwen3-8b | openrouter | 128000 | - | In: $0.04, Out: $0.14 |
 | Qwen: Qwen3 8B (free) | qwen/qwen3-8b:free | openrouter | 40960 | 40960 | - |
 | Qwerky 72B (free) | featherless/qwerky-72b:free | openrouter | 32768 | 4096 | - |
-| ReMM SLERP 13B | undi95/remm-slerp-l2-13b | openrouter | 6144 | 1024 | In: $0.56, Out: $1.12 |
+| ReMM SLERP 13B | undi95/remm-slerp-l2-13b | openrouter | 6144 | 1024 | In: $0.56, Out: $0.84 |
 | Reka: Flash 3 (free) | rekaai/reka-flash-3:free | openrouter | 32768 | - | - |
 | Rocinante 12B | thedrummer/rocinante-12b | openrouter | 32768 | - | In: $0.25, Out: $0.50 |
 | Sao10K: Llama 3 8B Lunaris | sao10k/l3-lunaris-8b | openrouter | 8192 | - | In: $0.02, Out: $0.05 |
@@ -1483,16 +1479,11 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Batch Processing (64)
+### Batch Processing (59)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
-| Claude 3 Haiku | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
-| Claude 3 Opus | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
-| Claude 3 Opus | claude-3-opus-latest | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Sonnet | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Haiku | claude-3-5-haiku-20241022 | anthropic | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $1.00 |
-| Claude 3.5 Haiku | claude-3-5-haiku-latest | anthropic | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $1.00 |
 | Claude 3.5 Sonnet | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude 3.5 Sonnet | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude 3.5 Sonnet | claude-3-5-sonnet-latest | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
@@ -1555,7 +1546,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
 ## Models by Modality
 
-### Vision Models (200)
+### Vision Models (199)
 
 Models that can process images:
 
@@ -1636,7 +1627,6 @@ Models that can process images:
 | Gemini 2.5 Pro Preview 03-25 | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Veo 2 | veo-2.0-generate-001 | gemini | - | - | - |
 | ChatGPT-4o | chatgpt-4o-latest | openai | 128000 | 16384 | In: $5.00, Out: $15.00 |
@@ -1715,7 +1705,7 @@ Models that can process images:
 | Meta: Llama 3.2 11B Vision Instruct (free) | meta-llama/llama-3.2-11b-vision-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.2 90B Vision Instruct | meta-llama/llama-3.2-90b-vision-instruct | openrouter | 131072 | 2048 | In: $1.20, Out: $1.20 |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 512000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -1793,7 +1783,7 @@ Models that can process audio:
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
 
 
-### PDF Models (67)
+### PDF Models (66)
 
 Models that can process PDF documents:
 
@@ -1856,7 +1846,6 @@ Models that can process PDF documents:
 | Gemini 2.5 Pro Preview 03-25 | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| LearnLM 1.5 Pro Experimental | learnlm-1.5-pro-experimental | gemini | 32767 | 8192 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4.5 Preview | gpt-4.5-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |

@@ -53,6 +53,10 @@ module RubyLLM
         Base64.strict_encode64(content)
       end
 
+      def text?
+        content.is_a?(String) || RubyLLM::MimeTypes.text?(mime_type)
+      end
+
       def mime_type
         RubyLLM::MimeTypes.detect_from_path(@filename)
       end

@@ -81,7 +81,7 @@ RubyLLM.configure do |config|
 
   # --- Logging Settings ---
   config.log_file = '/logs/ruby_llm.log'
-  config.level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
+  config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
 end
 ```
 
@@ -162,7 +162,7 @@ RubyLLM provides flexible logging configuration to help you monitor and debug AP
 RubyLLM.configure do |config|
   # --- Logging Settings ---
   config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
-  config.level = :debug  # Log level (:debug, :info, :warn)
+  config.log_level = :debug  # Log level (:debug, :info, :warn)
 end
 ```
 

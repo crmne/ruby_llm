@@ -18,5 +18,9 @@ module RubyLLM
         value
       end
     end
+
+    def format_text_file_for_llm(text_file)
+      "<file name='#{File.basename(text_file.source)}'>#{text_file.content}</file>"
+    end
   end
 end

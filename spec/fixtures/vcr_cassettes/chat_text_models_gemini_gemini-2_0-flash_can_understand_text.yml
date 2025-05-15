@@ -1,0 +1,176 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is Ruby?"},{"text":"<file
+        name=''ruby.txt''>Ruby is the best.</file>"}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 15 May 2025 09:35:38 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1113
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Based on the provided file, here's what we can say about Ruby:\n\n*   **\"Ruby is the best.\"** This is a subjective statement, but it indicates a strong positive sentiment towards Ruby. However, it doesn't provide any factual information about what Ruby *is*.\n\nTo get a more comprehensive understanding of what Ruby is, we'd need to consult additional sources. But based solely on the file, we can only conclude that the author has a high opinion of it.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.44216679591758579
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 19,
+            "candidatesTokenCount": 102,
+            "totalTokenCount": 121,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 19
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 102
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Thu, 15 May 2025 09:35:38 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is Ruby?"},{"text":"<file
+        name=''ruby.txt''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"Based
+        on the provided file, here''s what we can say about Ruby:\n\n*   **\"Ruby
+        is the best.\"** This is a subjective statement, but it indicates a strong
+        positive sentiment towards Ruby. However, it doesn''t provide any factual
+        information about what Ruby *is*.\n\nTo get a more comprehensive understanding
+        of what Ruby is, we''d need to consult additional sources. But based solely
+        on the file, we can only conclude that the author has a high opinion of it.\n"}]},{"role":"user","parts":[{"text":"What''s
+        in this file?"},{"text":"<file name=''ruby.xml''><truism>Ruby is the best</truism></file>"}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 15 May 2025 09:35:39 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=850
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The file \"ruby.xml\" contains the following XML structure:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n\nThis XML snippet contains a single element named `\u003ctruism\u003e`. The content within the `\u003ctruism\u003e` element is the string \"Ruby is the best\". This appears to be a statement of opinion or a potentially humorous assertion presented as a fact.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.362679783890887
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 149,
+            "candidatesTokenCount": 82,
+            "totalTokenCount": 231,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 149
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 82
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash"
+        }
+  recorded_at: Thu, 15 May 2025 09:35:39 GMT
+recorded_with: VCR 6.3.1

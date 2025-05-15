@@ -30,6 +30,11 @@ module RubyLLM
       self
     end
 
+    def add_text(source)
+      @attachments << Attachments::Text.new(source)
+      self
+    end
+
     def format
       if @text && @attachments.empty?
         @text
@@ -57,6 +62,7 @@ module RubyLLM
       Array(attachments[:image]).each { |source| add_image(source) }
       Array(attachments[:audio]).each { |source| add_audio(source) }
       Array(attachments[:pdf]).each { |source| add_pdf(source) }
+      Array(attachments[:text]).each { |source| add_text(source) }
     end
 
     def process_attachments_array_or_string(attachments)
@@ -66,8 +72,10 @@ module RubyLLM
           add_image file
         elsif RubyLLM::MimeTypes.audio?(mime_type)
           add_audio file
+        elsif RubyLLM::MimeTypes.pdf?(mime_type)
+          add_pdf file
         else
-          add_pdf file # Default to PDF for unknown types for now
+          add_text file
         end
       end
     end

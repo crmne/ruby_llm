@@ -21,7 +21,7 @@ module RubyLLM
     # @param identifier [String] File extension, path, or MIME type
     # @return [Boolean] true if content is an image
     def image?(identifier)
-      type = identifier.include?('/') ? identifier : mime_type(".#{identifier.to_s.downcase.delete('.')}")
+      type = mime_type_from_identifier(identifier)
       type.start_with?('image/')
     end
 
@@ -29,7 +29,7 @@ module RubyLLM
     # @param identifier [String] File extension, path, or MIME type
     # @return [Boolean] true if content is audio
     def audio?(identifier)
-      type = identifier.include?('/') ? identifier : mime_type(".#{identifier.to_s.downcase.delete('.')}")
+      type = mime_type_from_identifier(identifier)
       type.start_with?('audio/')
     end
 
@@ -37,8 +37,18 @@ module RubyLLM
     # @param identifier [String] File extension, path, or MIME type
     # @return [Boolean] true if content is a PDF
     def pdf?(identifier)
-      type = identifier.include?('/') ? identifier : mime_type(".#{identifier.to_s.downcase.delete('.')}")
+      type = mime_type_from_identifier(identifier)
       type == 'application/pdf'
+    end
+
+    # Detect if content is text based on extension or MIME type
+    # @param identifier [String] File extension, path, or MIME type
+    # @return [Boolean] true if content is text
+    def text?(identifier)
+      type = mime_type_from_identifier(identifier)
+      type.start_with?('text/') ||
+        TEXT_SUFFIXES.any? { |suffix| type.end_with?(suffix) } ||
+        NON_TEXT_PREFIX_TEXT_MIME_TYPES.include?(type)
     end
 
     # Extract extension from filename or path
@@ -60,6 +70,11 @@ module RubyLLM
     # @return [String, nil] Extension with leading dot, or nil if not found
     def extension_for_mime_type(mime)
       MIME_TYPES.invert[mime]
+    end
+
+    # Helper method to get MIME type from identifier
+    def mime_type_from_identifier(identifier)
+      identifier.include?('/') ? identifier : mime_type(".#{identifier.to_s.downcase.delete('.')}")
     end
 
     # List of most common mime-types, selected various sources
@@ -347,6 +362,7 @@ module RubyLLM
       '.mc1' => 'application/vnd.medcalcdata',
       '.mcd' => 'application/vnd.mcd',
       '.mdb' => 'application/x-msaccess',
+      '.md' => 'text/markdown',
       '.mdi' => 'image/vnd.ms-modi',
       '.mdoc' => 'text/troff',
       '.me' => 'text/troff',
@@ -709,5 +725,38 @@ module RubyLLM
       '.zip' => 'application/zip',
       '.zmm' => 'application/vnd.handheld-entertainment+xml'
     }.freeze
+
+    NON_TEXT_PREFIX_TEXT_MIME_TYPES = [
+      'application/json', # Base type, even if specific ones end with +json
+      'application/xml',  # Base type, even if specific ones end with +xml
+      'application/javascript',
+      'application/ecmascript',
+      'application/rtf',
+      'application/sql',
+      'application/x-sh',
+      'application/x-csh',
+      'application/x-httpd-php',
+      'application/sdp',
+      'application/sparql-query',
+      'application/graphql',
+      'application/yang', # Data modeling language, often serialized as XML/JSON but the type itself is distinct
+      'application/mbox', # Mailbox format
+      'application/x-tex',
+      'application/x-latex',
+      'application/x-perl',
+      'application/x-python',
+      'application/x-tcl',
+      'application/pgp-signature', # Often ASCII armored
+      'application/pgp-keys',      # Often ASCII armored
+      'application/vnd.coffeescript',
+      'application/vnd.dart',
+      'application/vnd.oai.openapi', # Base for OpenAPI, often with +json or +yaml suffix
+      'application/vnd.zul',         # ZK User Interface Language (can be XML-like)
+      'application/x-yaml',          # Common non-standard for YAML
+      'application/yaml',            # Standard for YAML
+      'application/toml'             # TOML configuration files
+    ].freeze
+
+    TEXT_SUFFIXES = ['+json', '+xml', '+html', '+yaml', '+csv', '+plain', '+javascript', '+svg'].freeze
   end
 end

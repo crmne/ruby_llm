@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is Ruby?"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 15 May 2025 09:38:14 GMT
+      Content-Length:
+      - '1544'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-375","object":"chat.completion","created":1747301894,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        is a high-level, interpreted programming language known for its simplicity
+        and productivity. It was created by Yukihiro \"Matz\" Matsumoto in the mid-1990s
+        and aims to combine the best features of other programming languages, such
+        as Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nHere are some key features of
+        Ruby:\n\n1. **Object-Oriented**: Everything in Ruby is an object, which makes
+        it a pure object-oriented language.\n2. **Dynamic Typing**: Variables in Ruby
+        do not have explicit types, which allows for more flexibility.\n3. **Simple
+        Syntax**: Ruby''s syntax is designed to be readable and easy to write, making
+        it a great language for beginners.\n4. **Block and Iterators**: Ruby has powerful
+        constructs for handling collections and performing operations on them.\n5.
+        **Metaprogramming**: Ruby supports metaprogramming, allowing developers to
+        write code that can modify itself.\n6. **Gem System**: Ruby has a robust package
+        management system called RubyGems, which makes it easy to share and reuse
+        code.\n\nRuby is often used for web development, thanks to the Ruby on Rails
+        framework, which simplifies the creation of database-backed web applications.
+        It is also used for scripting, automation, and other general-purpose programming
+        tasks."},"finish_reason":"stop"}],"usage":{"prompt_tokens":362,"completion_tokens":268,"total_tokens":630}}
+
+        '
+  recorded_at: Thu, 15 May 2025 09:38:14 GMT
+recorded_with: VCR 6.3.1

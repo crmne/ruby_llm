@@ -18,10 +18,10 @@ module RubyLLM
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
 
-      config = context&.config || RubyLLM.config
-      model_id = model || config.default_model
+      @context = context
+      @config = context&.config || RubyLLM.config
+      model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
-      @connection = context ? context.connection_for(@provider) : @provider.connection(config)
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -62,6 +62,7 @@ module RubyLLM
 
     def with_model(model_id, provider: nil, assume_exists: false)
       @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
+      @connection = @context ? @context.connection_for(@provider) : @provider.connection(@config)
       self
     end
 

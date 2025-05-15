@@ -86,7 +86,6 @@
       ]
     },
     "capabilities": [
-      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -95,10 +94,6 @@
           "input_per_million": 0.8,
           "cached_input_per_million": 1.0,
           "output_per_million": 4.0
-        },
-        "batch": {
-          "input_per_million": 0.4,
-          "output_per_million": 2.0
         }
       }
     },
@@ -123,7 +118,6 @@
       ]
     },
     "capabilities": [
-      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -132,10 +126,6 @@
           "input_per_million": 0.8,
           "cached_input_per_million": 1.0,
           "output_per_million": 4.0
-        },
-        "batch": {
-          "input_per_million": 0.4,
-          "output_per_million": 2.0
         }
       }
     },
@@ -345,7 +335,6 @@
       ]
     },
     "capabilities": [
-      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -354,10 +343,6 @@
           "input_per_million": 0.25,
           "cached_input_per_million": 0.3,
           "output_per_million": 1.25
-        },
-        "batch": {
-          "input_per_million": 0.125,
-          "output_per_million": 0.625
         }
       }
     },
@@ -382,7 +367,6 @@
       ]
     },
     "capabilities": [
-      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -391,10 +375,6 @@
           "input_per_million": 15.0,
           "cached_input_per_million": 18.75,
           "output_per_million": 75.0
-        },
-        "batch": {
-          "input_per_million": 7.5,
-          "output_per_million": 37.5
         }
       }
     },
@@ -419,7 +399,6 @@
       ]
     },
     "capabilities": [
-      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -428,10 +407,6 @@
           "input_per_million": 15.0,
           "cached_input_per_million": 18.75,
           "output_per_million": 75.0
-        },
-        "batch": {
-          "input_per_million": 7.5,
-          "output_per_million": 37.5
         }
       }
     },
@@ -3158,7 +3133,14 @@
         }
       }
     },
-    "metadata": {}
+    "metadata": {
+      "version": "001",
+      "description": "Gemini 2.0 Flash 001",
+      "supported_generation_methods": [
+        "bidiGenerateContent",
+        "countTokens"
+      ]
+    }
   },
   {
     "id": "gemini-2.0-flash-preview-image-generation",
@@ -3713,7 +3695,7 @@
     "id": "gemini-embedding-exp-03-07",
     "name": "Gemini Embedding Experimental",
     "provider": "gemini",
-    "family": "gemini-embedding",
+    "family": "gemini-embedding-exp",
     "created_at": null,
     "context_window": 8192,
     "max_output_tokens": null,
@@ -3998,7 +3980,7 @@
     "id": "imagen-3.0-generate-002",
     "name": "Imagen 3",
     "provider": "gemini",
-    "family": "imagen-3",
+    "family": "imagen-3.0-generate",
     "created_at": null,
     "context_window": null,
     "max_output_tokens": null,
@@ -4018,52 +4000,6 @@
       "description": "Vertex served Imagen 3.0 002 model",
       "supported_generation_methods": [
         "predict"
-      ]
-    }
-  },
-  {
-    "id": "learnlm-1.5-pro-experimental",
-    "name": "LearnLM 1.5 Pro Experimental",
-    "provider": "gemini",
-    "family": "other",
-    "created_at": null,
-    "context_window": 32767,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "caching"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        }
-      }
-    },
-    "metadata": {
-      "version": "001",
-      "description": "Alias that points to the most recent stable version of Gemini 1.5 Pro, our mid-size multimodal model that supports up to 2 million tokens.",
-      "supported_generation_methods": [
-        "generateContent",
-        "countTokens"
       ]
     }
   },
@@ -4260,7 +4196,7 @@
     "id": "veo-2.0-generate-001",
     "name": "Veo 2",
     "provider": "gemini",
-    "family": "veo-2",
+    "family": "veo-2.0-generate",
     "created_at": null,
     "context_window": null,
     "max_output_tokens": null,
@@ -4288,7 +4224,7 @@
     "provider": "openai",
     "family": "babbage-002",
     "created_at": null,
-    "context_window": null,
+    "context_window": 16384,
     "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
@@ -7750,7 +7686,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 6.5625,
+          "input_per_million": 7.5,
           "output_per_million": 9.375
         }
       }
@@ -8116,7 +8052,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.5,
+          "input_per_million": 1.875,
           "output_per_million": 2.25
         }
       }
@@ -15421,8 +15357,8 @@
     "provider": "openrouter",
     "family": "meta-llama",
     "created_at": "2024-12-06 18:28:57 +0100",
-    "context_window": 8000,
-    "max_output_tokens": 8000,
+    "context_window": 131072,
+    "max_output_tokens": 2048,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15452,8 +15388,8 @@
         "instruct_type": "llama3"
       },
       "top_provider": {
-        "context_length": 8000,
-        "max_completion_tokens": 8000,
+        "context_length": 131072,
+        "max_completion_tokens": 2048,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -15552,7 +15488,7 @@
     "provider": "openrouter",
     "family": "meta-llama",
     "created_at": "2025-04-05 21:37:02 +0200",
-    "context_window": 256000,
+    "context_window": 128000,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -15585,7 +15521,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
+        "context_length": 128000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -17661,8 +17597,6 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "response_format",
-        "structured_outputs",
         "seed",
         "top_k",
         "logit_bias",
@@ -17670,6 +17604,8 @@
         "top_logprobs",
         "tools",
         "tool_choice",
+        "response_format",
+        "structured_outputs",
         "repetition_penalty",
         "min_p"
       ]
@@ -18675,8 +18611,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09375,
-          "output_per_million": 0.75
+          "input_per_million": 0.15,
+          "output_per_million": 0.9375
         }
       }
     },
@@ -18739,8 +18675,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09375,
-          "output_per_million": 0.75
+          "input_per_million": 0.15,
+          "output_per_million": 0.9375
         }
       }
     },
@@ -18803,7 +18739,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.5,
+          "input_per_million": 1.875,
           "output_per_million": 2.25
         }
       }
@@ -18867,8 +18803,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09375,
-          "output_per_million": 0.75
+          "input_per_million": 0.15,
+          "output_per_million": 0.9375
         }
       }
     },
@@ -18931,7 +18867,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.75,
+          "input_per_million": 0.9375,
           "output_per_million": 1.5
         }
       }
@@ -26684,7 +26620,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.5625,
-          "output_per_million": 1.125
+          "output_per_million": 0.84375
         }
       }
     },

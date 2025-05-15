@@ -21,6 +21,10 @@ module RubyLLM
               parts << format_pdf(attachment)
             when Attachments::Audio
               parts << format_audio(attachment)
+            when Attachments::Text
+              parts << format_text_file(attachment)
+            else
+              raise UnsupportedAttachmentError, attachment.class
             end
           end
 
@@ -44,6 +48,13 @@ module RubyLLM
               filename: File.basename(pdf.source),
               file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
             }
+          }
+        end
+
+        def format_text_file(text_file)
+          {
+            type: 'text',
+            text: Utils.format_text_file_for_llm(text_file)
           }
         end
 

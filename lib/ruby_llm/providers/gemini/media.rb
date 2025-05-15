@@ -14,43 +14,29 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
-              parts << format_image(attachment)
-            when Attachments::PDF
-              parts << format_pdf(attachment)
-            when Attachments::Audio
-              parts << format_audio(attachment)
-            end
+            parts << case attachment
+                     when Attachments::Text
+                       format_text_file(attachment)
+                     else
+                       format_attachment(attachment)
+                     end
           end
 
           parts
         end
 
-        def format_image(image)
+        def format_attachment(attachment)
           {
             inline_data: {
-              mime_type: image.mime_type,
-              data: image.encoded
+              mime_type: attachment.mime_type,
+              data: attachment.encoded
             }
           }
         end
 
-        def format_pdf(pdf)
+        def format_text_file(text_file)
           {
-            inline_data: {
-              mime_type: pdf.mime_type,
-              data: pdf.encoded
-            }
-          }
-        end
-
-        def format_audio(audio)
-          {
-            inline_data: {
-              mime_type: audio.mime_type,
-              data: audio.encoded
-            }
+            text: Utils.format_text_file_for_llm(text_file)
           }
         end
 
