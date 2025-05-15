@@ -39,9 +39,13 @@ module RubyLLM
           {
             model: model,
             messages: chat_messages.map { |msg| format_message(msg) },
-            temperature: temperature,
+            temperature: 1, # TODO: Ensure to maintain this as being configurable - but must be set to 1 to enable thinking
             stream: stream,
-            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
+            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096,
+            thinking: {
+              type: RubyLLM.models.find(model)&.supports_thinking? ? 'enabled' : 'disabled', # TODO: Make this configurable
+              budget_tokens: 1024 # TODO: Make this configurable
+            }
           }
         end
 
@@ -52,12 +56,20 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
+          RubyLLM.logger.debug("Anthropic response: #{data}")
+
           content_blocks = data['content'] || []
 
+          thinking_content = extract_thinking_content(content_blocks)
           text_content = extract_text_content(content_blocks)
           tool_use = Tools.find_tool_use(content_blocks)
 
-          build_message(data, text_content, tool_use)
+          build_message(data, text_content, tool_use, thinking_content)
+        end
+
+        def extract_thinking_content(blocks)
+          thinking_blocks = blocks.select { |c| c['type'] == 'thinking' }
+          thinking_blocks.map { |c| c['thinking'] }.join
         end
 
         def extract_text_content(blocks)
@@ -65,10 +77,11 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use)
+        def build_message(data, content, tool_use, thinking_content)
           Message.new(
             role: :assistant,
             content: content,
+            thinking_content: thinking_content,
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),

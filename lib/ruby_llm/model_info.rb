@@ -12,7 +12,7 @@ module RubyLLM
   #   model.input_price_per_million   # => 30.0
   class ModelInfo
     attr_reader :id, :name, :provider, :family, :created_at, :context_window, :max_output_tokens, :knowledge_cutoff,
-                :modalities, :capabilities, :pricing, :metadata
+                :modalities, :capabilities, :pricing, :metadata, :thinking
 
     def initialize(data)
       @id = data[:id]
@@ -22,6 +22,7 @@ module RubyLLM
       @created_at = data[:created_at]
       @context_window = data[:context_window]
       @max_output_tokens = data[:max_output_tokens]
+      @thinking = data[:thinking]
       @knowledge_cutoff = data[:knowledge_cutoff]
       @modalities = Modalities.new(data[:modalities] || {})
       @capabilities = data[:capabilities] || []
@@ -55,6 +56,10 @@ module RubyLLM
 
     def supports_functions?
       function_calling?
+    end
+
+    def supports_thinking?
+      thinking
     end
 
     def input_price_per_million
