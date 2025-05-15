@@ -12,15 +12,15 @@ module RubyLLM
       accumulator = StreamAccumulator.new
 
       connection.post stream_url, payload do |req|
-        if Faraday::VERSION.start_with?('1')
-          # Handle Faraday 1.x streaming with :on_data key
-          req.options[:on_data] = handle_stream do |chunk|
+        if req.options.respond_to?(:on_data)
+          # Handle Faraday 2.x streaming with on_data method
+          req.options.on_data = handle_stream do |chunk|
             accumulator.add chunk
             block.call chunk
           end
         else
-          # Handle Faraday 2.x streaming with on_data method
-          req.options.on_data = handle_stream do |chunk|
+          # Handle Faraday 1.x streaming with :on_data key
+          req.options[:on_data] = handle_stream do |chunk|
             accumulator.add chunk
             block.call chunk
           end
