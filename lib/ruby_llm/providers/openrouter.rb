@@ -5,7 +5,9 @@ module RubyLLM
     # OpenRouter API integration.
     module OpenRouter
       extend OpenAI
+      extend OpenRouter::Chat
       extend OpenRouter::Models
+      extend OpenRouter::Media
 
       module_function
 
@@ -13,10 +15,13 @@ module RubyLLM
         'https://openrouter.ai/api/v1'
       end
 
+      # @see https://openrouter.ai/docs/api-reference/overview#headers
       def headers(config)
         {
-          'Authorization' => "Bearer #{config.openrouter_api_key}"
-        }
+          'Authorization' => "Bearer #{config.openrouter_api_key}",
+          'HTTP-Referer' => config.openrouter_referer, # Optional: Site URL for rankings on openrouter.ai.
+          'X-Title' => config.openrouter_title         # Optional: Site title for rankings on openrouter.ai.
+        }.compact
       end
 
       def slug
