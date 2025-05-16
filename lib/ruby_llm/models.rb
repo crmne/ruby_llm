@@ -86,13 +86,13 @@ module RubyLLM
 
         connection = Faraday.new('https://api.parsera.org') do |f|
           f.request :json
-          f.response :json
+          f.response :json, parser_options: { symbolize_names: true }
           f.response :raise_error
           f.adapter Faraday.default_adapter
         end
 
         response = connection.get('/v1/llm-specs')
-        response.body.map { |data| ModelInfo.new(Utils.deep_symbolize_keys(data)) }
+        response.body.map { |data| ModelInfo.new(data) }
       end
 
       def merge_models(provider_models, parsera_models)
@@ -145,7 +145,7 @@ module RubyLLM
     # Load models from the JSON file
     def load_models
       data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
-      JSON.parse(data).map { |model| ModelInfo.new(Utils.deep_symbolize_keys(model)) }
+      JSON.parse(data, symbolize_names: true).map { |model| ModelInfo.new(model) }
     rescue JSON::ParserError
       []
     end
