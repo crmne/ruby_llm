@@ -261,6 +261,54 @@ end
 chat.ask "What is metaprogramming in Ruby?"
 ```
 
+## Receiving Structured Responses
+You can ensure the responses follow a schema you define like this:
+```ruby
+chat = RubyLLM.chat
+
+chat.with_response_format(:integer).ask("What is 2 + 2?").to_i
+# => 4
+
+chat.with_response_format(:string).ask("Say 'Hello World' and nothing else.").content
+# => "Hello World"
+
+chat.with_response_format(:array, items: { type: :string })
+chat.ask('What are the 2 largest countries? Only respond with country names.').content
+# => ["Russia", "Canada"]
+
+chat.with_response_format(:object, properties: { age: { type: :integer } })
+chat.ask('Provide sample customer age between 10 and 100.').content
+# => { "age" => 42 }
+
+chat.with_response_format(
+  :object,
+  properties: { hobbies: { type: :array, items: { type: :string, enum: %w[Soccer Golf Hockey] } } }
+)
+chat.ask('Provide at least 1 hobby.').content
+# => { "hobbies" => ["Soccer"] }
+```
+
+You can also provide the JSON schema you want directly to the method like this:
+```ruby
+chat.with_response_format(type: :object, properties: { age: { type: :integer } })
+# => { "age" => 31 }
+```
+
+In this example the code is automatically switching to OpenAI's json_mode since no object properties are requested:
+```ruby
+chat.with_response_format(:json) # Don't care about structure, just give me JSON
+
+chat.ask('Provide a sample customer data object with name and email keys.').content
+# => { "name" => "Tobias", "email" => "tobias@example.com" }
+
+chat.ask('Provide a sample customer data object with name and email keys.').content
+# => { "first_name" => "Michael", "email_address" => "michael@example.com" }
+```
+
+{: .note }
+**Only OpenAI supported for now:** Only OpenAI models support this feature for now. We will add support for other models shortly.
+
+
 ## Next Steps
 
 This guide covered the core `Chat` interface. Now you might want to explore:
