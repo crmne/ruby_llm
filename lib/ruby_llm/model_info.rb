@@ -97,23 +97,6 @@ module RubyLLM
     end
   end
 
-  # Holds and manages input and output modalities for a language model
-  class Modalities
-    attr_reader :input, :output
-
-    def initialize(data)
-      @input = Array(data[:input]).map(&:to_s)
-      @output = Array(data[:output]).map(&:to_s)
-    end
-
-    def to_h
-      {
-        input: input,
-        output: output
-      }
-    end
-  end
-
   # A collection that manages and provides access to different categories of pricing information
   # (text tokens, images, audio tokens, embeddings)
   class PricingCollection
