@@ -106,7 +106,7 @@ module RubyLLM
     end
 
     def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      message = Message.wrap(message_or_attributes)
       messages << message
       message
     end
