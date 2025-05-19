@@ -33,12 +33,12 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 ## Last Updated
 {: .d-inline-block }
 
-2025-05-18
+2025-05-19
 {: .label .label-green }
 
 ## Models by Provider
 
-### Openai (78)
+### Openai (79)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -53,8 +53,9 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | GPT-3.5 Turbo Instruct | gpt-3.5-turbo-instruct | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo Instruct 0914 | gpt-3.5-turbo-instruct-0914 | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
-| GPT-4 | gpt-4-0613 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
+| GPT-4 | gpt-4-0314 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 0125 Preview | gpt-4-0125-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| GPT-4 0613 | gpt-4-0613 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 1106 Preview | gpt-4-1106-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
@@ -122,13 +123,14 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | text-moderation | text-moderation-latest | openai | - | 32768 | - |
 
 
-### Anthropic (13)
+### Anthropic (14)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude 2.0 | claude-2.0 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 2.1 | claude-2.1 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Haiku | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
+| Claude 3 Haiku | claude-3-haiku-latest | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
 | Claude 3 Opus | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Opus | claude-3-opus-latest | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Sonnet | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
@@ -190,10 +192,10 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Gemma 3 1B | gemma-3-1b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3 27B | gemma-3-27b-it | gemini | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3 4B | gemma-3-4b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
-| Imagen 3 | imagen-3.0-generate-002 | gemini | - | - | Out: $0.03 |
+| Imagen 3 | imagen-3.0-generate-002 | gemini | - | - | - |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Text Embedding | text-embedding-004 | gemini | 2048 | - | - |
-| Veo 2 | veo-2.0-generate-001 | gemini | - | - | Out: $0.35 |
+| Veo 2 | veo-2.0-generate-001 | gemini | - | - | - |
 
 
 ### Deepseek (2)
@@ -238,7 +240,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 
 
-### Openrouter (319)
+### Openrouter (318)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -288,7 +290,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Arcee AI: Virtuoso Medium V2 | arcee-ai/virtuoso-medium-v2 | openrouter | 131072 | 32768 | In: $0.50, Out: $0.80 |
 | ArliAI: QwQ 32B RpR v1 (free) | arliai/qwq-32b-arliai-rpr-v1:free | openrouter | 32768 | - | - |
 | Auto Router | openrouter/auto | openrouter | 2000000 | - | - |
-| Bytedance: UI-TARS 72B  (free) | bytedance-research/ui-tars-72b:free | openrouter | 32768 | - | - |
 | Cohere: Command | cohere/command | openrouter | 4096 | 4000 | In: $1.00, Out: $2.00 |
 | Cohere: Command A | cohere/command-a | openrouter | 256000 | 8192 | In: $2.50, Out: $10.00 |
 | Cohere: Command R | cohere/command-r | openrouter | 128000 | 4000 | In: $0.50, Out: $1.50 |
@@ -378,7 +379,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.3 8B Instruct (free) | meta-llama/llama-3.3-8b-instruct:free | openrouter | 128000 | 4028 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 256000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -565,11 +566,12 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 
 ## Models by Capability
 
-### Function Calling (238)
+### Function Calling (239)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude 3 Haiku | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
+| Claude 3 Haiku | claude-3-haiku-latest | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
 | Claude 3 Opus | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Opus | claude-3-opus-latest | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Sonnet | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
@@ -733,7 +735,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.3 8B Instruct (free) | meta-llama/llama-3.3-8b-instruct:free | openrouter | 128000 | 4028 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 256000 | - | - |
 | Microsoft: Phi-3 Medium 128K Instruct | microsoft/phi-3-medium-128k-instruct | openrouter | 131072 | - | In: $0.10, Out: $0.30 |
@@ -959,7 +961,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.3 8B Instruct (free) | meta-llama/llama-3.3-8b-instruct:free | openrouter | 128000 | 4028 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 256000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -1129,6 +1131,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | GPT-3.5 Turbo Instruct | gpt-3.5-turbo-instruct | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo Instruct 0914 | gpt-3.5-turbo-instruct-0914 | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-4 0125 Preview | gpt-4-0125-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| GPT-4 0613 | gpt-4-0613 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 1106 Preview | gpt-4-1106-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4.5 Preview | gpt-4.5-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
@@ -1188,7 +1191,6 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Arcee AI: Virtuoso Medium V2 | arcee-ai/virtuoso-medium-v2 | openrouter | 131072 | 32768 | In: $0.50, Out: $0.80 |
 | ArliAI: QwQ 32B RpR v1 (free) | arliai/qwq-32b-arliai-rpr-v1:free | openrouter | 32768 | - | - |
 | Auto Router | openrouter/auto | openrouter | 2000000 | - | - |
-| Bytedance: UI-TARS 72B  (free) | bytedance-research/ui-tars-72b:free | openrouter | 32768 | - | - |
 | Cohere: Command | cohere/command | openrouter | 4096 | 4000 | In: $1.00, Out: $2.00 |
 | Cohere: Command A | cohere/command-a | openrouter | 256000 | 8192 | In: $2.50, Out: $10.00 |
 | Cohere: Command R | cohere/command-r | openrouter | 128000 | 4000 | In: $0.50, Out: $1.50 |
@@ -1278,7 +1280,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | Meta: Llama 3.3 70B Instruct (free) | meta-llama/llama-3.3-70b-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.3 8B Instruct (free) | meta-llama/llama-3.3-8b-instruct:free | openrouter | 128000 | 4028 | - |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 256000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |
@@ -1463,11 +1465,12 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Batch Processing (54)
+### Batch Processing (55)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude 3 Haiku | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
+| Claude 3 Haiku | claude-3-haiku-latest | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
 | Claude 3 Opus | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Opus | claude-3-opus-latest | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Sonnet | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
@@ -1493,7 +1496,7 @@ See [Contributing Guide](/CONTRIBUTING.md) for more details.
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | GPT-3.5 Turbo | gpt-3.5-turbo | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
-| GPT-4 | gpt-4-0613 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
+| GPT-4 | gpt-4-0314 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -1532,6 +1535,7 @@ Models that can process images:
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude 3 Haiku | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
+| Claude 3 Haiku | claude-3-haiku-latest | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
 | Claude 3 Opus | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Opus | claude-3-opus-latest | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00, Cache: $18.75 |
 | Claude 3 Sonnet | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00 |
@@ -1607,7 +1611,7 @@ Models that can process images:
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
-| Veo 2 | veo-2.0-generate-001 | gemini | - | - | Out: $0.35 |
+| Veo 2 | veo-2.0-generate-001 | gemini | - | - | - |
 | ChatGPT-4o | chatgpt-4o-latest | openai | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | GPT Image 1 | gpt-image-1 | openai | - | - | In: $5.00, Out: $40.00 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
@@ -1662,7 +1666,6 @@ Models that can process images:
 | Anthropic: Claude 3.7 Sonnet (self-moderated) | anthropic/claude-3.7-sonnet:beta | openrouter | 200000 | 128000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | Anthropic: Claude 3.7 Sonnet (thinking) | anthropic/claude-3.7-sonnet:thinking | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | Arcee AI: Spotlight | arcee-ai/spotlight | openrouter | 131072 | 65537 | In: $0.18, Out: $0.18 |
-| Bytedance: UI-TARS 72B  (free) | bytedance-research/ui-tars-72b:free | openrouter | 32768 | - | - |
 | Google: Gemini 1.5 Flash  | google/gemini-flash-1.5 | openrouter | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Google: Gemini 1.5 Flash 8B | google/gemini-flash-1.5-8b | openrouter | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
 | Google: Gemini 1.5 Pro | google/gemini-pro-1.5 | openrouter | 2000000 | 8192 | In: $1.25, Out: $5.00 |
@@ -1684,7 +1687,7 @@ Models that can process images:
 | Meta: Llama 3.2 11B Vision Instruct (free) | meta-llama/llama-3.2-11b-vision-instruct:free | openrouter | 131072 | 2048 | - |
 | Meta: Llama 3.2 90B Vision Instruct | meta-llama/llama-3.2-90b-vision-instruct | openrouter | 131072 | 2048 | In: $1.20, Out: $1.20 |
 | Meta: Llama 4 Maverick | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.16, Out: $0.60 |
-| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 256000 | - | - |
+| Meta: Llama 4 Maverick (free) | meta-llama/llama-4-maverick:free | openrouter | 128000 | - | - |
 | Meta: Llama 4 Scout | meta-llama/llama-4-scout | openrouter | 1048576 | 1048576 | In: $0.08, Out: $0.30 |
 | Meta: Llama 4 Scout (free) | meta-llama/llama-4-scout:free | openrouter | 256000 | - | - |
 | Meta: Llama Guard 4 12B | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.05, Out: $0.05 |

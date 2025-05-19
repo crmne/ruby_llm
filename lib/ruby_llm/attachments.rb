@@ -5,15 +5,16 @@ module RubyLLM
   module Attachments
     # Base class for attachments
     class Base
-      attr_reader :source, :filename
+      attr_reader :source, :filename, :mime_type
 
-      def initialize(source, filename: nil)
+      def initialize(source, filename: nil, mime_type: nil) # rubocop:disable Metrics/PerceivedComplexity
         @source = source
         @filename = filename ||
                     (@source.respond_to?(:original_filename) && @source.original_filename) ||
                     (@source.respond_to?(:path) && File.basename(@source.path)) ||
                     (@source.is_a?(String) && File.basename(@source.split('?').first)) || # Basic URL basename
                     nil
+        @mime_type = mime_type || RubyLLM::MimeTypes.detect_from_path(@filename)
       end
 
       def url?
@@ -55,10 +56,6 @@ module RubyLLM
 
       def text?
         content.is_a?(String) || RubyLLM::MimeTypes.text?(mime_type)
-      end
-
-      def mime_type
-        RubyLLM::MimeTypes.detect_from_path(@filename)
       end
 
       private

@@ -14,6 +14,12 @@ module RubyLLM
     #       File.extname(file) returns.
     # +fallback+ may be any object
     def mime_type(ext, fallback = 'application/octet-stream')
+      if ext.nil? || ext.empty?
+        raise MissingExtensionError, 'Cannot determine MIME type from empty extension. ' \
+                                     'For URLs without file extensions, please specify the MIME type explicitly: ' \
+                                     "`with: { image: { location: '/path/or/url', mime_type: 'image/jpeg' } }`"
+      end
+
       MIME_TYPES.fetch(ext.to_s.downcase, fallback)
     end
 
@@ -51,11 +57,20 @@ module RubyLLM
         NON_TEXT_PREFIX_TEXT_MIME_TYPES.include?(type)
     end
 
+    # Clean a URL by removing query parameters and fragments
+    # @param url [String] URL to clean
+    # @return [String] Cleaned URL
+    def clean_url(url)
+      return url unless url.is_a?(String)
+
+      url.split(/[?#]/).first
+    end
+
     # Extract extension from filename or path
     # @param path [String] File path or name
     # @return [String] Extension with leading dot
     def extension(path)
-      File.extname(path.to_s.downcase)
+      File.extname(clean_url(path).to_s.downcase)
     end
 
     # Extract MIME type from file path

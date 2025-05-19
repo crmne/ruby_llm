@@ -14,6 +14,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:remote_audio_path) { 'https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-AcpoKrane-ruby.wav' }
   let(:remote_pdf_path) { 'https://pdfobject.com/pdf/sample.pdf' }
   let(:remote_text_path) { 'https://www.ruby-lang.org/en/about/license.txt' }
+  let(:bad_image_url) { 'https://example.com/eiffel_tower' }
+  let(:image_url_without_ext) { 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzSCawxoHrVtf9AX-o7bp7KVxcmkYWzsIjng&s' }
 
   describe 'text models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
@@ -79,6 +81,47 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).to be_present
         expect(chat.messages.first.content).to be_a(RubyLLM::Content)
         expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Image)
+      end
+
+      it "#{provider}/#{model} raises MissingExtensionError for URLs without extension" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
+
+        expect do
+          chat.ask('What do you see in this image?', with: { image: bad_image_url })
+        end.to raise_error(RubyLLM::MissingExtensionError) do |error| # rubocop:disable Style/MultilineBlockChain
+          expect(error.message).to include('mime_type')
+        end
+      end
+
+      it "#{provider}/#{model} accepts URLs without extension when MIME type is provided" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
+
+        response = chat.ask(
+          'What do you see in this image?', with: {
+            image: { location: image_url_without_ext, mime_type: 'image/jpeg' }
+          }
+        )
+
+        expect(response.content).to be_present
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first).to be_a(RubyLLM::Attachments::Image)
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/jpeg')
+      end
+
+      it "#{provider}/#{model} can handle multiple attachment formats together" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
+
+        response = chat.ask(
+          'What do you see in these images?', with:
+          [
+            { location: image_url_without_ext, mime_type: 'image/jpeg' },
+            remote_image_path # Regular URL with extension still works
+          ]
+        )
+
+        expect(response.content).to be_present
+        expect(chat.messages.first.content.attachments.size).to eq(2)
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/jpeg')
       end
     end
   end

@@ -364,6 +364,43 @@
     "metadata": {}
   },
   {
+    "id": "claude-3-haiku-latest",
+    "name": "Claude 3 Haiku",
+    "provider": "anthropic",
+    "family": "claude-3-haiku",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "batch",
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "cached_input_per_million": 0.3,
+          "output_per_million": 1.25
+        },
+        "batch": {
+          "input_per_million": 0.125,
+          "output_per_million": 0.625
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
     "id": "claude-3-opus-20240229",
     "name": "Claude 3 Opus",
     "provider": "anthropic",
@@ -3918,13 +3955,7 @@
       ]
     },
     "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.03
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "version": "002",
       "description": "Vertex served Imagen 3.0 002 model",
@@ -4024,13 +4055,7 @@
       "output": []
     },
     "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.35
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "version": "2.0",
       "description": "Vertex served Veo 2 model.",
@@ -4219,7 +4244,8 @@
         "text"
       ],
       "output": [
-        "image"
+        "image",
+        "text"
       ]
     },
     "capabilities": [],
@@ -4557,7 +4583,7 @@
     }
   },
   {
-    "id": "gpt-4-0613",
+    "id": "gpt-4-0314",
     "name": "GPT-4",
     "provider": "openai",
     "family": "gpt-4",
@@ -4585,6 +4611,36 @@
         "batch": {
           "input_per_million": 15.0,
           "output_per_million": 30.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "gpt-4-0613",
+    "name": "GPT-4 0613",
+    "provider": "openai",
+    "family": "other",
+    "created_at": "2023-06-12 18:54:56 +0200",
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
         }
       }
     },
@@ -9840,66 +9896,6 @@
         "top_p",
         "reasoning",
         "include_reasoning",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logprobs",
-        "logit_bias",
-        "top_logprobs"
-      ]
-    }
-  },
-  {
-    "id": "bytedance-research/ui-tars-72b:free",
-    "name": "Bytedance: UI-TARS 72B  (free)",
-    "provider": "openrouter",
-    "family": "bytedance-research",
-    "created_at": "2025-03-26 21:14:25 +0100",
-    "context_window": 32768,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {},
-    "metadata": {
-      "description": "UI-TARS 72B is an open-source multimodal AI model designed specifically for automating browser and desktop tasks through visual interaction and control. The model is built with a specialized vision architecture enabling accurate interpretation and manipulation of on-screen visual data. It supports automation tasks within web browsers as well as desktop applications, including Microsoft Office and VS Code.\n\nCore capabilities include intelligent screen detection, predictive action modeling, and efficient handling of repetitive interactions. UI-TARS employs supervised fine-tuning (SFT) tailored explicitly for computer control scenarios. It can be deployed locally or accessed via Hugging Face for demonstration purposes. Intended use cases encompass workflow automation, task scripting, and interactive desktop control applications.",
-      "architecture": {
-        "modality": "text+image->text",
-        "input_modalities": [
-          "text",
-          "image"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
         "stop",
         "frequency_penalty",
         "presence_penalty",
@@ -15344,7 +15340,7 @@
     "provider": "openrouter",
     "family": "meta-llama",
     "created_at": "2025-04-05 21:37:02 +0200",
-    "context_window": 256000,
+    "context_window": 128000,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -15378,29 +15374,29 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
+        "context_length": 128000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "tools",
-        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
         "structured_outputs",
         "response_format",
-        "repetition_penalty",
-        "top_k",
         "stop",
         "frequency_penalty",
         "presence_penalty",
         "seed",
+        "top_k",
         "min_p",
+        "repetition_penalty",
         "logprobs",
         "logit_bias",
-        "top_logprobs"
+        "top_logprobs",
+        "tools",
+        "tool_choice"
       ]
     }
   },
@@ -19080,11 +19076,11 @@
         "logprobs",
         "top_logprobs",
         "response_format",
-        "tools",
-        "tool_choice",
         "top_k",
         "min_p",
-        "repetition_penalty"
+        "repetition_penalty",
+        "tools",
+        "tool_choice"
       ]
     }
   },
