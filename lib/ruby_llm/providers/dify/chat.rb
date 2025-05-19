@@ -9,6 +9,17 @@ module RubyLLM
           'v1/chat-messages'
         end
 
+        def upload_document(document_path, original_filename = nil)
+          pn = Pathname.new(document_path)
+          mime_type = RubyLLM::MimeType.for pn
+          original_filename ||= document_path.is_a?(String) ? pn.basename : (document_path.is_a?(Tempfile) ? File.basename(document_path) : document_path.original_filename)
+          payload = {
+            file: Faraday::Multipart::FilePart.new(document_path, mime_type, original_filename),
+            user: 'dify-user'
+          }
+          connection({}).upload('v1/files/upload', payload)
+        end
+
         module_function
 
         def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
@@ -24,8 +35,6 @@ module RubyLLM
           }
           payload
         end
-
-        private
 
         def parse_completion_response(response)
           data = response.body
