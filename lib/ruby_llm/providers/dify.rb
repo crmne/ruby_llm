@@ -4,6 +4,7 @@ module RubyLLM
   module Providers
     module Dify
       extend Provider
+      extend Dify::Media
       extend Dify::Chat
       extend Dify::Streaming
 

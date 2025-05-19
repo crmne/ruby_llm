@@ -12,12 +12,15 @@ module RubyLLM
         module_function
 
         def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
+          # binding.irb
+          only_message_content = messages[0].content # only support first message now
           payload = {
             inputs: {},
-            query: messages[0].content,
+            query: only_message_content.is_a?(Content) ? only_message_content.text : only_message_content,
             response_mode: (stream ? 'streaming' : 'blocking'),
             conversation_id: '',
-            user: 'dify-user'
+            user: 'dify-user',
+            files: format_files(only_message_content)
           }
           payload
         end
