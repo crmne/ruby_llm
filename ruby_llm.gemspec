@@ -40,5 +40,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday-multipart', '>= 1'
   spec.add_dependency 'faraday-net_http', '>= 1'
   spec.add_dependency 'faraday-retry', '>= 1'
+  spec.add_dependency 'marcel', '~> 1.0'
   spec.add_dependency 'zeitwerk', '~> 2'
 end

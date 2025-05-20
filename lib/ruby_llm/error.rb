@@ -25,7 +25,6 @@ module RubyLLM
   class ModelNotFoundError < StandardError; end
   class UnsupportedFunctionsError < StandardError; end
   class UnsupportedAttachmentError < StandardError; end
-  class MissingExtensionError < StandardError; end
 
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end

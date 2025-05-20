@@ -5,6 +5,19 @@ module RubyLLM
   class Connection
     attr_reader :provider, :connection, :config
 
+    def self.basic
+      Faraday.new do |faraday|
+        faraday.response :logger,
+                         RubyLLM.logger,
+                         bodies: false,
+                         response: false,
+                         errors: true,
+                         headers: false,
+                         log_level: :debug
+        faraday.use Faraday::Response::RaiseError
+      end
+    end
+
     def initialize(provider, config)
       @provider = provider
       @config = config
@@ -40,8 +53,13 @@ module RubyLLM
     end
 
     def setup_logging(faraday)
-      faraday.response :logger, RubyLLM.logger, bodies: true, response: true,
-                                                errors: true, headers: false, log_level: :debug do |logger|
+      faraday.response :logger,
+                       RubyLLM.logger,
+                       bodies: true,
+                       response: true,
+                       errors: true,
+                       headers: false,
+                       log_level: :debug do |logger|
         logger.filter(%r{[A-Za-z0-9+/=]{100,}}, 'data":"[BASE64 DATA]"')
         logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
       end
