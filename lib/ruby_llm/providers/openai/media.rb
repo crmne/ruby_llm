@@ -14,17 +14,17 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
-            when Attachments::Audio
+            when :audio
               parts << format_audio(attachment)
-            when Attachments::Text
+            when :text
               parts << format_text_file(attachment)
             else
-              raise UnsupportedAttachmentError, attachment.class
+              raise UnsupportedAttachmentError, attachment.type
             end
           end
 
@@ -45,7 +45,7 @@ module RubyLLM
           {
             type: 'file',
             file: {
-              filename: File.basename(pdf.source),
+              filename: pdf.filename,
               file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
             }
           }
@@ -63,7 +63,7 @@ module RubyLLM
             type: 'input_audio',
             input_audio: {
               data: audio.encoded,
-              format: audio.format
+              format: audio.mime_type.split('/').last
             }
           }
         end

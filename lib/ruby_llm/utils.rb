@@ -6,7 +6,7 @@ module RubyLLM
     module_function
 
     def format_text_file_for_llm(text_file)
-      "<file name='#{File.basename(text_file.source)}'>#{text_file.content}</file>"
+      "<file name='#{text_file.filename}' mime_type='#{text_file.mime_type}'>#{text_file.content}</file>"
     end
 
     def hash_get(hash, key)

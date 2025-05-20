@@ -17,15 +17,15 @@ module RubyLLM
           parts << Anthropic::Media.format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
-            when Attachments::Text
+            when :text
               parts << Anthropic::Media.format_text_file(attachment)
             else
-              raise UnsupportedAttachmentError, attachment.class
+              raise UnsupportedAttachmentError, attachment.type
             end
           end
 

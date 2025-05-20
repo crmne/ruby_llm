@@ -14,8 +14,8 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            parts << case attachment
-                     when Attachments::Text
+            parts << case attachment.type
+                     when :text
                        format_text_file(attachment)
                      else
                        format_attachment(attachment)
