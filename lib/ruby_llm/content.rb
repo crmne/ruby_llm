@@ -28,8 +28,8 @@ module RubyLLM
     end
 
     # For Rails serialization
-    def as_json
-      { text: @text, attachments: @attachments.map(&:as_json) }
+    def to_h
+      { text: @text, attachments: @attachments.map(&:to_h) }
     end
 
     private
