@@ -34,6 +34,7 @@ module RubyLLM
                   :retry_interval,
                   :retry_backoff_factor,
                   :retry_interval_randomness,
+                  :http_proxy,
                   # Logging configuration
                   :log_file,
                   :log_level
@@ -45,6 +46,7 @@ module RubyLLM
       @retry_interval = 0.1
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
+      @http_proxy = nil
 
       # Default models
       @default_model = 'gpt-4.1-nano'
