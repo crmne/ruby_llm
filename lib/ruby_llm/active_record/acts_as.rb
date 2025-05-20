@@ -233,16 +233,16 @@ module RubyLLM
                          elsif file.is_a?(ActiveStorage::Attachment)
                            file.blob.content_type
                          else
-                           RubyLLM::MimeTypes.detect_from_path(file.to_s)
+                           RubyLLM::MimeType.for Pathname.new(file.to_s)
                          end
 
-          if RubyLLM::MimeTypes.image?(content_type)
+          if RubyLLM::MimeType.image?(content_type)
             result[:image] ||= []
             result[:image] << file
-          elsif RubyLLM::MimeTypes.audio?(content_type)
+          elsif RubyLLM::MimeType.audio?(content_type)
             result[:audio] ||= []
             result[:audio] << file
-          elsif RubyLLM::MimeTypes.pdf?(content_type)
+          elsif RubyLLM::MimeType.pdf?(content_type)
             result[:pdf] ||= []
             result[:pdf] << file
           else
@@ -267,7 +267,7 @@ module RubyLLM
       def attach_file(message, file_source)
         if file_source.to_s.match?(%r{^https?://})
           # For URLs, create a special attachment that just stores the URL
-          content_type = RubyLLM::MimeTypes.detect_from_path(file_source.to_s)
+          content_type = RubyLLM::MimeType.for Pathname.new(file_source.to_s)
 
           # Create a minimal blob that just stores the URL
           blob = ActiveStorage::Blob.create_and_upload!(
@@ -282,7 +282,7 @@ module RubyLLM
           message.attachments.attach(
             io: file_source,
             filename: extract_filename(file_source),
-            content_type: RubyLLM::MimeTypes.detect_from_path(extract_filename(file_source))
+            content_type: RubyLLM::MimeType.for(Pathname.new(extract_filename(file_source)))
           ) # Already a file-like object
         elsif file_source.is_a?(::ActiveStorage::Attachment)
           # Copy from existing ActiveStorage attachment
@@ -294,7 +294,7 @@ module RubyLLM
           message.attachments.attach(
             io: File.open(file_source),
             filename: File.basename(file_source),
-            content_type: RubyLLM::MimeTypes.detect_from_path(file_source)
+            content_type: RubyLLM::MimeType.for(Pathname.new(file_source))
           )
         end
       end
@@ -371,11 +371,11 @@ module RubyLLM
                               blob_path_for(attachment)
                             end
 
-          if RubyLLM::MimeTypes.image?(attachment.content_type)
+          if RubyLLM::MimeType.image?(attachment.content_type)
             content_obj.add_image(attachment_data)
-          elsif RubyLLM::MimeTypes.audio?(attachment.content_type)
+          elsif RubyLLM::MimeType.audio?(attachment.content_type)
             content_obj.add_audio(attachment_data)
-          elsif RubyLLM::MimeTypes.pdf?(attachment.content_type)
+          elsif RubyLLM::MimeType.pdf?(attachment.content_type)
             content_obj.add_pdf(attachment_data)
           else
             content_obj.add_text(attachment_data)
