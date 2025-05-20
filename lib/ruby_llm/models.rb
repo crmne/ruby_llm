@@ -61,8 +61,10 @@ module RubyLLM
             modalities: { input: %w[text image], output: %w[text] },
             metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
           )
-          RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
+          unless ENV['RUBYLLM_SILENCE_ASSUME_MODEL_CAPABILITIES_WARNING']
+            RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
                               'Capabilities may not be accurately reflected.'
+          end
         else
           model = Models.find model_id, provider
           provider = Provider.providers[model.provider.to_sym] || raise(Error, "Unknown provider: #{model.provider}")
