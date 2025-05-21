@@ -78,6 +78,7 @@ RubyLLM.configure do |config|
   config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
   config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
   config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
+  config.http_proxy = ENV.fetch('HTTP_PROXY', 'http://proxy.example.com:3128') # Optional HTTP proxy
 
   # --- Logging Settings ---
   config.log_file = '/logs/ruby_llm.log'
