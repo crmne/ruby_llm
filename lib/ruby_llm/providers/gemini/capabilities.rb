@@ -12,7 +12,7 @@ module RubyLLM
         # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
-          when /gemini-2\.0-flash/, /gemini-1\.5-flash/ then 1_048_576
+          when /gemini-2\.5-pro-preview/, /gemini-2\.5-flash-preview/, /gemini-2\.0-flash/, /gemini-1\.5-flash/ then 1_048_576
           when /gemini-1\.5-pro/ then 2_097_152
           when /text-embedding-004/, /embedding-001/ then 2_048
           when /aqa/ then 7_168
@@ -25,7 +25,8 @@ module RubyLLM
         # @return [Integer] the maximum output tokens
         def max_tokens_for(model_id)
           case model_id
-          when /gemini-2\.0-flash/, /gemini-1\.5/ then 8_192
+          when /gemini-2\.5-pro-preview/ then 64_000
+          when /gemini-2\.5-flash-preview/, /gemini-2\.0-flash/, /gemini-1\.5/ then 8_192
           when /text-embedding-004/, /embedding-001/ then 768 # Output dimension size for embeddings
           when /aqa/ then 1_024
           else 4_096 # Sensible default
@@ -140,6 +141,8 @@ module RubyLLM
         # @return [String] the model family identifier
         def model_family(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
           case model_id
+          when /gemini-2\.5-pro-preview/ then 'gemini25_pro_preview'
+          when /gemini-2\.5-flash-preview/ then 'gemini25_flash_preview'
           when /gemini-2\.0-flash-lite/ then 'gemini20_flash_lite'
           when /gemini-2\.0-flash/ then 'gemini20_flash'
           when /gemini-1\.5-flash-8b/ then 'gemini15_flash_8b'
@@ -158,6 +161,8 @@ module RubyLLM
         # @return [Symbol] the pricing family identifier
         def pricing_family(model_id) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
           case model_id
+          when /gemini-2\.5-pro-preview/ then :pro_2_5 # rubocop:disable Naming/VariableNumber
+          when /gemini-2\.5-flash-preview/ then :flash_2_5 # rubocop:disable Naming/VariableNumber
           when /gemini-2\.0-flash-lite/ then :flash_lite_2 # rubocop:disable Naming/VariableNumber
           when /gemini-2\.0-flash/ then :flash_2 # rubocop:disable Naming/VariableNumber
           when /gemini-1\.5-flash-8b/ then :flash_8b
@@ -223,6 +228,14 @@ module RubyLLM
           pro_1_0: { # Gemini 1.0 Pro # rubocop:disable Naming/VariableNumber
             input: 0.50,
             output: 1.50
+          },
+          pro_2_5: { # Gemini 2.5 Pro Preview # rubocop:disable Naming/VariableNumber
+            input: 0.12,
+            output: 0.50
+          },
+          flash_2_5: { # Gemini 2.5 Flash Preview # rubocop:disable Naming/VariableNumber
+            input: 0.10,
+            output: 0.40
           },
           embedding: { # Text Embedding models
             input: 0.00,
