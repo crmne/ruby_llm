@@ -12,9 +12,9 @@ module RubyLLM
         # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
-          when /gemini-2\.5-pro-exp-03-25/, /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/ # rubocop:disable Layout/LineLength
+          when /gemini-2\.5-flash/, /gemini-2\.5-pro-exp-03-25/, /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/ # rubocop:disable Layout/LineLength
             1_048_576
-          when /gemini-1\.5-pro/ then 2_097_152
+          when /gemini-2\.5-pro/, /gemini-1\.5-pro/ then 2_097_152
           when /gemini-embedding-exp/ then 8_192
           when /text-embedding-004/, /embedding-001/ then 2_048
           when /aqa/ then 7_168
@@ -28,8 +28,8 @@ module RubyLLM
         # @return [Integer] the maximum output tokens
         def max_tokens_for(model_id)
           case model_id
-          when /gemini-2\.5-pro-exp-03-25/ then 64_000
-          when /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/, /gemini-1\.5-pro/ # rubocop:disable Layout/LineLength
+          when /gemini-2\.5-pro-exp-03-25/, /gemini-2\.5-pro/ then 64_000
+          when /gemini-2\.5-flash/, /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/, /gemini-1\.5-pro/ # rubocop:disable Layout/LineLength
             8_192
           when /gemini-embedding-exp/ then nil # Elastic, supports 3072, 1536, or 768
           when /text-embedding-004/, /embedding-001/ then 768 # Output dimension size for embeddings
@@ -146,7 +146,12 @@ module RubyLLM
         # @return [String] the model family identifier
         def model_family(model_id)
           case model_id
+          when /gemini-2\.5-pro-preview-05-06/ then 'gemini25_pro_preview'
+          when /gemini-2\.5-pro-preview-tts/ then 'gemini25_pro_preview_tts'
           when /gemini-2\.5-pro-exp-03-25/ then 'gemini25_pro_exp'
+          when /gemini-2\.5-flash-preview-05-20/ then 'gemini25_flash_preview'
+          when /gemini-2\.5-flash-preview-native-audio-dialog/ then 'gemini25_flash_preview_audio'
+          when /gemini-2\.5-flash-preview-tts/ then 'gemini25_flash_preview_tts'
           when /gemini-2\.0-flash-lite/ then 'gemini20_flash_lite'
           when /gemini-2\.0-flash/ then 'gemini20_flash'
           when /gemini-1\.5-flash-8b/ then 'gemini15_flash_8b'
@@ -166,7 +171,8 @@ module RubyLLM
         # @return [Symbol] the pricing family identifier
         def pricing_family(model_id)
           case model_id
-          when /gemini-2\.5-pro-exp-03-25/ then :pro_2_5 # rubocop:disable Naming/VariableNumber
+          when /gemini-2\.5-pro-preview/, /gemini-2\.5-pro-exp-03-25/ then :pro_2_5 # rubocop:disable Naming/VariableNumber
+          when /gemini-2\.5-flash-preview/ then :flash_2_5 # rubocop:disable Naming/VariableNumber
           when /gemini-2\.0-flash-lite/ then :flash_lite_2 # rubocop:disable Naming/VariableNumber
           when /gemini-2\.0-flash/ then :flash_2 # rubocop:disable Naming/VariableNumber
           when /gemini-1\.5-flash-8b/ then :flash_8b
@@ -184,7 +190,7 @@ module RubyLLM
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports long context
         def long_context_model?(model_id)
-          model_id.match?(/gemini-1\.5-(?:pro|flash)|gemini-1\.5-flash-8b/)
+          model_id.match?(/gemini-1\.5-(?:pro|flash)|gemini-1\.5-flash-8b|gemini-2\.5|gemini-2\.0/)
         end
 
         # Returns the context length for the model
@@ -196,6 +202,14 @@ module RubyLLM
 
         # Pricing information for Gemini models (per 1M tokens in USD)
         PRICES = {
+          flash_2_5: { # Gemini 2.5 Flash Preview # rubocop:disable Naming/VariableNumber
+            input: 0.10,
+            output: 0.40,
+            audio_input: 0.70,
+            cache: 0.025,
+            cache_storage: 1.00,
+            grounding_search: 35.00 # per 1K requests after 1.5K free
+          },
           flash_2: { # Gemini 2.0 Flash # rubocop:disable Naming/VariableNumber
             input: 0.10,
             output: 0.40,
@@ -229,9 +243,11 @@ module RubyLLM
             cache_storage: 4.50,
             grounding_search: 35.00 # per 1K requests up to 5K per day
           },
-          pro_2_5: { # Gemini 2.5 Pro Experimental # rubocop:disable Naming/VariableNumber
+          pro_2_5: { # Gemini 2.5 Pro Preview/Experimental # rubocop:disable Naming/VariableNumber
             input: 0.12,
-            output: 0.50
+            output: 0.50,
+            cache: 0.03,
+            cache_storage: 1.50
           },
           gemini_embedding: { # Gemini Embedding Experimental
             input: 0.002,
@@ -274,8 +290,11 @@ module RubyLLM
             modalities[:input] << 'pdf'
           end
 
-          # Audio support
-          modalities[:input] << 'audio' if model_id.match?(/audio/)
+          # Audio input support
+          modalities[:input] << 'audio' if model_id.match?(/audio/) || supports_audio?(model_id)
+
+          # Audio output support (TTS)
+          modalities[:output] << 'audio' if model_id.match?(/tts/)
 
           # Embedding output
           modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
