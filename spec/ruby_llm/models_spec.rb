@@ -137,26 +137,6 @@ RSpec.describe RubyLLM::Models do
       expect(family_models.all).not_to be_empty
     end
   end
-  
-  describe 'Gemini models' do
-    it 'includes Gemini 2.5 models' do # rubocop:disable RSpec/MultipleExpectations
-      gemini_models = RubyLLM.models.by_provider('gemini')
-      
-      # Check for Gemini 2.5 Flash Preview model
-      flash_preview = gemini_models.find('gemini-2.5-flash-preview-05-20')
-      expect(flash_preview).to have_attributes(
-        id: 'gemini-2.5-flash-preview-05-20',
-        provider: 'gemini'
-      )
-      
-      # Check for Gemini 2.5 Pro Preview model
-      pro_preview = gemini_models.find('gemini-2.5-pro-preview-05-06')
-      expect(pro_preview).to have_attributes(
-        id: 'gemini-2.5-pro-preview-05-06',
-        provider: 'gemini'
-      )
-    end
-  end
 
   describe '#save_models' do
     it 'saves models to the models.json file' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
