@@ -32,16 +32,15 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: Content.new(message, with)
+      add_message Message.user(Content.new(message, with))
       complete(&)
     end
 
     alias say ask
 
     def with_instructions(instructions, replace: false)
-      @messages = @messages.reject { |msg| msg.role == :system } if replace
-
-      add_message role: :system, content: instructions
+      messages.reject!(&:system?) if replace
+      add_message Message.system(instructions)
       self
     end
 
@@ -50,8 +49,8 @@ module RubyLLM
         raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
       end
 
-      tool_instance = tool.is_a?(Class) ? tool.new : tool
-      @tools[tool_instance.name.to_sym] = tool_instance
+      tool = tool.new if tool.is_a?(Class)
+      @tools[tool.name.to_sym] = tool
       self
     end
 
@@ -142,11 +141,8 @@ module RubyLLM
     end
 
     def add_tool_result(tool_use_id, result)
-      add_message(
-        role: :tool,
-        content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
-        tool_call_id: tool_use_id
-      )
+      content = result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s
+      add_message Message.tool(content, tool_call_id: tool_use_id)
     end
   end
 end
