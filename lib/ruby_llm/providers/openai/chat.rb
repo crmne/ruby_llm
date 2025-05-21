@@ -35,9 +35,8 @@ module RubyLLM
           message_data = data.dig('choices', 0, 'message')
           return unless message_data
 
-          Message.new(
-            role: :assistant,
-            content: message_data['content'],
+          Message.assistant(
+            message_data['content'],
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],

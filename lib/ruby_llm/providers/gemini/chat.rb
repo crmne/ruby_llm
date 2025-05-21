@@ -69,9 +69,8 @@ module RubyLLM
           data = response.body
           tool_calls = extract_tool_calls(data)
 
-          Message.new(
-            role: :assistant,
-            content: extract_content(data),
+          Message.assistant(
+            extract_content(data),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),

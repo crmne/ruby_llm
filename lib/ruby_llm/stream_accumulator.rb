@@ -30,9 +30,8 @@ module RubyLLM
     end
 
     def to_message
-      Message.new(
-        role: :assistant,
-        content: content.empty? ? nil : content,
+      Message.assistant(
+        content.empty? ? nil : content,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
