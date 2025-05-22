@@ -63,5 +63,15 @@ RSpec.describe RubyLLM::Image do
         RubyLLM.paint('a cat', model: 'invalid-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
+
+    it 'openai/gpt-image-1 can paint images' do # rubocop:disable RSpec/MultipleExpectations
+      image = RubyLLM.paint('a siamese cat', model: 'gpt-image-1')
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+
+      save_and_verify_image image
+    end
   end
 end
