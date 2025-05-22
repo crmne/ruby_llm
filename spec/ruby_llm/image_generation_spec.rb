@@ -33,6 +33,7 @@ RSpec.describe RubyLLM::Image do
       expect(image.url).to start_with('https://')
       expect(image.mime_type).to include('image')
       expect(image.revised_prompt).to include('cat')
+      expect(image.model_id).to eq('dall-e-3')
 
       save_and_verify_image image
     end
@@ -70,6 +71,7 @@ RSpec.describe RubyLLM::Image do
       expect(image.base64?).to be(true)
       expect(image.data).to be_present
       expect(image.mime_type).to include('image')
+      expect(image.model_id).to eq('gpt-image-1')
 
       save_and_verify_image image
     end
