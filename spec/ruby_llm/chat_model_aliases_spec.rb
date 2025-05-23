@@ -24,4 +24,11 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
+
+  it 'handles different provider prefixes correctly' do # rubocop:disable RSpec/MultipleExpectations
+    # Test that we can match models regardless of their provider prefix
+    chat = RubyLLM.chat(model: 'claude-3-7-sonnet', provider: :bedrock)
+    expect(chat.model.id).to eq('us.anthropic.claude-3-7-sonnet-20250219-v1:0')
+    expect(chat.model.provider).to eq('bedrock')
+  end
 end
