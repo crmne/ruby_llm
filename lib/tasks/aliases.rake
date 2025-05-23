@@ -123,22 +123,23 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
 
   def find_best_bedrock_model(anthropic_model, bedrock_models) # rubocop:disable Metrics/PerceivedComplexity,Rake/MethodDefinitionInTask
     # Special mapping for Claude 2.x models
-    bedrock_pattern = case anthropic_model
-                      when 'claude-2.0', 'claude-2'
-                        'anthropic.claude-v2'
-                      when 'claude-2.1'
-                        'anthropic.claude-v2:1'
-                      when 'claude-instant-v1', 'claude-instant'
-                        'anthropic.claude-instant'
-                      else
-                        # For Claude 3+ models, extract base name
-                        base_name = extract_base_name(anthropic_model)
-                        "anthropic.#{base_name}"
-                      end
+    base_pattern = case anthropic_model
+                   when 'claude-2.0', 'claude-2'
+                     'claude-v2'
+                   when 'claude-2.1'
+                     'claude-v2:1'
+                   when 'claude-instant-v1', 'claude-instant'
+                     'claude-instant'
+                   else
+                     # For Claude 3+ models, extract base name
+                     extract_base_name(anthropic_model)
+                   end
 
-    # Find all matching Bedrock models
+    # Find all matching Bedrock models by stripping provider prefix and comparing base name
     matching_models = bedrock_models.select do |bedrock_model|
-      bedrock_model.start_with?(bedrock_pattern)
+      # Strip any provider prefix (anthropic. or us.anthropic.)
+      model_without_prefix = bedrock_model.sub(/^(?:us\.)?anthropic\./, '')
+      model_without_prefix.start_with?(base_pattern)
     end
 
     return nil if matching_models.empty?
