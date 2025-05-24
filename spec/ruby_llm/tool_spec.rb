@@ -32,5 +32,12 @@ RSpec.describe RubyLLM::Tool do
       stub_const('TestModule::SampleTool', Class.new(described_class))
       expect(TestModule::SampleTool.new.name).to eq('test_module--sample')
     end
+
+    it 'truncates names longer than 64 characters' do
+      stub_const('VeryLongToolNameThatExceedsTheMaximumAllowedLengthForOpenAIAndOtherProvidersTool', Class.new(described_class))
+      tool = VeryLongToolNameThatExceedsTheMaximumAllowedLengthForOpenAIAndOtherProvidersTool.new
+      expect(tool.name.length).to be <= 64
+      expect(tool.name).to start_with('very_long_tool_name_that_exceeds_the_maximum_allowed_length_for')
+    end
   end
 end

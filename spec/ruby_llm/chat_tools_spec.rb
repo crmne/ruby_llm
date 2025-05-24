@@ -31,6 +31,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class VeryLongToolNameThatExceedsTheMaximumAllowedLengthForOpenAIAndOtherProvidersTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration,Layout/LineLength
+    description 'Tool with a very long name that should be truncated'
+
+    def execute
+      'Success'
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -137,6 +145,26 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|
         expect(error.message).to include('This tool is broken')
+      end
+    end
+  end
+
+  describe 'long tool names' do
+    it 'truncates tool names to 64 characters' do
+      tool = VeryLongToolNameThatExceedsTheMaximumAllowedLengthForOpenAIAndOtherProvidersTool.new
+      expect(tool.name.length).to be <= 64
+      expect(tool.name).to start_with('very_long_tool_name_that_exceeds_the_maximum_allowed_length_for')
+    end
+
+    CHAT_MODELS.take(1).each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} can use tools with long names" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(VeryLongToolNameThatExceedsTheMaximumAllowedLengthForOpenAIAndOtherProvidersTool)
+
+        response = chat.ask('Use the tool with the long name')
+        expect(response.content).to include('Success')
       end
     end
   end
