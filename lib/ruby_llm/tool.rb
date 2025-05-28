@@ -57,6 +57,7 @@ module RubyLLM
           .gsub(/([a-z\d])([A-Z])/, '\1_\2')
           .downcase
           .delete_suffix('_tool')
+          .slice(0, 64)
     end
 
     def description
