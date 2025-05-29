@@ -24,39 +24,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 May 2025 19:05:41 GMT
+      - Thu, 29 May 2025 14:57:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Ratelimitbysize-Limit-Month:
-      - '10000000000'
-      X-Ratelimitbysize-Remaining-Month:
-      - '9999968000'
-      Ratelimitbysize-Query-Cost:
-      - '32000'
-      X-Ratelimitbysize-Limit-Minute:
-      - '2000000'
-      X-Ratelimitbysize-Remaining-Minute:
-      - '1968000'
-      Ratelimitbysize-Remaining:
-      - '1968000'
-      Ratelimitbysize-Reset:
-      - '24'
-      Ratelimitbysize-Limit:
-      - '2000000'
       X-Envoy-Upstream-Service-Time:
-      - '4987'
+      - '811'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1999883'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '10000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '9999998232'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '117'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '4988'
+      - '812'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '21'
       X-Kong-Request-Id:
-      - e094f77384f0302a96276d09d0299415
+      - d790bd26bfafa74fbaf1212806f84812
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -70,10 +64,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e7778ec67e224ab7ad73ad345fe70f0a","object":"chat.completion","created":1746644740,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
-        image depicts a red gemstone, specifically a ruby. The ruby is cut in a way
-        that showcases its facets, giving it a shiny and polished appearance. The
-        stone is centrally placed against a plain background, emphasizing its vibrant
-        red color and intricate cut."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":41,"total_tokens":94,"completion_tokens":53}}'
-  recorded_at: Wed, 07 May 2025 19:05:41 GMT
+      string: '{"id":"0f8ec2f341f34b1b9abd2e15ef5796d4","object":"chat.completion","created":1748530671,"model":"mistral-small-latest","choices":[{"index":0,"message":{"role":"assistant","tool_calls":null,"content":"The
+        image depicts a red gemstone, specifically a ruby. The ruby is shown in a
+        polished, faceted form, which is typical for gemstones used in jewelry. The
+        facets reflect light, giving it a shiny and lustrous appearance. The gemstone
+        is centrally positioned against a plain background, which helps to highlight
+        its vibrant red color and the intricate cuts on its surface."},"finish_reason":"stop","logprobs":null}],"usage":{"prompt_tokens":41,"total_tokens":117,"completion_tokens":76}}'
+  recorded_at: Thu, 29 May 2025 14:57:52 GMT
 recorded_with: VCR 6.3.1
