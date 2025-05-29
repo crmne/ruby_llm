@@ -117,7 +117,7 @@ Attach tools to a `Chat` instance using `with_tool` or `with_tools`.
 chat = RubyLLM.chat(model: 'gpt-4o') # Use a model that supports tools
 
 # Instantiate your tool if it requires arguments, otherwise use the class
-weather_tool = WeatherLookup.new
+weather_tool = Weather.new
 
 # Add the tool(s) to the chat
 chat.with_tool(weather_tool)
