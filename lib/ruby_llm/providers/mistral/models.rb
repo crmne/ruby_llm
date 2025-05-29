@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ruby_llm/model/info'
+
 module RubyLLM
   module Providers
     module Mistral
@@ -20,7 +22,7 @@ module RubyLLM
         def parse_model(model, slug, capabilities)
           id = model["id"]
 
-          ModelInfo.new(
+          ModelInfoWithFunctions.new(
             id: id,
             created_at: model["created"] ? Time.at(model["created"]) : nil,
             display_name: capabilities.format_display_name(id),
@@ -35,6 +37,12 @@ module RubyLLM
             max_tokens: capabilities.max_tokens_for(id),
             capabilities: capabilities.capabilities_for(id),
           )
+        end
+
+        class ModelInfoWithFunctions < RubyLLM::Model::Info
+          def supports_functions?
+            RubyLLM::Providers::Mistral::Capabilities.supports_functions?(id)
+          end
         end
       end
     end

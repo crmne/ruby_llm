@@ -59,29 +59,15 @@ module RubyLLM
 
         def render_message(message)
           result = {}
-          result[:role] = message.role
+          result[:role] = message.role.to_s # Ensure role is a string for API compliance
 
           # If the message content is a RubyLLM::Content with attachments, convert to multimodal array
           if message.content.is_a?(RubyLLM::Content)
             content = message.content
-            if content.attachments.any?
-              multimodal = []
-              multimodal << { type: "text", text: content.text } if content.text
-              content.attachments.each do |attachment|
-                case attachment
-                when RubyLLM::Attachments::Image
-                  multimodal << { type: "image", source: attachment.url? ? { url: attachment.source } : { type: 'base64', media_type: attachment.mime_type, data: attachment.encoded } }
-                # Add more attachment types if Mistral supports them
-                end
-              end
-              # Always format multimodal for Mistral
-              result[:content] = Mistral::Media.format_content(multimodal)
-            else
-              result[:content] = content.text
-            end
+            result[:content] = Mistral::Media.format_content(content)
           elsif message.content.is_a?(Array)
             # Multimodal content: format each part
-            formatted_content = Mistral::Media.format_content(message.content.compact)
+            formatted_content = message.content.compact
             result[:content] = formatted_content unless formatted_content.empty?
           else
             # Simple text content
@@ -96,6 +82,7 @@ module RubyLLM
             tool_calls = message.tool_calls.is_a?(Hash) ? message.tool_calls.values : message.tool_calls
             result[:tool_calls] = tool_calls.map { |tc| render_tool_call(tc) }
           end
+          
           result.compact
         end
 

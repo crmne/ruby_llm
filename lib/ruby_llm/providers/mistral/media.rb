@@ -2,15 +2,57 @@ module RubyLLM
   module Providers
     module Mistral
       # Media handling for Mistral models
-      #
-      # NOTE: There's currently an issue with Pixtral vision capabilities in the test suite.
-      # The content array contains nil values when an image is attached, which causes the API to return errors.
-      # This might be due to how images are being attached or formatted in the Content class.
-      # The test in chat_content_spec.rb for 'pixtral-12b-latest can understand images' currently fails.
-      # The debug output shows: content: [{type: "text", text: "..."}, nil] where the second element should be the image.
-      # This likely requires fixes in the core library's Content class or how it interacts with provider-specific formatting.
+
       module Media
         module_function
+
+        def format_content(content)
+          return content unless content.is_a?(Content)
+
+          parts = []
+          parts << { type: "text", text: content.text } if content.text
+
+          content.attachments.each do |attachment|
+            case attachment.type
+            when :image
+              parts << format_image(attachment)
+            when :pdf
+              # Mistral doesn't currently support PDFs other than
+              # through the OCR API
+              raise UnsupportedAttachmentError, attachment.type
+            when :audio
+              # Mistral doesn't currently support audio
+              raise UnsupportedAttachmentError, attachment.type
+            when :text
+              # Mistral doesn't support text files as attachments, so we'll append to the text
+              if parts.first && parts.first[:type] == "text"
+                parts.first[:text] += "\n\n" + Utils.format_text_file_for_llm(attachment)
+              else
+                parts << { type: "text", text: Utils.format_text_file_for_llm(attachment) }
+              end
+            else
+              raise UnsupportedAttachmentError, attachment.type
+            end
+          end
+
+          # Filter out nil values and return the formatted content array
+          parts.compact
+        end
+
+        # Format image according to Mistral API requirements
+        # @param image [Attachment] Image attachment
+        # @return [Hash] Formatted image data for Mistral API
+        def format_image(attachment)
+          url = if attachment.respond_to?(:source) && attachment.source.to_s.match?(/^https?:\/\//)
+            attachment.source.to_s
+          else
+            "data:#{attachment.mime_type};base64,#{attachment.encoded}"
+          end
+          {
+            type: "image_url",
+            image_url: url
+          }
+        end
 
         def supports_image?(model_id)
           # Check if the model supports vision according to the model capabilities
@@ -22,60 +64,8 @@ module RubyLLM
           capabilities.supports_audio?(model_id)
         end
 
-        # Moved from chat.rb
-        def format_content(content)
-          return content unless content.is_a?(Array)
-
-          RubyLLM.logger.debug "Formatting multimodal content: #{content.inspect}"
-
-          # Filter out nil values
-          filtered_content = content.compact
-
-          RubyLLM.logger.debug "Filtered content: #{filtered_content.inspect}"
-
-          filtered_content.map do |item|
-            if item.is_a?(Hash) && item[:type] == "image"
-              format_image_content(item)
-            else
-              item # Pass through text or other types
-            end
-          end
-        end
-
-        # Format image according to Mistral API requirements
-        # @param image [Hash] Image data hash from Content class
-        # @return [Hash] Formatted image data for Mistral API
-        def format_image_content(image)
-          RubyLLM.logger.debug "Formatting image content: #{image.inspect}"
-          
-          if image[:source].is_a?(Hash)
-            if image[:source][:url]
-              # Direct URL from source hash
-              {
-                type: "image_url",
-                image_url: image[:source][:url]
-              }
-            elsif image[:source][:type] == 'base64'
-              # Base64 data from source hash
-              data_uri = "data:#{image[:source][:media_type]};base64,#{image[:source][:data]}"
-              {
-                type: "image_url",
-                image_url: data_uri
-              }
-            else
-              RubyLLM.logger.warn "Invalid image source format: #{image[:source]}"
-              nil
-            end
-          elsif image[:source].is_a?(String)
-            # Direct URL string
-            {
-              type: "image_url",
-              image_url: image[:source]
-            }
-          else
-            RubyLLM.logger.warn "Invalid image format: #{image}"
-            nil
-          end
+        def capabilities
+          RubyLLM::Providers::Mistral::Capabilities
         end
       end
     end
