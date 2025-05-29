@@ -3,13 +3,15 @@
 module RubyLLM
   # A class representing a file attachment.
   class Attachment
-    attr_reader :source, :filename, :mime_type
+    attr_reader :source, :filename, :mime_type, :upload_file_id
 
     def initialize(source, filename: nil)
       @source = source
       if url?
         @source = URI source
         @filename = filename || File.basename(@source.path).to_s
+      elsif uuid?
+        @upload_file_id = source
       elsif path?
         @source = Pathname.new source
         @filename = filename || @source.basename.to_s
@@ -17,8 +19,10 @@ module RubyLLM
         @filename = filename
       end
 
-      @mime_type = RubyLLM::MimeType.for @source, name: @filename
-      @mime_type = RubyLLM::MimeType.for content if @mime_type == 'application/octet-stream'
+      if @upload_file_id.nil?
+        @mime_type = RubyLLM::MimeType.for @source, name: @filename
+        @mime_type = RubyLLM::MimeType.for content if @mime_type == 'application/octet-stream'
+      end
     end
 
     def url?
@@ -31,6 +35,10 @@ module RubyLLM
 
     def io_like?
       @source.respond_to?(:read) && !path?
+    end
+
+    def uuid?
+      @source.match?(/\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z/i)
     end
 
     def content
@@ -55,6 +63,7 @@ module RubyLLM
     end
 
     def type
+      return :file_id unless @upload_file_id.nil?
       return :image if image?
       return :audio if audio?
       return :pdf if pdf?

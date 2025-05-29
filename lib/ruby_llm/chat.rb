@@ -118,6 +118,10 @@ module RubyLLM
       message
     end
 
+    def upload_document(document_path)
+      @provider.upload_document(document_path)
+    end
+
     def reset_messages!
       @messages.clear
     end
