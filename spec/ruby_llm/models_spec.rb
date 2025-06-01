@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::Models do
 
       # Only use alias when exact match isn't found
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
-      expect(chat_model.model.id).to eq('claude-3-5-haiku-latest')
+      expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
   end
 

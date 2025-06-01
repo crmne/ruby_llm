@@ -71,39 +71,7 @@
     "id": "claude-3-5-haiku-20241022",
     "name": "Claude Haiku 3.5",
     "provider": "anthropic",
-    "family": "claude-haiku-3-5",
-    "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.8,
-          "cached_input_per_million": 1.0,
-          "output_per_million": 4.0
-        }
-      }
-    },
-    "metadata": {}
-  },
-  {
-    "id": "claude-3-5-haiku-latest",
-    "name": "Claude Haiku 3.5",
-    "provider": "anthropic",
-    "family": "claude-haiku-3-5",
+    "family": "claude-haiku-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
@@ -135,7 +103,7 @@
     "id": "claude-3-5-sonnet-20240620",
     "name": "Claude Sonnet 3.5",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-5",
+    "family": "claude-sonnet-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
@@ -167,39 +135,7 @@
     "id": "claude-3-5-sonnet-20241022",
     "name": "Claude Sonnet 3.5",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-5",
-    "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3.0,
-          "cached_input_per_million": 3.75,
-          "output_per_million": 15.0
-        }
-      }
-    },
-    "metadata": {}
-  },
-  {
-    "id": "claude-3-5-sonnet-latest",
-    "name": "Claude Sonnet 3.5",
-    "provider": "anthropic",
-    "family": "claude-sonnet-3-5",
+    "family": "claude-sonnet-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
@@ -231,39 +167,7 @@
     "id": "claude-3-7-sonnet-20250219",
     "name": "Claude Sonnet 3.7",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-7",
-    "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 64000,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3.0,
-          "cached_input_per_million": 3.75,
-          "output_per_million": 15.0
-        }
-      }
-    },
-    "metadata": {}
-  },
-  {
-    "id": "claude-3-7-sonnet-latest",
-    "name": "Claude Sonnet 3.7",
-    "provider": "anthropic",
-    "family": "claude-sonnet-3-7",
+    "family": "claude-sonnet-3.7",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 64000,
@@ -325,38 +229,6 @@
   },
   {
     "id": "claude-3-opus-20240229",
-    "name": "Claude Opus 3",
-    "provider": "anthropic",
-    "family": "claude-opus-3",
-    "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15.0,
-          "cached_input_per_million": 18.75,
-          "output_per_million": 75.0
-        }
-      }
-    },
-    "metadata": {}
-  },
-  {
-    "id": "claude-3-opus-latest",
     "name": "Claude Opus 3",
     "provider": "anthropic",
     "family": "claude-opus-3",
@@ -2017,7 +1889,7 @@
   },
   {
     "id": "deepseek-chat",
-    "name": "DeepSeek-V3",
+    "name": "deepseek-chat",
     "provider": "deepseek",
     "family": "deepseek-chat",
     "created_at": null,
@@ -2033,7 +1905,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -2051,12 +1924,12 @@
   },
   {
     "id": "deepseek-reasoner",
-    "name": "DeepSeek-R1",
+    "name": "deepseek-reasoner",
     "provider": "deepseek",
     "family": "deepseek-reasoner",
     "created_at": null,
     "context_window": 64000,
-    "max_output_tokens": 8000,
+    "max_output_tokens": 64000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -2067,7 +1940,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -3648,7 +3522,7 @@
   },
   {
     "id": "gemini-2.5-flash-preview-tts",
-    "name": "Gemini 2.5 Flash Preview TTS",
+    "name": "Gemini 2.5 Flash Preview Text-to-Speech",
     "provider": "gemini",
     "family": "gemini-2.5-flash-preview-tts",
     "created_at": null,
@@ -3821,7 +3695,7 @@
   },
   {
     "id": "gemini-2.5-pro-preview-tts",
-    "name": "Gemini 2.5 Pro Preview TTS",
+    "name": "Gemini 2.5 Pro Preview Text-to-Speech",
     "provider": "gemini",
     "family": "gemini-2.5-pro-preview-tts",
     "created_at": null,
@@ -4253,7 +4127,13 @@
       ]
     },
     "capabilities": [],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "output_per_million": 0.03
+        }
+      }
+    },
     "metadata": {
       "version": "002",
       "description": "Vertex served Imagen 3.0 002 model",
@@ -4353,7 +4233,13 @@
       "output": []
     },
     "capabilities": [],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "output_per_million": 0.35
+        }
+      }
+    },
     "metadata": {}
   },
   {
@@ -4536,7 +4422,8 @@
         "text"
       ],
       "output": [
-        "image"
+        "image",
+        "text"
       ]
     },
     "capabilities": [],
@@ -5568,6 +5455,43 @@
   },
   {
     "id": "gpt-4o-audio-preview-2024-10-01",
+    "name": "GPT-4o-Audio Preview 20241001",
+    "provider": "openai",
+    "family": "gpt4o_audio",
+    "created_at": "2024-09-27 00:17:22 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "audio"
+      ],
+      "output": [
+        "text",
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4o-audio-preview-2024-12-17",
     "name": "GPT-4o Audio",
     "provider": "openai",
     "family": "gpt-4o-audio-preview",
@@ -5587,43 +5511,6 @@
     },
     "capabilities": [
       "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 2.5,
-          "output_per_million": 10.0
-        }
-      }
-    },
-    "metadata": {
-      "object": "model",
-      "owned_by": "system"
-    }
-  },
-  {
-    "id": "gpt-4o-audio-preview-2024-12-17",
-    "name": "GPT-4o-Audio Preview 20241217",
-    "provider": "openai",
-    "family": "gpt4o_audio",
-    "created_at": "2024-12-12 21:10:39 +0100",
-    "context_window": 128000,
-    "max_output_tokens": 16384,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "audio"
-      ],
-      "output": [
-        "text",
-        "audio"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "speech_generation",
-      "transcription"
     ],
     "pricing": {
       "text_tokens": {
@@ -5828,28 +5715,31 @@
   },
   {
     "id": "gpt-4o-mini-realtime-preview-2024-12-17",
-    "name": "GPT-4o-Mini Realtime Preview 20241217",
+    "name": "GPT-4o mini Realtime",
     "provider": "openai",
-    "family": "gpt4o_mini_realtime",
-    "created_at": "2024-12-13 18:56:41 +0100",
+    "family": "gpt-4o-mini-realtime-preview",
+    "created_at": null,
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
+        "audio",
         "text"
       ],
       "output": [
+        "audio",
         "text"
       ]
     },
     "capabilities": [
-      "streaming"
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.6,
+          "cached_input_per_million": 0.3,
           "output_per_million": 2.4
         }
       }
@@ -7044,7 +6934,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "output_per_million": 30.0
+          "input_per_million": 30.0
         }
       }
     },
@@ -7710,69 +7600,6 @@
         "top_k",
         "min_p",
         "seed"
-      ]
-    }
-  },
-  {
-    "id": "allenai/olmo-7b-instruct",
-    "name": "OLMo 7B Instruct",
-    "provider": "openrouter",
-    "family": "allenai",
-    "created_at": "2024-05-10 02:00:00 +0200",
-    "context_window": 2048,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.08,
-          "output_per_million": 0.24
-        }
-      }
-    },
-    "metadata": {
-      "description": "OLMo 7B Instruct by the Allen Institute for AI is a model finetuned for question answering. It demonstrates **notable performance** across multiple benchmarks including TruthfulQA and ToxiGen.\n\n**Open Source**: The model, its code, checkpoints, logs are released under the [Apache 2.0 license](https://choosealicense.com/licenses/apache-2.0).\n\n- [Core repo (training, inference, fine-tuning etc.)](https://github.com/allenai/OLMo)\n- [Evaluation code](https://github.com/allenai/OLMo-Eval)\n- [Further fine-tuning code](https://github.com/allenai/open-instruct)\n- [Paper](https://arxiv.org/abs/2402.00838)\n- [Technical blog post](https://blog.allenai.org/olmo-open-language-model-87ccfc95f580)\n- [W&B Logs](https://wandb.ai/ai2-llm/OLMo-7B/reports/OLMo-7B--Vmlldzo2NzQyMzk5)",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": "zephyr"
-      },
-      "top_provider": {
-        "context_length": 2048,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
       ]
     }
   },
@@ -9462,15 +9289,15 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "tools",
-        "tool_choice",
         "max_tokens",
         "temperature",
-        "top_p",
+        "stop",
         "reasoning",
         "include_reasoning",
-        "top_k",
-        "stop"
+        "tools",
+        "tool_choice",
+        "top_p",
+        "top_k"
       ]
     }
   },
@@ -9543,7 +9370,7 @@
     "family": "anthropic",
     "created_at": "2025-02-24 19:35:10 +0100",
     "context_window": 200000,
-    "max_output_tokens": 64000,
+    "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -9583,20 +9410,18 @@
       },
       "top_provider": {
         "context_length": 200000,
-        "max_completion_tokens": 64000,
-        "is_moderated": false
+        "max_completion_tokens": 128000,
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "tools",
-        "tool_choice",
         "max_tokens",
         "temperature",
-        "top_p",
+        "stop",
         "reasoning",
         "include_reasoning",
-        "top_k",
-        "stop"
+        "tools",
+        "tool_choice"
       ]
     }
   },
@@ -9712,7 +9537,7 @@
       "top_provider": {
         "context_length": 200000,
         "max_completion_tokens": 64000,
-        "is_moderated": true
+        "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -11253,69 +11078,6 @@
     }
   },
   {
-    "id": "deepseek/deepseek-coder",
-    "name": "DeepSeek-Coder-V2",
-    "provider": "openrouter",
-    "family": "deepseek",
-    "created_at": "2024-05-14 02:00:00 +0200",
-    "context_window": 128000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.04,
-          "output_per_million": 0.12
-        }
-      }
-    },
-    "metadata": {
-      "description": "DeepSeek-Coder-V2, an open-source Mixture-of-Experts (MoE) code language model. It is further pre-trained from an intermediate checkpoint of DeepSeek-V2 with additional 6 trillion tokens.\n\nThe original V1 model was trained from scratch on 2T tokens, with a composition of 87% code and 13% natural language in both English and Chinese. It was pre-trained on project-level code corpus by employing a extra fill-in-the-blank task.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
-      ]
-    }
-  },
-  {
     "id": "deepseek/deepseek-prover-v2",
     "name": "DeepSeek: DeepSeek Prover V2",
     "provider": "openrouter",
@@ -11444,8 +11206,8 @@
     "provider": "openrouter",
     "family": "deepseek",
     "created_at": "2025-01-20 14:51:35 +0100",
-    "context_window": 163840,
-    "max_output_tokens": 163840,
+    "context_window": 128000,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -11464,8 +11226,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 2.1799999999999997
+          "input_per_million": 0.44999999999999996,
+          "output_per_million": 2.1500000000000004
         }
       }
     },
@@ -11483,8 +11245,8 @@
         "instruct_type": "deepseek-r1"
       },
       "top_provider": {
-        "context_length": 163840,
-        "max_completion_tokens": 163840,
+        "context_length": 128000,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -11499,15 +11261,270 @@
         "presence_penalty",
         "seed",
         "top_k",
+        "min_p",
         "logit_bias",
-        "logprobs",
         "top_logprobs",
-        "repetition_penalty",
         "response_format",
         "structured_outputs",
-        "min_p",
+        "logprobs",
+        "repetition_penalty",
         "tools",
         "tool_choice"
+      ]
+    }
+  },
+  {
+    "id": "deepseek/deepseek-r1-0528",
+    "name": "DeepSeek: R1 0528",
+    "provider": "openrouter",
+    "family": "deepseek",
+    "created_at": "2025-05-28 19:59:30 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 2.1500000000000004
+        }
+      }
+    },
+    "metadata": {
+      "description": "May 28th update to the [original DeepSeek R1](/deepseek/deepseek-r1) Performance on par with [OpenAI o1](/openai/o1), but open-sourced and with fully open reasoning tokens. It's 671B parameters in size, with 37B active in an inference pass.\n\nFully open-source model.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "DeepSeek",
+        "instruct_type": "deepseek-r1"
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 32768,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "top_k",
+        "repetition_penalty",
+        "logit_bias",
+        "min_p",
+        "response_format",
+        "logprobs",
+        "top_logprobs",
+        "seed",
+        "structured_outputs"
+      ]
+    }
+  },
+  {
+    "id": "deepseek/deepseek-r1-0528-qwen3-8b",
+    "name": "DeepSeek: Deepseek R1 0528 Qwen3 8B",
+    "provider": "openrouter",
+    "family": "deepseek",
+    "created_at": "2025-05-29 19:09:03 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 32000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06,
+          "output_per_million": 0.09
+        }
+      }
+    },
+    "metadata": {
+      "description": "DeepSeek-R1-0528 is a lightly upgraded release of DeepSeek R1 that taps more compute and smarter post-training tricks, pushing its reasoning and inference to the brink of flagship models like O3 and Gemini 2.5 Pro.\nIt now tops math, programming, and logic leaderboards, showcasing a step-change in depth-of-thought.\nThe distilled variant, DeepSeek-R1-0528-Qwen3-8B, transfers this chain-of-thought into an 8 B-parameter form, beating standard Qwen3 8B by +10 pp and tying the 235 B “thinking” giant on AIME 2024.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": "deepseek-r1"
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 32000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
+        "logit_bias"
+      ]
+    }
+  },
+  {
+    "id": "deepseek/deepseek-r1-0528-qwen3-8b:free",
+    "name": "DeepSeek: Deepseek R1 0528 Qwen3 8B (free)",
+    "provider": "openrouter",
+    "family": "deepseek",
+    "created_at": "2025-05-29 19:09:03 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "DeepSeek-R1-0528 is a lightly upgraded release of DeepSeek R1 that taps more compute and smarter post-training tricks, pushing its reasoning and inference to the brink of flagship models like O3 and Gemini 2.5 Pro.\nIt now tops math, programming, and logic leaderboards, showcasing a step-change in depth-of-thought.\nThe distilled variant, DeepSeek-R1-0528-Qwen3-8B, transfers this chain-of-thought into an 8 B-parameter form, beating standard Qwen3 8B by +10 pp and tying the 235 B “thinking” giant on AIME 2024.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": "deepseek-r1"
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
+        "logprobs",
+        "logit_bias",
+        "top_logprobs"
+      ]
+    }
+  },
+  {
+    "id": "deepseek/deepseek-r1-0528:free",
+    "name": "DeepSeek: R1 0528 (free)",
+    "provider": "openrouter",
+    "family": "deepseek",
+    "created_at": "2025-05-28 19:59:30 +0200",
+    "context_window": 163840,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "May 28th update to the [original DeepSeek R1](/deepseek/deepseek-r1) Performance on par with [OpenAI o1](/openai/o1), but open-sourced and with fully open reasoning tokens. It's 671B parameters in size, with 37B active in an inference pass.\n\nFully open-source model.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "DeepSeek",
+        "instruct_type": "deepseek-r1"
+      },
+      "top_provider": {
+        "context_length": 163840,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
+        "logprobs",
+        "logit_bias",
+        "top_logprobs"
       ]
     }
   },
@@ -11567,11 +11584,11 @@
         "top_p",
         "reasoning",
         "include_reasoning",
+        "seed",
         "top_k",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
         "logit_bias",
         "logprobs",
         "top_logprobs",
@@ -11784,7 +11801,7 @@
     "family": "deepseek",
     "created_at": "2025-01-30 00:39:00 +0100",
     "context_window": 64000,
-    "max_output_tokens": 64000,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -11822,7 +11839,7 @@
       },
       "top_provider": {
         "context_length": 64000,
-        "max_completion_tokens": 64000,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -11832,15 +11849,15 @@
         "top_p",
         "reasoning",
         "include_reasoning",
+        "seed",
         "stop",
         "frequency_penalty",
         "presence_penalty",
         "top_k",
+        "min_p",
         "repetition_penalty",
         "logit_bias",
-        "min_p",
-        "response_format",
-        "seed"
+        "response_format"
       ]
     }
   },
@@ -11935,7 +11952,7 @@
       }
     },
     "metadata": {
-      "description": "DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen 2.5 32B](https://huggingface.co/Qwen/Qwen2.5-32B), using outputs from [DeepSeek R1](/deepseek/deepseek-r1). It outperforms OpenAI's o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.\n\nOther benchmark results include:\n\n- AIME 2024 pass@1: 72.6\n- MATH-500 pass@1: 94.3\n- CodeForces Rating: 1691\n\nThe model leverages fine-tuning from DeepSeek R1's outputs, enabling competitive performance comparable to larger frontier models.",
+      "description": "DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen 2.5 32B](https://huggingface.co/Qwen/Qwen2.5-32B), using outputs from [DeepSeek R1](/deepseek/deepseek-r1). It outperforms OpenAI's o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.\\n\\nOther benchmark results include:\\n\\n- AIME 2024 pass@1: 72.6\\n- MATH-500 pass@1: 94.3\\n- CodeForces Rating: 1691\\n\\nThe model leverages fine-tuning from DeepSeek R1's outputs, enabling competitive performance comparable to larger frontier models.",
       "architecture": {
         "modality": "text->text",
         "input_modalities": [
@@ -11959,15 +11976,15 @@
         "top_p",
         "reasoning",
         "include_reasoning",
+        "seed",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "repetition_penalty",
-        "response_format",
         "top_k",
-        "seed",
         "min_p",
-        "logit_bias"
+        "repetition_penalty",
+        "logit_bias",
+        "response_format"
       ]
     }
   },
@@ -11993,7 +12010,7 @@
     ],
     "pricing": {},
     "metadata": {
-      "description": "DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen 2.5 32B](https://huggingface.co/Qwen/Qwen2.5-32B), using outputs from [DeepSeek R1](/deepseek/deepseek-r1). It outperforms OpenAI's o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.\n\nOther benchmark results include:\n\n- AIME 2024 pass@1: 72.6\n- MATH-500 pass@1: 94.3\n- CodeForces Rating: 1691\n\nThe model leverages fine-tuning from DeepSeek R1's outputs, enabling competitive performance comparable to larger frontier models.",
+      "description": "DeepSeek R1 Distill Qwen 32B is a distilled large language model based on [Qwen 2.5 32B](https://huggingface.co/Qwen/Qwen2.5-32B), using outputs from [DeepSeek R1](/deepseek/deepseek-r1). It outperforms OpenAI's o1-mini across various benchmarks, achieving new state-of-the-art results for dense models.\\n\\nOther benchmark results include:\\n\\n- AIME 2024 pass@1: 72.6\\n- MATH-500 pass@1: 94.3\\n- CodeForces Rating: 1691\\n\\nThe model leverages fine-tuning from DeepSeek R1's outputs, enabling competitive performance comparable to larger frontier models.",
       "architecture": {
         "modality": "text->text",
         "input_modalities": [
@@ -12017,6 +12034,63 @@
         "top_p",
         "reasoning",
         "include_reasoning"
+      ]
+    }
+  },
+  {
+    "id": "deepseek/deepseek-r1-distill-qwen-7b",
+    "name": "DeepSeek: R1 Distill Qwen 7B",
+    "provider": "openrouter",
+    "family": "deepseek",
+    "created_at": "2025-05-30 20:03:57 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999,
+          "output_per_million": 0.19999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "DeepSeek-R1-Distill-Qwen-7B is a 7 billion parameter dense language model distilled from DeepSeek-R1, leveraging reinforcement learning-enhanced reasoning data generated by DeepSeek's larger models. The distillation process transfers advanced reasoning, math, and code capabilities into a smaller, more efficient model architecture based on Qwen2.5-Math-7B. This model demonstrates strong performance across mathematical benchmarks (92.8% pass@1 on MATH-500), coding tasks (Codeforces rating 1189), and general reasoning (49.1% pass@1 on GPQA Diamond), achieving competitive accuracy relative to larger models while maintaining smaller inference costs.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": "deepseek-r1"
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "seed"
       ]
     }
   },
@@ -13286,7 +13360,7 @@
     "family": "google",
     "created_at": "2024-07-13 02:00:00 +0200",
     "context_window": 8192,
-    "max_output_tokens": null,
+    "max_output_tokens": 2048,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -13304,8 +13378,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09999999999999999,
-          "output_per_million": 0.3
+          "input_per_million": 0.7999999999999999,
+          "output_per_million": 0.7999999999999999
         }
       }
     },
@@ -13324,7 +13398,7 @@
       },
       "top_provider": {
         "context_length": 8192,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 2048,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -13339,10 +13413,7 @@
         "repetition_penalty",
         "logit_bias",
         "min_p",
-        "response_format",
-        "seed",
-        "logprobs",
-        "top_logprobs"
+        "response_format"
       ]
     }
   },
@@ -13353,7 +13424,7 @@
     "family": "google",
     "created_at": "2024-06-28 02:00:00 +0200",
     "context_window": 8192,
-    "max_output_tokens": null,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -13365,14 +13436,13 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.02,
-          "output_per_million": 0.06
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.19999999999999998
         }
       }
     },
@@ -13391,7 +13461,7 @@
       },
       "top_provider": {
         "context_length": 8192,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 8192,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -13402,14 +13472,11 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias",
         "response_format",
         "top_logprobs",
-        "logprobs"
+        "logprobs",
+        "logit_bias",
+        "seed"
       ]
     }
   },
@@ -13468,6 +13535,70 @@
         "logprobs",
         "logit_bias",
         "top_logprobs"
+      ]
+    }
+  },
+  {
+    "id": "google/gemma-2b-it",
+    "name": "Google: Gemma 2 2B",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2025-05-28 21:33:35 +0200",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999,
+          "output_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemma 2 2B by Google is an open model built from the same research and technology used to create the [Gemini models](/models?q=gemini).\n\nGemma models are well-suited for a variety of text generation tasks, including question answering, summarization, and reasoning.\n\nSee the [launch announcement](https://blog.google/technology/developers/google-gemma-2/) for more details. Usage of Gemma is subject to Google's [Gemma Terms of Use](https://ai.google.dev/gemma/terms).",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": "gemma"
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "top_k",
+        "repetition_penalty",
+        "logit_bias",
+        "min_p",
+        "response_format"
       ]
     }
   },
@@ -14025,13 +14156,13 @@
         "max_tokens",
         "temperature",
         "top_p",
-        "presence_penalty",
-        "frequency_penalty",
-        "repetition_penalty",
-        "top_k",
         "stop",
+        "frequency_penalty",
+        "presence_penalty",
         "seed",
+        "top_k",
         "min_p",
+        "repetition_penalty",
         "logit_bias",
         "response_format",
         "top_a"
@@ -15171,14 +15302,14 @@
         "max_tokens",
         "temperature",
         "top_p",
-        "stop",
+        "top_k",
+        "seed",
+        "repetition_penalty",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
+        "stop",
         "logit_bias",
+        "min_p",
         "response_format",
         "top_logprobs",
         "tools",
@@ -15308,8 +15439,7 @@
         "seed",
         "min_p",
         "logit_bias",
-        "top_logprobs",
-        "logprobs"
+        "top_logprobs"
       ]
     }
   },
@@ -15319,8 +15449,8 @@
     "provider": "openrouter",
     "family": "meta-llama",
     "created_at": "2024-09-25 02:00:00 +0200",
-    "context_window": 131000,
-    "max_output_tokens": null,
+    "context_window": 131072,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15331,8 +15461,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -15349,8 +15478,8 @@
         "instruct_type": "llama3"
       },
       "top_provider": {
-        "context_length": 131000,
-        "max_completion_tokens": null,
+        "context_length": 131072,
+        "max_completion_tokens": 8192,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -15361,11 +15490,7 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias"
+        "seed"
       ]
     }
   },
@@ -15613,13 +15738,13 @@
         "frequency_penalty",
         "presence_penalty",
         "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
         "logit_bias",
         "logprobs",
         "top_logprobs",
         "response_format",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
         "structured_outputs"
       ]
     }
@@ -16284,7 +16409,7 @@
     "provider": "openrouter",
     "family": "microsoft",
     "created_at": "2024-05-24 02:00:00 +0200",
-    "context_window": 131072,
+    "context_window": 128000,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -16297,14 +16422,13 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09999999999999999,
-          "output_per_million": 0.3
+          "input_per_million": 1.0,
+          "output_per_million": 1.0
         }
       }
     },
@@ -16322,7 +16446,7 @@
         "instruct_type": "phi3"
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 128000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -16332,15 +16456,7 @@
         "tool_choice",
         "max_tokens",
         "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
+        "top_p"
       ]
     }
   },
@@ -16407,7 +16523,7 @@
     "provider": "openrouter",
     "family": "microsoft",
     "created_at": "2024-08-21 02:00:00 +0200",
-    "context_window": 131072,
+    "context_window": 128000,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -16420,14 +16536,13 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 0.09
+          "input_per_million": 0.09999999999999999,
+          "output_per_million": 0.09999999999999999
         }
       }
     },
@@ -16445,7 +16560,7 @@
         "instruct_type": "phi3"
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 128000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -16455,15 +16570,7 @@
         "tool_choice",
         "max_tokens",
         "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
+        "top_p"
       ]
     }
   },
@@ -16837,13 +16944,13 @@
         "max_tokens",
         "temperature",
         "top_p",
-        "presence_penalty",
-        "frequency_penalty",
-        "repetition_penalty",
-        "top_k",
         "stop",
+        "frequency_penalty",
+        "presence_penalty",
         "seed",
+        "top_k",
         "min_p",
+        "repetition_penalty",
         "logit_bias",
         "response_format"
       ]
@@ -16970,75 +17077,12 @@
     }
   },
   {
-    "id": "mistralai/codestral-mamba",
-    "name": "Mistral: Codestral Mamba",
-    "provider": "openrouter",
-    "family": "mistralai",
-    "created_at": "2024-07-19 02:00:00 +0200",
-    "context_window": 262144,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.25,
-          "output_per_million": 0.25
-        }
-      }
-    },
-    "metadata": {
-      "description": "A 7.3B parameter Mamba-based model designed for code and reasoning tasks.\n\n- Linear time inference, allowing for theoretically infinite sequence lengths\n- 256k token context window\n- Optimized for quick responses, especially beneficial for code productivity\n- Performs comparably to state-of-the-art transformer models in code and reasoning tasks\n- Available under the Apache 2.0 license for free use, modification, and distribution",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Mistral",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "tools",
-        "tool_choice",
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "response_format",
-        "seed"
-      ]
-    }
-  },
-  {
     "id": "mistralai/devstral-small",
     "name": "Mistral: Devstral Small",
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2025-05-21 16:22:59 +0200",
-    "context_window": 131072,
+    "context_window": 128000,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -17057,8 +17101,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.07,
-          "output_per_million": 0.09999999999999999
+          "input_per_million": 0.06,
+          "output_per_million": 0.12
         }
       }
     },
@@ -17076,25 +17120,26 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 128000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "tools",
-        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "response_format",
-        "structured_outputs",
-        "seed",
         "repetition_penalty",
-        "top_k"
+        "response_format",
+        "top_k",
+        "seed",
+        "min_p",
+        "tools",
+        "tool_choice",
+        "structured_outputs"
       ]
     }
   },
@@ -17117,6 +17162,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "predicted_outputs"
     ],
     "pricing": {},
@@ -17140,6 +17186,8 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "tools",
+        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
@@ -17349,8 +17397,7 @@
         "seed",
         "logprobs",
         "tools",
-        "tool_choice",
-        "structured_outputs"
+        "tool_choice"
       ]
     }
   },
@@ -17551,8 +17598,7 @@
         "seed",
         "tools",
         "tool_choice",
-        "logprobs",
-        "structured_outputs"
+        "logprobs"
       ]
     }
   },
@@ -17944,7 +17990,7 @@
     "family": "mistralai",
     "created_at": "2024-07-19 02:00:00 +0200",
     "context_window": 131072,
-    "max_output_tokens": 131072,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -17983,7 +18029,7 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -17994,17 +18040,17 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
+        "repetition_penalty",
+        "response_format",
         "top_k",
+        "seed",
+        "min_p",
         "logit_bias",
         "logprobs",
         "top_logprobs",
         "tools",
         "tool_choice",
-        "response_format",
-        "structured_outputs",
-        "repetition_penalty",
-        "min_p"
+        "structured_outputs"
       ]
     }
   },
@@ -18203,8 +18249,8 @@
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2025-01-30 17:43:29 +0100",
-    "context_window": 28000,
-    "max_output_tokens": 14000,
+    "context_window": 32768,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -18223,7 +18269,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.049999999999999996,
+          "input_per_million": 0.06,
           "output_per_million": 0.12
         }
       }
@@ -18242,8 +18288,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 28000,
-        "max_completion_tokens": 14000,
+        "context_length": 32768,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -18550,8 +18596,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.2
+          "input_per_million": 0.8999999999999999,
+          "output_per_million": 0.8999999999999999
         }
       }
     },
@@ -18658,9 +18704,7 @@
         "logit_bias",
         "min_p",
         "response_format",
-        "seed",
-        "logprobs",
-        "top_logprobs"
+        "seed"
       ]
     }
   },
@@ -19044,70 +19088,6 @@
         "min_p",
         "seed",
         "logit_bias",
-        "top_a"
-      ]
-    }
-  },
-  {
-    "id": "neversleep/llama-3-lumimaid-8b:extended",
-    "name": "NeverSleep: Llama 3 Lumimaid 8B (extended)",
-    "provider": "openrouter",
-    "family": "neversleep",
-    "created_at": "2024-05-04 02:00:00 +0200",
-    "context_window": 24576,
-    "max_output_tokens": 2048,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 1.25
-        }
-      }
-    },
-    "metadata": {
-      "description": "The NeverSleep team is back, with a Llama 3 8B finetune trained on their curated roleplay data. Striking a balance between eRP and RP, Lumimaid was designed to be serious, yet uncensored when necessary.\n\nTo enhance it's overall intelligence and chat capability, roughly 40% of the training data was not roleplay. This provides a breadth of knowledge to access, while still keeping roleplay as the primary strength.\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Llama3",
-        "instruct_type": "llama3"
-      },
-      "top_provider": {
-        "context_length": 24576,
-        "max_completion_tokens": 2048,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "repetition_penalty",
-        "logit_bias",
-        "top_k",
-        "min_p",
-        "seed",
         "top_a"
       ]
     }
@@ -19679,11 +19659,11 @@
         "logprobs",
         "top_logprobs",
         "response_format",
+        "tools",
+        "tool_choice",
         "top_k",
         "min_p",
-        "repetition_penalty",
-        "tools",
-        "tool_choice"
+        "repetition_penalty"
       ]
     }
   },
@@ -19818,6 +19798,71 @@
         "top_k",
         "repetition_penalty",
         "min_p"
+      ]
+    }
+  },
+  {
+    "id": "nvidia/llama-3.1-nemotron-ultra-253b-v1",
+    "name": "NVIDIA: Llama 3.1 Nemotron Ultra 253B v1",
+    "provider": "openrouter",
+    "family": "nvidia",
+    "created_at": "2025-04-08 14:24:19 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 1.7999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "Llama-3.1-Nemotron-Ultra-253B-v1 is a large language model (LLM) optimized for advanced reasoning, human-interactive chat, retrieval-augmented generation (RAG), and tool-calling tasks. Derived from Meta’s Llama-3.1-405B-Instruct, it has been significantly customized using Neural Architecture Search (NAS), resulting in enhanced efficiency, reduced memory usage, and improved inference latency. The model supports a context length of up to 128K tokens and can operate efficiently on an 8x NVIDIA H100 node.\n\nNote: you must include `detailed thinking on` in the system prompt to enable reasoning. Please see [Usage Recommendations](https://huggingface.co/nvidia/Llama-3_1-Nemotron-Ultra-253B-v1#quick-start-and-usage-recommendations) for more.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Llama3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "logit_bias",
+        "logprobs",
+        "top_logprobs"
       ]
     }
   },
@@ -20181,18 +20226,10 @@
       "supported_parameters": [
         "tools",
         "tool_choice",
-        "max_tokens",
-        "reasoning",
-        "include_reasoning",
-        "structured_outputs",
-        "response_format",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
         "seed",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
+        "max_tokens",
+        "response_format",
+        "structured_outputs"
       ]
     }
   },
@@ -21520,8 +21557,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 2.5,
-          "output_per_million": 10.0,
-          "cached_input_per_million": 1.25
+          "output_per_million": 10.0
         }
       }
     },
@@ -21543,7 +21579,7 @@
       "top_provider": {
         "context_length": 128000,
         "max_completion_tokens": 16384,
-        "is_moderated": true
+        "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -22297,19 +22333,10 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "reasoning",
-        "include_reasoning",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
         "seed",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs",
-        "response_format"
+        "max_tokens",
+        "response_format",
+        "structured_outputs"
       ]
     }
   },
@@ -23264,8 +23291,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -23302,11 +23328,9 @@
         "frequency_penalty",
         "presence_penalty",
         "repetition_penalty",
-        "logit_bias",
         "top_k",
         "min_p",
-        "seed",
-        "top_a"
+        "seed"
       ]
     }
   },
@@ -23587,8 +23611,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -23613,15 +23636,7 @@
       "supported_parameters": [
         "max_tokens",
         "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias"
+        "top_p"
       ]
     }
   },
@@ -23688,8 +23703,7 @@
         "response_format",
         "seed",
         "logprobs",
-        "top_logprobs",
-        "top_a"
+        "top_logprobs"
       ]
     }
   },
@@ -24185,69 +24199,6 @@
     }
   },
   {
-    "id": "qwen/qwen2.5-coder-7b-instruct",
-    "name": "Qwen: Qwen2.5 Coder 7B Instruct",
-    "provider": "openrouter",
-    "family": "qwen",
-    "created_at": "2025-04-15 18:34:47 +0200",
-    "context_window": 32768,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.01,
-          "output_per_million": 0.03
-        }
-      }
-    },
-    "metadata": {
-      "description": "Qwen2.5-Coder-7B-Instruct is a 7B parameter instruction-tuned language model optimized for code-related tasks such as code generation, reasoning, and bug fixing. Based on the Qwen2.5 architecture, it incorporates enhancements like RoPE, SwiGLU, RMSNorm, and GQA attention with support for up to 128K tokens using YaRN-based extrapolation. It is trained on a large corpus of source code, synthetic data, and text-code grounding, providing robust performance across programming languages and agentic coding workflows.\n\nThis model is part of the Qwen2.5-Coder family and offers strong compatibility with tools like vLLM for efficient deployment. Released under the Apache 2.0 license.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
-      ]
-    }
-  },
-  {
     "id": "qwen/qwen2.5-vl-32b-instruct",
     "name": "Qwen: Qwen2.5 VL 32B Instruct",
     "provider": "openrouter",
@@ -24495,12 +24446,12 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
+        "seed",
         "top_k",
+        "min_p",
         "repetition_penalty",
         "logit_bias",
-        "min_p",
         "response_format",
-        "seed",
         "logprobs",
         "top_logprobs"
       ]
@@ -24587,6 +24538,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -24618,6 +24570,8 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "tools",
+        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
@@ -24753,20 +24707,20 @@
         "top_p",
         "reasoning",
         "include_reasoning",
-        "presence_penalty",
+        "stop",
         "frequency_penalty",
-        "repetition_penalty",
+        "presence_penalty",
         "top_k",
+        "repetition_penalty",
+        "logit_bias",
+        "min_p",
+        "response_format",
+        "seed",
         "tools",
         "tool_choice",
-        "stop",
-        "response_format",
         "structured_outputs",
-        "logit_bias",
         "logprobs",
-        "top_logprobs",
-        "seed",
-        "min_p"
+        "top_logprobs"
       ]
     }
   },
@@ -24982,6 +24936,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -25018,14 +24973,17 @@
         "top_p",
         "reasoning",
         "include_reasoning",
+        "seed",
+        "tools",
+        "tool_choice",
         "stop",
         "frequency_penalty",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
         "top_k",
-        "seed",
         "min_p",
+        "structured_outputs",
         "logprobs",
         "top_logprobs",
         "logit_bias"
@@ -25093,71 +25051,13 @@
     }
   },
   {
-    "id": "qwen/qwen3-4b:free",
-    "name": "Qwen: Qwen3 4B (free)",
-    "provider": "openrouter",
-    "family": "qwen",
-    "created_at": "2025-04-30 18:38:24 +0200",
-    "context_window": 128000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {},
-    "metadata": {
-      "description": "Qwen3-4B is a 4 billion parameter dense language model from the Qwen3 series, designed to support both general-purpose and reasoning-intensive tasks. It introduces a dual-mode architecture—thinking and non-thinking—allowing dynamic switching between high-precision logical reasoning and efficient dialogue generation. This makes it well-suited for multi-turn chat, instruction following, and complex agent workflows.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen3",
-        "instruct_type": "qwen3"
-      },
-      "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "reasoning",
-        "include_reasoning",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias"
-      ]
-    }
-  },
-  {
     "id": "qwen/qwen3-8b",
     "name": "Qwen: Qwen3 8B",
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-04-28 23:43:52 +0200",
     "context_window": 128000,
-    "max_output_tokens": null,
+    "max_output_tokens": 20000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -25194,7 +25094,7 @@
       },
       "top_provider": {
         "context_length": 128000,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 20000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -25294,7 +25194,6 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -25342,8 +25241,6 @@
         "logprobs",
         "top_logprobs",
         "seed",
-        "tools",
-        "tool_choice",
         "structured_outputs"
       ]
     }
@@ -25372,8 +25269,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09,
-          "output_per_million": 0.27
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.19999999999999998
         }
       }
     },
@@ -25916,6 +25813,122 @@
     }
   },
   {
+    "id": "sarvamai/sarvam-m",
+    "name": "Sarvam AI: Sarvam-M",
+    "provider": "openrouter",
+    "family": "sarvamai",
+    "created_at": "2025-05-25 17:53:33 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "output_per_million": 0.75
+        }
+      }
+    },
+    "metadata": {
+      "description": "Sarvam-M is a 24 B-parameter, instruction-tuned derivative of Mistral-Small-3.1-24B-Base-2503, post-trained on English plus eleven major Indic languages (bn, hi, kn, gu, mr, ml, or, pa, ta, te). The model introduces a dual-mode interface: “non-think” for low-latency chat and a optional “think” phase that exposes chain-of-thought tokens for more demanding reasoning, math, and coding tasks. \n\nBenchmark reports show solid gains versus similarly sized open models on Indic-language QA, GSM-8K math, and SWE-Bench coding, making Sarvam-M a practical general-purpose choice for multilingual conversational agents as well as analytical workloads that mix English, native Indic scripts, or romanized text.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": 32768,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "presence_penalty",
+        "frequency_penalty",
+        "repetition_penalty",
+        "top_k"
+      ]
+    }
+  },
+  {
+    "id": "sarvamai/sarvam-m:free",
+    "name": "Sarvam AI: Sarvam-M (free)",
+    "provider": "openrouter",
+    "family": "sarvamai",
+    "created_at": "2025-05-25 17:53:33 +0200",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Sarvam-M is a 24 B-parameter, instruction-tuned derivative of Mistral-Small-3.1-24B-Base-2503, post-trained on English plus eleven major Indic languages (bn, hi, kn, gu, mr, ml, or, pa, ta, te). The model introduces a dual-mode interface: “non-think” for low-latency chat and a optional “think” phase that exposes chain-of-thought tokens for more demanding reasoning, math, and coding tasks. \n\nBenchmark reports show solid gains versus similarly sized open models on Indic-language QA, GSM-8K math, and SWE-Bench coding, making Sarvam-M a practical general-purpose choice for multilingual conversational agents as well as analytical workloads that mix English, native Indic scripts, or romanized text.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
+        "logprobs",
+        "logit_bias",
+        "top_logprobs"
+      ]
+    }
+  },
+  {
     "id": "scb10x/llama3.1-typhoon2-70b-instruct",
     "name": "Typhoon2 70B Instruct",
     "provider": "openrouter",
@@ -26108,7 +26121,7 @@
     "family": "sophosympatheia",
     "created_at": "2024-03-22 01:00:00 +0100",
     "context_window": 4096,
-    "max_output_tokens": null,
+    "max_output_tokens": 2048,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -26145,7 +26158,7 @@
       },
       "top_provider": {
         "context_length": 4096,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 2048,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -26224,7 +26237,7 @@
   },
   {
     "id": "thedrummer/rocinante-12b",
-    "name": "Rocinante 12B",
+    "name": "TheDrummer: Rocinante 12B",
     "provider": "openrouter",
     "family": "thedrummer",
     "created_at": "2024-09-30 02:00:00 +0200",
@@ -26345,7 +26358,7 @@
   },
   {
     "id": "thedrummer/unslopnemo-12b",
-    "name": "Unslopnemo 12B",
+    "name": "TheDrummer: UnslopNemo 12B",
     "provider": "openrouter",
     "family": "thedrummer",
     "created_at": "2024-11-08 23:04:08 +0100",
@@ -26408,13 +26421,73 @@
     }
   },
   {
+    "id": "thedrummer/valkyrie-49b-v1",
+    "name": "TheDrummer: Valkyrie 49B V1",
+    "provider": "openrouter",
+    "family": "thedrummer",
+    "created_at": "2025-05-23 19:51:10 +0200",
+    "context_window": 131072,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 0.7999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Built on top of NVIDIA's Llama 3.3 Nemotron Super 49B, Valkyrie is TheDrummer's newest model drop for creative writing.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "presence_penalty",
+        "frequency_penalty",
+        "repetition_penalty",
+        "top_k"
+      ]
+    }
+  },
+  {
     "id": "thudm/glm-4-32b",
     "name": "THUDM: GLM 4 32B",
     "provider": "openrouter",
     "family": "thudm",
     "created_at": "2025-04-17 22:15:15 +0200",
     "context_window": 32000,
-    "max_output_tokens": null,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -26451,7 +26524,7 @@
       },
       "top_provider": {
         "context_length": 32000,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -26529,69 +26602,13 @@
     }
   },
   {
-    "id": "thudm/glm-4-9b:free",
-    "name": "THUDM: GLM 4 9B (free)",
-    "provider": "openrouter",
-    "family": "thudm",
-    "created_at": "2025-04-25 19:10:23 +0200",
-    "context_window": 32000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {},
-    "metadata": {
-      "description": "GLM-4-9B-0414 is a 9 billion parameter language model from the GLM-4 series developed by THUDM. Trained using the same reinforcement learning and alignment strategies as its larger 32B counterparts, GLM-4-9B-0414 achieves high performance relative to its size, making it suitable for resource-constrained deployments that still require robust language understanding and generation capabilities.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 32000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias"
-      ]
-    }
-  },
-  {
     "id": "thudm/glm-z1-32b",
     "name": "THUDM: GLM Z1 32B",
     "provider": "openrouter",
     "family": "thudm",
     "created_at": "2025-04-17 23:09:08 +0200",
     "context_window": 32000,
-    "max_output_tokens": null,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -26628,7 +26645,7 @@
       },
       "top_provider": {
         "context_length": 32000,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -26710,71 +26727,13 @@
     }
   },
   {
-    "id": "thudm/glm-z1-9b:free",
-    "name": "THUDM: GLM Z1 9B (free)",
-    "provider": "openrouter",
-    "family": "thudm",
-    "created_at": "2025-04-25 19:12:20 +0200",
-    "context_window": 32000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {},
-    "metadata": {
-      "description": "GLM-Z1-9B-0414 is a 9B-parameter language model developed by THUDM as part of the GLM-4 family. It incorporates techniques originally applied to larger GLM-Z1 models, including extended reinforcement learning, pairwise ranking alignment, and training on reasoning-intensive tasks such as mathematics, code, and logic. Despite its smaller size, it demonstrates strong performance on general-purpose reasoning tasks and outperforms many open-source models in its weight class.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": "deepseek-r1"
-      },
-      "top_provider": {
-        "context_length": 32000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "reasoning",
-        "include_reasoning",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
-        "repetition_penalty",
-        "logit_bias"
-      ]
-    }
-  },
-  {
     "id": "thudm/glm-z1-rumination-32b",
     "name": "THUDM: GLM Z1 Rumination 32B ",
     "provider": "openrouter",
     "family": "thudm",
     "created_at": "2025-04-25 19:18:15 +0200",
     "context_window": 32000,
-    "max_output_tokens": null,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -26811,7 +26770,7 @@
       },
       "top_provider": {
         "context_length": 32000,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,

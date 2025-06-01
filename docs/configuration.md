@@ -157,6 +157,10 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 Adjust these based on network conditions and provider reliability.
 
 ## Logging Settings
+{: .d-inline-block }
+
+Coming in v1.3.0
+{: .label .label-yellow }
 
 RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level.
 
