@@ -76,6 +76,7 @@ module RubyLLM
   end
 end
 
+RubyLLM::Provider.register :test, RubyLLM::Providers::Test
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini

@@ -112,6 +112,7 @@ RSpec.shared_context 'with configured RubyLLM' do
 end
 
 CHAT_MODELS = [
+  { provider: :test, model: 'test' },
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
