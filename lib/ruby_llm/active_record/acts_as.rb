@@ -271,7 +271,7 @@ module RubyLLM
           attachments.each do |attachment|
             # Always download the file to ensure it works across all storage backends
             tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile)
+            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
           end
         end
       end

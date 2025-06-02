@@ -6,8 +6,10 @@ on:
     paths:
       - 'lib/**'
       - 'spec/**'
+      - 'gemfiles/**'
       - 'Gemfile'
       - 'Rakefile'
+      - 'Appraisals'
       - 'ruby_llm.gemspec'
       - '.github/workflows/cicd.yml'
   pull_request:
@@ -15,8 +17,10 @@ on:
     paths:
       - 'lib/**'
       - 'spec/**'
+      - 'gemfiles/**'
       - 'Gemfile'
       - 'Rakefile'
+      - 'Appraisals'
       - 'ruby_llm.gemspec'
       - '.github/workflows/cicd.yml'
   workflow_call:
@@ -31,7 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.1', '3.2', '3.3', '3.4']
+        ruby-version: ['3.2', '3.3', '3.4']
+        rails-version: ['rails-7.1', 'rails-7.2', 'rails-8.0']
 
     steps:
     - uses: actions/checkout@v4
@@ -43,13 +48,15 @@ jobs:
         bundler-cache: true
 
     - name: Install dependencies
-      run: bundle install
+      run: |
+        bundle install
+        bundle exec appraisal install
 
     - name: Check code format
       run: bundle exec rubocop
 
     - name: Run tests
-      run: bundle exec rspec
+      run: bundle exec appraisal ${{ matrix.rails-version }} rspec
       env:
         OLLAMA_API_BASE: http://localhost:11434/v1 # dummy
 
@@ -61,8 +68,11 @@ jobs:
         files: ./coverage/coverage.xml
         fail_ci_if_error: false
 
-    - name: Run the test suite with lower Faraday versions
-      run: FARADAY_VERSION=1.10.3 bundle install && bundle exec rspec
+    - name: Run the test suite with Faraday v1
+      run: |
+        FARADAY_VERSION=1.10.3 bundle install
+        bundle exec appraisal install
+        bundle exec appraisal ${{ matrix.rails-version }} rspec
       env:
         OLLAMA_API_BASE: http://localhost:11434/v1 # dummy
 
@@ -78,7 +88,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.3'
+        ruby-version: '3.4'
         bundler-cache: true
 
     - name: Check if version needs publishing

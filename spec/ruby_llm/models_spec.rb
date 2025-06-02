@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Models do
       described_class.refresh!
 
       # Verify singleton instance was updated
-      expect(RubyLLM.models.all.size).to be > 0
+      expect(RubyLLM.models.all.size).to be_positive
     end
   end
 

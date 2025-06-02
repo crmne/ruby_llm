@@ -8,7 +8,6 @@ require 'openssl'
 require 'tempfile'
 require 'time'
 require 'uri'
-require 'set'
 require 'cgi'
 require 'pathname'
 
