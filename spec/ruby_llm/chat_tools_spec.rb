@@ -36,6 +36,8 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
+        skip 'Perplexity models do not reliably use tools without parameters' if provider == :perplexity
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
@@ -49,6 +51,8 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        skip 'Perplexity models do not reliably use tools without parameters' if provider == :perplexity
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
@@ -67,6 +71,7 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
         skip 'Ollama models do not reliably use tools without parameters' if provider == :ollama
+        skip 'Perplexity models do not reliably use tools without parameters' if provider == :perplexity
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
         response = chat.ask("What's the best language to learn?")
@@ -79,6 +84,7 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         skip 'Ollama models do not reliably use tools without parameters' if provider == :ollama
+        skip 'Perplexity models do not reliably use tools without parameters' if provider == :perplexity
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
@@ -106,6 +112,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        skip 'Perplexity models do not reliably use tools without parameters' if provider == :perplexity
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         chunks = []

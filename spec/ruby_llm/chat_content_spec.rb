@@ -23,6 +23,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can understand text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        skip 'System prompt can be flaky for Perplexity models' if provider == :perplexity
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
 
@@ -42,6 +43,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       end
 
       it "#{provider}/#{model} can understand remote text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        skip 'System prompt can be flaky for Perplexity models' if provider == :perplexity
+
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_url)
 

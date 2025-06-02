@@ -120,7 +120,7 @@ CHAT_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :ollama, model: 'mistral-small3.1' },
-  { provider: :perplexity, model: 'gpt-4.1-nano', }
+  { provider: :perplexity, model: 'sonar', }
 ].freeze
 
 PDF_MODELS = [
