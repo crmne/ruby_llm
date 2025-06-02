@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 *   How RubyLLM discovers and registers models.
 *   How to find and filter available models based on provider, type, or capabilities.
-*   How to understand model capabilities and pricing using `ModelInfo`.
+*   How to understand model capabilities and pricing using `Model::Info`.
 *   How to use model aliases for convenience.
 *   How to connect to custom endpoints (like Azure OpenAI or proxies) using `openai_api_base`.
 *   How to use models not listed in the default registry using `assume_model_exists`.
@@ -38,7 +38,7 @@ The registry stores crucial information about each model, including:
 *   **`id`**: The unique identifier used by the provider (e.g., `gpt-4o-2024-08-06`).
 *   **`provider`**: The source provider (`openai`, `anthropic`, etc.).
 *   **`type`**: The model's primary function (`chat`, `embedding`, etc.).
-*   **`display_name`**: A human-friendly name.
+*   **`name`**: A human-friendly name.
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
 *   **`max_tokens`**: Max output tokens (e.g., `16_384`).
 *   **`supports_vision`**: If it can process images.
@@ -97,14 +97,14 @@ puts "Found #{openai_vision_models.count} OpenAI vision models."
 
 ### Finding a Specific Model
 
-Use `find` to get a `ModelInfo` object containing details about a specific model.
+Use `find` to get a `Model::Info` object containing details about a specific model.
 
 ```ruby
 # Find by exact ID or alias
 model_info = RubyLLM.models.find('gpt-4o')
 
 if model_info
-  puts "Model: #{model_info.display_name}"
+  puts "Model: #{model_info.name}"
   puts "Provider: #{model_info.provider}"
   puts "Context Window: #{model_info.context_window} tokens"
 else

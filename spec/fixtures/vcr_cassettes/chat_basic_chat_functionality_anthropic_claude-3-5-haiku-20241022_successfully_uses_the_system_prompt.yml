@@ -5,9 +5,10 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.0,"stream":false,"max_tokens":8192,"system":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"temperature":0.0,"stream":false,"max_tokens":8192,"system":"{type:
+        \"text\", text: \"You must include the exact phrase \\\"XKCD7392\\\" somewhere
+        in your response.\"}"}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -27,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:16:59 GMT
+      - Mon, 12 May 2025 13:37:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +40,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-05T19:16:58Z'
+      - '2025-05-12T13:37:56Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-05T19:16:59Z'
+      - '2025-05-12T13:37:58Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-05T19:16:57Z'
+      - '2025-05-12T13:37:55Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-05T19:16:58Z'
+      - '2025-05-12T13:37:56Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -76,10 +77,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_0166yDUvrLeVvMSs54S24CMZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
-        apologize, but I can''t provide real-time weather information. Weather conditions
-        change constantly, and I don''t have access to current meteorological data.
-        XKCD7392 If you want to know the current weather, I recommend checking a local
-        weather website, app, or watching a local weather forecast."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":68}}'
-  recorded_at: Mon, 05 May 2025 19:16:59 GMT
+      string: '{"id":"msg_01SwcynvpPkeN3eoeMGuSxPZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t provide a specific weather report without knowing
+        your location. Weather conditions vary widely depending on geographic region,
+        time of day, and current atmospheric conditions. XKCD7392\n\nIf you''d like
+        to know about the current weather, I recommend:\n- Checking a local weather
+        website or app\n- Looking at a local weather forecast\n- Checking your local
+        meteorological service''s website\n- Looking outside or checking a nearby
+        thermometer\n\nWould you like me to suggest some reliable weather information
+        sources?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":42,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":112}}'
+  recorded_at: Mon, 12 May 2025 13:37:58 GMT
 recorded_with: VCR 6.3.1

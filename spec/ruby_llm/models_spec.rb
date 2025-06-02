@@ -63,57 +63,37 @@ RSpec.describe RubyLLM::Models do
 
   describe '#find' do
     it 'prioritizes exact matches over aliases' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      # This test covers the case from the issue
       chat_model = RubyLLM.chat(model: 'gemini-2.0-flash')
       expect(chat_model.model.id).to eq('gemini-2.0-flash')
 
-      # Even with provider specified, exact match wins
       chat_model = RubyLLM.chat(model: 'gemini-2.0-flash', provider: 'gemini')
       expect(chat_model.model.id).to eq('gemini-2.0-flash')
 
       # Only use alias when exact match isn't found
-      chat_model = RubyLLM.chat(model: 'claude-3')
-      expect(chat_model.model.id).to eq('claude-3-sonnet-20240229')
+      chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
+      expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
   end
 
   describe '#refresh!' do
-    it 'updates models and returns a chainable Models instance' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      # Use a temporary file to avoid modifying actual models.json
-      temp_file = Tempfile.new(['models', '.json'])
-      allow(File).to receive(:expand_path).with('models.json', any_args).and_return(temp_file.path)
+    it 'updates models and returns a chainable Models instance' do # rubocop:disable RSpec/MultipleExpectations
+      # Refresh and chain immediately
+      chat_models = RubyLLM.models.refresh!.chat_models
 
-      begin
-        # Refresh and chain immediately
-        chat_models = RubyLLM.models.refresh!.chat_models
+      # Verify we got results
+      expect(chat_models).to be_a(described_class)
+      expect(chat_models.all).to all(have_attributes(type: 'chat'))
 
-        # Verify we got results
-        expect(chat_models).to be_a(described_class)
-        expect(chat_models.all).to all(have_attributes(type: 'chat'))
-
-        # Verify we got models from at least OpenAI and Anthropic
-        providers = chat_models.map(&:provider).uniq
-        expect(providers).to include('openai', 'anthropic')
-      ensure
-        temp_file.close
-        temp_file.unlink
-      end
+      # Verify we got models from at least OpenAI and Anthropic
+      providers = chat_models.map(&:provider).uniq
+      expect(providers).to include('openai', 'anthropic')
     end
 
-    it 'works as a class method too' do # rubocop:disable RSpec/ExampleLength
-      temp_file = Tempfile.new(['models', '.json'])
-      allow(File).to receive(:expand_path).with('models.json', any_args).and_return(temp_file.path)
+    it 'works as a class method too' do
+      described_class.refresh!
 
-      begin
-        # Call class method
-        described_class.refresh!
-
-        # Verify singleton instance was updated
-        expect(RubyLLM.models.all.size).to be > 0
-      ensure
-        temp_file.close
-        temp_file.unlink
-      end
+      # Verify singleton instance was updated
+      expect(RubyLLM.models.all.size).to be > 0
     end
   end
 

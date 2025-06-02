@@ -2,12 +2,11 @@
 
 module RubyLLM
   # Represents the content sent to or received from an LLM.
-  # Stores data in a standard internal format, letting providers
-  # handle their own formatting needs.
+  # Selects the appropriate attachment class based on the content type.
   class Content
     attr_reader :text, :attachments
 
-    def initialize(text = nil, attachments = {})
+    def initialize(text = nil, attachments = nil)
       @text = text
       @attachments = []
 
@@ -15,18 +14,8 @@ module RubyLLM
       raise ArgumentError, 'Text and attachments cannot be both nil' if @text.nil? && @attachments.empty?
     end
 
-    def add_image(source)
-      @attachments << Attachments::Image.new(source)
-      self
-    end
-
-    def add_audio(source)
-      @attachments << Attachments::Audio.new(source)
-      self
-    end
-
-    def add_pdf(source)
-      @attachments << Attachments::PDF.new(source)
+    def add_attachment(source)
+      @attachments << Attachment.new(source)
       self
     end
 
@@ -39,24 +28,25 @@ module RubyLLM
     end
 
     # For Rails serialization
-    def as_json
-      hash = { text: @text }
-      unless @attachments.empty?
-        hash[:attachments] = @attachments.map do |a|
-          { type: a.type, source: a.source }
-        end
-      end
-      hash
+    def to_h
+      { text: @text, attachments: @attachments.map(&:to_h) }
     end
 
     private
 
-    def process_attachments(attachments)
-      return unless attachments.is_a?(Hash)
+    def process_attachments_array_or_string(attachments)
+      Utils.to_safe_array(attachments).each do |file|
+        add_attachment(file)
+      end
+    end
 
-      Array(attachments[:image]).each { |source| add_image(source) }
-      Array(attachments[:audio]).each { |source| add_audio(source) }
-      Array(attachments[:pdf]).each { |source| add_pdf(source) }
+    def process_attachments(attachments)
+      if attachments.is_a?(Hash)
+        # Ignores types (like :image, :audio, :text, :pdf) since we have robust MIME type detection
+        attachments.each_value(&method(:process_attachments_array_or_string))
+      else
+        process_attachments_array_or_string attachments
+      end
     end
   end
 end

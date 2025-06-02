@@ -3,6 +3,19 @@
 require 'dotenv/load'
 require 'ruby_llm'
 
+task default: ['models:update']
+
+namespace :models do
+  desc 'Update available models from providers (API keys needed)'
+  task :update do
+    puts 'Configuring RubyLLM...'
+    configure_from_env
+
+    refresh_models
+    display_model_stats
+  end
+end
+
 def configure_from_env
   RubyLLM.configure do |config|
     config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
@@ -64,16 +77,3 @@ def status(provider_sym)
     ' (NOT CONFIGURED)'
   end
 end
-
-namespace :models do
-  desc 'Update available models from providers (API keys needed)'
-  task :update do
-    puts 'Configuring RubyLLM...'
-    configure_from_env
-
-    refresh_models
-    display_model_stats
-  end
-end
-
-task default: ['models:update']

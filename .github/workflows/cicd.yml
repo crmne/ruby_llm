@@ -61,6 +61,11 @@ jobs:
         files: ./coverage/coverage.xml
         fail_ci_if_error: false
 
+    - name: Run the test suite with lower Faraday versions
+      run: FARADAY_VERSION=1.10.3 bundle install && bundle exec rspec
+      env:
+        OLLAMA_API_BASE: http://localhost:11434/v1 # dummy
+
   publish:
     name: Build + Publish
     needs: test

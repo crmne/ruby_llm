@@ -5,19 +5,19 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Hello"}],"temperature":0.7,"max_tokens":4096}'
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250505T191345Z
+      - 20250512T133646Z
       X-Amz-Content-Sha256:
-      - 959391fd29cc0448b517196b85a4e74eb99a6987651df8e3fc708330fede5380
+      - 9c512cbe0db46db91a9cd6a06019d86ea7ae159fb05375850b2231797ceaeb5d
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=invalid-key/20250505/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=40be44c40f2bb8ed0a831eb4bd86aa1116f6c829ac4dac5b13fbc44ca089b5c7
+      - AWS4-HMAC-SHA256 Credential=invalid-key/20250512/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=da2ee546fdb110ec1dde8e80010af9c3b426c40b7d017a14ccd457d0ff5ae10b
       Content-Type:
       - application/json
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: Forbidden
     headers:
       Date:
-      - Mon, 05 May 2025 19:13:46 GMT
+      - Mon, 12 May 2025 13:36:46 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,11 +38,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - bf694ffd-20cf-4854-8c09-6259bced6699
+      - a2732f16-8053-4def-ad2e-fc78df6efb33
       X-Amzn-Errortype:
       - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
     body:
       encoding: UTF-8
       string: '{"message":"The security token included in the request is invalid."}'
-  recorded_at: Mon, 05 May 2025 19:13:46 GMT
+  recorded_at: Mon, 12 May 2025 13:36:46 GMT
 recorded_with: VCR 6.3.1

@@ -3,8 +3,8 @@
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
-    # Provides a clean interface for storing chat history and message metadata
-    # in your database.
+    # Provides a clean interface for storing chat history, message metadata,
+    # and attachments in your database.
     module ActsAs
       extend ActiveSupport::Concern
 
@@ -24,19 +24,24 @@ module RubyLLM
                    to: :to_llm
         end
 
-        def acts_as_message(chat_class: 'Chat', tool_call_class: 'ToolCall', **options)
+        def acts_as_message(chat_class: 'Chat',
+                            chat_foreign_key: nil,
+                            tool_call_class: 'ToolCall',
+                            tool_call_foreign_key: nil,
+                            touch_chat: false)
           include MessageMethods
 
           @chat_class = chat_class.to_s
-          @chat_foreign_key = options[:chat_foreign_key] || @chat_class.foreign_key
+          @chat_foreign_key = chat_foreign_key || ActiveSupport::Inflector.foreign_key(@chat_class)
+
           @tool_call_class = tool_call_class.to_s
-          @tool_call_foreign_key = options[:tool_call_foreign_key] || @tool_call_class.foreign_key
+          @tool_call_foreign_key = tool_call_foreign_key || ActiveSupport::Inflector.foreign_key(@tool_call_class)
 
           belongs_to :chat,
                      class_name: @chat_class,
                      foreign_key: @chat_foreign_key,
                      inverse_of: :messages,
-                     touch: options[:touch_chat]
+                     touch: touch_chat
 
           has_many :tool_calls,
                    class_name: @tool_call_class,
@@ -51,10 +56,10 @@ module RubyLLM
           delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
         end
 
-        def acts_as_tool_call(message_class: 'Message', **options)
+        def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
           @message_class = message_class.to_s
-          @message_foreign_key = options[:message_foreign_key] || @message_class.foreign_key
-          @result_foreign_key = options[:result_foreign_key] || 'id'
+          @message_foreign_key = message_foreign_key || ActiveSupport::Inflector.foreign_key(@message_class)
+          @result_foreign_key = result_foreign_key || ActiveSupport::Inflector.foreign_key(name)
 
           belongs_to :message,
                      class_name: @message_class,
@@ -119,12 +124,17 @@ module RubyLLM
       end
 
       def with_model(...)
-        to_llm.with_model(...)
+        update(model_id: to_llm.with_model(...).model.id)
         self
       end
 
       def with_temperature(...)
         to_llm.with_temperature(...)
+        self
+      end
+
+      def with_context(...)
+        to_llm.with_context(...)
         self
       end
 
@@ -138,11 +148,18 @@ module RubyLLM
         self
       end
 
-      def ask(message, &)
-        message = { role: :user, content: message }
-        messages.create!(**message)
+      def create_user_message(content, with: nil)
+        message_record = messages.create!(role: :user, content: content)
+        persist_content(message_record, with) if with.present?
+        message_record
+      end
+
+      def ask(message, with: nil, &)
+        create_user_message(message, with:)
         complete(&)
       end
+
+      alias say ask
 
       def complete(...)
         to_llm.complete(...)
@@ -153,8 +170,6 @@ module RubyLLM
         end
         raise e
       end
-
-      alias say ask
 
       private
 
@@ -169,7 +184,7 @@ module RubyLLM
         return unless message
 
         if message.tool_call_id
-          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id).id
+          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id)&.id
         end
 
         transaction do
@@ -193,6 +208,19 @@ module RubyLLM
           @message.tool_calls.create!(**attributes)
         end
       end
+
+      def persist_content(message_record, attachments)
+        return unless message_record.respond_to?(:attachments)
+
+        attachments = Utils.to_safe_array(attachments).reject(&:blank?)
+        return if attachments.empty?
+
+        message_record.attachments.attach(attachments)
+      end
+
+      def extract_filename(file)
+        file.respond_to?(:original_filename) ? file.original_filename : 'attachment'
+      end
     end
 
     # Methods mixed into message models to handle serialization and
@@ -201,8 +229,7 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do
-        attr_reader :chat_class, :tool_call_class
-        attr_reader :chat_foreign_key, :tool_call_foreign_key
+        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
       end
 
       def to_llm
@@ -235,7 +262,39 @@ module RubyLLM
       end
 
       def extract_content
-        content
+        return content unless respond_to?(:attachments) && attachments.attached?
+
+        RubyLLM::Content.new(content).tap do |content_obj|
+          # Prevent tempfiles from being garbage-collected during API calls
+          @_tempfiles = []
+
+          attachments.each do |attachment|
+            # Always download the file to ensure it works across all storage backends
+            tempfile = download_attachment(attachment)
+            content_obj.add_attachment(tempfile)
+          end
+        end
+      end
+
+      private
+
+      def download_attachment(attachment)
+        ext = File.extname(attachment.filename.to_s)
+        basename = File.basename(attachment.filename.to_s, ext)
+        tempfile = Tempfile.new([basename, ext])
+        tempfile.binmode
+
+        attachment.download do |chunk|
+          tempfile.write(chunk)
+        end
+
+        tempfile.flush
+        tempfile.rewind
+
+        # Keep reference to prevent GC
+        @_tempfiles << tempfile
+
+        tempfile
       end
     end
   end

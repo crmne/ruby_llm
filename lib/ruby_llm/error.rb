@@ -24,6 +24,7 @@ module RubyLLM
   class InvalidRoleError < StandardError; end
   class ModelNotFoundError < StandardError; end
   class UnsupportedFunctionsError < StandardError; end
+  class UnsupportedAttachmentError < StandardError; end
 
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end

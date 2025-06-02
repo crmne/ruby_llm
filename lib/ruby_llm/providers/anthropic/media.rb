@@ -14,11 +14,15 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
+            when :text
+              parts << format_text_file(attachment)
+            else
+              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
 
@@ -67,11 +71,18 @@ module RubyLLM
               type: 'document',
               source: {
                 type: 'base64',
-                media_type: 'application/pdf',
+                media_type: pdf.mime_type,
                 data: pdf.encoded
               }
             }
           end
+        end
+
+        def format_text_file(text_file)
+          {
+            type: 'text',
+            text: Utils.format_text_file_for_llm(text_file)
+          }
         end
       end
     end

@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Chat do
       )
 
       expect(chat.model.id).to eq(custom_model)
-      expect(chat.model.provider.slug).to eq(provider)
+      expect(chat.model.provider).to eq(provider)
     end
 
     it 'works with RubyLLM.chat convenience method' do # rubocop:disable RSpec/ExampleLength
@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Chat do
       chat.with_model(custom_model, provider: provider, assume_exists: true)
 
       expect(chat.model.id).to eq(custom_model)
-      expect(chat.model.provider.slug).to eq(provider)
+      expect(chat.model.provider).to eq(provider)
     end
   end
 end

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:26:47 GMT
+      - Mon, 12 May 2025 13:46:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,9 +37,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '220'
+      - '205'
       Openai-Version:
       - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '210'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -47,7 +49,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199993'
+      - '199992'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -73,9 +75,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BTvkdFPsMIlUCxSMwqyNrQutlrycK",
+          "id": "chatcmpl-BWNlrc1csymGkSdaKOnftxsHoPblI",
           "object": "chat.completion",
-          "created": 1746473207,
+          "created": 1747057571,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -85,7 +87,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_7sMd0mc6QP1mUlojmj1CLHuM",
+                    "id": "call_kSoKNVKA1ebCOVSrMpX5SW87",
                     "type": "function",
                     "function": {
                       "name": "broken",
@@ -118,5 +120,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_8fd43718b3"
         }
-  recorded_at: Mon, 05 May 2025 19:26:47 GMT
+  recorded_at: Mon, 12 May 2025 13:46:11 GMT
 recorded_with: VCR 6.3.1

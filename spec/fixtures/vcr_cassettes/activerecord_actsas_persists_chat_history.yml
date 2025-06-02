@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:12:10 GMT
+      - Mon, 12 May 2025 13:34:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,9 +36,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '719'
+      - '1083'
       Openai-Version:
       - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1086'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -72,16 +74,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BTvWU8wF2nD6TAf6Z2cO1kj2Co9Gu",
+          "id": "chatcmpl-BWNaHwvbATqn3GiZJoZUMCHYXQN8H",
           "object": "chat.completion",
-          "created": 1746472330,
+          "created": 1747056853,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I find the concept of blocks in Ruby particularly fascinating. They enable elegant and expressive code by allowing you to pass chunks of code to methods, facilitating iteration, callbacks, and domain-specific languages. This feature showcases Ruby's emphasis on readability and developer happiness, making complex tasks concise and intuitive.",
+                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks make it straightforward to write concise, readable code for iteration, callbacks, and domain-specific languages. For example, methods like `each`, `map`, and `select` enable developers to write code that closely resembles natural language, enhancing clarity and maintainability. Additionally, Ruby's flexible metaprogramming capabilities, such as defining methods at runtime with `define_method`, allow for powerful and dynamic code constructs. Overall, Ruby's combination of simplicity and flexibility makes it a joy to work with.",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,8 +93,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 58,
-            "total_tokens": 71,
+            "completion_tokens": 124,
+            "total_tokens": 137,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -105,7 +107,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_eede8f0d45"
+          "system_fingerprint": "fp_8fd43718b3"
         }
-  recorded_at: Mon, 05 May 2025 19:12:10 GMT
+  recorded_at: Mon, 12 May 2025 13:34:14 GMT
 recorded_with: VCR 6.3.1

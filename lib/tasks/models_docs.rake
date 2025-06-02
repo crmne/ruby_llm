@@ -57,9 +57,6 @@ def generate_models_markdown
     #{Time.now.utc.strftime('%Y-%m-%d')}
     {: .label .label-green }
 
-    {: .warning }
-    This page is currently work in progress given the new Parsera integration.
-
     ## Models by Provider
 
     #{generate_provider_sections}
@@ -92,7 +89,7 @@ def generate_capability_sections
     'Function Calling' => RubyLLM.models.select(&:function_calling?),
     'Structured Output' => RubyLLM.models.select(&:structured_output?),
     'Streaming' => RubyLLM.models.select { |m| m.capabilities.include?('streaming') },
-    'Reasoning' => RubyLLM.models.select { |m| m.capabilities.include?('reasoning') },
+    # 'Reasoning' => RubyLLM.models.select { |m| m.capabilities.include?('reasoning') },
     'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
   }
 

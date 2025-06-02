@@ -5,20 +5,20 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"temperature":0.7,"max_tokens":4096}'
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250505T191709Z
+      - 20250512T133808Z
       X-Amz-Content-Sha256:
-      - 45bc07e92f3e4928655fb657829c1790fcb1594aafa5abfd051050018ced0ffe
+      - bc339c9c404e800abda4a15d692c5e59e723234175cd452a30f8d7fccce40717
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250505/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5427052cc3895fb18f7255743f3a8e8a5470c8e348e0aa72f8413df67fa70d0f
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250512/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e38de6bd60b5a3282af8945f1c2abb26854b0a372a9e47eec748712ad83fb0a6
       Content-Type:
       - application/json
       Accept:
@@ -31,53 +31,55 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:17:12 GMT
+      - Mon, 12 May 2025 13:38:11 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '535'
+      - '600'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f1e3079c-3935-48f5-bd54-a2f98a38c3a6
+      - d5e0011d-e9dd-44ec-99ad-5413ea5ee3be
       X-Amzn-Bedrock-Invocation-Latency:
-      - '3230'
+      - '2222'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '74'
+      - '84'
       X-Amzn-Bedrock-Input-Token-Count:
       - '13'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01GcZMaVKgpEhLPmLP8zPgwL","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
+      string: '{"id":"msg_bdrk_01BpLoA65LbQ1G6yrPxHPGP3","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
         was created by Yukihiro Matsumoto (often called \"Matz\") in Japan. He first
-        released Ruby in 1995, designing it to be a programming language that is both
-        powerful and easy to read and write. Matz aimed to create a language that
-        would make programmers happy and be more natural to use."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"output_tokens":74}}'
-  recorded_at: Mon, 05 May 2025 19:17:13 GMT
+        released Ruby in 1995, designing it to be a programming language that was
+        more human-friendly and productive, emphasizing the principle of least surprise.
+        Matz wanted to create a language that was enjoyable for programmers to use
+        and focused on simplicity and productivity."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"output_tokens":84}}'
+  recorded_at: Mon, 12 May 2025 13:38:11 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        Yukihiro Matsumoto (often called \"Matz\") in Japan. He first released Ruby
-        in 1995, designing it to be a programming language that is both powerful and
-        easy to read and write. Matz aimed to create a language that would make programmers
-        happy and be more natural to use."},{"role":"user","content":"What year did
-        he create Ruby?"}],"temperature":0.7,"max_tokens":4096}'
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
+        was created by Yukihiro Matsumoto (often called \"Matz\") in Japan. He first
+        released Ruby in 1995, designing it to be a programming language that was
+        more human-friendly and productive, emphasizing the principle of least surprise.
+        Matz wanted to create a language that was enjoyable for programmers to use
+        and focused on simplicity and productivity."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.1
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250505T191713Z
+      - 20250512T133811Z
       X-Amz-Content-Sha256:
-      - ce23fec8a7195df347fd7c8535fa5cb0298782e87d596466b3fb2004dbe7573e
+      - 19efc8202e1c22d0c8035b4ace39041c94caf6b6aeadfe4c6b0230197e1ffbf9
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250505/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=f36a90bafed8d736777ec24b61d9d2fcb0f492901573c81ad6468d967f417e8e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250512/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1c7cf02f3d866389d9c68d6eaca46ac61eb0076cc9cd07db5f5989a67039f8ce
       Content-Type:
       - application/json
       Accept:
@@ -90,26 +92,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:17:14 GMT
+      - Mon, 12 May 2025 13:38:14 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '427'
+      - '591'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 43827e42-1f04-4a6d-aa95-23ba202e469b
+      - f3800424-1d73-4731-b1d3-ea602fde6849
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1102'
+      - '1884'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '45'
+      - '73'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '97'
+      - '107'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_015V8KjXD7RvFBE2WQ8TfaXT","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
-        Matsumoto created Ruby in 1995. He first released Ruby to the public in that
-        year, with the goal of creating a more programmer-friendly object-oriented
-        programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":97,"output_tokens":45}}'
-  recorded_at: Mon, 05 May 2025 19:17:14 GMT
+      string: '{"id":"msg_bdrk_012bjaygfPfBpSmqdhksWpXe","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
+        Matsumoto first released Ruby in 1995. Specifically, the first public release
+        of Ruby (version 0.95) was in 1995, and it was designed to be an object-oriented
+        scripting language that was more intuitive and enjoyable to use compared to
+        other programming languages of that time."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":107,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":73}}'
+  recorded_at: Mon, 12 May 2025 13:38:14 GMT
 recorded_with: VCR 6.3.1

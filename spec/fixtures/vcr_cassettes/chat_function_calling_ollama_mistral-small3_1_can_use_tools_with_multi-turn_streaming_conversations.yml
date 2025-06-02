@@ -27,29 +27,29 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Mon, 05 May 2025 19:26:03 GMT
+      - Mon, 12 May 2025 13:47:59 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-511","object":"chat.completion.chunk","created":1746473163,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_22kp2pgh","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":null}]}
+        data: {"id":"chatcmpl-252","object":"chat.completion.chunk","created":1747057679,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_avwsl297","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-511","object":"chat.completion.chunk","created":1746473163,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
+        data: {"id":"chatcmpl-252","object":"chat.completion.chunk","created":1747057679,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
 
-        data: {"id":"chatcmpl-511","object":"chat.completion.chunk","created":1746473163,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":471,"completion_tokens":31,"total_tokens":502}}
+        data: {"id":"chatcmpl-252","object":"chat.completion.chunk","created":1747057679,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":471,"completion_tokens":31,"total_tokens":502}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:26:03 GMT
+  recorded_at: Mon, 12 May 2025 13:47:59 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_22kp2pgh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_22kp2pgh"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_avwsl297","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_avwsl297"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
@@ -70,23 +70,23 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Mon, 05 May 2025 19:26:16 GMT
+      - Mon, 12 May 2025 13:48:03 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTQ4OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDY0NzMxNzYsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTQ4OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDY0NzMxNzYsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOltdLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NTYsImNvbXBsZXRpb25fdG9rZW5zIjoyMiwidG90YWxfdG9rZW5zIjo0Nzh9fQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Mon, 05 May 2025 19:26:16 GMT
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTk2NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDcwNTc2ODMsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46IDE1wrBDLCBXaW5kOiAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC05NjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ3MDU3NjgzLCJtb2RlbCI6Im1pc3RyYWwtc21hbGwzLjEiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbXSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDU2LCJjb21wbGV0aW9uX3Rva2VucyI6MTksInRvdGFsX3Rva2VucyI6NDc1fX0KCmRhdGE6IFtET05FXQoK
+  recorded_at: Mon, 12 May 2025 13:48:03 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_22kp2pgh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_22kp2pgh"},{"role":"assistant","content":"The
-        current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_avwsl297","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_avwsl297"},{"role":"assistant","content":"Current
+        weather in Berlin: 15°C, Wind: 10 km/h."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -108,32 +108,32 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Mon, 05 May 2025 19:26:32 GMT
+      - Mon, 12 May 2025 13:48:09 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-256","object":"chat.completion.chunk","created":1746473192,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_debju892","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":null}]}
+        data: {"id":"chatcmpl-317","object":"chat.completion.chunk","created":1747057689,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_ny5g06tz","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-256","object":"chat.completion.chunk","created":1746473193,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
+        data: {"id":"chatcmpl-317","object":"chat.completion.chunk","created":1747057689,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
 
-        data: {"id":"chatcmpl-256","object":"chat.completion.chunk","created":1746473193,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":592,"completion_tokens":33,"total_tokens":625}}
+        data: {"id":"chatcmpl-317","object":"chat.completion.chunk","created":1747057689,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":589,"completion_tokens":33,"total_tokens":622}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:26:33 GMT
+  recorded_at: Mon, 12 May 2025 13:48:09 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_22kp2pgh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_22kp2pgh"},{"role":"assistant","content":"The
-        current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_debju892","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_debju892"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_avwsl297","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_avwsl297"},{"role":"assistant","content":"Current
+        weather in Berlin: 15°C, Wind: 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_ny5g06tz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_ny5g06tz"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
@@ -154,12 +154,12 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Mon, 05 May 2025 19:26:46 GMT
+      - Mon, 12 May 2025 13:48:13 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTE3NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDY0NzMyMDYsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMgaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV19CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtMTc0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc0NjQ3MzIwNiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsMy4xIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NSwiY29tcGxldGlvbl90b2tlbnMiOjIyLCJ0b3RhbF90b2tlbnMiOjU5N319CgpkYXRhOiBbRE9ORV0KCg==
-  recorded_at: Mon, 05 May 2025 19:26:46 GMT
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTU3NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDcwNTc2OTMsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBpbiBQYXJpczogMTXCsEMsIFdpbmQ6IDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTU3NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDcwNTc2OTMsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOltdLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NzIsImNvbXBsZXRpb25fdG9rZW5zIjoxOSwidG90YWxfdG9rZW5zIjo1OTF9fQoKZGF0YTogW0RPTkVdCgo=
+  recorded_at: Mon, 12 May 2025 13:48:13 GMT
 recorded_with: VCR 6.3.1

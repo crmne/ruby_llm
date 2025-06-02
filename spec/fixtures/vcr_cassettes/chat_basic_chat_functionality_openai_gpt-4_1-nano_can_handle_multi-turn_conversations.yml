@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:18:33 GMT
+      - Mon, 12 May 2025 13:39:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,9 +36,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '322'
+      - '333'
       Openai-Version:
       - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '339'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -72,16 +74,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BTvcewvQJMTX7Vcjq1w5x8Khx5dtO",
+          "id": "chatcmpl-BWNfllrKsNH3QvwQVeBVkIAbWnOMK",
           "object": "chat.completion",
-          "created": 1746472712,
+          "created": 1747057193,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto.",
+                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto, a Japanese software programmer.",
                 "refusal": null,
                 "annotations": []
               },
@@ -91,8 +93,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 16,
-            "total_tokens": 29,
+            "completion_tokens": 21,
+            "total_tokens": 34,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -107,7 +109,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_eede8f0d45"
         }
-  recorded_at: Mon, 05 May 2025 19:18:33 GMT
+  recorded_at: Mon, 12 May 2025 13:39:54 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -115,7 +117,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Who was
         Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by Yukihiro
-        \"Matz\" Matsumoto."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        \"Matz\" Matsumoto, a Japanese software programmer."},{"role":"user","content":"What
+        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -133,7 +136,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:18:33 GMT
+      - Mon, 12 May 2025 13:39:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -145,9 +148,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '339'
+      - '317'
       Openai-Version:
       - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '320'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -155,11 +160,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199971'
+      - '199962'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 11ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -181,9 +186,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BTvcfO5ZTlWvussB3smcS7msEJA8G",
+          "id": "chatcmpl-BWNfmrRxFG4A6WdNi7522fv0nDYtM",
           "object": "chat.completion",
-          "created": 1746472713,
+          "created": 1747057194,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -199,9 +204,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 43,
+            "prompt_tokens": 48,
             "completion_tokens": 19,
-            "total_tokens": 62,
+            "total_tokens": 67,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -214,7 +219,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_eede8f0d45"
+          "system_fingerprint": "fp_8fd43718b3"
         }
-  recorded_at: Mon, 05 May 2025 19:18:33 GMT
+  recorded_at: Mon, 12 May 2025 13:39:54 GMT
 recorded_with: VCR 6.3.1
