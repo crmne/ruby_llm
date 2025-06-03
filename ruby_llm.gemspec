@@ -34,7 +34,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   # Runtime dependencies
-  spec.add_dependency 'activesupport', '~> 7'
   spec.add_dependency 'base64'
   spec.add_dependency 'event_stream_parser', '~> 1'
   spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
@@ -43,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday-retry', '>= 1'
   spec.add_dependency 'marcel', '~> 1.0'
   spec.add_dependency 'zeitwerk', '~> 2'
+  spec.add_dependency 'activesupport'
 end

@@ -2,6 +2,7 @@ PATH
   remote: ..
   specs:
     ruby_llm (1.3.0rc1)
+      activesupport
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -96,6 +97,7 @@ GEM
     benchmark (0.4.1)
     bigdecimal (3.2.1)
     builder (3.3.0)
+    cgi (0.4.2)
     childprocess (5.1.0)
       logger (~> 1.5)
     codecov (0.2.12)
@@ -113,7 +115,8 @@ GEM
     docile (1.4.1)
     dotenv (3.1.8)
     drb (2.2.3)
-    erb (5.0.1)
+    erb (4.0.4)
+      cgi (>= 0.3.3)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
     faraday (2.13.1)
@@ -172,7 +175,9 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     nio4r (2.7.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    nokogiri (1.18.8-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.8-x86_64-linux)
       racc (~> 1.4)
     overcommit (0.67.1)
       childprocess (>= 0.6.3, < 6)
@@ -284,7 +289,8 @@ GEM
       simplecov (~> 0.19)
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
-    sqlite3 (2.6.0-x86_64-linux-gnu)
+    sqlite3 (2.6.0-arm64-darwin)
+    sqlite3 (2.6.0-x86_64-linux)
     stringio (3.1.7)
     thor (1.3.2)
     timeout (0.4.3)
@@ -307,9 +313,10 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     yard (0.9.37)
-    zeitwerk (2.7.3)
+    zeitwerk (2.6.18)
 
 PLATFORMS
+  arm64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
