@@ -77,6 +77,14 @@ image_imagen = RubyLLM.paint(
   "Cyberpunk city street at night, raining, neon signs",
   model: "imagen-3.0-generate-002"
 )
+
+# Use a model not in the registry (useful for custom endpoints)
+image_custom = RubyLLM.paint(
+  "A sunset over mountains",
+  model: "my-custom-image-model",
+  provider: :openai,
+  assume_model_exists: true
+)
 ```
 
 You can configure the default model globally:

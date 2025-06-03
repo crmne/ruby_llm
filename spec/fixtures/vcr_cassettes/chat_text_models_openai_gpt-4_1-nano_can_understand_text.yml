@@ -5,8 +5,9 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:36:38 GMT
+      - Tue, 03 Jun 2025 09:38:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,11 +37,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '584'
+      - '366'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '587'
+      - '370'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -48,11 +49,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199983'
+      - '199975'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 5ms
+      - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -74,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BXPIzvdSJXzHXrZ3qW5OOFKS0bT8P",
+          "id": "chatcmpl-BeIOAx7pUsNKsGgMANLotSbmid9eT",
           "object": "chat.completion",
-          "created": 1747301797,
+          "created": 1748943506,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby is a programming language known for its simplicity and productivity. It is often used for web development, especially with the Ruby on Rails framework, and is appreciated for its elegant syntax and ease of use.",
+                "content": "The file 'ruby.txt' contains the text: \"Ruby is the best.\"",
                 "refusal": null,
                 "annotations": []
               },
@@ -92,9 +93,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 24,
-            "completion_tokens": 41,
-            "total_tokens": 65,
+            "prompt_tokens": 31,
+            "completion_tokens": 16,
+            "total_tokens": 47,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -107,20 +108,19 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_8fd43718b3"
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 15 May 2025 09:36:38 GMT
+  recorded_at: Tue, 03 Jun 2025 09:38:27 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]},{"role":"assistant","content":"Ruby
-        is a programming language known for its simplicity and productivity. It is
-        often used for web development, especially with the Ruby on Rails framework,
-        and is appreciated for its elegant syntax and ease of use."},{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.xml''><truism>Ruby
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file ''ruby.txt''
+        contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
@@ -139,7 +139,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:36:39 GMT
+      - Tue, 03 Jun 2025 09:38:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -151,11 +151,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '660'
+      - '391'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '662'
+      - '393'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -163,11 +163,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199907'
+      - '199932'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 27ms
+      - 20ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -189,16 +189,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BXPJ0mJtBiSwtx70vmUt8lkvi3oAU",
+          "id": "chatcmpl-BeIOBLsu56qLdCykSFrhyjP3SlK49",
           "object": "chat.completion",
-          "created": 1747301798,
+          "created": 1748943507,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file 'ruby.xml' contains the following content:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis indicates a statement or truism expressing that Ruby is the best.",
+                "content": "The file 'ruby.xml' contains an XML element with the text: \"Ruby is the best\" inside the `<truism>` tag.",
                 "refusal": null,
                 "annotations": []
               },
@@ -207,9 +207,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 96,
-            "completion_tokens": 43,
-            "total_tokens": 139,
+            "prompt_tokens": 85,
+            "completion_tokens": 28,
+            "total_tokens": 113,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -222,7 +222,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_8fd43718b3"
+          "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Thu, 15 May 2025 09:36:39 GMT
+  recorded_at: Tue, 03 Jun 2025 09:38:27 GMT
 recorded_with: VCR 6.3.1

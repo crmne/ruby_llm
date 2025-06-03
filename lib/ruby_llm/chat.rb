@@ -71,6 +71,13 @@ module RubyLLM
       self
     end
 
+    def with_context(context)
+      @context = context
+      @config = context.config
+      with_model(@model.id, provider: @provider.slug, assume_exists: true)
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self

@@ -35,8 +35,7 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}",
-              detail: 'auto'
+              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}"
             }
           }
         end

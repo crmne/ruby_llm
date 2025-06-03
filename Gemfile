@@ -5,11 +5,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  # Rails integration dependencies
-  gem 'activerecord', '>= 6.0', '< 9.0'
-  gem 'activesupport', '>= 6.0', '< 9.0'
-
-  # Development dependencies
+  gem 'appraisal'
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
@@ -18,6 +14,7 @@ group :development do
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
   gem 'pry', '>= 0.14'
+  gem 'rails'
   gem 'rake', '>= 13.0'
   gem 'rdoc'
   gem 'reline'

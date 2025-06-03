@@ -22,7 +22,7 @@ module RubyLLM
             when :text
               parts << format_text_file(attachment)
             else
-              raise UnsupportedAttachmentError, attachment.type
+              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
 

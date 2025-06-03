@@ -191,6 +191,26 @@ chat.with_model(
 )
 ```
 
+The `assume_model_exists` flag also works with `RubyLLM.embed` and `RubyLLM.paint` for embedding and image generation models:
+
+```ruby
+# Custom embedding model
+embedding = RubyLLM.embed(
+  "Test text",
+  model: 'my-custom-embedder',
+  provider: :openai,
+  assume_model_exists: true
+)
+
+# Custom image model
+image = RubyLLM.paint(
+  "A beautiful landscape",
+  model: 'my-custom-dalle',
+  provider: :openai,
+  assume_model_exists: true
+)
+```
+
 **Key Points when Assuming Existence:**
 
 *   **`provider:` is Mandatory:** You must tell RubyLLM which API format to use (`ArgumentError` otherwise).

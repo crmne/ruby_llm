@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250515T122739Z
+      - 20250603T094419Z
       X-Amz-Content-Sha256:
       - c9959b2464b5ac20dc26dcc5555c64745b5fb1d651b2c68adbb1e8b276b03a01
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250515/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0cf9897d7830c6d1d4eda2de72cbe63b6e7afed3bf9e6a4a69b98ba93eacaae9
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250603/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a1394f75d2c792eb80b57c2fcedac31cba11ab609fef5fc2058cdfd6a9c5b27b
       Content-Type:
       - application/json
       Accept:
@@ -31,25 +31,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 12:27:40 GMT
+      - Tue, 03 Jun 2025 09:44:20 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '245'
+      - '305'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - bbdce67a-3804-45a2-9b33-3589c8d87f3d
+      - 70b1b59b-450f-4024-bdaa-353ad1fb0c43
       X-Amzn-Bedrock-Invocation-Latency:
-      - '388'
+      - '382'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01PuSszNsxssT6ebuXwCW61z","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"output_tokens":5}}'
-  recorded_at: Thu, 15 May 2025 12:27:40 GMT
+      string: '{"id":"msg_bdrk_01TJFmCi3gCZ4LEBZ9DmrXK8","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Tue, 03 Jun 2025 09:44:20 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -80,7 +80,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 15 May 2025 12:27:41 GMT
+      - Tue, 03 Jun 2025 09:44:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -90,7 +90,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=311
+      - gfet4t7; dur=327
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -130,7 +130,8 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "9MM-aNnCIdr11PIP4Nzs0QY"
         }
-  recorded_at: Thu, 15 May 2025 12:27:41 GMT
+  recorded_at: Tue, 03 Jun 2025 09:44:20 GMT
 recorded_with: VCR 6.3.1

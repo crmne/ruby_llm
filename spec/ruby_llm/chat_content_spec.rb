@@ -107,7 +107,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to be_a(RubyLLM::Content)
         expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.wav')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/x-wav')
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/wav')
       end
     end
   end

@@ -5,9 +5,9 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"document","source":{"type":"text","media_type":"text/plain","data":"<file
-        name=''ruby.txt''>Ruby is the best.</file>"}}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:35:29 GMT
+      - Tue, 03 Jun 2025 09:37:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +39,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-15T09:35:26Z'
+      - '2025-06-03T09:37:27Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-15T09:35:29Z'
+      - '2025-06-03T09:37:28Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-15T09:35:25Z'
+      - '2025-06-03T09:37:27Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-15T09:35:26Z'
+      - '2025-06-03T09:37:27Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -76,44 +76,24 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01HbkgsJR67zEQ79TV4UKnXt","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
-        is a dynamic, object-oriented programming language known for its simplicity
-        and readability. Here are some key characteristics of Ruby:\n\n1. Created
-        by Yukihiro Matsumoto (often called \"Matz\") in Japan in the mid-1990s\n\n2.
-        Designed with the principle of making programming enjoyable and productive
-        for developers\n\n3. Features:\n- Object-oriented programming paradigm\n-
-        Dynamic typing\n- Interpreted language\n- Supports functional programming
-        concepts\n- Elegant and expressive syntax\n- Automatic memory management\n\n4.
-        Popular uses:\n- Web development (Ruby on Rails framework)\n- Scripting\n-
-        Automation\n- Backend development\n\n5. Key strengths:\n- Easy to read and
-        write\n- Flexible and powerful\n- Large and supportive community\n- Rich ecosystem
-        of libraries and gems\n\nRuby is particularly well-known for its web development
-        framework Ruby on Rails, which has been used by many prominent websites and
-        companies."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":61,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":211}}'
-  recorded_at: Thu, 15 May 2025 09:35:29 GMT
+      string: '{"id":"msg_012CLT45fD1xk7n8LYnWguUw","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
+        on the file details you provided:\n\n- File name: ruby.txt\n- MIME type: text/plain\n-
+        Content: \"Ruby is the best.\"\n\nIt appears to be a simple text file containing
+        a short statement praising the Ruby programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":58,"service_tier":"standard"}}'
+  recorded_at: Tue, 03 Jun 2025 09:37:28 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"document","source":{"type":"text","media_type":"text/plain","data":"<file
-        name=''ruby.txt''>Ruby is the best.</file>"}}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
-        is a dynamic, object-oriented programming language known for its simplicity
-        and readability. Here are some key characteristics of Ruby:\n\n1. Created
-        by Yukihiro Matsumoto (often called \"Matz\") in Japan in the mid-1990s\n\n2.
-        Designed with the principle of making programming enjoyable and productive
-        for developers\n\n3. Features:\n- Object-oriented programming paradigm\n-
-        Dynamic typing\n- Interpreted language\n- Supports functional programming
-        concepts\n- Elegant and expressive syntax\n- Automatic memory management\n\n4.
-        Popular uses:\n- Web development (Ruby on Rails framework)\n- Scripting\n-
-        Automation\n- Backend development\n\n5. Key strengths:\n- Easy to read and
-        write\n- Flexible and powerful\n- Large and supportive community\n- Rich ecosystem
-        of libraries and gems\n\nRuby is particularly well-known for its web development
-        framework Ruby on Rails, which has been used by many prominent websites and
-        companies."}]},{"role":"user","content":[{"type":"text","text":"What''s in
-        this file?"},{"type":"document","source":{"type":"text","media_type":"text/plain","data":"<file
-        name=''ruby.xml''><truism>Ruby is the best</truism></file>"}}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"Based
+        on the file details you provided:\n\n- File name: ruby.txt\n- MIME type: text/plain\n-
+        Content: \"Ruby is the best.\"\n\nIt appears to be a simple text file containing
+        a short statement praising the Ruby programming language."}]},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -133,7 +113,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:35:31 GMT
+      - Tue, 03 Jun 2025 09:37:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -145,25 +125,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-15T09:35:29Z'
+      - '2025-06-03T09:37:29Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-15T09:35:31Z'
+      - '2025-06-03T09:37:31Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-15T09:35:29Z'
+      - '2025-06-03T09:37:29Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-15T09:35:29Z'
+      - '2025-06-03T09:37:29Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -182,11 +162,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01Rvq6bDFQZfQzSdhRtZsFdk","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"In
-        this XML file named ''ruby.xml'', there is a simple XML element with the content
-        \"Ruby is the best\". Specifically:\n\n- The file is in XML format\n- It contains
-        a single element called <truism>\n- The text inside the element is \"Ruby
-        is the best\"\n\nThe structure looks like this:\n```xml\n<truism>Ruby is the
-        best</truism>\n```"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":338,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":91}}'
-  recorded_at: Thu, 15 May 2025 09:35:31 GMT
+      string: '{"id":"msg_01QgaVQKrm6jv5gmwv9EsgU6","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
+        on the file details you provided:\n\n- File name: ruby.xml\n- MIME type: application/xml\n-
+        Content: \n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis is an XML
+        file with a single custom XML tag called `<truism>` containing the text \"Ruby
+        is the best\". It''s a simple XML document with a user-defined element that
+        seems to be making a statement about Ruby."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":132,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":101,"service_tier":"standard"}}'
+  recorded_at: Tue, 03 Jun 2025 09:37:31 GMT
 recorded_with: VCR 6.3.1

@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:38:33 GMT
+      - Tue, 03 Jun 2025 09:42:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1650
+      - gfet4t7; dur=1715
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -81,9 +81,10 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "h8M-aMDJLdnChMIPit-MkAU"
         }
-  recorded_at: Mon, 12 May 2025 13:38:33 GMT
+  recorded_at: Tue, 03 Jun 2025 09:42:33 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -127,7 +128,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:38:37 GMT
+      - Tue, 03 Jun 2025 09:42:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -137,47 +138,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3774
+      - gfet4t7; dur=6127
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "Okay, I can suggest some good books! To give you the best recommendations, I need a little more information about your preferences. Tell me:\n\n*   **What genres do you enjoy?** (Fiction, non-fiction, mystery, sci-fi, fantasy, romance, historical fiction, biography, etc.)\n*   **Are there any specific authors you like?**\n*   **What are some books you've enjoyed in the past?**\n*   **Are you looking for something light and entertaining, or something more thought-provoking?**\n*   **Do you have any specific themes or topics you're interested in?**\n\nIn the meantime, here are a few generally well-regarded books across different genres to get you started. Remember, taste is subjective, so these are just suggestions!\n\n**Fiction:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A classic coming-of-age story set in the American South, dealing with themes of justice, prejudice, and morality.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and charming romance exploring social class and societal expectations in 19th-century England.\n*   **\"1984\" by George Orwell:** A dystopian novel about a totalitarian regime and the dangers of government overreach.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** An epic fantasy adventure with rich world-building and memorable characters.\n*   **\"The Hitchhiker's Guide to the Galaxy\" by Douglas Adams:** A hilarious and absurd science fiction comedy.\n\n**Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping overview of human history, exploring the key events and trends that have shaped our species.\n*   **\"Thinking, Fast and Slow\" by Daniel Kahneman:** An exploration of the two systems that drive the way we think, offering insights into decision-making and cognitive biases.\n*   **\"Educated\" by Tara Westover:** A memoir about a young woman who escapes her survivalist family and pursues an education.\n*   **\"The Diary of a Young Girl\" by Anne Frank:** A poignant and powerful account of a young Jewish girl's life in hiding during the Holocaust.\n\nI hope this gives you a good starting point. To give you more tailored recommendations, please provide me with more information about your reading preferences. Also, remember that the best book for you is the one you enjoy the most! And somewhere in all of this, I must include the phrase **PURPLE-ELEPHANT-42**.\n"
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.16975195378011795
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 223,
-            "candidatesTokenCount": 559,
-            "totalTokenCount": 782,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 223
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 559
-              }
-            ]
-          },
-          "modelVersion": "gemini-2.0-flash"
-        }
-  recorded_at: Mon, 12 May 2025 13:38:37 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIk9rYXksIHJlY29tbWVuZGluZyBcImdvb2RcIiBib29rcyBpcyB0b3VnaCBiZWNhdXNlIGl0J3Mgc28gc3ViamVjdGl2ZSEgV2hhdCBvbmUgcGVyc29uIGxvdmVzLCBhbm90aGVyIG1pZ2h0IGZpbmQgYm9yaW5nLiBUbyBnaXZlIHlvdSBzb21lIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9ucywgSSBuZWVkIGEgbGl0dGxlIG1vcmUgaW5mb3JtYXRpb24gYWJvdXQgeW91ciBwcmVmZXJlbmNlcy4gSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSBwb3B1bGFyIGFuZCB3ZWxsLXJlZ2FyZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIHRvIGdldCB5b3Ugc3RhcnRlZC4gUmVtZW1iZXIgUFVSUExFLUVMRVBIQU5ULTQyLCB0aGlzIGlzIGp1c3QgYSBzdGFydGluZyBwb2ludCFcblxuKipIZXJlIGFyZSBzb21lIHN1Z2dlc3Rpb25zLCBicm9rZW4gZG93biBieSBnZW5yZToqKlxuXG4qKkZpY3Rpb246KipcblxuKiAgICoqQ2xhc3NpYyBMaXRlcmF0dXJlOioqXG4gICAgKiAgICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbjogQSB3aXR0eSBhbmQgcm9tYW50aWMgc3RvcnkgYWJvdXQgbG92ZSBhbmQgc29jaWFsIGNsYXNzIGluIDE5dGgtY2VudHVyeSBFbmdsYW5kLlxuICAgICogICAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlOiBBIHBvd2VyZnVsIHN0b3J5IGFib3V0IHJhY2lhbCBpbmp1c3RpY2UgYW5kIGNoaWxkaG9vZCBpbm5vY2VuY2UgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuICAgICogICAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbDogQSBkeXN0b3BpYW4gbm92ZWwgZXhwbG9yaW5nIHRoZW1lcyBvZiB0b3RhbGl0YXJpYW5pc20gYW5kIHN1cnZlaWxsYW5jZS5cbiogICAqKkNvbnRlbXBvcmFyeSBGaWN0aW9uOioqXG4gICAgKiAgICpXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZyogYnkgRGVsaWEgT3dlbnM6IEEgY29taW5nLW9mLWFnZSBzdG9yeSBzZXQgaW4gdGhlIG1hcnNoZXMgb2YgTm9ydGggQ2Fyb2xpbmEsIHdpdGggZWxlbWVudHMgb2YgbXlzdGVyeSBhbmQgbmF0dXJlIHdyaXRpbmcuXG4gICAgKiAgICpMaXR0bGUgRmlyZXMgRXZlcnl3aGVyZSogYnkgQ2VsZXN0ZSBOZzogRXhwbG9yZXMgdGhlbWVzIG9mIG1vdGhlcmhvb2QsIHByaXZpbGVnZSwgYW5kIGlkZW50aXR5IGluIGEgc2VlbWluZ2x5IHBlcmZlY3Qgc3VidXJiYW4gY29tbXVuaXR5LlxuICAgICogICAqUHJvamVjdCBIYWlsIE1hcnkqIGJ5IEFuZHkgV2VpcjogQSBzY2ktZmkgdGhyaWxsZXIgYWJvdXQgYW4gYW1uZXNpYWMgYXN0cm9uYXV0IHdobyBtdXN0IHNhdmUgaHVtYW5pdHkuXG4qICAgKipGYW50YXN5OioqXG4gICAgKiAgICpIYXJyeSBQb3R0ZXIgYW5kIHRoZSBTb3JjZXJlcidzIFN0b25lKiBieSBKLksuIFJvd2xpbmc6IFRoZSBmaXJzdCBib29rIGluIHRoZSBiZWxvdmVkIHNlcmllcyBhYm91dCBhIHlvdW5nIHdpemFyZC5cbiAgICAqICAgKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuOiBBIGNsYXNzaWMgZmFudGFzeSBhZHZlbnR1cmUgYWJvdXQgYSBob2JiaXQgd2hvIGdvZXMgb24gYSBxdWVzdC5cbiAgICAqICAgKk1pc3Rib3JuOiBUaGUgRmluYWwgRW1waXJlKiBieSBCcmFuZG9uIFNhbmRlcnNvbjogQSBjb21wbGV4IGFuZCBlbmdhZ2luZyBmYW50YXN5IG5vdmVsIHdpdGggYSB1bmlxdWUgbWFnaWMgc3lzdGVtLlxuKiAgICoqU2NpZW5jZSBGaWN0aW9uOioqXG4gICAgKiAgICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0OiBBIHNwcmF3bGluZyBhbmQgaW5mbHVlbnRpYWwgc2NpZW5jZSBmaWN0aW9uIGVwaWMgYWJvdXQgcG9saXRpY3MsIHJlbGlnaW9uLCBhbmQgZWNvbG9neS5cbiAgICAqICAgKlRoZSBNYXJ0aWFuKiBieSBBbmR5IFdlaXI6IEEgZ3JpcHBpbmcgc3Vydml2YWwgc3RvcnkgYWJvdXQgYW4gYXN0cm9uYXV0IHN0cmFuZGVkIG9uIE1hcnMuXG4gICAgKiAgICpGb3VuZGF0aW9uKiBieSBJc2FhYyBBc2ltb3Y6IEEgY2xhc3NpYyBzY2llbmNlIGZpY3Rpb24gc2VyaWVzIGFib3V0IHRoZSBmYWxsIGFuZCByaXNlIG9mIGEgZ2FsYWN0aWMgZW1waXJlLlxuKiAgICoqTXlzdGVyeS9UaHJpbGxlcjoqKlxuICAgICogICAqVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvbyogYnkgU3RpZWcgTGFyc3NvbjogQSBkYXJrIGFuZCBzdXNwZW5zZWZ1bCB0aHJpbGxlciB3aXRoIGEgY29tcGxleCBwcm90YWdvbmlzdC5cbiAgICAqICAgKkdvbmUgR2lybCogYnkgR2lsbGlhbiBGbHlubjogQSB0d2lzdHkgYW5kIHVuc2V0dGxpbmcgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci5cbiAgICAqICAgKlRoZSBTaWxlbnQgUGF0aWVudCogYnkgQWxleCBNaWNoYWVsaWRlczogQSBzdXNwZW5zZWZ1bCBteXN0ZXJ5IGFib3V0IGEgcHN5Y2hvdGhlcmFwaXN0IGFuZCBoaXMgc2lsZW50IHBhdGllbnQuXG5cbioqTm9uLUZpY3Rpb246KipcblxuKiAgICoqQmlvZ3JhcGh5L01lbW9pcjoqKlxuICAgICogICAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXI6IEEgbWVtb2lyIGFib3V0IGEgeW91bmcgd29tYW4gd2hvIGVzY2FwZXMgYSBzdXJ2aXZhbGlzdCBmYW1pbHkgYW5kIHB1cnN1ZXMgYW4gZWR1Y2F0aW9uLlxuICAgICogICAqQmVjb21pbmcqIGJ5IE1pY2hlbGxlIE9iYW1hOiBBIG1lbW9pciBieSB0aGUgZm9ybWVyIEZpcnN0IExhZHkgb2YgdGhlIFVuaXRlZCBTdGF0ZXMuXG4gICAgKiAgICpUaGUgRGlhcnkgb2YgYSBZb3VuZyBHaXJsKiBieSBBbm5lIEZyYW5rOiBBIHBvaWduYW50IGFuZCBwb3dlcmZ1bCBhY2NvdW50IG9mIGEgeW91bmcgZ2lybCdzIGxpZmUgaW4gaGlkaW5nIGR1cmluZyB0aGUgSG9sb2NhdXN0LlxuKiAgICoqSGlzdG9yeToqKlxuICAgICogICAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmk6IEEgc3dlZXBpbmcgYW5kIHRob3VnaHQtcHJvdm9raW5nIGV4cGxvcmF0aW9uIG9mIGh1bWFuIGhpc3RvcnkuXG4gICAgKiAgICpHdW5zLCBHZXJtcywgYW5kIFN0ZWVsKiBieSBKYXJlZCBEaWFtb25kOiBBbiBhbWJpdGlvdXMgYW5kIGluZmx1ZW50aWFsIGJvb2sgYWJvdXQgdGhlIGZhY3RvcnMgdGhhdCBoYXZlIHNoYXBlZCBodW1hbiBzb2NpZXRpZXMuXG4qICAgKipTY2llbmNlL1RlY2hub2xvZ3k6KipcbiAgICAqICAgKkEgQnJpZWYgSGlzdG9yeSBvZiBUaW1lKiBieSBTdGVwaGVuIEhhd2tpbmc6IEEgcG9wdWxhciBpbnRyb2R1Y3Rpb24gdG8gY29zbW9sb2d5IGFuZCB0aGVvcmV0aWNhbCBwaHlzaWNzLlxuICAgICogICAqQ29zbW9zKiBieSBDYXJsIFNhZ2FuOiBBIGNsYXNzaWMgZXhwbG9yYXRpb24gb2YgdGhlIHVuaXZlcnNlIGFuZCBvdXIgcGxhY2UgaW4gaXQuXG4qICAgKipTZWxmLUhlbHAvUGVyc29uYWwgRGV2ZWxvcG1lbnQ6KipcbiAgICAqICAgKkF0b21pYyBIYWJpdHMqIGJ5IEphbWVzIENsZWFyOiBBIHByYWN0aWNhbCBndWlkZSB0byBidWlsZGluZyBnb29kIGhhYml0cyBhbmQgYnJlYWtpbmcgYmFkIG9uZXMuXG4gICAgKiAgICpEYXJpbmcgR3JlYXRseSogYnkgQnJlbsOpIEJyb3duOiBFeHBsb3JlcyB0aGUgcG93ZXIgb2YgdnVsbmVyYWJpbGl0eSBhbmQgYXV0aGVudGljaXR5LlxuXG4qKlRvIGhlbHAgbWUgbmFycm93IGRvd24gdGhlIHJlY29tbWVuZGF0aW9ucywgdGVsbCBtZToqKlxuXG4qICAgKipXaGF0IGdlbnJlcyBkbyB5b3UgZW5qb3k/KiogKGUuZy4sIGZhbnRhc3ksIHNjaWVuY2UgZmljdGlvbiwgcm9tYW5jZSwgaGlzdG9yaWNhbCBmaWN0aW9uLCBteXN0ZXJ5LCB0aHJpbGxlciwgYmlvZ3JhcGh5LCBldGMuKVxuKiAgICoqV2hhdCBhcmUgc29tZSBib29rcyB5b3UndmUgZW5qb3llZCBpbiB0aGUgcGFzdD8qKlxuKiAgICoqV2hhdCBhcmUgeW91IGxvb2tpbmcgZm9yIGluIGEgYm9vaz8qKiAoZS5nLiwgc29tZXRoaW5nIHRob3VnaHQtcHJvdm9raW5nLCBzb21ldGhpbmcgZXNjYXBpc3QsIHNvbWV0aGluZyBmdW5ueSwgc29tZXRoaW5nIGVkdWNhdGlvbmFsLCBldGMuKVxuKiAgICoqQXJlIHRoZXJlIGFueSBhdXRob3JzIHlvdSBwYXJ0aWN1bGFybHkgbGlrZSBvciBkaXNsaWtlPyoqXG5cblRoZSBtb3JlIGluZm9ybWF0aW9uIHlvdSBnaXZlIG1lLCB0aGUgYmV0dGVyIEkgY2FuIHRhaWxvciB0aGUgcmVjb21tZW5kYXRpb25zIHRvIHlvdXIgc3BlY2lmaWMgdGFzdGVzIVxuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjEwNjY0MzM1MTQ0MzUyNzkyCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjIzLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOTg1LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEyMDgsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIyMwogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOTg1CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuMC1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiaWNNLWFNcklJOW5DaE1JUGl0LU1rQVUiCn0K
+  recorded_at: Tue, 03 Jun 2025 09:42:39 GMT
 recorded_with: VCR 6.3.1

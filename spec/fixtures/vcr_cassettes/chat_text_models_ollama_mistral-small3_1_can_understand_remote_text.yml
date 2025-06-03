@@ -1,56 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"}]}],"temperature":0.7,"stream":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.1
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 15 May 2025 09:38:14 GMT
-      Content-Length:
-      - '1544'
-    body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-375","object":"chat.completion","created":1747301894,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        is a high-level, interpreted programming language known for its simplicity
-        and productivity. It was created by Yukihiro \"Matz\" Matsumoto in the mid-1990s
-        and aims to combine the best features of other programming languages, such
-        as Perl, Smalltalk, Eiffel, Ada, and Lisp.\n\nHere are some key features of
-        Ruby:\n\n1. **Object-Oriented**: Everything in Ruby is an object, which makes
-        it a pure object-oriented language.\n2. **Dynamic Typing**: Variables in Ruby
-        do not have explicit types, which allows for more flexibility.\n3. **Simple
-        Syntax**: Ruby''s syntax is designed to be readable and easy to write, making
-        it a great language for beginners.\n4. **Block and Iterators**: Ruby has powerful
-        constructs for handling collections and performing operations on them.\n5.
-        **Metaprogramming**: Ruby supports metaprogramming, allowing developers to
-        write code that can modify itself.\n6. **Gem System**: Ruby has a robust package
-        management system called RubyGems, which makes it easy to share and reuse
-        code.\n\nRuby is often used for web development, thanks to the Ruby on Rails
-        framework, which simplifies the creation of database-backed web applications.
-        It is also used for scripting, automation, and other general-purpose programming
-        tasks."},"finish_reason":"stop"}],"usage":{"prompt_tokens":362,"completion_tokens":268,"total_tokens":630}}
-
-        '
-  recorded_at: Thu, 15 May 2025 09:38:14 GMT
-- request:
     method: get
     uri: https://www.ruby-lang.org/en/about/license.txt
     body:
@@ -76,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Fri, 16 May 2025 15:24:48 GMT
+      - Wed, 28 May 2025 09:09:09 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"682758c0-9c6"
+      - W/"6836d2b5-9c6"
       Expires:
-      - Tue, 20 May 2025 12:18:45 GMT
+      - Tue, 03 Jun 2025 09:40:49 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 4E3B:24E65B:32A37F4:331CE86:682C70CD
+      - B55A:1CA3CF:6E38775:6F2D4D9:683EC0C9
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Tue, 20 May 2025 13:50:51 GMT
+      - Tue, 03 Jun 2025 09:38:43 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '71'
       X-Served-By:
-      - cache-fra-etou8220144-FRA
+      - cache-fra-etou8220111-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1747749051.121485,VS0,VE99
+      - S1748943523.180552,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - e585b952e44b8b38044e9946ebeda910a7d9442e
+      - 9a34061d3cc8f70b3a2ced710ee983906180ad79
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -147,5 +95,98 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 20 May 2025 13:50:51 GMT
+  recorded_at: Tue, 03 Jun 2025 09:38:43 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n  3.
+        You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n       b)
+        accompany the distribution with the machine-readable source of\n\t  the software.\n\n       c)
+        give non-standard binaries non-standard names, with\n          instructions
+        on where to get the original software distribution.\n\n       d) make other
+        distribution arrangements with the author.\n\n  4. You may modify and include
+        the part of the software into any other\n     software (possibly commercial).  But
+        some files in the distribution\n     are not written by the author, so that
+        they are not under these terms.\n\n     For the list of those files and their
+        copying conditions, see the\n     file LEGAL.\n\n  5. The scripts and library
+        files supplied as input to or produced as\n     output from the software do
+        not automatically fall under the\n     copyright of the software, but belong
+        to whomever generated them,\n     and may be sold commercially, and may be
+        aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
+        IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
+        LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 03 Jun 2025 10:52:21 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-810","object":"chat.completion","created":1748947941,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `license.txt` contains the licensing terms for Ruby, a programming language
+        created by Yukihiro Matsumoto. Here is a summary of the key points:\n\n1.
+        **Copyright**: Ruby is copyrighted free software by Yukihiro Matsumoto.\n\n2.
+        **Redistribution and Modification**:\n   - You can make and distribute verbatim
+        copies of the source code, provided you include all original copyright notices
+        and disclaimers.\n   - You can modify the software, but you must do at least
+        one of the following:\n     - Place your modifications in the public domain
+        or make them freely available.\n     - Use the modified software only within
+        your organization.\n     - Give non-standard binaries non-standard names and
+        provide instructions on where to get the original software.\n     - Make other
+        distribution arrangements with the author.\n\n3. **Distribution in Binary
+        Form**:\n   - You can distribute the software in object code or binary form,
+        but you must do at least one of the following:\n     - Distribute the binaries
+        with instructions on where to get the original distribution.\n     - Include
+        the machine-readable source of the software.\n     - Give non-standard binaries
+        non-standard names and provide instructions on where to get the original software.\n     -
+        Make other distribution arrangements with the author.\n\n4. **Inclusion in
+        Other Software**:\n   - You can modify and include parts of the software in
+        other software (possibly commercial), but note that some files may not be
+        under these terms (check the `LEGAL` file for details).\n\n5. **Scripts and
+        Library Files**:\n   - Scripts and library files supplied as input to or produced
+        as output from the software do not automatically fall under the software''s
+        copyright. They belong to the generator and can be sold commercially or aggregated
+        with the software.\n\n6. **Disclaimer**:\n   - The software is provided \"as
+        is\" without any warranties, including implied warranties of merchantability
+        and fitness for a particular purpose.\n\nFor more detailed information, you
+        would need to refer to the specific files mentioned, such as `BSDL` and `LEGAL`."},"finish_reason":"stop"}],"usage":{"prompt_tokens":932,"completion_tokens":424,"total_tokens":1356}}
+
+        '
+  recorded_at: Tue, 03 Jun 2025 10:52:21 GMT
 recorded_with: VCR 6.3.1

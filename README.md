@@ -46,14 +46,14 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
 
-# Analyze images
-chat.ask "What's in this image?", with: { image: "ruby_conf.jpg" }
+# Analyze images, audio, documents, and text files
+chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "Describe this meeting", with: "meeting.wav"
+chat.ask "Summarize this document", with: "contract.pdf"
+chat.ask "Explain this code", with: "app.rb"
 
-# Analyze audio recordings
-chat.ask "Describe this meeting", with: { audio: "meeting.wav" }
-
-# Analyze documents
-chat.ask "Summarize this document", with: { pdf: "contract.pdf" }
+# Multiple files at once - types automatically detected
+chat.ask "Analyze these files", with: ["diagram.png", "report.pdf", "notes.txt"]
 
 # Stream responses in real-time
 chat.ask "Tell me a story about a Ruby programmer" do |chunk|
@@ -90,7 +90,7 @@ chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
 *   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
-*   📄 **PDF Analysis:** Extract information and summarize PDF documents.
+*   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
 *   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
 *   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
@@ -143,6 +143,10 @@ end
 # Now interacting with a Chat record persists the conversation:
 chat_record = Chat.create!(model_id: "gpt-4.1-nano")
 chat_record.ask("Explain Active Record callbacks.") # User & Assistant messages saved
+
+# Works seamlessly with file attachments - types automatically detected
+chat_record.ask("What's in this file?", with: "report.pdf")
+chat_record.ask("Analyze these", with: ["image.jpg", "data.csv", "notes.txt"])
 ```
 Check the [Rails Integration Guide](https://rubyllm.com/guides/rails) for more.
 

@@ -5,8 +5,9 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,67 +25,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2025 09:37:34 GMT
+      - Tue, 03 Jun 2025 10:51:38 GMT
       Content-Length:
-      - '1991'
+      - '378'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-330","object":"chat.completion","created":1747301854,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        is a dynamic, open-source programming language with a focus on simplicity
-        and productivity. It was created by Yukihiro Matsumoto in the mid-1990s and
-        is designed to make programming enjoyable and intuitive. Here are some key
-        features of Ruby:\n\n1. **Object-Oriented**: Everything in Ruby is an object,
-        even primitive data types like integers and booleans. This allows for a consistent
-        and powerful way to manipulate data.\n\n2. **Dynamic Typing**: Ruby is a dynamically
-        typed language, meaning you don''t need to declare the type of a variable
-        when you create it. This can make the code more flexible and easier to write.\n\n3.
-        **Elegant Syntax**: Ruby''s syntax is designed to be clean and readable, which
-        can make it easier to learn and use compared to some other languages.\n\n4.
-        **Metaprogramming**: Ruby supports metaprogramming, which allows you to write
-        code that writes or manipulates other code. This can be very powerful for
-        creating flexible and dynamic applications.\n\n5. **Rails Framework**: One
-        of the most well-known applications of Ruby is the Ruby on Rails framework,
-        which is a web application framework that follows the Model-View-Controller
-        (MVC) architectural pattern. Rails is known for its convention over configuration
-        philosophy, which simplifies the development process.\n\n6. **Community and
-        Libraries**: Ruby has a strong community and a rich ecosystem of libraries
-        (called gems) that can be easily integrated into projects.\n\nRuby is often
-        used for web development, but it can also be used for a variety of other tasks,
-        including scripting, automation, and more. Its emphasis on developer happiness
-        and productivity makes it a popular choice for many developers."},"finish_reason":"stop"}],"usage":{"prompt_tokens":362,"completion_tokens":347,"total_tokens":709}}
+      string: '{"id":"chatcmpl-666","object":"chat.completion","created":1748947898,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file named `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```"},"finish_reason":"stop"}],"usage":{"prompt_tokens":384,"completion_tokens":20,"total_tokens":404}}
 
         '
-  recorded_at: Thu, 15 May 2025 09:37:34 GMT
+  recorded_at: Tue, 03 Jun 2025 10:51:38 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"}]},{"role":"assistant","content":"Ruby is a dynamic, open-source
-        programming language with a focus on simplicity and productivity. It was created
-        by Yukihiro Matsumoto in the mid-1990s and is designed to make programming
-        enjoyable and intuitive. Here are some key features of Ruby:\n\n1. **Object-Oriented**:
-        Everything in Ruby is an object, even primitive data types like integers and
-        booleans. This allows for a consistent and powerful way to manipulate data.\n\n2.
-        **Dynamic Typing**: Ruby is a dynamically typed language, meaning you don''t
-        need to declare the type of a variable when you create it. This can make the
-        code more flexible and easier to write.\n\n3. **Elegant Syntax**: Ruby''s
-        syntax is designed to be clean and readable, which can make it easier to learn
-        and use compared to some other languages.\n\n4. **Metaprogramming**: Ruby
-        supports metaprogramming, which allows you to write code that writes or manipulates
-        other code. This can be very powerful for creating flexible and dynamic applications.\n\n5.
-        **Rails Framework**: One of the most well-known applications of Ruby is the
-        Ruby on Rails framework, which is a web application framework that follows
-        the Model-View-Controller (MVC) architectural pattern. Rails is known for
-        its convention over configuration philosophy, which simplifies the development
-        process.\n\n6. **Community and Libraries**: Ruby has a strong community and
-        a rich ecosystem of libraries (called gems) that can be easily integrated
-        into projects.\n\nRuby is often used for web development, but it can also
-        be used for a variety of other tasks, including scripting, automation, and
-        more. Its emphasis on developer happiness and productivity makes it a popular
-        choice for many developers."},{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file named `ruby.txt`
+        contains the following text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -102,23 +63,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 15 May 2025 09:37:50 GMT
+      - Tue, 03 Jun 2025 10:51:41 GMT
       Content-Length:
-      - '990'
+      - '415'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-350","object":"chat.completion","created":1747301870,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
-        unable to read or interpret files directly, but I can help you understand
-        what might be in a file if you provide more context or describe the contents.
-        Here are a few things you can do:\n\n1. **Describe the File**: Tell me the
-        name of the file and any details you know about it, such as its extension
-        (e.g., `.txt`, `.py`, `.png`) and what it is supposed to contain.\n\n2. **Copy
-        and Paste**: If the file contains text, you can copy and paste a portion of
-        it here, and I can help you analyze or interpret it.\n\n3. **Ask Specific
-        Questions**: If you have specific questions about the file, such as \"What
-        does this Python code do?\" or \"How can I open this type of file?\", feel
-        free to ask!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":717,"completion_tokens":166,"total_tokens":883}}
+      string: '{"id":"chatcmpl-73","object":"chat.completion","created":1748947901,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file named `ruby.xml` contains the following XML:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```"},"finish_reason":"stop"}],"usage":{"prompt_tokens":437,"completion_tokens":29,"total_tokens":466}}
 
         '
-  recorded_at: Thu, 15 May 2025 09:37:50 GMT
+  recorded_at: Tue, 03 Jun 2025 10:51:41 GMT
 recorded_with: VCR 6.3.1

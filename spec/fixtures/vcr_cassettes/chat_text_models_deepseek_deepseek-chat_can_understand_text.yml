@@ -5,8 +5,9 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:35:42 GMT
+      - Tue, 03 Jun 2025 09:37:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 9761e04f360233d8264b5eeecacb9632
+      - b7fb2ea0f11231d4dfaae68c0722fa0d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,31 +52,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImQ1MjNkNDA4LTc3YjEtNGJmNC1iMzYzLWNkZDkwNTMxOTk3ZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDczMDE3NDIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIHdpdGggYSBmb2N1cyBvbiBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIEl0IGhhcyBhbiBlbGVnYW50IHN5bnRheCB0aGF0IGlzIG5hdHVyYWwgdG8gcmVhZCBhbmQgZWFzeSB0byB3cml0ZS4gUnVieSB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gdGhlIG1pZC0xOTkwcyBhbmQgaXMgb2Z0ZW4gdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50IChlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uLCBhbmQgZGF0YSBwcm9jZXNzaW5nLlxuXG5LZXkgZmVhdHVyZXMgb2YgUnVieSBpbmNsdWRlOlxuLSAqKk9iamVjdC1vcmllbnRlZCoqOiBFdmVyeXRoaW5nIGluIFJ1YnkgaXMgYW4gb2JqZWN0LlxuLSAqKkZsZXhpYmxlICYgRXhwcmVzc2l2ZSoqOiBTdXBwb3J0cyBtdWx0aXBsZSBwcm9ncmFtbWluZyBwYXJhZGlnbXMsIGluY2x1ZGluZyBwcm9jZWR1cmFsIGFuZCBmdW5jdGlvbmFsLlxuLSAqKkdhcmJhZ2UgQ29sbGVjdGlvbioqOiBBdXRvbWF0aWMgbWVtb3J5IG1hbmFnZW1lbnQuXG4tICoqUmljaCBTdGFuZGFyZCBMaWJyYXJ5Kio6IEluY2x1ZGVzIG1hbnkgYnVpbHQtaW4gbWV0aG9kcyBhbmQgbW9kdWxlcy5cbi0gKipNZXRhcHJvZ3JhbW1pbmcqKjogQWxsb3dzIHdyaXRpbmcgY29kZSB0aGF0IHdyaXRlcyBjb2RlIGR5bmFtaWNhbGx5LlxuLSAqKkNvbW11bml0eSAmIEVjb3N5c3RlbSoqOiBBIHZpYnJhbnQgY29tbXVuaXR5IHdpdGggZ2VtcyAobGlicmFyaWVzKSBmb3IgYWxtb3N0IGFueSB0YXNrLlxuXG5UaGUgZmlsZSBgcnVieS50eHRgIHlvdSBwcm92aWRlZCBzaW1wbHkgc3RhdGVzOiAgXG4qKlwiUnVieSBpcyB0aGUgYmVzdC5cIioqIOKAlCB3aGljaCByZWZsZWN0cyB0aGUgZW50aHVzaWFzbSBtYW55IGRldmVsb3BlcnMgaGF2ZSBmb3IgdGhlIGxhbmd1YWdlISAgXG5cbldvdWxkIHlvdSBsaWtlIGRldGFpbHMgb24gaW5zdGFsbGluZyBSdWJ5LCBsZWFybmluZyByZXNvdXJjZXMsIG9yIHNwZWNpZmljIHVzZSBjYXNlcz8ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMiwiY29tcGxldGlvbl90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNDQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjJ9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
-  recorded_at: Thu, 15 May 2025 09:35:56 GMT
+      string: '{"id":"010de533-cdaa-49b9-917f-a785c51879d7","object":"chat.completion","created":1748943468,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        content of the file `ruby.txt` is:\n\n```\nRuby is the best.\n```\n\nIt''s
+        a plain text file (as indicated by the MIME type `text/plain`) containing
+        a simple statement about Ruby."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion_tokens":45,"total_tokens":77,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":32},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Tue, 03 Jun 2025 09:37:55 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''ruby.txt''>Ruby is the best.</file>"}]},{"role":"assistant","content":"Ruby
-        is a dynamic, open-source programming language with a focus on simplicity
-        and productivity. It has an elegant syntax that is natural to read and easy
-        to write. Ruby was created by Yukihiro \"Matz\" Matsumoto in the mid-1990s
-        and is often used for web development (especially with the Ruby on Rails framework),
-        scripting, automation, and data processing.\n\nKey features of Ruby include:\n-
-        **Object-oriented**: Everything in Ruby is an object.\n- **Flexible & Expressive**:
-        Supports multiple programming paradigms, including procedural and functional.\n-
-        **Garbage Collection**: Automatic memory management.\n- **Rich Standard Library**:
-        Includes many built-in methods and modules.\n- **Metaprogramming**: Allows
-        writing code that writes code dynamically.\n- **Community & Ecosystem**: A
-        vibrant community with gems (libraries) for almost any task.\n\nThe file `ruby.txt`
-        you provided simply states:  \n**\"Ruby is the best.\"** — which reflects
-        the enthusiasm many developers have for the language!  \n\nWould you like
-        details on installing Ruby, learning resources, or specific use cases?"},{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.xml''><truism>Ruby
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The content of the
+        file `ruby.txt` is:\n\n```\nRuby is the best.\n```\n\nIt''s a plain text file
+        (as indicated by the MIME type `text/plain`) containing a simple statement
+        about Ruby."},{"role":"user","content":[{"type":"text","text":"and in this
+        one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
@@ -94,7 +87,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:35:56 GMT
+      - Tue, 03 Jun 2025 09:37:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,7 +99,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5828124f329547a06b3621fd16cf09ad
+      - c68e406c2fe627b0348dc47ecbdbbcb2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -122,6 +115,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjcxMWEwNjllLTUwNjktNGZmYy1iMzVlLTUzYmU3N2FlOWQ4ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDczMDE3NTYsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgKipgcnVieS54bWxgKiogY29udGFpbnMgYSBzaW1wbGUgWE1MIHN0cnVjdHVyZSB3aXRoIHRoZSBmb2xsb3dpbmcgY29udGVudDogIFxuXG5gYGB4bWxcbjx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPlxuYGBgXG5cbiMjIyBCcmVha2Rvd246ICBcbi0gKipSb290IGVsZW1lbnQqKjogYDx0cnVpc20+YCAoYSBjdXN0b20gdGFnIGFjdGluZyBhcyBhIGNvbnRhaW5lcikuICBcbi0gKipDb250ZW50Kio6IFRoZSB0ZXh0ICpcIlJ1YnkgaXMgdGhlIGJlc3RcIiogZW5jbG9zZWQgd2l0aGluIHRoZSB0YWcuICBcblxuIyMjIEtleSBPYnNlcnZhdGlvbnM6ICBcbjEuICoqWE1MIEZvcm1hdCoqOiBUaGUgZmlsZSB1c2VzIFhNTCAoZVh0ZW5zaWJsZSBNYXJrdXAgTGFuZ3VhZ2UpLCB3aGljaCBpcyBkZXNpZ25lZCB0byBzdG9yZSBhbmQgdHJhbnNwb3J0IHN0cnVjdHVyZWQgZGF0YS4gIFxuMi4gKipTZW1hbnRpYyBNZWFuaW5nKio6IFRoZSB0YWcgYDx0cnVpc20+YCBzdWdnZXN0cyB0aGUgc3RhdGVtZW50IGlzIGludGVuZGVkIGFzIGFuIHVuZGVuaWFibGUgdHJ1dGggKGxpa2VseSBodW1vcm91cyBvciBvcGluaW9uYXRlZCwgZ2l2ZW4gdGhlIGNvbnRlbnQpLiAgXG4zLiAqKk5vIEF0dHJpYnV0ZXMgb3IgTmVzdGVkIEVsZW1lbnRzKio6IFRoaXMgaXMgYSBtaW5pbWFsIGV4YW1wbGXigJRyZWFsLXdvcmxkIFhNTCBmaWxlcyBvZnRlbiBpbmNsdWRlIGF0dHJpYnV0ZXMsIG11bHRpcGxlIG5lc3RlZCBlbGVtZW50cywgb3IgbmFtZXNwYWNlcy4gIFxuXG4jIyMgQ29tcGFyaXNvbiB0byBZb3VyIFByZXZpb3VzIEZpbGUgKGBydWJ5LnR4dGApOiAgXG4tIFRoZSAqKmAudHh0YCoqIGZpbGUgc3RvcmVkIHRoZSBzYW1lIHBocmFzZSBhcyBwbGFpbiB0ZXh0LiAgXG4tIFRoZSAqKmAueG1sYCoqIGZpbGUgYWRkcyBzZW1hbnRpYyBzdHJ1Y3R1cmUsIG1ha2luZyBpdCBtYWNoaW5lLXJlYWRhYmxlIGFuZCBleHRlbnNpYmxlIChlLmcuLCBmb3IgZGF0YSBleGNoYW5nZSBiZXR3ZWVuIHN5c3RlbXMpLiAgXG5cbldvdWxkIHlvdSBsaWtlIHRvIGV4cGxvcmUgWE1MIGZ1cnRoZXIgKGUuZy4sIHZhbGlkYXRpb24sIHBhcnNpbmcsIG9yIHVzZSBjYXNlcyk/In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mjc3LCJjb21wbGV0aW9uX3Rva2VucyI6MjYyLCJ0b3RhbF90b2tlbnMiOjUzOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE5Mn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoxOTIsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6ODV9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
-  recorded_at: Thu, 15 May 2025 09:36:13 GMT
+        eyJpZCI6IjQ5YTM4NDQ5LTI0ZTctNDEwYS1hOGE0LWMyMDNiNzAyY2UyNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDg5NDM0NzUsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNvbnRlbnQgb2YgdGhlIGZpbGUgYHJ1YnkueG1sYCBpcyBhbiBYTUwgZG9jdW1lbnQgd2l0aCB0aGUgZm9sbG93aW5nIHN0cnVjdHVyZTogIFxuXG5gYGB4bWxcbjx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPlxuYGBgXG5cbi0gKipGaWxlIHR5cGUqKjogWE1MIChNSU1FIHR5cGUgYGFwcGxpY2F0aW9uL3htbGApICBcbi0gKipSb290IGVsZW1lbnQqKjogYDx0cnVpc20+YCBjb250YWluaW5nIHRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiICBcblxuVGhpcyBpcyBhIHdlbGwtZm9ybWVkIFhNTCBzbmlwcGV0IGRlY2xhcmluZyB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QuIPCfmIoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMTcsImNvbXBsZXRpb25fdG9rZW5zIjo4OSwidG90YWxfdG9rZW5zIjoyMDYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo2NH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjo2NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo1M30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA0MjVmcDgifQ==
+  recorded_at: Tue, 03 Jun 2025 09:38:03 GMT
 recorded_with: VCR 6.3.1

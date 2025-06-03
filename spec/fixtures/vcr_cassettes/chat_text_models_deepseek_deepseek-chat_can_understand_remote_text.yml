@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Wed, 14 May 2025 18:45:16 GMT
+      - Wed, 28 May 2025 09:09:09 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6824e4bc-9c6"
+      - W/"6836d2b5-9c6"
       Expires:
-      - Thu, 15 May 2025 06:18:40 GMT
+      - Tue, 03 Jun 2025 09:40:49 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 837C:2EE16:10587B4:107C83D:682584E8
+      - B55A:1CA3CF:6E38775:6F2D4D9:683EC0C9
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 15 May 2025 09:36:13 GMT
+      - Tue, 03 Jun 2025 09:38:03 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '42'
+      - '32'
       X-Served-By:
-      - cache-fra-etou8220043-FRA
+      - cache-fra-etou8220087-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1747301773.445405,VS0,VE3
+      - S1748943484.526312,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 072ef82bcd34a0141918e540cbca1262f84c36cc
+      - 23caddf9ce1587b6a5b7a3da439fab1a0b0d00fe
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,24 +95,24 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 15 May 2025 09:36:13 GMT
+  recorded_at: Tue, 03 Jun 2025 09:38:03 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''license.txt''>Ruby is copyrighted
-        free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou can redistribute
-        it and/or modify it under either the terms of the\n2-clause BSDL (see the
-        file BSDL), or the conditions below:\n\n  1. You may make and give away verbatim
-        copies of the source form of the\n     software without restriction, provided
-        that you duplicate all of the\n     original copyright notices and associated
-        disclaimers.\n\n  2. You may modify your copy of the software in any way,
-        provided that\n     you do at least ONE of the following:\n\n       a) place
-        your modifications in the Public Domain or otherwise\n          make them
-        Freely Available, such as by posting said\n\t  modifications to Usenet or
-        an equivalent medium, or by allowing\n\t  the author to include your modifications
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
         in the software.\n\n       b) use the modified software only within your corporation
         or\n          organization.\n\n       c) give non-standard binaries non-standard
         names, with\n          instructions on where to get the original software
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:36:13 GMT
+      - Tue, 03 Jun 2025 09:38:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,7 +165,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - beae5bd1799141bd587056f938615daa
+      - e74e6928ac4713b7885ca6a0f19e7a5e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -182,7 +180,31 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijg2MjAxZTY4LWViOTEtNDVhOC1hYzc0LTgzNjk1NjM3YTJjMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDczMDE3NzMsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIHdpdGggYSBmb2N1cyBvbiBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIEl0IHdhcyBjcmVhdGVkIGJ5ICoqWXVraWhpcm8gTWF0c3Vtb3RvIChcIk1hdHpcIikqKiBpbiB0aGUgbWlkLTE5OTBzLiBSdWJ5IGlzIGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXgsIG9iamVjdC1vcmllbnRlZCBuYXR1cmUsIGFuZCBkZXZlbG9wZXItZnJpZW5kbHkgZGVzaWduIHByaW5jaXBsZXMgKGUuZy4sIFwicHJpbmNpcGxlIG9mIGxlYXN0IHN1cnByaXNlXCIpLiBcblxuIyMjIEtleSBGZWF0dXJlcyBvZiBSdWJ5OlxuMS4gKipPYmplY3QtT3JpZW50ZWQqKjogRXZlcnl0aGluZyBpbiBSdWJ5IGlzIGFuIG9iamVjdCwgaW5jbHVkaW5nIHByaW1pdGl2ZXMgbGlrZSBudW1iZXJzLlxuMi4gKipEeW5hbWljIFR5cGluZyoqOiBObyBleHBsaWNpdCB0eXBlIGRlY2xhcmF0aW9uczsgdHlwZXMgYXJlIHJlc29sdmVkIGF0IHJ1bnRpbWUuXG4zLiAqKkV4cHJlc3NpdmUgU3ludGF4Kio6IENsZWFuLCByZWFkYWJsZSBjb2RlIHdpdGggbWluaW1hbCBib2lsZXJwbGF0ZSAoZS5nLiwgYDUudGltZXMgeyBwdXRzIFwiSGVsbG9cIiB9YCkuXG40LiAqKk1ldGFwcm9ncmFtbWluZyoqOiBBYmlsaXR5IHRvIG1vZGlmeSBjb2RlIGF0IHJ1bnRpbWUgKGUuZy4sIGRlZmluaW5nIG1ldGhvZHMgZHluYW1pY2FsbHkpLlxuNS4gKipSdWJ5IG9uIFJhaWxzKio6IEEgcG9wdWxhciB3ZWIgZnJhbWV3b3JrIGJ1aWx0IHdpdGggUnVieSwgZW1waGFzaXppbmcgY29udmVudGlvbiBvdmVyIGNvbmZpZ3VyYXRpb24uXG42LiAqKkdhcmJhZ2UgQ29sbGVjdGlvbioqOiBBdXRvbWF0aWMgbWVtb3J5IG1hbmFnZW1lbnQuXG5cbiMjIyBMaWNlbnNpbmcgKGZyb20geW91ciBmaWxlKTpcblJ1YnkgaXMgKipmcmVlIHNvZnR3YXJlKiogZGlzdHJpYnV0ZWQgdW5kZXIgYSAqKmR1YWwgbGljZW5zZSoqOlxuLSAqKjItY2xhdXNlIEJTREwqKiAoQmVya2VsZXkgU29mdHdhcmUgRGlzdHJpYnV0aW9uIExpY2Vuc2UpIG9yXG4tICoqUnVieeKAmXMgb3duIGxpY2Vuc2UqKiAoYSBtb3JlIHBlcm1pc3NpdmUgdmFyaWFudCB3aXRoIHNwZWNpZmljIHJlZGlzdHJpYnV0aW9uL21vZGlmaWNhdGlvbiB0ZXJtcykuXG5cblRoZSBsaWNlbnNlIGFsbG93czpcbi0gRnJlZSByZWRpc3RyaWJ1dGlvbiBhbmQgbW9kaWZpY2F0aW9uLlxuLSBVc2UgaW4gcHJvcHJpZXRhcnkgc29mdHdhcmUgKHdpdGggc29tZSBjb25kaXRpb25zKS5cbi0gXCJBUyBJU1wiIGRpc2NsYWltZXIgb2Ygd2FycmFudGllcy5cblxuIyMjIEV4YW1wbGUgQ29kZTpcbmBgYHJ1YnlcbiMgU2ltcGxlIFJ1Ynkgc2NyaXB0XG5wdXRzIFwiSGVsbG8sIFdvcmxkIVwiICAjIE91dHB1dDogSGVsbG8sIFdvcmxkIVxuXG4jIERlZmluZSBhIGNsYXNzXG5jbGFzcyBHcmVldGVyXG4gIGRlZiBpbml0aWFsaXplKG5hbWUpXG4gICAgQG5hbWUgPSBuYW1lXG4gIGVuZFxuXG4gIGRlZiBncmVldFxuICAgIHB1dHMgXCJIaSwgI3tAbmFtZX0hXCJcbiAgZW5kXG5lbmRcblxuR3JlZXRlci5uZXcoXCJSdWJ5XCIpLmdyZWV0ICAjIE91dHB1dDogSGksIFJ1YnkhXG5gYGBcblxuRm9yIG1vcmUgZGV0YWlscywgdmlzaXQgW1J1YnnigJlzIG9mZmljaWFsIHdlYnNpdGVdKGh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvKS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MzMsImNvbXBsZXRpb25fdG9rZW5zIjozOTYsInRvdGFsX3Rva2VucyI6OTI5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjUzM30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA0MjVmcDgifQ==
-  recorded_at: Thu, 15 May 2025 09:36:36 GMT
+      string: '{"id":"9a6da2a8-236a-458d-a6b2-885d0423649a","object":"chat.completion","created":1748943483,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `license.txt` contains the license terms for the Ruby programming language.
+        Here''s a summary of its contents:\n\n1. **Copyright Notice**: Ruby is copyrighted
+        free software by Yukihiro Matsumoto (`matz@netlab.jp`).\n\n2. **Redistribution
+        and Modification Terms**:\n   - You can redistribute/modify Ruby under either
+        the 2-clause BSDL (referenced in the file `BSDL`) or the conditions listed
+        in this file.\n\n3. **Key Conditions**:\n   - **Verbatim Copies**: Allowed
+        if original copyright/disclaimers are preserved.\n   - **Modifications**:
+        Allowed if at least one of the following is met:\n     - Place modifications
+        in the Public Domain or make them freely available (e.g., via Usenet).\n     -
+        Use modified software only within your organization.\n     - Give non-standard
+        binaries unique names and provide original distribution instructions.\n     -
+        Arrange distribution terms with the author.\n   - **Binary/Object Code Distribution**:
+        Allowed if at least one of the following is met:\n     - Include instructions
+        to fetch the original source.\n     - Provide machine-readable source with
+        the distribution.\n     - Use non-standard names for non-standard binaries.\n     -
+        Arrange terms with the author.\n   - **Inclusion in Other Software**: Modifications
+        can be included in other (even commercial) software, but some files (listed
+        in `LEGAL`) have separate terms.\n   - **Scripts/Library Files**: Input/output
+        files generated by Ruby are not automatically copyrighted under Ruby''s license
+        and can be sold/commercially used.\n\n4. **Disclaimer**: The software is provided
+        \"AS IS\" without warranties, including merchantability or fitness for a purpose.\n\n###
+        Notable Files Referenced:\n- `BSDL`: Contains the 2-clause BSD license terms.\n-
+        `LEGAL`: Lists files not covered by Ruby''s license (with their own terms).\n\nThis
+        is a permissive license allowing broad use, modification, and distribution
+        under specific conditions."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":543,"completion_tokens":406,"total_tokens":949,"prompt_tokens_details":{"cached_tokens":512},"prompt_cache_hit_tokens":512,"prompt_cache_miss_tokens":31},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Tue, 03 Jun 2025 09:38:26 GMT
 recorded_with: VCR 6.3.1

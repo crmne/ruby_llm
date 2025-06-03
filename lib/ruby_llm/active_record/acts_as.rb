@@ -20,8 +20,7 @@ module RubyLLM
                    class_name: @message_class,
                    dependent: :destroy
 
-          delegate :add_message,
-                   to: :to_llm
+          delegate :add_message, to: :to_llm
         end
 
         def acts_as_message(chat_class: 'Chat',
@@ -88,26 +87,18 @@ module RubyLLM
         @chat ||= RubyLLM.chat(model: model_id)
         @chat.reset_messages!
 
-        # Load existing messages into chat
         messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
 
-        # Set up message persistence
         @chat.on_new_message { persist_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
       end
 
       def with_instructions(instructions, replace: false)
         transaction do
-          # If replace is true, remove existing system messages
           messages.where(role: :system).destroy_all if replace
-
-          # Create the new system message
-          messages.create!(
-            role: :system,
-            content: instructions
-          )
+          messages.create!(role: :system, content: instructions)
         end
         to_llm.with_instructions(instructions)
         self
@@ -133,6 +124,11 @@ module RubyLLM
         self
       end
 
+      def with_context(...)
+        to_llm.with_context(...)
+        self
+      end
+
       def on_new_message(...)
         to_llm.on_new_message(...)
         self
@@ -143,26 +139,9 @@ module RubyLLM
         self
       end
 
-      def create_user_message(content, with: nil) # rubocop:disable Metrics/PerceivedComplexity
-        message_record = messages.create!(
-          role: :user,
-          content: content
-        )
-
-        if with.present?
-          files = Array(with).reject do |f|
-            f.nil? || (f.respond_to?(:empty?) && f.empty?) || (f.respond_to?(:blank?) && f.blank?)
-          end
-
-          if files.any?
-            if files.first.is_a?(ActionDispatch::Http::UploadedFile)
-              message_record.attachments.attach(files)
-            else
-              attach_files(message_record, process_attachments(with))
-            end
-          end
-        end
-
+      def create_user_message(content, with: nil)
+        message_record = messages.create!(role: :user, content: content)
+        persist_content(message_record, with) if with.present?
         message_record
       end
 
@@ -186,21 +165,16 @@ module RubyLLM
       private
 
       def persist_new_message
-        @message = messages.create!(
-          role: :assistant,
-          content: String.new
-        )
+        @message = messages.create!(role: :assistant, content: String.new)
       end
 
       def persist_message_completion(message)
         return unless message
 
-        if message.tool_call_id
-          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id)&.id
-        end
+        tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
-          @message.update(
+          @message.update!(
             role: message.role,
             content: message.content,
             model_id: message.model_id,
@@ -221,86 +195,46 @@ module RubyLLM
         end
       end
 
-      def process_attachments(attachments) # rubocop:disable Metrics/PerceivedComplexity
-        return {} if attachments.nil?
+      def find_tool_call_id(tool_call_id)
+        self.class.tool_call_class.constantize.find_by(tool_call_id: tool_call_id)&.id
+      end
 
-        result = {}
-        files = Array(attachments)
+      def persist_content(message_record, attachments)
+        return unless message_record.respond_to?(:attachments)
 
-        files.each do |file|
-          content_type = if file.respond_to?(:content_type)
-                           file.content_type
-                         elsif file.is_a?(ActiveStorage::Attachment)
-                           file.blob.content_type
-                         else
-                           RubyLLM::MimeTypes.detect_from_path(file.to_s)
-                         end
+        attachables = prepare_for_active_storage(attachments)
+        message_record.attachments.attach(attachables) if attachables.any?
+      end
 
-          if RubyLLM::MimeTypes.image?(content_type)
-            result[:image] ||= []
-            result[:image] << file
-          elsif RubyLLM::MimeTypes.audio?(content_type)
-            result[:audio] ||= []
-            result[:audio] << file
-          elsif RubyLLM::MimeTypes.pdf?(content_type)
-            result[:pdf] ||= []
-            result[:pdf] << file
+      def prepare_for_active_storage(attachments)
+        Utils.to_safe_array(attachments).filter_map do |attachment|
+          case attachment
+          when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
+            attachment
+          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many
+            attachment.blobs
+          when Hash
+            attachment.values.map { |v| prepare_for_active_storage(v) }
           else
-            result[:text] ||= []
-            result[:text] << file
+            convert_to_active_storage_format(attachment)
           end
-        end
-
-        result
+        end.flatten.compact
       end
 
-      def attach_files(message, attachments_hash)
-        return unless message.respond_to?(:attachments)
+      def convert_to_active_storage_format(source)
+        return if source.blank?
 
-        %i[image audio pdf text].each do |type|
-          Array(attachments_hash[type]).each do |file_source|
-            attach_file(message, file_source)
-          end
-        end
-      end
+        # Let RubyLLM::Attachment handle the heavy lifting
+        attachment = RubyLLM::Attachment.new(source)
 
-      def attach_file(message, file_source)
-        if file_source.to_s.match?(%r{^https?://})
-          # For URLs, create a special attachment that just stores the URL
-          content_type = RubyLLM::MimeTypes.detect_from_path(file_source.to_s)
-
-          # Create a minimal blob that just stores the URL
-          blob = ActiveStorage::Blob.create_and_upload!(
-            io: StringIO.new('URL Reference'),
-            filename: File.basename(file_source),
-            content_type: content_type,
-            metadata: { original_url: file_source.to_s }
-          )
-          message.attachments.attach(blob)
-        elsif file_source.respond_to?(:read)
-          # Handle various file source types
-          message.attachments.attach(
-            io: file_source,
-            filename: extract_filename(file_source),
-            content_type: RubyLLM::MimeTypes.detect_from_path(extract_filename(file_source))
-          ) # Already a file-like object
-        elsif file_source.is_a?(::ActiveStorage::Attachment)
-          # Copy from existing ActiveStorage attachment
-          message.attachments.attach(file_source.blob)
-        elsif file_source.is_a?(::ActiveStorage::Blob)
-          message.attachments.attach(file_source)
-        else
-          # Local file path
-          message.attachments.attach(
-            io: File.open(file_source),
-            filename: File.basename(file_source),
-            content_type: RubyLLM::MimeTypes.detect_from_path(file_source)
-          )
-        end
-      end
-
-      def extract_filename(file)
-        file.respond_to?(:original_filename) ? file.original_filename : 'attachment'
+        {
+          io: StringIO.new(attachment.content),
+          filename: attachment.filename,
+          content_type: attachment.mime_type
+        }
+      rescue StandardError => e
+        RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
+        nil
       end
     end
 
@@ -325,6 +259,8 @@ module RubyLLM
         )
       end
 
+      private
+
       def extract_tool_calls
         tool_calls.to_h do |tool_call|
           [
@@ -342,57 +278,31 @@ module RubyLLM
         parent_tool_call&.tool_call_id
       end
 
-      def extract_content # rubocop:disable Metrics/PerceivedComplexity
+      def extract_content
         return content unless respond_to?(:attachments) && attachments.attached?
 
-        content_obj = RubyLLM::Content.new(content)
+        RubyLLM::Content.new(content).tap do |content_obj|
+          @_tempfiles = []
 
-        # We need to keep tempfiles alive for the duration of the API call
-        @_tempfiles = []
-
-        attachments.each do |attachment|
-          attachment_data = if attachment.metadata&.key?('original_url')
-                              attachment.metadata['original_url']
-                            elsif defined?(ActiveJob) && caller.any? { |c| c.include?('active_job') }
-                              # We're in a background job - need to download the data
-                              temp_file = Tempfile.new([File.basename(attachment.filename.to_s, '.*'),
-                                                        File.extname(attachment.filename.to_s)])
-                              temp_file.binmode
-                              temp_file.write(attachment.download)
-                              temp_file.flush
-                              temp_file.rewind
-
-                              # Store the tempfile reference in the instance variable to prevent GC
-                              @_tempfiles << temp_file
-
-                              # Return the file object itself, not just the path
-                              temp_file
-                            else
-                              blob_path_for(attachment)
-                            end
-
-          if RubyLLM::MimeTypes.image?(attachment.content_type)
-            content_obj.add_image(attachment_data)
-          elsif RubyLLM::MimeTypes.audio?(attachment.content_type)
-            content_obj.add_audio(attachment_data)
-          elsif RubyLLM::MimeTypes.pdf?(attachment.content_type)
-            content_obj.add_pdf(attachment_data)
-          else
-            content_obj.add_text(attachment_data)
+          attachments.each do |attachment|
+            tempfile = download_attachment(attachment)
+            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
           end
         end
-
-        content_obj
       end
 
-      private
+      def download_attachment(attachment)
+        ext = File.extname(attachment.filename.to_s)
+        basename = File.basename(attachment.filename.to_s, ext)
+        tempfile = Tempfile.new([basename, ext])
+        tempfile.binmode
 
-      def blob_path_for(attachment)
-        if Rails.application.routes.url_helpers.respond_to?(:rails_blob_path)
-          Rails.application.routes.url_helpers.rails_blob_path(attachment, only_path: true)
-        else
-          attachment.service_url
-        end
+        attachment.download { |chunk| tempfile.write(chunk) }
+
+        tempfile.flush
+        tempfile.rewind
+        @_tempfiles << tempfile
+        tempfile
       end
     end
   end

@@ -14,12 +14,14 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            parts << case attachment.type
-                     when :text
-                       format_text_file(attachment)
-                     else
-                       format_attachment(attachment)
-                     end
+            case attachment.type
+            when :text
+              parts << format_text_file(attachment)
+            when :unknown
+              raise UnsupportedAttachmentError, attachment.mime_type
+            else
+              parts << format_attachment(attachment)
+            end
           end
 
           parts

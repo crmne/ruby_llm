@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 12:27:39 GMT
+      - Tue, 03 Jun 2025 09:44:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-15T12:27:39Z'
+      - '2025-06-03T09:44:18Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-15T12:27:39Z'
+      - '2025-06-03T09:44:18Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-15T12:27:38Z'
+      - '2025-06-03T09:44:18Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-15T12:27:39Z'
+      - '2025-06-03T09:44:18Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -75,8 +75,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_018jFmSSP9BqU5fnt2FFuBxv","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Thu, 15 May 2025 12:27:39 GMT
+      string: '{"id":"msg_01KxeMKHL9YMLgpUs2xrfAzA","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5,"service_tier":"standard"}}'
+  recorded_at: Tue, 03 Jun 2025 09:44:18 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -107,7 +107,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 15 May 2025 12:27:39 GMT
+      - Tue, 03 Jun 2025 09:44:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,7 +117,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=355
+      - gfet4t7; dur=438
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -157,7 +157,8 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "88M-aJy5BZqC_NUP2avDkQQ"
         }
-  recorded_at: Thu, 15 May 2025 12:27:39 GMT
+  recorded_at: Tue, 03 Jun 2025 09:44:19 GMT
 recorded_with: VCR 6.3.1

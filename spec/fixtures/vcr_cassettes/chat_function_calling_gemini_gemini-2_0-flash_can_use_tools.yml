@@ -33,7 +33,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:41:11 GMT
+      - Tue, 03 Jun 2025 09:44:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=425
+      - gfet4t7; dur=651
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -60,8 +60,8 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     }
                   }
@@ -69,7 +69,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.069765539730296422
+              "avgLogprobs": -0.00099647439578000232
             }
           ],
           "usageMetadata": {
@@ -89,16 +89,17 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "FsQ-aPnjI5_KhMIPkLCIoAU"
         }
-  recorded_at: Mon, 12 May 2025 13:41:11 GMT
+  recorded_at: Tue, 03 Jun 2025 09:44:55 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"e14f55ef-f24f-49ba-98b8-310d27b0e120","response":{"name":"e14f55ef-f24f-49ba-98b8-310d27b0e120","content":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"c21392d6-0fcb-46b6-9554-38e127fff093","response":{"name":"c21392d6-0fcb-46b6-9554-38e127fff093","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -126,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:41:12 GMT
+      - Tue, 03 Jun 2025 09:44:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -136,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=392
+      - gfet4t7; dur=642
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -144,6 +145,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDLCB3aXRoIHdpbmQgYXQgMTAga20vaC5cbiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC4wMTQxMTYzNTA3MjMzNDk1MjkKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxOTIsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMywKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTUsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDE5MgogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjMKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi4wLWZsYXNoIgp9Cg==
-  recorded_at: Mon, 12 May 2025 13:41:12 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLlxuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjA4MTMxOTUwMDA5OTUyODkxNgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDE5MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDIyLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDIxMiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTkwCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMgogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjAtZmxhc2giLAogICJyZXNwb25zZUlkIjogIkY4US1hSmZVRk95VnNiUVBsZWFqa1FFIgp9Cg==
+  recorded_at: Tue, 03 Jun 2025 09:44:55 GMT
 recorded_with: VCR 6.3.1
