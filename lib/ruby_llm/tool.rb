@@ -46,6 +46,14 @@ module RubyLLM
       def parameters
         @parameters ||= {}
       end
+
+      def cacheable?
+        false
+      end
+
+      def cache_expiration(expires_in = 12.hours)
+        @cache_expiration = expires_in
+      end
     end
 
     def name
@@ -69,9 +77,17 @@ module RubyLLM
 
     def call(args)
       RubyLLM.logger.debug "Tool #{name} called with: #{args.inspect}"
-      result = execute(**args.transform_keys(&:to_sym))
+      if RubyLLM.config.perform_caching && self.class.cacheable?
+        cache_key = [name, args].to_param
+        RubyLLM.logger.debug "Retrieving result from cache with key: #{cache_key.inspect}"
+
+        result = RubyLLM.cache.fetch(cache_key, expires_in: self.class.cache_expiration) do
+          execute(**args.transform_keys(&:to_sym))
+        end
+      else
+        execute(**args.transform_keys(&:to_sym))
+      end
       RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
-      result
     end
 
     def execute(...)

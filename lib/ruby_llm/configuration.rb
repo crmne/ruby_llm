@@ -38,7 +38,9 @@ module RubyLLM
                   # Logging configuration
                   :log_file,
                   :log_level,
-                  :log_assume_model_exists
+                  :log_assume_model_exists,
+                  :perform_caching,
+                  :cache_store
 
     def initialize
       # Connection configuration
@@ -58,6 +60,10 @@ module RubyLLM
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       @log_assume_model_exists = true
+
+      # Cache configuration
+      @perform_caching = false
+      @cache_store = :null_store
     end
 
     def inspect

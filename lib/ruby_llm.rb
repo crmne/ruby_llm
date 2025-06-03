@@ -73,6 +73,10 @@ module RubyLLM
         level: config.log_level
       )
     end
+
+    def cache
+      @cache ||= ActiveSupport::Cache.lookup_store(*config.cache_store)
+    end
   end
 end
 

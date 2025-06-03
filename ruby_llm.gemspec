@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   # Runtime dependencies
+  spec.add_dependency 'activesupport', '~> 7'
   spec.add_dependency 'base64'
   spec.add_dependency 'event_stream_parser', '~> 1'
   spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
