@@ -5,6 +5,7 @@ require 'simplecov'
 require 'simplecov-cobertura'
 require 'codecov'
 require 'vcr'
+require 'active_support/testing/time_helpers'
 
 SimpleCov.start do
   add_filter '/spec/'
@@ -105,6 +106,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  config.include ActiveSupport::Testing::TimeHelpers
 end
 
 RSpec.shared_context 'with configured RubyLLM' do

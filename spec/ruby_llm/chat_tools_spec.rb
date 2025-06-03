@@ -131,6 +131,41 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'caching' do
+    class CounterTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+      description 'Returns a counter value'
+      cacheable true
+      cache_expiration 1.hour
+
+      def initialize
+        @counter = 0
+      end
+
+      def execute
+        @counter += 1
+        @counter
+      end
+    end
+
+    around do |example|
+      RubyLLM.config.perform_caching = true
+      RubyLLM.config.cache_store = :memory_store
+      example.run
+      RubyLLM.config.perform_caching = false
+      RubyLLM.config.cache_store = :null_store
+    end
+
+    it 'caches tool results' do
+      chat = RubyLLM.chat.with_tool(CounterTool.new)
+      response = chat.ask('Give me the current counter value from the database')
+      expect(response.content).to include('1')
+
+      cached_response = chat.ask('Give me the current counter value from the database')
+      expect(cached_response.content).to include('1')
+      expect(RubyLLM.cache.read('counter/')).to eq(1)
+    end
+  end
+
   describe 'error handling' do
     it 'raises an error when tool execution fails' do # rubocop:disable RSpec/MultipleExpectations
       chat = RubyLLM.chat.with_tool(BrokenTool)
