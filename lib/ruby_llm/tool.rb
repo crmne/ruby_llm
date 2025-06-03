@@ -39,8 +39,8 @@ module RubyLLM
         @description = text
       end
 
-      def param(name, **)
-        parameters[name] = Parameter.new(name, **)
+      def param(name, **options)
+        parameters[name] = Parameter.new(name, **options)
       end
 
       def parameters

@@ -35,8 +35,9 @@ rescue ActiveRecord::DatabaseAlreadyExists
   # Database already exists, that's fine
 end
 
-# Explicitly run all migrations from the dummy app
-ActiveRecord::Tasks::DatabaseTasks.migrate
+# Explicitly run the dummy app migrations
+dummy_migrations_path = File.expand_path('dummy/db/migrate', __dir__)
+ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
 
 require 'fileutils'
 require 'ruby_llm'

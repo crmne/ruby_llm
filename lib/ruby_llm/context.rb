@@ -10,16 +10,16 @@ module RubyLLM
       @connections = {}
     end
 
-    def chat(*, **, &)
-      Chat.new(*, **, context: self, &)
+    def chat(*args, **kwargs, &)
+      Chat.new(*args, **kwargs, context: self, &)
     end
 
-    def embed(*, **, &)
-      Embedding.embed(*, **, context: self, &)
+    def embed(*args, **kwargs, &)
+      Embedding.embed(*args, **kwargs, context: self, &)
     end
 
-    def paint(*, **, &)
-      Image.paint(*, **, context: self, &)
+    def paint(*args, **kwargs, &)
+      Image.paint(*args, **kwargs, context: self, &)
     end
 
     def connection_for(provider_module)

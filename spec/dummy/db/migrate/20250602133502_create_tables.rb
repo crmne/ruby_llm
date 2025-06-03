@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateTables < ActiveRecord::Migration[8.0]
+class CreateTables < ActiveRecord::Migration[7.0]
   def change
     create_table :chats do |t|
       t.string :model_id

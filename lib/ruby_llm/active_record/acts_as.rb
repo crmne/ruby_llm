@@ -20,8 +20,7 @@ module RubyLLM
                    class_name: @message_class,
                    dependent: :destroy
 
-          delegate :add_message,
-                   to: :to_llm
+          delegate :add_message, to: :to_llm
         end
 
         def acts_as_message(chat_class: 'Chat',
@@ -88,26 +87,18 @@ module RubyLLM
         @chat ||= RubyLLM.chat(model: model_id)
         @chat.reset_messages!
 
-        # Load existing messages into chat
         messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
 
-        # Set up message persistence
         @chat.on_new_message { persist_new_message }
              .on_end_message { |msg| persist_message_completion(msg) }
       end
 
       def with_instructions(instructions, replace: false)
         transaction do
-          # If replace is true, remove existing system messages
           messages.where(role: :system).destroy_all if replace
-
-          # Create the new system message
-          messages.create!(
-            role: :system,
-            content: instructions
-          )
+          messages.create!(role: :system, content: instructions)
         end
         to_llm.with_instructions(instructions)
         self
@@ -174,21 +165,16 @@ module RubyLLM
       private
 
       def persist_new_message
-        @message = messages.create!(
-          role: :assistant,
-          content: String.new
-        )
+        @message = messages.create!(role: :assistant, content: String.new)
       end
 
       def persist_message_completion(message)
         return unless message
 
-        if message.tool_call_id
-          tool_call_id = self.class.tool_call_class.constantize.find_by(tool_call_id: message.tool_call_id)&.id
-        end
+        tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
-          @message.update(
+          @message.update!(
             role: message.role,
             content: message.content,
             model_id: message.model_id,
@@ -209,17 +195,46 @@ module RubyLLM
         end
       end
 
+      def find_tool_call_id(tool_call_id)
+        self.class.tool_call_class.constantize.find_by(tool_call_id: tool_call_id)&.id
+      end
+
       def persist_content(message_record, attachments)
         return unless message_record.respond_to?(:attachments)
 
-        attachments = Utils.to_safe_array(attachments).reject(&:blank?)
-        return if attachments.empty?
-
-        message_record.attachments.attach(attachments)
+        attachables = prepare_for_active_storage(attachments)
+        message_record.attachments.attach(attachables) if attachables.any?
       end
 
-      def extract_filename(file)
-        file.respond_to?(:original_filename) ? file.original_filename : 'attachment'
+      def prepare_for_active_storage(attachments)
+        Utils.to_safe_array(attachments).filter_map do |attachment|
+          case attachment
+          when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
+            attachment
+          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many
+            attachment.blobs
+          when Hash
+            attachment.values.map { |v| prepare_for_active_storage(v) }
+          else
+            convert_to_active_storage_format(attachment)
+          end
+        end.flatten.compact
+      end
+
+      def convert_to_active_storage_format(source)
+        return if source.blank?
+
+        # Let RubyLLM::Attachment handle the heavy lifting
+        attachment = RubyLLM::Attachment.new(source)
+
+        {
+          io: StringIO.new(attachment.content),
+          filename: attachment.filename,
+          content_type: attachment.mime_type
+        }
+      rescue StandardError => e
+        RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
+        nil
       end
     end
 
@@ -244,6 +259,8 @@ module RubyLLM
         )
       end
 
+      private
+
       def extract_tool_calls
         tool_calls.to_h do |tool_call|
           [
@@ -265,18 +282,14 @@ module RubyLLM
         return content unless respond_to?(:attachments) && attachments.attached?
 
         RubyLLM::Content.new(content).tap do |content_obj|
-          # Prevent tempfiles from being garbage-collected during API calls
           @_tempfiles = []
 
           attachments.each do |attachment|
-            # Always download the file to ensure it works across all storage backends
             tempfile = download_attachment(attachment)
             content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
           end
         end
       end
-
-      private
 
       def download_attachment(attachment)
         ext = File.extname(attachment.filename.to_s)
@@ -284,16 +297,11 @@ module RubyLLM
         tempfile = Tempfile.new([basename, ext])
         tempfile.binmode
 
-        attachment.download do |chunk|
-          tempfile.write(chunk)
-        end
+        attachment.download { |chunk| tempfile.write(chunk) }
 
         tempfile.flush
         tempfile.rewind
-
-        # Keep reference to prevent GC
         @_tempfiles << tempfile
-
         tempfile
       end
     end
