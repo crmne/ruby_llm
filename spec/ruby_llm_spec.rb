@@ -5,6 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM do
   describe '.logger' do
     let(:logger) { instance_double(Logger) }
+    let(:log_file) { double }
+    let(:log_level) { double }
 
     before do
       described_class.instance_variable_set(:@config, nil)
@@ -17,9 +19,6 @@ RSpec.describe RubyLLM do
     end
 
     context 'with configuration options' do
-      let(:log_file) { double }
-      let(:log_level) { double }
-
       before do
         described_class.configure do |config|
           config.log_file = log_file
@@ -35,9 +34,6 @@ RSpec.describe RubyLLM do
     end
 
     context 'with a custom logger' do
-      let(:log_file) { double }
-      let(:log_level) { double }
-
       before do
         described_class.configure do |config|
           config.logger = logger
