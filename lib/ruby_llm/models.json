@@ -71,19 +71,14 @@
     "id": "claude-3-5-haiku-20241022",
     "name": "Claude Haiku 3.5",
     "provider": "anthropic",
-    "family": "claude-haiku-3-5",
+    "family": "claude-haiku-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -103,19 +98,14 @@
     "id": "claude-3-5-sonnet-20240620",
     "name": "Claude Sonnet 3.5",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-5",
+    "family": "claude-sonnet-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -135,19 +125,14 @@
     "id": "claude-3-5-sonnet-20241022",
     "name": "Claude Sonnet 3.5",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-5",
+    "family": "claude-sonnet-3.5",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -167,19 +152,14 @@
     "id": "claude-3-7-sonnet-20250219",
     "name": "Claude Sonnet 3.7",
     "provider": "anthropic",
-    "family": "claude-sonnet-3-7",
+    "family": "claude-sonnet-3.7",
     "created_at": null,
     "context_window": 200000,
     "max_output_tokens": 64000,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -205,13 +185,8 @@
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -237,13 +212,8 @@
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
+      "input": [],
+      "output": []
     },
     "capabilities": [
       "function_calling"
@@ -2150,40 +2120,33 @@
   },
   {
     "id": "gemini-1.5-flash-001",
-    "name": "Gemini 1.5 Flash 001",
+    "name": "Gemini 1.5 Flash",
     "provider": "gemini",
-    "family": "gemini15_flash",
+    "family": "gemini-1.5-flash",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
           "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
         }
       }
     },
@@ -2248,40 +2211,33 @@
   },
   {
     "id": "gemini-1.5-flash-002",
-    "name": "Gemini 1.5 Flash 002",
+    "name": "Gemini 1.5 Flash",
     "provider": "gemini",
-    "family": "gemini15_flash",
+    "family": "gemini-1.5-flash",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
           "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
         }
       }
     },
@@ -2339,40 +2295,33 @@
   },
   {
     "id": "gemini-1.5-flash-8b-001",
-    "name": "Gemini 1.5 Flash-8B 001",
+    "name": "Gemini 1.5 Flash-8B",
     "provider": "gemini",
-    "family": "gemini15_flash_8b",
+    "family": "gemini-1.5-flash-8b",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        },
-        "batch": {
-          "input_per_million": 0.01875,
-          "output_per_million": 0.075
+          "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
+          "output_per_million": 0.3
         }
       }
     },
@@ -2484,40 +2433,33 @@
   },
   {
     "id": "gemini-1.5-flash-8b-latest",
-    "name": "Gemini 1.5 Flash-8B Latest",
+    "name": "Gemini 1.5 Flash-8B",
     "provider": "gemini",
-    "family": "gemini15_flash_8b",
+    "family": "gemini-1.5-flash-8b",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        },
-        "batch": {
-          "input_per_million": 0.01875,
-          "output_per_million": 0.075
+          "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
+          "output_per_million": 0.3
         }
       }
     },
@@ -2533,40 +2475,33 @@
   },
   {
     "id": "gemini-1.5-flash-latest",
-    "name": "Gemini 1.5 Flash Latest",
+    "name": "Gemini 1.5 Flash",
     "provider": "gemini",
-    "family": "gemini15_flash",
+    "family": "gemini-1.5-flash",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
           "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
         }
       }
     },
@@ -2622,38 +2557,33 @@
   },
   {
     "id": "gemini-1.5-pro-001",
-    "name": "Gemini 1.5 Pro 001",
+    "name": "Gemini 1.5 Pro",
     "provider": "gemini",
-    "family": "gemini15_pro",
+    "family": "gemini-1.5-pro",
     "created_at": null,
-    "context_window": 2000000,
+    "context_window": 2097152,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 1.25,
+          "cached_input_per_million": 0.3125,
           "output_per_million": 5.0
-        },
-        "batch": {
-          "input_per_million": 0.625,
-          "output_per_million": 2.5
         }
       }
     },
@@ -2669,38 +2599,33 @@
   },
   {
     "id": "gemini-1.5-pro-002",
-    "name": "Gemini 1.5 Pro 002",
+    "name": "Gemini 1.5 Pro",
     "provider": "gemini",
-    "family": "gemini15_pro",
+    "family": "gemini-1.5-pro",
     "created_at": null,
-    "context_window": 2000000,
+    "context_window": 2097152,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 1.25,
+          "cached_input_per_million": 0.3125,
           "output_per_million": 5.0
-        },
-        "batch": {
-          "input_per_million": 0.625,
-          "output_per_million": 2.5
         }
       }
     },
@@ -2716,38 +2641,33 @@
   },
   {
     "id": "gemini-1.5-pro-latest",
-    "name": "Gemini 1.5 Pro Latest",
+    "name": "Gemini 1.5 Pro",
     "provider": "gemini",
-    "family": "gemini15_pro",
+    "family": "gemini-1.5-pro",
     "created_at": null,
-    "context_window": 2000000,
+    "context_window": 2097152,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 1.25,
+          "cached_input_per_million": 0.3125,
           "output_per_million": 5.0
-        },
-        "batch": {
-          "input_per_million": 0.625,
-          "output_per_million": 2.5
         }
       }
     },
@@ -2805,39 +2725,33 @@
   },
   {
     "id": "gemini-2.0-flash-001",
-    "name": "Gemini 2.0 Flash 001",
+    "name": "Gemini 2.0 Flash",
     "provider": "gemini",
-    "family": "gemini20_flash",
+    "family": "gemini-2.0-flash",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.1,
+          "cached_input_per_million": 0.025,
           "output_per_million": 0.4
-        },
-        "batch": {
-          "input_per_million": 0.05,
-          "output_per_million": 0.2
         }
       }
     },
@@ -2854,39 +2768,33 @@
   },
   {
     "id": "gemini-2.0-flash-exp",
-    "name": "Gemini 2.0 Flash Experimental",
+    "name": "Gemini 2.0 Flash",
     "provider": "gemini",
-    "family": "gemini20_flash",
+    "family": "gemini-2.0-flash",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.1,
+          "cached_input_per_million": 0.025,
           "output_per_million": 0.4
-        },
-        "batch": {
-          "input_per_million": 0.05,
-          "output_per_million": 0.2
         }
       }
     },
@@ -2945,36 +2853,33 @@
   },
   {
     "id": "gemini-2.0-flash-lite-001",
-    "name": "Gemini 2.0 Flash-Lite 001",
+    "name": "Gemini 2.0 Flash-Lite",
     "provider": "gemini",
-    "family": "gemini20_flash_lite",
+    "family": "gemini-2.0-flash-lite",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
-      "batch"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
+          "input_per_million": 0.1,
+          "cached_input_per_million": 0.025,
+          "output_per_million": 0.4
         }
       }
     },
@@ -3085,7 +2990,7 @@
     "id": "gemini-2.0-flash-live-001",
     "name": "Gemini 2.0 Flash Live",
     "provider": "gemini",
-    "family": "gemini-2.0-flash-live",
+    "family": "gemini-2.0-flash-live-001",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 8192,
@@ -3396,7 +3301,7 @@
     "id": "gemini-2.5-flash-exp-native-audio-thinking-dialog",
     "name": "Gemini 2.5 Flash Native Audio",
     "provider": "gemini",
-    "family": "gemini-2.5-flash-native-audio",
+    "family": "gemini-2.5-flash-preview-native-audio-dialog",
     "created_at": null,
     "context_window": 128000,
     "max_output_tokens": 8000,
@@ -3526,7 +3431,7 @@
     "id": "gemini-2.5-flash-preview-05-20",
     "name": "Gemini 2.5 Flash Preview 05-20",
     "provider": "gemini",
-    "family": "gemini-2.5-flash-preview",
+    "family": "gemini-2.5-flash-preview-05-20",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 65536,
@@ -3569,7 +3474,7 @@
     "id": "gemini-2.5-flash-preview-native-audio-dialog",
     "name": "Gemini 2.5 Flash Native Audio",
     "provider": "gemini",
-    "family": "gemini-2.5-flash-native-audio",
+    "family": "gemini-2.5-flash-preview-native-audio-dialog",
     "created_at": null,
     "context_window": 128000,
     "max_output_tokens": 8000,
@@ -3599,7 +3504,7 @@
   },
   {
     "id": "gemini-2.5-flash-preview-tts",
-    "name": "Gemini 2.5 Flash Preview Text-to-Speech",
+    "name": "Gemini 2.5 Flash Preview TTS",
     "provider": "gemini",
     "family": "gemini-2.5-flash-preview-tts",
     "created_at": null,
@@ -3731,7 +3636,7 @@
     "id": "gemini-2.5-pro-preview-05-06",
     "name": "Gemini 2.5 Pro Preview",
     "provider": "gemini",
-    "family": "gemini-2.5-pro-preview",
+    "family": "gemini-2.5-pro-preview-05-06",
     "created_at": null,
     "context_window": 1048576,
     "max_output_tokens": 65536,
@@ -3772,7 +3677,7 @@
   },
   {
     "id": "gemini-2.5-pro-preview-tts",
-    "name": "Gemini 2.5 Pro Preview Text-to-Speech",
+    "name": "Gemini 2.5 Pro Preview TTS",
     "provider": "gemini",
     "family": "gemini-2.5-pro-preview-tts",
     "created_at": null,
@@ -3863,7 +3768,7 @@
     "id": "gemini-embedding-exp-03-07",
     "name": "Gemini Embedding Experimental",
     "provider": "gemini",
-    "family": "gemini-embedding",
+    "family": "gemini-embedding-exp-03-07",
     "created_at": null,
     "context_window": 8192,
     "max_output_tokens": null,
@@ -4190,7 +4095,7 @@
     "id": "imagen-3.0-generate-002",
     "name": "Imagen 3",
     "provider": "gemini",
-    "family": "imagen-3",
+    "family": "imagen-3.0-generate-002",
     "created_at": null,
     "context_window": null,
     "max_output_tokens": null,
@@ -4270,7 +4175,7 @@
     "id": "models/aqa",
     "name": "AQA",
     "provider": "gemini",
-    "family": "aqa",
+    "family": "models/aqa",
     "created_at": null,
     "context_window": 7168,
     "max_output_tokens": 1024,
@@ -4291,7 +4196,7 @@
     "id": "models/embedding-001",
     "name": "Embedding",
     "provider": "gemini",
-    "family": "embedding",
+    "family": "models/embedding-001",
     "created_at": null,
     "context_window": 2048,
     "max_output_tokens": null,
@@ -4312,7 +4217,7 @@
     "id": "models/text-embedding-004",
     "name": "Text Embedding",
     "provider": "gemini",
-    "family": "text-embedding",
+    "family": "models/text-embedding-004",
     "created_at": null,
     "context_window": 2048,
     "max_output_tokens": null,
@@ -4370,7 +4275,7 @@
     "id": "veo-2.0-generate-001",
     "name": "Veo 2",
     "provider": "gemini",
-    "family": "veo-2",
+    "family": "veo-2.0-generate-001",
     "created_at": null,
     "context_window": null,
     "max_output_tokens": null,
@@ -4572,17 +4477,12 @@
         "text"
       ],
       "output": [
-        "image"
+        "image",
+        "text"
       ]
     },
     "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.02
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "object": "model",
       "owned_by": "system"
@@ -4917,12 +4817,12 @@
   },
   {
     "id": "gpt-4-0613",
-    "name": "GPT-4",
+    "name": "GPT-4 0613",
     "provider": "openai",
-    "family": "gpt-4",
-    "created_at": null,
-    "context_window": 8192,
-    "max_output_tokens": 8192,
+    "family": "other",
+    "created_at": "2023-06-12 18:54:56 +0200",
+    "context_window": 4096,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -4933,17 +4833,13 @@
       ]
     },
     "capabilities": [
-      "batch"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 30.0,
-          "output_per_million": 60.0
-        },
-        "batch": {
-          "input_per_million": 15.0,
-          "output_per_million": 30.0
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
         }
       }
     },
@@ -5647,25 +5543,64 @@
   },
   {
     "id": "gpt-4o-audio-preview-2024-12-17",
-    "name": "GPT-4o Audio",
+    "name": "GPT-4o-Audio Preview 20241217",
     "provider": "openai",
-    "family": "gpt-4o-audio-preview",
-    "created_at": null,
+    "family": "gpt4o_audio",
+    "created_at": "2024-12-12 21:10:39 +0100",
     "context_window": 128000,
     "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "audio",
-        "text"
+        "text",
+        "audio"
       ],
       "output": [
-        "audio",
-        "text"
+        "text",
+        "audio"
       ]
     },
     "capabilities": [
-      "function_calling"
+      "streaming",
+      "speech_generation",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4o-audio-preview-2025-06-03",
+    "name": "GPT-4o-Audio Preview 20250603",
+    "provider": "openai",
+    "family": "gpt4o_audio",
+    "created_at": "2025-06-03 01:54:58 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "audio"
+      ],
+      "output": [
+        "text",
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation",
+      "transcription"
     ],
     "pricing": {
       "text_tokens": {
@@ -6104,6 +6039,39 @@
     "provider": "openai",
     "family": "gpt4o_realtime",
     "created_at": "2024-12-11 20:30:30 +0100",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 5.0,
+          "output_per_million": 20.0
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-4o-realtime-preview-2025-06-03",
+    "name": "GPT-4o-Realtime Preview 20250603",
+    "provider": "openai",
+    "family": "gpt4o_realtime",
+    "created_at": "2025-06-03 01:43:58 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -6596,7 +6564,10 @@
         }
       }
     },
-    "metadata": {}
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
   },
   {
     "id": "o3-2025-04-16",
@@ -6634,7 +6605,10 @@
         }
       }
     },
-    "metadata": {}
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
   },
   {
     "id": "o3-mini",
@@ -6827,7 +6801,7 @@
   },
   {
     "id": "omni-moderation-latest",
-    "name": "omni-moderation",
+    "name": "omni-moderation-latest",
     "provider": "openai",
     "family": "omni-moderation-latest",
     "created_at": null,
@@ -6984,7 +6958,7 @@
   },
   {
     "id": "text-moderation-latest",
-    "name": "text-moderation",
+    "name": "text-moderation-latest",
     "provider": "openai",
     "family": "text-moderation-latest",
     "created_at": null,
@@ -7089,7 +7063,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 30.0
+          "output_per_million": 30.0
         }
       }
     },
@@ -7147,6 +7121,7 @@
         "audio"
       ],
       "output": [
+        "audio",
         "text"
       ]
     },
@@ -11022,23 +10997,23 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "tools",
+        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
+        "structured_outputs",
+        "response_format",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "repetition_penalty",
-        "response_format",
         "top_k",
-        "seed",
-        "min_p",
+        "repetition_penalty",
         "logit_bias",
         "logprobs",
         "top_logprobs",
-        "tools",
-        "tool_choice",
-        "structured_outputs"
+        "seed",
+        "min_p"
       ]
     }
   },
@@ -11048,8 +11023,8 @@
     "provider": "openrouter",
     "family": "deepseek",
     "created_at": "2025-03-24 14:59:15 +0100",
-    "context_window": 32768,
-    "max_output_tokens": 163840,
+    "context_window": 163840,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -11068,8 +11043,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.25,
-          "output_per_million": 1.3
+          "input_per_million": 0.3,
+          "output_per_million": 0.88
         }
       }
     },
@@ -11087,24 +11062,24 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 163840,
+        "context_length": 163840,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "tools",
+        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
-        "presence_penalty",
-        "frequency_penalty",
-        "repetition_penalty",
-        "top_k",
-        "stop",
-        "tools",
-        "tool_choice",
-        "response_format",
         "structured_outputs",
+        "response_format",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "top_k",
+        "repetition_penalty",
         "logit_bias",
         "logprobs",
         "top_logprobs",
@@ -12257,7 +12232,7 @@
     "provider": "openrouter",
     "family": "deepseek",
     "created_at": "2025-03-06 22:43:54 +0100",
-    "context_window": 128000,
+    "context_window": 163840,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -12287,7 +12262,7 @@
         "instruct_type": "deepseek-r1"
       },
       "top_provider": {
-        "context_length": 128000,
+        "context_length": 163840,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -13697,7 +13672,7 @@
   },
   {
     "id": "google/gemma-2b-it",
-    "name": "Google: Gemma 2 2B",
+    "name": "Google: Gemma 1 2B",
     "provider": "openrouter",
     "family": "google",
     "created_at": "2025-05-28 21:33:35 +0200",
@@ -13726,7 +13701,7 @@
       }
     },
     "metadata": {
-      "description": "Gemma 2 2B by Google is an open model built from the same research and technology used to create the [Gemini models](/models?q=gemini).\n\nGemma models are well-suited for a variety of text generation tasks, including question answering, summarization, and reasoning.\n\nSee the [launch announcement](https://blog.google/technology/developers/google-gemma-2/) for more details. Usage of Gemma is subject to Google's [Gemma Terms of Use](https://ai.google.dev/gemma/terms).",
+      "description": "Gemma 1 2B by Google is an open model built from the same research and technology used to create the [Gemini models](/models?q=gemini).\n\nGemma models are well-suited for a variety of text generation tasks, including question answering, summarization, and reasoning.\n\nUsage of Gemma is subject to Google's [Gemma Terms of Use](https://ai.google.dev/gemma/terms).",
       "architecture": {
         "modality": "text->text",
         "input_modalities": [
@@ -15266,15 +15241,15 @@
         "max_tokens",
         "temperature",
         "top_p",
+        "response_format",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "top_k",
         "repetition_penalty",
-        "logit_bias",
-        "min_p",
-        "response_format",
+        "top_k",
         "seed",
+        "min_p",
+        "logit_bias",
         "logprobs",
         "top_logprobs",
         "structured_outputs"
@@ -15894,14 +15869,14 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "top_k",
-        "min_p",
         "repetition_penalty",
+        "response_format",
+        "top_k",
+        "seed",
+        "min_p",
         "logit_bias",
         "logprobs",
         "top_logprobs",
-        "response_format",
         "structured_outputs"
       ]
     }
@@ -15950,17 +15925,16 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "tools",
+        "tool_choice",
         "max_tokens",
         "temperature",
         "top_p",
+        "repetition_penalty",
+        "top_k",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "tools",
-        "tool_choice",
-        "repetition_penalty",
-        "top_k",
         "logit_bias",
         "min_p",
         "response_format"
@@ -16078,12 +16052,12 @@
         "max_tokens",
         "temperature",
         "top_p",
-        "presence_penalty",
-        "frequency_penalty",
-        "repetition_penalty",
-        "top_k",
         "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "repetition_penalty",
         "response_format",
+        "top_k",
         "seed",
         "min_p",
         "logit_bias",
@@ -16422,11 +16396,12 @@
         "presence_penalty",
         "top_k",
         "repetition_penalty",
-        "logit_bias",
-        "min_p",
         "response_format",
-        "top_logprobs",
+        "structured_outputs",
+        "logit_bias",
         "logprobs",
+        "top_logprobs",
+        "min_p",
         "seed"
       ]
     }
@@ -18166,8 +18141,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.02,
-          "output_per_million": 0.07
+          "input_per_million": 0.01,
+          "output_per_million": 0.06
         }
       }
     },
@@ -24834,7 +24809,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.14,
+          "input_per_million": 0.13,
           "output_per_million": 0.6
         }
       }
@@ -26210,6 +26185,72 @@
         "logit_bias",
         "min_p",
         "response_format"
+      ]
+    }
+  },
+  {
+    "id": "sentientagi/dobby-mini-unhinged-plus-llama-3.1-8b",
+    "name": "SentientAGI: Dobby Mini Plus Llama 3.1 8B",
+    "provider": "openrouter",
+    "family": "sentientagi",
+    "created_at": "2025-06-02 19:33:39 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.19999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "Dobby-Mini-Leashed-Llama-3.1-8B and Dobby-Mini-Unhinged-Llama-3.1-8B are language models fine-tuned from Llama-3.1-8B-Instruct. Dobby models have a strong conviction towards personal freedom, decentralization, and all things crypto — even when coerced to speak otherwise. \n\nDobby-Mini-Leashed-Llama-3.1-8B and Dobby-Mini-Unhinged-Llama-3.1-8B have their own unique, uhh, personalities. The two versions are being released to be improved using the community’s feedback, which will steer the development of a 70B model.\n\n",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "top_k",
+        "repetition_penalty",
+        "response_format",
+        "structured_outputs",
+        "logit_bias",
+        "logprobs",
+        "top_logprobs"
       ]
     }
   },
