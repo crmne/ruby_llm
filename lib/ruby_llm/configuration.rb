@@ -36,6 +36,7 @@ module RubyLLM
                   :retry_interval_randomness,
                   :http_proxy,
                   # Logging configuration
+                  :logger,
                   :log_file,
                   :log_level,
                   :log_assume_model_exists
