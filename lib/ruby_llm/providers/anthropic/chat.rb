@@ -21,7 +21,7 @@ module RubyLLM
         end
 
         def separate_messages(messages)
-          messages.partition { |msg| msg.role == :system }
+          messages.partition(&:system?)
         end
 
         def build_system_content(system_messages)
@@ -66,9 +66,8 @@ module RubyLLM
         end
 
         def build_message(data, content, tool_use)
-          Message.new(
-            role: :assistant,
-            content: content,
+          Message.assistant(
+            content,
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),

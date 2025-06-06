@@ -52,6 +52,13 @@ module RubyLLM
         model_id: model_id
       }.compact
     end
+    
+    ROLES.each do |role|
+      define_method(:"#{role}?") { self.role == role }
+      define_singleton_method(role) do |content, **args|
+        new(role: role, content: content, **args)
+      end
+    end
 
     private
 
