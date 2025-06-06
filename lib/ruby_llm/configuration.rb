@@ -28,7 +28,7 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
-                  :default_thinking_budget
+                  :default_thinking_budget,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,
