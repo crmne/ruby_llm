@@ -11,12 +11,12 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, thinking:, stream: false)
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:)
+            add_optional_fields(payload, system_content:, tools:, thinking:)
           end
         end
 
@@ -41,17 +41,19 @@ module RubyLLM
             messages: chat_messages.map { |msg| format_message(msg) },
             temperature: 1, # TODO: Ensure to maintain this as being configurable - but must be set to 1 to enable thinking
             stream: stream,
-            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096,
-            thinking: {
-              type: RubyLLM.models.find(model)&.supports_thinking? ? 'enabled' : 'disabled', # TODO: Make this configurable
-              budget_tokens: 1024 # TODO: Make this configurable
-            }
+            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:)
+        def add_optional_fields(payload, system_content:, tools:, thinking:)
           payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
+          if thinking
+            payload[:thinking] = {
+              type: 'enabled',
+              budget_tokens: 1024, # TODO: default
+            }
+          end
         end
 
         def parse_completion_response(response)
