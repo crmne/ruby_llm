@@ -27,13 +27,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:41:23 GMT
+      - Tue, 03 Jun 2025 09:45:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -45,18 +49,12 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n{\"id\":\"gen-1747057283-0s8u0MglVlN9tWwdn0QO\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747057283,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        help you check the current weather in Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_012sBRWLT8AHzCZtWRwA3N7x\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":92,\"total_tokens\":481}}"
-  recorded_at: Mon, 12 May 2025 13:41:28 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943907-nwX8FQNpVwrHbP43zbsT\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943907,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you check the current weather in Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01AcJP8RFT4WhYzh7SCx8XKi\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":90,\"total_tokens\":479}}"
+  recorded_at: Tue, 03 Jun 2025 09:45:09 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -64,8 +62,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_012sBRWLT8AHzCZtWRwA3N7x","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_012sBRWLT8AHzCZtWRwA3N7x"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_01AcJP8RFT4WhYzh7SCx8XKi","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01AcJP8RFT4WhYzh7SCx8XKi"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -86,13 +84,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:41:28 GMT
+      - Tue, 03 Jun 2025 09:45:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -104,13 +106,9 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ3MDU3Mjg4LWprZWJLRGJ0WXNzM09OTHNxdTZBIiwicHJvdmlkZXIiOiJHb29nbGUiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0NzA1NzI4OCwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJCYXNlZCBvbiB0aGUgd2VhdGhlciBkYXRhLCBoZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG4tIFRlbXBlcmF0dXJlOiAxNcKwQyAoNTnCsEYpXG4tIFdpbmQgU3BlZWQ6IDEwIGttL2hcblxuSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIG1vZGVyYXRlIHdpbmQgY29uZGl0aW9ucy4gVGhlIHRlbXBlcmF0dXJlIGlzIGNvbWZvcnRhYmxlLCBzdWl0YWJsZSBmb3IgbGlnaHQgY2xvdGhpbmcgb3IgYSBsaWdodCBqYWNrZXQuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MTgsImNvbXBsZXRpb25fdG9rZW5zIjo3MiwidG90YWxfdG9rZW5zIjo1OTB9fQ==
-  recorded_at: Mon, 12 May 2025 13:41:32 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3NDg5NDM5MDktVUxQcWlKRkVZZnJyNXhyclo2OVoiLCJwcm92aWRlciI6IkFudGhyb3BpYyIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS0zLjUtaGFpa3UiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzQ4OTQzOTA5LCJjaG9pY2VzIjpbeyJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkJhc2VkIG9uIHRoZSB3ZWF0aGVyIGRhdGEsIGhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbjpcbi0gVGVtcGVyYXR1cmU6IDE1wrBDICg1OcKwRilcbi0gV2luZCBTcGVlZDogMTAga20vaFxuXG5JdCBzZWVtcyBsaWtlIGEgbWlsZCBkYXkgaW4gQmVybGluIHdpdGggYSBtb2RlcmF0ZSBicmVlemUuIFRoZSB0ZW1wZXJhdHVyZSBpcyBjb21mb3J0YWJsZSwgc3VpdGFibGUgZm9yIGxpZ2h0IGNsb3RoaW5nIG9yIGEgbGlnaHQgamFja2V0LiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTE4LCJjb21wbGV0aW9uX3Rva2VucyI6NzEsInRvdGFsX3Rva2VucyI6NTg5fX0=
+  recorded_at: Tue, 03 Jun 2025 09:45:11 GMT
 recorded_with: VCR 6.3.1

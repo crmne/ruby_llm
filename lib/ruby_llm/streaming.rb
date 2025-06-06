@@ -12,9 +12,18 @@ module RubyLLM
       accumulator = StreamAccumulator.new
 
       connection.post stream_url, payload do |req|
-        req.options.on_data = handle_stream do |chunk|
-          accumulator.add chunk
-          block.call chunk
+        if req.options.respond_to?(:on_data)
+          # Handle Faraday 2.x streaming with on_data method
+          req.options.on_data = handle_stream do |chunk|
+            accumulator.add chunk
+            block.call chunk
+          end
+        else
+          # Handle Faraday 1.x streaming with :on_data key
+          req.options[:on_data] = handle_stream do |chunk|
+            accumulator.add chunk
+            block.call chunk
+          end
         end
       end
 
@@ -29,19 +38,45 @@ module RubyLLM
 
     private
 
-    def to_json_stream(&block)
+    def to_json_stream(&)
       buffer = String.new
       parser = EventStreamParser::Parser.new
 
-      proc do |chunk, _bytes, env|
-        RubyLLM.logger.debug "Received chunk: #{chunk}"
+      create_stream_processor(parser, buffer, &)
+    end
 
-        if error_chunk?(chunk)
-          handle_error_chunk(chunk, env)
-        elsif env&.status != 200
-          handle_failed_response(chunk, buffer, env)
+    def create_stream_processor(parser, buffer, &)
+      if Faraday::VERSION.start_with?('1')
+        # Faraday 1.x: on_data receives (chunk, size)
+        legacy_stream_processor(parser, &)
+      else
+        # Faraday 2.x: on_data receives (chunk, bytes, env)
+        stream_processor(parser, buffer, &)
+      end
+    end
+
+    def process_stream_chunk(chunk, parser, _env, &)
+      RubyLLM.logger.debug "Received chunk: #{chunk}"
+
+      if error_chunk?(chunk)
+        handle_error_chunk(chunk, nil)
+      else
+        yield handle_sse(chunk, parser, nil, &)
+      end
+    end
+
+    def legacy_stream_processor(parser, &block)
+      proc do |chunk, _size|
+        process_stream_chunk(chunk, parser, nil, &block)
+      end
+    end
+
+    def stream_processor(parser, buffer, &block)
+      proc do |chunk, _bytes, env|
+        if env&.status == 200
+          process_stream_chunk(chunk, parser, env, &block)
         else
-          yield handle_sse(chunk, parser, env, &block)
+          handle_failed_response(chunk, buffer, env)
         end
       end
     end

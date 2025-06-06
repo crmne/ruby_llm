@@ -46,22 +46,25 @@ module RubyLLM
         end
       end
 
-      def resolve(model_id, provider: nil, assume_exists: false)
+      def resolve(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/PerceivedComplexity
         assume_exists = true if provider && Provider.providers[provider.to_sym].local?
 
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
           provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
-          model = Struct.new(:id, :provider, :capabilities, :modalities, :supports_vision?, :supports_functions?)
-                        .new(model_id,
-                             provider,
-                             %w[function_calling streaming],
-                             RubyLLM::Modalities.new({ input: %w[text image], output: %w[text] }),
-                             true,
-                             true)
-          RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
-                              'Capabilities may not be accurately reflected.'
+          model = Model::Info.new(
+            id: model_id,
+            name: model_id.gsub('-', ' ').capitalize,
+            provider: provider.slug,
+            capabilities: %w[function_calling streaming],
+            modalities: { input: %w[text image], output: %w[text] },
+            metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
+          )
+          if RubyLLM.config.log_assume_model_exists
+            RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
+                                'Capabilities may not be accurately reflected.'
+          end
         else
           model = Models.find model_id, provider
           provider = Provider.providers[model.provider.to_sym] || raise(Error, "Unknown provider: #{model.provider}")
@@ -84,15 +87,12 @@ module RubyLLM
       def fetch_from_parsera
         RubyLLM.logger.info 'Fetching models from Parsera API...'
 
-        connection = Faraday.new('https://api.parsera.org') do |f|
+        connection = Connection.basic do |f|
           f.request :json
-          f.response :json
-          f.response :raise_error
-          f.adapter Faraday.default_adapter
+          f.response :json, parser_options: { symbolize_names: true }
         end
-
-        response = connection.get('/v1/llm-specs')
-        response.body.map { |data| ModelInfo.new(Utils.deep_symbolize_keys(data)) }
+        response = connection.get 'https://api.parsera.org/v1/llm-specs'
+        response.body.map { |data| Model::Info.new(data) }
       end
 
       def merge_models(provider_models, parsera_models)
@@ -130,10 +130,10 @@ module RubyLLM
       end
 
       def add_provider_metadata(parsera_model, provider_model)
-        # Create a new ModelInfo with parsera data but include provider metadata
+        # Create a new Model::Info with parsera data but include provider metadata
         data = parsera_model.to_h
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        ModelInfo.new(data)
+        Model::Info.new(data)
       end
     end
 
@@ -145,7 +145,7 @@ module RubyLLM
     # Load models from the JSON file
     def load_models
       data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
-      JSON.parse(data).map { |model| ModelInfo.new(Utils.deep_symbolize_keys(model)) }
+      JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
     rescue JSON::ParserError
       []
     end

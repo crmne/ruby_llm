@@ -63,17 +63,15 @@ RSpec.describe RubyLLM::Models do
 
   describe '#find' do
     it 'prioritizes exact matches over aliases' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-      # This test covers the case from the issue
       chat_model = RubyLLM.chat(model: 'gemini-2.0-flash')
       expect(chat_model.model.id).to eq('gemini-2.0-flash')
 
-      # Even with provider specified, exact match wins
       chat_model = RubyLLM.chat(model: 'gemini-2.0-flash', provider: 'gemini')
       expect(chat_model.model.id).to eq('gemini-2.0-flash')
 
       # Only use alias when exact match isn't found
-      chat_model = RubyLLM.chat(model: 'claude-3')
-      expect(chat_model.model.id).to eq('claude-3-sonnet-20240229')
+      chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
+      expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
   end
 
@@ -95,7 +93,7 @@ RSpec.describe RubyLLM::Models do
       described_class.refresh!
 
       # Verify singleton instance was updated
-      expect(RubyLLM.models.all.size).to be > 0
+      expect(RubyLLM.models.all.size).to be_positive
     end
   end
 

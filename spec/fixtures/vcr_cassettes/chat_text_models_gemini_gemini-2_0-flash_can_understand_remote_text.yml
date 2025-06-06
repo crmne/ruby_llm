@@ -1,0 +1,215 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.ruby-lang.org/en/about/license.txt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2502'
+      Server:
+      - GitHub.com
+      Content-Type:
+      - text/plain; charset=utf-8
+      Last-Modified:
+      - Wed, 28 May 2025 09:09:09 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"6836d2b5-9c6"
+      Expires:
+      - Tue, 03 Jun 2025 09:40:49 GMT
+      Cache-Control:
+      - max-age=600
+      X-Proxy-Cache:
+      - MISS
+      X-Github-Request-Id:
+      - B55A:1CA3CF:6E38775:6F2D4D9:683EC0C9
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 03 Jun 2025 09:37:45 GMT
+      Via:
+      - 1.1 varnish
+      Age:
+      - '13'
+      X-Served-By:
+      - cache-fra-etou8220066-FRA
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1748943465.402728,VS0,VE2
+      Vary:
+      - Accept-Encoding
+      X-Fastly-Request-Id:
+      - 5ebba6b44c8f77d78162eef1fce39c3683990f89
+    body:
+      encoding: ASCII-8BIT
+      string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n
+        \      a) place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n
+        \ 3. You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n
+        \      b) accompany the distribution with the machine-readable source of\n\t
+        \ the software.\n\n       c) give non-standard binaries non-standard names,
+        with\n          instructions on where to get the original software distribution.\n\n
+        \      d) make other distribution arrangements with the author.\n\n  4. You
+        may modify and include the part of the software into any other\n     software
+        (possibly commercial).  But some files in the distribution\n     are not written
+        by the author, so that they are not under these terms.\n\n     For the list
+        of those files and their copying conditions, see the\n     file LEGAL.\n\n
+        \ 5. The scripts and library files supplied as input to or produced as\n     output
+        from the software do not automatically fall under the\n     copyright of the
+        software, but belong to whomever generated them,\n     and may be sold commercially,
+        and may be aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED
+        \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
+        WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
+        FOR A PARTICULAR\n     PURPOSE.\n"
+  recorded_at: Tue, 03 Jun 2025 09:37:45 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
+        name=''license.txt'' mime_type=''text/plain''>Ruby is copyrighted free software
+        by Yukihiro Matsumoto <matz@netlab.jp>.\nYou can redistribute it and/or modify
+        it under either the terms of the\n2-clause BSDL (see the file BSDL), or the
+        conditions below:\n\n  1. You may make and give away verbatim copies of the
+        source form of the\n     software without restriction, provided that you duplicate
+        all of the\n     original copyright notices and associated disclaimers.\n\n  2.
+        You may modify your copy of the software in any way, provided that\n     you
+        do at least ONE of the following:\n\n       a) place your modifications in
+        the Public Domain or otherwise\n          make them Freely Available, such
+        as by posting said\n\t  modifications to Usenet or an equivalent medium, or
+        by allowing\n\t  the author to include your modifications in the software.\n\n       b)
+        use the modified software only within your corporation or\n          organization.\n\n       c)
+        give non-standard binaries non-standard names, with\n          instructions
+        on where to get the original software distribution.\n\n       d) make other
+        distribution arrangements with the author.\n\n  3. You may distribute the
+        software in object code or binary form,\n     provided that you do at least
+        ONE of the following:\n\n       a) distribute the binaries and library files
+        of the software,\n\t  together with instructions (in the manual page or equivalent)\n\t  on
+        where to get the original distribution.\n\n       b) accompany the distribution
+        with the machine-readable source of\n\t  the software.\n\n       c) give non-standard
+        binaries non-standard names, with\n          instructions on where to get
+        the original software distribution.\n\n       d) make other distribution arrangements
+        with the author.\n\n  4. You may modify and include the part of the software
+        into any other\n     software (possibly commercial).  But some files in the
+        distribution\n     are not written by the author, so that they are not under
+        these terms.\n\n     For the list of those files and their copying conditions,
+        see the\n     file LEGAL.\n\n  5. The scripts and library files supplied as
+        input to or produced as\n     output from the software do not automatically
+        fall under the\n     copyright of the software, but belong to whomever generated
+        them,\n     and may be sold commercially, and may be aggregated with this\n     software.\n\n  6.
+        THIS SOFTWARE IS PROVIDED \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED
+        WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF
+        MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Jun 2025 09:37:47 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=2126
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The file \"license.txt\" contains the licensing terms for the Ruby programming language. It states that Ruby is copyrighted free software by Yukihiro Matsumoto.  It allows redistribution and modification under the 2-clause BSDL or the conditions listed.\n\nKey points include:\n\n*   **Redistribution allowed:** Verbatim copies of the source can be distributed without restriction if copyright notices and disclaimers are kept.\n*   **Modification allowed:** Modifications are permitted if one of several conditions is met, such as making the modifications public, using the modified software internally, or giving non-standard binaries non-standard names.\n*   **Binary distribution allowed:** Distribution in object code or binary form is allowed, subject to similar conditions as modification.\n*   **Inclusion in other software allowed:** Parts of Ruby can be included in other software, even commercial software, but notes that some files in the distribution have different licensing terms (see LEGAL).\n*   **Scripts and Libraries:** Scripts and library files used as input or output are not automatically under Ruby's copyright.\n*   **\"AS IS\" warranty:** The software is provided \"AS IS\" with no warranties.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.25712941381223031
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 564,
+            "candidatesTokenCount": 239,
+            "totalTokenCount": 803,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 564
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 239
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "acI-aIO3KNr11PIP4Nzs0QY"
+        }
+  recorded_at: Tue, 03 Jun 2025 09:37:47 GMT
+recorded_with: VCR 6.3.1

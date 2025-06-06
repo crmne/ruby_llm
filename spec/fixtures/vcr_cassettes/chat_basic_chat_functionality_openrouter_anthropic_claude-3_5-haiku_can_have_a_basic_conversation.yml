@@ -24,13 +24,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:39:57 GMT
+      - Tue, 03 Jun 2025 09:43:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -42,12 +46,8 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1747057197-rmfFhj1GEFS3ZKIPZwHf\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747057197,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":10,\"total_tokens\":26}}"
-  recorded_at: Mon, 12 May 2025 13:39:58 GMT
+      string: "\n         \n\n         \n{\"id\":\"gen-1748943836-TEAKeC4HsPN9wLwbN3fO\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943836,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":6,\"total_tokens\":22}}"
+  recorded_at: Tue, 03 Jun 2025 09:43:58 GMT
 recorded_with: VCR 6.3.1

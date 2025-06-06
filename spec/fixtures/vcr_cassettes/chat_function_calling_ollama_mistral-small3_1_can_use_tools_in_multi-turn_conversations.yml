@@ -5,8 +5,8 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -27,23 +27,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:42:55 GMT
+      - Tue, 03 Jun 2025 10:53:10 GMT
       Content-Length:
       - '462'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-795","object":"chat.completion","created":1747057375,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_9tdp9xwa","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":471,"completion_tokens":31,"total_tokens":502}}
+      string: '{"id":"chatcmpl-462","object":"chat.completion","created":1748947990,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_hp6x5x8e","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":471,"completion_tokens":31,"total_tokens":502}}
 
         '
-  recorded_at: Mon, 12 May 2025 13:42:55 GMT
+  recorded_at: Tue, 03 Jun 2025 10:53:10 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"call_9tdp9xwa","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"tool_call_id":"call_9tdp9xwa"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_hp6x5x8e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_hp6x5x8e"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -64,24 +64,28 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:42:59 GMT
+      - Tue, 03 Jun 2025 10:53:14 GMT
       Content-Length:
-      - '354'
+      - '393'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTIwMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDcwNTczNzksIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQXMgb2Ygbm93LCBpdCdzIDE1wrBDIGluIEJlcmxpbiB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDIyLCJjb21wbGV0aW9uX3Rva2VucyI6MjQsInRvdGFsX3Rva2VucyI6NDQ2fX0K
-  recorded_at: Mon, 12 May 2025 13:42:59 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-931","object":"chat.completion","created":1748947994,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is 15 degrees Celsius with a
+        wind speed of 10 km/h."},"finish_reason":"stop"}],"usage":{"prompt_tokens":422,"completion_tokens":41,"total_tokens":463}}
+
+        '
+  recorded_at: Tue, 03 Jun 2025 10:53:14 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"call_9tdp9xwa","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"tool_call_id":"call_9tdp9xwa"},{"role":"assistant","content":[{"type":"text","text":"As
-        of now, it''s 15°C in Berlin with a wind speed of 10 km/h."}]},{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Paris? (48.8575, 2.3514)"}]}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_hp6x5x8e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_hp6x5x8e"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is 15 degrees Celsius with a
+        wind speed of 10 km/h."},{"role":"user","content":"What''s the weather in
+        Paris? (48.8575, 2.3514)"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -102,26 +106,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:43:06 GMT
+      - Tue, 03 Jun 2025 10:53:18 GMT
       Content-Length:
       - '461'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-205","object":"chat.completion","created":1747057386,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_2ofkwr2t","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":560,"completion_tokens":36,"total_tokens":596}}
+      string: '{"id":"chatcmpl-233","object":"chat.completion","created":1748947998,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_mcimgtpc","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":577,"completion_tokens":36,"total_tokens":613}}
 
         '
-  recorded_at: Mon, 12 May 2025 13:43:06 GMT
+  recorded_at: Tue, 03 Jun 2025 10:53:18 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"call_9tdp9xwa","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"tool_call_id":"call_9tdp9xwa"},{"role":"assistant","content":[{"type":"text","text":"As
-        of now, it''s 15°C in Berlin with a wind speed of 10 km/h."}]},{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"call_2ofkwr2t","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":[{"type":"text","text":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}],"tool_call_id":"call_2ofkwr2t"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_hp6x5x8e","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_hp6x5x8e"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is 15 degrees Celsius with a
+        wind speed of 10 km/h."},{"role":"user","content":"What''s the weather in
+        Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_mcimgtpc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_mcimgtpc"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -142,12 +147,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:43:11 GMT
+      - Tue, 03 Jun 2025 10:53:22 GMT
       Content-Length:
-      - '353'
+      - '391'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTU1OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDcwNTczOTEsIm1vZGVsIjoibWlzdHJhbC1zbWFsbDMuMSIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQXMgb2Ygbm93LCBpdCdzIDE1wrBDIGluIFBhcmlzIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MTAsImNvbXBsZXRpb25fdG9rZW5zIjoyNCwidG90YWxfdG9rZW5zIjo1MzR9fQo=
-  recorded_at: Mon, 12 May 2025 13:43:11 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-257","object":"chat.completion","created":1748948002,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        current weather in Paris (48.8575, 2.3514) is 15 degrees Celsius with a wind
+        speed of 10 km/h."},"finish_reason":"stop"}],"usage":{"prompt_tokens":527,"completion_tokens":40,"total_tokens":567}}
+
+        '
+  recorded_at: Tue, 03 Jun 2025 10:53:22 GMT
 recorded_with: VCR 6.3.1

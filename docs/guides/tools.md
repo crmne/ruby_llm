@@ -117,7 +117,7 @@ Attach tools to a `Chat` instance using `with_tool` or `with_tools`.
 chat = RubyLLM.chat(model: 'gpt-4o') # Use a model that supports tools
 
 # Instantiate your tool if it requires arguments, otherwise use the class
-weather_tool = WeatherLookup.new
+weather_tool = Weather.new
 
 # Add the tool(s) to the chat
 chat.with_tool(weather_tool)
@@ -130,7 +130,7 @@ puts response.content
 ```
 
 {: .warning }
-Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
+Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 

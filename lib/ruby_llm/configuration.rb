@@ -34,9 +34,11 @@ module RubyLLM
                   :retry_interval,
                   :retry_backoff_factor,
                   :retry_interval_randomness,
+                  :http_proxy,
                   # Logging configuration
                   :log_file,
-                  :log_level
+                  :log_level,
+                  :log_assume_model_exists
 
     def initialize
       # Connection configuration
@@ -45,6 +47,7 @@ module RubyLLM
       @retry_interval = 0.1
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
+      @http_proxy = nil
 
       # Default models
       @default_model = 'gpt-4.1-nano'
@@ -54,6 +57,7 @@ module RubyLLM
       # Logging configuration
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
+      @log_assume_model_exists = true
     end
 
     def inspect

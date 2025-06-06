@@ -263,7 +263,7 @@ module RubyLLM
           # Advanced capabilities
           capabilities << 'reasoning' if model_id.match?(/o1/)
 
-          if model_id.match?(/gpt-4-turbo|gpt-4o|claude/)
+          if model_id.match?(/gpt-4-turbo|gpt-4o/)
             capabilities << 'image_generation' if model_id.match?(/vision/)
             capabilities << 'speech_generation' if model_id.match?(/audio/)
             capabilities << 'transcription' if model_id.match?(/audio/)

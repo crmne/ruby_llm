@@ -30,7 +30,7 @@ module RubyLLM
           models.select { |m| m['modelId'].include?('claude') }.map do |model_data|
             model_id = model_data['modelId']
 
-            ModelInfo.new(
+            Model::Info.new(
               id: model_id_with_region(model_id, model_data),
               name: model_data['modelName'] || capabilities.format_display_name(model_id),
               provider: slug,
@@ -56,7 +56,7 @@ module RubyLLM
         def create_model_info(model_data, slug, _capabilities)
           model_id = model_data['modelId']
 
-          ModelInfo.new(
+          Model::Info.new(
             id: model_id_with_region(model_id, model_data),
             name: model_data['modelName'] || model_id,
             provider: slug,

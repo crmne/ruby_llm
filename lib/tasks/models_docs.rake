@@ -30,7 +30,7 @@ def generate_models_markdown
     # Available Models
     {: .no_toc }
 
-    This guide lists all models available in RubyLLM, automatically generated from the current model registry.
+    This guide lists all models available in RubyLLM, automatically generated from the current [model registry](https://github.com/crmne/ruby_llm/blob/main/lib/ruby_llm/models.json).
     {: .fs-6 .fw-300 }
 
     ## Table of contents
@@ -41,15 +41,21 @@ def generate_models_markdown
 
     ---
 
-    ## Contributing
+    ## How Model Data Works
 
-    The model list is automatically generated from the model registry. To add or update models:
+    RubyLLM's model registry combines data from multiple sources:
 
-    1. Edit the appropriate `capabilities.rb` file in `lib/ruby_llm/providers/<provider>/`
-    2. Run `rake models:update` to refresh the model registry
-    3. Submit a pull request with the updated `models.json`
+    - **OpenAI, Anthropic, DeepSeek, Gemini**: Data from [Parsera](https://api.parsera.org/v1/llm-specs)
+    - **OpenRouter**: Direct from OpenRouter's API
+    - **Other providers**: Defined in `capabilities.rb` files
 
-    See [Contributing Guide](/CONTRIBUTING.md) for more details.
+    ## Contributing Model Updates
+
+    **For major providers** (OpenAI, Anthropic, DeepSeek, Gemini): File issues with [Parsera](https://github.com/parsera-labs/api-llm-specs/issues) for public model data corrections.
+
+    **For other providers**: Edit `lib/ruby_llm/providers/<provider>/capabilities.rb` then run `rake models:update`.
+
+    See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIBUTING.md) for details.
 
     ## Last Updated
     {: .d-inline-block }

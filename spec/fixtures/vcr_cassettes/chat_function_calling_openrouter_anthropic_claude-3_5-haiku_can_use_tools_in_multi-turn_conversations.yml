@@ -27,13 +27,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:42:32 GMT
+      - Tue, 03 Jun 2025 09:46:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -45,18 +49,12 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1747057352-zlj95TyBW93Y9tgocnLT\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747057352,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Let
-        me check the current weather in Berlin for you using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":91,\"total_tokens\":480}}"
-  recorded_at: Mon, 12 May 2025 13:42:39 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943961-EQ8GjBhpB9b1N0jAHWHN\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943961,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Let
+        me check the current weather for Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":88,\"total_tokens\":477}}"
+  recorded_at: Tue, 03 Jun 2025 09:46:03 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -64,8 +62,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"Let
-        me check the current weather in Berlin for you using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        me check the current weather for Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -86,13 +84,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:42:39 GMT
+      - Tue, 03 Jun 2025 09:46:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -104,15 +106,11 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc0NzA1NzM1OS0ybjE3M1YzNVR6M3JRTE1xT0lZNCIsInByb3ZpZGVyIjoiR29vZ2xlIiwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTMuNS1oYWlrdSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDcwNTczNTksImNob2ljZXMiOlt7ImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4gSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIHRoZSBHZXJtYW4gY2FwaXRhbC4gV291bGQgeW91IGxpa2UgdG8ga25vdyBhbnl0aGluZyBlbHNlIGFib3V0IHRoZSB3ZWF0aGVyPyIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTE4LCJjb21wbGV0aW9uX3Rva2VucyI6NTEsInRvdGFsX3Rva2VucyI6NTY5fX0=
-  recorded_at: Mon, 12 May 2025 13:42:45 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ4OTQzOTYzLXJnRmZCcTNLRlJ0cHU1dEZIOVN0IiwicHJvdmlkZXIiOiJHb29nbGUiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0ODk0Mzk2MywiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiBJdCBzZWVtcyBsaWtlIGEgbWlsZCBkYXkgaW4gdGhlIEdlcm1hbiBjYXBpdGFsLiBXb3VsZCB5b3UgbGlrZSB0byBrbm93IGFueXRoaW5nIGVsc2UgYWJvdXQgdGhlIHdlYXRoZXI/IiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MTYsImNvbXBsZXRpb25fdG9rZW5zIjo0OCwidG90YWxfdG9rZW5zIjo1NjR9fQ==
+  recorded_at: Tue, 03 Jun 2025 09:46:06 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -120,8 +118,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"Let
-        me check the current weather in Berlin for you using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc"},{"role":"assistant","content":"The
+        me check the current weather for Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
         a mild day in the German capital. Would you like to know anything else about
         the weather?"},{"role":"user","content":"What''s the weather in Paris? (48.8575,
@@ -146,13 +144,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:42:45 GMT
+      - Tue, 03 Jun 2025 09:46:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -164,16 +166,12 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1747057365-TpA9A34YV0hNHdoxRggL\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747057365,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        check the current weather in Paris for you using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_011iNmoKENTYjyZvpaEZoe7s\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":92,\"total_tokens\":680}}"
-  recorded_at: Mon, 12 May 2025 13:42:47 GMT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1748943966-PnIQ2b3YZRdTkqArRXOk\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943966,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        check the current weather for Paris using the coordinates you provided.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01Qg1jMPQSrTinSDcjYoTru5\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":586,\"completion_tokens\":89,\"total_tokens\":675}}"
+  recorded_at: Tue, 03 Jun 2025 09:46:08 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -181,14 +179,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"Let
-        me check the current weather in Berlin for you using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_016Cz3aJTDZCC1ARREi9GTBc"},{"role":"assistant","content":"The
+        me check the current weather for Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01MwZxq48Vwifu4hHhjiv5en"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
         a mild day in the German capital. Would you like to know anything else about
         the weather?"},{"role":"user","content":"What''s the weather in Paris? (48.8575,
-        2.3514)"},{"role":"assistant","content":"I''ll check the current weather in
-        Paris for you using the provided coordinates.","tool_calls":[{"id":"toolu_011iNmoKENTYjyZvpaEZoe7s","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_011iNmoKENTYjyZvpaEZoe7s"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        2.3514)"},{"role":"assistant","content":"I''ll check the current weather for
+        Paris using the coordinates you provided.","tool_calls":[{"id":"toolu_01Qg1jMPQSrTinSDcjYoTru5","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01Qg1jMPQSrTinSDcjYoTru5"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
@@ -209,13 +207,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:42:47 GMT
+      - Tue, 03 Jun 2025 09:46:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -227,13 +229,9 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ3MDU3MzY3LUUwWjBDZEpuNzVSTEM0ZEozYnhWIiwicHJvdmlkZXIiOiJBbnRocm9waWMiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0NzA1NzM2NywiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIEludGVyZXN0aW5nbHksIGl0J3MgcXVpdGUgc2ltaWxhciB0byB0aGUgd2VhdGhlciB3ZSBqdXN0IHNhdyBpbiBCZXJsaW4uIEl0IGxvb2tzIGxpa2UgYSBwbGVhc2FudCBkYXkgaW4gdGhlIEZyZW5jaCBjYXBpdGFsLiBJcyB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdyBhYm91dCB0aGUgd2VhdGhlcj8iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjcxNywiY29tcGxldGlvbl90b2tlbnMiOjczLCJ0b3RhbF90b2tlbnMiOjc5MH19
-  recorded_at: Mon, 12 May 2025 13:42:49 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ4OTQzOTY4LUhQaWY4bE03eVZDcmNlZHlIc2FGIiwicHJvdmlkZXIiOiJBbnRocm9waWMiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0ODk0Mzk2OCwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIEludGVyZXN0aW5nbHksIGl0J3MgcXVpdGUgc2ltaWxhciB0byB0aGUgd2VhdGhlciBpbiBCZXJsaW4gYXQgdGhlIG1vbWVudC4gSXMgdGhlcmUgYW55dGhpbmcgZWxzZSB5b3UnZCBsaWtlIHRvIGtub3cgYWJvdXQgdGhlIHdlYXRoZXI/IiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MTQsImNvbXBsZXRpb25fdG9rZW5zIjo1NywidG90YWxfdG9rZW5zIjo3NzF9fQ==
+  recorded_at: Tue, 03 Jun 2025 09:46:10 GMT
 recorded_with: VCR 6.3.1
