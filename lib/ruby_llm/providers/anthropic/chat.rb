@@ -51,7 +51,7 @@ module RubyLLM
           if thinking
             payload[:thinking] = {
               type: 'enabled',
-              budget_tokens: 1024, # TODO: default
+              budget_tokens: RubyLLM.configuration.default_thinking_budget || 1024,
             }
           end
         end
