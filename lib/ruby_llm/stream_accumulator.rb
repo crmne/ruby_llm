@@ -9,7 +9,7 @@ module RubyLLM
 
     def initialize
       @content = String.new
-      @thinking_content = String.new
+      @reasoning_content = String.new
       @tool_calls = {}
       @input_tokens = 0
       @output_tokens = 0
@@ -24,7 +24,7 @@ module RubyLLM
         accumulate_tool_calls chunk.tool_calls
       else
         @content << (chunk.content || '')
-        @thinking_content << (chunk.thinking_content || '')
+        @reasoning_content << (chunk.reasoning_content || '')
       end
 
       count_tokens chunk
@@ -35,7 +35,7 @@ module RubyLLM
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
-        thinking_content: @thinking_content.empty? ? nil : @thinking_content,
+        reasoning_content: @reasoning_content.empty? ? nil : @reasoning_content,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,

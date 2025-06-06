@@ -11,12 +11,12 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, thinking:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, reasoning:, stream: false) # rubocop:disable Metrics/ParameterLists
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, thinking:)
+            add_optional_fields(payload, system_content:, tools:, reasoning:)
           end
         end
 
@@ -39,21 +39,21 @@ module RubyLLM
           {
             model: model,
             messages: chat_messages.map { |msg| format_message(msg) },
-            temperature: 1, # TODO: Ensure to maintain this as being configurable - but must be set to 1 to enable thinking
+            temperature: temperature,
             stream: stream,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:, thinking:)
+        def add_optional_fields(payload, system_content:, tools:, reasoning:)
           payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
-          if thinking
-            payload[:thinking] = {
-              type: 'enabled',
-              budget_tokens: RubyLLM.config.default_thinking_budget || 1024,
-            }
-          end
+          return unless reasoning
+
+          payload[:thinking] = {
+            type: 'enabled',
+            budget_tokens: RubyLLM.config.default_reasoning_budget || 1024
+          }
         end
 
         def parse_completion_response(response)
@@ -62,14 +62,14 @@ module RubyLLM
 
           content_blocks = data['content'] || []
 
-          thinking_content = extract_thinking_content(content_blocks)
+          reasoning_content = extract_reasoning_content(content_blocks)
           text_content = extract_text_content(content_blocks)
           tool_use = Tools.find_tool_use(content_blocks)
 
-          build_message(data, text_content, tool_use, thinking_content)
+          build_message(data, text_content, tool_use, reasoning_content)
         end
 
-        def extract_thinking_content(blocks)
+        def extract_reasoning_content(blocks)
           thinking_blocks = blocks.select { |c| c['type'] == 'thinking' }
           thinking_blocks.map { |c| c['thinking'] }.join
         end
@@ -79,11 +79,11 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use, thinking_content)
+        def build_message(data, content, tool_use, reasoning_content)
           Message.new(
             role: :assistant,
             content: content,
-            thinking_content: thinking_content,
+            reasoning_content: reasoning_content,
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),

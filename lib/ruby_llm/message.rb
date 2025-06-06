@@ -7,12 +7,12 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id, :thinking_content
+    attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id, :reasoning_content
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym
       @content = normalize_content(options.fetch(:content))
-      @thinking_content = options[:thinking_content]
+      @reasoning_content = options[:reasoning_content]
       @tool_calls = options[:tool_calls]
       @input_tokens = options[:input_tokens]
       @output_tokens = options[:output_tokens]
