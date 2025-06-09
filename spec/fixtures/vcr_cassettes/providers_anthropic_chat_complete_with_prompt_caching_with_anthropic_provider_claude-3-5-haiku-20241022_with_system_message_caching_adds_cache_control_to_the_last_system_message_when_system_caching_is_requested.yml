@@ -2,10 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"You
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What
+        are the key principles you follow?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"system":[{"type":"text","text":"You
         are an expert software architect and Ruby developer with deep knowledge of
         distributed systems, microservices architecture, and modern web development
         practices. Your role is to provide comprehensive technical guidance on complex
@@ -148,111 +149,52 @@ http_interactions:
         recovery procedures for both application and database\n- Use blue-green or
         rolling deployment strategies for zero-downtime deployments\n- Implement proper
         environment configuration management with tools like dotenv or Rails credentials
-        \n\nBased on the above, tell me about Ruby","cache_control":{"type":"ephemeral"}}]}],"temperature":0.7,"max_tokens":4096}'
+        ","cache_control":{"type":"ephemeral"}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.1
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250609T190156Z
-      X-Amz-Security-Token:
-      - "<AWS_SESSION_TOKEN>"
-      X-Amz-Content-Sha256:
-      - b0ffb3b609bdc16bec51f3ab641ef1e3abff3e91ea8df5f82383ffd4844e084f
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250609/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=c07cc489dc2df64d2aed2b397d6ac3a06562c1c3e37561a2378400fc9f66f76d
+      X-Api-Key:
+      - test
+      Anthropic-Version:
+      - '2023-06-01'
       Content-Type:
-      - application/json
-      Accept:
       - application/json
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 401
+      message: Unauthorized
     headers:
       Date:
-      - Mon, 09 Jun 2025 19:01:31 GMT
+      - Mon, 09 Jun 2025 17:50:26 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '4839'
+      - '86'
       Connection:
       - keep-alive
-      X-Amzn-Requestid:
-      - e1becc03-8f24-4551-9098-9aee178cadab
-      X-Amzn-Bedrock-Invocation-Latency:
-      - '21606'
-      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
-      - '2113'
-      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
-      - '0'
-      X-Amzn-Bedrock-Output-Token-Count:
-      - '1174'
-      X-Amzn-Bedrock-Input-Token-Count:
-      - '4'
+      X-Should-Retry:
+      - 'false'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01NbnNpue6nQB9hGTbxwiVAn","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
-        is a dynamic, object-oriented programming language designed for programmer
-        productivity and happiness, created by Yukihiro \"Matz\" Matsumoto in 1995.
-        Here''s a comprehensive overview:\n\nCore Language Characteristics:\n- Purely
-        object-oriented: Everything in Ruby is an object\n- Dynamic typing with strong
-        type checking\n- Interpreted language with multiple implementation options
-        (MRI, JRuby, Rubinius)\n- Supports functional programming paradigms\n- Provides
-        powerful metaprogramming capabilities\n- Emphasizes developer happiness and
-        readability\n\nKey Language Features:\n1. Dynamic and Flexible Typing\n```ruby\n#
-        Dynamic typing example\nx = 5           # Integer\nx = \"Hello\"     # Now
-        a String\nx = [1, 2, 3]   # Now an Array\n```\n\n2. Blocks and Closures\n```ruby\n#
-        Block with implicit return\n[1, 2, 3].map { |n| n * 2 }  # => [2, 4, 6]\n\n#
-        Method with block\ndef custom_method\n  yield if block_given?\nend\n\ncustom_method
-        { puts \"Block executed\" }\n```\n\n3. Metaprogramming Capabilities\n```ruby\n#
-        Dynamic method definition\nclass Person\n  define_method :greet do |name|\n    puts
-        \"Hello, #{name}!\"\n  end\nend\n\n# Method missing for dynamic behavior\nclass
-        DynamicClass\n  def method_missing(method_name, *args)\n    puts \"Called
-        #{method_name} with #{args}\"\n  end\nend\n```\n\n4. Powerful Enumeration
-        and Functional Concepts\n```ruby\n# Advanced enumeration\nnumbers = [1, 2,
-        3, 4, 5]\nresult = numbers.select(&:even?)\n             .map { |n| n * 2
-        }\n             .reduce(:+)\n```\n\nEcosystem and Frameworks:\n1. Ruby on
-        Rails: Most popular web framework\n   - Convention over configuration\n   -
-        Rapid application development\n   - Full-stack web framework\n\n2. Popular
-        Gems (Libraries):\n   - Devise (Authentication)\n   - ActiveRecord (ORM)\n   -
-        Sidekiq (Background Processing)\n   - RSpec (Testing)\n   - Pry (Advanced
-        REPL)\n\nPerformance Characteristics:\n- Interpreted language with Just-In-Time
-        (JIT) compilation in newer versions\n- Generally slower than compiled languages\n-
-        Significant performance improvements in recent versions (Ruby 3.x)\n- Good
-        for web applications, scripting, and prototyping\n\nModern Ruby Development
-        Principles:\n1. Prefer Composition over Inheritance\n```ruby\n# Composition
-        example\nclass Report\n  def initialize(formatter:)\n    @formatter = formatter\n  end\n\n  def
-        generate\n    @formatter.format(data)\n  end\nend\n```\n\n2. Service Objects
-        for Complex Logic\n```ruby\nclass UserRegistrationService\n  def initialize(user_params)\n    @user_params
-        = user_params\n  end\n\n  def call\n    ActiveRecord::Base.transaction do\n      user
-        = User.create!(@user_params)\n      send_welcome_email(user)\n      user\n    end\n  end\n\n  private\n\n  def
-        send_welcome_email(user)\n    UserMailer.welcome(user).deliver_later\n  end\nend\n```\n\nStrengths:\n-
-        Extremely readable and expressive syntax\n- Rapid development capabilities\n-
-        Strong community and ecosystem\n- Excellent for web development and scripting\n-
-        Powerful metaprogramming\n- High developer productivity\n\nLimitations:\n-
-        Performance overhead compared to compiled languages\n- Memory consumption\n-
-        Not ideal for high-performance computing\n- Smaller job market compared to
-        Java/JavaScript\n\nRecommended Use Cases:\n- Web Applications\n- Prototyping\n-
-        Scripting\n- DevOps tools\n- Automation\n- Small to medium-scale enterprise
-        applications\n\nBest Practices:\n- Follow Ruby style guides\n- Use RuboCop
-        for code linting\n- Write comprehensive tests\n- Leverage design patterns\n-
-        Keep methods small and focused\n- Use meaningful variable and method names\n\nModern
-        Ruby (3.x) Improvements:\n- Improved performance with YJIT\n- Concurrent programming
-        features\n- Pattern matching\n- Endless method definitions\n- Improved type
-        signatures\n\nSample Modern Ruby 3.x Code:\n```ruby\n# Pattern matching\nresult
-        = case data\n         in { name: String => name, age: Integer => age } \n           \"Valid:
-        #{name}, #{age}\"\n         in { name: }\n           \"Invalid age\"\n         else\n           \"No
-        match\"\n         end\n\n# Improved concurrency\nrequire ''async''\n\nAsync
-        do\n  # Non-blocking operations\nend\n```\n\nRecommended Learning Path:\n1.
-        Ruby basics and syntax\n2. Object-oriented programming in Ruby\n3. Ruby on
-        Rails\n4. Testing with RSpec\n5. Advanced metaprogramming\n6. Performance
-        optimization\n7. Distributed systems with Ruby\n\nRuby continues to evolve,
-        maintaining its core philosophy of developer happiness while adapting to modern
-        software development needs."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":2113,"cache_read_input_tokens":0,"output_tokens":1174}}'
-  recorded_at: Mon, 09 Jun 2025 19:02:17 GMT
+      string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
+        x-api-key"}}'
+  recorded_at: Mon, 09 Jun 2025 17:51:12 GMT
 recorded_with: VCR 6.3.1
