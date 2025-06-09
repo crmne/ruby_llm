@@ -159,3 +159,9 @@ VISION_MODELS = [
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
 ].freeze
+
+# Models that support prompt caching
+CACHING_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' }
+].freeze
