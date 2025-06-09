@@ -33,9 +33,6 @@ RSpec.describe 'Prompt Caching' do
           
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
-          
-          # The VCR cassette will contain the request with cache_control
-          # We'll verify the cassette in the implementation phase
         end
       end
 
@@ -46,9 +43,6 @@ RSpec.describe 'Prompt Caching' do
           
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
-          
-          # The VCR cassette will contain the request with cache_control
-          # We'll verify the cassette in the implementation phase
         end
       end
 
@@ -61,9 +55,6 @@ RSpec.describe 'Prompt Caching' do
           
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
-          
-          # The VCR cassette will contain the request with cache_control
-          # We'll verify the cassette in the implementation phase
         end
       end
     end
