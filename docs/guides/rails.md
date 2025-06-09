@@ -195,6 +195,28 @@ class ToolCall < ApplicationRecord
 end
 ```
 
+### Use Alternate Providers 
+
+You can always specify the provider-specific model id. But if you want to use aliases, one approach is to set the chat instance variable in an after_initialize callback:
+
+```ruby
+ class Chat < ApplicationRecord
+    acts_as_chat
+
+    validates :model_id, presence: true
+    validates :provider, presence: true
+
+    after_initialize :set_chat
+
+    def set_chat
+      @chat = RubyLLM::Chat.new(model: model_id, provider:)
+    end
+  end
+
+  Chat.new(model_id: 'alias', provider: 'provider_name')
+```
+
+
 ## Basic Usage
 
 Once your models are set up, the `acts_as_chat` helper delegates common `RubyLLM::Chat` methods to your `Chat` model:
