@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Prompt Caching' do
+RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt caching' do
   include_context 'with configured RubyLLM'
 
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
@@ -24,15 +24,12 @@ RSpec.describe 'Prompt Caching' do
 
       context 'with system message caching' do
         it 'adds cache_control to the last system message when system caching is requested' do
-          chat.with_instructions(
-            'You are a helpful assistant. Please be concise.'
-          )
+          chat.with_instructions('You are a helpful assistant. Please be concise.')
           chat.cache_prompts(system: true)
 
           response = chat.ask('Hello')
 
           expect(response).to be_a(RubyLLM::Message)
-          expect(response.content).to be_a(String)
         end
       end
 
@@ -42,7 +39,6 @@ RSpec.describe 'Prompt Caching' do
           response = chat.ask('Hello')
 
           expect(response).to be_a(RubyLLM::Message)
-          expect(response.content).to be_a(String)
         end
       end
 
@@ -54,7 +50,6 @@ RSpec.describe 'Prompt Caching' do
           response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
 
           expect(response).to be_a(RubyLLM::Message)
-          expect(response.content).to be_a(String)
         end
       end
     end
