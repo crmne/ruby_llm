@@ -25,6 +25,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @cache_prompts = { system: false, user: false, tools: false }
       @on = {
         new_message: nil,
         end_message: nil
@@ -92,6 +93,11 @@ module RubyLLM
       messages.each(&)
     end
 
+    def cache_prompts(system: false, user: false, tools: false)
+      @cache_prompts = { system: system, user: user, tools: tools }
+      self
+    end
+
     def complete(&)
       @on[:new_message]&.call
       response = @provider.complete(
@@ -99,6 +105,7 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
+        cache_prompts: @cache_prompts.dup,
         connection: @connection,
         &
       )
