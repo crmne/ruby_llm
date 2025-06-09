@@ -80,7 +80,9 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
-            model_id: data['model']
+            model_id: data['model'],
+            cache_creation_input_tokens: data.dig('usage', 'cache_creation_input_tokens'),
+            cache_read_input_tokens: data.dig('usage', 'cache_read_input_tokens')
           )
         end
 

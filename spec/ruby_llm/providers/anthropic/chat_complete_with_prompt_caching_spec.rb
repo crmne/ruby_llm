@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
 
           response = chat.ask('What are the key principles you follow?')
 
-          expect(response).to be_a(RubyLLM::Message)
+          expect(response.cache_creation_input_tokens).to be_positive
         end
       end
 
@@ -38,30 +38,32 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
           chat.cache_prompts(user: true)
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
-          expect(response).to be_a(RubyLLM::Message)
+          expect(response.cache_creation_input_tokens).to be_positive
         end
       end
 
       context 'with tool definition caching' do
-        it 'adds cache_control to tool definitions when tools caching is requested' do
+        it 'adds cache_control to tool definitions when tools caching is requested' do # rubocop:disable RSpec/MultipleExpectations
           chat.with_tools(DescribeRubyDev)
           chat.cache_prompts(tools: true)
 
           response = chat.ask('Tell me about Ruby')
 
-          expect(response).to be_a(RubyLLM::Message)
+          expect(chat.messages[1].cache_creation_input_tokens).to be_positive
+          expect(response.cache_read_input_tokens).to be_positive
         end
       end
 
       context 'with multiple caching types' do
-        it 'handles multiple caching types together' do
+        it 'handles multiple caching types together' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
           chat.with_tools(DescribeRubyDev)
           chat.with_instructions(LARGE_PROMPT)
           chat.cache_prompts(system: true, tools: true, user: true)
 
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
-          expect(response).to be_a(RubyLLM::Message)
+          expect(chat.messages[2].cache_creation_input_tokens).to be_positive
+          expect(response.cache_read_input_tokens).to be_positive
         end
       end
     end
