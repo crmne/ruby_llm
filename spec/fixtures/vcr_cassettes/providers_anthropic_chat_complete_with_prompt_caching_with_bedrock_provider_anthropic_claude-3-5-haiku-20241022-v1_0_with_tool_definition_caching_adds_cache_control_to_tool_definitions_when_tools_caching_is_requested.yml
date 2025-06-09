@@ -1,0 +1,128 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]},"cache_control":{"type":"ephemeral"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250609T070545Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 42b337aa798ca00edeabe41bd981ac0a3a326dfb7a5a544f49efc060db94ca4d
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250609/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=9f26233de3db3dbeb200c404dec67e277653e0de5281a4821de54904c107c232
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Jun 2025 07:05:47 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '520'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 4227faaf-92b0-46b6-af33-e951a866dbb1
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1785'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '90'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '389'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_014gShpvMxLnsvNXUS1U5tco","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_017mWY4UKMHxjsFX1JCJpTNw","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Mon, 09 Jun 2025 07:05:47 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_017mWY4UKMHxjsFX1JCJpTNw","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_017mWY4UKMHxjsFX1JCJpTNw","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]},"cache_control":{"type":"ephemeral"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250609T070547Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - c1745e778d2bcf3b606eea7a73853093fac031f2f6ec41a71ddbaf65dfd32dc1
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250609/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=72960986dce466656dafdfde3ac1ed2e6ab8d6e1c8e5ffc353668e066866632f
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Jun 2025 07:05:51 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '621'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 8ec47255-d7bf-4bad-b04c-4f93f0d540fd
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '3518'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '90'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '518'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01TSN2H5W7bBvngrvJgmK1iX","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
+        on the current weather data, in Berlin (at coordinates 52.5200, 13.4050):\n-
+        Temperature: 15°C (which is quite mild)\n- Wind speed: 10 km/h\n\nIt seems
+        like a pleasant day in Berlin with a comfortable temperature. The light wind
+        might make it feel slightly cooler, but overall, it''s a nice day to be outside."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":518,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Mon, 09 Jun 2025 07:05:50 GMT
+recorded_with: VCR 6.3.1
