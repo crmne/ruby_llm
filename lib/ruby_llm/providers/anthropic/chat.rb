@@ -11,14 +11,14 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           cache_prompts: { system: false, user: false, tools: false })
-          system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages, cache: cache_prompts[:system])
+        def render_payload(params)
+          system_messages, chat_messages = separate_messages(params.messages)
+          system_content = build_system_content(system_messages, cache: params.cache_prompts[:system])
 
-          build_base_payload(chat_messages, temperature, model, stream, cache: cache_prompts[:user]).tap do |payload|
-            add_optional_fields(payload, system_content: system_content, tools: tools,
-                                         cache_tools: cache_prompts[:tools])
+          build_base_payload(chat_messages, params.temperature, params.model, params.stream,
+                             cache: params.cache_prompts[:user]).tap do |payload|
+            add_optional_fields(payload, system_content: system_content, tools: params.tools,
+                                         cache_tools: params.cache_prompts[:tools])
           end
         end
 
