@@ -60,10 +60,9 @@ module RubyLLM
           )
         end
 
-        module_function
-
         def with_cache_control(hash, cache: false)
           return hash unless cache
+
           hash.merge(cache_control: { type: 'ephemeral' })
         end
       end

@@ -39,7 +39,8 @@ module RubyLLM
           "model/#{@model_id}/invoke"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: { system: false, user: false, tools: false }, **)
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           cache_prompts: { system: false, user: false, tools: false }, **)
           # Hold model_id in instance variable for use in completion_url and stream_url
           @model_id = model
 
@@ -48,8 +49,8 @@ module RubyLLM
 
           build_base_payload(chat_messages, temperature, model, cache: cache_prompts[:user]).tap do |payload|
             Anthropic::Chat.add_optional_fields(
-              payload, 
-              system_content: system_content, 
+              payload,
+              system_content: system_content,
               tools: tools,
               cache_tools: cache_prompts[:tools]
             )
@@ -58,7 +59,7 @@ module RubyLLM
 
         def build_base_payload(chat_messages, temperature, model, cache: false)
           messages = chat_messages.map.with_index do |msg, idx|
-            cache = idx == chat_messages.size - 1 ? cache : false
+            cache = false unless idx == chat_messages.size - 1
             format_message(msg, cache:)
           end
           {

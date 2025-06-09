@@ -28,9 +28,9 @@ RSpec.describe 'Prompt Caching' do
             'You are a helpful assistant. Please be concise.'
           )
           chat.cache_prompts(system: true)
-          
+
           response = chat.ask('Hello')
-          
+
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
         end
@@ -40,7 +40,7 @@ RSpec.describe 'Prompt Caching' do
         it 'adds cache_control to user messages when user caching is requested' do
           chat.cache_prompts(user: true)
           response = chat.ask('Hello')
-          
+
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
         end
@@ -50,9 +50,9 @@ RSpec.describe 'Prompt Caching' do
         it 'adds cache_control to tool definitions when tools caching is requested' do
           chat.with_tools(Weather)
           chat.cache_prompts(tools: true)
-          
+
           response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
-          
+
           expect(response).to be_a(RubyLLM::Message)
           expect(response.content).to be_a(String)
         end

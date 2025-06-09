@@ -11,12 +11,14 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: { system: false, user: false, tools: false })
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           cache_prompts: { system: false, user: false, tools: false })
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, cache: cache_prompts[:system])
 
           build_base_payload(chat_messages, temperature, model, stream, cache: cache_prompts[:user]).tap do |payload|
-            add_optional_fields(payload, system_content: system_content, tools: tools, cache_tools: cache_prompts[:tools])
+            add_optional_fields(payload, system_content: system_content, tools: tools,
+                                         cache_tools: cache_prompts[:tools])
           end
         end
 
@@ -26,14 +28,14 @@ module RubyLLM
 
         def build_system_content(system_messages, cache: false)
           system_messages.flat_map.with_index do |msg, idx|
-            cache = idx == system_messages.size - 1 ? cache : false
+            cache = false unless idx == system_messages.size - 1
             format_system_message(msg, cache:)
           end
         end
 
         def build_base_payload(chat_messages, temperature, model, stream, cache: false)
           messages = chat_messages.map.with_index do |msg, idx|
-            cache = idx == chat_messages.size - 1 ? cache : false
+            cache = false unless idx == chat_messages.size - 1
             format_message(msg, cache:)
           end
 
