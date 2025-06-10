@@ -20,7 +20,7 @@ module RubyLLM
 
           {
             role: 'assistant',
-            content: 
+            content:
           }
         end
 
