@@ -26,13 +26,17 @@ RSpec.describe RubyLLM::Chat do
   class LoopingAnswer < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Fetches posts from the r/RandomNames Reddit community.'
 
+    def generate_fake_title
+      "Topic #{SecureRandom.hex(10)}"
+    end
+
     def execute
       # Fake some posts encouraging fetching the next page
       {
         posts: [
-          { title: Faker::Name.name, score: rand(1000) },
-          { title: Faker::Name.name, score: rand(1000) },
-          { title: Faker::Name.name, score: rand(1000) }
+          { title: generate_fake_title, score: rand(1000) },
+          { title: generate_fake_title, score: rand(1000) },
+          { title: generate_fake_title, score: rand(1000) }
         ],
         next_page: "t3_abc123_#{rand(1000)}",
         message: 'More posts are available using the next_page token.'
