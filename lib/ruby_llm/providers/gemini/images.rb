@@ -9,7 +9,7 @@ module RubyLLM
           "models/#{@model}:predict"
         end
 
-        def render_image_payload(prompt, model:, size:) # rubocop:disable Metrics/MethodLength
+        def render_image_payload(prompt, model:, size:)
           RubyLLM.logger.debug "Ignoring size #{size}. Gemini does not support image size customization."
           @model = model
           {
@@ -24,7 +24,7 @@ module RubyLLM
           }
         end
 
-        def parse_image_response(response) # rubocop:disable Metrics/MethodLength
+        def parse_image_response(response, model:)
           data = response.body
           image_data = data['predictions']&.first
 
@@ -38,7 +38,8 @@ module RubyLLM
 
           Image.new(
             data: base64_data,
-            mime_type: mime_type
+            mime_type: mime_type,
+            model_id: model
           )
         end
       end

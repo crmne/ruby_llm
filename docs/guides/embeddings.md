@@ -80,6 +80,14 @@ embedding_google = RubyLLM.embed(
   "This is another test sentence",
   model: "text-embedding-004" # Google's model
 )
+
+# Use a model not in the registry (useful for custom endpoints)
+embedding_custom = RubyLLM.embed(
+  "Custom model test",
+  model: "my-custom-embedding-model",
+  provider: :openai,
+  assume_model_exists: true
+)
 ```
 
 You can configure the default embedding model globally:
@@ -93,10 +101,6 @@ end
 Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on finding available embedding models and their capabilities.
 
 ## Choosing Dimensions
-{: .d-inline-block }
-
-Coming in v1.3.0
-{: .label .label-yellow }
 
 Each embedding model has its own default output dimensions. For example, OpenAI's `text-embedding-3-small` outputs 1536 dimensions by default, while `text-embedding-3-large` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
 

@@ -15,7 +15,7 @@ module RubyLLM
         end
 
         # Extract tool calls from response data
-        def extract_tool_calls(data) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength
+        def extract_tool_calls(data)
           return nil unless data
 
           # Get the first candidate

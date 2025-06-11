@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 23 Apr 2025 11:28:40 GMT
+      - Tue, 03 Jun 2025 09:46:25 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=520
+      - gfet4t7; dur=360
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.00011707750880824668
+              "avgLogprobs": -0.00014370836184493134
             }
           ],
           "usageMetadata": {
@@ -84,20 +84,21 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "ccQ-aIO7Fvbsx_AP1L3CoAM"
         }
-  recorded_at: Wed, 23 Apr 2025 11:28:40 GMT
+  recorded_at: Tue, 03 Jun 2025 09:46:25 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"84801db8-f4dd-4af4-8d13-369b346b18d4","response":{"name":"84801db8-f4dd-4af4-8d13-369b346b18d4","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"5a672a93-8e70-41fd-b27c-2f898a98ac09","response":{"name":"5a672a93-8e70-41fd-b27c-2f898a98ac09","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -118,7 +119,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 23 Apr 2025 11:28:40 GMT
+      - Tue, 03 Jun 2025 09:46:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -128,7 +129,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=584
+      - gfet4t7; dur=369
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -142,33 +143,34 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I think Ruby is the best language to learn.\n"
+                    "text": "The best language to learn is Ruby.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.11464322697032582
+              "avgLogprobs": -0.0017982162535190582
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 98,
-            "candidatesTokenCount": 11,
+            "promptTokenCount": 100,
+            "candidatesTokenCount": 9,
             "totalTokenCount": 109,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 98
+                "tokenCount": 100
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 11
+                "tokenCount": 9
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "ccQ-aJDqM6-R1PIPn56f8QM"
         }
-  recorded_at: Wed, 23 Apr 2025 11:28:40 GMT
+  recorded_at: Tue, 03 Jun 2025 09:46:26 GMT
 recorded_with: VCR 6.3.1

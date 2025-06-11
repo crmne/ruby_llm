@@ -25,6 +25,7 @@ module RubyLLM
   class ModelNotFoundError < StandardError; end
   class UnsupportedFunctionsError < StandardError; end
   class ToolCallCompletionsLimitReachedError < StandardError; end
+  class UnsupportedAttachmentError < StandardError; end
 
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end
@@ -51,7 +52,7 @@ module RubyLLM
     end
 
     class << self
-      def parse_error(provider:, response:) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/AbcSize,Metrics/PerceivedComplexity
+      def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
         message = provider&.parse_error(response)
 
         case response.status

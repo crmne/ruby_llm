@@ -17,7 +17,8 @@ loader.inflector.inflect(
   'api' => 'API',
   'deepseek' => 'DeepSeek',
   'bedrock' => 'Bedrock',
-  'openrouter' => 'OpenRouter'
+  'openrouter' => 'OpenRouter',
+  'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/ruby_llm/railtie")
@@ -67,9 +68,9 @@ module RubyLLM
 
     def logger
       @logger ||= Logger.new(
-        $stdout,
+        config.log_file,
         progname: 'RubyLLM',
-        level: ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
+        level: config.log_level
       )
     end
   end

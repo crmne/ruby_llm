@@ -34,8 +34,10 @@ module RubyLLM
 
       def headers(config)
         {
-          'Authorization' => "Bearer #{config.openai_api_key}"
-        }
+          'Authorization' => "Bearer #{config.openai_api_key}",
+          'OpenAI-Organization' => config.openai_organization_id,
+          'OpenAI-Project' => config.openai_project_id
+        }.compact
       end
 
       def capabilities
