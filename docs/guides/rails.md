@@ -90,7 +90,6 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.references :chat, null: false, foreign_key: true
       t.string :role
       t.text :content
-      # Optional fields for tracking usage/metadata
       t.string :model_id
       t.integer :input_tokens
       t.integer :output_tokens
