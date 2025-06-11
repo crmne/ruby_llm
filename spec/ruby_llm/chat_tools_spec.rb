@@ -140,4 +140,75 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+
+  describe 'tool management' do
+    let(:chat) { RubyLLM.chat }
+    let(:weather_tool) { Weather.new }
+    let(:best_language_tool) { BestLanguageToLearn.new }
+
+    before do
+      chat.with_tool(Weather)
+      chat.with_tool(BestLanguageToLearn)
+    end
+
+    describe '#without_tool' do
+      it 'removes a tool by class' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+        
+        chat.without_tool(Weather)
+        
+        expect(chat.tools.keys).not_to include(:weather)
+        expect(chat.tools.keys).to include(:best_language_to_learn)
+      end
+
+      it 'removes a tool by instance' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+        
+        chat.without_tool(weather_tool)
+        
+        expect(chat.tools.keys).not_to include(:weather)
+        expect(chat.tools.keys).to include(:best_language_to_learn)
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.without_tool(weather_tool)).to be(chat)
+      end
+    end
+
+    describe '#without_tools' do
+      it 'removes multiple tools by class' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+        
+        chat.without_tools(Weather, BestLanguageToLearn)
+        
+        expect(chat.tools).to be_empty
+      end
+
+      it 'removes multiple tools by instance' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+        
+        chat.without_tools(weather_tool, best_language_tool)
+        
+        expect(chat.tools).to be_empty
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.without_tools(weather_tool, best_language_tool)).to be(chat)
+      end
+    end
+
+    describe '#clear_tools' do
+      it 'removes all tools' do
+        expect(chat.tools).not_to be_empty
+        
+        chat.clear_tools
+        
+        expect(chat.tools).to be_empty
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.clear_tools).to be(chat)
+      end
+    end
+  end
 end
