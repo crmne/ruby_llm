@@ -22,6 +22,7 @@ module RubyLLM
       @config = context&.config || RubyLLM.config
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
+      @reasoning = false
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -63,11 +64,22 @@ module RubyLLM
     def with_model(model_id, provider: nil, assume_exists: false)
       @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
       @connection = @context ? @context.connection_for(@provider) : @provider.connection(@config)
+      # TODO: Currently the unsupported errors will not retrigger after model reassignment.
+
       self
     end
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_reasoning(reasoning = true)
+      if reasoning && !@model.reasoning?
+        raise UnsupportedReasoningError, "Model #{@model.id} doesn't support reasoning"
+      end
+
+      @reasoning = reasoning
       self
     end
 
@@ -99,6 +111,7 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
+        reasoning: @reasoning,
         connection: @connection,
         &
       )
@@ -120,6 +133,10 @@ module RubyLLM
 
     def reset_messages!
       @messages.clear
+    end
+
+    def thinking?
+      @thinking
     end
 
     private
