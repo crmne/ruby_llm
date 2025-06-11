@@ -50,13 +50,29 @@ module RubyLLM
         raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
       end
 
-      tool_instance = tool.is_a?(Class) ? tool.new : tool
-      @tools[tool_instance.name.to_sym] = tool_instance
+      tool_instance = instantiate_tool(tool)
+      @tools[tool_name(tool_instance)] = tool_instance
       self
     end
 
     def with_tools(*tools)
       tools.each { |tool| with_tool tool }
+      self
+    end
+
+    def without_tool(tool)
+      tool_instance = instantiate_tool(tool)
+      @tools.delete(tool_name(tool_instance))
+      self
+    end
+
+    def without_tools(*tools)
+      tools.each { |tool| without_tool(tool) }
+      self
+    end
+
+    def clear_tools
+      @tools.clear
       self
     end
 
@@ -147,6 +163,14 @@ module RubyLLM
         content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
         tool_call_id: tool_use_id
       )
+    end
+
+    def tool_name(tool)
+      tool.name.to_sym
+    end
+
+    def instantiate_tool(tool)
+      tool.is_a?(Class) ? tool.new : tool
     end
   end
 end

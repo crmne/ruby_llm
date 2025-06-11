@@ -132,6 +132,46 @@ puts response.content
 {: .warning }
 Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
 
+## Removing Tools
+
+Each tool definition adds to the input tokens for every request, so it is often a good idea to remove tools that are not needed on a given request. You can remove tools from a `Chat` instance using these methods:
+
+### Remove a Single Tool
+
+Use `without_tool` to remove a specific tool by passing either the tool class or instance:
+
+```ruby
+# Remove by class
+chat.without_tool(Weather)
+
+# Or by instance
+chat.without_tool(weather_tool)
+```
+
+### Remove Multiple Tools
+
+Use `without_tools` to remove multiple tools at once:
+
+```ruby
+chat.without_tools(Weather, AnotherTool, some_tool_instance)
+```
+
+### Clear All Tools
+
+To remove all tools from the chat instance:
+
+```ruby
+chat.clear_tools
+```
+
+All these methods return the `Chat` instance, allowing for method chaining:
+
+```ruby
+chat.clear_tools
+  .with_tool(Weather.new)
+  .ask("What's the weather?")
+```
+
 ## The Tool Execution Flow
 
 When you `ask` a question that the model determines requires a tool:
