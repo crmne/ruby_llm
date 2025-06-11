@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Jun 2025 20:31:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749587480-emRxjCDiNfxMfbbImoD9\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749587480,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        roll a six-sided die three times for you.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01Kb2EPwanJh4DrJPeWRU3wM\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_012oTqsd64aBbTi31E7QbQC1\",\"index\":1,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_013Jn8Y5uW2R4x7cy9q1F5sF\",\"index\":2,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":352,\"completion_tokens\":88,\"total_tokens\":440}}"
+  recorded_at: Tue, 10 Jun 2025 20:31:22 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"I''ll roll a six-sided die
+        three times for you.","tool_calls":[{"id":"toolu_01Kb2EPwanJh4DrJPeWRU3wM","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_012oTqsd64aBbTi31E7QbQC1","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_013Jn8Y5uW2R4x7cy9q1F5sF","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"toolu_01Kb2EPwanJh4DrJPeWRU3wM"},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"toolu_012oTqsd64aBbTi31E7QbQC1"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"toolu_013Jn8Y5uW2R4x7cy9q1F5sF"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Jun 2025 20:31:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-1749587483-4w2glAfe4toiUgtzMQ0m\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749587483,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+        are the results of the three dice rolls:\\n1st roll: 3\\n2nd roll: 1\\n3rd
+        roll: 3\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":539,\"completion_tokens\":35,\"total_tokens\":574}}"
+  recorded_at: Tue, 10 Jun 2025 20:31:24 GMT
+recorded_with: VCR 6.3.1

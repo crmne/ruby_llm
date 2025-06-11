@@ -12,11 +12,13 @@ module RubyLLM
         end
 
         def format_tool_call(msg)
-          tool_call = msg.tool_calls.values.first
-
           content = []
+
           content << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
-          content << format_tool_use_block(tool_call)
+
+          msg.tool_calls.each_value do |tool_call|
+            content << format_tool_use_block(tool_call)
+          end
 
           {
             role: 'assistant',
@@ -68,16 +70,24 @@ module RubyLLM
           end
         end
 
-        def parse_tool_calls(content_block)
-          return nil unless content_block && content_block['type'] == 'tool_use'
+        def parse_tool_calls(content_blocks)
+          return nil if content_blocks.nil?
 
-          {
-            content_block['id'] => ToolCall.new(
-              id: content_block['id'],
-              name: content_block['name'],
-              arguments: content_block['input']
+          # Handle single content block (backward compatibility)
+          content_blocks = [content_blocks] unless content_blocks.is_a?(Array)
+
+          tool_calls = {}
+          content_blocks.each do |block|
+            next unless block && block['type'] == 'tool_use'
+
+            tool_calls[block['id']] = ToolCall.new(
+              id: block['id'],
+              name: block['name'],
+              arguments: block['input']
             )
-          }
+          end
+
+          tool_calls.empty? ? nil : tool_calls
         end
 
         def clean_parameters(parameters)
