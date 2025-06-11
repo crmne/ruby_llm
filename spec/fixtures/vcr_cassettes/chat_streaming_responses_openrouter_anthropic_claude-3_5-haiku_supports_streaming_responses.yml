@@ -24,13 +24,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:40:51 GMT
+      - Tue, 03 Jun 2025 09:44:36 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -42,31 +48,37 @@ http_interactions:
       - token-invalid
       X-Clerk-Auth-Status:
       - signed-out
-      Vary:
-      - Accept-Encoding
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
         : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":"1, 2"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":", 3"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":"Here"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1747057251-npT2eVuQ3XtHP3bSmG97","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1747057251,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":15,"completion_tokens":16,"total_tokens":31,"cost":0.000076,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":"'s"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":" counting"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":" from 1 to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":" 3:\n\n1"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n2\n3"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+
+        data: {"id":"gen-1748943875-bXQ35bM4pNeY4cEzsCJk","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1748943875,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":15,"completion_tokens":20,"total_tokens":35,"cost":0.000092,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 12 May 2025 13:40:52 GMT
+  recorded_at: Tue, 03 Jun 2025 09:44:37 GMT
 recorded_with: VCR 6.3.1
 ...

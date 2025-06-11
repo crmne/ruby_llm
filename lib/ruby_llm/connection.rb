@@ -5,6 +5,20 @@ module RubyLLM
   class Connection
     attr_reader :provider, :connection, :config
 
+    def self.basic(&)
+      Faraday.new do |f|
+        f.response :logger,
+                   RubyLLM.logger,
+                   bodies: false,
+                   response: false,
+                   errors: true,
+                   headers: false,
+                   log_level: :debug
+        f.response :raise_error
+        yield f if block_given?
+      end
+    end
+
     def initialize(provider, config)
       @provider = provider
       @config = config
@@ -15,6 +29,7 @@ module RubyLLM
         setup_logging(faraday)
         setup_retry(faraday)
         setup_middleware(faraday)
+        setup_http_proxy(faraday)
       end
     end
 
@@ -40,8 +55,13 @@ module RubyLLM
     end
 
     def setup_logging(faraday)
-      faraday.response :logger, RubyLLM.logger, bodies: true, response: true,
-                                                errors: true, headers: false, log_level: :debug do |logger|
+      faraday.response :logger,
+                       RubyLLM.logger,
+                       bodies: true,
+                       response: true,
+                       errors: true,
+                       headers: false,
+                       log_level: :debug do |logger|
         logger.filter(%r{[A-Za-z0-9+/=]{100,}}, 'data":"[BASE64 DATA]"')
         logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
       end
@@ -63,6 +83,12 @@ module RubyLLM
       faraday.response :json
       faraday.adapter Faraday.default_adapter
       faraday.use :llm_errors, provider: @provider
+    end
+
+    def setup_http_proxy(faraday)
+      return unless @config.http_proxy
+
+      faraday.proxy = @config.http_proxy
     end
 
     def retry_exceptions

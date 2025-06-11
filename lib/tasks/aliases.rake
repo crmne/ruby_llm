@@ -28,29 +28,32 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
       }
     end
 
-    # Anthropic models
-    models['anthropic'].each do |model|
-      # Check both naming conventions for OpenRouter
+    # Anthropic models - group by base name and find latest
+    anthropic_latest = group_anthropic_models_by_base_name(models['anthropic'])
+
+    anthropic_latest.each do |base_name, latest_model|
+      # Check OpenRouter naming patterns for the BASE NAME (not the full dated model)
       openrouter_variants = [
-        "anthropic/#{model}",
-        "anthropic/#{model.gsub(/-(\d)/, '.\1')}" # claude-3-5 -> claude-3.5
+        "anthropic/#{base_name}", # anthropic/claude-3-5-sonnet
+        "anthropic/#{base_name.gsub(/-(\d)/, '.\1')}", # anthropic/claude-3.5-sonnet
+        "anthropic/#{base_name.gsub(/claude-(\d+)-(\d+)/, 'claude-\1.\2')}", # claude-3-5 -> claude-3.5
+        "anthropic/#{base_name.gsub(/(\d+)-(\d+)/, '\1.\2')}" # any X-Y -> X.Y pattern
       ]
 
       openrouter_model = openrouter_variants.find { |v| models['openrouter'].include?(v) }
 
-      # Find corresponding Bedrock model (regardless of OpenRouter)
-      bedrock_model = find_best_bedrock_model(model, models['bedrock'])
+      # Find corresponding Bedrock model
+      bedrock_model = find_best_bedrock_model(latest_model, models['bedrock'])
 
-      # Create alias if we have any match (OpenRouter OR Bedrock)
-      next unless openrouter_model || bedrock_model
+      # Create alias if we have any match (OpenRouter OR Bedrock) OR if it's Anthropic-only
+      next unless openrouter_model || bedrock_model || models['anthropic'].include?(latest_model)
 
-      alias_key = model.gsub('-latest', '')
-      aliases[alias_key] = {
-        'anthropic' => model
+      aliases[base_name] = {
+        'anthropic' => latest_model
       }
 
-      aliases[alias_key]['openrouter'] = openrouter_model if openrouter_model
-      aliases[alias_key]['bedrock'] = bedrock_model if bedrock_model
+      aliases[base_name]['openrouter'] = openrouter_model if openrouter_model
+      aliases[base_name]['bedrock'] = bedrock_model if bedrock_model
     end
 
     # Also check if Bedrock has models that Anthropic doesn't
@@ -121,24 +124,67 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
     puts "Generated #{sorted_aliases.size} aliases"
   end
 
+  def group_anthropic_models_by_base_name(anthropic_models) # rubocop:disable Rake/MethodDefinitionInTask
+    grouped = Hash.new { |h, k| h[k] = [] }
+
+    anthropic_models.each do |model|
+      base_name = extract_base_name(model)
+      grouped[base_name] << model
+    end
+
+    # Find the latest model for each base name
+    latest_models = {}
+    grouped.each do |base_name, model_list|
+      if model_list.size == 1
+        latest_models[base_name] = model_list.first
+      else
+        # Sort by date and take the latest
+        latest_model = model_list.max_by { |model| extract_date_from_model(model) }
+        latest_models[base_name] = latest_model
+      end
+    end
+
+    latest_models
+  end
+
+  def extract_base_name(model) # rubocop:disable Rake/MethodDefinitionInTask
+    # Remove date suffix (YYYYMMDD) from model name
+    if model =~ /^(.+)-(\d{8})$/
+      Regexp.last_match(1)
+    else
+      # Models without date suffix (like claude-2.0, claude-2.1)
+      model
+    end
+  end
+
+  def extract_date_from_model(model) # rubocop:disable Rake/MethodDefinitionInTask
+    # Extract date for comparison, return '00000000' for models without dates
+    if model =~ /-(\d{8})$/
+      Regexp.last_match(1)
+    else
+      '00000000' # Ensures models without dates sort before dated ones
+    end
+  end
+
   def find_best_bedrock_model(anthropic_model, bedrock_models) # rubocop:disable Metrics/PerceivedComplexity,Rake/MethodDefinitionInTask
     # Special mapping for Claude 2.x models
-    bedrock_pattern = case anthropic_model
-                      when 'claude-2.0', 'claude-2'
-                        'anthropic.claude-v2'
-                      when 'claude-2.1'
-                        'anthropic.claude-v2:1'
-                      when 'claude-instant-v1', 'claude-instant'
-                        'anthropic.claude-instant'
-                      else
-                        # For Claude 3+ models, extract base name
-                        base_name = extract_base_name(anthropic_model)
-                        "anthropic.#{base_name}"
-                      end
+    base_pattern = case anthropic_model
+                   when 'claude-2.0', 'claude-2'
+                     'claude-v2'
+                   when 'claude-2.1'
+                     'claude-v2:1'
+                   when 'claude-instant-v1', 'claude-instant'
+                     'claude-instant'
+                   else
+                     # For Claude 3+ models, extract base name
+                     extract_base_name(anthropic_model)
+                   end
 
-    # Find all matching Bedrock models
+    # Find all matching Bedrock models by stripping provider prefix and comparing base name
     matching_models = bedrock_models.select do |bedrock_model|
-      bedrock_model.start_with?(bedrock_pattern)
+      # Strip any provider prefix (anthropic. or us.anthropic.)
+      model_without_prefix = bedrock_model.sub(/^(?:us\.)?anthropic\./, '')
+      model_without_prefix.start_with?(base_pattern)
     end
 
     return nil if matching_models.empty?
@@ -184,21 +230,6 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
       has_context_priority = model.include?('k') ? -1 : 0
 
       [has_context_priority, context_priority, version_priority]
-    end
-  end
-
-  def extract_base_name(anthropic_model) # rubocop:disable Rake/MethodDefinitionInTask
-    # Remove -latest suffix and date stamps
-    model_name = anthropic_model.gsub('-latest', '')
-
-    # Extract the base model name without date/version
-    # e.g. "claude-3-5-sonnet-20241022" -> "claude-3-5-sonnet"
-    # e.g. "claude-3-opus" -> "claude-3-opus"
-
-    if model_name =~ /^(claude-[\d\-]+-[a-z]+)(?:-\d{8})?$/
-      Regexp.last_match(1)
-    else
-      model_name
     end
   end
 end

@@ -7,6 +7,9 @@ require 'codecov'
 require 'vcr'
 
 SimpleCov.start do
+  add_filter '/spec/'
+  add_filter '/vendor/'
+
   enable_coverage :branch
 
   formatter SimpleCov::Formatter::MultiFormatter.new(
@@ -18,8 +21,24 @@ SimpleCov.start do
   )
 end
 
-require 'active_record'
 require 'bundler/setup'
+
+# Load the dummy Rails app
+ENV['RAILS_ENV'] = 'test'
+require_relative 'dummy/config/environment'
+
+# Ensure database is properly set up
+begin
+  # Create database if it doesn't exist
+  ActiveRecord::Tasks::DatabaseTasks.create_current
+rescue ActiveRecord::DatabaseAlreadyExists
+  # Database already exists, that's fine
+end
+
+# Explicitly run the dummy app migrations
+dummy_migrations_path = File.expand_path('dummy/db/migrate', __dir__)
+ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
+
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'

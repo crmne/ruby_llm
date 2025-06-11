@@ -7,8 +7,8 @@ RSpec.describe RubyLLM::Chat do
 
   it 'finds models by alias name' do # rubocop:disable RSpec/MultipleExpectations
     # Core test - can we find a model using just its alias?
-    chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
-    expect(chat.model.id).to eq('claude-3-5-sonnet-latest')
+    chat = RubyLLM.chat(model: 'claude-3-5-haiku')
+    expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
     expect(chat.model.provider).to eq('anthropic')
   end
 
@@ -22,6 +22,13 @@ RSpec.describe RubyLLM::Chat do
   it 'finds models by alias and provider' do # rubocop:disable RSpec/MultipleExpectations
     chat = RubyLLM.chat(model: 'claude-3-5-haiku', provider: :bedrock)
     expect(chat.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
+    expect(chat.model.provider).to eq('bedrock')
+  end
+
+  it 'handles different provider prefixes correctly' do # rubocop:disable RSpec/MultipleExpectations
+    # Test that we can match models regardless of their provider prefix
+    chat = RubyLLM.chat(model: 'claude-3-7-sonnet', provider: :bedrock)
+    expect(chat.model.id).to eq('us.anthropic.claude-3-7-sonnet-20250219-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
 end

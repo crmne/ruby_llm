@@ -22,10 +22,9 @@ module RubyLLM
     # Returns the raw binary image data regardless of source
     def to_blob
       if base64?
-        Base64.decode64(@data)
+        Base64.decode64 @data
       else
-        # Use Faraday instead of URI.open for better security
-        response = Faraday.get(@url)
+        response = Connection.basic.get @url
         response.body
       end
     end

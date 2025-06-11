@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:43:26 GMT
+      - Tue, 03 Jun 2025 09:46:25 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=375
+      - gfet4t7; dur=360
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -84,16 +84,17 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "ccQ-aIO7Fvbsx_AP1L3CoAM"
         }
-  recorded_at: Mon, 12 May 2025 13:43:26 GMT
+  recorded_at: Tue, 03 Jun 2025 09:46:25 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"d43aea6f-69e3-4ff8-9216-21a02711f297","response":{"name":"d43aea6f-69e3-4ff8-9216-21a02711f297","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"5a672a93-8e70-41fd-b27c-2f898a98ac09","response":{"name":"5a672a93-8e70-41fd-b27c-2f898a98ac09","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -118,7 +119,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 May 2025 13:43:26 GMT
+      - Tue, 03 Jun 2025 09:46:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -128,7 +129,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=473
+      - gfet4t7; dur=369
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -148,7 +149,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.00091955903917551041
+              "avgLogprobs": -0.0017982162535190582
             }
           ],
           "usageMetadata": {
@@ -168,7 +169,8 @@ http_interactions:
               }
             ]
           },
-          "modelVersion": "gemini-2.0-flash"
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "ccQ-aJDqM6-R1PIPn56f8QM"
         }
-  recorded_at: Mon, 12 May 2025 13:43:26 GMT
+  recorded_at: Tue, 03 Jun 2025 09:46:26 GMT
 recorded_with: VCR 6.3.1

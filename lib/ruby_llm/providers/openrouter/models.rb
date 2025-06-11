@@ -37,7 +37,7 @@ module RubyLLM
             # Convert OpenRouter's supported parameters to our capability format
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters'])
 
-            ModelInfo.new(
+            Model::Info.new(
               id: model_data['id'],
               name: model_data['name'],
               provider: slug,

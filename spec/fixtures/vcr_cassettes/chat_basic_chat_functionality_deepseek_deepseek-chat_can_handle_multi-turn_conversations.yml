@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:38:45 GMT
+      - Tue, 03 Jun 2025 09:42:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 87c3e18ca6f9d3501b4c9983341def84
+      - 36ce938903b31a5ee0d7e6d04bb9a49f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,14 +51,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c63ced7b-fe82-4485-bd37-36b21fd496f3","object":"chat.completion","created":1747057124,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+      string: '{"id":"002a7fe3-480e-4b1f-a266-3e0fb725eb2c","object":"chat.completion","created":1748943765,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
         was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first
-        version of Ruby in **1995**. Matz designed Ruby with a focus on simplicity,
-        productivity, and programmer happiness, blending elements from Perl, Smalltalk,
-        Eiffel, Ada, and Lisp. \n\nHis famous motto is:  \n*\"Ruby is designed to
-        make programmers happy.\"*  \n\nWould you like details on Ruby''s design philosophy
-        or its evolution over time?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":100,"total_tokens":109,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Mon, 12 May 2025 13:38:54 GMT
+        version of Ruby (0.95) in **1995**. \n\nMatsumoto designed Ruby with a focus
+        on simplicity, productivity, and programmer happiness, blending elements from
+        his favorite languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding
+        principle was the **\"Principle of Least Surprise\" (POLS)**, aiming to make
+        the language intuitive and enjoyable for developers. \n\nFun fact: The name
+        \"Ruby\" was inspired by the gemstone, as a playful nod to Perl (another gemstone-inspired
+        language)."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":137,"total_tokens":146,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Tue, 03 Jun 2025 09:42:56 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -67,11 +69,13 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
         was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
         **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first version of
-        Ruby in **1995**. Matz designed Ruby with a focus on simplicity, productivity,
-        and programmer happiness, blending elements from Perl, Smalltalk, Eiffel,
-        Ada, and Lisp. \n\nHis famous motto is:  \n*\"Ruby is designed to make programmers
-        happy.\"*  \n\nWould you like details on Ruby''s design philosophy or its
-        evolution over time?"},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+        Ruby (0.95) in **1995**. \n\nMatsumoto designed Ruby with a focus on simplicity,
+        productivity, and programmer happiness, blending elements from his favorite
+        languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding principle
+        was the **\"Principle of Least Surprise\" (POLS)**, aiming to make the language
+        intuitive and enjoyable for developers. \n\nFun fact: The name \"Ruby\" was
+        inspired by the gemstone, as a playful nod to Perl (another gemstone-inspired
+        language)."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -89,7 +93,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:38:54 GMT
+      - Tue, 03 Jun 2025 09:42:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -101,7 +105,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 575e49bd4051e358d233ca102f998577
+      - 49195f941ff211228b216fc6c87adba4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,7 +120,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjM0MDE3YmY4LWUzZjItNDY5MS1hZjQ3LTU1ZjgzZGU4ZGMwMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDcwNTcxMzQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqY3JlYXRlZCBSdWJ5IGluIDE5OTMqKiBhbmQgcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uICgqKlJ1YnkgMC45NSoqKSBpbiAqKkRlY2VtYmVyIDE5OTQqKi4gVGhlIHN0YWJsZSAqKlJ1YnkgMS4wKiogZm9sbG93ZWQgaW4gKioxOTk2KiouICBcblxuIyMjIEtleSBUaW1lbGluZTogIFxuLSAqKjE5OTMqKjogTWF0eiBzdGFydHMgZGVzaWduaW5nIFJ1YnkuICBcbi0gKioxOTk0IChEZWMpKio6IEZpcnN0IHB1YmxpYyByZWxlYXNlICh2MC45NSkuICBcbi0gKioxOTk1Kio6IFJ1YnkgZ2FpbnMgYXR0ZW50aW9uIGluIEphcGFuLiAgXG4tICoqMTk5NioqOiBPZmZpY2lhbCBSdWJ5IDEuMCBsYXVuY2guICBcblxuRnVuIGZhY3Q6IE1hdHogbmFtZWQgaXQgXCJSdWJ5XCIgYXMgYSBwbGF5ZnVsIG5vZCB0byBQZXJsIChhIGdlbXN0b25lIHRoZW1lKSBhbmQgYXMgYSB0cmlidXRlIHRvIGEgY29sbGVhZ3Vl4oCZcyBiaXJ0aHN0b25lIChKdW5lID0gcGVhcmwsIEp1bHkgPSBydWJ5KS4gIFxuXG5XYW50IGRlZXBlciBoaXN0b3J5IG9yIHRlY2huaWNhbCBpbmZsdWVuY2VzPyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExOSwiY29tcGxldGlvbl90b2tlbnMiOjE2NiwidG90YWxfdG9rZW5zIjoyODUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo2NH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjo2NCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo1NX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA0MjVmcDgifQ==
-  recorded_at: Mon, 12 May 2025 13:39:06 GMT
+      string: '{"id":"7f81ca58-f552-4c72-855a-33fe0a9e7b57","object":"chat.completion","created":1748943776,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        \"Matz\" Matsumoto **started working on Ruby in 1993** and **released the
+        first public version (Ruby 0.95) on December 21, 1995**.  \n\nSo, while the
+        development began in **1993**, **1995** is considered the official birth year
+        of Ruby. The stable **Ruby 1.0** was later released in **1996**.  \n\nWould
+        you like details on Ruby''s early design goals or influences?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":156,"completion_tokens":102,"total_tokens":258,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Tue, 03 Jun 2025 09:43:05 GMT
 recorded_with: VCR 6.3.1

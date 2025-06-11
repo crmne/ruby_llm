@@ -70,8 +70,8 @@ RSpec.describe RubyLLM::Models do
       expect(chat_model.model.id).to eq('gemini-2.0-flash')
 
       # Only use alias when exact match isn't found
-      chat_model = RubyLLM.chat(model: 'claude-3-5-sonnet')
-      expect(chat_model.model.id).to eq('claude-3-5-sonnet-latest')
+      chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
+      expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
   end
 
@@ -93,7 +93,7 @@ RSpec.describe RubyLLM::Models do
       described_class.refresh!
 
       # Verify singleton instance was updated
-      expect(RubyLLM.models.all.size).to be > 0
+      expect(RubyLLM.models.all.size).to be_positive
     end
   end
 

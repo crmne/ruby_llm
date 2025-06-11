@@ -20,6 +20,7 @@ PreCommit:
 
   RakeTarget:
     enabled: true
+    command: ['bundle', 'exec', 'rake']
     targets: ['models:update', 'models:docs', 'aliases:generate']
     on_warn: fail
 

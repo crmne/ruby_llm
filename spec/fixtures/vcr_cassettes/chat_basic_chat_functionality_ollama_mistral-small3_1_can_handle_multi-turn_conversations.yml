@@ -5,8 +5,8 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"Who
-        was Ruby''s creator?"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,31 +24,35 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:40:26 GMT
+      - Tue, 03 Jun 2025 10:52:50 GMT
       Content-Length:
-      - '554'
+      - '758'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-858","object":"chat.completion","created":1747057226,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by Yukihiro \"Matz\" Matsumoto. He began working on Ruby in the
-        mid-1990s and officially released it to the public in 1995. Matsumoto designed
-        Ruby with a focus on simplicity and productivity, aiming to make programming
-        enjoyable and intuitive."},"finish_reason":"stop"}],"usage":{"prompt_tokens":364,"completion_tokens":65,"total_tokens":429}}
+      string: '{"id":"chatcmpl-147","object":"chat.completion","created":1748947970,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by Yukihiro Matsumoto, often referred to as \"Matz.\" He began
+        development on Ruby in the mid-1990s and released the first public version,
+        Ruby 0.95, in 1995. Matsumoto designed Ruby with an emphasis on simplicity
+        and productivity, aiming to make programming enjoyable and intuitive. Ruby
+        is known for its elegant syntax and powerful features, which make it a popular
+        language for web development, particularly through the Ruby on Rails framework."},"finish_reason":"stop"}],"usage":{"prompt_tokens":364,"completion_tokens":105,"total_tokens":469}}
 
         '
-  recorded_at: Mon, 12 May 2025 13:40:26 GMT
+  recorded_at: Tue, 03 Jun 2025 10:52:50 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":[{"type":"text","text":"Who
-        was Ruby''s creator?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
-        was created by Yukihiro \"Matz\" Matsumoto. He began working on Ruby in the
-        mid-1990s and officially released it to the public in 1995. Matsumoto designed
-        Ruby with a focus on simplicity and productivity, aiming to make programming
-        enjoyable and intuitive."}]},{"role":"user","content":[{"type":"text","text":"What
-        year did he create Ruby?"}]}],"temperature":0.7,"stream":false}'
+      string: '{"model":"mistral-small3.1","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
+        Yukihiro Matsumoto, often referred to as \"Matz.\" He began development on
+        Ruby in the mid-1990s and released the first public version, Ruby 0.95, in
+        1995. Matsumoto designed Ruby with an emphasis on simplicity and productivity,
+        aiming to make programming enjoyable and intuitive. Ruby is known for its
+        elegant syntax and powerful features, which make it a popular language for
+        web development, particularly through the Ruby on Rails framework."},{"role":"user","content":"What
+        year did he create Ruby?"}],"temperature":0.7,"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -66,15 +70,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 May 2025 13:40:33 GMT
+      - Tue, 03 Jun 2025 10:52:54 GMT
       Content-Length:
-      - '393'
+      - '438'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-876","object":"chat.completion","created":1747057233,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        \"Matz\" Matsumoto began developing Ruby in the mid-1990s and publicly released
-        it in 1995."},"finish_reason":"stop"}],"usage":{"prompt_tokens":438,"completion_tokens":35,"total_tokens":473}}
+      string: '{"id":"chatcmpl-368","object":"chat.completion","created":1748947974,"model":"mistral-small3.1","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        Matsumoto (\"Matz\") began developing Ruby in the mid-1990s. The first public
+        release of Ruby, version 0.95, was made available in 1995."},"finish_reason":"stop"}],"usage":{"prompt_tokens":478,"completion_tokens":49,"total_tokens":527}}
 
         '
-  recorded_at: Mon, 12 May 2025 13:40:33 GMT
+  recorded_at: Tue, 03 Jun 2025 10:52:54 GMT
 recorded_with: VCR 6.3.1

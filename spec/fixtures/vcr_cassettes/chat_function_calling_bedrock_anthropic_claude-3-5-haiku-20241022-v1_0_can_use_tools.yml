@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250512T134106Z
+      - 20250603T094449Z
       X-Amz-Content-Sha256:
       - 37fc3c4fb3b65d1625b2a2c7d8a3a4a1fd3cc3cdb5e20355093cbaa5097ca4fa
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250512/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=7067c5c7ce58b6e1d29ddc5a15eb4edc8f326a2679e3a757e2cf6fe341d7ae3c
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250603/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c7d81df90be8cf013fdea568c9f4ed4a569cb8f0f37a6509a539642bc27816a7
       Content-Type:
       - application/json
       Accept:
@@ -34,7 +34,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:41:08 GMT
+      - Tue, 03 Jun 2025 09:44:51 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -42,18 +42,18 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c7eeea4d-d930-4c48-b7b9-2bc194aa6dcc
+      - 0e2b41a7-8a2f-4361-9d07-519d04aad358
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1296'
+      - '1670'
       X-Amzn-Bedrock-Output-Token-Count:
       - '90'
       X-Amzn-Bedrock-Input-Token-Count:
       - '389'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_016HrhMQoijDgVmiGQF4dCuB","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01MxW7n14ZmPGUzFJngFV112","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
-  recorded_at: Mon, 12 May 2025 13:41:08 GMT
+      string: '{"id":"msg_bdrk_01C6GCMJmdSrPYGaxmoWboUP","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01Wspdyi2BmsfVcU7deXgnjN","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Tue, 03 Jun 2025 09:44:51 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -61,7 +61,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01MxW7n14ZmPGUzFJngFV112","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01MxW7n14ZmPGUzFJngFV112","content":"Current
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01Wspdyi2BmsfVcU7deXgnjN","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01Wspdyi2BmsfVcU7deXgnjN","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -72,12 +72,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250512T134108Z
+      - 20250603T094451Z
       X-Amz-Content-Sha256:
-      - 18aa757e03ab673a2519661062ed76aa4642dc902a77d6c8edf0ad350b977dc3
+      - e08f5a6fe6562ce65eed2c16b35cc0441a09df54ca5b713851777138821f3cfa
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250512/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ab74c7e80a58f28659aa5ed1844c1356314ae2ae7ec9f4c290d4400b8eaa49ae
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250603/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=72a7af8e188732c41e759d8fd64ae5aafa5d087bef07db29fc14765e50066447
       Content-Type:
       - application/json
       Accept:
@@ -90,24 +90,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:41:11 GMT
+      - Tue, 03 Jun 2025 09:44:54 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '539'
+      - '559'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 75278a74-66bd-43f0-b212-05c817024ef4
+      - f9d2c080-ea8b-4447-a280-173a05791048
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2052'
+      - '2022'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '85'
+      - '82'
       X-Amzn-Bedrock-Input-Token-Count:
       - '518'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Im1zZ19iZHJrXzAxNTEySFhZMmhhVDNUNGpxRlhxNGVYaSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkJhc2VkIG9uIHRoZSB3ZWF0aGVyIGRhdGEsIGhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbjpcbi0gVGVtcGVyYXR1cmU6IDE1wrBDICg1OcKwRilcbi0gV2luZCBTcGVlZDogMTAga20vaCAoYWJvdXQgNi4yIG1waClcblxuSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIGEgbW9kZXJhdGUgYnJlZXplLiBUaGUgdGVtcGVyYXR1cmUgaXMgY29tZm9ydGFibGUsIHN1aXRhYmxlIGZvciBsaWdodCBjbG90aGluZyBvciBhIGxpZ2h0IGphY2tldC4gRW5qb3kgdGhlIHdlYXRoZXIhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1MTgsIm91dHB1dF90b2tlbnMiOjg1fX0=
-  recorded_at: Mon, 12 May 2025 13:41:11 GMT
+        eyJpZCI6Im1zZ19iZHJrXzAxVTQyTG5HM2I3RGpORWF1S1lXNUtDbSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkJhc2VkIG9uIHRoZSB3ZWF0aGVyIGluZm9ybWF0aW9uLCBoZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG4tIFRlbXBlcmF0dXJlOiAxNcKwQyAoNTnCsEYpXG4tIFdpbmQgU3BlZWQ6IDEwIGttL2hcblxuSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIGEgbW9kZXJhdGUgd2luZC4gVGhlIHRlbXBlcmF0dXJlIGlzIGNvbWZvcnRhYmxlLCBuZWl0aGVyIHRvbyBob3Qgbm9yIHRvbyBjb2xkLiBBIGxpZ2h0IGphY2tldCBtaWdodCBiZSBzdWl0YWJsZSBpZiB5b3UncmUgcGxhbm5pbmcgdG8gZ28gb3V0c2lkZS4ifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUxOCwib3V0cHV0X3Rva2VucyI6ODJ9fQ==
+  recorded_at: Tue, 03 Jun 2025 09:44:54 GMT
 recorded_with: VCR 6.3.1

@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://example.com/eiffel_tower
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - text/html
+      Etag:
+      - '"84238dfc8092e5d9c0dac8ef93371a07:1736799080.121134"'
+      Last-Modified:
+      - Mon, 13 Jan 2025 20:11:20 GMT
+      Server:
+      - AkamaiNetStorage
+      Content-Length:
+      - '1256'
+      Expires:
+      - Tue, 03 Jun 2025 09:39:24 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 03 Jun 2025 09:39:24 GMT
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "<!doctype html>\n<html>\n<head>\n    <title>Example Domain</title>\n\n
+        \   <meta charset=\"utf-8\" />\n    <meta http-equiv=\"Content-type\" content=\"text/html;
+        charset=utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width,
+        initial-scale=1\" />\n    <style type=\"text/css\">\n    body {\n        background-color:
+        #f0f0f2;\n        margin: 0;\n        padding: 0;\n        font-family: -apple-system,
+        system-ui, BlinkMacSystemFont, \"Segoe UI\", \"Open Sans\", \"Helvetica Neue\",
+        Helvetica, Arial, sans-serif;\n        \n    }\n    div {\n        width:
+        600px;\n        margin: 5em auto;\n        padding: 2em;\n        background-color:
+        #fdfdff;\n        border-radius: 0.5em;\n        box-shadow: 2px 3px 7px 2px
+        rgba(0,0,0,0.02);\n    }\n    a:link, a:visited {\n        color: #38488f;\n
+        \       text-decoration: none;\n    }\n    @media (max-width: 700px) {\n        div
+        {\n            margin: 0 auto;\n            width: auto;\n        }\n    }\n
+        \   </style>    \n</head>\n\n<body>\n<div>\n    <h1>Example Domain</h1>\n
+        \   <p>This domain is for use in illustrative examples in documents. You may
+        use this\n    domain in literature without prior coordination or asking for
+        permission.</p>\n    <p><a href=\"https://www.iana.org/domains/example\">More
+        information...</a></p>\n</div>\n</body>\n</html>\n"
+  recorded_at: Tue, 03 Jun 2025 09:39:24 GMT
+recorded_with: VCR 6.3.1
