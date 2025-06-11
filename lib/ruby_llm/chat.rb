@@ -125,6 +125,7 @@ module RubyLLM
     private
 
     def handle_tool_calls(response, &)
+      # Execute all tools and collect results first
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
@@ -132,6 +133,7 @@ module RubyLLM
         @on[:end_message]&.call(message)
       end
 
+      # Make a single API call after all tools have been executed
       complete(&)
     end
 
