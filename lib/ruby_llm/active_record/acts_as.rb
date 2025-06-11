@@ -115,11 +115,6 @@ module RubyLLM
         self
       end
 
-      def with_max_tool_completions(...)
-        to_llm.with_max_tool_completions(...)
-        self
-      end
-
       def with_model(...)
         update(model_id: to_llm.with_model(...).model.id)
         self

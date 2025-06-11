@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :number_of_tool_completions
+    attr_reader :model, :messages, :tools
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -29,7 +29,7 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
-      @max_tool_completions = config.max_tool_completions
+      @max_tool_completions = @config.max_tool_completions
       @number_of_tool_completions = 0
     end
 
@@ -64,11 +64,6 @@ module RubyLLM
       self
     end
 
-    def with_max_tool_completions(max_tool_completions)
-      @max_tool_completions = max_tool_completions
-      self
-    end
-
     def with_model(model_id, provider: nil, assume_exists: false)
       @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
       @connection = @context ? @context.connection_for(@provider) : @provider.connection(@config)
@@ -82,7 +77,10 @@ module RubyLLM
 
     def with_context(context)
       @context = context
-      @config = context.config
+      if context.config
+        @config = context.config
+        @max_tool_completions = @config.max_tool_completions
+      end
       with_model(@model.id, provider: @provider.slug, assume_exists: true)
       self
     end
