@@ -150,20 +150,20 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#without_tool' do
-      it 'removes a tool by class' do
+      it 'removes a tool by class' do # rubocop:disable RSpec/MultipleExpectations
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
-        
+
         chat.without_tool(Weather)
-        
+
         expect(chat.tools.keys).not_to include(:weather)
         expect(chat.tools.keys).to include(:best_language_to_learn)
       end
 
-      it 'removes a tool by instance' do
+      it 'removes a tool by instance' do # rubocop:disable RSpec/MultipleExpectations
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
-        
+
         chat.without_tool(weather_tool)
-        
+
         expect(chat.tools.keys).not_to include(:weather)
         expect(chat.tools.keys).to include(:best_language_to_learn)
       end
@@ -174,19 +174,19 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#without_tools' do
-      it 'removes multiple tools by class' do
+      it 'removes multiple tools by class' do # rubocop:disable RSpec/MultipleExpectations
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
-        
+
         chat.without_tools(Weather, BestLanguageToLearn)
-        
+
         expect(chat.tools).to be_empty
       end
 
-      it 'removes multiple tools by instance' do
+      it 'removes multiple tools by instance' do # rubocop:disable RSpec/MultipleExpectations
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
-        
+
         chat.without_tools(weather_tool, best_language_tool)
-        
+
         expect(chat.tools).to be_empty
       end
 
@@ -196,11 +196,11 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#clear_tools' do
-      it 'removes all tools' do
+      it 'removes all tools' do # rubocop:disable RSpec/MultipleExpectations
         expect(chat.tools).not_to be_empty
-        
+
         chat.clear_tools
-        
+
         expect(chat.tools).to be_empty
       end
 
