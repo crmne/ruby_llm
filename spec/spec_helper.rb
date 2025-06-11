@@ -42,7 +42,6 @@ ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'
-require 'faker'
 
 # VCR Configuration
 VCR.configure do |config|

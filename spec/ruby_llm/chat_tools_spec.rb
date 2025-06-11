@@ -171,9 +171,12 @@ RSpec.describe RubyLLM::Chat do
         expect(next_response.content).to include('10')
       end
 
-      it "#{model} can use tools with a tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{model} can use tools with a tool completions limit using context" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        context = RubyLLM.context do |ctx|
+          ctx.max_tool_completions = 5
+        end
         chat = RubyLLM.chat(model: model)
-                      .with_max_tool_completions(5)
+                      .with_context(context)
                       .with_tools(LoopingAnswer, Weather)
 
         expect do
