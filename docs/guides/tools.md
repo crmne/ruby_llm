@@ -200,22 +200,26 @@ Proper error handling within your `execute` method is crucial.
 
 See the [Error Handling Guide]({% link guides/error-handling.md %}#handling-errors-within-tools) for more discussion.
 
-## Maximum Tool Completion Limiting
+## Maximum Tool LLM Requests
 
 When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit of 25, which can be overridden or turned off entirely.
 
-This can be performed on a per chat basis or provided in the global configuration.
+Note this is a limit on the number of requests made to the provider, not the number of tool calls made by the application. **The limit is checked after all the requested tool executions have been performed**, this is to prevent the chat from 
+becoming invalid if you wish to continue the conversation after the error.
+
+This can be performed on a per chat basis using `RubyLLM.context` (see configuration documentation) or provided in the global configuration.
 
 ```ruby
 # Set a maximum number of tool completions per instantiated chat object
-chat = RubyLLM.chat.with_max_tool_completions(5)
+context = RubyLLM.context do { |ctx| ctx.max_tool_llm_calls = 5 }
+chat = RubyLLM.chat.with_context(context)
 chat.ask "Question that triggers tools loop"
 # => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallCompletionsReachedError)
 ```
 
-If you wish to remove this safe-guard you can set the max_tool_completions to `nil`.
+If you wish to remove this safe-guard you can set the max_tool_llm_calls to `nil`.
 ```ruby
-chat = RubyLLM.chat.with_max_tool_completions(nil)
+chat = RubyLLM.chat.with_max_tool_llm_calls(nil)
 chat.ask "Question that triggers tools loop"
 # Loops until you've used all your credit...
 ```
@@ -227,7 +231,7 @@ You can set a default maximum tool completion limit for all chats through the gl
 ```ruby
 RubyLLM.configure do |config|
   # Default is 25 calls per conversation
-  config.max_tool_completions = 10  # Set a more conservative limit
+  config.max_tool_llm_calls = 10  # Set a more conservative limit
 end
 ```
 
@@ -235,7 +239,7 @@ This setting can still be overridden per-chat when needed:
 
 ```ruby
 # Override the global setting for this specific chat
-chat = RubyLLM.chat.with_max_tool_completions(5)
+chat = RubyLLM.chat.with_max_tool_llm_calls(5)
 ```
 
 ## Security Considerations

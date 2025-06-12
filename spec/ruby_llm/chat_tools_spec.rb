@@ -152,7 +152,7 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{model} can use tools with a configured tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         RubyLLM.configure do |config|
-          config.max_tool_completions = 5
+          config.max_tool_llm_calls = 5
         end
 
         chat = RubyLLM.chat(model: model)
@@ -173,7 +173,7 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{model} can use tools with a tool completions limit using context" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         context = RubyLLM.context do |ctx|
-          ctx.max_tool_completions = 5
+          ctx.max_tool_llm_calls = 5
         end
         chat = RubyLLM.chat(model: model)
                       .with_context(context)

@@ -25,7 +25,7 @@ module RubyLLM
                   :openrouter_api_key,
                   :ollama_api_base,
                   # Default tool configuration
-                  :max_tool_completions,
+                  :max_tool_llm_calls,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -57,7 +57,7 @@ module RubyLLM
       @default_image_model = 'dall-e-3'
 
       # Default restrictions
-      @max_tool_completions = 25
+      @max_tool_llm_calls = 25
 
       # Logging configuration
       @log_file = $stdout

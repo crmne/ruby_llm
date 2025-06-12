@@ -29,12 +29,12 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
-      @max_tool_completions = @config.max_tool_completions
-      @number_of_tool_completions = 0
+      @max_tool_llm_calls = @config.max_tool_llm_calls
+      @number_of_tool_llm_calls = 0
     end
 
     def ask(message = nil, with: nil, &)
-      @number_of_tool_completions = 0
+      @number_of_tool_llm_calls = 0
 
       add_message role: :user, content: Content.new(message, with)
       complete(&)
@@ -79,7 +79,7 @@ module RubyLLM
       @context = context
       if context.config
         @config = context.config
-        @max_tool_completions = @config.max_tool_completions
+        @max_tool_llm_calls = @config.max_tool_llm_calls
       end
       with_model(@model.id, provider: @provider.slug, assume_exists: true)
       self
@@ -139,11 +139,11 @@ module RubyLLM
         @on[:end_message]&.call(message)
       end
 
-      if max_tool_completions_reached?
-        raise ToolCallCompletionsLimitReachedError, "Tool completions limit reached: #{@max_tool_completions}"
+      if max_tool_llm_calls_reached?
+        raise ToolCallCompletionsLimitReachedError, "Tool LLM calls limit reached: #{@max_tool_llm_calls}"
       end
 
-      @number_of_tool_completions += 1
+      @number_of_tool_llm_calls += 1
       complete(&)
     end
 
@@ -161,10 +161,10 @@ module RubyLLM
       )
     end
 
-    def max_tool_completions_reached?
-      return false unless @max_tool_completions
+    def max_tool_llm_calls_reached?
+      return false unless @max_tool_llm_calls
 
-      @number_of_tool_completions >= @max_tool_completions
+      @number_of_tool_llm_calls >= @max_tool_llm_calls
     end
   end
 end
