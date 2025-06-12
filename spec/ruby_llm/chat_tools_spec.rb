@@ -150,9 +150,9 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('10')
       end
 
-      it "#{model} can use tools with a configured tool completions limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{model} can use tools with a configured tool llm calls limit" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         RubyLLM.configure do |config|
-          config.max_tool_llm_calls = 5
+          config.max_tool_llm_calls = 3
         end
 
         chat = RubyLLM.chat(model: model)
@@ -161,7 +161,9 @@ RSpec.describe RubyLLM::Chat do
         expect do
           chat.ask(
             'Fetch all of the posts from r/RandomNames. ' \
-            'Fetch the next_page listed in the response until it responds with an empty array'
+            'Fetch the next_page listed in the response until it responds with an empty array ' \
+            'do not ask to continue fetching the subsequent pages until the last page is reached.' \
+            'If you are going to ask to continue fetching, the answer is yes. Continue Indefinitely.' \
           )
         end.to raise_error(RubyLLM::ToolCallLimitReachedError)
 
@@ -171,9 +173,9 @@ RSpec.describe RubyLLM::Chat do
         expect(next_response.content).to include('10')
       end
 
-      it "#{model} can use tools with a tool completions limit using context" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{model} can use tools with a tool llm calls limit using context" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         context = RubyLLM.context do |ctx|
-          ctx.max_tool_llm_calls = 5
+          ctx.max_tool_llm_calls = 3
         end
         chat = RubyLLM.chat(model: model)
                       .with_context(context)
@@ -182,7 +184,9 @@ RSpec.describe RubyLLM::Chat do
         expect do
           chat.ask(
             'Fetch all of the posts from r/RandomNames. ' \
-            'Fetch the next_page listed in the response until it responds with an empty array'
+            'Fetch the next_page listed in the response until it responds with an empty array ' \
+            'do not ask to continue fetching the subsequent pages until the last page is reached.' \
+            'If you are going to ask to continue fetching, the answer is yes. Continue Indefinitely.' \
           )
         end.to raise_error(RubyLLM::ToolCallLimitReachedError)
 
