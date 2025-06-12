@@ -1,0 +1,346 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array do not ask to continue fetching the
+        subsequent pages until the last page is reached.If you are going to ask to
+        continue fetching, the answer is yes. Continue Indefinitely."}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 12:35:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1749731719-3jFIWY26phzFIoS2jnem\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749731724,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you fetch all posts from r/RandomNames by using the `looping_answer`
+        function. I'll continue fetching pages until an empty array is returned.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"looping_answer\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":488,\"completion_tokens\":74,\"total_tokens\":562}}"
+  recorded_at: Thu, 12 Jun 2025 12:35:29 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array do not ask to continue fetching the
+        subsequent pages until the last page is reached.If you are going to ask to
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","content":"I''ll
+        help you fetch all posts from r/RandomNames by using the `looping_answer`
+        function. I''ll continue fetching pages until an empty array is returned.","tool_calls":[{"id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        ad9e4998521895aa6704\", :score=>245}, {:title=>\"Topic b1f375cd6031c90b8f4e\",
+        :score=>902}, {:title=>\"Topic 3d852719c447b9b6bee7\", :score=>638}], :next_page=>\"t3_abc123_835\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 12:35:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749731730-dSGEZ1pbY2TUlWCc9tx0\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749731730,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        continue fetching the next page using the provided next_page token:\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"looping_answer\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":678,\"completion_tokens\":55,\"total_tokens\":733}}"
+  recorded_at: Thu, 12 Jun 2025 12:35:33 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array do not ask to continue fetching the
+        subsequent pages until the last page is reached.If you are going to ask to
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","content":"I''ll
+        help you fetch all posts from r/RandomNames by using the `looping_answer`
+        function. I''ll continue fetching pages until an empty array is returned.","tool_calls":[{"id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        ad9e4998521895aa6704\", :score=>245}, {:title=>\"Topic b1f375cd6031c90b8f4e\",
+        :score=>902}, {:title=>\"Topic 3d852719c447b9b6bee7\", :score=>638}], :next_page=>\"t3_abc123_835\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL"},{"role":"assistant","content":"I''ll
+        continue fetching the next page using the provided next_page token:","tool_calls":[{"id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        446d6df8eaa61a7068e2\", :score=>447}, {:title=>\"Topic 0759c98d1a0151ebb8e8\",
+        :score=>970}, {:title=>\"Topic 07c2b51ebfd20c2e3de7\", :score=>775}], :next_page=>\"t3_abc123_268\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 12:35:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1749731733-VRs3ZFPKQoofv7pK0ICF\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749731733,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        continue fetching the next page:\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01ULqeUknCM2zLSvoaczEipC\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"looping_answer\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":856,\"completion_tokens\":48,\"total_tokens\":904}}"
+  recorded_at: Thu, 12 Jun 2025 12:35:36 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array do not ask to continue fetching the
+        subsequent pages until the last page is reached.If you are going to ask to
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","content":"I''ll
+        help you fetch all posts from r/RandomNames by using the `looping_answer`
+        function. I''ll continue fetching pages until an empty array is returned.","tool_calls":[{"id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        ad9e4998521895aa6704\", :score=>245}, {:title=>\"Topic b1f375cd6031c90b8f4e\",
+        :score=>902}, {:title=>\"Topic 3d852719c447b9b6bee7\", :score=>638}], :next_page=>\"t3_abc123_835\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL"},{"role":"assistant","content":"I''ll
+        continue fetching the next page using the provided next_page token:","tool_calls":[{"id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        446d6df8eaa61a7068e2\", :score=>447}, {:title=>\"Topic 0759c98d1a0151ebb8e8\",
+        :score=>970}, {:title=>\"Topic 07c2b51ebfd20c2e3de7\", :score=>775}], :next_page=>\"t3_abc123_268\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot"},{"role":"assistant","content":"I''ll
+        continue fetching the next page:","tool_calls":[{"id":"toolu_vrtx_01ULqeUknCM2zLSvoaczEipC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        4bf6bbbd073aa82ed093\", :score=>626}, {:title=>\"Topic 9d3f60351b9c62296713\",
+        :score=>844}, {:title=>\"Topic 1edd27a6f1ea183ddf32\", :score=>894}], :next_page=>\"t3_abc123_630\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01ULqeUknCM2zLSvoaczEipC"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 12:35:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1749731737-zaVie8DsnUDNFsGivfhh\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749731737,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        fetch the current weather for Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_013G3fxUHM3abP1VKL44yxfM\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":1046,\"completion_tokens\":88,\"total_tokens\":1134}}"
+  recorded_at: Thu, 12 Jun 2025 12:35:40 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Fetch
+        all of the posts from r/RandomNames. Fetch the next_page listed in the response
+        until it responds with an empty array do not ask to continue fetching the
+        subsequent pages until the last page is reached.If you are going to ask to
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","content":"I''ll
+        help you fetch all posts from r/RandomNames by using the `looping_answer`
+        function. I''ll continue fetching pages until an empty array is returned.","tool_calls":[{"id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        ad9e4998521895aa6704\", :score=>245}, {:title=>\"Topic b1f375cd6031c90b8f4e\",
+        :score=>902}, {:title=>\"Topic 3d852719c447b9b6bee7\", :score=>638}], :next_page=>\"t3_abc123_835\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01VDMHGAJJQgbW7Y1pY7r6DL"},{"role":"assistant","content":"I''ll
+        continue fetching the next page using the provided next_page token:","tool_calls":[{"id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        446d6df8eaa61a7068e2\", :score=>447}, {:title=>\"Topic 0759c98d1a0151ebb8e8\",
+        :score=>970}, {:title=>\"Topic 07c2b51ebfd20c2e3de7\", :score=>775}], :next_page=>\"t3_abc123_268\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01BKfvGiVENmpZSYC1HbiBot"},{"role":"assistant","content":"I''ll
+        continue fetching the next page:","tool_calls":[{"id":"toolu_vrtx_01ULqeUknCM2zLSvoaczEipC","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        4bf6bbbd073aa82ed093\", :score=>626}, {:title=>\"Topic 9d3f60351b9c62296713\",
+        :score=>844}, {:title=>\"Topic 1edd27a6f1ea183ddf32\", :score=>894}], :next_page=>\"t3_abc123_630\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"toolu_vrtx_01ULqeUknCM2zLSvoaczEipC"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
+        fetch the current weather for Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_013G3fxUHM3abP1VKL44yxfM","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_013G3fxUHM3abP1VKL44yxfM"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 12:35:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc0OTczMTc0MC13YWJFaFNIZ0ZYbkp5R05mSGNpOSIsInByb3ZpZGVyIjoiQW50aHJvcGljIiwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTMuNS1oYWlrdSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk3MzE3NDAsImNob2ljZXMiOlt7ImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExNzMsImNvbXBsZXRpb25fdG9rZW5zIjoyNiwidG90YWxfdG9rZW5zIjoxMTk5fX0=
+  recorded_at: Thu, 12 Jun 2025 12:35:42 GMT
+recorded_with: VCR 6.3.1

@@ -200,6 +200,52 @@ Proper error handling within your `execute` method is crucial.
 
 See the [Error Handling Guide]({% link guides/error-handling.md %}#handling-errors-within-tools) for more discussion.
 
+## Maximum Tool LLM Requests
+
+When including tools it is important to consider if the response could trigger unintended recursive calls to the provider. RubyLLM provides built-in protection by providing a default limit of 25, which can be overridden or turned off entirely.
+
+Note this is a limit on the number of requests made to the provider, not the number of tool calls made by the application. **The limit is checked after all the requested tool executions have been performed**, this is to prevent the chat from 
+becoming invalid if you wish to continue the conversation after the error.
+
+This can be performed on a per chat basis using `RubyLLM.context` (see configuration documentation) or provided in the global configuration.
+
+```ruby
+RubyLLM.configure do |config|
+  config.max_tool_llm_calls = 5
+end
+chat.ask "Question that triggers tools loop"
+# => `execute_tool': Tool LLM calls limit reached: (RubyLLM::ToolCallLimitReachedError)
+```
+
+If you wish to remove this safe-guard you can set the max_tool_llm_calls to `nil`.
+```ruby
+RubyLLM.configure do |config|
+  config.max_tool_llm_calls = nil  # No limit
+end
+chat = RubyLLM.chat
+chat.ask "Question that triggers tools loop"
+# Loops until you've used all your credit...
+```
+
+### Global Configuration
+
+You can set a default maximum tool completion limit for all chats through the global configuration:
+
+```ruby
+RubyLLM.configure do |config|
+  # Default is 25 calls per conversation
+  config.max_tool_llm_calls = 10  # Set a more conservative limit
+end
+```
+
+This setting can still be overridden per-chat when needed:
+
+```ruby
+# Override the global setting for this specific chat
+context = RubyLLM.context { |ctx| ctx.max_tool_llm_calls = 5 }
+chat = RubyLLM.chat.with_context(context)
+```
+
 ## Security Considerations
 
 {: .warning }
@@ -208,6 +254,7 @@ Treat any arguments passed to your `execute` method as potentially untrusted use
 *   **NEVER** use methods like `eval`, `system`, `send`, or direct SQL interpolation with raw arguments from the AI.
 *   **Validate and Sanitize:** Always validate parameter types, ranges, formats, and allowed values. Sanitize strings to prevent injection attacks if they are used in database queries or system commands (though ideally, avoid direct system commands).
 *   **Principle of Least Privilege:** Ensure the code within `execute` only has access to the resources it absolutely needs.
+*   **Cost-based Denial of Service:** Ensure protection against malicious input or usage, particularly when used in conjunction with tool calls if you remove the default limit.
 
 ## Next Steps
 
