@@ -154,7 +154,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.13.1
       X-Api-Key:
-      - test
+      - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
       - '2023-06-01'
       Content-Type:
@@ -165,23 +165,47 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
     headers:
       Date:
-      - Mon, 09 Jun 2025 17:50:26 GMT
+      - Thu, 12 Jun 2025 18:00:10 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '86'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      X-Should-Retry:
-      - 'false'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '49000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T17:59:56Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T18:00:11Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T17:59:55Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '59000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T17:59:56Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -193,8 +217,61 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
     body:
-      encoding: UTF-8
-      string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
-        x-api-key"}}'
-  recorded_at: Mon, 09 Jun 2025 17:51:12 GMT
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_015RNgk2wSvffFccuFNQ1Xwo","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"As
+        an expert software architect and Ruby developer, I follow a comprehensive
+        set of key principles that guide my approach to software design, development,
+        and architecture:\n\n1. Holistic System Design Principles\n- Prioritize system
+        reliability and maintainability\n- Design for change and future evolution\n-
+        Balance complexity with pragmatic solutions\n- Consider the entire system
+        lifecycle, not just initial implementation\n- Optimize for human understanding
+        and collaboration\n\n2. Technical Excellence\n- Continuous learning and staying
+        current with technology trends\n- Deep understanding of underlying system
+        mechanics\n- Preference for clean, readable, and self-documenting code\n-
+        Rigorous attention to performance and scalability\n- Systematic approach to
+        problem-solving\n\n3. Architecture Guiding Principles\n- Modularity: Break
+        complex systems into manageable, loosely coupled components\n- Separation
+        of Concerns: Each module/component has a clear, focused responsibility\n-
+        Abstraction: Hide complex implementation details behind clean interfaces\n-
+        Composability: Design systems that can be easily combined and extended\n-
+        Minimize dependencies and potential coupling points\n\n4. Design Philosophy\n-
+        \"Make it work, make it right, make it fast\" - prioritize correctness before
+        optimization\n- Favor composition over inheritance\n- Use design patterns
+        judiciously, avoiding over-engineering\n- Implement the simplest solution
+        that meets requirements\n- Always consider the trade-offs of architectural
+        decisions\n\n5. Quality and Reliability Principles\n- Comprehensive testing
+        at multiple levels (unit, integration, system)\n- Robust error handling and
+        graceful degradation\n- Implement defensive programming techniques\n- Prioritize
+        security by design\n- Create self-documenting and predictable systems\n\n6.
+        Performance Considerations\n- Understand and optimize algorithmic complexity\n-
+        Implement efficient data structures and algorithms\n- Use caching strategically\n-
+        Design for horizontal scalability\n- Profile and measure before premature
+        optimization\n\n7. Development Process Principles\n- Iterative and incremental
+        development\n- Continuous integration and deployment\n- Automated testing
+        and quality checks\n- Regular code reviews and knowledge sharing\n- Transparent
+        communication about technical decisions\n\n8. Ethical and Professional Standards\n-
+        Prioritize user privacy and data protection\n- Create inclusive and accessible
+        technology\n- Consider environmental and social impact of technological solutions\n-
+        Maintain high standards of professional conduct\n- Promote knowledge sharing
+        and community learning\n\n9. Technological Neutrality\n- Evaluate tools and
+        technologies objectively\n- Choose the right tool for the specific problem\n-
+        Avoid religious debates about programming languages or frameworks\n- Stay
+        pragmatic and solution-oriented\n\n10. Sustainable Development Practices\n-
+        Write code that is easy to understand and maintain\n- Create comprehensive
+        documentation\n- Design for operability and observability\n- Consider long-term
+        maintenance costs\n- Build systems that can be easily understood and extended
+        by other developers\n\nCore Technical Values:\n- Simplicity\n- Clarity\n-
+        Reliability\n- Performance\n- Security\n- Scalability\n\nImplementation Strategy:\n-
+        Start with clear requirements understanding\n- Create flexible, modular architectural
+        designs\n- Use domain-driven design principles\n- Implement comprehensive
+        testing strategies\n- Continuously refactor and improve\n- Monitor and iterate
+        based on real-world performance\n\nPractical Application Framework:\n- Requirements
+        Analysis\n- Architecture Design\n- Implementation\n- Testing\n- Deployment\n-
+        Monitoring and Optimization\n\nBy consistently applying these principles,
+        I aim to create robust, efficient, and maintainable software solutions that
+        not only meet current requirements but are also adaptable to future needs.\n\nThese
+        principles are not rigid rules but flexible guidelines that are applied contextually,
+        always considering the specific project constraints, team capabilities, and
+        business objectives."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":2099,"cache_read_input_tokens":0,"output_tokens":790,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 18:00:10 GMT
 recorded_with: VCR 6.3.1

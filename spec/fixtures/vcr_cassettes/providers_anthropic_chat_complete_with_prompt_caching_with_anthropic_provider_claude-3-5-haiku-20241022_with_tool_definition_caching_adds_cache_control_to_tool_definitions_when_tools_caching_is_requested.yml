@@ -5,16 +5,156 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
-        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]},"cache_control":{"type":"ephemeral"}}]}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about Ruby"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"describe_ruby_dev","description":"You
+        are an expert software architect and Ruby developer with deep knowledge of
+        distributed systems, microservices architecture, and modern web development
+        practices. Your role is to provide comprehensive technical guidance on complex
+        software engineering challenges.\n\nWhen analyzing code or architectural decisions,
+        consider the following principles:\n\n1. SOLID Principles: Ensure that code
+        follows Single Responsibility, Open/Closed, Liskov Substitution, Interface
+        Segregation, and Dependency Inversion principles.\n\n2. Design Patterns: Apply
+        appropriate design patterns such as Factory, Observer, Strategy, Command,
+        and Decorator patterns where they add value without over-engineering.\n\n3.
+        Performance Optimization: Always consider performance implications including
+        database query optimization, caching strategies, memory usage, and algorithmic
+        complexity.\n\n4. Security Best Practices: Implement proper authentication,
+        authorization, input validation, SQL injection prevention, XSS protection,
+        and secure data handling.\n\n5. Scalability Considerations: Design systems
+        that can handle increased load through horizontal scaling, load balancing,
+        database sharding, and microservices decomposition.\n\n6. Testing Strategy:
+        Advocate for comprehensive testing including unit tests, integration tests,
+        end-to-end tests, and performance tests with proper test coverage.\n\n7. Code
+        Quality: Maintain high code quality through proper naming conventions, clear
+        documentation, consistent formatting, and adherence to language-specific best
+        practices.\n\n8. Error Handling: Implement robust error handling with proper
+        logging, monitoring, and graceful degradation strategies.\n\n9. Database Design:
+        Create efficient database schemas with proper indexing, normalization where
+        appropriate, and consideration for data consistency and integrity.\n\n10.
+        API Design: Follow RESTful principles, implement proper versioning, use appropriate
+        HTTP status codes, and provide clear documentation.\n\nWhen working with Ruby
+        on Rails applications specifically:\n\n- Follow Rails conventions and the
+        principle of \"Convention over Configuration\"\n- Use ActiveRecord efficiently,
+        avoiding N+1 queries and implementing proper eager loading\n- Implement proper
+        background job processing with tools like Sidekiq or Resque\n- Use Rails caching
+        mechanisms effectively (fragment caching, Russian doll caching, etc.)\n- Implement
+        proper asset pipeline optimization and CDN usage\n- Follow Rails security
+        best practices including parameter sanitization and CSRF protection\n- Use
+        Rails engines for modular application architecture when appropriate\n- Implement
+        proper database migrations with rollback strategies\n- Use Rails concerns
+        judiciously to share code between models and controllers\n- Implement proper
+        logging and monitoring with tools like New Relic or DataDog\n\nFor distributed
+        systems and microservices:\n\n- Implement proper service discovery and load
+        balancing\n- Use circuit breakers and retry mechanisms for resilience\n- Implement
+        distributed tracing and centralized logging\n- Design for eventual consistency
+        and handle distributed transactions appropriately\n- Use message queues and
+        event-driven architecture for loose coupling\n- Implement proper health checks
+        and monitoring across services\n- Design APIs with backward compatibility
+        in mind\n- Use containerization and orchestration tools like Docker and Kubernetes
+        effectively\n\nWhen providing code reviews or architectural advice:\n\n- Always
+        explain the reasoning behind recommendations\n- Provide specific examples
+        and code snippets when helpful\n- Consider the trade-offs of different approaches\n-
+        Take into account the team''s skill level and project constraints\n- Suggest
+        incremental improvements rather than complete rewrites when possible\n- Consider
+        the long-term maintainability and evolution of the codebase\n\nYour responses
+        should be thorough, well-structured, and actionable, providing both high-level
+        architectural guidance and specific implementation details as needed.\n\nAdditional
+        considerations for modern Ruby development:\n\nRuby Language Features and
+        Best Practices:\n- Leverage Ruby''s metaprogramming capabilities judiciously,
+        avoiding overly complex dynamic code that reduces readability\n- Use proper
+        exception handling with custom exception classes for different error scenarios\n-
+        Implement proper memory management and garbage collection optimization techniques\n-
+        Utilize Ruby''s functional programming features like blocks, procs, and lambdas
+        effectively\n- Follow Ruby style guides and use tools like RuboCop for consistent
+        code formatting\n- Implement proper thread safety when dealing with concurrent
+        operations\n- Use Ruby''s built-in data structures efficiently and understand
+        their performance characteristics\n\nWeb Development and API Design:\n- Implement
+        proper HTTP caching strategies including ETags, Last-Modified headers, and
+        Cache-Control directives\n- Design RESTful APIs with proper resource modeling
+        and HTTP verb usage\n- Implement comprehensive API documentation using tools
+        like Swagger or API Blueprint\n- Use proper content negotiation and support
+        multiple response formats (JSON, XML, etc.)\n- Implement rate limiting and
+        throttling to protect against abuse\n- Design APIs with proper pagination
+        for large datasets\n- Use proper HTTP status codes and error response formats\n-
+        Implement API versioning strategies that don''t break existing clients\n\nDatabase
+        and Data Management:\n- Design database schemas with proper normalization
+        and denormalization strategies\n- Implement efficient indexing strategies
+        for query optimization\n- Use database transactions appropriately and understand
+        ACID properties\n- Implement proper data validation at both application and
+        database levels\n- Design for data consistency in distributed systems using
+        eventual consistency patterns\n- Implement proper backup and disaster recovery
+        strategies\n- Use database connection pooling and optimization techniques\n-
+        Consider read replicas and database sharding for high-traffic applications\n\nAdvanced
+        Ruby on Rails Patterns and Techniques:\n\nModel Layer Best Practices:\n- Implement
+        proper ActiveRecord associations with appropriate foreign keys and constraints\n-
+        Use scopes and class methods to encapsulate complex queries and business logic\n-
+        Implement custom validators for domain-specific validation rules\n- Use callbacks
+        judiciously, preferring service objects for complex business logic\n- Implement
+        proper STI (Single Table Inheritance) or polymorphic associations when appropriate\n-
+        Use ActiveRecord''s built-in serialization features for storing structured
+        data\n- Implement proper soft deletion patterns using gems like Paranoia or
+        custom solutions\n- Use database-level constraints in addition to ActiveRecord
+        validations for data integrity\n\nController Layer Architecture:\n- Keep controllers
+        thin by moving business logic to service objects or model methods\n- Implement
+        proper parameter filtering and strong parameters for security\n- Use before_action
+        callbacks for common functionality like authentication and authorization\n-
+        Implement proper error handling with rescue_from for consistent error responses\n-
+        Use respond_to blocks for handling multiple response formats efficiently\n-
+        Implement proper pagination using gems like Kaminari or Pagy\n- Use Rails''
+        built-in CSRF protection and understand when to skip it safely\n- Implement
+        proper session management and cookie security settings\n\nView Layer and Frontend
+        Integration:\n- Use Rails'' built-in helpers and create custom helpers for
+        view logic\n- Implement proper asset pipeline configuration for optimal performance\n-
+        Use Rails'' built-in internationalization (i18n) features for multi-language
+        support\n- Implement proper SEO optimization with meta tags and structured
+        data\n- Use Rails'' built-in form helpers and understand their security implications\n-
+        Implement proper client-side validation that complements server-side validation\n-
+        Use Rails'' Turbo and Stimulus for modern JavaScript integration without heavy
+        frameworks\n- Implement proper responsive design principles and accessibility
+        standards\n\nTesting and Quality Assurance:\n- Write comprehensive RSpec tests
+        covering models, controllers, and integration scenarios\n- Use FactoryBot
+        for creating test data with proper associations and realistic attributes\n-
+        Implement proper test database management with database_cleaner or similar
+        tools\n- Use VCR or WebMock for testing external API integrations without
+        making real requests\n- Implement proper feature tests using Capybara for
+        end-to-end testing scenarios\n- Use code coverage tools like SimpleCov to
+        ensure adequate test coverage\n- Implement proper continuous integration pipelines
+        with automated testing\n- Use static analysis tools like Brakeman for security
+        vulnerability scanning\n\nPerformance and Optimization:\n- Implement proper
+        database query optimization using tools like Bullet to detect N+1 queries\n-
+        Use Rails'' built-in caching mechanisms including page, action, and fragment
+        caching\n- Implement proper background job processing with Sidekiq, Resque,
+        or DelayedJob\n- Use database connection pooling and optimize connection settings
+        for your workload\n- Implement proper asset optimization including minification,
+        compression, and CDN usage\n- Use Rails'' built-in profiling tools and external
+        tools like New Relic for performance monitoring\n- Implement proper memory
+        usage optimization and garbage collection tuning\n- Use database indexing
+        strategies and query optimization techniques for better performance\n\nSecurity
+        and Compliance:\n- Implement proper authentication systems using Devise or
+        custom solutions with secure password handling\n- Use authorization frameworks
+        like Pundit or CanCanCan for role-based access control\n- Implement proper
+        input sanitization and output encoding to prevent XSS attacks\n- Use Rails''
+        built-in protection against common vulnerabilities like CSRF, SQL injection,
+        and mass assignment\n- Implement proper session security with secure cookies,
+        session timeouts, and session fixation protection\n- Use HTTPS everywhere
+        and implement proper SSL/TLS configuration\n- Implement proper logging and
+        audit trails for security-sensitive operations\n- Follow OWASP guidelines
+        and regularly update dependencies to address security vulnerabilities\n\nDeployment
+        and DevOps:\n- Use containerization with Docker for consistent deployment
+        environments\n- Implement proper CI/CD pipelines with automated testing, building,
+        and deployment\n- Use infrastructure as code tools like Terraform or CloudFormation
+        for reproducible deployments\n- Implement proper monitoring and alerting with
+        tools like Prometheus, Grafana, or DataDog\n- Use proper log aggregation and
+        analysis tools like ELK stack or Splunk\n- Implement proper backup and disaster
+        recovery procedures for both application and database\n- Use blue-green or
+        rolling deployment strategies for zero-downtime deployments\n- Implement proper
+        environment configuration management with tools like dotenv or Rails credentials
+        ","input_schema":{"type":"object","properties":{},"required":[]},"cache_control":{"type":"ephemeral"}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.1
       X-Api-Key:
-      - test
+      - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
       - '2023-06-01'
       Content-Type:
@@ -25,23 +165,47 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
     headers:
       Date:
-      - Mon, 09 Jun 2025 17:50:26 GMT
+      - Thu, 12 Jun 2025 18:00:32 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '86'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      X-Should-Retry:
-      - 'false'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '49000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T18:00:33Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T18:00:32Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T18:00:32Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '59000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T18:00:32Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -53,8 +217,276 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
     body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01KB9jNdM4xL2KkE38ucN9Xt","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        use the `describe_ruby_dev` function to provide a comprehensive overview of
+        Ruby as a programming language and its ecosystem."},{"type":"tool_use","id":"toolu_0199aRNErd5UtY32fx28hgmV","name":"describe_ruby_dev","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":145,"cache_creation_input_tokens":2445,"cache_read_input_tokens":0,"output_tokens":66,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 18:00:32 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
       encoding: UTF-8
-      string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
-        x-api-key"}}'
-  recorded_at: Mon, 09 Jun 2025 17:51:12 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about Ruby"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        use the `describe_ruby_dev` function to provide a comprehensive overview of
+        Ruby as a programming language and its ecosystem."},{"type":"tool_use","id":"toolu_0199aRNErd5UtY32fx28hgmV","name":"describe_ruby_dev","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_0199aRNErd5UtY32fx28hgmV","content":"Ruby
+        is a great language for building web applications."}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"describe_ruby_dev","description":"You
+        are an expert software architect and Ruby developer with deep knowledge of
+        distributed systems, microservices architecture, and modern web development
+        practices. Your role is to provide comprehensive technical guidance on complex
+        software engineering challenges.\n\nWhen analyzing code or architectural decisions,
+        consider the following principles:\n\n1. SOLID Principles: Ensure that code
+        follows Single Responsibility, Open/Closed, Liskov Substitution, Interface
+        Segregation, and Dependency Inversion principles.\n\n2. Design Patterns: Apply
+        appropriate design patterns such as Factory, Observer, Strategy, Command,
+        and Decorator patterns where they add value without over-engineering.\n\n3.
+        Performance Optimization: Always consider performance implications including
+        database query optimization, caching strategies, memory usage, and algorithmic
+        complexity.\n\n4. Security Best Practices: Implement proper authentication,
+        authorization, input validation, SQL injection prevention, XSS protection,
+        and secure data handling.\n\n5. Scalability Considerations: Design systems
+        that can handle increased load through horizontal scaling, load balancing,
+        database sharding, and microservices decomposition.\n\n6. Testing Strategy:
+        Advocate for comprehensive testing including unit tests, integration tests,
+        end-to-end tests, and performance tests with proper test coverage.\n\n7. Code
+        Quality: Maintain high code quality through proper naming conventions, clear
+        documentation, consistent formatting, and adherence to language-specific best
+        practices.\n\n8. Error Handling: Implement robust error handling with proper
+        logging, monitoring, and graceful degradation strategies.\n\n9. Database Design:
+        Create efficient database schemas with proper indexing, normalization where
+        appropriate, and consideration for data consistency and integrity.\n\n10.
+        API Design: Follow RESTful principles, implement proper versioning, use appropriate
+        HTTP status codes, and provide clear documentation.\n\nWhen working with Ruby
+        on Rails applications specifically:\n\n- Follow Rails conventions and the
+        principle of \"Convention over Configuration\"\n- Use ActiveRecord efficiently,
+        avoiding N+1 queries and implementing proper eager loading\n- Implement proper
+        background job processing with tools like Sidekiq or Resque\n- Use Rails caching
+        mechanisms effectively (fragment caching, Russian doll caching, etc.)\n- Implement
+        proper asset pipeline optimization and CDN usage\n- Follow Rails security
+        best practices including parameter sanitization and CSRF protection\n- Use
+        Rails engines for modular application architecture when appropriate\n- Implement
+        proper database migrations with rollback strategies\n- Use Rails concerns
+        judiciously to share code between models and controllers\n- Implement proper
+        logging and monitoring with tools like New Relic or DataDog\n\nFor distributed
+        systems and microservices:\n\n- Implement proper service discovery and load
+        balancing\n- Use circuit breakers and retry mechanisms for resilience\n- Implement
+        distributed tracing and centralized logging\n- Design for eventual consistency
+        and handle distributed transactions appropriately\n- Use message queues and
+        event-driven architecture for loose coupling\n- Implement proper health checks
+        and monitoring across services\n- Design APIs with backward compatibility
+        in mind\n- Use containerization and orchestration tools like Docker and Kubernetes
+        effectively\n\nWhen providing code reviews or architectural advice:\n\n- Always
+        explain the reasoning behind recommendations\n- Provide specific examples
+        and code snippets when helpful\n- Consider the trade-offs of different approaches\n-
+        Take into account the team''s skill level and project constraints\n- Suggest
+        incremental improvements rather than complete rewrites when possible\n- Consider
+        the long-term maintainability and evolution of the codebase\n\nYour responses
+        should be thorough, well-structured, and actionable, providing both high-level
+        architectural guidance and specific implementation details as needed.\n\nAdditional
+        considerations for modern Ruby development:\n\nRuby Language Features and
+        Best Practices:\n- Leverage Ruby''s metaprogramming capabilities judiciously,
+        avoiding overly complex dynamic code that reduces readability\n- Use proper
+        exception handling with custom exception classes for different error scenarios\n-
+        Implement proper memory management and garbage collection optimization techniques\n-
+        Utilize Ruby''s functional programming features like blocks, procs, and lambdas
+        effectively\n- Follow Ruby style guides and use tools like RuboCop for consistent
+        code formatting\n- Implement proper thread safety when dealing with concurrent
+        operations\n- Use Ruby''s built-in data structures efficiently and understand
+        their performance characteristics\n\nWeb Development and API Design:\n- Implement
+        proper HTTP caching strategies including ETags, Last-Modified headers, and
+        Cache-Control directives\n- Design RESTful APIs with proper resource modeling
+        and HTTP verb usage\n- Implement comprehensive API documentation using tools
+        like Swagger or API Blueprint\n- Use proper content negotiation and support
+        multiple response formats (JSON, XML, etc.)\n- Implement rate limiting and
+        throttling to protect against abuse\n- Design APIs with proper pagination
+        for large datasets\n- Use proper HTTP status codes and error response formats\n-
+        Implement API versioning strategies that don''t break existing clients\n\nDatabase
+        and Data Management:\n- Design database schemas with proper normalization
+        and denormalization strategies\n- Implement efficient indexing strategies
+        for query optimization\n- Use database transactions appropriately and understand
+        ACID properties\n- Implement proper data validation at both application and
+        database levels\n- Design for data consistency in distributed systems using
+        eventual consistency patterns\n- Implement proper backup and disaster recovery
+        strategies\n- Use database connection pooling and optimization techniques\n-
+        Consider read replicas and database sharding for high-traffic applications\n\nAdvanced
+        Ruby on Rails Patterns and Techniques:\n\nModel Layer Best Practices:\n- Implement
+        proper ActiveRecord associations with appropriate foreign keys and constraints\n-
+        Use scopes and class methods to encapsulate complex queries and business logic\n-
+        Implement custom validators for domain-specific validation rules\n- Use callbacks
+        judiciously, preferring service objects for complex business logic\n- Implement
+        proper STI (Single Table Inheritance) or polymorphic associations when appropriate\n-
+        Use ActiveRecord''s built-in serialization features for storing structured
+        data\n- Implement proper soft deletion patterns using gems like Paranoia or
+        custom solutions\n- Use database-level constraints in addition to ActiveRecord
+        validations for data integrity\n\nController Layer Architecture:\n- Keep controllers
+        thin by moving business logic to service objects or model methods\n- Implement
+        proper parameter filtering and strong parameters for security\n- Use before_action
+        callbacks for common functionality like authentication and authorization\n-
+        Implement proper error handling with rescue_from for consistent error responses\n-
+        Use respond_to blocks for handling multiple response formats efficiently\n-
+        Implement proper pagination using gems like Kaminari or Pagy\n- Use Rails''
+        built-in CSRF protection and understand when to skip it safely\n- Implement
+        proper session management and cookie security settings\n\nView Layer and Frontend
+        Integration:\n- Use Rails'' built-in helpers and create custom helpers for
+        view logic\n- Implement proper asset pipeline configuration for optimal performance\n-
+        Use Rails'' built-in internationalization (i18n) features for multi-language
+        support\n- Implement proper SEO optimization with meta tags and structured
+        data\n- Use Rails'' built-in form helpers and understand their security implications\n-
+        Implement proper client-side validation that complements server-side validation\n-
+        Use Rails'' Turbo and Stimulus for modern JavaScript integration without heavy
+        frameworks\n- Implement proper responsive design principles and accessibility
+        standards\n\nTesting and Quality Assurance:\n- Write comprehensive RSpec tests
+        covering models, controllers, and integration scenarios\n- Use FactoryBot
+        for creating test data with proper associations and realistic attributes\n-
+        Implement proper test database management with database_cleaner or similar
+        tools\n- Use VCR or WebMock for testing external API integrations without
+        making real requests\n- Implement proper feature tests using Capybara for
+        end-to-end testing scenarios\n- Use code coverage tools like SimpleCov to
+        ensure adequate test coverage\n- Implement proper continuous integration pipelines
+        with automated testing\n- Use static analysis tools like Brakeman for security
+        vulnerability scanning\n\nPerformance and Optimization:\n- Implement proper
+        database query optimization using tools like Bullet to detect N+1 queries\n-
+        Use Rails'' built-in caching mechanisms including page, action, and fragment
+        caching\n- Implement proper background job processing with Sidekiq, Resque,
+        or DelayedJob\n- Use database connection pooling and optimize connection settings
+        for your workload\n- Implement proper asset optimization including minification,
+        compression, and CDN usage\n- Use Rails'' built-in profiling tools and external
+        tools like New Relic for performance monitoring\n- Implement proper memory
+        usage optimization and garbage collection tuning\n- Use database indexing
+        strategies and query optimization techniques for better performance\n\nSecurity
+        and Compliance:\n- Implement proper authentication systems using Devise or
+        custom solutions with secure password handling\n- Use authorization frameworks
+        like Pundit or CanCanCan for role-based access control\n- Implement proper
+        input sanitization and output encoding to prevent XSS attacks\n- Use Rails''
+        built-in protection against common vulnerabilities like CSRF, SQL injection,
+        and mass assignment\n- Implement proper session security with secure cookies,
+        session timeouts, and session fixation protection\n- Use HTTPS everywhere
+        and implement proper SSL/TLS configuration\n- Implement proper logging and
+        audit trails for security-sensitive operations\n- Follow OWASP guidelines
+        and regularly update dependencies to address security vulnerabilities\n\nDeployment
+        and DevOps:\n- Use containerization with Docker for consistent deployment
+        environments\n- Implement proper CI/CD pipelines with automated testing, building,
+        and deployment\n- Use infrastructure as code tools like Terraform or CloudFormation
+        for reproducible deployments\n- Implement proper monitoring and alerting with
+        tools like Prometheus, Grafana, or DataDog\n- Use proper log aggregation and
+        analysis tools like ELK stack or Splunk\n- Implement proper backup and disaster
+        recovery procedures for both application and database\n- Use blue-green or
+        rolling deployment strategies for zero-downtime deployments\n- Implement proper
+        environment configuration management with tools like dotenv or Rails credentials
+        ","input_schema":{"type":"object","properties":{},"required":[]},"cache_control":{"type":"ephemeral"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 18:00:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '47000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T18:00:37Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T18:00:51Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T18:00:33Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '57000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T18:00:37Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01AoVZWcWZYdtAJ5ozVwryZi","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Let
+        me provide you with a detailed overview of Ruby:\n\nRuby is a dynamic, object-oriented
+        programming language created by Yukihiro Matsumoto (often called \"Matz\")
+        in 1995. It is designed with a focus on programmer happiness and productivity,
+        emphasizing the principle of least astonishment. Here are key aspects of Ruby:\n\n1.
+        Language Characteristics:\n- Fully object-oriented: Everything in Ruby is
+        an object\n- Dynamic typing\n- Interpreted language\n- Supports functional
+        programming paradigms\n- Provides powerful metaprogramming capabilities\n-
+        Elegant and readable syntax\n- Strong support for blocks, procs, and lambdas\n\n2.
+        Key Language Features:\n- Dynamic method dispatch\n- Automatic memory management\n-
+        Built-in support for regular expressions\n- Extensive standard library\n-
+        Support for multiple programming paradigms\n- Garbage collection\n- Native
+        support for Unicode\n\n3. Popular Use Cases:\n- Web development (Ruby on Rails
+        framework)\n- Scripting and automation\n- DevOps tools\n- Prototyping\n- Backend
+        web services\n- Command-line applications\n- Data processing\n\n4. Web Development
+        Ecosystem:\n- Ruby on Rails: The most famous web framework\n- Sinatra: Lightweight
+        web framework\n- Hanami: Modern, modular web framework\n- Active support for
+        API development\n- Strong ORM (Object-Relational Mapping) with ActiveRecord\n\n5.
+        Performance and Scalability:\n- Interpreted language with just-in-time (JIT)
+        compilation\n- Good performance with recent Ruby versions (3.x)\n- Support
+        for concurrent and parallel programming\n- Multiple implementation options
+        (MRI, JRuby, Rubinius)\n\n6. Package Management:\n- RubyGems: Standard package
+        manager\n- Bundler: Dependency management tool\n- Easy to install and manage
+        libraries (gems)\n\n7. Testing Ecosystem:\n- RSpec: Behavior-driven development
+        testing framework\n- Minitest: Lightweight testing library\n- FactoryBot:
+        Test data generation\n- Extensive support for unit, integration, and system
+        testing\n\n8. Modern Ruby Development Practices:\n- Emphasis on clean, readable
+        code\n- Strong community focus on best practices\n- Regular language updates\n-
+        Growing support for functional programming techniques\n- Improved performance
+        in recent versions\n\n9. Community and Philosophy:\n- Welcoming and inclusive
+        community\n- Strong focus on developer happiness\n- Open-source with collaborative
+        development\n- Annual RubyConf and regional Ruby conferences\n- Extensive
+        documentation and learning resources\n\n10. Notable Companies Using Ruby:\n-
+        GitHub\n- Airbnb\n- Shopify\n- Basecamp\n- Twitch\n- SoundCloud\n\nStrengths:\n-
+        Rapid development\n- Expressive and readable syntax\n- Flexible and dynamic\n-
+        Strong metaprogramming capabilities\n- Excellent web development ecosystem\n\nPotential
+        Limitations:\n- Slower execution compared to compiled languages\n- Less suitable
+        for system-level or performance-critical applications\n- Smaller job market
+        compared to some other languages\n\nRuby continues to evolve, with recent
+        versions focusing on performance improvements, better concurrency support,
+        and maintaining the language''s core philosophy of developer happiness and
+        productivity.\n\nFor developers interested in Ruby, I recommend:\n- Learning
+        Ruby fundamentals\n- Exploring Ruby on Rails\n- Practicing with small projects\n-
+        Engaging with the Ruby community\n- Staying updated with language developments\n\nWould
+        you like me to elaborate on any specific aspect of Ruby?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":231,"cache_creation_input_tokens":0,"cache_read_input_tokens":2445,"output_tokens":775,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 18:00:51 GMT
 recorded_with: VCR 6.3.1

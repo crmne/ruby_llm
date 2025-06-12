@@ -148,12 +148,12 @@ http_interactions:
         recovery procedures for both application and database\n- Use blue-green or
         rolling deployment strategies for zero-downtime deployments\n- Implement proper
         environment configuration management with tools like dotenv or Rails credentials
-        \n\nBased on the above, what are the most important architectural principles?","cache_control":{"type":"ephemeral"}}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+        \n\nBased on the above, tell me about Ruby","cache_control":{"type":"ephemeral"}}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.13.1
       X-Api-Key:
-      - test
+      - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
       - '2023-06-01'
       Content-Type:
@@ -164,23 +164,47 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 401
-      message: Unauthorized
+      code: 200
+      message: OK
     headers:
       Date:
-      - Mon, 09 Jun 2025 17:50:26 GMT
+      - Thu, 12 Jun 2025 18:00:30 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '86'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
-      X-Should-Retry:
-      - 'false'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '48000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T18:00:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T18:00:31Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T18:00:11Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '58000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T18:00:13Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -192,8 +216,58 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
     body:
-      encoding: UTF-8
-      string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
-        x-api-key"}}'
-  recorded_at: Mon, 09 Jun 2025 17:51:12 GMT
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01RgEgfRMAXex8Bf7yiMc2qa","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
+        is a dynamic, object-oriented programming language designed for programmer
+        productivity and happiness, created by Yukihiro Matsumoto (often called Matz)
+        in 1995. Here''s a comprehensive overview:\n\nCore Language Characteristics:\n-
+        Dynamically typed, interpreted language\n- Pure object-oriented: everything
+        is an object\n- Supports multiple programming paradigms (object-oriented,
+        functional, imperative)\n- Designed with the principle of \"developer happiness\"
+        and programmer productivity\n- Supports metaprogramming and dynamic method
+        definition\n- Garbage-collected language with automatic memory management\n\nKey
+        Language Features:\n1. Object-Oriented Design\n```ruby\nclass Person\n  attr_accessor
+        :name, :age\n\n  def initialize(name, age)\n    @name = name\n    @age = age\n  end\n\n  def
+        introduce\n    \"Hi, I''m #{@name}, #{@age} years old\"\n  end\nend\n\nperson
+        = Person.new(\"Alice\", 30)\nputs person.introduce\n```\n\n2. Metaprogramming
+        Capabilities\n```ruby\nclass Object\n  def log_method_call(method_name)\n    original_method
+        = instance_method(method_name)\n    define_method(method_name) do |*args,
+        &block|\n      puts \"Calling method: #{method_name}\"\n      original_method.bind(self).call(*args,
+        &block)\n    end\n  end\nend\n\nclass Calculator\n  def add(a, b)\n    a +
+        b\n  end\n  log_method_call :add\nend\n```\n\n3. Blocks and Functional Programming\n```ruby\n#
+        Functional-style iteration\n[1, 2, 3, 4, 5].map { |n| n * 2 }\n# => [2, 4,
+        6, 8, 10]\n\n# Custom method with block\ndef with_logging\n  puts \"Starting
+        operation\"\n  result = yield\n  puts \"Operation completed\"\n  result\nend\n\nwith_logging
+        { 42 }\n```\n\nEcosystem and Frameworks:\n1. Ruby on Rails\n- Most popular
+        web application framework\n- Follows \"Convention over Configuration\" principle\n-
+        Rapid application development\n- Built-in ORM (ActiveRecord)\n- Comprehensive
+        web development tools\n\n2. Popular Gems (Libraries)\n- Devise (Authentication)\n-
+        ActiveAdmin (Admin interfaces)\n- Sidekiq (Background job processing)\n- RSpec
+        (Testing)\n- Pundit (Authorization)\n\nPerformance Considerations:\n- Interpreted
+        language with Just-In-Time (JIT) compilation in recent versions\n- Generally
+        slower than compiled languages\n- Good for rapid development and prototyping\n-
+        Performance-critical sections can use:\n  - Native extensions\n  - Alternative
+        Ruby implementations (JRuby, TruffleRuby)\n  - Compiled methods\n\nModern
+        Ruby (3.x) Improvements:\n1. Performance Enhancements\n- Improved JIT compiler\n-
+        Ractor (lightweight concurrency model)\n- Parallel execution capabilities\n\n2.
+        Type Checking\n```ruby\n# Experimental RBS type signatures\nclass User\n  def
+        initialize(name: String, age: Integer)\n    @name = name\n    @age = age\n  end\nend\n```\n\n3.
+        Concurrency Model\n```ruby\n# Ractor (lightweight thread) example\nr = Ractor.new
+        do\n  # Concurrent computation\n  42\nend\n\nresult = r.take  # Retrieve result\n```\n\nBest
+        Practices:\n1. Follow Ruby Style Guide\n2. Use meaningful variable/method
+        names\n3. Prefer composition over inheritance\n4. Write small, focused methods\n5.
+        Use Ruby''s built-in methods and idioms\n6. Implement proper error handling\n\nUse
+        Cases:\n- Web Development\n- Automation Scripts\n- DevOps Tools\n- Prototyping\n-
+        Data Processing\n- Game Development\n- Machine Learning (with gems like SciRuby)\n\nLearning
+        Resources:\n- Official Ruby Documentation\n- \"Eloquent Ruby\" by Russ Olsen\n-
+        \"Practical Object-Oriented Design\" by Sandi Metz\n- RubyConf talks and presentations\n\nComparison
+        with Other Languages:\n- More dynamic than Java/C#\n- More readable than Perl\n-
+        More flexible than Python\n- Strong focus on developer experience\n\nChallenges:\n-
+        Performance limitations\n- Smaller job market compared to Java/Python\n- Less
+        suitable for system-level programming\n\nStrengths:\n- Extremely readable
+        syntax\n- Rapid development\n- Powerful metaprogramming\n- Vibrant, supportive
+        community\n- Flexible and expressive\n\nThis overview captures Ruby''s essence
+        as a language designed for programmer joy and productivity, with a rich ecosystem
+        and unique approach to software development."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":2113,"cache_read_input_tokens":0,"output_tokens":1093,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 18:00:30 GMT
 recorded_with: VCR 6.3.1
