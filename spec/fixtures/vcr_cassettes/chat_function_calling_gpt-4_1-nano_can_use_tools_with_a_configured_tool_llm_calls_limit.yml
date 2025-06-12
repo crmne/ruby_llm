@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 11:14:07 GMT
+      - Thu, 12 Jun 2025 12:38:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '325'
+      - '178'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '331'
+      - '182'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -81,9 +81,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhaAguGQIrLgMNzx13mbihjUe4tNy",
+          "id": "chatcmpl-BhbUAuSjKv2sgEhvdN9lM53MIt0SZ",
           "object": "chat.completion",
-          "created": 1749726846,
+          "created": 1749731898,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -93,7 +93,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_ecTjk8XOMKWrWjU1JU38TYDU",
+                    "id": "call_rAwws28MoEmbC7oWgAHxJo30",
                     "type": "function",
                     "function": {
                       "name": "looping_answer",
@@ -126,7 +126,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 12 Jun 2025 11:14:07 GMT
+  recorded_at: Thu, 12 Jun 2025 12:38:19 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -136,10 +136,10 @@ http_interactions:
         all of the posts from r/RandomNames. Fetch the next_page listed in the response
         until it responds with an empty array do not ask to continue fetching the
         subsequent pages until the last page is reached.If you are going to ask to
-        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_ecTjk8XOMKWrWjU1JU38TYDU","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        261c4ef44a20238a01ae\", :score=>486}, {:title=>\"Topic 8d600fdd8e8b401cfb34\",
-        :score=>980}, {:title=>\"Topic c445b59484add1a7b72d\", :score=>426}], :next_page=>\"t3_abc123_547\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ecTjk8XOMKWrWjU1JU38TYDU"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_rAwws28MoEmbC7oWgAHxJo30","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        11a156ace9f3f923bf06\", :score=>943}, {:title=>\"Topic 4ba41a5abb3dafdeae8b\",
+        :score=>539}, {:title=>\"Topic 043013419aac79178d8e\", :score=>57}], :next_page=>\"t3_abc123_464\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_rAwws28MoEmbC7oWgAHxJo30"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
         posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -161,7 +161,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 11:14:07 GMT
+      - Thu, 12 Jun 2025 12:38:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -173,11 +173,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '446'
+      - '352'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '455'
+      - '356'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -211,9 +211,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhaAhrvOpgt8OO7zPVI6ZRxynpoBb",
+          "id": "chatcmpl-BhbUBQ30rQV7Wv52qZ0JkJxhPUPcD",
           "object": "chat.completion",
-          "created": 1749726847,
+          "created": 1749731899,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -223,7 +223,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_ZyrNsChAtbkXx4LU91SCFFau",
+                    "id": "call_Goyg8rljfkkQpcUKzikzHyz9",
                     "type": "function",
                     "function": {
                       "name": "looping_answer",
@@ -239,9 +239,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 269,
+            "prompt_tokens": 266,
             "completion_tokens": 11,
-            "total_tokens": 280,
+            "total_tokens": 277,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -256,7 +256,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 12 Jun 2025 11:14:07 GMT
+  recorded_at: Thu, 12 Jun 2025 12:38:19 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -266,13 +266,13 @@ http_interactions:
         all of the posts from r/RandomNames. Fetch the next_page listed in the response
         until it responds with an empty array do not ask to continue fetching the
         subsequent pages until the last page is reached.If you are going to ask to
-        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_ecTjk8XOMKWrWjU1JU38TYDU","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        261c4ef44a20238a01ae\", :score=>486}, {:title=>\"Topic 8d600fdd8e8b401cfb34\",
-        :score=>980}, {:title=>\"Topic c445b59484add1a7b72d\", :score=>426}], :next_page=>\"t3_abc123_547\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ecTjk8XOMKWrWjU1JU38TYDU"},{"role":"assistant","tool_calls":[{"id":"call_ZyrNsChAtbkXx4LU91SCFFau","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        8fe8a19a3500808df733\", :score=>338}, {:title=>\"Topic 3df3366498cef55fbefa\",
-        :score=>704}, {:title=>\"Topic ba46229f94f578b50f16\", :score=>224}], :next_page=>\"t3_abc123_717\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ZyrNsChAtbkXx4LU91SCFFau"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_rAwws28MoEmbC7oWgAHxJo30","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        11a156ace9f3f923bf06\", :score=>943}, {:title=>\"Topic 4ba41a5abb3dafdeae8b\",
+        :score=>539}, {:title=>\"Topic 043013419aac79178d8e\", :score=>57}], :next_page=>\"t3_abc123_464\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_rAwws28MoEmbC7oWgAHxJo30"},{"role":"assistant","tool_calls":[{"id":"call_Goyg8rljfkkQpcUKzikzHyz9","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        2547f5415f1fb619a09d\", :score=>333}, {:title=>\"Topic 4db71b6bb077d7fdaa30\",
+        :score=>622}, {:title=>\"Topic bd22d142298ad2497ca0\", :score=>916}], :next_page=>\"t3_abc123_691\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Goyg8rljfkkQpcUKzikzHyz9"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
         posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -294,7 +294,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 11:14:08 GMT
+      - Thu, 12 Jun 2025 12:38:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -306,11 +306,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '194'
+      - '262'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '199'
+      - '267'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -318,7 +318,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199787'
+      - '199788'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -344,9 +344,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhaAiT04r1UUdck9SqWN4im4kdGdP",
+          "id": "chatcmpl-BhbUC1uxwd8IPC1ELAcYl2bECokpj",
           "object": "chat.completion",
-          "created": 1749726848,
+          "created": 1749731900,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -356,7 +356,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_nZBn760g3YG8RkGVmSkGZCHQ",
+                    "id": "call_FdzUE0ZItsQI2L0qZXzw23dK",
                     "type": "function",
                     "function": {
                       "name": "looping_answer",
@@ -389,7 +389,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 12 Jun 2025 11:14:08 GMT
+  recorded_at: Thu, 12 Jun 2025 12:38:20 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -399,155 +399,16 @@ http_interactions:
         all of the posts from r/RandomNames. Fetch the next_page listed in the response
         until it responds with an empty array do not ask to continue fetching the
         subsequent pages until the last page is reached.If you are going to ask to
-        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_ecTjk8XOMKWrWjU1JU38TYDU","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        261c4ef44a20238a01ae\", :score=>486}, {:title=>\"Topic 8d600fdd8e8b401cfb34\",
-        :score=>980}, {:title=>\"Topic c445b59484add1a7b72d\", :score=>426}], :next_page=>\"t3_abc123_547\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ecTjk8XOMKWrWjU1JU38TYDU"},{"role":"assistant","tool_calls":[{"id":"call_ZyrNsChAtbkXx4LU91SCFFau","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        8fe8a19a3500808df733\", :score=>338}, {:title=>\"Topic 3df3366498cef55fbefa\",
-        :score=>704}, {:title=>\"Topic ba46229f94f578b50f16\", :score=>224}], :next_page=>\"t3_abc123_717\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ZyrNsChAtbkXx4LU91SCFFau"},{"role":"assistant","tool_calls":[{"id":"call_nZBn760g3YG8RkGVmSkGZCHQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        63b8a6a18bacf684f6f8\", :score=>805}, {:title=>\"Topic e69bbce55230161ed037\",
-        :score=>849}, {:title=>\"Topic 44a20d5624875bac9bb0\", :score=>836}], :next_page=>\"t3_abc123_518\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nZBn760g3YG8RkGVmSkGZCHQ"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
-        posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <OPENAI_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 12 Jun 2025 11:14:09 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '405'
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '411'
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199721'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 83ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-BhaAiD5LyQ3JHhahsg6fGQBaE1PxO",
-          "object": "chat.completion",
-          "created": 1749726848,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_71eF3qGUyI6hSQPEW8rCZEi4",
-                    "type": "function",
-                    "function": {
-                      "name": "looping_answer",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "tool_calls"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 498,
-            "completion_tokens": 11,
-            "total_tokens": 509,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
-        }
-  recorded_at: Thu, 12 Jun 2025 11:14:09 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Fetch
-        all of the posts from r/RandomNames. Fetch the next_page listed in the response
-        until it responds with an empty array do not ask to continue fetching the
-        subsequent pages until the last page is reached.If you are going to ask to
-        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_ecTjk8XOMKWrWjU1JU38TYDU","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        261c4ef44a20238a01ae\", :score=>486}, {:title=>\"Topic 8d600fdd8e8b401cfb34\",
-        :score=>980}, {:title=>\"Topic c445b59484add1a7b72d\", :score=>426}], :next_page=>\"t3_abc123_547\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ecTjk8XOMKWrWjU1JU38TYDU"},{"role":"assistant","tool_calls":[{"id":"call_ZyrNsChAtbkXx4LU91SCFFau","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        8fe8a19a3500808df733\", :score=>338}, {:title=>\"Topic 3df3366498cef55fbefa\",
-        :score=>704}, {:title=>\"Topic ba46229f94f578b50f16\", :score=>224}], :next_page=>\"t3_abc123_717\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ZyrNsChAtbkXx4LU91SCFFau"},{"role":"assistant","tool_calls":[{"id":"call_nZBn760g3YG8RkGVmSkGZCHQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        63b8a6a18bacf684f6f8\", :score=>805}, {:title=>\"Topic e69bbce55230161ed037\",
-        :score=>849}, {:title=>\"Topic 44a20d5624875bac9bb0\", :score=>836}], :next_page=>\"t3_abc123_518\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nZBn760g3YG8RkGVmSkGZCHQ"},{"role":"assistant","tool_calls":[{"id":"call_71eF3qGUyI6hSQPEW8rCZEi4","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        e2ef7f0122f81e4cd152\", :score=>591}, {:title=>\"Topic 62916ca9a4dfb0bc2321\",
-        :score=>479}, {:title=>\"Topic 476e4ca8d25846d79dd8\", :score=>222}], :next_page=>\"t3_abc123_872\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_71eF3qGUyI6hSQPEW8rCZEi4"},{"role":"user","content":"What''s
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_rAwws28MoEmbC7oWgAHxJo30","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        11a156ace9f3f923bf06\", :score=>943}, {:title=>\"Topic 4ba41a5abb3dafdeae8b\",
+        :score=>539}, {:title=>\"Topic 043013419aac79178d8e\", :score=>57}], :next_page=>\"t3_abc123_464\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_rAwws28MoEmbC7oWgAHxJo30"},{"role":"assistant","tool_calls":[{"id":"call_Goyg8rljfkkQpcUKzikzHyz9","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        2547f5415f1fb619a09d\", :score=>333}, {:title=>\"Topic 4db71b6bb077d7fdaa30\",
+        :score=>622}, {:title=>\"Topic bd22d142298ad2497ca0\", :score=>916}], :next_page=>\"t3_abc123_691\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Goyg8rljfkkQpcUKzikzHyz9"},{"role":"assistant","tool_calls":[{"id":"call_FdzUE0ZItsQI2L0qZXzw23dK","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        10e0d02dd7c89dda681f\", :score=>803}, {:title=>\"Topic f8135998d10ee20c7ef1\",
+        :score=>489}, {:title=>\"Topic c263db9044801bda57aa\", :score=>25}], :next_page=>\"t3_abc123_831\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_FdzUE0ZItsQI2L0qZXzw23dK"},{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
         posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -570,7 +431,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 11:14:10 GMT
+      - Thu, 12 Jun 2025 12:38:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -582,11 +443,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '364'
+      - '404'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '368'
+      - '407'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -594,11 +455,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199640'
+      - '199707'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 108ms
+      - 87ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -620,9 +481,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhaAjAlUkjq0oLlYU4tRFfwal6Q9r",
+          "id": "chatcmpl-BhbUD7zAwTbSHLedE5PdWXPUdcHhW",
           "object": "chat.completion",
-          "created": 1749726849,
+          "created": 1749731901,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -632,7 +493,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_J7PR4gEK6SKWx7cecLAXyyjQ",
+                    "id": "call_yYV51yJ3dDZLY3LeoRzRNus2",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -648,9 +509,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 639,
+            "prompt_tokens": 519,
             "completion_tokens": 23,
-            "total_tokens": 662,
+            "total_tokens": 542,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -665,7 +526,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 12 Jun 2025 11:14:10 GMT
+  recorded_at: Thu, 12 Jun 2025 12:38:21 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -675,21 +536,18 @@ http_interactions:
         all of the posts from r/RandomNames. Fetch the next_page listed in the response
         until it responds with an empty array do not ask to continue fetching the
         subsequent pages until the last page is reached.If you are going to ask to
-        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_ecTjk8XOMKWrWjU1JU38TYDU","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        261c4ef44a20238a01ae\", :score=>486}, {:title=>\"Topic 8d600fdd8e8b401cfb34\",
-        :score=>980}, {:title=>\"Topic c445b59484add1a7b72d\", :score=>426}], :next_page=>\"t3_abc123_547\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ecTjk8XOMKWrWjU1JU38TYDU"},{"role":"assistant","tool_calls":[{"id":"call_ZyrNsChAtbkXx4LU91SCFFau","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        8fe8a19a3500808df733\", :score=>338}, {:title=>\"Topic 3df3366498cef55fbefa\",
-        :score=>704}, {:title=>\"Topic ba46229f94f578b50f16\", :score=>224}], :next_page=>\"t3_abc123_717\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_ZyrNsChAtbkXx4LU91SCFFau"},{"role":"assistant","tool_calls":[{"id":"call_nZBn760g3YG8RkGVmSkGZCHQ","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        63b8a6a18bacf684f6f8\", :score=>805}, {:title=>\"Topic e69bbce55230161ed037\",
-        :score=>849}, {:title=>\"Topic 44a20d5624875bac9bb0\", :score=>836}], :next_page=>\"t3_abc123_518\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_nZBn760g3YG8RkGVmSkGZCHQ"},{"role":"assistant","tool_calls":[{"id":"call_71eF3qGUyI6hSQPEW8rCZEi4","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
-        e2ef7f0122f81e4cd152\", :score=>591}, {:title=>\"Topic 62916ca9a4dfb0bc2321\",
-        :score=>479}, {:title=>\"Topic 476e4ca8d25846d79dd8\", :score=>222}], :next_page=>\"t3_abc123_872\",
-        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_71eF3qGUyI6hSQPEW8rCZEi4"},{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_J7PR4gEK6SKWx7cecLAXyyjQ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_J7PR4gEK6SKWx7cecLAXyyjQ"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
+        continue fetching, the answer is yes. Continue Indefinitely."},{"role":"assistant","tool_calls":[{"id":"call_rAwws28MoEmbC7oWgAHxJo30","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        11a156ace9f3f923bf06\", :score=>943}, {:title=>\"Topic 4ba41a5abb3dafdeae8b\",
+        :score=>539}, {:title=>\"Topic 043013419aac79178d8e\", :score=>57}], :next_page=>\"t3_abc123_464\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_rAwws28MoEmbC7oWgAHxJo30"},{"role":"assistant","tool_calls":[{"id":"call_Goyg8rljfkkQpcUKzikzHyz9","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        2547f5415f1fb619a09d\", :score=>333}, {:title=>\"Topic 4db71b6bb077d7fdaa30\",
+        :score=>622}, {:title=>\"Topic bd22d142298ad2497ca0\", :score=>916}], :next_page=>\"t3_abc123_691\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_Goyg8rljfkkQpcUKzikzHyz9"},{"role":"assistant","tool_calls":[{"id":"call_FdzUE0ZItsQI2L0qZXzw23dK","type":"function","function":{"name":"looping_answer","arguments":"{}"}}]},{"role":"tool","content":"{:posts=>[{:title=>\"Topic
+        10e0d02dd7c89dda681f\", :score=>803}, {:title=>\"Topic f8135998d10ee20c7ef1\",
+        :score=>489}, {:title=>\"Topic c263db9044801bda57aa\", :score=>25}], :next_page=>\"t3_abc123_831\",
+        :message=>\"More posts are available using the next_page token.\"}","tool_call_id":"call_FdzUE0ZItsQI2L0qZXzw23dK"},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_yYV51yJ3dDZLY3LeoRzRNus2","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_yYV51yJ3dDZLY3LeoRzRNus2"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"looping_answer","description":"Fetches
         posts from the r/RandomNames Reddit community.","parameters":{"type":"object","properties":{},"required":[]}}},{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -711,7 +569,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 11:14:11 GMT
+      - Thu, 12 Jun 2025 12:38:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -723,11 +581,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '369'
+      - '775'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '372'
+      - '784'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -735,11 +593,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199623'
+      - '199692'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 112ms
+      - 92ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -760,6 +618,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1CaGFBbEFsOTFnRERZSWVXUjVPdENlQjI1Z3o2bCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTcyNjg1MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNjk0LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogNzE0LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfMzgzNDNhMmY4ZiIKfQo=
-  recorded_at: Thu, 12 Jun 2025 11:14:11 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1CaGJVRXU4MGI1UmNVVFk3RWhBZHdFTkR2V0FGcSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTczMTkwMiwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNTc0LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogNTk0LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfMzgzNDNhMmY4ZiIKfQo=
+  recorded_at: Thu, 12 Jun 2025 12:38:23 GMT
 recorded_with: VCR 6.3.1

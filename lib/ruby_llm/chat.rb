@@ -132,6 +132,8 @@ module RubyLLM
     private
 
     def handle_tool_calls(response, &)
+      @number_of_tool_llm_calls += 1
+
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
@@ -139,11 +141,11 @@ module RubyLLM
         @on[:end_message]&.call(message)
       end
 
+      # Perform this afterwards to ensure messages remain valid for the next call
       if max_tool_llm_calls_reached?
         raise ToolCallLimitReachedError, "Tool LLM calls limit reached: #{@max_tool_llm_calls}"
       end
 
-      @number_of_tool_llm_calls += 1
       complete(&)
     end
 
