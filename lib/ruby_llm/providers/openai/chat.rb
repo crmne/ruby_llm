@@ -11,22 +11,22 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(params)
           payload = {
-            model: model,
-            messages: format_messages(messages),
-            stream: stream
+            model: params.model,
+            messages: format_messages(params.messages),
+            stream: params.stream
           }
 
           # Only include temperature if it's not nil (some models don't accept it)
-          payload[:temperature] = temperature unless temperature.nil?
+          payload[:temperature] = params.temperature unless params.temperature.nil?
 
-          if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+          if params.tools.any?
+            payload[:tools] = params.tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = 'auto'
           end
 
-          payload[:stream_options] = { include_usage: true } if stream
+          payload[:stream_options] = { include_usage: true } if params.stream
           payload
         end
 

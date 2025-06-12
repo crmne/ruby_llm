@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'completion_params'
+
 module RubyLLM
   # Represents a conversation with an AI model. Handles message history,
   # streaming responses, and tool integration with a simple, conversational API.
@@ -25,6 +27,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @cache_prompts = { system: false, user: false, tools: false }
       @on = {
         new_message: nil,
         end_message: nil
@@ -92,16 +95,22 @@ module RubyLLM
       messages.each(&)
     end
 
+    def cache_prompts(system: false, user: false, tools: false)
+      @cache_prompts = { system: system, user: user, tools: tools }
+      self
+    end
+
     def complete(&)
       @on[:new_message]&.call
-      response = @provider.complete(
-        messages,
+      params = CompletionParams.new(
+        messages: messages,
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
-        connection: @connection,
-        &
+        cache_prompts: @cache_prompts.dup,
+        connection: @connection
       )
+      response = @provider.complete(params, &)
       @on[:end_message]&.call(response)
 
       add_message response

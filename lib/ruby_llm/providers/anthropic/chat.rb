@@ -11,12 +11,14 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
-          system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages)
+        def render_payload(params)
+          system_messages, chat_messages = separate_messages(params.messages)
+          system_content = build_system_content(system_messages, cache: params.cache_prompts[:system])
 
-          build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:)
+          build_base_payload(chat_messages, params.temperature, params.model, params.stream,
+                             cache: params.cache_prompts[:user]).tap do |payload|
+            add_optional_fields(payload, system_content: system_content, tools: params.tools,
+                                         cache_tools: params.cache_prompts[:tools])
           end
         end
 
@@ -24,29 +26,35 @@ module RubyLLM
           messages.partition { |msg| msg.role == :system }
         end
 
-        def build_system_content(system_messages)
-          if system_messages.length > 1
-            RubyLLM.logger.warn(
-              "Anthropic's Claude implementation only supports a single system message. " \
-              'Multiple system messages will be combined into one.'
-            )
+        def build_system_content(system_messages, cache: false)
+          system_messages.flat_map.with_index do |msg, idx|
+            cache = false unless idx == system_messages.size - 1
+            format_system_message(msg, cache:)
           end
-
-          system_messages.map { |msg| format_message(msg)[:content] }.join("\n\n")
         end
 
-        def build_base_payload(chat_messages, temperature, model, stream)
+        def build_base_payload(chat_messages, temperature, model, stream, cache: false)
+          messages = chat_messages.map.with_index do |msg, idx|
+            cache = false unless idx == chat_messages.size - 1
+            format_message(msg, cache:)
+          end
+
           {
             model: model,
-            messages: chat_messages.map { |msg| format_message(msg) },
+            messages: messages,
             temperature: temperature,
             stream: stream,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:)
-          payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
+        def add_optional_fields(payload, system_content:, tools:, cache_tools: false)
+          if tools.any?
+            tool_definitions = tools.values.map { |t| Tools.function_for(t) }
+            tool_definitions[-1][:cache_control] = { type: 'ephemeral' } if cache_tools
+            payload[:tools] = tool_definitions
+          end
+
           payload[:system] = system_content unless system_content.empty?
         end
 
@@ -72,24 +80,30 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
-            model_id: data['model']
+            model_id: data['model'],
+            cache_creation_input_tokens: data.dig('usage', 'cache_creation_input_tokens'),
+            cache_read_input_tokens: data.dig('usage', 'cache_read_input_tokens')
           )
         end
 
-        def format_message(msg)
+        def format_message(msg, cache: false)
           if msg.tool_call?
             Tools.format_tool_call(msg)
           elsif msg.tool_result?
             Tools.format_tool_result(msg)
           else
-            format_basic_message(msg)
+            format_basic_message(msg, cache:)
           end
         end
 
-        def format_basic_message(msg)
+        def format_system_message(msg, cache: false)
+          Media.format_content(msg.content, cache:)
+        end
+
+        def format_basic_message(msg, cache: false)
           {
             role: convert_role(msg.role),
-            content: Media.format_content(msg.content)
+            content: Media.format_content(msg.content, cache:)
           }
         end
 
