@@ -99,6 +99,7 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         connection: @connection,
+        config: @config,
         &wrap_streaming_block(&)
       )
 
