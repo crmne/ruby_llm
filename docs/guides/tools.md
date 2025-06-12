@@ -210,16 +210,19 @@ becoming invalid if you wish to continue the conversation after the error.
 This can be performed on a per chat basis using `RubyLLM.context` (see configuration documentation) or provided in the global configuration.
 
 ```ruby
-# Set a maximum number of tool completions per instantiated chat object
-context = RubyLLM.context do { |ctx| ctx.max_tool_llm_calls = 5 }
-chat = RubyLLM.chat.with_context(context)
+RubyLLM.configure do |config|
+  config.max_tool_llm_calls = 5
+end
 chat.ask "Question that triggers tools loop"
-# => `execute_tool': Tool completions limit reached: 5 (RubyLLM::ToolCallCompletionsReachedError)
+# => `execute_tool': Tool LLM calls limit reached: (RubyLLM::ToolCallLimitReachedError)
 ```
 
 If you wish to remove this safe-guard you can set the max_tool_llm_calls to `nil`.
 ```ruby
-chat = RubyLLM.chat.with_max_tool_llm_calls(nil)
+RubyLLM.configure do |config|
+  config.max_tool_llm_calls = nil  # No limit
+end
+chat = RubyLLM.chat
 chat.ask "Question that triggers tools loop"
 # Loops until you've used all your credit...
 ```
@@ -239,7 +242,8 @@ This setting can still be overridden per-chat when needed:
 
 ```ruby
 # Override the global setting for this specific chat
-chat = RubyLLM.chat.with_max_tool_llm_calls(5)
+context = RubyLLM.context { |ctx| ctx.max_tool_llm_calls = 5 }
+chat = RubyLLM.chat.with_context(context)
 ```
 
 ## Security Considerations
