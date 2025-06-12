@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 15:47:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - ac2219871c167d2d64ffad9774233497
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=7kQ73_gTBbz9IgAdmTyMFsEIBjJpfA4rGRT9dKVjTxs-1749743234-1.0.1.1-BHsY14QYmTVWTrhUG.cBluvNXX9f_NyVPeW1ooFmxF_FLrSvfkDpMwi_wbEMS4wVKYLdAWmA_DDzLXWjVXUp7K0ZGF4NmaVAoatawrBpw_aAlZX0QBp4vIgyYHfowbdHOarzXm_wt0vQ57VLWSjh6XgjiOYr7JkMeWee4E6GE1E"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=7kQ73_gTBbz9IgAdmTyMFsEIBjJpfA4rGRT9dKVjTxs-1749743234-1.0.1.1-BHsY14QYmTVWTrhUG.cBluvNXX9f_NyVPeW1ooFmxF_FLrSvfkDpMwi_wbEMS4wVKYLdAWmA_DDzLXWjVXUp7K0ZGF4NmaVAoatawrBpw_aAlZX0QBp4vIgyYHfowbdHOarzXm_wt0vQ57VLWSjh6XgjiOYr7JkMeWee4E6GE1E;
+        report-to cf-csp-endpoint
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjEwZDE1YzU2LTE1NWMtNDUxZS04M2IwLWY5NTI1YjAzMGYzNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk3NDMyMzMsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgY2FuIHZhcnkgZ3JlYXRseSBkZXBlbmRpbmcgb24gbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gR2VuZXJhbGx5LCBpdCBpbmNsdWRlcyBmYWN0b3JzIGxpa2UgdGVtcGVyYXR1cmUsIHByZWNpcGl0YXRpb24gKHJhaW4sIHNub3csIGV0Yy4pLCBodW1pZGl0eSwgd2luZCBzcGVlZCwgYW5kIGNsb3VkIGNvdmVyLiBGb3IgZXhhbXBsZSwgdG9kYXkgbWlnaHQgYmUgc3VubnkgYW5kIHdhcm0gaW4gb25lIHBsYWNlIHdoaWxlIHN0b3JteSBhbmQgY29sZCBpbiBhbm90aGVyLiBcblxuSWYgeW91J2QgbGlrZSBzcGVjaWZpY3MsIGxldCBtZSBrbm93IGEgbG9jYXRpb24gb3IgdGltZSBmcmFtZSEgQWxzbywgWEtDRDczOTLigJRqdXN0IHRvIG1ha2Ugc3VyZSB3ZSdyZSBvbiB0aGUgc2FtZSBwYWdlLiDwn5iKIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjYsImNvbXBsZXRpb25fdG9rZW5zIjoxMDAsInRvdGFsX3Rva2VucyI6MTI2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjI2fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDQyNWZwOCJ9
+  recorded_at: Thu, 12 Jun 2025 15:47:19 GMT
+recorded_with: VCR 6.3.1

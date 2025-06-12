@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 12 Jun 2025 15:39:48 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1715
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "I can't give you a real-time, location-specific weather forecast. To get that, you need to use a dedicated weather service or app. These services use live data from weather stations, satellites, and radar to provide accurate predictions for your area.\n\nHowever, I can tell you that generally, weather is the state of the atmosphere at a particular place and time. It involves things like temperature, humidity, precipitation (rain, snow, etc.), wind, and cloud cover. Weather patterns are influenced by many factors, including latitude, altitude, proximity to bodies of water, and prevailing wind currents.\n\nThinking about weather can also lead to interesting thought experiments. What if it rained chocolate? Or what if the wind always blew in the same direction, no matter where you were? These are the kinds of whimsical questions that might lead someone to create something like XKCD7392.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.52623358925620278
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 24,
+            "candidatesTokenCount": 182,
+            "totalTokenCount": 206,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 24
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 182
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "w_RKaJmSDYyR698PnJ6ZmAQ"
+        }
+  recorded_at: Thu, 12 Jun 2025 15:39:46 GMT
+recorded_with: VCR 6.3.1
