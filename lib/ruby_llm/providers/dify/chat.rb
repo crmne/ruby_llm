@@ -9,20 +9,20 @@ module RubyLLM
           'v1/chat-messages'
         end
 
-        def upload_document(document_path, original_filename = nil)
+        def upload_document(document_path, original_filename = nil, dify_user = nil)
           pn = Pathname.new(document_path)
           mime_type = RubyLLM::MimeType.for pn
           original_filename ||= document_path.is_a?(String) ? pn.basename : (document_path.is_a?(Tempfile) ? File.basename(document_path) : document_path.original_filename)
           payload = {
             file: Faraday::Multipart::FilePart.new(document_path, mime_type, original_filename),
-            user: 'dify-user'
+            user: dify_user || 'dify-user'
           }
           connection({}).upload('v1/files/upload', payload)
         end
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, config:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
           current_message = messages[-1]
           current_message_content = current_message.content # dify using conversation_id to trace message history
 
@@ -34,7 +34,7 @@ module RubyLLM
             query: current_message_content.is_a?(Content) ? current_message_content.text : current_message_content,
             response_mode: (stream ? 'streaming' : 'blocking'),
             conversation_id: latest_conversation_id,
-            user: 'dify-user',
+            user: config.dify_user || 'dify-user',
             files: format_files(current_message_content)
           }
         end

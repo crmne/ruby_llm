@@ -100,6 +100,7 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         connection: @connection,
+        config: @config,
         &
       )
       @on[:end_message]&.call(response)
