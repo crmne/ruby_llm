@@ -1,0 +1,117 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"add","description":"Add
+        two numbers","parameters":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:29:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 1f5a68939afca9d5aa6fe8746ea34f6a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"55cd3fdc-f82c-45d7-903e-4e88578e8b9f","object":"chat.completion","created":1749745794,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_f848b881-0dd9-47cd-a2a2-ab1dfb64b60f","type":"function","function":{"name":"add","arguments":"{\"number_one\":2,\"number_two\":2}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":125,"completion_tokens":30,"total_tokens":155,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":61},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Thu, 12 Jun 2025 16:29:59 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        2 + 2?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_f848b881-0dd9-47cd-a2a2-ab1dfb64b60f","type":"function","function":{"name":"add","arguments":"{\"number_one\":2,\"number_two\":2}"}}]},{"role":"tool","content":"4","tool_call_id":"call_0_f848b881-0dd9-47cd-a2a2-ab1dfb64b60f"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"add","description":"Add
+        two numbers","parameters":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:30:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 7f2be711f36c3f29aa28f8edf14801ea
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=SgZt47Oykyg1OFRshjMufyBbLasI8tnK2ijTAq0EgnU-1749745801-1.0.1.1-lgykWTIxctc.U2XPx_tP2oY2fVktq3hmwr6mniZO13bU6_BJdqydY.qhg9yxI1C2Z.n5xQmw_HWQU1D7YhghywgHm.LKHT5oYU9jhPY9W2H4BJIROQsrsBsOwQCGIwZk6XMR6DBxxztfN7FbFubcC5S6ESQz4axeUYAMj0iwtEY"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=SgZt47Oykyg1OFRshjMufyBbLasI8tnK2ijTAq0EgnU-1749745801-1.0.1.1-lgykWTIxctc.U2XPx_tP2oY2fVktq3hmwr6mniZO13bU6_BJdqydY.qhg9yxI1C2Z.n5xQmw_HWQU1D7YhghywgHm.LKHT5oYU9jhPY9W2H4BJIROQsrsBsOwQCGIwZk6XMR6DBxxztfN7FbFubcC5S6ESQz4axeUYAMj0iwtEY;
+        report-to cf-csp-endpoint
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"549b1919-385a-4c35-81e7-bac00b5c57ed","object":"chat.completion","created":1749745801,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"2
+        + 2 equals 4."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":154,"completion_tokens":8,"total_tokens":162,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":26},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Thu, 12 Jun 2025 16:30:03 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"temperature":0.7,"max_tokens":4096}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250612T162936Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 9c97ec4d17c3eee216e6dce74bcb9cd840eab41022eb3b90af04e89b3d4ef956
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250612/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=38343af742612c192170b66fcabc499a0e157cdebfd4a7816fd151b2175741a6
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:29:40 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '594'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 75732b1f-8862-4e46-880d-c89ed50c9c71
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1576'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '64'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '13'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01P9BZJspH6Fpu7UuzyoJ3ge","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t actually see the current weather where you are. I
+        can discuss weather in general, but I would need more specific context from
+        you about location, time, or what specific weather information you''re seeking.
+        Would you like to tell me more about what you want to know?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":64}}'
+  recorded_at: Thu, 12 Jun 2025 16:29:38 GMT
+recorded_with: VCR 6.3.1

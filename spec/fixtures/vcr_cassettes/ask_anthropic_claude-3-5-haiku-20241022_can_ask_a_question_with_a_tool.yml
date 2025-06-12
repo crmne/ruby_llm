@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"add","description":"Add
+        two numbers","input_schema":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:29:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T16:29:22Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T16:29:22Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T16:29:22Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T16:29:22Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01K1MA2FSoY2LDsNikszTmab","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you calculate that using the \"add\" function."},{"type":"tool_use","id":"toolu_014RNxM5aoU5NyyYsqshdduy","name":"add","input":{"number_one":2,"number_two":2}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":350,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":86,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 16:29:20 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll help
+        you calculate that using the \"add\" function."},{"type":"tool_use","id":"toolu_014RNxM5aoU5NyyYsqshdduy","name":"add","input":{"number_one":2,"number_two":2}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_014RNxM5aoU5NyyYsqshdduy","content":"4"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"add","description":"Add
+        two numbers","input_schema":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:29:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '50000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T16:29:23Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '10000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T16:29:23Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T16:29:23Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '60000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T16:29:23Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - 46ac142f-76df-407a-a246-7bff28db7155
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01K7UjHUrRPpSXbrvL6Ly9jJ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
+        result is 4. 2 + 2 = 4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":448,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":21,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 16:29:21 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 12 Jun 2025 16:29:48 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1076
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Okay, I need a little more information to give you a helpful weather report!  Tell me:\n\n*   **Where are you located, or where are you interested in getting the weather for?** (City, State/Province, or even just a general region like \"Southern California\")\n*   **Are you looking for the current weather, a forecast for today, or a longer-range forecast?**\n\nOnce I have that, I can give you a good weather update!\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.24809709548950196
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 6,
+            "candidatesTokenCount": 100,
+            "totalTokenCount": 106,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 6
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 100
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "ewBLaJPYINmJmNAPl-aeuAg"
+        }
+  recorded_at: Thu, 12 Jun 2025 16:29:46 GMT
+recorded_with: VCR 6.3.1

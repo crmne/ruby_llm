@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"add","description":"Add
+        two numbers","parameters":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Jun 2025 16:31:33 GMT
+      Content-Length:
+      - '1005'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-271","object":"chat.completion","created":1749745893,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking \"What''s 2 + 2?\" I need to figure out how to respond.
+        Let me check the tools provided. There''s a function called add that takes
+        two integers. Since the question is a simple arithmetic problem, I should
+        use the add function. The parameters required are number_one and number_two,
+        both integers. So, I''ll call the add function with 2 and 2 as the arguments.
+        That should give the correct result. Let me make sure I''m formatting the
+        tool call correctly in JSON inside the XML tags. Alright, that should do it.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_rwhk2lr2","index":0,"type":"function","function":{"name":"add","arguments":"{\"number_one\":2,\"number_two\":2}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":156,"completion_tokens":152,"total_tokens":308}}
+
+        '
+  recorded_at: Thu, 12 Jun 2025 16:31:33 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"},{"role":"assistant","content":"<think>\nOkay, the user is asking \"What''s
+        2 + 2?\" I need to figure out how to respond. Let me check the tools provided.
+        There''s a function called add that takes two integers. Since the question
+        is a simple arithmetic problem, I should use the add function. The parameters
+        required are number_one and number_two, both integers. So, I''ll call the
+        add function with 2 and 2 as the arguments. That should give the correct result.
+        Let me make sure I''m formatting the tool call correctly in JSON inside the
+        XML tags. Alright, that should do it.\n</think>\n\n","tool_calls":[{"id":"call_rwhk2lr2","type":"function","function":{"name":"add","arguments":"{\"number_one\":2,\"number_two\":2}"}}]},{"role":"tool","content":"4","tool_call_id":"call_rwhk2lr2"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"add","description":"Add
+        two numbers","parameters":{"type":"object","properties":{"number_one":{"type":"integer"},"number_two":{"type":"integer"}},"required":["number_one","number_two"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Jun 2025 16:31:33 GMT
+      Content-Length:
+      - '348'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-827","object":"chat.completion","created":1749745893,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\n\u003c/think\u003e\n\nThe
+        result of 2 + 2 is 4."},"finish_reason":"stop"}],"usage":{"prompt_tokens":296,"completion_tokens":17,"total_tokens":313}}
+
+        '
+  recorded_at: Thu, 12 Jun 2025 16:31:33 GMT
+recorded_with: VCR 6.3.1

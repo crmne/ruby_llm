@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:30:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 325883c1d6fa543d1b28d6edb802903c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY3MTVmZjQ3LWZjOGYtNDc4ZC1iMDY5LWZiODVkYTRmNzE4YSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk3NDU4MzUsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgdmFyaWVzIGRlcGVuZGluZyBvbiB5b3VyIGxvY2F0aW9uIGFuZCB0aGUgdGltZSBvZiB5ZWFyLiBIZXJl4oCZcyBhIGdlbmVyYWwgb3ZlcnZpZXc6ICBcblxuLSAqKlRlbXBlcmF0dXJlKio6IFJhbmdlcyBmcm9tIGZyZWV6aW5nIGluIHBvbGFyIHJlZ2lvbnMgdG8gZXh0cmVtZWx5IGhvdCBpbiBkZXNlcnRzLiAgXG4tICoqUHJlY2lwaXRhdGlvbioqOiBJbmNsdWRlcyByYWluLCBzbm93LCBzbGVldCwgb3IgaGFpbCwgZGVwZW5kaW5nIG9uIGNvbmRpdGlvbnMuICBcbi0gKipXaW5kKio6IENhbiBiZSBjYWxtIG9yIHN0b3JteSwgd2l0aCBodXJyaWNhbmVzIGFuZCB0b3JuYWRvZXMgaW4gZXh0cmVtZSBjYXNlcy4gIFxuLSAqKkNsb3VkcyoqOiBDbGVhciBza2llcywgcGFydGx5IGNsb3VkeSwgb3Igb3ZlcmNhc3QgY29uZGl0aW9ucyBhZmZlY3Qgc3VubGlnaHQgYW5kIHdhcm10aC4gIFxuXG5Gb3IgcmVhbC10aW1lIHdlYXRoZXIgdXBkYXRlcywgeW91IGNhbiBjaGVjayBzZXJ2aWNlcyBsaWtlOiAgXG4tIFtXZWF0aGVyLmNvbV0oaHR0cHM6Ly93ZWF0aGVyLmNvbSkgIFxuLSBbQWNjdVdlYXRoZXJdKGh0dHBzOi8vd3d3LmFjY3V3ZWF0aGVyLmNvbSkgIFxuLSBZb3VyIGxvY2FsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2UgIFxuXG5Xb3VsZCB5b3UgbGlrZSBkZXRhaWxzIGFib3V0IGEgc3BlY2lmaWMgbG9jYXRpb24gb3Igd2VhdGhlciBwaGVub21lbm9uPyDwn5iKIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OSwiY29tcGxldGlvbl90b2tlbnMiOjE2MiwidG90YWxfdG9rZW5zIjoxNzEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6OX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA0MjVmcDgifQ==
+  recorded_at: Thu, 12 Jun 2025 16:30:43 GMT
+recorded_with: VCR 6.3.1

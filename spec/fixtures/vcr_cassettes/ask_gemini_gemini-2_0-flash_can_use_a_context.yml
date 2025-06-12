@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 17:16:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1345'
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1350'
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999974'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CaGZwYnlFRFdUQTlGMEVncUFrN3Z3S0ZMSmJ0ZCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTc0ODYwMywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSdyZSBpbnRlcmVzdGVkIGluIHRoZSB3ZWF0aGVyISBIb3dldmVyLCBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSBkYXRhLCBzbyBJIGNhbid0IHByb3ZpZGUgY3VycmVudCB3ZWF0aGVyIGNvbmRpdGlvbnMuIEZvciB0aGUgbGF0ZXN0IHVwZGF0ZXMsIEkgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciB3ZWJzaXRlIG9yIGFwcC4gSWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgZ2VuZXJhbCBjbGltYXRlIHBhdHRlcm5zIG9yIHdlYXRoZXIgcGhlbm9tZW5hLCBmZWVsIGZyZWUgdG8gYXNrISBCeSB0aGUgd2F5LCBJIG5vdGljZWQgdGhlIGNvZGUgXCJYS0NENzM5Mlwi4oCUaXQgcmVtaW5kcyBtZSBvZiB0aGUgWEtDRCBjb21pYyBzZXJpZXMsIHdoaWNoIG9mdGVuIGh1bW9yb3VzbHkgZXhwbG9yZXMgc2NpZW5jZSBhbmQgdGVjaG5vbG9neSB0b3BpY3MuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMzQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA5NCwKICAgICJ0b3RhbF90b2tlbnMiOiAxMjgsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9mMTIxNjdiMzcwIgp9Cg==
+  recorded_at: Thu, 12 Jun 2025 17:16:44 GMT
+recorded_with: VCR 6.3.1

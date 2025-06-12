@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 12 Jun 2025 16:29:46 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1377
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "I need more information to tell you about the weather! I don't have access to real-time weather data. To give you a forecast, I need to know:\n\n*   **Where are you located?** (City, state/province, country)\n*   **Or, what location are you interested in?**\n\nOnce I have that, I can tell you about the current conditions, the forecast for today and the next few days, and any relevant warnings or advisories. Remember, I'm just an AI, so always double-check with a reliable weather source (like a local news website or weather app) for the most up-to-date and accurate information. Also, remember the dangers of relying on anecdotal evidence for weather trends, as highlighted in XKCD7392.\n"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.4385046130882766
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 24,
+            "candidatesTokenCount": 167,
+            "totalTokenCount": 191,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 24
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 167
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.0-flash",
+          "responseId": "eABLaIPyPL2YnvgPsrLg8AU"
+        }
+  recorded_at: Thu, 12 Jun 2025 16:29:44 GMT
+recorded_with: VCR 6.3.1
