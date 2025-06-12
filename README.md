@@ -43,22 +43,26 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ```ruby
 # Just ask questions
-chat = RubyLLM.chat
-chat.ask "What's the best way to learn Ruby?"
+RubyLLM.ask "What's the best way to learn Ruby?"
 
 # Analyze images, audio, documents, and text files
-chat.ask "What's in this image?", with: "ruby_conf.jpg"
-chat.ask "Describe this meeting", with: "meeting.wav"
-chat.ask "Summarize this document", with: "contract.pdf"
-chat.ask "Explain this code", with: "app.rb"
+RubyLLM.ask "What's in this image?", with: "ruby_conf.jpg"
+RubyLLM.ask "Describe this meeting", with: "meeting.wav"
+RubyLLM.ask "Summarize this document", with: "contract.pdf"
+RubyLLM.ask "Explain this code", with: "app.rb"
 
 # Multiple files at once - types automatically detected
-chat.ask "Analyze these files", with: ["diagram.png", "report.pdf", "notes.txt"]
+RubyLLM.ask "Analyze these files", with: ["diagram.png", "report.pdf", "notes.txt"]
 
 # Stream responses in real-time
-chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+RubyLLM.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
+
+# Continue the conversation with a chat instance
+chat = RubyLLM.chat
+chat.ask "What's the best way to learn Ruby?"
+chat.ask "Why is it so popular?"
 
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
