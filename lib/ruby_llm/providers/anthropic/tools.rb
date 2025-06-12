@@ -14,12 +14,13 @@ module RubyLLM
         def format_tool_call(msg)
           tool_call = msg.tool_calls.values.first
 
+          content = []
+          content << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
+          content << format_tool_use_block(tool_call)
+
           {
             role: 'assistant',
-            content: [
-              Media.format_text(msg.content),
-              format_tool_use_block(tool_call)
-            ]
+            content:
           }
         end
 

@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 11 Jun 2025 12:51:54 GMT
+      Content-Length:
+      - '969'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQ3NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYzMTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBcIldoYXQncyAyICsgMj9cIiBUaGF0J3MgYSBiYXNpYyBhcml0aG1ldGljIHF1ZXN0aW9uLiBMZXQgbWUgdGhpbmsuIDIgcGx1cyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gSSByZW1lbWJlciBmcm9tIGJhc2ljIG1hdGggdGhhdCAyKzIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5IHdhbnQgYSBtb3JlIGRldGFpbGVkIGV4cGxhbmF0aW9uPyBPciBwZXJoYXBzIHRoZXkncmUgdGVzdGluZyBpZiBJIGtub3cgdGhlIGJhc2ljcy4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGNvbnRleHQgSSdtIG1pc3NpbmcuIFRoZSBxdWVzdGlvbiBpcyBzaW1wbGUsIHNvIHRoZSBhbnN3ZXIgc2hvdWxkIGJlIDQuIE1heWJlIHRoZXkganVzdCBuZWVkIGNvbmZpcm1hdGlvbi4gSSBzaG91bGQgbWFrZSBzdXJlIHRvIHN0YXRlIHRoZSBhbnN3ZXIgY2xlYXJseSBhbmQgbWF5YmUgYWRkIGEgZnJpZW5kbHkgbm90ZSB0byBzZWUgaWYgdGhleSBoYXZlIG1vcmUgcXVlc3Rpb25zLiBZZWFoLCB0aGF0J3MgaXQuIEp1c3QgY29uZmlybSB0aGUgYW5zd2VyIGFuZCBvZmZlciBmdXJ0aGVyIGhlbHAuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuMiArIDIgZXF1YWxzICoqNCoqLiBMZXQgbWUga25vdyBpZiB5b3UgaGF2ZSBtb3JlIHF1ZXN0aW9ucyEg8J+YiiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTYsImNvbXBsZXRpb25fdG9rZW5zIjoxNjMsInRvdGFsX3Rva2VucyI6MTc5fX0K
+  recorded_at: Wed, 11 Jun 2025 12:51:54 GMT
+recorded_with: VCR 6.3.1

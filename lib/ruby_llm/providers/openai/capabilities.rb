@@ -215,10 +215,13 @@ module RubyLLM
           end
         end
 
-        def normalize_temperature(temperature, model_id)
+        def self.normalize_temperature(temperature, model_id)
           if model_id.match?(/^o\d/)
             RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
             1.0
+          elsif model_id.match?(/-search/)
+            RubyLLM.logger.debug "Model #{model_id} does not accept temperature parameter, removing"
+            nil
           else
             temperature
           end

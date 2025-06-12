@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"temperature":0.7,"stream":false}'
+        your favorite Ruby feature?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:37:20 GMT
+      - Wed, 11 Jun 2025 12:42:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,11 +36,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1512'
+      - '923'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1517'
+      - '929'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -74,16 +74,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BeIN5eXiLYFZFmNIEWWt5w864HwLW",
+          "id": "chatcmpl-BhF4npDrkJ3BKO6hV3Mzb8fsUnSEA",
           "object": "chat.completion",
-          "created": 1748943439,
+          "created": 1749645757,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "That's a great question! One of my favorite Ruby features is its elegant and expressive syntax, especially the way it handles blocks and iterators. Features like `each`, `map`, and `select` allow for very readable and concise code when working with collections. Additionally, Ruby's open classes and metaprogramming capabilities make it highly flexible, enabling developers to extend or modify existing classes dynamically. This combination of readability and flexibility makes Ruby a joy to work with!",
+                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks make it easy to write clean, concise code for collection processing, such as using `each`, `map`, and `select`. This feature promotes a functional style of programming and allows developers to write code that reads almost like natural language. Additionally, Ruby's open classes and metaprogramming capabilities provide powerful ways to extend and customize behavior, making it a very flexible language for both beginners and experienced developers.",
                 "refusal": null,
                 "annotations": []
               },
@@ -93,8 +93,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 93,
-            "total_tokens": 106,
+            "completion_tokens": 106,
+            "total_tokens": 119,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -109,5 +109,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Tue, 03 Jun 2025 09:37:20 GMT
+  recorded_at: Wed, 11 Jun 2025 12:42:38 GMT
 recorded_with: VCR 6.3.1
