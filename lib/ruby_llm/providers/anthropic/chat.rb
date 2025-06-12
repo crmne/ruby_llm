@@ -55,9 +55,9 @@ module RubyLLM
           content_blocks = data['content'] || []
 
           text_content = extract_text_content(content_blocks)
-          tool_use = Tools.find_tool_use(content_blocks)
+          tool_use_blocks = content_blocks.select { |c| c['type'] == 'tool_use' }
 
-          build_message(data, text_content, tool_use)
+          build_message(data, text_content, tool_use_blocks)
         end
 
         def extract_text_content(blocks)
@@ -65,11 +65,11 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use)
+        def build_message(data, content, tool_use_blocks)
           Message.new(
             role: :assistant,
             content: content,
-            tool_calls: Tools.parse_tool_calls(tool_use),
+            tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
             model_id: data['model']
