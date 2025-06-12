@@ -250,7 +250,7 @@ Treat any arguments passed to your `execute` method as potentially untrusted use
 *   **NEVER** use methods like `eval`, `system`, `send`, or direct SQL interpolation with raw arguments from the AI.
 *   **Validate and Sanitize:** Always validate parameter types, ranges, formats, and allowed values. Sanitize strings to prevent injection attacks if they are used in database queries or system commands (though ideally, avoid direct system commands).
 *   **Principle of Least Privilege:** Ensure the code within `execute` only has access to the resources it absolutely needs.
-*   **Cost-based Denial of Service:** Ensure protection against malicious input or usage, particularly when used in conjunction with tool completions if you remove the default limit
+*   **Cost-based Denial of Service:** Ensure protection against malicious input or usage, particularly when used in conjunction with tool calls if you remove the default limit.
 
 ## Next Steps
 
