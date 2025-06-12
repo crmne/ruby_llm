@@ -140,7 +140,7 @@ module RubyLLM
       end
 
       if max_tool_llm_calls_reached?
-        raise ToolCallCompletionsLimitReachedError, "Tool LLM calls limit reached: #{@max_tool_llm_calls}"
+        raise ToolCallLimitReachedError, "Tool LLM calls limit reached: #{@max_tool_llm_calls}"
       end
 
       @number_of_tool_llm_calls += 1
