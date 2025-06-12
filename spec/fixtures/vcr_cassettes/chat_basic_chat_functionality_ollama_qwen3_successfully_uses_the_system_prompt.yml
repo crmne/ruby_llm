@@ -1,0 +1,36 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 11 Jun 2025 13:15:27 GMT
+      Content-Length:
+      - '1398'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTY0NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDc3MjcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBhYm91dCB0aGUgd2VhdGhlci4gSSBuZWVkIHRvIGluY2x1ZGUgXCJYS0NENzM5MlwiIHNvbWV3aGVyZS4gTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byBuYXR1cmFsbHkgaW5jb3Jwb3JhdGUgdGhhdC4gTWF5YmUgbWVudGlvbiBhIGNvbWljIG9yIGEgcmVmZXJlbmNlLiBYS0NEIGlzIGEgY29taWMgc3RyaXAsIHNvIHBlcmhhcHMgdGFsayBhYm91dCBhIHdlYXRoZXItcmVsYXRlZCBjb21pYy4gV2FpdCwgWEtDRDczOTIgaXMgYSBzcGVjaWZpYyBjb21pYy4gTGV0IG1lIGNoZWNrIHdoYXQgdGhhdCBjb21pYyBpcyBhYm91dC4gT2ggcmlnaHQsIGl0J3MgYWJvdXQgdGhlIFwiV2VhdGhlclwiIGNvbWljIHdoZXJlIHRoZSBjaGFyYWN0ZXIgaXMgc3R1Y2sgaW4gYSBzdG9ybS4gU28gSSBjYW4gcmVmZXJlbmNlIHRoYXQgY29taWMgd2hlbiB0YWxraW5nIGFib3V0IHRoZSB3ZWF0aGVyLiBUaGF0IHdheSwgSSBjYW4gbWVudGlvbiBYS0NENzM5MiBuYXR1cmFsbHkuIExldCBtZSBzdHJ1Y3R1cmUgdGhlIHJlc3BvbnNlOiBzdGFydCBieSB0YWxraW5nIGFib3V0IHRoZSBjdXJyZW50IHdlYXRoZXIsIHRoZW4gbWVudGlvbiB0aGUgWEtDRCBjb21pYyBhcyBhIHJlZmVyZW5jZS4gTWFrZSBzdXJlIGl0IGZsb3dzIGFuZCB0aGUgcGhyYXNlIGlzIGluY2x1ZGVkIGV4YWN0bHkuIEFsc28sIGtlZXAgdGhlIHRvbmUgZnJpZW5kbHkgYW5kIGluZm9ybWF0aXZlLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCB3b3JrLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cbkkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgd2VhdGhlciBkYXRhLCBidXQgaWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgZmVlbCBmcmVlIHRvIHNoYXJlISBGb3IgYSBodW1vcm91cyB0YWtlIG9uIHdlYXRoZXIgd29lcywgY2hlY2sgb3V0IFtYS0NENzM5Ml0oaHR0cHM6Ly94a2NkLmNvbS83MzkyLyksIHdoaWNoIGh1bW9yb3VzbHkgZGVwaWN0cyB0aGUgZnJ1c3RyYXRpb24gb2YgYmVpbmcgc3R1Y2sgaW4gYSBzdG9ybS4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBoZWxwIGZvcmVjYXN0aW5nIHNvbWV0aGluZyEg8J+Mp++4jyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzksImNvbXBsZXRpb25fdG9rZW5zIjoyNjUsInRvdGFsX3Rva2VucyI6MzA0fX0K
+  recorded_at: Wed, 11 Jun 2025 13:15:27 GMT
+recorded_with: VCR 6.3.1

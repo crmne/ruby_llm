@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"temperature":0.7,"stream":false}'
+        was Ruby''s creator?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:42:45 GMT
+      - Wed, 11 Jun 2025 12:50:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 36ce938903b31a5ee0d7e6d04bb9a49f
+      - 76ccc793af9ec975521e1f9c1535432d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,31 +51,24 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"002a7fe3-480e-4b1f-a266-3e0fb725eb2c","object":"chat.completion","created":1748943765,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first
-        version of Ruby (0.95) in **1995**. \n\nMatsumoto designed Ruby with a focus
-        on simplicity, productivity, and programmer happiness, blending elements from
-        his favorite languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding
-        principle was the **\"Principle of Least Surprise\" (POLS)**, aiming to make
-        the language intuitive and enjoyable for developers. \n\nFun fact: The name
-        \"Ruby\" was inspired by the gemstone, as a playful nod to Perl (another gemstone-inspired
-        language)."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":137,"total_tokens":146,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Tue, 03 Jun 2025 09:42:56 GMT
+      string: !binary |-
+        eyJpZCI6IjJmNDkzNzU4LWM1N2ItNGVlYS05MzViLWE4MmY1ZDYxNzFiNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYyMTAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiUnVieSB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIEphcGFuLiBIZSByZWxlYXNlZCB0aGUgZmlyc3QgdmVyc2lvbiBvZiBSdWJ5IGluICoqMTk5NSoqLiBNYXR6IGRlc2lnbmVkIFJ1Ynkgd2l0aCBhIGZvY3VzIG9uIHNpbXBsaWNpdHksIHByb2R1Y3Rpdml0eSwgYW5kIHByb2dyYW1tZXIgaGFwcGluZXNzLCBibGVuZGluZyBlbGVtZW50cyBmcm9tIFBlcmwsIFNtYWxsdGFsaywgYW5kIG90aGVyIGxhbmd1YWdlcy5cblxuRnVuIGZhY3Q6IFRoZSBuYW1lIFwiUnVieVwiIHdhcyBpbnNwaXJlZCBieSB0aGUgYmlydGhzdG9uZSBvZiBvbmUgb2YgTWF0eidzIGNvbGxlYWd1ZXMsIGZvbGxvd2luZyB0aGUgbmFtaW5nIHRyYWRpdGlvbiBvZiBQZXJsIChhbm90aGVyIGdlbXN0b25lLWluc3BpcmVkIGxhbmd1YWdlKS4gIFxuXG5Xb3VsZCB5b3UgbGlrZSBkZXRhaWxzIG9uIFJ1YnkncyBkZXNpZ24gcGhpbG9zb3BoeSBvciBpdHMgZXZvbHV0aW9uPyDwn5iKIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OSwiY29tcGxldGlvbl90b2tlbnMiOjExMSwidG90YWxfdG9rZW5zIjoxMjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6OX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA0MjVmcDgifQ==
+  recorded_at: Wed, 11 Jun 2025 12:50:21 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first version of
-        Ruby (0.95) in **1995**. \n\nMatsumoto designed Ruby with a focus on simplicity,
-        productivity, and programmer happiness, blending elements from his favorite
-        languages like Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding principle
-        was the **\"Principle of Least Surprise\" (POLS)**, aiming to make the language
-        intuitive and enjoyable for developers. \n\nFun fact: The name \"Ruby\" was
-        inspired by the gemstone, as a playful nod to Perl (another gemstone-inspired
-        language)."},{"role":"user","content":"What year did he create Ruby?"}],"temperature":0.7,"stream":false}'
+      string: "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
+        was Ruby's creator?\"},{\"role\":\"assistant\",\"content\":\"Ruby was created
+        by **Yukihiro \\\"Matz\\\" Matsumoto** in Japan. He released the first version
+        of Ruby in **1995**. Matz designed Ruby with a focus on simplicity, productivity,
+        and programmer happiness, blending elements from Perl, Smalltalk, and other
+        languages.\\n\\nFun fact: The name \\\"Ruby\\\" was inspired by the birthstone
+        of one of Matz's colleagues, following the naming tradition of Perl (another
+        gemstone-inspired language).  \\n\\nWould you like details on Ruby's design
+        philosophy or its evolution? \U0001F60A\"},{\"role\":\"user\",\"content\":\"What
+        year did he create Ruby?\"}],\"stream\":false,\"temperature\":0.7}"
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -93,7 +86,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:42:56 GMT
+      - Wed, 11 Jun 2025 12:50:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -105,7 +98,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 49195f941ff211228b216fc6c87adba4
+      - 7985d09bdb61f8437ef6ab3607df4502
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -120,11 +113,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7f81ca58-f552-4c72-855a-33fe0a9e7b57","object":"chat.completion","created":1748943776,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        \"Matz\" Matsumoto **started working on Ruby in 1993** and **released the
-        first public version (Ruby 0.95) on December 21, 1995**.  \n\nSo, while the
-        development began in **1993**, **1995** is considered the official birth year
-        of Ruby. The stable **Ruby 1.0** was later released in **1996**.  \n\nWould
-        you like details on Ruby''s early design goals or influences?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":156,"completion_tokens":102,"total_tokens":258,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Tue, 03 Jun 2025 09:43:05 GMT
+      string: !binary |-
+        eyJpZCI6ImM0MDZhZGEwLTM1OWYtNGM2MC04MzVhLTliNmRiNjk4ZjU0YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYyMjEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqc3RhcnRlZCBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyoqIGFuZCBvZmZpY2lhbGx5ICoqcmVsZWFzZWQgdmVyc2lvbiAwLjk1IGluIDE5OTUqKiAoRGVjZW1iZXIgMjEsIHRvIGJlIHByZWNpc2UpLiBUaGUgZmlyc3Qgc3RhYmxlIHJlbGVhc2UsICoqUnVieSAxLjAqKiwgY2FtZSBsYXRlciBpbiAqKjE5OTYqKi4gIFxuXG5Tbywgd2hpbGUgdGhlIGxhbmd1YWdlJ3MgZGVzaWduIGJlZ2FuIGluIDE5OTMsIGl0cyBwdWJsaWMgZGVidXQgd2FzIGluICoqMTk5NSoq4oCUYSBrZXkgbWlsZXN0b25lIG9mdGVuIGNpdGVkIGFzIGl0cyBjcmVhdGlvbiB5ZWFyLiAgXG5cbldvdWxkIHlvdSBsaWtlIHRvIGtub3cgbW9yZSBhYm91dCBSdWJ54oCZcyBlYXJseSBpbmZsdWVuY2VzIG9yIGhvdyBpdCBldm9sdmVkIGFmdGVyIHJlbGVhc2U/IPCfmIoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzAsImNvbXBsZXRpb25fdG9rZW5zIjoxMjAsInRvdGFsX3Rva2VucyI6MjUwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NjR9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NjQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NjZ9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
+  recorded_at: Wed, 11 Jun 2025 12:50:34 GMT
 recorded_with: VCR 6.3.1
