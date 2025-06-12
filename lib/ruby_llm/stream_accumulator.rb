@@ -5,7 +5,7 @@ module RubyLLM
   # Handles the complexities of accumulating content and tool calls
   # from partial chunks while tracking token usage.
   class StreamAccumulator
-    attr_reader :content, :model_id, :tool_calls
+    attr_reader :content, :model_id, :conversation_id, :tool_calls
 
     def initialize
       @content = String.new
@@ -18,6 +18,7 @@ module RubyLLM
     def add(chunk)
       RubyLLM.logger.debug chunk.inspect
       @model_id ||= chunk.model_id
+      @conversation_id ||= chunk.conversation_id
 
       if chunk.tool_call?
         accumulate_tool_calls chunk.tool_calls
@@ -34,6 +35,7 @@ module RubyLLM
         role: :assistant,
         content: content.empty? ? nil : content,
         model_id: model_id,
+        conversation_id: conversation_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
         output_tokens: @output_tokens.positive? ? @output_tokens : nil

@@ -14,6 +14,7 @@ module RubyLLM
         def build_chunk(data)
           Chunk.new(
             role: :assistant,
+            conversation_id: data['conversation_id'],
             model_id: nil,
             content: data['answer'],
             tool_calls: nil,
