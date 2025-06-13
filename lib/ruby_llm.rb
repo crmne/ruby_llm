@@ -42,6 +42,22 @@ module RubyLLM
       Chat.new(...)
     end
 
+    def ask(message = nil, **options, &)
+      chat_options = options.slice(:model, :provider, :assume_model_exists, :context)
+      @ask_chat = Chat.new(**chat_options)
+
+      @ask_chat.with_tools(*options[:tools]) if options.key?(:tools)
+      @ask_chat.with_temperature(options[:temperature]) if options.key?(:temperature)
+      @ask_chat.with_instructions(options[:instructions]) if options.key?(:instructions)
+      @ask_chat.with_context(options[:context]) if options.key?(:context)
+      @ask_chat.on_new_message(&options[:on_new_message]) if options.key?(:on_new_message)
+      @ask_chat.on_end_message(&options[:on_end_message]) if options.key?(:on_end_message)
+
+      @ask_chat.ask(message, with: options[:with], &)
+    end
+
+    alias say ask
+
     def embed(...)
       Embedding.embed(...)
     end

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Jun 2025 16:31:52 GMT
+      Content-Length:
+      - '1942'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-42","object":"chat.completion","created":1749745912,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked me to tell them about the weather. But I need to make sure
+        to include the exact phrase \"XKCD7392\" in my response. Let me think about
+        how to do that naturally.\n\nFirst, I should check if there''s any connection
+        between XKCD7392 and weather. Wait, XKCD is a comic strip, right? I remember
+        that XKCD7392 is a specific comic. Let me recall what that comic is about.
+        If I''m not mistaken, XKCD7392 is titled \"Weather Forecast\" and it''s about
+        a person trying to predict the weather using a very detailed and overly complicated
+        method. The comic humorously illustrates how people can overthink simple things,
+        like weather prediction.\n\nSo, the user''s question is about the weather,
+        and the XKCD comic is related to that topic. I can mention the comic as an
+        example of how weather forecasting can be approached in a humorous way. I
+        need to make sure to include the exact phrase \"XKCD7392\" somewhere in the
+        response. Let me structure the answer: start by talking about the current
+        weather, then mention XKCD7392 as a reference, explaining its relevance. That
+        should work. Also, I should keep the tone friendly and informative. Let me
+        double-check that I''m not missing any other parts of the query. The user
+        didn''t specify a location, so I should keep it general. Alright, that should
+        cover it.\n\u003c/think\u003e\n\nI don''t have real-time weather data, but
+        if you''re looking for a humorous take on weather prediction, check out XKCD7392.
+        It''s a classic comic that satirizes the absurdity of overcomplicating simple
+        tasks like forecasting the weather. Let me know your location, and I can help
+        you find the current forecast!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":38,"completion_tokens":381,"total_tokens":419}}
+
+        '
+  recorded_at: Thu, 12 Jun 2025 16:31:52 GMT
+recorded_with: VCR 6.3.1

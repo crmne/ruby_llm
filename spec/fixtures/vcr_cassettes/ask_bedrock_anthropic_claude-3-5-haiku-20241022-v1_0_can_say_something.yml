@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]}],"temperature":0.7,"max_tokens":4096}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250612T162930Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - c9959b2464b5ac20dc26dcc5555c64745b5fb1d651b2c68adbb1e8b276b03a01
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250612/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=bdd6793361d23e1a988fbcfcc28e88251ca44114c98f121cc36a6dc98bfd07ac
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:29:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '305'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 0c1b2aaf-9b64-4bcf-8938-2ba07ccd7bb7
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1018'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '5'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '16'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_014kd4DhaD5ZrNKbQTbwugwe","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Thu, 12 Jun 2025 16:29:31 GMT
+recorded_with: VCR 6.3.1

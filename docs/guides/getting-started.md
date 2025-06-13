@@ -77,6 +77,20 @@ puts response.content
 
 RubyLLM handles the conversation history automatically. See the [Chatting with AI Models Guide]({% link guides/chat.md %}) for more details.
 
+## One-off Requests
+
+For single prompt responses, interact with language models using `RubyLLM.ask`. This uses the configured default model.
+
+```ruby
+# Ask a question
+response = RubyLLM.ask "What is Ruby on Rails?"
+
+# The response is a RubyLLM::Message object
+puts response.content
+# => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
+```
+
+
 ## Generating an Image
 
 Generate images using models like DALL-E 3 via `RubyLLM.paint`.

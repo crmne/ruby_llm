@@ -60,6 +60,14 @@ chat.ask "Tell me a story about a Ruby programmer" do |chunk|
   print chunk.content
 end
 
+# Continue the conversation with a chat instance
+chat = RubyLLM.chat
+chat.ask "What's the best way to learn Ruby?"
+chat.ask "Why is it so popular?"
+
+# For one-off requests
+RubyLLM.ask "What's the best way to learn Ruby?"
+
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 

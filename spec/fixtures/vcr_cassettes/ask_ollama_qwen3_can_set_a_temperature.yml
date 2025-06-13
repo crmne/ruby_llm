@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.8}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Jun 2025 16:31:42 GMT
+      Content-Length:
+      - '1544'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-920","object":"chat.completion","created":1749745902,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked \"What''s 2 + 2?\" That''s a basic math question, right? Let
+        me think. 2 plus 2... Well, in arithmetic, adding 2 and 2 should give 4. But
+        maybe I should double-check to make sure there''s no trick here. Sometimes
+        people might ask such simple questions to test if the AI is paying attention
+        or if there''s a hidden meaning. Let me consider different contexts. If it''s
+        in base 10, which is standard, then yes, 2 + 2 = 4. Are there any other bases
+        where this might not hold? For example, in base 3, 2 + 2 would be 11, but
+        the question doesn''t mention any base. So it''s safe to assume base 10. Also,
+        maybe the user is a child learning math, or they just want a straightforward
+        answer. I should make sure to state the answer clearly. Let me also think
+        if there''s any possibility of a typo or misunderstanding. The user wrote
+        \"2 + 2\" without any symbols, so it''s definitely an addition problem. I
+        think the answer is 4. Just to confirm, I can recall that 2 + 2 is one of
+        the most basic arithmetic facts. So yeah, the answer should be 4.\n\u003c/think\u003e\n\nThe
+        result of 2 + 2 is **4**. This is a basic arithmetic operation in the decimal
+        number system, where adding two units to another two units yields a total
+        of four units."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":318,"total_tokens":334}}
+
+        '
+  recorded_at: Thu, 12 Jun 2025 16:31:42 GMT
+recorded_with: VCR 6.3.1

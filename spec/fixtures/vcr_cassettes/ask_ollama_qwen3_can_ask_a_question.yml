@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Jun 2025 15:47:27 GMT
+      Content-Length:
+      - '1410'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-956","object":"chat.completion","created":1749743247,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking, \"What''s 2 + 2?\" That''s a basic arithmetic question.
+        Let me make sure I understand it correctly. They want to know the sum of 2
+        and 2. \n\nFirst, I should recall the fundamental addition rules. In mathematics,
+        adding two numbers means combining their quantities. So, 2 + 2 is straightforward.
+        Let me think: 2 plus 2 equals 4. That''s the standard answer.\n\nWait, is
+        there any chance they might be asking about something else? Like, maybe in
+        a different context, such as binary or another base? But the question is written
+        in base 10, so unless specified otherwise, the answer should be 4. \n\nAlso,
+        maybe they''re testing if I know basic math, but it''s a simple question.
+        Let me confirm again. 2 + 2. Yes, 2 plus 2 is 4. I don''t see any complications
+        here. \n\nPerhaps they want a detailed explanation? But the question is pretty
+        direct. The user might just need the answer. I should provide the correct
+        result clearly. \n\nNo, I think it''s safe to say the answer is 4. There''s
+        no ambiguity in this question. So, I''ll state that 2 + 2 equals 4.\n\u003c/think\u003e\n\n2
+        + 2 equals 4."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":281,"total_tokens":297}}
+
+        '
+  recorded_at: Thu, 12 Jun 2025 15:47:27 GMT
+recorded_with: VCR 6.3.1

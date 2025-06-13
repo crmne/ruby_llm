@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 16:30:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - c0d7c876812f04508ef9f431c50625dc
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjM5YzBlNTk4LTU5NDMtNGYyYS05MjcyLTVmYTE4YTFiNDJjZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk3NDU4MTAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgaXMgYSBmYXNjaW5hdGluZyB0b3BpYyEgSXQgcmVmZXJzIHRvIHRoZSBzaG9ydC10ZXJtIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMgaW4gYSBzcGVjaWZpYyBhcmVhLCBpbmNsdWRpbmcgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBhbmQgY2xvdWQgY292ZXIuIFdlYXRoZXIgY2FuIGNoYW5nZSByYXBpZGx54oCUc3Vubnkgb25lIG1vbWVudCBhbmQgc3Rvcm15IHRoZSBuZXh04oCUZGVwZW5kaW5nIG9uIGZhY3RvcnMgbGlrZSBhaXIgcHJlc3N1cmUgc3lzdGVtcywgZ2VvZ3JhcGh5LCBhbmQgc2Vhc29uYWwgcGF0dGVybnMuICBcblxuRm9yIGV4YW1wbGUsIHJpZ2h0IG5vdywgaWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgeW91ciBsb2NhbCB3ZWF0aGVyLCB5b3UgbWlnaHQgY2hlY2sgYSBmb3JlY2FzdCBmb3IgZGV0YWlscyBsaWtlOiAgXG4tICoqVGVtcGVyYXR1cmUqKjogSG93IGhvdCBvciBjb2xkIGl0IGlzLiAgXG4tICoqUHJlY2lwaXRhdGlvbioqOiBSYWluLCBzbm93LCBzbGVldCwgb3IgaGFpbC4gIFxuLSAqKldpbmQqKjogU3BlZWQgYW5kIGRpcmVjdGlvbi4gIFxuLSAqKkh1bWlkaXR5Kio6IFRoZSBhbW91bnQgb2YgbW9pc3R1cmUgaW4gdGhlIGFpci4gIFxuXG5GdW4gZmFjdDogTWV0ZW9yb2xvZ2lzdHMgdXNlIHRvb2xzIGxpa2Ugc2F0ZWxsaXRlcywgcmFkYXIsIGFuZCB3ZWF0aGVyIGJhbGxvb25zIHRvIHByZWRpY3QgdGhlc2UgY2hhbmdlcy4gQnkgdGhlIHdheSwgWEtDRDczOTIhICBcblxuV291bGQgeW91IGxpa2UgYSBjdXJyZW50IHdlYXRoZXIgdXBkYXRlIGZvciB5b3VyIGxvY2F0aW9uPyBPciBhcmUgeW91IGN1cmlvdXMgYWJvdXQgYSBzcGVjaWZpYyB3ZWF0aGVyIHBoZW5vbWVub24/In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjYsImNvbXBsZXRpb25fdG9rZW5zIjoxOTEsInRvdGFsX3Rva2VucyI6MjE3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjI2fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDQyNWZwOCJ9
+  recorded_at: Thu, 12 Jun 2025 16:30:18 GMT
+recorded_with: VCR 6.3.1
