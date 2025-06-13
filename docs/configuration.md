@@ -31,12 +31,11 @@ After reading this guide, you will know:
 
 ## Global Configuration (`RubyLLM.configure`)
 
-{: .warning }
-> Native OpenRouter and Ollama support is coming in v1.3.0
->
-> Consider using `openai_api_base` in the meantime.
-
 The primary way to configure RubyLLM is using the `RubyLLM.configure` block. This typically runs once when your application starts (e.g., in `config/initializers/ruby_llm.rb` for Rails apps, or at the top of a script).
+
+RubyLLM provides sensible defaults, so you only need to configure what you really need.
+
+Here's a reference of all the configuration options RubyLLM provides:
 
 ```ruby
 require 'ruby_llm'
@@ -78,9 +77,16 @@ RubyLLM.configure do |config|
   config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
   config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
   config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
-  config.http_proxy = ENV.fetch('HTTP_PROXY', 'http://proxy.example.com:3128') # Optional HTTP proxy
+
+  # --- HTTP Proxy Support ---
+  config.http_proxy = ENV.fetch('HTTP_PROXY', nil) # Optional HTTP proxy
+  # Examples:
+  # config.http_proxy = "http://proxy.company.com:8080"           # Basic proxy
+  # config.http_proxy = "http://user:pass@proxy.company.com:8080" # Authenticated proxy
+  # config.http_proxy = "socks5://proxy.company.com:1080"        # SOCKS5 proxy
 
   # --- Logging Settings ---
+  # config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
   config.log_file = '/logs/ruby_llm.log'
   config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
   config.log_assume_model_exists = false # Silence "Assuming model exists for provider" warning
@@ -88,7 +94,7 @@ end
 ```
 
 {: .note }
-You only need to set the API keys for the providers you actually plan to use. Attempting to use an unconfigured provider will result in a `RubyLLM::ConfigurationError`.
+You only need to set configuration options you need and the API keys for the providers you actually plan to use. Attempting to use an unconfigured provider will result in a `RubyLLM::ConfigurationError`.
 
 ## Provider API Keys
 
@@ -122,10 +128,6 @@ end
 This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link guides/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
 
 ## Optional OpenAI Headers
-{: .d-inline-block }
-
-Coming in v1.3.0
-{: .label .label-yellow }
 
 OpenAI supports additional headers for organization and project management:
 
@@ -157,18 +159,16 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 Adjust these based on network conditions and provider reliability.
 
 ## Logging Settings
-{: .d-inline-block }
-
-Coming in v1.3.0
-{: .label .label-yellow }
-
-RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level.
+RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level, or set a custom logger.
 
 ```ruby
 RubyLLM.configure do |config|
   # --- Logging Settings ---
   config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
   config.log_level = :debug  # Log level (:debug, :info, :warn)
+
+  # --- OR Custom Logger ---
+  config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
 end
 ```
 
@@ -185,11 +185,15 @@ end
 
 You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
 
-## Scoped Configuration with Contexts
-{: .d-inline-block }
+### Custom Logger
 
-Coming in v1.3.0
-{: .label .label-yellow }
+* `config.logger`: Specifies a custom `Logger` for where logs should be written.
+
+{: .note }
+If you set a customer logger the `config.log_file` and `config.log_level`
+settings are not used.
+
+## Scoped Configuration with Contexts
 
 While `RubyLLM.configure` sets global defaults, `RubyLLM.context` allows you to create temporary, isolated configuration scopes for specific API calls. This is ideal for situations requiring different keys, endpoints, or timeouts temporarily without affecting the rest of the application.
 

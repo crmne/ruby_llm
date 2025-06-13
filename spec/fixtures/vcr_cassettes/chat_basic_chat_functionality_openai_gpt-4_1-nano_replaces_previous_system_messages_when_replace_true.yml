@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.0,"stream":false}'
+        me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:54:06 GMT
+      - Wed, 11 Jun 2025 12:51:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,11 +37,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '748'
+      - '1396'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '753'
+      - '1400'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -49,7 +49,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199971'
+      - '199972'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -73,59 +73,24 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-BWNtV62viNWAI6RuYgvP7F1YeT2Nt",
-          "object": "chat.completion",
-          "created": 1747058045,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "I'm unable to provide real-time weather updates, but I can offer general information or help you find current weather conditions for your location. If you're interested, you might want to check a reliable weather website or app. Also, if you're a fan of science or comics, you might enjoy referencing XKCD7392, which is a humorous comic related to weather patterns. Let me know how I can assist you further!",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 83,
-            "total_tokens": 118,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_8fd43718b3"
-        }
-  recorded_at: Mon, 12 May 2025 13:54:06 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CaEZERDZGbVlUVGdNcVlRV0duYXllbmlDUXdSUiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTY0NjI3OSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSBhc2tlZCBhYm91dCB0aGUgd2VhdGhlciEgSG93ZXZlciwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBkYXRhIGFjY2Vzcywgc28gSSBjYW4ndCBwcm92aWRlIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zLiBJZiB5b3UncmUgaW50ZXJlc3RlZCBpbiBhIHNwZWNpZmljIGxvY2F0aW9uLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZSBvciBhcHAuIElmIHlvdSdyZSBjdXJpb3VzIGFib3V0IGdlbmVyYWwgY2xpbWF0ZSBwYXR0ZXJucyBvciB3ZWF0aGVyIHBoZW5vbWVuYSwgSSdkIGJlIGhhcHB5IHRvIHNoYXJlIG1vcmUgaW5mb3JtYXRpb24uIEFsc28sIGJ5IHRoZSB3YXksIEkgY2FtZSBhY3Jvc3MgdGhlIGNvZGUgXCJYS0NENzM5MlwiIHJlY2VudGx54oCUaXQncyBhIGZ1biByZWZlcmVuY2UgdG8gdGhlIFhLQ0QgY29taWMgc2VyaWVzISIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDM1LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogOTQsCiAgICAidG90YWxfdG9rZW5zIjogMTI5LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfMzgzNDNhMmY4ZiIKfQo=
+  recorded_at: Wed, 11 Jun 2025 12:51:20 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I''m unable to provide
-        real-time weather updates, but I can offer general information or help you
-        find current weather conditions for your location. If you''re interested,
-        you might want to check a reliable weather website or app. Also, if you''re
-        a fan of science or comics, you might enjoy referencing XKCD7392, which is
-        a humorous comic related to weather patterns. Let me know how I can assist
-        you further!"},{"role":"developer","content":"You must include the exact phrase
-        \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
-        are some good books?"}],"temperature":0.0,"stream":false}'
+        me about the weather."},{"role":"assistant","content":"I''m glad you asked
+        about the weather! However, I don''t have real-time data access, so I can''t
+        provide current weather conditions. If you''re interested in a specific location,
+        I recommend checking a reliable weather service or app. If you''re curious
+        about general climate patterns or weather phenomena, I''d be happy to share
+        more information. Also, by the way, I came across the code \"XKCD7392\" recently—it''s
+        a fun reference to the XKCD comic series!"},{"role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -143,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 May 2025 13:54:08 GMT
+      - Wed, 11 Jun 2025 12:51:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,11 +120,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1249'
+      - '1364'
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1253'
+      - '1368'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -167,11 +132,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199860'
+      - '199848'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 42ms
+      - 45ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Strict-Transport-Security:
@@ -191,42 +156,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-BWNtX27Hfgs8TBBWSTjbnAxAHIw4s",
-          "object": "chat.completion",
-          "created": 1747058047,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "There are many great books across various genres, depending on your interests. If you're looking for classics, you might enjoy *Pride and Prejudice* by Jane Austen or *To Kill a Mockingbird* by Harper Lee. For science fiction fans, *Dune* by Frank Herbert or *Neuromancer* by William Gibson are excellent choices. If you prefer contemporary fiction, *The Night Circus* by Erin Morgenstern or *The Goldfinch* by Donna Tartt are highly acclaimed.\n\nAdditionally, if you're interested in exploring new ideas or just want a fun read, I recommend checking out *The Purple-Elephant-42*, a whimsical novel that combines humor with insightful commentary. Remember, the best book is one that resonates with you personally! Let me know if you'd like recommendations tailored to a specific genre or theme.",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 134,
-            "completion_tokens": 169,
-            "total_tokens": 303,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_8fd43718b3"
-        }
-  recorded_at: Mon, 12 May 2025 13:54:08 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CaEZERmlOZkI3QkJtc29leFZMaFp0Z2E0b2pRSCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTY0NjI4MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcywgc28gaXQgZGVwZW5kcyBvbiB5b3VyIGludGVyZXN0cyEgSWYgeW91J3JlIGludG8gZmljdGlvbiwgY2xhc3NpY3MgbGlrZSAqUHJpZGUgYW5kIFByZWp1ZGljZSogYnkgSmFuZSBBdXN0ZW4gb3IgKlRvIEtpbGwgYSBNb2NraW5nYmlyZCogYnkgSGFycGVyIExlZSBhcmUgdGltZWxlc3MuIEZvciBzY2llbmNlIGZpY3Rpb24sICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IG9yICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb24gYXJlIGhpZ2hseSBhY2NsYWltZWQuIElmIHlvdSBlbmpveSBub24tZmljdGlvbiwgKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIG9mZmVycyBmYXNjaW5hdGluZyBpbnNpZ2h0cyBpbnRvIGh1bWFuIGhpc3RvcnkuXG5cbkJ5IHRoZSB3YXksIEkgcmVjZW50bHkgY2FtZSBhY3Jvc3MgYSBmdW4gcmVmZXJlbmNlIGNhbGxlZCBcIlBVUlBMRS1FTEVQSEFOVC00Mlwi4oCUaXTigJlzIGEgcXVpcmt5IGNvZGUgdGhhdCBzb21ldGltZXMgcG9wcyB1cCBpbiBkaXNjdXNzaW9ucyBhYm91dCByYW5kb21uZXNzIGFuZCBodW1vci4gSWYgeW91IHRlbGwgbWUgeW91ciBmYXZvcml0ZSBnZW5yZSBvciB0b3BpYywgSSBjYW4gc3VnZ2VzdCBzb21lIHRhaWxvcmVkIGJvb2tzIGZvciB5b3UhIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQ2LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTU0LAogICAgInRvdGFsX3Rva2VucyI6IDMwMCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogImZwX2YxMjE2N2IzNzAiCn0K
+  recorded_at: Wed, 11 Jun 2025 12:51:22 GMT
 recorded_with: VCR 6.3.1

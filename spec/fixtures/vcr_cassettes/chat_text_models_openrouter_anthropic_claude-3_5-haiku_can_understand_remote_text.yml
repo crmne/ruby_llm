@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Wed, 14 May 2025 18:45:16 GMT
+      - Wed, 28 May 2025 09:09:09 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6824e4bc-9c6"
+      - W/"6836d2b5-9c6"
       Expires:
-      - Thu, 15 May 2025 06:18:40 GMT
+      - Wed, 11 Jun 2025 09:37:51 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 837C:2EE16:10587B4:107C83D:682584E8
+      - 2E0D:1A1E1:ED23E5:EF5D0B:68494C17
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 15 May 2025 09:36:49 GMT
+      - Wed, 11 Jun 2025 12:43:55 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '78'
+      - '379'
       X-Served-By:
-      - cache-fra-etou8220063-FRA
+      - cache-fra-etou8220130-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1747301809.486882,VS0,VE2
+      - S1749645836.562219,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - ade3b5e0c2dbbe443855a90d85d5bddb9118d3c9
+      - fcd21f6afc4c176a4b7b61cacc0afc59093c4ab8
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,24 +95,24 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 15 May 2025 09:36:49 GMT
+  recorded_at: Wed, 11 Jun 2025 12:43:55 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is Ruby?"},{"type":"text","text":"<file name=''license.txt''>Ruby is copyrighted
-        free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou can redistribute
-        it and/or modify it under either the terms of the\n2-clause BSDL (see the
-        file BSDL), or the conditions below:\n\n  1. You may make and give away verbatim
-        copies of the source form of the\n     software without restriction, provided
-        that you duplicate all of the\n     original copyright notices and associated
-        disclaimers.\n\n  2. You may modify your copy of the software in any way,
-        provided that\n     you do at least ONE of the following:\n\n       a) place
-        your modifications in the Public Domain or otherwise\n          make them
-        Freely Available, such as by posting said\n\t  modifications to Usenet or
-        an equivalent medium, or by allowing\n\t  the author to include your modifications
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
         in the software.\n\n       b) use the modified software only within your corporation
         or\n          organization.\n\n       c) give non-standard binaries non-standard
         names, with\n          instructions on where to get the original software
@@ -137,7 +135,7 @@ http_interactions:
         aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
         IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
         LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"temperature":0.7,"stream":false}'
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 May 2025 09:36:49 GMT
+      - Wed, 11 Jun 2025 12:43:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -181,20 +179,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
         \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n{\"id\":\"gen-1747301809-AwWcUJnhFfXXWo9nXBUS\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1747301809,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Ruby
-        is a dynamic, object-oriented programming language created by Yukihiro Matsumoto
-        (also known as Matz) in Japan. Based on the license text, the key points about
-        Ruby are:\\n\\n1. It is copyrighted free software developed by Yukihiro Matsumoto.\\n\\n2.
-        It is distributed under a flexible licensing model that allows:\\n- Redistribution
-        of source code\\n- Modification of the software\\n- Use in commercial and
-        non-commercial projects\\n- Sharing and distributing modifications\\n\\n3.
-        The software is provided \\\"AS IS\\\" without any express or implied warranties.\\n\\nWhile
-        the license text doesn't describe Ruby's technical characteristics, Ruby is
-        known for being:\\n- Designed for programmer productivity and happiness\\n-
-        Emphasizing the principle of least surprise\\n- Supporting multiple programming
-        paradigms\\n- Having a clean and readable syntax\\n- Featuring dynamic typing
-        and automatic memory management\\n- Providing powerful metaprogramming capabilities\\n\\nRuby
-        gained widespread popularity with the Ruby on Rails web framework, which helped
-        establish Ruby as a prominent language for web development.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":578,\"completion_tokens\":235,\"total_tokens\":813}}"
-  recorded_at: Thu, 15 May 2025 09:36:55 GMT
+        \        \n{\"id\":\"gen-1749645835-5XhxXI7yjaYEKQVN8ec0\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645835,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This
+        is the license text for Ruby, a programming language created by Yukihiro Matsumoto.
+        It appears to be a modified BSD-style license that outlines the terms and
+        conditions for redistributing and using Ruby software. The key points include:\\n\\n1.
+        You can freely redistribute the source code\\n2. You can modify the software
+        with certain conditions\\n3. You can distribute binaries with specific requirements\\n4.
+        You can incorporate parts of Ruby into other software\\n5. Scripts and library
+        files generated using Ruby do not automatically fall under Ruby's copyright\\n6.
+        The software is provided \\\"AS IS\\\" without warranties\\n\\nThis license
+        grants significant freedom to users while providing some protections for the
+        original author.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":148,\"total_tokens\":736}}"
+  recorded_at: Wed, 11 Jun 2025 12:44:00 GMT
 recorded_with: VCR 6.3.1

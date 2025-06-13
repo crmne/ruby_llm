@@ -14,8 +14,8 @@ module RubyLLM
       raise ArgumentError, 'Text and attachments cannot be both nil' if @text.nil? && @attachments.empty?
     end
 
-    def add_attachment(source)
-      @attachments << Attachment.new(source)
+    def add_attachment(source, filename: nil)
+      @attachments << Attachment.new(source, filename:)
       self
     end
 

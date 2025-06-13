@@ -68,7 +68,7 @@ module RubyLLM
     end
 
     def logger
-      @logger ||= Logger.new(
+      @logger ||= config.logger || Logger.new(
         config.log_file,
         progname: 'RubyLLM',
         level: config.log_level
