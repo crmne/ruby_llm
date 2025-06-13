@@ -59,7 +59,25 @@ end
 {: .note }
 You only need to configure keys for the providers you actually plan to use. See the [Configuration Guide]({% link configuration.md %}) for all options, including setting defaults and connecting to custom endpoints.
 
-## Your First LLM response
+## Your First Chat
+
+Interact with language models using `RubyLLM.chat`.
+
+```ruby
+# Create a chat instance (uses the configured default model)
+chat = RubyLLM.chat
+
+# Ask a question
+response = chat.ask "What is Ruby on Rails?"
+
+# The response is a RubyLLM::Message object
+puts response.content
+# => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
+```
+
+RubyLLM handles the conversation history automatically. See the [Chatting with AI Models Guide]({% link guides/chat.md %}) for more details.
+
+## One-off Requests
 
 For single prompt responses, interact with language models using `RubyLLM.ask`. This uses the configured default model.
 
@@ -72,7 +90,6 @@ puts response.content
 # => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
 ```
 
-If you would like RubyLLM to handle conversation history automatically, use a RubyLLM.chat instance. See the [Chatting with AI Models Guide]({% link guides/chat.md %}) for more details.
 
 ## Generating an Image
 
