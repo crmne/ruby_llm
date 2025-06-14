@@ -16,7 +16,8 @@ module RubyLLM
           payload = {
             contents: format_messages(messages),
             generationConfig: {
-              temperature: temperature
+              temperature: temperature,
+              responseModalities: ['TEXT', 'IMAGE']
             }
           }
           payload[:tools] = format_tools(tools) if tools.any?
