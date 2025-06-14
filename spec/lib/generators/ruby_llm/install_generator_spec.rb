@@ -134,35 +134,35 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     end
   end
 
-  describe 'README template' do
-    let(:readme_content) { File.read(File.join(template_dir, 'README.md.tt')) }
+  describe 'INSTALL_INFO template' do
+    let(:install_info_content) { File.read(File.join(template_dir, 'INSTALL_INFO.md.tt')) }
 
-    it 'has README template file' do
-      expect(File.exist?(File.join(template_dir, 'README.md.tt'))).to be(true)
+    it 'has INSTALL_INFO template file' do
+      expect(File.exist?(File.join(template_dir, 'INSTALL_INFO.md.tt'))).to be(true)
     end
 
     it 'includes welcome message' do
-      expect(readme_content).to include('RubyLLM Rails Setup Complete')
+      expect(install_info_content).to include('RubyLLM Rails Setup Complete')
     end
 
     it 'includes setup information' do
-      expect(readme_content).to include('Run migrations')
+      expect(install_info_content).to include('Run migrations')
     end
 
     it 'includes migration instructions' do
-      expect(readme_content).to include('rails db:migrate')
+      expect(install_info_content).to include('rails db:migrate')
     end
 
     it 'includes API configuration instructions' do
-      expect(readme_content).to include('Set your API keys')
+      expect(install_info_content).to include('Set your API keys')
     end
 
     it 'includes usage examples' do
-      expect(readme_content).to include('Start using RubyLLM in your code')
+      expect(install_info_content).to include('Start using RubyLLM in your code')
     end
 
     it 'includes streaming response information' do
-      expect(readme_content).to include('For streaming responses')
+      expect(install_info_content).to include('For streaming responses')
     end
   end
 
@@ -197,8 +197,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       expect(generator_content).to include('def create_initializer')
     end
 
-    it 'defines show_readme method' do
-      expect(generator_content).to include('def show_readme')
+    it 'defines show_install_info method' do
+      expect(generator_content).to include('def show_install_info')
     end
   end
 
