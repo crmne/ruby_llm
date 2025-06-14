@@ -119,7 +119,7 @@ RubyLLM manages a registry of known models and their capabilities. For detailed 
 
 ## Multi-modal Conversations
 
-Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, and even PDFs in your chat messages using the `with:` option in the `ask` method.
+Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, text files, and PDFs in your chat messages using the `with:` option in the `ask` method.
 
 ### Working with Images
 
@@ -130,17 +130,15 @@ Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-o
 chat = RubyLLM.chat(model: 'gpt-4o')
 
 # Ask about a local image file
-response = chat.ask "Describe this logo.", with: { image: "path/to/ruby_logo.png" }
+response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
 puts response.content
 
 # Ask about an image from a URL
-response = chat.ask "What kind of architecture is shown here?", with: { image: "https://example.com/eiffel_tower.jpg" }
+response = chat.ask "What kind of architecture is shown here?", with: "https://example.com/eiffel_tower.jpg"
 puts response.content
 
 # Send multiple images
-response = chat.ask "Compare the user interfaces in these two screenshots.", with: {
-  image: ["screenshot_v1.png", "screenshot_v2.png"]
-}
+response = chat.ask "Compare the user interfaces in these two screenshots.", with: ["screenshot_v1.png", "screenshot_v2.png"]
 puts response.content
 ```
 
@@ -154,11 +152,27 @@ Provide audio file paths to audio-capable models (like `gpt-4o-audio-preview`).
 chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
 
 # Transcribe or ask questions about audio content
-response = chat.ask "Please transcribe this meeting recording.", with: { audio: "path/to/meeting.mp3" }
+response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
 puts response.content
 
 # Ask follow-up questions based on the audio context
 response = chat.ask "What were the main action items discussed?"
+puts response.content
+```
+
+### Working with Text Files
+
+Provide text file paths to models that support document analysis.
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+
+# Analyze a text file
+response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
+puts response.content
+
+# Ask questions about code files
+response = chat.ask "Explain what this Ruby file does.", with: "app/models/user.rb"
 puts response.content
 ```
 
@@ -171,20 +185,48 @@ Provide PDF paths or URLs to models that support document analysis (currently Cl
 chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
 
 # Ask about a local PDF
-response = chat.ask "Summarize the key findings in this research paper.", with: { pdf: "path/to/paper.pdf" }
+response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
 puts response.content
 
 # Ask about a PDF via URL
-response = chat.ask "What are the terms and conditions outlined here?", with: { pdf: "https://example.com/terms.pdf" }
+response = chat.ask "What are the terms and conditions outlined here?", with: "https://example.com/terms.pdf"
 puts response.content
 
 # Combine text and PDF context
-response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: { pdf: "manual.pdf" }
+response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: "manual.pdf"
 puts response.content
 ```
 
 {: .note }
 **PDF Limitations:** Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
+
+### Simplified Attachment API
+
+RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+
+# Single file - type automatically detected
+response = chat.ask "What's in this file?", with: "path/to/document.pdf"
+
+# Multiple files of different types
+response = chat.ask "Analyze these files", with: [
+  "diagram.png",
+  "report.pdf",
+  "meeting_notes.txt",
+  "recording.mp3"
+]
+
+# Still works with the explicit hash format if needed
+response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
+```
+
+**Supported file types:**
+- **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Audio:** .mp3, .wav, .m4a, .ogg, .flac
+- **Documents:** .pdf, .txt, .md, .csv, .json, .xml
+- **Code:** .rb, .py, .js, .html, .css (and many others)
 
 ## Controlling Creativity: Temperature
 

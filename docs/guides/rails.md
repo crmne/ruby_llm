@@ -50,7 +50,7 @@ This two-phase approach (create empty → update with content) is intentional an
 
 1. **Streaming-first design**: By creating the message record before the API call, your UI can immediately show a "thinking" state and have a DOM target ready for incoming chunks.
 2. **Turbo Streams compatibility**: Works perfectly with `after_create_commit { broadcast_append_to... }` for real-time updates.
-3. **Clean rollback on failure**: If the API call fails, the empty message is automatically removed.
+3. **Clean rollback on failure**: If the API call fails, the empty assistant message is automatically removed, preventing orphaned records that could cause issues with providers like Gemini that reject empty messages.
 
 ### Content Validation Implications
 
@@ -60,7 +60,7 @@ This approach has one important consequence: **you cannot use `validates :conten
 
 ### Database Migrations
 
-First, generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
+First, generate migrations for your `Chat`, `Message`, and `ToolCall` models.
 
 ```bash
 # Generate basic models and migrations
@@ -90,7 +90,6 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.references :chat, null: false, foreign_key: true
       t.string :role
       t.text :content
-      # Optional fields for tracking usage/metadata
       t.string :model_id
       t.integer :input_tokens
       t.integer :output_tokens
@@ -101,7 +100,6 @@ class CreateMessages < ActiveRecord::Migration[7.1]
 end
 
 # db/migrate/YYYYMMDDHHMMSS_create_tool_calls.rb
-# (Only needed if using tools)
 class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
@@ -118,10 +116,6 @@ end
 Run the migrations: `rails db:migrate`
 
 ### ActiveStorage Setup for Attachments (Optional)
-{: .d-inline-block }
-
-Coming in v1.3.0
-{: .label .label-yellow }
 
 If you want to use attachments (images, audio, PDFs) with your AI chats, you need to set up ActiveStorage:
 
@@ -249,7 +243,7 @@ puts system_message.content # => "You are a concise Ruby expert."
 
 ### Tools Integration
 
-If you're using [Tools]({% link guides/tools.md %}), they're automatically persisted too:
+[Tools]({% link guides/tools.md %}) are automatically persisted too:
 
 ```ruby
 # Define a tool
@@ -272,10 +266,6 @@ puts chat_record.messages.count # => 3 (user, assistant's tool call, tool result
 ```
 
 ### Working with Attachments
-{: .d-inline-block }
-
-Coming in v1.3.0
-{: .label .label-yellow }
 
 If you've set up ActiveStorage as described above, you can easily send attachments to AI models with automatic type detection:
 
@@ -290,13 +280,9 @@ chat_record.ask("What's in this file?", with: "app/assets/images/diagram.png")
 chat_record.ask("What are in these files?", with: [
   "app/assets/documents/report.pdf",
   "app/assets/images/chart.jpg",
+  "app/assets/text/notes.txt",
   "app/assets/audio/recording.mp3"
 ])
-
-# Still works with manually categorized hash (backward compatible)
-chat_record.ask("What's in this image?", with: {
-  image: "app/assets/images/diagram.png"
-})
 
 # Works with file uploads from forms
 chat_record.ask("Analyze this file", with: params[:uploaded_file])
@@ -305,7 +291,7 @@ chat_record.ask("Analyze this file", with: params[:uploaded_file])
 chat_record.ask("What's in this document?", with: user.profile_document)
 ```
 
-The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, or PDF - RubyLLM figures it out for you!
+The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, PDF, or text document - RubyLLM figures it out for you!
 
 ## Handling Persistence Edge Cases
 

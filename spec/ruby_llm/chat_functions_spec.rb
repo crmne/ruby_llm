@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Chat do
     it "raises UnsupportedFunctionsError when model doesn't support functions" do # rubocop:disable RSpec/ExampleLength
       # Create a non-function-calling model by patching the supports_functions attribute
       model = RubyLLM.models.find('gpt-4.1-nano')
-      allow(model).to receive(:supports_functions).and_return(false)
+      allow(model).to receive(:supports_functions?).and_return(false)
 
       chat = described_class.new(model: 'gpt-4.1-nano')
       # Replace the model with our modified version

@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"temperature":0.7,"stream":false}'
+        2 + 2?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:26:02 GMT
+      - Wed, 11 Jun 2025 12:51:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,6 +48,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1745407562-yCYKmyVh0iuPFBKkw976\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1745407562,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":10,\"total_tokens\":26}}"
-  recorded_at: Wed, 23 Apr 2025 11:26:04 GMT
+      string: "\n         \n\n         \n{\"id\":\"gen-1749646282-miEO6cUHVL3wzWxasc0I\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646282,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":5,\"total_tokens\":21}}"
+  recorded_at: Wed, 11 Jun 2025 12:51:23 GMT
 recorded_with: VCR 6.3.1

@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Chat do
   describe '#assume_model_exists' do
     let(:real_model) { 'gpt-4.1-nano' }
     let(:custom_model) { 'my-custom-model' }
-    let(:provider) { :openai }
+    let(:provider) { 'openai' }
     # Keep a reference to the original models for cleanup
     let!(:original_models) { RubyLLM::Models.instance.all.dup }
 

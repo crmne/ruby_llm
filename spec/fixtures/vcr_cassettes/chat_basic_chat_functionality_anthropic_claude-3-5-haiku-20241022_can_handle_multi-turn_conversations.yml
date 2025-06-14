@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:24:26 GMT
+      - Wed, 11 Jun 2025 12:49:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,27 +38,29 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-23T11:24:25Z'
+      - '2025-06-11T12:49:26Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-23T11:24:26Z'
+      - '2025-06-11T12:49:27Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-23T11:24:25Z'
+      - '2025-06-11T12:49:25Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-23T11:24:25Z'
+      - '2025-06-11T12:49:26Z'
       Request-Id:
       - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
       Via:
@@ -73,27 +75,27 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_018NCGGG4BGkT3EorX5pt1MU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
-        was created by Yukihiro Matsumoto (often called \"Matz\") in Japan. He began
-        designing Ruby in 1993 and released the first public version (Ruby 0.95) in
-        1995. Matz aimed to create a programming language that was more human-friendly
-        and enjoyable to use, with a focus on programmer happiness and productivity."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":83}}'
-  recorded_at: Wed, 23 Apr 2025 11:24:26 GMT
+      string: '{"id":"msg_0141rBBATtHin1agU5kmPiy9","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
+        was created by Yukihiro Matsumoto (often referred to as \"Matz\") in Japan.
+        He first released Ruby in 1995 and designed it to be a programming language
+        that prioritizes programmer happiness and productivity, with a focus on simplicity
+        and natural syntax."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":63,"service_tier":"standard"}}'
+  recorded_at: Wed, 11 Jun 2025 12:49:27 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        Yukihiro Matsumoto (often called \"Matz\") in Japan. He began designing Ruby
-        in 1993 and released the first public version (Ruby 0.95) in 1995. Matz aimed
-        to create a programming language that was more human-friendly and enjoyable
-        to use, with a focus on programmer happiness and productivity."},{"role":"user","content":"What
-        year did he create Ruby?"}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
+        was created by Yukihiro Matsumoto (often referred to as \"Matz\") in Japan.
+        He first released Ruby in 1995 and designed it to be a programming language
+        that prioritizes programmer happiness and productivity, with a focus on simplicity
+        and natural syntax."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -110,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:24:27 GMT
+      - Wed, 11 Jun 2025 12:49:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -122,27 +124,29 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-04-23T11:24:27Z'
+      - '2025-06-11T12:49:28Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-04-23T11:24:27Z'
+      - '2025-06-11T12:49:29Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-04-23T11:24:27Z'
+      - '2025-06-11T12:49:27Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-04-23T11:24:27Z'
+      - '2025-06-11T12:49:28Z'
       Request-Id:
       - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
       Via:
@@ -157,8 +161,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_0139MjxxFWWEciEszzAssQAu","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
-        Matsumoto began designing Ruby in 1993 and released the first public version
-        (Ruby 0.95) in 1995."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":106,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":37}}'
-  recorded_at: Wed, 23 Apr 2025 11:24:27 GMT
+      string: '{"id":"msg_01NBXzJkvdwK93YVyT9Zye8W","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
+        Matsumoto first released Ruby in 1995."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":86,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":19,"service_tier":"standard"}}'
+  recorded_at: Wed, 11 Jun 2025 12:49:29 GMT
 recorded_with: VCR 6.3.1

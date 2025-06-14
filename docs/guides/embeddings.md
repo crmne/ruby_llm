@@ -80,6 +80,14 @@ embedding_google = RubyLLM.embed(
   "This is another test sentence",
   model: "text-embedding-004" # Google's model
 )
+
+# Use a model not in the registry (useful for custom endpoints)
+embedding_custom = RubyLLM.embed(
+  "Custom model test",
+  model: "my-custom-embedding-model",
+  provider: :openai,
+  assume_model_exists: true
+)
 ```
 
 You can configure the default embedding model globally:

@@ -1,0 +1,59 @@
+name: Feature Request
+description: Suggest a new feature for RubyLLM
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Read this first:** Our [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIBUTING.md) explains what belongs in RubyLLM vs. your app.
+
+        We focus on **LLM communication**, not application architecture.
+
+  - type: checkboxes
+    id: scope_check
+    attributes:
+      label: Scope check
+      description: "Does this belong in RubyLLM?"
+      options:
+        - label: This is **core LLM communication** (not application logic)
+          required: true
+        - label: This **benefits most users** (not just my use case)
+          required: true
+        - label: This **can't be solved in application code** with current RubyLLM
+          required: true
+        - label: I read the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIBUTING.md)
+          required: true
+
+  - type: checkboxes
+    id: existing_check
+    attributes:
+      label: Due diligence
+      options:
+        - label: I searched existing issues
+          required: true
+        - label: I checked the documentation
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Focus on LLM communication and developer experience
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_library
+    attributes:
+      label: Why this belongs in RubyLLM
+      description: Explain why this can't/shouldn't be application code
+    validations:
+      required: true

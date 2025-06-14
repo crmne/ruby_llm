@@ -8,20 +8,20 @@ module RubyLLM
   #   chat = RubyLLM.chat
   #   chat.ask "What's the best way to learn Ruby?"
   #   chat.ask "Can you elaborate on that?"
-  class Chat # rubocop:disable Metrics/ClassLength
+  class Chat
     include Enumerable
 
     attr_reader :model, :messages, :tools
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil) # rubocop:disable Metrics/MethodLength
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
 
-      config = context&.config || RubyLLM.config
-      model_id = model || config.default_model
+      @context = context
+      @config = context&.config || RubyLLM.config
+      model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
-      @connection = context ? context.connection_for(@provider) : @provider.connection(config)
       @temperature = 0.7
       @messages = []
       @tools = {}
@@ -31,22 +31,22 @@ module RubyLLM
       }
     end
 
-    def ask(message = nil, with: {}, &block)
+    def ask(message = nil, with: nil, &)
       add_message role: :user, content: Content.new(message, with)
-      complete(&block)
+      complete(&)
     end
 
     alias say ask
 
     def with_instructions(instructions, replace: false)
-      @messages = @messages.reject! { |msg| msg.role == :system } if replace
+      @messages = @messages.reject { |msg| msg.role == :system } if replace
 
       add_message role: :system, content: instructions
       self
     end
 
     def with_tool(tool)
-      unless @model.supports_functions
+      unless @model.supports_functions?
         raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
       end
 
@@ -60,25 +60,21 @@ module RubyLLM
       self
     end
 
-    def with_model(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-      assume_exists = true if provider && Provider.providers[provider.to_sym].local?
-
-      if assume_exists
-        raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
-
-        @provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
-        @model = Struct.new(:id, :provider, :supports_functions, :supports_vision).new(model_id, provider, true, true)
-        RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
-                            'Capabilities may not be accurately reflected.'
-      else
-        @model = Models.find model_id, provider
-        @provider = Provider.providers[@model.provider.to_sym] || raise(Error, "Unknown provider: #{@model.provider}")
-      end
+    def with_model(model_id, provider: nil, assume_exists: false)
+      @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
+      @connection = @context ? @context.connection_for(@provider) : @provider.connection(@config)
       self
     end
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_context(context)
+      @context = context
+      @config = context.config
+      with_model(@model.id, provider: @provider.slug, assume_exists: true)
       self
     end
 
@@ -96,7 +92,7 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/MethodLength
+    def complete(&)
       @on[:new_message]&.call
       response = @provider.complete(
         messages,
@@ -120,6 +116,10 @@ module RubyLLM
       message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
       messages << message
       message
+    end
+
+    def reset_messages!
+      @messages.clear
     end
 
     private

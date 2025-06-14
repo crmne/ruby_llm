@@ -13,6 +13,8 @@ module RubyLLM
     # Provider-specific configuration
     attr_accessor :openai_api_key,
                   :openai_api_base,
+                  :openai_organization_id,
+                  :openai_project_id,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
@@ -31,7 +33,13 @@ module RubyLLM
                   :max_retries,
                   :retry_interval,
                   :retry_backoff_factor,
-                  :retry_interval_randomness
+                  :retry_interval_randomness,
+                  :http_proxy,
+                  # Logging configuration
+                  :logger,
+                  :log_file,
+                  :log_level,
+                  :log_assume_model_exists
 
     def initialize
       # Connection configuration
@@ -40,16 +48,22 @@ module RubyLLM
       @retry_interval = 0.1
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
+      @http_proxy = nil
 
       # Default models
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
+
+      # Logging configuration
+      @log_file = $stdout
+      @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
+      @log_assume_model_exists = true
     end
 
-    def inspect # rubocop:disable Metrics/MethodLength
+    def inspect
       redacted = lambda do |name, value|
-        if name.match?(/_key|_secret|_token$/)
+        if name.match?(/_id|_key|_secret|_token$/)
           value.nil? ? 'nil' : '[FILTERED]'
         else
           value

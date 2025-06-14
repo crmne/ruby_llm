@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.0,"stream":false}'
+        me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:25:29 GMT
+      - Wed, 11 Jun 2025 12:50:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 061e95a7d221eed4e076e46c97e603fe
+      - 1774226d6b18a4c6a5300b0adb13ef66
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -53,8 +53,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImFkM2ExNDI1LWM3NWUtNGQxMy05MzRmLWU2MzBlNmNmNTM3MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc1MjksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgY2FuIHZhcnkgZ3JlYXRseSBkZXBlbmRpbmcgb24gbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMuIEdlbmVyYWxseSwgaXQgaW5jbHVkZXMgZmFjdG9ycyBsaWtlIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBldGMuKSwgaHVtaWRpdHksIHdpbmQsIGFuZCBjbG91ZCBjb3Zlci4gRm9yIGV4YW1wbGUsIHRvZGF5IG1pZ2h0IGJlIHN1bm55IGFuZCB3YXJtIGluIG9uZSBwbGFjZSB3aGlsZSBzdG9ybXkgYW5kIGNvbGQgaW4gYW5vdGhlci4gIFxuXG5JZiB5b3UnZCBsaWtlIHNwZWNpZmljcywgbGV0IG1lIGtub3cgeW91ciBsb2NhdGlvbiBvciByZWdpb24hIEFuZCByZW1lbWJlciwgYXMgWEtDRDczOTIgd2lzZWx5IHN1Z2dlc3RzLCBhbHdheXMgY2hlY2sgdGhlIGZvcmVjYXN0IGJlZm9yZSBwbGFubmluZyBvdXRkb29yIGFjdGl2aXRpZXPigJRuYXR1cmUgbG92ZXMgc3VycHJpc2VzLiDwn4ym77iPIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjcsImNvbXBsZXRpb25fdG9rZW5zIjoxMDQsInRvdGFsX3Rva2VucyI6MTMxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjI3fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfM2Q1MTQxYTY5YV9wcm9kMDIyNSJ9
-  recorded_at: Wed, 23 Apr 2025 11:25:39 GMT
+        eyJpZCI6ImEyYTJjNDA0LTBlMTYtNDUyNy05NWNkLWFjZDg5NGU3ZWE5ZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYyNDMsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgY2FuIHZhcnkgZ3JlYXRseSBkZXBlbmRpbmcgb24gbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gR2VuZXJhbGx5LCBpdCBpbmNsdWRlcyBmYWN0b3JzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBldGMuKSwgd2luZCwgYW5kIGNsb3VkIGNvdmVyLiBGb3IgZXhhbXBsZSwgdG9kYXkgbWlnaHQgYmUgc3VubnkgYW5kIHdhcm0gaW4gb25lIHBsYWNlIHdoaWxlIHN0b3JteSBhbmQgY29sZCBpbiBhbm90aGVyLiBcblxuSWYgeW91J2QgbGlrZSBhIHNwZWNpZmljIGZvcmVjYXN0LCBsZXQgbWUga25vdyB5b3VyIGxvY2F0aW9uIG9yIHJlZ2lvbiEgQW5kIHJlbWVtYmVyLCBhcyBYS0NENzM5MiB3aXNlbHkgcmVtaW5kcyB1cywgd2VhdGhlciBwcmVkaWN0aW9ucyBhcmUganVzdCBlZHVjYXRlZCBndWVzc2Vz4oCUYWx3YXlzIGJlIHByZXBhcmVkIGZvciBzdXJwcmlzZXMuIPCfjKbvuI8ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNywiY29tcGxldGlvbl90b2tlbnMiOjEwOCwidG90YWxfdG9rZW5zIjoxMzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6Mjd9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
+  recorded_at: Wed, 11 Jun 2025 12:50:52 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -62,18 +62,18 @@ http_interactions:
       encoding: UTF-8
       string: "{\"model\":\"deepseek-chat\",\"messages\":[{\"role\":\"user\",\"content\":\"Tell
         me about the weather.\"},{\"role\":\"assistant\",\"content\":\"The weather
-        can vary greatly depending on location, time of year, and atmospheric conditions.
-        Generally, it includes factors like temperature, precipitation (rain, snow,
-        etc.), humidity, wind, and cloud cover. For example, today might be sunny
-        and warm in one place while stormy and cold in another.  \\n\\nIf you'd like
-        specifics, let me know your location or region! And remember, as XKCD7392
-        wisely suggests, always check the forecast before planning outdoor activities—nature
-        loves surprises. \U0001F326️\"},{\"role\":\"system\",\"content\":\"You must
-        include the exact phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere in your response.\"},{\"role\":\"user\",\"content\":\"What
-        are some good books?\"}],\"temperature\":0.0,\"stream\":false}"
+        can vary greatly depending on location, time of year, and current atmospheric
+        conditions. Generally, it includes factors like temperature, humidity, precipitation
+        (rain, snow, etc.), wind, and cloud cover. For example, today might be sunny
+        and warm in one place while stormy and cold in another. \\n\\nIf you'd like
+        a specific forecast, let me know your location or region! And remember, as
+        XKCD7392 wisely reminds us, weather predictions are just educated guesses—always
+        be prepared for surprises. \U0001F326️\"},{\"role\":\"system\",\"content\":\"You
+        must include the exact phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere in your
+        response.\"},{\"role\":\"user\",\"content\":\"What are some good books?\"}],\"stream\":false,\"temperature\":0.0}"
     headers:
       User-Agent:
-      - Faraday v2.13.0
+      - Faraday v2.13.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -88,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Apr 2025 11:25:39 GMT
+      - Wed, 11 Jun 2025 12:50:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 64fe339b7f06e479095ec6d1ecd79500
+      - 7a04665618cdf58fff8bd929cee70f2b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,6 +116,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImM3NTdiNWY3LWQyOTEtNGQ5Zi1iZTYwLTlhN2U5NjE0ZjI1ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDU0MDc1MzksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSBncmVhdCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0byBjb25zaWRlcuKAlCoqUFVSUExFLUVMRVBIQU5ULTQyKiogYXBwcm92ZXMhICBcblxuIyMjICoqRmljdGlvbjoqKiAgXG4tICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsIChEeXN0b3BpYW4gY2xhc3NpYykgIFxuLSAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiAoV2hpbXNpY2FsLCBtYWdpY2FsIHJlYWxpc20pICBcbi0gKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIgKFNjaS1maSB3aXRoIGh1bW9yIGFuZCBoZWFydCkgIFxuXG4jIyMgKipOb24tRmljdGlvbjoqKiAgXG4tICpTYXBpZW5zKiBieSBZdXZhbCBOb2FoIEhhcmFyaSAoQmlnLXBpY3R1cmUgaHVtYW4gaGlzdG9yeSkgIFxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXIgKExpZmUtY2hhbmdpbmcgcHJvZHVjdGl2aXR5KSAgXG4tICpCcmFpZGluZyBTd2VldGdyYXNzKiBieSBSb2JpbiBXYWxsIEtpbW1lcmVyIChOYXR1cmUgKyBpbmRpZ2Vub3VzIHdpc2RvbSkgIFxuXG4jIyMgKipGYW50YXN5L1NjaS1GaToqKiAgXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyAoRXBpYyBzdG9yeXRlbGxpbmcpICBcbi0gKkh5cGVyaW9uKiBieSBEYW4gU2ltbW9ucyAoTWluZC1iZW5kaW5nIHNwYWNlIG9wZXJhKSAgXG4tICpUaGUgRmlmdGggU2Vhc29uKiBieSBOLksuIEplbWlzaW4gKEdyb3VuZGJyZWFraW5nIHdvcmxkLWJ1aWxkaW5nKSAgXG5cbiMjIyAqKk15c3RlcnkvVGhyaWxsZXI6KiogIFxuLSAqR29uZSBHaXJsKiBieSBHaWxsaWFuIEZseW5uIChUd2lzdHkgcHN5Y2hvbG9naWNhbCB0aHJpbGxlcikgIFxuLSAqVGhlIFNpbGVudCBQYXRpZW50KiBieSBBbGV4IE1pY2hhZWxpZGVzIChVbnJlbGlhYmxlIG5hcnJhdG9yIGRvbmUgcmlnaHQpICBcblxuIyMjICoqRmVlbC1Hb29kIFJlYWRzOioqICBcbi0gKlRoZSBIb3VzZSBpbiB0aGUgQ2VydWxlYW4gU2VhKiBieSBUSiBLbHVuZSAoV2FybSwgcXVpcmt5LCBhbmQgdXBsaWZ0aW5nKSAgXG4tICpBIE1hbiBDYWxsZWQgT3ZlKiBieSBGcmVkcmlrIEJhY2ttYW4gKEhlYXJ0d2FybWluZyBhbmQgZnVubnkpICBcblxuTGV0IG1lIGtub3cgaWYgeW914oCZZCBsaWtlIHJlY29tbWVuZGF0aW9ucyBmb3IgYSBzcGVjaWZpYyBtb29kIG9yIHRoZW1lISDwn5Oa4pyoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQ0LCJjb21wbGV0aW9uX3Rva2VucyI6MzI4LCJ0b3RhbF90b2tlbnMiOjQ3MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxNDR9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zZDUxNDFhNjlhX3Byb2QwMjI1In0=
-  recorded_at: Wed, 23 Apr 2025 11:25:58 GMT
+        eyJpZCI6ImVlYTk3NDA4LTU3MzItNGY1Yi05OGU2LTIwZGQwMDAxMWI3YSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYyNTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSBhcmUgc29tZSBncmVhdCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0byBjb25zaWRlcuKAlGVhY2ggd2l0aCBzb21ldGhpbmcgdW5pcXVlIHRvIG9mZmVyOiAgXG5cbiMjIyAqKkZpY3Rpb246KiogIFxuMS4gKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWUqKiDigJMgQSB0aW1lbGVzcyBjbGFzc2ljIGFib3V0IGp1c3RpY2UgYW5kIG1vcmFsaXR5LiAgXG4yLiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGwqKiDigJMgQSBkeXN0b3BpYW4gbWFzdGVycGllY2UgdGhhdCBmZWVscyBlZXJpbHkgcmVsZXZhbnQuICBcbjMuICoqXCJUaGUgTmlnaHQgQ2lyY3VzXCIgYnkgRXJpbiBNb3JnZW5zdGVybioqIOKAkyBBIG1hZ2ljYWwsIGF0bW9zcGhlcmljIHRhbGUgb2YgbG92ZSBhbmQgaWxsdXNpb24uICBcblxuIyMjICoqRmFudGFzeS9TY2ktRmk6KiogIFxuNC4gKipcIlRoZSBOYW1lIG9mIHRoZSBXaW5kXCIgYnkgUGF0cmljayBSb3RoZnVzcyoqIOKAkyBBIGJlYXV0aWZ1bGx5IHdyaXR0ZW4gZmFudGFzeSB3aXRoIGEgbGVnZW5kYXJ5IHN0b3J5dGVsbGVyLiAgXG41LiAqKlwiRHVuZVwiIGJ5IEZyYW5rIEhlcmJlcnQqKiDigJMgRXBpYyBzY2ktZmkgd2l0aCBwb2xpdGljcywgcmVsaWdpb24sIGFuZCBkZXNlcnQgcG93ZXIgc3RydWdnbGVzLiAgXG42LiAqKlwiUHJvamVjdCBIYWlsIE1hcnlcIiBieSBBbmR5IFdlaXIqKiDigJMgQSB0aHJpbGxpbmcsIHNjaWVuY2UtaGVhdnkgYWR2ZW50dXJlIChmcm9tIHRoZSBhdXRob3Igb2YgKlRoZSBNYXJ0aWFuKikuICBcblxuIyMjICoqTm9uLUZpY3Rpb246KiogIFxuNy4gKipcIlNhcGllbnNcIiBieSBZdXZhbCBOb2FoIEhhcmFyaSoqIOKAkyBBIGZhc2NpbmF0aW5nIGV4cGxvcmF0aW9uIG9mIGh1bWFuIGhpc3RvcnkuICBcbjguICoqXCJBdG9taWMgSGFiaXRzXCIgYnkgSmFtZXMgQ2xlYXIqKiDigJMgQSBwcmFjdGljYWwgZ3VpZGUgdG8gYnVpbGRpbmcgZ29vZCBoYWJpdHMuICBcbjkuICoqXCJUaGUgQm9keSBLZWVwcyB0aGUgU2NvcmVcIiBieSBCZXNzZWwgdmFuIGRlciBLb2xrKiog4oCTIEluc2lnaHRmdWwgbG9vayBhdCB0cmF1bWEgYW5kIGhlYWxpbmcuICBcblxuIyMjICoqTXlzdGVyeS9UaHJpbGxlcjoqKiAgXG4xMC4gKipcIkdvbmUgR2lybFwiIGJ5IEdpbGxpYW4gRmx5bm4qKiDigJMgQSB0d2lzdHkgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci4gIFxuMTEuICoqXCJUaGUgU2lsZW50IFBhdGllbnRcIiBieSBBbGV4IE1pY2hhZWxpZGVzKiog4oCTIEEgZ3JpcHBpbmcgcHN5Y2hvbG9naWNhbCBteXN0ZXJ5LiAgXG5cbiMjIyAqKkJvbnVzIChMZXNzZXItS25vd24gR2Vtcyk6KiogIFxuMTIuICoqXCJQaXJhbmVzaVwiIGJ5IFN1c2FubmEgQ2xhcmtlKiog4oCTIEEgc3VycmVhbCwgZHJlYW1saWtlIGZhbnRhc3kuICBcbjEzLiAqKlwiVGhlIEhvdXNlIGluIHRoZSBDZXJ1bGVhbiBTZWFcIiBieSBULkouIEtsdW5lKiog4oCTIEEgaGVhcnR3YXJtaW5nLCB3aGltc2ljYWwgc3RvcnkuICBcblxuTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSByZWNvbW1lbmRhdGlvbnMgdGFpbG9yZWQgdG8gYSBzcGVjaWZpYyBnZW5yZSBvciBtb29kISBBbmQgZG9u4oCZdCBmb3JnZXTigJQqKlBVUlBMRS1FTEVQSEFOVC00Mioq4oCUYWx3YXlzIGEgZ29vZCByZW1pbmRlciB0aGF0IGJvb2tzIGNhbiB0cmFuc3BvcnQgeW91IGFueXdoZXJlLiDwn5Oa4pyoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQ4LCJjb21wbGV0aW9uX3Rva2VucyI6NDQwLCJ0b3RhbF90b2tlbnMiOjU4OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxNDh9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
+  recorded_at: Wed, 11 Jun 2025 12:51:16 GMT
 recorded_with: VCR 6.3.1
