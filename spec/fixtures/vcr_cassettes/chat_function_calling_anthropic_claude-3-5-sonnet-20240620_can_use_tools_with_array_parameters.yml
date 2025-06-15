@@ -1,0 +1,168 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-sonnet-20240620","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","input_schema":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 21:08:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '40000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '40000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T21:08:12Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T21:08:13Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T21:08:12Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '48000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '48000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T21:08:12Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - e1031ea3-bbf0-4676-9f23-42dec1e708ae
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_016FgXCFH4kzDUwCggHYPSXA","type":"message","role":"assistant","model":"claude-3-5-sonnet-20240620","content":[{"type":"text","text":"Certainly!
+        I can help you get the weather information for Ottawa, Berlin, and London
+        using the available weather tool. Let me fetch that information for you right
+        away."},{"type":"tool_use","id":"toolu_01C1Fki9WZ36h9z5i6sPRdc6","name":"weather_for_multiple_cities","input":{"cities":["Ottawa","Berlin","London"]}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":386,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":100,"service_tier":"standard"}}'
+  recorded_at: Thu, 12 Jun 2025 21:08:13 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-sonnet-20240620","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"}]},{"role":"assistant","content":[{"type":"text","text":"Certainly!
+        I can help you get the weather information for Ottawa, Berlin, and London
+        using the available weather tool. Let me fetch that information for you right
+        away."},{"type":"tool_use","id":"toolu_01C1Fki9WZ36h9z5i6sPRdc6","name":"weather_for_multiple_cities","input":{"cities":["Ottawa","Berlin","London"]}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01C1Fki9WZ36h9z5i6sPRdc6","content":"Weather
+        in Ottawa, Berlin, London:\n- Ottawa: 19°C, Wind: 5 km/h\n- Berlin: 20°C,
+        Wind: 10 km/h\n- London: 17°C, Wind: 8 km/h\n"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","input_schema":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jun 2025 21:08:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '40000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '40000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-06-12T21:08:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-06-12T21:08:17Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-06-12T21:08:14Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '48000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '48000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-06-12T21:08:13Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - e1031ea3-bbf0-4676-9f23-42dec1e708ae
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ18wMTh2MWlBcXlReUp3d3h1NTVWTXpwaFgiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS0zLTUtc29ubmV0LTIwMjQwNjIwIiwiY29udGVudCI6W3sidHlwZSI6InRleHQiLCJ0ZXh0IjoiR3JlYXQhIEkndmUgcmV0cmlldmVkIHRoZSB3ZWF0aGVyIGluZm9ybWF0aW9uIGZvciB0aGUgY2l0aWVzIHlvdSByZXF1ZXN0ZWQuIEhlcmUncyBhIHN1bW1hcnkgb2YgdGhlIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zOlxuXG4xLiBPdHRhd2E6IFRoZSB0ZW1wZXJhdHVyZSBpcyAxOcKwQyAoNjbCsEYpIHdpdGggYSBsaWdodCB3aW5kIG9mIDUga20vaCAoMyBtcGgpLlxuMi4gQmVybGluOiBJdCdzIHNsaWdodGx5IHdhcm1lciBhdCAyMMKwQyAoNjjCsEYpIHdpdGggYSBtb2RlcmF0ZSB3aW5kIG9mIDEwIGttL2ggKDYgbXBoKS5cbjMuIExvbmRvbjogVGhlIHRlbXBlcmF0dXJlIGlzIDE3wrBDICg2M8KwRikgd2l0aCBhIGdlbnRsZSB3aW5kIG9mIDgga20vaCAoNSBtcGgpLlxuXG5BbGwgdGhyZWUgY2l0aWVzIGFyZSBleHBlcmllbmNpbmcgbWlsZCB0ZW1wZXJhdHVyZXMsIHR5cGljYWwgZm9yIGEgcGxlYXNhbnQgZGF5LiBCZXJsaW4gaXMgdGhlIHdhcm1lc3Qgb2YgdGhlIHRocmVlLCB3aGlsZSBMb25kb24gaXMgdGhlIGNvb2xlc3QuIFRoZSB3aW5kIGNvbmRpdGlvbnMgYXJlIHJlbGF0aXZlbHkgY2FsbSBpbiBhbGwgbG9jYXRpb25zLCB3aXRoIEJlcmxpbiBoYXZpbmcgdGhlIHN0cm9uZ2VzdCBicmVlemUgYW1vbmcgdGhlIHRocmVlIGNpdGllcy5cblxuSXMgdGhlcmUgYW55dGhpbmcgZWxzZSB5b3UnZCBsaWtlIHRvIGtub3cgYWJvdXQgdGhlIHdlYXRoZXIgaW4gdGhlc2UgY2l0aWVzIG9yIGFueSBvdGhlciBsb2NhdGlvbnM/In1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1NTcsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjIwNCwic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
+  recorded_at: Thu, 12 Jun 2025 21:08:16 GMT
+recorded_with: VCR 6.3.1

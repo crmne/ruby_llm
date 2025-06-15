@@ -1,0 +1,169 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather for these cities: Ottawa, Berlin and London?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:17:49 GMT
+      Content-Length:
+      - '990'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-525","object":"chat.completion","created":1750018669,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking for the weather in Ottawa, Berlin, and London. Let me check
+        the tools available. There''s a function called weather_for_multiple_cities
+        that takes an array of city names. The required parameter is \"cities\", which
+        should be an array of strings. The user provided three cities, so I need to
+        include all of them in the array. Let me make sure the JSON is correctly formatted
+        with the cities listed. I''ll call the function with those cities as the arguments.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_ayso8vph","index":0,"type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":163,"completion_tokens":137,"total_tokens":300}}
+
+        '
+  recorded_at: Sun, 15 Jun 2025 20:17:49 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather for these cities: Ottawa, Berlin and London?"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Ottawa, Berlin, and London. Let me check
+        the tools available. There''s a function called weather_for_multiple_cities
+        that takes an array of city names. The required parameter is \"cities\", which
+        should be an array of strings. The user provided three cities, so I need to
+        include all of them in the array. Let me make sure the JSON is correctly formatted
+        with the cities listed. I''ll call the function with those cities as the arguments.\n</think>\n\n","tool_calls":[{"id":"call_ayso8vph","type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},{"role":"tool","content":"Weather
+        in Ottawa, Berlin, London:\n- Ottawa: 19°C, Wind: 5 km/h\n- Berlin: 20°C,
+        Wind: 10 km/h\n- London: 17°C, Wind: 8 km/h\n","tool_call_id":"call_ayso8vph"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:17:58 GMT
+      Content-Length:
+      - '1536'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTM3OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTg2NzgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCBsZXQgbWUgcHJvY2VzcyB0aGUgdXNlcidzIHF1ZXJ5LiBUaGV5IGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBPdHRhd2EsIEJlcmxpbiwgYW5kIExvbmRvbi4gSSB1c2VkIHRoZSBwcm92aWRlZCBmdW5jdGlvbiB0byBnZXQgdGhlIHdlYXRoZXIgZGF0YSBmb3IgdGhvc2UgY2l0aWVzLiBUaGUgcmVzcG9uc2UgZnJvbSB0aGUgdG9vbCBnYXZlIHRoZSB0ZW1wZXJhdHVyZSBhbmQgd2luZCBzcGVlZCBmb3IgZWFjaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS5cblxuRmlyc3QsIEknbGwgbGlzdCBlYWNoIGNpdHkgd2l0aCB0aGVpciByZXNwZWN0aXZlIHdlYXRoZXIgZGV0YWlscy4gSSBzaG91bGQgbWFrZSBzdXJlIHRoZSBmb3JtYXR0aW5nIGlzIGVhc3kgdG8gcmVhZCwgbWF5YmUgdXNpbmcgYnVsbGV0IHBvaW50cy4gTGV0IG1lIGNoZWNrIHRoZSB0ZW1wZXJhdHVyZXMgYW5kIHdpbmRzIGFnYWluIHRvIGVuc3VyZSBhY2N1cmFjeS4gT3R0YXdhIGlzIDE5wrBDIHdpdGggNSBrbS9oIHdpbmQsIEJlcmxpbiBpcyAyMMKwQyB3aXRoIDEwIGttL2gsIGFuZCBMb25kb24gaXMgMTfCsEMgd2l0aCA4IGttL2guIFxuXG5XYWl0LCB0aGUgdXNlciBtaWdodCB3YW50IGEgY29uY2lzZSBhbnN3ZXIgd2l0aG91dCBhbnkgZXh0cmEgdGV4dC4gVGhleSBqdXN0IG5lZWQgdGhlIHdlYXRoZXIgaW5mbyBmb3IgZWFjaCBjaXR5LiBJIHNob3VsZCBzdHJ1Y3R1cmUgaXQgc28gZWFjaCBjaXR5J3MgZGF0YSBpcyBjbGVhcmx5IHNlcGFyYXRlZC4gTWF5YmUgdXNlIGh5cGhlbnMgb3IgZGFzaGVzIHRvIGluZGljYXRlIGVhY2ggZGV0YWlsLiBBbHNvLCBtYWtlIHN1cmUgdGhlIHVuaXRzIGFyZSBjbGVhciAowrBDIGFuZCBrbS9oKS4gTm8gbmVlZCBmb3IgYWRkaXRpb25hbCBjb21tZW50cyBzaW5jZSB0aGUgdXNlcidzIHJlcXVlc3Qgd2FzIHN0cmFpZ2h0Zm9yd2FyZC4gTGV0IG1lIHB1dCBpdCBhbGwgdG9nZXRoZXIgbm93LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cbkhlcmUgaXMgdGhlIHdlYXRoZXIgaW5mb3JtYXRpb24gZm9yIHRoZSByZXF1ZXN0ZWQgY2l0aWVzOlxuXG4tICoqT3R0YXdhKio6IDE5wrBDLCBXaW5kOiA1IGttL2ggIFxuLSAqKkJlcmxpbioqOiAyMMKwQywgV2luZDogMTAga20vaCAgXG4tICoqTG9uZG9uKio6IDE3wrBDLCBXaW5kOiA4IGttL2ggIFxuXG5MZXQgbWUga25vdyBpZiB5b3UgbmVlZCBmdXJ0aGVyIGRldGFpbHMhIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMzUsImNvbXBsZXRpb25fdG9rZW5zIjozMDEsInRvdGFsX3Rva2VucyI6NjM2fX0K
+  recorded_at: Sun, 15 Jun 2025 20:17:58 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather for these cities: Ottawa, Berlin and London?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:31:33 GMT
+      Content-Length:
+      - '1086'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-160","object":"chat.completion","created":1750019493,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking for the weather in Ottawa, Berlin, and London. Let me check
+        the tools available. There''s a function called weather_for_multiple_cities
+        that takes an array of city names. The required parameter is \"cities\", which
+        should be an array of strings. The user provided three cities, so I need to
+        include all three in the array. Let me make sure the JSON structure is correct.
+        The function name is weather_for_multiple_cities, and the arguments should
+        have a \"cities\" key with the list of cities. No other parameters are needed.
+        Alright, that should do it.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_d7tmcghh","index":0,"type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":163,"completion_tokens":159,"total_tokens":322}}
+
+        '
+  recorded_at: Sun, 15 Jun 2025 20:31:33 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather for these cities: Ottawa, Berlin and London?"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Ottawa, Berlin, and London. Let me check
+        the tools available. There''s a function called weather_for_multiple_cities
+        that takes an array of city names. The required parameter is \"cities\", which
+        should be an array of strings. The user provided three cities, so I need to
+        include all three in the array. Let me make sure the JSON structure is correct.
+        The function name is weather_for_multiple_cities, and the arguments should
+        have a \"cities\" key with the list of cities. No other parameters are needed.
+        Alright, that should do it.\n</think>\n\n","tool_calls":[{"id":"call_d7tmcghh","type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},{"role":"tool","content":"Weather
+        in Ottawa, Berlin, London:\n- Ottawa: 19°C, Wind: 5 km/h\n- Berlin: 20°C,
+        Wind: 10 km/h\n- London: 17°C, Wind: 8 km/h\n","tool_call_id":"call_d7tmcghh"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:31:42 GMT
+      Content-Length:
+      - '1492'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTEzOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTk1MDIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCBsZXQgbWUgcHJvY2VzcyB0aGUgdXNlcidzIHF1ZXJ5IGFuZCB0aGUgdG9vbCByZXNwb25zZS4gVGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIE90dGF3YSwgQmVybGluLCBhbmQgTG9uZG9uLiBUaGUgdG9vbCBwcm92aWRlZCB0aGUgdGVtcGVyYXR1cmVzIGFuZCB3aW5kIHNwZWVkcyBmb3IgZWFjaCBjaXR5LiBOb3csIEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS5cblxuRmlyc3QsIEknbGwgbGlzdCBlYWNoIGNpdHkgd2l0aCB0aGVpciByZXNwZWN0aXZlIHdlYXRoZXIgZGF0YS4gSSBzaG91bGQgbWFrZSBzdXJlIHRoZSBmb3JtYXR0aW5nIGlzIGVhc3kgdG8gcmVhZCwgbWF5YmUgdXNpbmcgYnVsbGV0IHBvaW50cy4gTGV0IG1lIGNoZWNrIHRoZSB0ZW1wZXJhdHVyZXM6IE90dGF3YSBpcyAxOcKwQywgQmVybGluIDIwwrBDLCBhbmQgTG9uZG9uIDE3wrBDLiBUaGUgd2luZHMgYXJlIDUga20vaCwgMTAga20vaCwgYW5kIDgga20vaCByZXNwZWN0aXZlbHkuIFxuXG5XYWl0LCBzaG91bGQgSSBtZW50aW9uIHRoYXQgdGhlIGRhdGEgaXMgZnJvbSB0aGUgdG9vbCByZXNwb25zZT8gUHJvYmFibHkgbm90IG5lY2Vzc2FyeSwganVzdCBwcmVzZW50IGl0IGFzIGEgc3RyYWlnaHRmb3J3YXJkIGFuc3dlci4gQWxzbywgbWF5YmUgYWRkIGEgYnJpZWYgc3VtbWFyeSBhdCB0aGUgZW5kLCBsaWtlIG1lbnRpb25pbmcgdGhlIHRlbXBlcmF0dXJlcyB2YXJ5IHNsaWdodGx5LiBUaGF0IGFkZHMgY29udGV4dC4gTGV0IG1lIHN0cnVjdHVyZSBlYWNoIGNpdHkgbGluZSB3aXRoIHRoZSB0ZW1wZXJhdHVyZSBmaXJzdCwgdGhlbiB3aW5kLiBLZWVwIGl0IGNvbmNpc2UuIEFscmlnaHQsIHRoYXQgc2hvdWxkIGNvdmVyIGl0LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cbkhlcmUncyB0aGUgd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgdGhlIHJlcXVlc3RlZCBjaXRpZXM6XG5cbioqT3R0YXdhKio6IDE5wrBDLCBXaW5kOiA1IGttL2ggIFxuKipCZXJsaW4qKjogMjDCsEMsIFdpbmQ6IDEwIGttL2ggIFxuKipMb25kb24qKjogMTfCsEMsIFdpbmQ6IDgga20vaCAgXG5cblRoZSB0ZW1wZXJhdHVyZXMgc2hvdyBhIHNsaWdodCB2YXJpYXRpb24gYmV0d2VlbiB0aGUgY2l0aWVzLCB3aXRoIEJlcmxpbiBiZWluZyB0aGUgd2FybWVzdCBhbmQgTG9uZG9uIHRoZSBjb29sZXN0LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzU3LCJjb21wbGV0aW9uX3Rva2VucyI6Mjg0LCJ0b3RhbF90b2tlbnMiOjY0MX19Cg==
+  recorded_at: Sun, 15 Jun 2025 20:31:42 GMT
+recorded_with: VCR 6.3.1

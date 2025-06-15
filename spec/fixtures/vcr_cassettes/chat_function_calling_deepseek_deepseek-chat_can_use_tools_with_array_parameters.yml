@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:18:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - c33632774372b532362bf07ebeacb0ae
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"990ab99d-77ce-44f1-9b36-81e5b9fbb3b4","object":"chat.completion","created":1749824322,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_b4e006ba-7f26-46b6-8994-36932a4e2602","type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":
+        [\"Ottawa\", \"Berlin\", \"London\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":141,"completion_tokens":32,"total_tokens":173,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":141},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Fri, 13 Jun 2025 14:18:46 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_b4e006ba-7f26-46b6-8994-36932a4e2602","type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},{"role":"tool","content":"Weather
+        in Ottawa, Berlin, London:\n- Ottawa: 19°C, Wind: 5 km/h\n- Berlin: 20°C,
+        Wind: 10 km/h\n- London: 17°C, Wind: 8 km/h\n","tool_call_id":"call_0_b4e006ba-7f26-46b6-8994-36932a4e2602"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:18:47 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 0d1599d4ec9a30b1c11d598c29586c02
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjdhODE5ZjY4LWU3ZTAtNGRkZC1iMzU0LWE3YzFhMmE3YmUyMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk4MjQzMjcsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgZm9yIHRoZSBjaXRpZXMgeW91IGFza2VkIGFib3V0OlxuXG4tICoqT3R0YXdhKio6IDE5wrBDLCBXaW5kOiA1IGttL2ggIFxuLSAqKkJlcmxpbioqOiAyMMKwQywgV2luZDogMTAga20vaCAgXG4tICoqTG9uZG9uKio6IDE3wrBDLCBXaW5kOiA4IGttL2ggICJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyOSwiY29tcGxldGlvbl90b2tlbnMiOjYxLCJ0b3RhbF90b2tlbnMiOjI5MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyOH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoxMjgsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTAxfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDQyNWZwOCJ9
+  recorded_at: Fri, 13 Jun 2025 14:18:54 GMT
+recorded_with: VCR 6.3.1

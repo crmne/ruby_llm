@@ -23,10 +23,26 @@ module RubyLLM
         end
 
         def param_schema(param)
-          {
-            type: param.type,
-            description: param.description
-          }.compact
+          properties = case param.type
+                       when :array
+                         {
+                           type: param.type,
+                           items: { type: param.item_type }
+                         }
+                       when :object
+                         {
+                           type: param.type,
+                           properties: param.properties.transform_values { |value| param_schema(value) },
+                           required: param.properties.select { |_, p| p.required }.keys
+                         }
+                       else
+                         {
+                           type: param.type,
+                           description: param.description
+                         }
+                       end
+
+          properties.compact
         end
 
         def format_tool_calls(tool_calls)

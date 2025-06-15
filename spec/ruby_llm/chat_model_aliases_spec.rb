@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Chat do
 
   it 'finds models by alias and provider' do # rubocop:disable RSpec/MultipleExpectations
     chat = RubyLLM.chat(model: 'claude-3-5-haiku', provider: :bedrock)
-    expect(chat.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
+    expect(chat.model.id).to eq('us.anthropic.claude-3-5-haiku-20241022-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
 

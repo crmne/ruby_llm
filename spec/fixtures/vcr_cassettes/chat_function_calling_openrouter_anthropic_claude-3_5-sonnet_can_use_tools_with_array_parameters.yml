@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-sonnet","messages":[{"role":"user","content":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:21:39 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1749824498-oFnr3MVFO0O1JIXGKRWm\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-3.5-sonnet\",\"object\":\"chat.completion\",\"created\":1749824498,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you check the weather for Ottawa, Berlin, and London using the weather_for_multiple_cities
+        function.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_bdrk_01CcunuJoqHekYsvq5Y2EkT5\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather_for_multiple_cities\",\"arguments\":\"{\\\"cities\\\":
+        [\\\"Ottawa\\\", \\\"Berlin\\\", \\\"London\\\"]}\"}}]}}],\"usage\":{\"prompt_tokens\":405,\"completion_tokens\":91,\"total_tokens\":496}}"
+  recorded_at: Fri, 13 Jun 2025 14:21:40 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-sonnet","messages":[{"role":"user","content":"What''s
+        the weather for these cities: Ottawa, Berlin and London?"},{"role":"assistant","content":"I''ll
+        help you check the weather for Ottawa, Berlin, and London using the weather_for_multiple_cities
+        function.","tool_calls":[{"id":"toolu_bdrk_01CcunuJoqHekYsvq5Y2EkT5","type":"function","function":{"name":"weather_for_multiple_cities","arguments":"{\"cities\":[\"Ottawa\",\"Berlin\",\"London\"]}"}}]},{"role":"tool","content":"Weather
+        in Ottawa, Berlin, London:\n- Ottawa: 19°C, Wind: 5 km/h\n- Berlin: 20°C,
+        Wind: 10 km/h\n- London: 17°C, Wind: 8 km/h\n","tool_call_id":"toolu_bdrk_01CcunuJoqHekYsvq5Y2EkT5"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_for_multiple_cities","description":"Returns
+        the weather for multiple cities that are provided","parameters":{"type":"object","properties":{"cities":{"type":"array","items":{"type":"string"}}},"required":["cities"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:21:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ5ODI0NTAxLVBxTDRETlRPVkx1ajZib29FeVByIiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS0zLjUtc29ubmV0Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc0OTgyNDUwMSwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcblxuQmFzZWQgb24gdGhlIHJlc3VsdHMsIGhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIHRoZXNlIGNpdGllczpcbi0gT3R0YXdhIGlzIGV4cGVyaWVuY2luZyAxOcKwQyB3aXRoIGxpZ2h0IHdpbmRzIG9mIDUga20vaFxuLSBCZXJsaW4gaXMgYXQgMjDCsEMgd2l0aCB3aW5kcyBvZiAxMCBrbS9oXG4tIExvbmRvbiBpcyBzbGlnaHRseSBjb29sZXIgYXQgMTfCsEMgd2l0aCB3aW5kcyBvZiA4IGttL2giLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU2NywiY29tcGxldGlvbl90b2tlbnMiOjc2LCJ0b3RhbF90b2tlbnMiOjY0M319
+  recorded_at: Fri, 13 Jun 2025 14:21:43 GMT
+recorded_with: VCR 6.3.1

@@ -32,4 +32,50 @@ http_interactions:
       string: !binary |-
         eyJpZCI6ImNoYXRjbXBsLTQ3NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDYzMTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBcIldoYXQncyAyICsgMj9cIiBUaGF0J3MgYSBiYXNpYyBhcml0aG1ldGljIHF1ZXN0aW9uLiBMZXQgbWUgdGhpbmsuIDIgcGx1cyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gSSByZW1lbWJlciBmcm9tIGJhc2ljIG1hdGggdGhhdCAyKzIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5IHdhbnQgYSBtb3JlIGRldGFpbGVkIGV4cGxhbmF0aW9uPyBPciBwZXJoYXBzIHRoZXkncmUgdGVzdGluZyBpZiBJIGtub3cgdGhlIGJhc2ljcy4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGNvbnRleHQgSSdtIG1pc3NpbmcuIFRoZSBxdWVzdGlvbiBpcyBzaW1wbGUsIHNvIHRoZSBhbnN3ZXIgc2hvdWxkIGJlIDQuIE1heWJlIHRoZXkganVzdCBuZWVkIGNvbmZpcm1hdGlvbi4gSSBzaG91bGQgbWFrZSBzdXJlIHRvIHN0YXRlIHRoZSBhbnN3ZXIgY2xlYXJseSBhbmQgbWF5YmUgYWRkIGEgZnJpZW5kbHkgbm90ZSB0byBzZWUgaWYgdGhleSBoYXZlIG1vcmUgcXVlc3Rpb25zLiBZZWFoLCB0aGF0J3MgaXQuIEp1c3QgY29uZmlybSB0aGUgYW5zd2VyIGFuZCBvZmZlciBmdXJ0aGVyIGhlbHAuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuMiArIDIgZXF1YWxzICoqNCoqLiBMZXQgbWUga25vdyBpZiB5b3UgaGF2ZSBtb3JlIHF1ZXN0aW9ucyEg8J+YiiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTYsImNvbXBsZXRpb25fdG9rZW5zIjoxNjMsInRvdGFsX3Rva2VucyI6MTc5fX0K
   recorded_at: Wed, 11 Jun 2025 12:51:54 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:16:29 GMT
+      Content-Length:
+      - '1282'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-602","object":"chat.completion","created":1750018589,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked, \"What''s 2 + 2?\" That''s a basic arithmetic question. Let
+        me think. I know that 2 + 2 is 4. But wait, maybe they want a more detailed
+        explanation? Or perhaps they''re testing if I can answer a simple question.
+        Let me check if there''s any trick here. Sometimes people might phrase questions
+        in a way that''s not straightforward, like asking for the sum in a different
+        base or something. But the question is straightforward: 2 + 2. In base 10,
+        which is standard, the answer is definitely 4. I don''t see any hidden meaning
+        here. Maybe they just want the answer confirmed. I should make sure to state
+        it clearly. Let me also consider if there''s any alternative interpretation,
+        but I don''t think so. The user probably just wants the correct answer. Alright,
+        I''ll go with 4.\n\u003c/think\u003e\n\nThe sum of 2 + 2 is **4**. \n\nIn
+        basic arithmetic, adding two units to another two units results in a total
+        of four units. This is a fundamental concept in mathematics."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":234,"total_tokens":250}}
+
+        '
+  recorded_at: Sun, 15 Jun 2025 20:16:29 GMT
 recorded_with: VCR 6.3.1

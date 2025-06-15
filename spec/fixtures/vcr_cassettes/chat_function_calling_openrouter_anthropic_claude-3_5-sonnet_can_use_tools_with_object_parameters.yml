@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-sonnet","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:21:34 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1749824493-D1CPIHXK6yN1v8XmwEEd\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-3.5-sonnet\",\"object\":\"chat.completion\",\"created\":1749824493,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you check the weather in Berlin using the provided coordinates (52.5200,
+        13.4050).\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_bdrk_01VE9UGo1oohJazCASxZVaMd\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather_with_object\",\"arguments\":\"{\\\"geo_location\\\":
+        {\\\"latitude\\\": \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}}\"}}]}}],\"usage\":{\"prompt_tokens\":465,\"completion_tokens\":100,\"total_tokens\":565}}"
+  recorded_at: Fri, 13 Jun 2025 14:21:36 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-sonnet","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
+        help you check the weather in Berlin using the provided coordinates (52.5200,
+        13.4050).","tool_calls":[{"id":"toolu_bdrk_01VE9UGo1oohJazCASxZVaMd","type":"function","function":{"name":"weather_with_object","arguments":"{\"geo_location\":{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}}"}}]},{"role":"tool","content":"Current
+        weather at , : 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01VE9UGo1oohJazCASxZVaMd"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Jun 2025 14:21:37 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Clerk-Auth-Message:
+      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
+        token-carrier=header)
+      X-Clerk-Auth-Reason:
+      - token-invalid
+      X-Clerk-Auth-Status:
+      - signed-out
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzQ5ODI0NDk2LXVTS1FxNTFCRTBRMHVOWG15VHZ1IiwicHJvdmlkZXIiOiJHb29nbGUiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LXNvbm5ldCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk4MjQ0OTYsImNob2ljZXMiOlt7ImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQmFzZWQgb24gdGhlIHJlc3VsdHMsIGl0J3MgY3VycmVudGx5IDE1wrBDICg1OcKwRikgaW4gQmVybGluIHdpdGggd2luZCBzcGVlZHMgb2YgMTAga20vaC4iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU5NCwiY29tcGxldGlvbl90b2tlbnMiOjM0LCJ0b3RhbF90b2tlbnMiOjYyOH19
+  recorded_at: Fri, 13 Jun 2025 14:21:38 GMT
+recorded_with: VCR 6.3.1

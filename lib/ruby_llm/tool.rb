@@ -4,13 +4,21 @@ module RubyLLM
   # Parameter definition for Tool methods. Specifies type constraints,
   # descriptions, and whether parameters are required.
   class Parameter
-    attr_reader :name, :type, :description, :required
+    attr_reader :name, :type, :description, :required, :item_type, :properties
 
-    def initialize(name, type: 'string', desc: nil, required: true)
+    def initialize(name, type: :string, desc: nil, required: true, item_type: nil, &)
       @name = name
-      @type = type
+      @type = type.to_sym
       @description = desc
       @required = required
+      @item_type = item_type
+      @properties = {}
+
+      instance_eval(&) if block_given?
+    end
+
+    def param(name, **options)
+      @properties[name] = Parameter.new(name, **options)
     end
   end
 
@@ -39,8 +47,8 @@ module RubyLLM
         @description = text
       end
 
-      def param(name, **options)
-        parameters[name] = Parameter.new(name, **options)
+      def param(name, ...)
+        parameters[name] = Parameter.new(name, ...)
       end
 
       def parameters

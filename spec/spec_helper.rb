@@ -5,6 +5,7 @@ require 'simplecov'
 require 'simplecov-cobertura'
 require 'codecov'
 require 'vcr'
+require 'debug'
 
 SimpleCov.start do
   add_filter '/spec/'
@@ -119,7 +120,7 @@ RSpec.shared_context 'with configured RubyLLM' do
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
-      config.bedrock_region = 'us-west-2'
+      config.bedrock_region = ENV.fetch('AWS_REGION', 'us-west-2')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
       config.request_timeout = 240
@@ -133,12 +134,22 @@ end
 
 CHAT_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
-  { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
+  { provider: :bedrock, model: 'us.anthropic.claude-3-5-haiku-20241022-v1:0' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :ollama, model: 'qwen3' }
+].freeze
+
+COMPLEX_FUNCTION_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-sonnet-20240620' },
+  { provider: :bedrock, model: 'us.anthropic.claude-3-5-haiku-20241022-v1:0' },
+  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :openai, model: 'gpt-4.1' },
+  { provider: :openrouter, model: 'anthropic/claude-3.5-sonnet' }
+  # { provider: :ollama, model: 'qwen3' }
 ].freeze
 
 PDF_MODELS = [
@@ -150,7 +161,7 @@ PDF_MODELS = [
 
 VISION_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
-  { provider: :bedrock, model: 'anthropic.claude-3-5-sonnet-20241022-v2:0' },
+  { provider: :bedrock, model: 'us.anthropic.claude-3-5-sonnet-20241022-v2:0' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },

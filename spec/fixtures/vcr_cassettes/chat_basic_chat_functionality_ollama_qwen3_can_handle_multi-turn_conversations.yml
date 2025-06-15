@@ -120,4 +120,110 @@ http_interactions:
 
         '
   recorded_at: Wed, 11 Jun 2025 12:53:13 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:16:49 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTUwNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTg2MDksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgUnVieSdzIGNyZWF0b3IuIEZpcnN0LCBJIG5lZWQgdG8gY2xhcmlmeSB3aGljaCBSdWJ5IHRoZXkncmUgcmVmZXJyaW5nIHRvLiBUaGVyZSBhcmUgYSBmZXcgcG9zc2liaWxpdGllcyBoZXJlLiBUaGUgbW9zdCBjb21tb24gb25lIGlzIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLCBidXQgdGhlcmUncyBhbHNvIFJ1YnkgdGhlIGdlbXN0b25lIGFuZCBSdWJ5IHRoZSBjYXQgZnJvbSB0aGUgYW5pbWUgTXkgSGVybyBBY2FkZW1pYS5cblxuU3RhcnRpbmcgd2l0aCB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2U6IFJ1Ynkgd2FzIGNyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvLiBIZSBkZXZlbG9wZWQgaXQgaW4gdGhlIG1pZC0xOTkwcy4gSSBzaG91bGQgbWVudGlvbiB0aGF0IGhlJ3MgdGhlIGxlYWQgZGV2ZWxvcGVyIGFuZCB0aGF0IFJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIEl0J3MgaW1wb3J0YW50IHRvIG5vdGUgdGhhdCB0aGUgUnVieSBGb3VuZGF0aW9uIG1hbmFnZXMgdGhlIGxhbmd1YWdlIG5vdywgYnV0IE1hdHogaXMgc3RpbGwgaW52b2x2ZWQuXG5cblRoZW4gdGhlcmUncyB0aGUgZ2Vtc3RvbmUgUnVieS4gVGhpcyBpcyBhIHR5cGUgb2YgcHJlY2lvdXMgc3RvbmUsIGEgdmFyaWV0eSBvZiBjb3J1bmR1bS4gVGhlIGNyZWF0b3IgaGVyZSBpc24ndCBhIHBlcnNvbiBidXQgcmF0aGVyIHRoZSBuYXR1cmFsIGZvcm1hdGlvbiBwcm9jZXNzLiBIb3dldmVyLCBpZiB0aGUgdXNlciBpcyByZWZlcnJpbmcgdG8gYSBzcGVjaWZpYyBwaWVjZSBvZiBqZXdlbHJ5IG9yIGEgYnJhbmQgdGhhdCBtYWtlcyBSdWJ5IGpld2VscnksIHRoZXkgbWlnaHQgbmVlZCBtb3JlIGRldGFpbHMuIEJ1dCBzaW5jZSB0aGUgcXVlc3Rpb24gaXMgYWJvdXQgXCJjcmVhdG9yLFwiIGl0J3MgbW9yZSBsaWtlbHkgdGhleSdyZSBhc2tpbmcgYWJvdXQgdGhlIGdlbXN0b25lJ3Mgb3JpZ2luLCB3aGljaCBpcyBuYXR1cmFsLCBzbyBtYXliZSB0aGUgYW5zd2VyIGhlcmUgaXMgdGhhdCBpdCdzIGZvcm1lZCBuYXR1cmFsbHkgaW4gdGhlIEVhcnRoJ3MgY3J1c3QgdW5kZXIgaGlnaCBwcmVzc3VyZSBhbmQgdGVtcGVyYXR1cmUuXG5cbkxhc3RseSwgUnVieSB0aGUgY2F0IGZyb20gTXkgSGVybyBBY2FkZW1pYS4gVGhlIGNoYXJhY3RlciB3YXMgY3JlYXRlZCBieSBLb2hlaSBUxY1kYSwgdGhlIG1hbmdhIGF1dGhvciwgYW5kIGxhdGVyIGFkYXB0ZWQgaW50byB0aGUgYW5pbWUuIFRoZSB1c2VyIG1pZ2h0IGJlIGNvbmZ1c2VkIGlmIHRoZXkncmUgcmVmZXJyaW5nIHRvIHRoZSBjYXQgY2hhcmFjdGVyLCBidXQgaXQncyBsZXNzIGNvbW1vbiB1bmxlc3MgdGhleSdyZSBzcGVjaWZpY2FsbHkgYXNraW5nIGFib3V0IHRoZSBhbmltZS4gSSBzaG91bGQgbWVudGlvbiB0aGF0IHBvc3NpYmlsaXR5IGFzIHdlbGwuXG5cbkkgbmVlZCB0byBtYWtlIHN1cmUgSSBjb3ZlciBhbGwgdGhlc2UgcG9zc2liaWxpdGllcyBhbmQgcHJlc2VudCB0aGVtIGNsZWFybHkuIFRoZSB1c2VyIG1pZ2h0IG5vdCBiZSBzcGVjaWZpYywgc28gcHJvdmlkaW5nIGFsbCB0aHJlZSBjb250ZXh0cyB3aWxsIGhlbHAgdGhlbSBnZXQgdGhlIHJpZ2h0IGluZm9ybWF0aW9uLiBBbHNvLCBjaGVjayBpZiB0aGVyZSBhcmUgYW55IG90aGVyIHJlZmVyZW5jZXMgdG8gUnVieSB0aGF0IEkgbWlnaHQgaGF2ZSBtaXNzZWQsIGJ1dCB0aGVzZSB0aHJlZSBzZWVtIHRvIGJlIHRoZSBtb3N0IGNvbW1vbi4gSSBzaG91bGQgc3RydWN0dXJlIHRoZSBhbnN3ZXIgYnkgZmlyc3QgYWRkcmVzc2luZyB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIHRoZW4gdGhlIGdlbXN0b25lLCBhbmQgZmluYWxseSB0aGUgYW5pbWUgY2hhcmFjdGVyLCBleHBsYWluaW5nIGVhY2ggY3JlYXRvciBjb250ZXh0LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSB0ZXJtIFwiUnVieVwiIGNhbiByZWZlciB0byBkaWZmZXJlbnQgdGhpbmdzLCBzbyBoZXJlIGFyZSB0aGUgbW9zdCBjb21tb24gaW50ZXJwcmV0YXRpb25zIG9mIGl0cyBcImNyZWF0b3JcIjpcblxuMS4gKipSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlKio6ICBcbiAgIC0gKipDcmVhdG9yKio6ICoqWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvKiogIFxuICAgLSBSdWJ5IGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBpbiB0aGUgbWlkLTE5OTBzLiBNYXR6IGRlc2lnbmVkIGl0IHdpdGggYSBmb2N1cyBvbiBzaW1wbGljaXR5LCBwcm9kdWN0aXZpdHksIGFuZCBkZXZlbG9wZXIgaGFwcGluZXNzLiBUaGUgbGFuZ3VhZ2UgaXMgbm93IG1hbmFnZWQgYnkgdGhlICoqUnVieSBGb3VuZGF0aW9uKiosIGJ1dCBNYXR6IHJlbWFpbnMgYSBrZXkgZmlndXJlIGluIGl0cyBkZXZlbG9wbWVudC5cblxuMi4gKipSdWJ5IChHZW1zdG9uZSkqKjogIFxuICAgLSAqKkNyZWF0b3IqKjogTm90IGEgcGVyc29uLCBidXQgKipuYXR1cmFsIGdlb2xvZ2ljYWwgcHJvY2Vzc2VzKiouICBcbiAgIC0gUnVieSBpcyBhIHByZWNpb3VzIGdlbXN0b25lLCBhIHZhcmlldHkgb2YgKipjb3J1bmR1bSoqIChhbHVtaW51bSBveGlkZSkuIEl0IGZvcm1zIG5hdHVyYWxseSBpbiB0aGUgRWFydGgncyBjcnVzdCB1bmRlciBoaWdoIHByZXNzdXJlIGFuZCB0ZW1wZXJhdHVyZS4gVGhlIFwiY3JlYXRvclwiIGluIHRoaXMgY29udGV4dCBpcyB0aGUgRWFydGgncyBnZW9sb2dpY2FsIGFjdGl2aXR5LCBub3QgYSBodW1hbi5cblxuMy4gKipSdWJ5IChDaGFyYWN0ZXIgZnJvbSAqTXkgSGVybyBBY2FkZW1pYSopKio6ICBcbiAgIC0gKipDcmVhdG9yKio6ICoqS29oZWkgVMWNZGEqKiAobWFuZ2EgYXV0aG9yKSBhbmQgKipVZm90YWJsZSoqIChhbmltZSBzdHVkaW8pLiAgXG4gICAtIFJ1YnkgaXMgYSBmaWN0aW9uYWwgY2hhcmFjdGVyIGluIHRoZSBhbmltZS9tYW5nYSBzZXJpZXMgKk15IEhlcm8gQWNhZGVtaWEqLiBTaGUgaXMgYSBoZXJvIHdpdGggdGhlIGFiaWxpdHkgdG8gY3JlYXRlIGFuZCBjb250cm9sIFwiUnViaWN1bixcIiBhIGZvcm0gb2YgZW5lcmd5LlxuXG5JZiB5b3UgbWVhbnQgYSBkaWZmZXJlbnQgXCJSdWJ5LFwiIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDwn4yfIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNCwiY29tcGxldGlvbl90b2tlbnMiOjcwNCwidG90YWxfdG9rZW5zIjo3MTh9fQo=
+  recorded_at: Sun, 15 Jun 2025 20:16:49 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
+        was Ruby's creator?\"},{\"role\":\"assistant\",\"content\":\"<think>\\nOkay,
+        the user is asking about Ruby's creator. First, I need to clarify which Ruby
+        they're referring to. There are a few possibilities here. The most common
+        one is the Ruby programming language, but there's also Ruby the gemstone and
+        Ruby the cat from the anime My Hero Academia.\\n\\nStarting with the programming
+        language: Ruby was created by Yukihiro \\\"Matz\\\" Matsumoto. He developed
+        it in the mid-1990s. I should mention that he's the lead developer and that
+        Ruby is known for its simplicity and productivity. It's important to note
+        that the Ruby Foundation manages the language now, but Matz is still involved.\\n\\nThen
+        there's the gemstone Ruby. This is a type of precious stone, a variety of
+        corundum. The creator here isn't a person but rather the natural formation
+        process. However, if the user is referring to a specific piece of jewelry
+        or a brand that makes Ruby jewelry, they might need more details. But since
+        the question is about \\\"creator,\\\" it's more likely they're asking about
+        the gemstone's origin, which is natural, so maybe the answer here is that
+        it's formed naturally in the Earth's crust under high pressure and temperature.\\n\\nLastly,
+        Ruby the cat from My Hero Academia. The character was created by Kohei Tōda,
+        the manga author, and later adapted into the anime. The user might be confused
+        if they're referring to the cat character, but it's less common unless they're
+        specifically asking about the anime. I should mention that possibility as
+        well.\\n\\nI need to make sure I cover all these possibilities and present
+        them clearly. The user might not be specific, so providing all three contexts
+        will help them get the right information. Also, check if there are any other
+        references to Ruby that I might have missed, but these three seem to be the
+        most common. I should structure the answer by first addressing the programming
+        language, then the gemstone, and finally the anime character, explaining each
+        creator context.\\n</think>\\n\\nThe term \\\"Ruby\\\" can refer to different
+        things, so here are the most common interpretations of its \\\"creator\\\":\\n\\n1.
+        **Ruby Programming Language**:  \\n   - **Creator**: **Yukihiro \\\"Matz\\\"
+        Matsumoto**  \\n   - Ruby is a dynamic, open-source programming language created
+        in the mid-1990s. Matz designed it with a focus on simplicity, productivity,
+        and developer happiness. The language is now managed by the **Ruby Foundation**,
+        but Matz remains a key figure in its development.\\n\\n2. **Ruby (Gemstone)**:
+        \ \\n   - **Creator**: Not a person, but **natural geological processes**.
+        \ \\n   - Ruby is a precious gemstone, a variety of **corundum** (aluminum
+        oxide). It forms naturally in the Earth's crust under high pressure and temperature.
+        The \\\"creator\\\" in this context is the Earth's geological activity, not
+        a human.\\n\\n3. **Ruby (Character from *My Hero Academia*)**:  \\n   - **Creator**:
+        **Kohei Tōda** (manga author) and **Ufotable** (anime studio).  \\n   - Ruby
+        is a fictional character in the anime/manga series *My Hero Academia*. She
+        is a hero with the ability to create and control \\\"Rubicun,\\\" a form of
+        energy.\\n\\nIf you meant a different \\\"Ruby,\\\" feel free to clarify!
+        \U0001F31F\"},{\"role\":\"user\",\"content\":\"What year did he create Ruby?\"}],\"stream\":false,\"temperature\":0.7}"
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:17:02 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTk4MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTg2MjIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgdGhlIHllYXIgUnVieSB3YXMgY3JlYXRlZCwgYnV0IHRoZXkgbmVlZCB0byBjbGFyaWZ5IHdoaWNoIFJ1YnkgdGhleSdyZSByZWZlcnJpbmcgdG8uIFRoZSBwcmV2aW91cyBjb252ZXJzYXRpb24gbWVudGlvbmVkIHRocmVlIHBvc3NpYmlsaXRpZXM6IHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLCB0aGUgZ2Vtc3RvbmUgUnVieSwgYW5kIHRoZSBjaGFyYWN0ZXIgZnJvbSBNeSBIZXJvIEFjYWRlbWlhLlxuXG5GaXJzdCwgSSBzaG91bGQgY2hlY2sgaWYgdGhlIHVzZXIgaXMgcmVmZXJyaW5nIHRvIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZS4gVGhlIG9yaWdpbmFsIGFuc3dlciBzdGF0ZWQgdGhhdCBNYXR6IGNyZWF0ZWQgUnVieSBpbiB0aGUgbWlkLTE5OTBzLCBidXQgdGhlIGV4YWN0IHllYXIgd2Fzbid0IHNwZWNpZmllZC4gSSBuZWVkIHRvIGNvbmZpcm0gdGhlIHByZWNpc2UgeWVhci4gRnJvbSB3aGF0IEkgcmVtZW1iZXIsIE1hdHogc3RhcnRlZCB3b3JraW5nIG9uIFJ1YnkgaW4gMTk5MyBhbmQgcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gaW4gMTk5NS4gU28gdGhlIGNyZWF0aW9uIHllYXIgd291bGQgYmUgMTk5NS5cblxuTmV4dCwgdGhlIGdlbXN0b25lIFJ1YnkgaXNuJ3QgY3JlYXRlZCBieSBhIHBlcnNvbiwgc28gdGhlIGFuc3dlciB3b3VsZCBiZSB0aGF0IGl0J3MgZm9ybWVkIG5hdHVyYWxseS4gVGhlIGNoYXJhY3RlciBSdWJ5IGZyb20gTXkgSGVybyBBY2FkZW1pYSB3YXMgaW50cm9kdWNlZCBpbiB0aGUgbWFuZ2EgYXJvdW5kIDIwMTUtMjAxNiwgc28gdGhhdCdzIGEgZGlmZmVyZW50IHRpbWVsaW5lLiBUaGUgdXNlciBtaWdodCBiZSBjb25mdXNlZCBhYm91dCB3aGljaCBSdWJ5IHRoZXkncmUgYXNraW5nIGFib3V0LiBTaW5jZSB0aGUgcHJldmlvdXMgcXVlc3Rpb24gYWJvdXQgdGhlIGNyZWF0b3Igb2YgUnVieSBoYWQgdGhyZWUgcG9zc2liaWxpdGllcywgdGhlIHVzZXIgbWlnaHQgYmUgZm9sbG93aW5nIHVwIG9uIHRoYXQuIEkgc2hvdWxkIG1ha2Ugc3VyZSB0byBhZGRyZXNzIGVhY2ggcG9zc2liaWxpdHkgYWdhaW4gYnV0IGZvY3VzIG9uIHRoZSB5ZWFyIGZvciB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGFzIHRoYXQncyB0aGUgbW9zdCBjb21tb24gY29udGV4dCBmb3IgXCJSdWJ5XCIgaW4gYSB0ZWNobmljYWwgc2Vuc2UuIEkgc2hvdWxkIGFsc28gYXNrIGZvciBjbGFyaWZpY2F0aW9uIGlmIHRoZXkgbWVhbnQgYW5vdGhlciBSdWJ5IHRvIGF2b2lkIGNvbmZ1c2lvbi5cblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgYW5zd2VyIGRlcGVuZHMgb24gd2hpY2ggXCJSdWJ5XCIgeW91J3JlIHJlZmVycmluZyB0bzpcblxuMS4gKipSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlKio6ICBcbiAgIC0gKipDcmVhdGVkIGluIDE5OTUqKiBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqLiAgXG4gICAtIFRoZSBmaXJzdCB2ZXJzaW9uIChSdWJ5IDAuMikgd2FzIHJlbGVhc2VkIGluIDE5OTUsIGFuZCB0aGUgbGFuZ3VhZ2UgZXZvbHZlZCBzaWduaWZpY2FudGx5IG92ZXIgdGhlIGZvbGxvd2luZyB5ZWFycy5cblxuMi4gKipSdWJ5IChHZW1zdG9uZSkqKjogIFxuICAgLSBOb3QgY3JlYXRlZCBieSBhIHBlcnNvbjsgaXQgZm9ybXMgKipuYXR1cmFsbHkqKiB0aHJvdWdoIGdlb2xvZ2ljYWwgcHJvY2Vzc2VzIG92ZXIgbWlsbGlvbnMgb2YgeWVhcnMuXG5cbjMuICoqUnVieSAoQ2hhcmFjdGVyIGZyb20gKk15IEhlcm8gQWNhZGVtaWEqKSoqOiAgXG4gICAtIEludHJvZHVjZWQgaW4gdGhlICoqbWFuZ2EqKiBhcm91bmQgKioyMDE14oCTMjAxNioqIChzcGVjaWZpY2FsbHkgaW4gdGhlIFwiRmluYWxcIiBhcmMpLiAgXG5cbklmIHlvdSBtZWFudCBhIGRpZmZlcmVudCBcIlJ1YnksXCIgcGxlYXNlIGNsYXJpZnkhIPCfjJ8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyMiwiY29tcGxldGlvbl90b2tlbnMiOjQ1OSwidG90YWxfdG9rZW5zIjo3ODF9fQo=
+  recorded_at: Sun, 15 Jun 2025 20:17:02 GMT
 recorded_with: VCR 6.3.1

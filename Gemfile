@@ -8,6 +8,7 @@ group :development do
   gem 'appraisal'
   gem 'bundler', '>= 2.0'
   gem 'codecov'
+  gem 'debug'
   gem 'dotenv'
   gem 'ferrum'
   gem 'irb'

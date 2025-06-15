@@ -225,4 +225,69 @@ http_interactions:
 
         '
   recorded_at: Wed, 11 Jun 2025 13:12:48 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n  3.
+        You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n       b)
+        accompany the distribution with the machine-readable source of\n\t  the software.\n\n       c)
+        give non-standard binaries non-standard names, with\n          instructions
+        on where to get the original software distribution.\n\n       d) make other
+        distribution arrangements with the author.\n\n  4. You may modify and include
+        the part of the software into any other\n     software (possibly commercial).  But
+        some files in the distribution\n     are not written by the author, so that
+        they are not under these terms.\n\n     For the list of those files and their
+        copying conditions, see the\n     file LEGAL.\n\n  5. The scripts and library
+        files supplied as input to or produced as\n     output from the software do
+        not automatically fall under the\n     copyright of the software, but belong
+        to whomever generated them,\n     and may be sold commercially, and may be
+        aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
+        IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
+        LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:15:43 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQxOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTg1NDMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCBsZXQgbWUgc2VlIHdoYXQgdGhpcyB1c2VyIGlzIGFza2luZy4gVGhleSBwcm92aWRlZCBhIGZpbGUgbmFtZWQgbGljZW5zZS50eHQgd2l0aCBjb250ZW50IGFib3V0IFJ1YnkncyBsaWNlbnNpbmcuIFRoZSBxdWVzdGlvbiBpcyBcIldoYXQncyBpbiB0aGlzIGZpbGU/XCIgU28gSSBuZWVkIHRvIGV4cGxhaW4gdGhlIGNvbnRlbnRzIG9mIHRoZSBsaWNlbnNlLnR4dC5cblxuRmlyc3QsIEknbGwgcmVhZCB0aHJvdWdoIHRoZSBmaWxlJ3MgY29udGVudC4gSXQgc3RhcnRzIGJ5IHN0YXRpbmcgdGhhdCBSdWJ5IGlzIGZyZWUgc29mdHdhcmUgYnkgTWF0c3Vtb3RvIFl1a2loaXJvLiBUaGVuIHRoZXJlIGFyZSBzaXggY29uZGl0aW9ucyAoMS02KSBvdXRsaW5pbmcgdGhlIHRlcm1zIG9mIHRoZSBsaWNlbnNlLlxuXG5Db25kaXRpb24gMSBhbGxvd3MgcmVkaXN0cmlidXRpb24gb2Ygc291cmNlIGNvZGUgd2l0aCBjb3B5cmlnaHQgbm90aWNlcy4gQ29uZGl0aW9uIDIgbGV0cyB1c2VycyBtb2RpZnkgdGhlIHNvZnR3YXJlIGJ1dCByZXF1aXJlcyB0aGVtIHRvIGRvIG9uZSBvZiBmb3VyIHRoaW5nczogcGxhY2UgbW9kaWZpY2F0aW9ucyBpbiB0aGUgcHVibGljIGRvbWFpbiwgdXNlIHdpdGhpbiB0aGVpciBvcmdhbml6YXRpb24sIG5hbWUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzLCBvciBtYWtlIG90aGVyIGFycmFuZ2VtZW50cy4gXG5cbkNvbmRpdGlvbiAzIGNvdmVycyBkaXN0cmlidXRpbmcgaW4gYmluYXJ5IGZvcm0sIHJlcXVpcmluZyBzaW1pbGFyIHN0ZXBzIGFzIGNvbmRpdGlvbiAyLiBDb25kaXRpb24gNCBtZW50aW9ucyB0aGF0IG1vZGlmaWNhdGlvbnMgY2FuIGJlIGluY2x1ZGVkIGluIG90aGVyIHNvZnR3YXJlLCBidXQgc29tZSBmaWxlcyBhcmVuJ3QgdW5kZXIgdGhlc2UgdGVybXMgYW5kIHJlZmVyIHRvIGEgTEVHQUwgZmlsZS4gQ29uZGl0aW9uIDUgc2F5cyBzY3JpcHRzIGFuZCBsaWJyYXJpZXMgYXJlbid0IGF1dG9tYXRpY2FsbHkgY29weXJpZ2h0ZWQgYW5kIGJlbG9uZyB0byB0aGUgY3JlYXRvci4gRmluYWxseSwgY29uZGl0aW9uIDYgc3RhdGVzIHRoZSBzb2Z0d2FyZSBpcyBwcm92aWRlZCBcImFzIGlzXCIgd2l0aCBubyB3YXJyYW50aWVzLlxuXG5JIG5lZWQgdG8gc3VtbWFyaXplIGFsbCB0aGVzZSBwb2ludHMgY2xlYXJseS4gVGhlIHVzZXIgbWlnaHQgYmUgYSBkZXZlbG9wZXIgb3Igc29tZW9uZSB1c2luZyBSdWJ5LCB3YW50aW5nIHRvIHVuZGVyc3RhbmQgdGhlIGxpY2Vuc2luZyB0ZXJtcy4gVGhleSBtaWdodCBuZWVkIHRvIGtub3cgaWYgdGhleSBjYW4gcmVkaXN0cmlidXRlLCBtb2RpZnksIG9yIHVzZSB0aGUgc29mdHdhcmUgaW4gdGhlaXIgcHJvamVjdHMuIEFsc28sIHRoZXkgbWlnaHQgYmUgY29uY2VybmVkIGFib3V0IHRoZSBleGNlcHRpb25zIG1lbnRpb25lZCwgbGlrZSB0aGUgTEVHQUwgZmlsZSBhbmQgbm9uLXN0YW5kYXJkIGJpbmFyaWVzLlxuXG5JIHNob3VsZCBzdHJ1Y3R1cmUgdGhlIGFuc3dlciB0byBoaWdobGlnaHQgZWFjaCBzZWN0aW9uLCBtZW50aW9uIHRoZSBrZXkgcG9pbnRzIGxpa2UgcmVkaXN0cmlidXRpb24sIG1vZGlmaWNhdGlvbiwgYmluYXJ5IGRpc3RyaWJ1dGlvbiwgYW5kIHRoZSBleGNlcHRpb25zLiBBbHNvLCBub3RlIHRoZSBkaXNjbGFpbWVycyBhbmQgd2FycmFudGllcy4gTWFrZSBzdXJlIGl0J3MgY2xlYXIgYW5kIGVhc3kgdG8gdW5kZXJzdGFuZCB3aXRob3V0IGphcmdvbi4gQ2hlY2sgZm9yIGFueSBwb3NzaWJsZSBtaXN1bmRlcnN0YW5kaW5ncywgbGlrZSB0aGUgZGlmZmVyZW5jZSBiZXR3ZWVuIHRoZSAyLWNsYXVzZSBCU0RMIGFuZCB0aGUgY29uZGl0aW9ucyBsaXN0ZWQuIEFsc28sIG1lbnRpb24gdGhhdCBzb21lIGZpbGVzIGFyZSBub3QgdW5kZXIgdGhlc2UgdGVybXMgYW5kIHJlZmVyIHRvIHRoZSBMRUdBTCBmaWxlLiBGaW5hbGx5LCBjb25maXJtIHRoYXQgdGhlIHNvZnR3YXJlIGlzIGZyZWUgYnV0IHdpdGggY2VydGFpbiBjb25kaXRpb25zLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBjb250ZW50cyBvZiB0aGUgYGxpY2Vuc2UudHh0YCBmaWxlIGFyZSB0aGUgKipsaWNlbnNlIHRlcm1zIGZvciBSdWJ5KiosIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopLiBUaGlzIGxpY2Vuc2UgYWxsb3dzIHRoZSB1c2UsIG1vZGlmaWNhdGlvbiwgYW5kIHJlZGlzdHJpYnV0aW9uIG9mIFJ1YnkgdW5kZXIgc3BlY2lmaWMgY29uZGl0aW9ucy4gSGVyZSdzIGEgYnJlYWtkb3duIG9mIHRoZSBrZXkgcG9pbnRzOlxuXG4tLS1cblxuIyMjICoqMS4gQ29weXJpZ2h0IGFuZCBSZWRpc3RyaWJ1dGlvbioqXG4tIFJ1YnkgaXMgKipmcmVlIHNvZnR3YXJlKiogYW5kIGNvcHlyaWdodGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90by5cbi0gWW91IGNhbiAqKnJlZGlzdHJpYnV0ZSoqIHRoZSBzb3VyY2UgY29kZSAqKnZlcmJhdGltKiogKHVuY2hhbmdlZCkgKip3aXRob3V0IHJlc3RyaWN0aW9uKiosIHByb3ZpZGVkIHlvdTpcbiAgLSBEdXBsaWNhdGUgKiphbGwgb3JpZ2luYWwgY29weXJpZ2h0IG5vdGljZXMqKi5cbiAgLSBJbmNsdWRlICoqYXNzb2NpYXRlZCBkaXNjbGFpbWVycyoqLlxuXG4tLS1cblxuIyMjICoqMi4gTW9kaWZpY2F0aW9uIENvbmRpdGlvbnMqKlxuSWYgeW91ICoqbW9kaWZ5KiogdGhlIHNvZnR3YXJlLCB5b3UgbXVzdCBzYXRpc2Z5ICoqYXQgbGVhc3Qgb25lKiogb2YgdGhlc2U6XG4tICoqYSkqKiBQbGFjZSB5b3VyIGNoYW5nZXMgaW4gdGhlICoqUHVibGljIERvbWFpbioqIG9yIG1ha2UgdGhlbSBmcmVlbHkgYXZhaWxhYmxlIChlLmcuLCBzaGFyZSB0aGVtIHB1YmxpY2x5IG9yIGFsbG93IHRoZSBhdXRob3IgdG8gaW5jbHVkZSB0aGVtKS5cbi0gKipiKSoqIFVzZSB0aGUgbW9kaWZpZWQgc29mdHdhcmUgKipvbmx5IHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvbioqLlxuLSAqKmMpKiogTmFtZSAqKm5vbi1zdGFuZGFyZCBiaW5hcmllcyoqIGRpZmZlcmVudGx5IGFuZCBpbmNsdWRlIGluc3RydWN0aW9ucyBvbiBob3cgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb2Z0d2FyZS5cbi0gKipkKSoqIE1ha2UgKipvdGhlciBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzKiogd2l0aCB0aGUgYXV0aG9yLlxuXG4tLS1cblxuIyMjICoqMy4gQmluYXJ5IERpc3RyaWJ1dGlvbioqXG5JZiB5b3UgZGlzdHJpYnV0ZSBSdWJ5IGluICoqb2JqZWN0IGNvZGUgb3IgYmluYXJ5IGZvcm0qKiwgeW91IG11c3Qgc2F0aXNmeSAqKmF0IGxlYXN0IG9uZSoqIG9mIHRoZXNlOlxuLSAqKmEpKiogSW5jbHVkZSBpbnN0cnVjdGlvbnMgb24gaG93IHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlIGNvZGUgKGUuZy4sIGluIGEgbWFudWFsIG9yIGRvY3VtZW50YXRpb24pLlxuLSAqKmIpKiogUHJvdmlkZSB0aGUgKiptYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBjb2RlKiogYWxvbmdzaWRlIHRoZSBiaW5hcmllcy5cbi0gKipjKSoqIE5hbWUgKipub24tc3RhbmRhcmQgYmluYXJpZXMqKiBkaWZmZXJlbnRseSBhbmQgaW5jbHVkZSBpbnN0cnVjdGlvbnMgZm9yIHRoZSBvcmlnaW5hbCBzb3VyY2UuXG4tICoqZCkqKiBNYWtlICoqb3RoZXIgZGlzdHJpYnV0aW9uIGFycmFuZ2VtZW50cyoqIHdpdGggdGhlIGF1dGhvci5cblxuLS0tXG5cbiMjIyAqKjQuIEludGVncmF0aW9uIHdpdGggT3RoZXIgU29mdHdhcmUqKlxuLSBZb3UgY2FuICoqbW9kaWZ5IGFuZCBpbnRlZ3JhdGUqKiBwYXJ0cyBvZiBSdWJ5IGludG8gb3RoZXIgc29mdHdhcmUgKGV2ZW4gY29tbWVyY2lhbCBvbmVzKSwgYnV0OlxuICAtICoqU29tZSBmaWxlcyoqIGluIHRoZSBkaXN0cmlidXRpb24gYXJlIG5vdCB1bmRlciB0aGVzZSB0ZXJtcyAoc2VlIHRoZSBgTEVHQUxgIGZpbGUgZm9yIGRldGFpbHMpLlxuXG4tLS1cblxuIyMjICoqNS4gU2NyaXB0cyBhbmQgTGlicmFyaWVzKipcbi0gU2NyaXB0cyBhbmQgbGlicmFyeSBmaWxlcyBwcm92aWRlZCBhcyBpbnB1dC9vdXRwdXQgYnkgUnVieSAqKmRvIG5vdCBpbmhlcml0KiogUnVieeKAmXMgY29weXJpZ2h0LlxuICAtIFRoZXkgYmVsb25nIHRvICoqdGhlaXIgY3JlYXRvcnMqKiBhbmQgY2FuIGJlICoqY29tbWVyY2lhbGx5IHNvbGQqKiBvciAqKmFnZ3JlZ2F0ZWQqKiB3aXRoIFJ1YnkuXG5cbi0tLVxuXG4jIyMgKio2LiBEaXNjbGFpbWVyKipcbi0gVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkICoqXCJBUyBJU1wiKiogd2l0aCAqKm5vIHdhcnJhbnRpZXMqKiAoZXhwbGljaXQgb3IgaW1wbGllZCksIGluY2x1ZGluZzpcbiAgLSAqKk5vIHdhcnJhbnR5IG9mIG1lcmNoYW50YWJpbGl0eSoqIG9yICoqZml0bmVzcyBmb3IgYSBwYXJ0aWN1bGFyIHB1cnBvc2UqKi5cblxuLS0tXG5cbiMjIyBTdW1tYXJ5XG5UaGlzIGxpY2Vuc2UgaXMgKipwZXJtaXNzaXZlKiogYnV0IHdpdGggc3BlY2lmaWMgY29uZGl0aW9ucyBmb3IgcmVkaXN0cmlidXRpb24gYW5kIG1vZGlmaWNhdGlvbi4gSXQgYWxsb3dzIGZyZWUgdXNlIGFuZCBzaGFyaW5nIG9mIFJ1YnkgYnV0IHJlcXVpcmVzIHByb3BlciBhdHRyaWJ1dGlvbiwgY2xlYXIgZG9jdW1lbnRhdGlvbiwgb3IgcmVzdHJpY3Rpb25zIG9uIG1vZGlmaWVkIHZlcnNpb25zLiBTb21lIGZpbGVzIGFyZSAqKmV4Y2VwdGlvbmFsKiogYW5kIG1heSBoYXZlIHNlcGFyYXRlIGxpY2Vuc2luZyB0ZXJtcyAoc2VlIGBMRUdBTGApLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTQ0LCJjb21wbGV0aW9uX3Rva2VucyI6OTYyLCJ0b3RhbF90b2tlbnMiOjE1MDZ9fQo=
+  recorded_at: Sun, 15 Jun 2025 20:15:43 GMT
 recorded_with: VCR 6.3.1

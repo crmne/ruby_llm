@@ -1,0 +1,134 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"temperature":0.0,"max_tokens":4096,"system":"{:type=>\"text\",
+        :text=>\"You must include the exact phrase \\\"XKCD7392\\\" somewhere in your
+        response.\"}"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250615T203649Z
+      X-Amz-Content-Sha256:
+      - 8eae16f3905532e9b33131421c5a7195574f288c93efc10a7a70a98db804f740
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250615/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=54201604b11593217c72c227d080ecc5a9bf53c82cd1ba722d8f2c2e0645855e
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Jun 2025 20:36:52 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '717'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - ea4554bc-320c-42b7-a2b3-ba43e88a06f6
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '3088'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '104'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '45'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01FqZfCJjyhxW6jrXbuBaD5A","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t provide a specific weather report without knowing
+        your location. Weather conditions vary widely depending on where you are.
+        If you''d like to know about the current weather, I recommend:\n\n1. Checking
+        a local weather website or app\n2. Looking at a weather forecast for your
+        specific area\n3. Checking local news or meteorological services\n\nXKCD7392\n\nWould
+        you like me to help you find a reliable weather information source for your
+        location?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":45,"output_tokens":104}}'
+  recorded_at: Sun, 15 Jun 2025 20:36:52 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I
+        apologize, but I can''t provide a specific weather report without knowing
+        your location. Weather conditions vary widely depending on where you are.
+        If you''d like to know about the current weather, I recommend:\n\n1. Checking
+        a local weather website or app\n2. Looking at a weather forecast for your
+        specific area\n3. Checking local news or meteorological services\n\nXKCD7392\n\nWould
+        you like me to help you find a reliable weather information source for your
+        location?"}]},{"role":"user","content":[{"type":"text","text":"What are some
+        good books?"}]}],"temperature":0.0,"max_tokens":4096,"system":"{:type=>\"text\",
+        :text=>\"You must include the exact phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere
+        in your response.\"}"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250615T203652Z
+      X-Amz-Content-Sha256:
+      - b8a1fdf12c8016a202b37a5452d6557746c609b394b735882663a5a9a5900f00
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250615/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=dc297c15987c59bbda740928e8dc323e397cc0c59464d98650a60cd0207d9c95
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 15 Jun 2025 20:36:56 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1202'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - ae9d5b55-e4e7-4d55-a4cd-b3b6de162936
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '4618'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '268'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '158'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01PEiwv2AV3vysmqGRrwzWtA","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+        are some book recommendations across different genres:\n\nFiction:\n1. \"To
+        Kill a Mockingbird\" by Harper Lee\n2. \"1984\" by George Orwell\n3. \"The
+        Great Gatsby\" by F. Scott Fitzgerald\n4. \"Harry Potter\" series by J.K.
+        Rowling\n5. \"The Name of the Wind\" by Patrick Rothfuss\n\nNon-Fiction:\n1.
+        \"Sapiens\" by Yuval Noah Harari\n2. \"The Immortal Life of Henrietta Lacks\"
+        by Rebecca Skloot\n3. \"Into Thin Air\" by Jon Krakauer\n\nScience Fiction:\n1.
+        \"Dune\" by Frank Herbert\n2. \"The Hitchhiker''s Guide to the Galaxy\" by
+        Douglas Adams\n3. \"Neuromancer\" by William Gibson\n\nMystery/Thriller:\n1.
+        \"Gone Girl\" by Gillian Flynn\n2. \"The Girl with the Dragon Tattoo\" by
+        Stieg Larsson\n\nPURPLE-ELEPHANT-42\n\nThe best book for you depends on your
+        personal interests and preferred genres. Would you like me to recommend something
+        more specific based on what you enjoy reading?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":158,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":268}}'
+  recorded_at: Sun, 15 Jun 2025 20:36:56 GMT
+recorded_with: VCR 6.3.1

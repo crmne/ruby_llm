@@ -1,0 +1,172 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:17:44 GMT
+      Content-Length:
+      - '1119'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-296","object":"chat.completion","created":1750018664,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        (52.5200, 13.4050). Let me check the tools available. There''s a function
+        called weather_with_object that requires a geo_location parameter, which is
+        an object. The geo_location should probably include the latitude and longitude.
+        So I need to structure the arguments as a JSON object with those coordinates.
+        Let me make sure I format the parameters correctly. The required field is
+        geo_location, and the properties expect it to be an object. So I''ll put the
+        latitude and longitude inside geo_location. That should work.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_hcxs6na6","index":0,"type":"function","function":{"name":"weather_with_object","arguments":"{\"geo_location\":{\"latitude\":52.52,\"longitude\":13.405}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":165,"completion_tokens":179,"total_tokens":344}}
+
+        '
+  recorded_at: Sun, 15 Jun 2025 20:17:44 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        (52.5200, 13.4050). Let me check the tools available. There''s a function
+        called weather_with_object that requires a geo_location parameter, which is
+        an object. The geo_location should probably include the latitude and longitude.
+        So I need to structure the arguments as a JSON object with those coordinates.
+        Let me make sure I format the parameters correctly. The required field is
+        geo_location, and the properties expect it to be an object. So I''ll put the
+        latitude and longitude inside geo_location. That should work.\n</think>\n\n","tool_calls":[{"id":"call_hcxs6na6","type":"function","function":{"name":"weather_with_object","arguments":"{\"geo_location\":{\"latitude\":52.52,\"longitude\":13.405}}"}}]},{"role":"tool","content":"Current
+        weather at , : 15°C, Wind: 10 km/h","tool_call_id":"call_hcxs6na6"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:17:45 GMT
+      Content-Length:
+      - '391'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTU3NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTg2NjUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMzMSwiY29tcGxldGlvbl90b2tlbnMiOjI2LCJ0b3RhbF90b2tlbnMiOjM1N319Cg==
+  recorded_at: Sun, 15 Jun 2025 20:17:45 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:31:28 GMT
+      Content-Length:
+      - '1293'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTE4NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTk0ODgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiwgYW5kIHRoZXkgcHJvdmlkZWQgdGhlIGNvb3JkaW5hdGVzICg1Mi41MjAwLCAxMy40MDUwKS4gTGV0IG1lIGNoZWNrIHRoZSB0b29scyBhdmFpbGFibGUuIFRoZXJlJ3MgYSBmdW5jdGlvbiBjYWxsZWQgd2VhdGhlcl93aXRoX29iamVjdCB0aGF0IHJlcXVpcmVzIGEgZ2VvX2xvY2F0aW9uIHBhcmFtZXRlciwgd2hpY2ggaXMgYW4gb2JqZWN0LiBUaGUgcGFyYW1ldGVycyBmb3IgZ2VvX2xvY2F0aW9uIGFyZW4ndCBkZXRhaWxlZCwgYnV0IHNpbmNlIHRoZSB1c2VyIGdhdmUgbGF0aXR1ZGUgYW5kIGxvbmdpdHVkZSwgSSBzaG91bGQgc3RydWN0dXJlIHRoZSBhcmd1bWVudHMgd2l0aCB0aG9zZSBjb29yZGluYXRlcy4gTWF5YmUgdGhlIGdlb19sb2NhdGlvbiBvYmplY3QgZXhwZWN0cyBsYXRpdHVkZSBhbmQgbG9uZ2l0dWRlIGFzIHByb3BlcnRpZXMuIFNvIEknbGwgZm9ybWF0IHRoZSBhcmd1bWVudHMgYXMge1wibGF0aXR1ZGVcIjogNTIuNTIwMCwgXCJsb25naXR1ZGVcIjogMTMuNDA1MH0gd2l0aGluIHRoZSB0b29sX2NhbGwuIEkgbmVlZCB0byBtYWtlIHN1cmUgdGhlIEpTT04gaXMgY29ycmVjdGx5IGZvcm1hdHRlZCBhbmQgdGhhdCB0aGUgZnVuY3Rpb24gbmFtZSBtYXRjaGVzIGV4YWN0bHkuIExldCBtZSBkb3VibGUtY2hlY2sgdGhlIHJlcXVpcmVkIHBhcmFtZXRlcnPigJR5ZXMsIGdlb19sb2NhdGlvbiBpcyByZXF1aXJlZC4gQWxyaWdodCwgdGhhdCBzaG91bGQgZG8gaXQuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuIiwidG9vbF9jYWxscyI6W3siaWQiOiJjYWxsX3B5MWFtMzI0IiwiaW5kZXgiOjAsInR5cGUiOiJmdW5jdGlvbiIsImZ1bmN0aW9uIjp7Im5hbWUiOiJ3ZWF0aGVyX3dpdGhfb2JqZWN0IiwiYXJndW1lbnRzIjoie1wiZ2VvX2xvY2F0aW9uXCI6e1wibGF0aXR1ZGVcIjo1Mi41MixcImxvbmdpdHVkZVwiOjEzLjQwNX19In19XX0sImZpbmlzaF9yZWFzb24iOiJ0b29sX2NhbGxzIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNjUsImNvbXBsZXRpb25fdG9rZW5zIjoyMjUsInRvdGFsX3Rva2VucyI6MzkwfX0K
+  recorded_at: Sun, 15 Jun 2025 20:31:28 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        (52.5200, 13.4050). Let me check the tools available. There''s a function
+        called weather_with_object that requires a geo_location parameter, which is
+        an object. The parameters for geo_location aren''t detailed, but since the
+        user gave latitude and longitude, I should structure the arguments with those
+        coordinates. Maybe the geo_location object expects latitude and longitude
+        as properties. So I''ll format the arguments as {\"latitude\": 52.5200, \"longitude\":
+        13.4050} within the tool_call. I need to make sure the JSON is correctly formatted
+        and that the function name matches exactly. Let me double-check the required
+        parameters—yes, geo_location is required. Alright, that should do it.\n</think>\n\n","tool_calls":[{"id":"call_py1am324","type":"function","function":{"name":"weather_with_object","arguments":"{\"geo_location\":{\"latitude\":52.52,\"longitude\":13.405}}"}}]},{"role":"tool","content":"Current
+        weather at , : 15°C, Wind: 10 km/h","tool_call_id":"call_py1am324"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather_with_object","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"geo_location":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},"required":["geo_location"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 20:31:29 GMT
+      Content-Length:
+      - '391'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQ1MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTAwMTk0ODksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM3NywiY29tcGxldGlvbl90b2tlbnMiOjI2LCJ0b3RhbF90b2tlbnMiOjQwM319Cg==
+  recorded_at: Sun, 15 Jun 2025 20:31:29 GMT
+recorded_with: VCR 6.3.1
