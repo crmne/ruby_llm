@@ -105,8 +105,13 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `gemini_api_key`
 *   `deepseek_api_key`
 *   `openrouter_api_key`
-*   `ollama_api_base`
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
+
+## Provider API Base
+
+When configuring a local model running via Ollama, you will configure the URL to the Ollama server rather than an API key. A typical value is `http://localhost:11434/v1`.
+
+*   `ollama_api_base`
 
 ## Custom OpenAI API Base (`openai_api_base`)
 {: .d-inline-block }
