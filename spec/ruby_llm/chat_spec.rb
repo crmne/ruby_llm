@@ -30,7 +30,6 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} successfully uses the system prompt" do
-        skip 'System prompt can be flaky for Ollama models' if provider == :ollama
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
@@ -41,7 +40,6 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        skip 'System prompt can be flaky for Ollama models' if provider == :ollama
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally

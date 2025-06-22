@@ -86,6 +86,7 @@ RubyLLM.configure do |config|
   # config.http_proxy = "socks5://proxy.company.com:1080"        # SOCKS5 proxy
 
   # --- Logging Settings ---
+  # config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
   config.log_file = '/logs/ruby_llm.log'
   config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
   config.log_assume_model_exists = false # Silence "Assuming model exists for provider" warning
@@ -158,13 +159,16 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 Adjust these based on network conditions and provider reliability.
 
 ## Logging Settings
-RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level.
+RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level, or set a custom logger.
 
 ```ruby
 RubyLLM.configure do |config|
   # --- Logging Settings ---
   config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
   config.log_level = :debug  # Log level (:debug, :info, :warn)
+
+  # --- OR Custom Logger ---
+  config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
 end
 ```
 
@@ -180,6 +184,14 @@ end
 * `:warn`: Warning messages for non-critical issues that may need attention
 
 You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
+
+### Custom Logger
+
+* `config.logger`: Specifies a custom `Logger` for where logs should be written.
+
+{: .note }
+If you set a customer logger the `config.log_file` and `config.log_level`
+settings are not used.
 
 ## Scoped Configuration with Contexts
 

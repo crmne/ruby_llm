@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"temperature":0.7,"stream":false}'
+        is the best.</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:38:32 GMT
+      - Wed, 11 Jun 2025 12:43:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,11 +49,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943511-OaYNF6ghIhSJzbPKlonr\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943511,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Based
-        on the provided file, the contents of the 'ruby.txt' file is:\\n\\n\\\"Ruby
-        is the best.\\\"\\n\\nThe file appears to be a simple text file with a single
-        line of text praising the Ruby programming language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":36,\"completion_tokens\":52,\"total_tokens\":88}}"
-  recorded_at: Tue, 03 Jun 2025 09:38:33 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749645831-0l7sjcck6NMTgWUuwxDB\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645831,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        file 'ruby.txt' contains the text: \\\"Ruby is the best.\\\"\\n\\nThe file
+        appears to be a plain text file (mime_type='text/plain') with a simple one-line
+        statement expressing an opinion about the Ruby programming language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":36,\"completion_tokens\":56,\"total_tokens\":92}}"
+  recorded_at: Wed, 11 Jun 2025 12:43:53 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -61,12 +61,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"Based on the provided
-        file, the contents of the ''ruby.txt'' file is:\n\n\"Ruby is the best.\"\n\nThe
-        file appears to be a simple text file with a single line of text praising
-        the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file ''ruby.txt''
+        contains the text: \"Ruby is the best.\"\n\nThe file appears to be a plain
+        text file (mime_type=''text/plain'') with a simple one-line statement expressing
+        an opinion about the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"temperature":0.7,"stream":false}'
+        is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:38:34 GMT
+      - Wed, 11 Jun 2025 12:43:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,9 +108,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943513-uiaB4lsoC8sGsDMqsY8C\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943513,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"In
-        the 'ruby.xml' file, the contents are:\\n\\n```xml\\n<truism>Ruby is the best</truism>\\n```\\n\\nThis
-        is an XML file with a custom `<truism>` tag containing the text \\\"Ruby is
-        the best\\\". It's a simple XML document with a single element.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":126,\"completion_tokens\":71,\"total_tokens\":197}}"
-  recorded_at: Tue, 03 Jun 2025 09:38:35 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749645833-X6Wm36UHBtgHjvmsBK7r\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645833,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        file 'ruby.xml' contains an XML document with a single element:\\n\\n```xml\\n<truism>Ruby
+        is the best</truism>\\n```\\n\\nThis is an XML file (mime_type='application/xml')
+        with a custom XML tag <truism> that contains the text \\\"Ruby is the best\\\".
+        The XML structure suggests this is a simple XML document expressing an opinion
+        about Ruby.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":130,\"completion_tokens\":88,\"total_tokens\":218}}"
+  recorded_at: Wed, 11 Jun 2025 12:43:55 GMT
 recorded_with: VCR 6.3.1

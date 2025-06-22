@@ -53,19 +53,93 @@ You can see the full list of currently registered models in the [Available Model
 
 ### Refreshing the Registry
 
-The `rake models:update` task updates the `models.json` file based on the currently available models from providers for which you have configured API keys.
+**For Application Developers:**
+
+The recommended way to refresh models in your application is to call `RubyLLM.models.refresh!` directly:
+
+```ruby
+# In your application code (console, background job, etc.)
+RubyLLM.models.refresh!
+puts "Refreshed in-memory model list."
+```
+
+This refreshes the in-memory model registry and is what you want 99% of the time. This method is safe to call from Rails applications, background jobs, or any running Ruby process.
+
+**For Gem Development:**
+
+The `rake models:update` task is designed for gem maintainers and updates the `models.json` file shipped with the gem:
 
 ```bash
-# Ensure API keys are configured (e.g., via ENV vars)
+# Only for gem development - requires API keys and gem directory structure
 bundle exec rake models:update
 ```
 
-Additionally, you can refresh the *in-memory* model list within a running application using `RubyLLM.models.refresh!`. This is useful for long-running processes that might need to pick up newly available models without restarting. Note that this does *not* update the `models.json` file itself, only the currently loaded list.
+This task is not intended for Rails applications as it writes to gem directories and requires the full gem development environment.
+
+**Persisting Models to Your Database:**
+
+If you want to store model information in your application's database for persistence, querying, or caching, create your own migration and sync logic. Here's an example schema and production-ready sync job:
 
 ```ruby
-# In your application code (e.g., a background job scheduler)
-RubyLLM.models.refresh!
-puts "Refreshed in-memory model list."
+# db/migrate/xxx_create_llm_models.rb
+create_table "llm_models", force: :cascade do |t|
+  t.string "model_id", null: false
+  t.string "name", null: false
+  t.string "provider", null: false
+  t.boolean "available", default: false
+  t.boolean "is_default", default: false
+  t.datetime "last_synced_at"
+  t.integer "context_window"
+  t.integer "max_output_tokens"
+  t.jsonb "metadata", default: {}
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+  t.string "slug"
+  t.string "model_type"
+  t.string "family"
+  t.datetime "model_created_at"
+  t.date "knowledge_cutoff"
+  t.jsonb "modalities", default: {}, null: false
+  t.jsonb "capabilities", default: [], null: false
+  t.jsonb "pricing", default: {}, null: false
+
+  t.index ["model_id"], unique: true
+  t.index ["provider", "available", "context_window"]
+  t.index ["capabilities"], using: :gin
+  t.index ["modalities"], using: :gin
+  t.index ["pricing"], using: :gin
+end
+
+# app/jobs/sync_llm_models_job.rb
+class SyncLLMModelsJob < ApplicationJob
+  queue_as :default
+  retry_on StandardError, wait: 1.seconds, attempts: 5
+
+  def perform
+    RubyLLM.models.refresh!
+
+    found_model_ids = RubyLLM.models.chat_models.filter_map do |model_data|
+      attributes = model_data.to_h
+      attributes[:model_id] = attributes.delete(:id)
+      attributes[:model_type] = attributes.delete(:type)
+      attributes[:model_created_at] = attributes.delete(:created_at)
+      attributes[:last_synced_at] = Time.now
+
+      model = LLMModel.find_or_initialize_by(model_id: attributes[:model_id])
+      model.assign_attributes(**attributes)
+      model.save ? model.id : nil
+    end
+
+    # Mark missing models as unavailable instead of deleting them
+    LLMModel.where.not(id: found_model_ids).update_all(available: false)
+  end
+end
+
+# Schedule it to run periodically
+# config/schedule.rb (with whenever gem)
+every 6.hours do
+  runner "SyncLLMModelsJob.perform_later"
+end
 ```
 
 ## Exploring and Finding Models

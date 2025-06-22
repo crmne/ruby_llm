@@ -147,6 +147,10 @@ When you `ask` a question that the model determines requires a tool:
 
 This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
 
+## Model Context Protocol (MCP) Support
+
+For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
+
 ## Debugging Tools
 
 Set the `RUBYLLM_DEBUG` environment variable to see detailed logging, including tool calls and results.

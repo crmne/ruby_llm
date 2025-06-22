@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"temperature":0.0,"stream":false}'
+        me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -25,17 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:44:04 GMT
+      - Wed, 11 Jun 2025 12:51:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Server:
-      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -47,14 +43,23 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943843-Hg9th0Xh3f0gBKncDwsp\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943843,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I
-        apologize, but I can't provide real-time weather information. Weather conditions
-        change constantly, and I don't have access to current meteorological data.
-        XKCD7392 If you want to know the current weather, I recommend checking a local
-        weather website, app, or watching a local weather forecast.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":68,\"total_tokens\":100}}"
-  recorded_at: Tue, 03 Jun 2025 09:44:05 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1749646291-dOwK01euEaMthRw8EJRS\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646291,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I
+        apologize, but I can't provide real-time weather information as I don't have
+        access to current weather data. Weather conditions vary depending on your
+        specific location and the current time. If you'd like to know about the weather,
+        I recommend:\\n\\n1. Checking a local weather website or app\\n2. Looking
+        at a weather forecast on TV\\n3. Checking your local meteorological service
+        website\\n4. Using a smartphone weather app\\n\\nXKCD7392 Just remember that
+        weather can change quickly, so it's always best to get the most up-to-date
+        information from a live source.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":130,\"total_tokens\":162}}"
+  recorded_at: Wed, 11 Jun 2025 12:51:34 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -62,12 +67,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"I apologize, but I
-        can''t provide real-time weather information. Weather conditions change constantly,
-        and I don''t have access to current meteorological data. XKCD7392 If you want
-        to know the current weather, I recommend checking a local weather website,
-        app, or watching a local weather forecast."},{"role":"developer","content":"You
+        can''t provide real-time weather information as I don''t have access to current
+        weather data. Weather conditions vary depending on your specific location
+        and the current time. If you''d like to know about the weather, I recommend:\n\n1.
+        Checking a local weather website or app\n2. Looking at a weather forecast
+        on TV\n3. Checking your local meteorological service website\n4. Using a smartphone
+        weather app\n\nXKCD7392 Just remember that weather can change quickly, so
+        it''s always best to get the most up-to-date information from a live source."},{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
-        are some good books?"}],"temperature":0.0,"stream":false}'
+        are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -85,17 +93,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:44:06 GMT
+      - Wed, 11 Jun 2025 12:51:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Server:
-      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -107,22 +111,27 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1748943845-wquFTcxWuKIBpDqiHNXY\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943845,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
-        are some book recommendations across different genres:\\n\\nFiction:\\n1.
+        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1749646294-FIlRBz6raf9Y6O3ZsBGm\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646294,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+        are some great book recommendations across different genres:\\n\\nFiction:\\n1.
         \\\"To Kill a Mockingbird\\\" by Harper Lee\\n2. \\\"1984\\\" by George Orwell\\n3.
-        \\\"The Great Gatsby\\\" by F. Scott Fitzgerald\\n4. \\\"Dune\\\" by Frank
-        Herbert\\n5. \\\"The Name of the Wind\\\" by Patrick Rothfuss\\n\\nNon-Fiction:\\n1.
+        \\\"The Great Gatsby\\\" by F. Scott Fitzgerald\\n4. \\\"Harry Potter\\\"
+        series by J.K. Rowling\\n5. \\\"The Name of the Wind\\\" by Patrick Rothfuss\\n\\nNon-Fiction:\\n1.
         \\\"Sapiens\\\" by Yuval Noah Harari\\n2. \\\"Into Thin Air\\\" by Jon Krakauer\\n3.
         \\\"The Immortal Life of Henrietta Lacks\\\" by Rebecca Skloot\\n\\nScience
-        Fiction:\\n1. \\\"Neuromancer\\\" by William Gibson\\n2. \\\"The Hitchhiker's
-        Guide to the Galaxy\\\" by Douglas Adams\\n3. \\\"Ender's Game\\\" by Orson
-        Scott Card\\n\\nMystery/Thriller:\\n1. \\\"Gone Girl\\\" by Gillian Flynn\\n2.
-        \\\"The Girl with the Dragon Tattoo\\\" by Stieg Larsson\\n\\nPURPLE-ELEPHANT-42
-        These are just a few suggestions - the best book depends on your personal
-        interests and reading preferences. I recommend checking out reviews and reading
-        a sample before committing to a full book.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":110,\"completion_tokens\":274,\"total_tokens\":384}}"
-  recorded_at: Tue, 03 Jun 2025 09:44:10 GMT
+        Fiction:\\n1. \\\"Dune\\\" by Frank Herbert\\n2. \\\"The Hitchhiker's Guide
+        to the Galaxy\\\" by Douglas Adams\\n3. \\\"Neuromancer\\\" by William Gibson\\n\\nMystery/Thriller:\\n1.
+        \\\"Gone Girl\\\" by Gillian Flynn\\n2. \\\"The Girl with the Dragon Tattoo\\\"
+        by Stieg Larsson\\n\\nClassic Literature:\\n1. \\\"Pride and Prejudice\\\"
+        by Jane Austen\\n2. \\\"Crime and Punishment\\\" by Fyodor Dostoevsky\\n\\nPURPLE-ELEPHANT-42
+        These recommendations cover a wide range of interests, so there's something
+        for almost every reader!\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":172,\"completion_tokens\":295,\"total_tokens\":467}}"
+  recorded_at: Wed, 11 Jun 2025 12:51:39 GMT
 recorded_with: VCR 6.3.1

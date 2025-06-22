@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"temperature":0.7,"stream":false}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:48:51 GMT
+      - Wed, 11 Jun 2025 13:03:04 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -60,5 +60,5 @@ http_interactions:
                 "code": "invalid_api_key"
             }
         }
-  recorded_at: Tue, 03 Jun 2025 09:48:51 GMT
+  recorded_at: Wed, 11 Jun 2025 13:03:04 GMT
 recorded_with: VCR 6.3.1
