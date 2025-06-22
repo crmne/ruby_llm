@@ -11,12 +11,12 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, thinking:, thinking_budget:, stream: false) # rubocop:disable Metrics/ParameterLists
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:)
+            add_optional_fields(payload, system_content:, tools:, thinking:, thinking_budget:)
           end
         end
 
@@ -45,19 +45,33 @@ module RubyLLM
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:)
+        def add_optional_fields(payload, system_content:, tools:, thinking:, thinking_budget:)
           payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
+          return unless thinking
+
+          payload[:thinking] = {
+            type: 'enabled',
+            budget_tokens: thinking_budget
+          }
         end
 
         def parse_completion_response(response)
           data = response.body
+          RubyLLM.logger.debug("Anthropic response: #{data}")
+
           content_blocks = data['content'] || []
 
+          thinking_content = extract_thinking_content(content_blocks)
           text_content = extract_text_content(content_blocks)
           tool_use = Tools.find_tool_use(content_blocks)
 
-          build_message(data, text_content, tool_use)
+          build_message(data, text_content, tool_use, thinking_content)
+        end
+
+        def extract_thinking_content(blocks)
+          thinking_blocks = blocks.select { |c| c['type'] == 'thinking' }
+          thinking_blocks.map { |c| c['thinking'] }.join
         end
 
         def extract_text_content(blocks)
@@ -65,10 +79,11 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use)
+        def build_message(data, content, tool_use, thinking_content)
           Message.new(
             role: :assistant,
             content: content,
+            thinking: thinking_content,
             tool_calls: Tools.parse_tool_calls(tool_use),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
