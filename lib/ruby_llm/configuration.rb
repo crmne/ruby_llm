@@ -28,7 +28,9 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
-                  :default_reasoning_budget,
+                  # Default model settings
+                  :default_thinking,
+                  :default_thinking_budget,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,
@@ -55,7 +57,11 @@ module RubyLLM
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
-      @default_reasoning_budget = 1024
+      
+      # Default model settings
+      @default_thinking = false
+      @default_thinking_budget = 2048
+      @default_temperature = 0.7
 
       # Logging configuration
       @log_file = $stdout

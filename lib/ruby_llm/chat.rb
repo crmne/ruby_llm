@@ -22,8 +22,9 @@ module RubyLLM
       @config = context&.config || RubyLLM.config
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
-      @reasoning = false
-      @temperature = 0.7
+      @thinking = @config.default_thinking
+      @thinking_budget = @config.default_thinking_budget
+      @temperature = @config.default_temperature
       @messages = []
       @tools = {}
       @on = {
@@ -74,12 +75,15 @@ module RubyLLM
       self
     end
 
-    def with_reasoning(reasoning = true)
-      if reasoning && !@model.reasoning?
-        raise UnsupportedReasoningError, "Model #{@model.id} doesn't support reasoning"
-      end
+    def with_thinking(thinking: true, budget: nil)
+      raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.thinking?
 
-      @reasoning = reasoning
+      @thinking = thinking
+      
+      if budget
+        @thinking_budget = budget
+      end
+      
       self
     end
 
@@ -111,7 +115,8 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
-        reasoning: @reasoning,
+        thinking: @thinking,
+        thinking_budget: @thinking_budget,
         connection: @connection,
         &
       )
