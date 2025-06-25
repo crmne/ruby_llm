@@ -15,6 +15,10 @@ module RubyLLM
       type.start_with?('image/')
     end
 
+    def video?(type)
+      type.start_with?('video/')
+    end
+
     def audio?(type)
       type.start_with?('audio/')
     end

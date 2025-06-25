@@ -117,7 +117,7 @@ Run the migrations: `rails db:migrate`
 
 ### ActiveStorage Setup for Attachments (Optional)
 
-If you want to use attachments (images, audio, PDFs) with your AI chats, you need to set up ActiveStorage:
+If you want to use attachments (images, videos, audio, PDFs) with your AI chats, you need to set up ActiveStorage:
 
 ```bash
 # Only needed if you plan to use attachments
@@ -291,7 +291,7 @@ chat_record.ask("Analyze this file", with: params[:uploaded_file])
 chat_record.ask("What's in this document?", with: user.profile_document)
 ```
 
-The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, PDF, or text document - RubyLLM figures it out for you!
+The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, video, audio file, PDF, or text document - RubyLLM figures it out for you!
 
 ## Handling Persistence Edge Cases
 
