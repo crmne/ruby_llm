@@ -46,7 +46,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
 
-# Analyze images, audio, documents, and text files
+# Analyze images, videos, audio, documents, and text files
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
@@ -88,7 +88,7 @@ chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
 ## Core Capabilities
 
 *   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
-*   👁️ **Vision:** Analyze images within chats.
+*   👁️ **Vision:** Analyze images and videos within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
 *   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
