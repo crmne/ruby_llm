@@ -100,7 +100,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
+* **Vision:** Analyze images and videos
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
