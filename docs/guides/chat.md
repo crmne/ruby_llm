@@ -119,7 +119,7 @@ RubyLLM manages a registry of known models and their capabilities. For detailed 
 
 ## Multi-modal Conversations
 
-Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, text files, and PDFs in your chat messages using the `with:` option in the `ask` method.
+Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, videos, audio, text files, and PDFs in your chat messages using the `with:` option in the `ask` method.
 
 ### Working with Images
 
@@ -143,6 +143,30 @@ puts response.content
 ```
 
 RubyLLM handles converting the image source into the format required by the specific provider API.
+
+### Working with Videos
+
+You can also analyze video files or URLs with vision-capable models. RubyLLM will automatically detect video files and handle them appropriately.
+
+```ruby
+# Ask about a local video file
+chat = RubyLLM.chat(model: 'gpt-4o')
+response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
+puts response.content
+
+# Ask about a video from a URL
+response = chat.ask "Summarize the main events in this video.", with: "https://example.com/demo_video.mp4"
+puts response.content
+
+# Combine videos with other file types
+response = chat.ask "Analyze these files for visual content.", with: ["diagram.png", "demo.mp4", "notes.txt"]
+puts response.content
+```
+
+**Notes:**
+- Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
+- Not all models or providers support video input; check the [Available Models Guide]({% link guides/available-models.md %}) for details.
+- Large video files may be subject to size or duration limits imposed by the provider.
 
 ### Working with Audio
 
@@ -224,6 +248,7 @@ response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 
 **Supported file types:**
 - **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Videos:** .mp4, .mov, .avi, .webm
 - **Audio:** .mp3, .wav, .m4a, .ogg, .flac
 - **Documents:** .pdf, .txt, .md, .csv, .json, .xml
 - **Code:** .rb, .py, .js, .html, .css (and many others)

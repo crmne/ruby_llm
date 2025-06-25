@@ -72,8 +72,9 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
 
-# Analyze images, audio, documents, and text files
+# Analyze images, videos, audio, documents, and text files
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "presentation.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
