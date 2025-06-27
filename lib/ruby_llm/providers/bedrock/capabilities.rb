@@ -117,7 +117,9 @@ module RubyLLM
           /anthropic\.claude-3-haiku/ => :claude3_haiku,
           /anthropic\.claude-3-5-haiku/ => :claude3_5_haiku,
           /anthropic\.claude-v2/ => :claude2,
-          /anthropic\.claude-instant/ => :claude_instant
+          /anthropic\.claude-instant/ => :claude_instant,
+          /anthropic\.claude-sonnet-4/ => :claude_sonnet4,
+          /anthropic\.claude-opus-4/ => :claude_opus4
         }.freeze
 
         # Determines the model family for pricing and capability lookup
@@ -187,8 +189,8 @@ module RubyLLM
 
           capabilities << 'structured_output' if supports_json_mode?(model_id)
 
-          # Extended thinking for 3.7 models
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7/)
+          # Extended thinking for 3.7, and 4 models
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7-sonnet|claude-sonnet-4|claude-opus-4/)
 
           # Batch capabilities for newer Claude models
           if model_id.match?(/claude-3\.5|claude-3-7/)

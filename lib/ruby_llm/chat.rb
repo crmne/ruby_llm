@@ -79,11 +79,10 @@ module RubyLLM
       raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.thinking?
 
       @thinking = thinking
-      
-      if budget
-        @thinking_budget = budget
-      end
-      
+      @temperature = 1 if thinking # Thinking requires temperature be set to 1
+
+      @thinking_budget = budget if budget
+
       self
     end
 

@@ -39,7 +39,7 @@ module RubyLLM
           "model/#{@model_id}/invoke"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, thinking:, stream: false) # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, thinking:, thinking_budget:, stream: false) # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
           # Hold model_id in instance variable for use in completion_url and stream_url
           @model_id = model
 
@@ -47,7 +47,7 @@ module RubyLLM
           system_content = Anthropic::Chat.build_system_content(system_messages)
 
           build_base_payload(chat_messages, temperature, model).tap do |payload|
-            Anthropic::Chat.add_optional_fields(payload, system_content:, tools:)
+            Anthropic::Chat.add_optional_fields(payload, system_content:, tools:, thinking:, thinking_budget:)
           end
         end
 
