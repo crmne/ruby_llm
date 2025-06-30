@@ -34,7 +34,7 @@ module RubyLLM
       def embed(text, model:, connection:, dimensions:)
         payload = render_embedding_payload(text, model:, dimensions:)
         response = connection.post(embedding_url(model:), payload)
-        parse_embedding_response(response, model:)
+        parse_embedding_response(response, model:, text:)
       end
 
       def paint(prompt, model:, size:, connection:)

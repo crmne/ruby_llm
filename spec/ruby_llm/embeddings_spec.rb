@@ -44,6 +44,14 @@ RSpec.describe RubyLLM::Embedding do
           expect(vector.length).to eq(test_dimensions)
         end
       end
+
+      it "#{provider}/#{model} handles single-string arrays consistently" do # rubocop:disable RSpec/MultipleExpectations
+        embeddings = RubyLLM.embed(['Ruby is great'], model: model)
+        expect(embeddings.vectors).to be_an(Array)
+        expect(embeddings.vectors.size).to eq(1)
+        expect(embeddings.vectors.first).to be_an(Array)
+        expect(embeddings.vectors.first.first).to be_a(Float)
+      end
     end
   end
 end
