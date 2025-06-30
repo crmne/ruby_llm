@@ -93,7 +93,6 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.string :model_id
       t.integer :input_tokens
       t.integer :output_tokens
-      t.references :tool_call # Links tool result message to the initiating call
       t.timestamps
     end
   end
