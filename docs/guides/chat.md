@@ -246,6 +246,19 @@ puts response2.content
 
 You can set the temperature using `with_temperature`, which returns the `Chat` instance for chaining.
 
+## Custom Request Options
+
+You can configure additional provider-specific features by adding custom fields to each API request. Use the `with_request_options` method.
+
+```ruby
+# response_format parameter is supported by :openai, :ollama, :deepseek
+chat = RubyLLM.chat.with_request_options(response_format: { type: 'json_object' })
+response = chat.ask "What is the square root of 64? Answer with a JSON object with the key `result`."
+puts JSON.parse(response.content)
+```
+
+Allowed parameters vary widely by provider and model.
+
 ## Tracking Token Usage
 
 Understanding token usage is important for managing costs and staying within context limits. Each `RubyLLM::Message` returned by `ask` includes token counts.

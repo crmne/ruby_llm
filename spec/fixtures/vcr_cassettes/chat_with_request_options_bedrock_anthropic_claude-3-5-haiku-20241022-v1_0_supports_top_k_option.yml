@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"top_k":5,"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"temperature":0.7,"max_tokens":4096}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250703T023014Z
+      X-Amz-Content-Sha256:
+      - 6e66b0df343074bb4e2b11bf211a10441f15ad68ce5af9849ddf69242979563a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250703/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=fcd9e32b652d60a37b7cc97d6fcba77ada3b58fdd75025df3e6285dcb4aff15c
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 03 Jul 2025 02:30:15 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '267'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 9e3152dd-eee4-4058-bc15-3b5b02aa2156
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '568'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '12'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '28'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01KcHJWHGoWa5hRNBV8QL35e","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"\n    \"result\":
+        8\n}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":28,"output_tokens":12}}'
+  recorded_at: Thu, 03 Jul 2025 02:30:15 GMT
+recorded_with: VCR 6.3.1
