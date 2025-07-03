@@ -76,6 +76,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<OPENAI_ORGANIZATION>') do |interaction|
     interaction.response.headers['Openai-Organization']&.first
   end
+  config.filter_sensitive_data('<ANTHROPIC_ORGANIZATION_ID>') do |interaction|
+    interaction.response.headers['Anthropic-Organization-Id']&.first
+  end
   config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
   config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
   config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }

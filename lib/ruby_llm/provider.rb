@@ -10,11 +10,11 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:, options: {}, &) # rubocop:disable Metrics/ParameterLists
+      def complete(messages, tools:, temperature:, model:, connection:, request_options: {}, &) # rubocop:disable Metrics/ParameterLists
         normalized_temperature = maybe_normalize_temperature(temperature, model)
 
         payload = deep_merge(
-          options,
+          request_options,
           render_payload(
             messages,
             tools: tools,

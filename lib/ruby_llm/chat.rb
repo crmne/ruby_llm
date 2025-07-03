@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :options
+    attr_reader :model, :messages, :tools, :request_options
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -25,7 +25,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
-      @options = {}
+      @request_options = {}
       @on = {
         new_message: nil,
         end_message: nil
@@ -79,8 +79,8 @@ module RubyLLM
       self
     end
 
-    def with_options(**options)
-      @options = options
+    def with_request_options(**request_options)
+      @request_options = request_options
       self
     end
 
@@ -106,7 +106,7 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         connection: @connection,
-        options: @options,
+        request_options: @request_options,
         &
       )
       @on[:end_message]&.call(response)
