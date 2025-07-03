@@ -92,7 +92,8 @@ module RubyLLM
           f.response :json, parser_options: { symbolize_names: true }
         end
         response = connection.get 'https://api.parsera.org/v1/llm-specs'
-        response.body.map { |data| Model::Info.new(data) }
+        models = response.body.map { |data| Model::Info.new(data) }
+        models.reject { |model| model.provider.nil? || model.id.nil? }
       end
 
       def merge_models(provider_models, parsera_models)
