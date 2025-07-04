@@ -41,4 +41,80 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+
+  describe 'Error handling' do
+    let(:chat) { RubyLLM.chat(model: 'claude-3-5-haiku-20241022', provider: :anthropic) }
+
+    describe 'Faraday version 1' do
+      before do
+        stub_const('Faraday::VERSION', '1.10.0')
+      end
+
+      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
+        VCR.use_cassette(
+          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_chunks',
+          record: :none
+        ) do
+          chunks = []
+
+          expect do
+            chat.ask('Count from 1 to 3') do |chunk|
+              chunks << chunk
+            end
+          end.to raise_error(RubyLLM::Error, /Overloaded/)
+        end
+      end
+
+      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
+        VCR.use_cassette(
+          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_events',
+          record: :none
+        ) do
+          chunks = []
+
+          expect do
+            chat.ask('Count from 1 to 3') do |chunk|
+              chunks << chunk
+            end
+          end.to raise_error(RubyLLM::Error, /Overloaded/)
+        end
+      end
+    end
+
+    describe 'Faraday version 2' do
+      before do
+        stub_const('Faraday::VERSION', '2.0.0')
+      end
+
+      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
+        VCR.use_cassette(
+          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_chunks',
+          record: :none
+        ) do
+          chunks = []
+
+          expect do
+            chat.ask('Count from 1 to 3') do |chunk|
+              chunks << chunk
+            end
+          end.to raise_error(RubyLLM::Error, /Overloaded/)
+        end
+      end
+
+      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
+        VCR.use_cassette(
+          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_events',
+          record: :none
+        ) do
+          chunks = []
+
+          expect do
+            chat.ask('Count from 1 to 3') do |chunk|
+              chunks << chunk
+            end
+          end.to raise_error(RubyLLM::Error, /Overloaded/)
+        end
+      end
+    end
+  end
 end
