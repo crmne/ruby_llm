@@ -18,6 +18,7 @@ module RubyLLM
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
+                  :cohere_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
                   :bedrock_region,
