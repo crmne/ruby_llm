@@ -150,6 +150,10 @@ EMBEDDINGS_MODELS = [
   { provider: :cohere, model: 'embed-v4.0', default_dimensions: 1024 }
 ].freeze
 
+RERANK_MODELS = [
+  { provider: :cohere, model: 'rerank-v3.5' }
+].freeze
+
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
