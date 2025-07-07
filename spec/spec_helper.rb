@@ -65,6 +65,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<ANTHROPIC_API_KEY>') { ENV.fetch('ANTHROPIC_API_KEY', nil) }
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
+  config.filter_sensitive_data('<COHERE_API_KEY>') { ENV.fetch('COHERE_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
 
@@ -114,6 +115,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
+      config.cohere_api_key = ENV.fetch('COHERE_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
@@ -138,6 +140,7 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
+  { provider: :cohere, model: 'command-a-03-2025' },
   { provider: :ollama, model: 'qwen3' }
 ].freeze
 
@@ -154,6 +157,7 @@ VISION_MODELS = [
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
+  { provider: :cohere, model: 'c4ai-aya-vision-32b' },
   { provider: :ollama, model: 'qwen3' }
 ].freeze
 
