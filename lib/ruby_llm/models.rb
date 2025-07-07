@@ -184,6 +184,11 @@ module RubyLLM
       self.class.new(all.select { |m| m.type == 'embedding' })
     end
 
+    # Filter to only rerank models
+    def rerank_models
+      self.class.new(all.select { |m| m.type == 'rerank' })
+    end
+
     # Filter to only audio models
     def audio_models
       self.class.new(all.select { |m| m.type == 'audio' })

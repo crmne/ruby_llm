@@ -66,17 +66,16 @@ module RubyLLM
         pricing.text_tokens.output
       end
 
-      def type # rubocop:disable Metrics/PerceivedComplexity
-        if modalities.output.include?('embeddings') && !modalities.output.include?('text')
-          'embedding'
-        elsif modalities.output.include?('image') && !modalities.output.include?('text')
-          'image'
-        elsif modalities.output.include?('audio') && !modalities.output.include?('text')
-          'audio'
-        elsif modalities.output.include?('moderation')
-          'moderation'
-        else
-          'chat'
+      def type
+        outputs = modalities.output
+
+        return 'moderation' if outputs.include?('moderation')
+        return 'chat' if outputs.include?('text')
+
+        case outputs.first
+        when 'embeddings' then 'embedding'
+        when 'rerank', 'image', 'audio' then outputs.first
+        else 'chat'
         end
       end
 
