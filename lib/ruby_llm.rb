@@ -46,6 +46,10 @@ module RubyLLM
       Embedding.embed(...)
     end
 
+    def rerank(...)
+      Rerank.rank(...)
+    end
+
     def paint(...)
       Image.paint(...)
     end

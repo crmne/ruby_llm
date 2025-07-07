@@ -43,6 +43,12 @@ module RubyLLM
         parse_image_response(response, model:)
       end
 
+      def rank(query, documents, model:, connection:, top_n:, max_tokens_per_doc:) # rubocop:disable Metrics/ParameterLists
+        payload = render_rerank_payload(query, documents, model:, top_n:, max_tokens_per_doc:)
+        response = connection.post(rerank_url(model:), payload)
+        parse_rerank_response(response, model:)
+      end
+
       def configured?(config = nil)
         config ||= RubyLLM.config
         missing_configs(config).empty?
