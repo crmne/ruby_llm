@@ -13,6 +13,7 @@ module RubyLLM
     # See https://docs.cohere.com/docs/compatibility-api for more information.
     module Cohere
       extend Provider
+      extend Cohere::Models
       module_function
 
       def api_base(_config)
@@ -27,6 +28,7 @@ module RubyLLM
       end
 
       def capabilities
+        Cohere::Capabilities
       end
 
       def slug
@@ -36,6 +38,11 @@ module RubyLLM
       def configuration_requirements
         %i[cohere_api_key]
       end
+
+      def parse_error(response)
+        return if response.body.empty?
+
+        JSON.parse(response.response.body)['message']
       end
     end
   end
