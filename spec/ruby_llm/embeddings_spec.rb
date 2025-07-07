@@ -45,4 +45,18 @@ RSpec.describe RubyLLM::Embedding do
       end
     end
   end
+
+  describe 'image embeddings' do
+    EMBEDDINGS_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      input_modalities = RubyLLM.models.find(model)&.modalities&.input
+      next if input_modalities&.exclude?('image')
+
+      it "#{provider}/#{model} can handle a single image" do
+        skip "Image embeddings for #{provider}/#{model} are not supported by RubyLLM yet."
+      end
+    end
+  end
 end
