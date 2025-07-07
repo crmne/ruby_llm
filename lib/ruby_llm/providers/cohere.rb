@@ -15,7 +15,6 @@ module RubyLLM
       extend Provider
       extend Cohere::Chat
       extend Cohere::Embeddings
-      extend Cohere::Reranking
       extend Cohere::Models
       extend Cohere::Streaming
       extend Cohere::Tools
