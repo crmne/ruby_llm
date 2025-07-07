@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/rerank
+    body:
+      encoding: UTF-8
+      string: '{"model":"rerank-v3.5","query":"What is Ruby programming?","documents":["Ruby
+        is a dynamic, object-oriented programming language","Cooking recipes for beginners","Ruby
+        was created by Yukihiro Matsumoto in 1995","Weather patterns in different
+        climates","Ruby on Rails is a popular web framework for Ruby"],"top_n":5,"max_tokens_per_doc":100}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 UTC
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 1fd19893d769befc7504f0f418e811cc
+      Date:
+      - Mon, 07 Jul 2025 03:50:55 GMT
+      Content-Length:
+      - '335'
+      X-Envoy-Upstream-Service-Time:
+      - '80'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"54c4fd64-f473-4afa-a1bb-2878bf64ddf8","results":[{"index":0,"relevance_score":0.8455478},{"index":4,"relevance_score":0.53298485},{"index":2,"relevance_score":0.2531684},{"index":1,"relevance_score":0.025085583},{"index":3,"relevance_score":0.014718728}],"meta":{"api_version":{"version":"2"},"billed_units":{"search_units":1}}}'
+  recorded_at: Mon, 07 Jul 2025 03:50:56 GMT
+recorded_with: VCR 6.3.1
