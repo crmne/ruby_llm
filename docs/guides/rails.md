@@ -150,6 +150,7 @@ RubyLLM.configure do |config|
   # Add other provider configurations as needed
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.cohere_api_key = ENV['COHERE_API_KEY']
   # ...
 end
 ```
