@@ -13,7 +13,14 @@ module RubyLLM
     # See https://docs.cohere.com/docs/compatibility-api for more information.
     module Cohere
       extend Provider
+      extend Cohere::Chat
+      extend Cohere::Embeddings
+      extend Cohere::Reranking
       extend Cohere::Models
+      extend Cohere::Streaming
+      extend Cohere::Tools
+      extend Cohere::Media
+
       module_function
 
       def api_base(_config)
