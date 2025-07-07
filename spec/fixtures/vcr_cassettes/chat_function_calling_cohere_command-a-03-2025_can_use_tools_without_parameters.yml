@@ -1,0 +1,126 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 UTC
+      Num-Chars:
+      - '6733'
+      Num-Tokens:
+      - '51'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 90c7b24c81e59c843c7024c0efbce66e
+      Date:
+      - Mon, 07 Jul 2025 00:36:51 GMT
+      Content-Length:
+      - '453'
+      X-Envoy-Upstream-Service-Time:
+      - '435'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"f457fd3b-d37d-4557-a07d-f308e2d71a6f","message":{"role":"assistant","tool_plan":"I
+        will use the ''best_language_to_learn'' tool to find the best language to
+        learn.","tool_calls":[{"id":"best_language_to_learn_x5wycdpv9as9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":21,"output_tokens":30},"tokens":{"input_tokens":1430,"output_tokens":59}}}'
+  recorded_at: Mon, 07 Jul 2025 00:36:51 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","tool_calls":[{"id":"best_language_to_learn_x5wycdpv9as9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_x5wycdpv9as9","content":"Ruby"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 UTC
+      Num-Chars:
+      - '7148'
+      Num-Tokens:
+      - '32'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 73d9a426c45c5fd9113203b321716aa9
+      Date:
+      - Mon, 07 Jul 2025 00:36:52 GMT
+      Content-Length:
+      - '465'
+      X-Envoy-Upstream-Service-Time:
+      - '239'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"e35241d9-1913-4f3f-9bbb-ebd54d47286e","message":{"role":"assistant","content":[{"type":"text","text":"Ruby
+        is the best language to learn."}],"citations":[{"start":0,"end":4,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_x5wycdpv9as9:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":24,"output_tokens":8},"tokens":{"input_tokens":1515,"output_tokens":21}}}'
+  recorded_at: Mon, 07 Jul 2025 00:36:52 GMT
+recorded_with: VCR 6.3.1
