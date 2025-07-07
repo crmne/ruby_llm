@@ -2,8 +2,8 @@
 
 module RubyLLM
   module Providers
-    # Cohere API integration. Handles Command models for chat completion,
-    # Embed models for text embeddings and Rerank models for reranking.
+    # Cohere API integration. Handles Command models for chat completion
+    # and Embed models for text embeddings.
     #
     # NOTE: While Cohere have an OpenAI-format compatible API, we have opted to support a native
     # Cohere API implementation so we have the optionality to support Cohere specific features across
