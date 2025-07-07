@@ -144,6 +144,12 @@ CHAT_MODELS = [
   { provider: :ollama, model: 'qwen3' }
 ].freeze
 
+EMBEDDINGS_MODELS = [
+  { provider: :openai, model: 'text-embedding-004', default_dimensions: 768 },
+  { provider: :gemini, model: 'text-embedding-3-small', default_dimensions: 1024 },
+  { provider: :cohere, model: 'embed-v4.0', default_dimensions: 1024 }
+].freeze
+
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
