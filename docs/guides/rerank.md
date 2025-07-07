@@ -9,7 +9,7 @@ permalink: /guides/rerank
 # Reranking
 {: .no_toc }
 
-Reranking improves search relevancy by reassessing and reordering retrieved documents based on their relevance to a specific query. This is particularly useful for optimizing Retrieval Augmented Generation (RAG) pipelines and enterprise search applications.
+Reranking is a standard step in retrieval-augmented generation (RAG) pipelines that bridges retrieval and generation workflows, improving search relevancy by reassessing and reordering retrieved documents based on their relevance to a specific query. This is particularly useful for optimizing RAG pipelines and enterprise search applications.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
