@@ -16,7 +16,6 @@ module RubyLLM
           data = response.body
           return [] if data.empty?
 
-
           data['models']&.map do |model_data|
             model_id = model_data['name']
 
