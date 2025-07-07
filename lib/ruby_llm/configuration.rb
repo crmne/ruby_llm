@@ -28,6 +28,7 @@ module RubyLLM
                   # Default models
                   :default_model,
                   :default_embedding_model,
+                  :default_rerank_model,
                   :default_image_model,
                   # Connection configuration
                   :request_timeout,
@@ -54,6 +55,7 @@ module RubyLLM
       # Default models
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
+      @default_rerank_model = 'rerank-v3.5'
       @default_image_model = 'dall-e-3'
 
       # Logging configuration
