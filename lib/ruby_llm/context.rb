@@ -18,6 +18,10 @@ module RubyLLM
       Embedding.embed(*args, **kwargs, context: self, &)
     end
 
+    def rank(*args, **kwargs, &)
+      Rerank.rank(*args, **kwargs, context: self, &)
+    end
+
     def paint(*args, **kwargs, &)
       Image.paint(*args, **kwargs, context: self, &)
     end

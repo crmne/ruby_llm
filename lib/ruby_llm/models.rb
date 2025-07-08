@@ -92,7 +92,8 @@ module RubyLLM
           f.response :json, parser_options: { symbolize_names: true }
         end
         response = connection.get 'https://api.parsera.org/v1/llm-specs'
-        response.body.map { |data| Model::Info.new(data) }
+        models = response.body.map { |data| Model::Info.new(data) }
+        models.select { |m| m.provider && m.id }
       end
 
       def merge_models(provider_models, parsera_models)
@@ -181,6 +182,11 @@ module RubyLLM
     # Filter to only embedding models
     def embedding_models
       self.class.new(all.select { |m| m.type == 'embedding' })
+    end
+
+    # Filter to only rerank models
+    def rerank_models
+      self.class.new(all.select { |m| m.type == 'rerank' })
     end
 
     # Filter to only audio models
