@@ -70,6 +70,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       end
 
       it "#{provider}/#{model} can understand remote images without extension" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        skip "Cohere vision models don't support remote image URLs" if provider == :cohere
+
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: image_url_no_ext)
 

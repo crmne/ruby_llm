@@ -117,6 +117,18 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
       }
     end
 
+    # Cohere models
+    models['cohere'].each do |model|
+      openrouter_model = "cohere/#{model}"
+      next unless models['openrouter'].include?(openrouter_model)
+
+      alias_key = model.gsub(/-\d{2}-\d{4}$/, '')
+      aliases[alias_key] = {
+        'cohere' => model,
+        'openrouter' => openrouter_model
+      }
+    end
+
     # Write the result
     sorted_aliases = aliases.sort.to_h
     File.write('lib/ruby_llm/aliases.json', JSON.pretty_generate(sorted_aliases))
