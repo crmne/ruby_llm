@@ -52,6 +52,8 @@ RubyLLM.configure do |config|
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
+  config.dify_api_base = ENV.fetch('DIFY_API_BASE', nil)
+  config.dify_api_key = ENV.fetch('DIFY_API_KEY', nil)
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)

@@ -11,7 +11,7 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, config:, stream: false)
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
