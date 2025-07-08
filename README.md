@@ -8,6 +8,9 @@
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
   &nbsp;
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/cohere-color.svg" alt="Cohere" class="logo-medium">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/cohere-text.svg" alt="Cohere" class="logo-medium">
+  &nbsp;
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-color.svg" alt="DeepSeek" class="logo-medium">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   &nbsp;
