@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     module AzureOpenAI
-      # Chat methods of the Ollama API integration
+      # Chat methods of the Azure OpenAI API integration
       module Chat
         extend OpenAI::Chat
 
