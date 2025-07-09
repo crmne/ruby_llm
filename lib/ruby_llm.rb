@@ -86,6 +86,7 @@ RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
+RubyLLM::Provider.register :azure_openai, RubyLLM::Providers::AzureOpenAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
