@@ -14,6 +14,7 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'llm' => 'LLM',
   'openai' => 'OpenAI',
+  'azure_openai' => 'AzureOpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
   'bedrock' => 'Bedrock',
