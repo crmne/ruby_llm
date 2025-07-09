@@ -2,12 +2,12 @@
 
 module RubyLLM
   module Providers
-    # OpenAI API integration. Handles chat completion, function calling,
-    # and OpenAI's unique streaming format. Supports GPT-4, GPT-3.5,
-    # and other OpenAI models.
+    # Azure OpenAI API integration. Derived from OpenAI integration to support
+    # OpenAI capabilities via Microsoft Azure endpoints.
     module AzureOpenAI
       extend OpenAI
       extend AzureOpenAI::Chat
+      extend AzureOpenAI::Streaming
 
       module_function
 
