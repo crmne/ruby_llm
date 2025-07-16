@@ -12,18 +12,22 @@ module RubyLLM
         module_function
 
         def render_payload(messages, tools:, temperature:, model:, stream: false)
-          {
+          payload = {
             model: model,
             messages: format_messages(messages),
-            temperature: temperature,
             stream: stream
-          }.tap do |payload|
-            if tools.any?
-              payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-              payload[:tool_choice] = 'auto'
-            end
-            payload[:stream_options] = { include_usage: true } if stream
+          }
+
+          # Only include temperature if it's not nil (some models don't accept it)
+          payload[:temperature] = temperature unless temperature.nil?
+
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tool_choice] = 'auto'
           end
+
+          payload[:stream_options] = { include_usage: true } if stream
+          payload
         end
 
         def parse_completion_response(response)

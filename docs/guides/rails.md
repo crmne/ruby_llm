@@ -60,7 +60,7 @@ This approach has one important consequence: **you cannot use `validates :conten
 
 ### Database Migrations
 
-First, generate migrations for your `Chat` and `Message` models. You'll also need a `ToolCall` model if you plan to use [Tools]({% link guides/tools.md %}).
+First, generate migrations for your `Chat`, `Message`, and `ToolCall` models.
 
 ```bash
 # Generate basic models and migrations
@@ -100,7 +100,6 @@ class CreateMessages < ActiveRecord::Migration[7.1]
 end
 
 # db/migrate/YYYYMMDDHHMMSS_create_tool_calls.rb
-# (Only needed if using tools)
 class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
@@ -244,7 +243,7 @@ puts system_message.content # => "You are a concise Ruby expert."
 
 ### Tools Integration
 
-If you're using [Tools]({% link guides/tools.md %}), they're automatically persisted too:
+[Tools]({% link guides/tools.md %}) are automatically persisted too:
 
 ```ruby
 # Define a tool

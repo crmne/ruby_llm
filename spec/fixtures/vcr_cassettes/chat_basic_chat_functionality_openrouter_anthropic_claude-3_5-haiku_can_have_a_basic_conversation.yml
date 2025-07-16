@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"temperature":0.7,"stream":false}'
+        2 + 2?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
       - Faraday v2.13.1
@@ -24,17 +24,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Jun 2025 09:43:58 GMT
+      - Wed, 11 Jun 2025 12:51:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Server:
-      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Clerk-Auth-Message:
@@ -46,8 +42,12 @@ http_interactions:
       - signed-out
       Vary:
       - Accept-Encoding
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n{\"id\":\"gen-1748943836-TEAKeC4HsPN9wLwbN3fO\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1748943836,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":6,\"total_tokens\":22}}"
-  recorded_at: Tue, 03 Jun 2025 09:43:58 GMT
+      string: "\n         \n\n         \n{\"id\":\"gen-1749646282-miEO6cUHVL3wzWxasc0I\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646282,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"4\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":5,\"total_tokens\":21}}"
+  recorded_at: Wed, 11 Jun 2025 12:51:23 GMT
 recorded_with: VCR 6.3.1
