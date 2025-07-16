@@ -29,9 +29,13 @@ module RubyLLM
         new_message: nil,
         end_message: nil
       }
+      @max_tool_llm_calls = @config.max_tool_llm_calls
+      @number_of_tool_llm_calls = 0
     end
 
     def ask(message = nil, with: nil, &)
+      @number_of_tool_llm_calls = 0
+
       add_message role: :user, content: Content.new(message, with)
       complete(&)
     end
@@ -73,7 +77,10 @@ module RubyLLM
 
     def with_context(context)
       @context = context
-      @config = context.config
+      if context.config
+        @config = context.config
+        @max_tool_llm_calls = @config.max_tool_llm_calls
+      end
       with_model(@model.id, provider: @provider.slug, assume_exists: true)
       self
     end
@@ -125,11 +132,18 @@ module RubyLLM
     private
 
     def handle_tool_calls(response, &)
+      @number_of_tool_llm_calls += 1
+
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
         message = add_tool_result tool_call.id, result
         @on[:end_message]&.call(message)
+      end
+
+      # Perform this afterwards to ensure messages remain valid for the next call
+      if max_tool_llm_calls_reached?
+        raise ToolCallLimitReachedError, "Tool LLM calls limit reached: #{@max_tool_llm_calls}"
       end
 
       complete(&)
@@ -147,6 +161,12 @@ module RubyLLM
         content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
         tool_call_id: tool_use_id
       )
+    end
+
+    def max_tool_llm_calls_reached?
+      return false unless @max_tool_llm_calls
+
+      @number_of_tool_llm_calls >= @max_tool_llm_calls
     end
   end
 end
