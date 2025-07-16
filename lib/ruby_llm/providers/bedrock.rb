@@ -22,7 +22,7 @@ module RubyLLM
         "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
       end
 
-      def parse_error(response) # rubocop:disable Metrics/MethodLength
+      def parse_error(response)
         return if response.body.empty?
 
         body = try_parse_json(response.body)

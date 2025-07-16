@@ -1,0 +1,120 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 11 Jun 2025 12:43:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 259fca9ab8e39d739e4d9a04205c9a8d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"02c1e5f4-7984-4661-90f1-c4b6c86e7e57","object":"chat.completion","created":1749645786,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a plain text file (MIME type `text/plain`) with a single line of content
+        praising the Ruby programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion_tokens":46,"total_tokens":78,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":32},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Wed, 11 Jun 2025 12:43:12 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
+        text file (MIME type `text/plain`) with a single line of content praising
+        the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 11 Jun 2025 12:43:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 0d34e3fde62a9ddd1ed113ed4b0b5f5b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk0MWI2NTg1LWFjMGMtNGViMy04ZGMzLTYxNWE4YmJiZWU1ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDU3OTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OiAgXG5cbmBgYHhtbFxuPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+XG5gYGAgIFxuXG4tICoqRmlsZSB0eXBlOioqIFhNTCAoTUlNRSB0eXBlIGBhcHBsaWNhdGlvbi94bWxgKSAgXG4tICoqU3RydWN0dXJlOioqIEEgc2luZ2xlIFhNTCBlbGVtZW50IGA8dHJ1aXNtPmAgd2l0aCB0aGUgdGV4dCBjb250ZW50IFwiUnVieSBpcyB0aGUgYmVzdFwiLiAgXG5cbiooTm90ZTogVGhlcmUncyBhIHNtYWxsIHR5cG/igJR0aGUgY2xvc2luZyB0YWcgc2hvdWxkIGJlIGA8L3RydWlzbT5gIGluc3RlYWQgb2YgYDwvdHJ1aXNtPmAsIGJ1dCBpdCBhcHBlYXJzIGNvcnJlY3RseSBpbiB0aGUgb3JpZ2luYWwgaW5wdXQuKSoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMTgsImNvbXBsZXRpb25fdG9rZW5zIjoxMTIsInRvdGFsX3Rva2VucyI6MjMwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NjR9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NjQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NTR9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
+  recorded_at: Wed, 11 Jun 2025 12:43:21 GMT
+recorded_with: VCR 6.3.1

@@ -10,7 +10,7 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:, &) # rubocop:disable Metrics/MethodLength
+      def complete(messages, tools:, temperature:, model:, connection:, &)
         normalized_temperature = maybe_normalize_temperature(temperature, model)
 
         payload = render_payload(messages,
@@ -34,13 +34,13 @@ module RubyLLM
       def embed(text, model:, connection:, dimensions:)
         payload = render_embedding_payload(text, model:, dimensions:)
         response = connection.post(embedding_url(model:), payload)
-        parse_embedding_response(response, model:)
+        parse_embedding_response(response, model:, text:)
       end
 
       def paint(prompt, model:, size:, connection:)
         payload = render_image_payload(prompt, model:, size:)
         response = connection.post images_url, payload
-        parse_image_response response
+        parse_image_response(response, model:)
       end
 
       def configured?(config = nil)
@@ -87,7 +87,7 @@ module RubyLLM
       maybe_json
     end
 
-    def parse_error(response) # rubocop:disable Metrics/MethodLength
+    def parse_error(response)
       return if response.body.empty?
 
       body = try_parse_json(response.body)

@@ -68,10 +68,10 @@ module RubyLLM
     end
 
     def logger
-      @logger ||= Logger.new(
-        $stdout,
+      @logger ||= config.logger || Logger.new(
+        config.log_file,
         progname: 'RubyLLM',
-        level: ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
+        level: config.log_level
       )
     end
   end

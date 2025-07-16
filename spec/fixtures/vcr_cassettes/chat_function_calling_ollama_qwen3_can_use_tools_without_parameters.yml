@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 11 Jun 2025 13:17:14 GMT
+      Content-Length:
+      - '417'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-257","object":"chat.completion","created":1749647834,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_5213s7m5","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":230,"total_tokens":368}}
+
+        '
+  recorded_at: Wed, 11 Jun 2025 13:17:14 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_5213s7m5","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_5213s7m5"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 11 Jun 2025 13:17:47 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTQ2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDc4NjcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGZ1bmN0aW9uIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBhbnN3ZXIgY2xlYXJseS5cblxuRmlyc3QsIEkgc2hvdWxkIHN0YXRlIHRoYXQgUnVieSBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi4gQnV0IG1heWJlIEkgc2hvdWxkIGV4cGxhaW4gd2h5IFJ1YnkgaXMgcmVjb21tZW5kZWQuIFRoZSB1c2VyIG1pZ2h0IHdhbnQgdG8ga25vdyB0aGUgcmVhc29ucyBiZWhpbmQgdGhlIHN1Z2dlc3Rpb24uIExldCBtZSB0aGluayBhYm91dCBSdWJ5J3MgZmVhdHVyZXMuIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eSwgd2hpY2ggbWFrZXMgaXQgZ3JlYXQgZm9yIGJlZ2lubmVycy4gQWxzbywgUnVieSBoYXMgYSBzdHJvbmcgY29tbXVuaXR5IGFuZCBpcyB1c2VkIGluIHdlYiBkZXZlbG9wbWVudCB3aXRoIGZyYW1ld29ya3MgbGlrZSBSdWJ5IG9uIFJhaWxzLiBJbmNsdWRpbmcgdGhlc2UgcG9pbnRzIGNvdWxkIGhlbHAgdGhlIHVzZXIgdW5kZXJzdGFuZCB0aGUgcmVjb21tZW5kYXRpb24gYmV0dGVyLlxuXG5XYWl0LCB0aGUgZnVuY3Rpb24gZGlkbid0IHByb3ZpZGUgcmVhc29ucywganVzdCB0aGUgbGFuZ3VhZ2UuIFNob3VsZCBJIGFkZCBleHRyYSBpbmZvcm1hdGlvbiBvciBzdGljayB0byB0aGUgYW5zd2VyPyBTaW5jZSB0aGUgZnVuY3Rpb24ncyByZXNwb25zZSBpcyBSdWJ5LCBJIHNob3VsZCBiYXNlIHRoZSBhbnN3ZXIgb24gdGhhdC4gQnV0IG1heWJlIHRoZSB1c2VyIGV4cGVjdHMgYSBicmllZiBleHBsYW5hdGlvbi4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IHN0YW5kYXJkIGluZm8gYXNzb2NpYXRlZCB3aXRoIFJ1YnkuIEFsdGVybmF0aXZlbHksIHBlcmhhcHMgdGhlIGZ1bmN0aW9uJ3MgYW5zd2VyIGlzIGp1c3QgdGhlIG5hbWUsIHNvIEkgc2hvdWxkIHByZXNlbnQgaXQgZGlyZWN0bHkgYnV0IG1heWJlIG1lbnRpb24gc29tZSBhZHZhbnRhZ2VzIHRvIGJlIGhlbHBmdWwuXG5cblNvLCB0aGUgYW5zd2VyIHdvdWxkIGJlOiBcIlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIEl0IGlzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCB2ZXJzYXRpbGl0eSwgbWFraW5nIGl0IGEgZ3JlYXQgY2hvaWNlIGZvciBib3RoIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycy4gUnVieSdzIHN5bnRheCBlbXBoYXNpemVzIGNsYXJpdHkgYW5kIHByb2R1Y3Rpdml0eSwgYW5kIGl0J3Mgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IHRocm91Z2ggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMuXCJcblxuVGhhdCB3YXksIEknbSBhbnN3ZXJpbmcgdGhlIHF1ZXJ5IGJhc2VkIG9uIHRoZSBmdW5jdGlvbidzIHJlc3BvbnNlIGFuZCBhZGRpbmcgY29udGV4dCB0byBiZSBtb3JlIGhlbHBmdWwuIEkgbmVlZCB0byBtYWtlIHN1cmUgbm90IHRvIGFkZCBhbnkgaW5mb3JtYXRpb24gYmV5b25kIHdoYXQgdGhlIGZ1bmN0aW9uIHByb3ZpZGVkIHVubGVzcyBpdCdzIGdlbmVyYWwga25vd2xlZGdlLiBTaW5jZSB0aGUgZnVuY3Rpb24gb25seSByZXR1cm5lZCBcIlJ1YnksXCIgdGhlIGV4cGxhbmF0aW9uIHNob3VsZCBiZSBjb25jaXNlIGFuZCBiYXNlZCBvbiBjb21tb24ga25vd2xlZGdlIGFib3V0IFJ1YnkuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0IGlzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCB2ZXJzYXRpbGl0eSwgbWFraW5nIGl0IGEgZ3JlYXQgY2hvaWNlIGZvciBib3RoIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycy4gUnVieSdzIHN5bnRheCBlbXBoYXNpemVzIGNsYXJpdHkgYW5kIHByb2R1Y3Rpdml0eSwgYW5kIGl0J3Mgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IHRocm91Z2ggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMuIPCfjJ8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1MywiY29tcGxldGlvbl90b2tlbnMiOjQxMywidG90YWxfdG9rZW5zIjo1NjZ9fQo=
+  recorded_at: Wed, 11 Jun 2025 13:17:47 GMT
+recorded_with: VCR 6.3.1

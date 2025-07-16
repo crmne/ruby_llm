@@ -10,8 +10,8 @@ module RubyLLM
     attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id
 
     def initialize(options = {})
-      @role = options[:role].to_sym
-      @content = normalize_content(options[:content])
+      @role = options.fetch(:role).to_sym
+      @content = normalize_content(options.fetch(:content))
       @tool_calls = options[:tool_calls]
       @input_tokens = options[:input_tokens]
       @output_tokens = options[:output_tokens]

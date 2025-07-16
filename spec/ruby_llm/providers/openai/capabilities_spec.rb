@@ -13,10 +13,19 @@ RSpec.describe RubyLLM::Providers::OpenAI::Capabilities do # rubocop:disable RSp
       end
     end
 
-    it 'preserves temperature for non-O1 models' do
-      non_o1_models = ['gpt-4', 'gpt-4o', 'claude-3-opus']
+    it 'returns nil for search preview models' do
+      search_models = %w[gpt-4o-search-preview gpt-4o-mini-search-preview]
 
-      non_o1_models.each do |model|
+      search_models.each do |model|
+        result = described_class.normalize_temperature(0.7, model)
+        expect(result).to be_nil
+      end
+    end
+
+    it 'preserves temperature for standard models' do
+      standard_models = ['gpt-4', 'gpt-4o', 'gpt-4o-mini', 'claude-3-opus']
+
+      standard_models.each do |model|
         result = described_class.normalize_temperature(0.7, model)
         expect(result).to eq(0.7)
       end

@@ -7,6 +7,9 @@ require 'codecov'
 require 'vcr'
 
 SimpleCov.start do
+  add_filter '/spec/'
+  add_filter '/vendor/'
+
   enable_coverage :branch
 
   formatter SimpleCov::Formatter::MultiFormatter.new(
@@ -18,8 +21,24 @@ SimpleCov.start do
   )
 end
 
-require 'active_record'
 require 'bundler/setup'
+
+# Load the dummy Rails app
+ENV['RAILS_ENV'] = 'test'
+require_relative 'dummy/config/environment'
+
+# Ensure database is properly set up
+begin
+  # Create database if it doesn't exist
+  ActiveRecord::Tasks::DatabaseTasks.create_current
+rescue ActiveRecord::DatabaseAlreadyExists
+  # Database already exists, that's fine
+end
+
+# Explicitly run the dummy app migrations
+dummy_migrations_path = File.expand_path('dummy/db/migrate', __dir__)
+ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
+
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'
@@ -103,6 +122,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
+      config.request_timeout = 240
       config.max_retries = 10
       config.retry_interval = 1
       config.retry_backoff_factor = 3
@@ -118,14 +138,14 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'mistral-small3.1' }
+  { provider: :ollama, model: 'qwen3' }
 ].freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'google/gemini-2.5-flash-preview' }
+  { provider: :openrouter, model: 'google/gemini-2.5-flash' }
 ].freeze
 
 VISION_MODELS = [
@@ -134,7 +154,7 @@ VISION_MODELS = [
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'mistral-small3.1' }
+  { provider: :ollama, model: 'qwen3' }
 ].freeze
 
 AUDIO_MODELS = [

@@ -7,20 +7,24 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/MethodLength
-          return format_text(content) unless content.is_a?(Content)
+        def format_content(content)
+          return content unless content.is_a?(Content)
 
           parts = []
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
-            when Attachments::Audio
+            when :audio
               parts << format_audio(attachment)
+            when :text
+              parts << format_text_file(attachment)
+            else
+              raise UnsupportedAttachmentError, attachment.type
             end
           end
 
@@ -31,8 +35,7 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}",
-              detail: 'auto'
+              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}"
             }
           }
         end
@@ -41,9 +44,16 @@ module RubyLLM
           {
             type: 'file',
             file: {
-              filename: File.basename(pdf.source),
+              filename: pdf.filename,
               file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
             }
+          }
+        end
+
+        def format_text_file(text_file)
+          {
+            type: 'text',
+            text: Utils.format_text_file_for_llm(text_file)
           }
         end
 
@@ -52,7 +62,7 @@ module RubyLLM
             type: 'input_audio',
             input_audio: {
               data: audio.encoded,
-              format: audio.format
+              format: audio.mime_type.split('/').last
             }
           }
         end

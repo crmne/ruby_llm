@@ -7,50 +7,44 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/MethodLength
-          return { text: content } unless content.is_a?(Content)
+        def format_content(content)
+          return [format_text(content)] unless content.is_a?(Content)
 
           parts = []
-          parts << { text: content.text } if content.text
+          parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
-              parts << format_image(attachment)
-            when Attachments::PDF
-              parts << format_pdf(attachment)
-            when Attachments::Audio
-              parts << format_audio(attachment)
+            case attachment.type
+            when :text
+              parts << format_text_file(attachment)
+            when :unknown
+              raise UnsupportedAttachmentError, attachment.mime_type
+            else
+              parts << format_attachment(attachment)
             end
           end
 
           parts
         end
 
-        def format_image(image)
+        def format_attachment(attachment)
           {
             inline_data: {
-              mime_type: image.mime_type,
-              data: image.encoded
+              mime_type: attachment.mime_type,
+              data: attachment.encoded
             }
           }
         end
 
-        def format_pdf(pdf)
+        def format_text_file(text_file)
           {
-            inline_data: {
-              mime_type: 'application/pdf',
-              data: pdf.encoded
-            }
+            text: Utils.format_text_file_for_llm(text_file)
           }
         end
 
-        def format_audio(audio)
+        def format_text(text)
           {
-            inline_data: {
-              mime_type: "audio/#{audio.format}",
-              data: audio.encoded
-            }
+            text: text
           }
         end
       end

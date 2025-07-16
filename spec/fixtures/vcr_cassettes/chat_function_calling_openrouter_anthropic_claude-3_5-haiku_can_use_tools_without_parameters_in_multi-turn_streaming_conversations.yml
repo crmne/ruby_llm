@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -26,13 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:24:38 GMT
+      - Wed, 11 Jun 2025 13:00:21 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -48,8 +50,6 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
@@ -61,35 +61,51 @@ http_interactions:
 
         : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":"I"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":"'ll help"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":" you find out by"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":"I"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":" using the available"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":"'ll"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":" tool to determine"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" help"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":" the best language to learn"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" you fin"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":"."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":"d out"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"delta":{"role":"assistant","content":null,"tool_calls":[{"id":"toolu_01KHo7RSTbTtPWRG27nwrW9E","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":""}}]},"index":0,"finish_reason":null,"native_finish_reason":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" by"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"type":"function","function":{"arguments":""}}]},"index":0,"finish_reason":null,"native_finish_reason":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" using"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls","native_finish_reason":"tool_calls","logprobs":null}]}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" the"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473078-3r36Gl1R41XiFGbuESUQ","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473078,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":335,"completion_tokens":61,"total_tokens":396,"cost":0.000512,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" available"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" tool"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":" determine the best language to learn"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":"."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"id":"toolu_018MW3kNJZ5d7V9QzMmssSWi","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":""}}]},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"type":"function","function":{"arguments":""}}]},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls","native_finish_reason":"tool_calls","logprobs":null}]}
+
+        data: {"id":"gen-1749646818-DRQYj3AMU6qBjXI9Mzgz","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646818,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":335,"completion_tokens":60,"total_tokens":395,"cost":0.000508,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:24:41 GMT
+  recorded_at: Wed, 11 Jun 2025 13:00:23 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -98,7 +114,7 @@ http_interactions:
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
         best language to learn?"},{"role":"assistant","content":"I''ll help you find
-        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_01KHo7RSTbTtPWRG27nwrW9E","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01KHo7RSTbTtPWRG27nwrW9E"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_018MW3kNJZ5d7V9QzMmssSWi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_018MW3kNJZ5d7V9QzMmssSWi"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -117,13 +133,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:24:41 GMT
+      - Wed, 11 Jun 2025 13:00:24 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -139,8 +157,6 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
@@ -150,81 +166,169 @@ http_interactions:
 
         : OPENROUTER PROCESSING
 
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"According"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" to the tool"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":", Ruby"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" is currently"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" recommende"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d as the best language to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" learn."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" Ruby"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" is a dynamic"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":", object"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"-oriented programming language known"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" for its simplicity an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d readability."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" It's particularly"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" popular for web development,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" especially with"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" the"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" Ruby"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" on Rails framework."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" \n\nSome"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" reasons"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" why Ruby might"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" be a great"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" language"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" to learn:"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n1"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":". Easy to rea"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d and write with"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" a"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" clean"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":","},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" elegant"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" syntax\n2. Great"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" for web"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" development an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d scri"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"pting\n3. Strong"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" community support"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
         : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n4. Versat"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"ile and use"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"According"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d in various"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" to the tool, Ruby"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" domains like"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" is the best language to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" web"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" learn right now!"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" applications"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" Ruby is a dynamic"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":", automation"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":", object-oriented programming"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":", an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" language known for its simplicity an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d data"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"d readability. It's"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" processing"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" particularly popular for web development,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n\nHowever, the \""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" especially with the Ruby on Rails framework."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"best\" language can"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" \n\nSome reasons why Ruby might"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" depen"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" be a great language to learn:"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d on your specific goals,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n1. Easy to read and write,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" such"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" with a clean and elegant"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" as:"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" syntax\n2. Great"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n- Web"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" for web development and scri"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" development"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"pting\n3. Strong"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n- Data"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" community support\n4. Use"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" science"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"d in many startups and tech"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n- Mobile"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" companies\n5. Versat"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" app"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"ile and beginner-friendly\n\nOf"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" development\n- Game"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" course, the \"best\" language can"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" development\n- Career"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" depend on your specific goals,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" objectives"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" whether you're interested in web development,"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n\nWoul"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" data science, mobile apps, or other"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"d you like to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" areas of programming. But Ruby is certainly"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" know"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" an excellent choice for many"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" more about Ruby or"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" aspiring programmers.\n\nWoul"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" discuss"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":"d you like to know more about Ruby or"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" how"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" discuss why it might be a good language"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" it"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":" for you to learn?"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" might"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" align"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473081-uUqf9yN5tN4zLtkvF12O","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473081,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":407,"completion_tokens":196,"total_tokens":603,"cost":0.0011096,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" with your specific"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":" learning objectives"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":"?"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+
+        data: {"id":"gen-1749646823-9XvSC2Gn0mgc4bxINkY1","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646823,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":407,"completion_tokens":179,"total_tokens":586,"cost":0.0010416,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:24:46 GMT
+  recorded_at: Wed, 11 Jun 2025 13:00:27 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -233,20 +337,19 @@ http_interactions:
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
         best language to learn?"},{"role":"assistant","content":"I''ll help you find
-        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_01KHo7RSTbTtPWRG27nwrW9E","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01KHo7RSTbTtPWRG27nwrW9E"},{"role":"assistant","content":"According
-        to the tool, Ruby is the best language to learn right now! Ruby is a dynamic,
-        object-oriented programming language known for its simplicity and readability.
-        It''s particularly popular for web development, especially with the Ruby on
-        Rails framework. \n\nSome reasons why Ruby might be a great language to learn:\n1.
-        Easy to read and write, with a clean and elegant syntax\n2. Great for web
-        development and scripting\n3. Strong community support\n4. Used in many startups
-        and tech companies\n5. Versatile and beginner-friendly\n\nOf course, the \"best\"
-        language can depend on your specific goals, whether you''re interested in
-        web development, data science, mobile apps, or other areas of programming.
-        But Ruby is certainly an excellent choice for many aspiring programmers.\n\nWould
-        you like to know more about Ruby or discuss why it might be a good language
-        for you to learn?"},{"role":"user","content":"Tell me again: what''s the best
-        language to learn?"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_018MW3kNJZ5d7V9QzMmssSWi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_018MW3kNJZ5d7V9QzMmssSWi"},{"role":"assistant","content":"According
+        to the tool, Ruby is currently recommended as the best language to learn.
+        Ruby is a dynamic, object-oriented programming language known for its simplicity
+        and readability. It''s particularly popular for web development, especially
+        with the Ruby on Rails framework. \n\nSome reasons why Ruby might be a great
+        language to learn:\n1. Easy to read and write with a clean, elegant syntax\n2.
+        Great for web development and scripting\n3. Strong community support\n4. Versatile
+        and used in various domains like web applications, automation, and data processing\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Game development\n- Career objectives\n\nWould
+        you like to know more about Ruby or discuss how it might align with your specific
+        learning objectives?"},{"role":"user","content":"Tell me again: what''s the
+        best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -265,13 +368,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:24:46 GMT
+      - Wed, 11 Jun 2025 13:00:29 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -287,8 +392,6 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
@@ -298,29 +401,39 @@ http_interactions:
 
         : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":"I"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":"'ll check the tool again to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":"I"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":" confirm the best language to learn"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":"'ll"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":"."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" check"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"delta":{"role":"assistant","content":null,"tool_calls":[{"id":"toolu_01FZLpGjcWmzteVLKPu88BVU","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":""}}]},"index":0,"finish_reason":null,"native_finish_reason":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" the tool again"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"type":"function","function":{"arguments":""}}]},"index":0,"finish_reason":null,"native_finish_reason":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" to get the"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls","native_finish_reason":"tool_calls","logprobs":null}]}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" most"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473087-xxKISX6FDWX7DP4OpdFP","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473087,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":616,"completion_tokens":56,"total_tokens":672,"cost":0.0007168,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" current"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":" recommendation."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"id":"toolu_vrtx_016C5GTbWDakW68566GXnrNj","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":""}}]},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"type":"function","function":{"arguments":""}}]},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls","native_finish_reason":"tool_calls","logprobs":null}]}
+
+        data: {"id":"gen-1749646827-9E37ZDxZtxtI3DBCa3Px","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646827,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":601,"completion_tokens":54,"total_tokens":655,"cost":0.0006968,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:24:49 GMT
+  recorded_at: Wed, 11 Jun 2025 13:00:30 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -329,21 +442,20 @@ http_interactions:
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
         best language to learn?"},{"role":"assistant","content":"I''ll help you find
-        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_01KHo7RSTbTtPWRG27nwrW9E","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01KHo7RSTbTtPWRG27nwrW9E"},{"role":"assistant","content":"According
-        to the tool, Ruby is the best language to learn right now! Ruby is a dynamic,
-        object-oriented programming language known for its simplicity and readability.
-        It''s particularly popular for web development, especially with the Ruby on
-        Rails framework. \n\nSome reasons why Ruby might be a great language to learn:\n1.
-        Easy to read and write, with a clean and elegant syntax\n2. Great for web
-        development and scripting\n3. Strong community support\n4. Used in many startups
-        and tech companies\n5. Versatile and beginner-friendly\n\nOf course, the \"best\"
-        language can depend on your specific goals, whether you''re interested in
-        web development, data science, mobile apps, or other areas of programming.
-        But Ruby is certainly an excellent choice for many aspiring programmers.\n\nWould
-        you like to know more about Ruby or discuss why it might be a good language
-        for you to learn?"},{"role":"user","content":"Tell me again: what''s the best
-        language to learn?"},{"role":"assistant","content":"I''ll check the tool again
-        to confirm the best language to learn.","tool_calls":[{"id":"toolu_01FZLpGjcWmzteVLKPu88BVU","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01FZLpGjcWmzteVLKPu88BVU"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        out by using the available tool to determine the best language to learn.","tool_calls":[{"id":"toolu_018MW3kNJZ5d7V9QzMmssSWi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_018MW3kNJZ5d7V9QzMmssSWi"},{"role":"assistant","content":"According
+        to the tool, Ruby is currently recommended as the best language to learn.
+        Ruby is a dynamic, object-oriented programming language known for its simplicity
+        and readability. It''s particularly popular for web development, especially
+        with the Ruby on Rails framework. \n\nSome reasons why Ruby might be a great
+        language to learn:\n1. Easy to read and write with a clean, elegant syntax\n2.
+        Great for web development and scripting\n3. Strong community support\n4. Versatile
+        and used in various domains like web applications, automation, and data processing\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Game development\n- Career objectives\n\nWould
+        you like to know more about Ruby or discuss how it might align with your specific
+        learning objectives?"},{"role":"user","content":"Tell me again: what''s the
+        best language to learn?"},{"role":"assistant","content":"I''ll check the tool
+        again to get the most current recommendation.","tool_calls":[{"id":"toolu_vrtx_016C5GTbWDakW68566GXnrNj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_vrtx_016C5GTbWDakW68566GXnrNj"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
@@ -362,13 +474,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:24:49 GMT
+      - Wed, 11 Jun 2025 13:00:33 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
@@ -384,8 +498,6 @@ http_interactions:
       - Accept-Encoding
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
@@ -395,48 +507,116 @@ http_interactions:
 
         : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":"The"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" tool consistently recommends Ruby as the"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        : OPENROUTER PROCESSING
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" best language to learn."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" As mentioned in my"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" previous response, Ruby is"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"The"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" a dynamic, object-oriente"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" tool consistently"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":"d programming language known for its simplicity and readability"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" recommends Ruby as the"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":". It remains an excellent choice for those"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" best language to learn."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" looking to start their programming journey or"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" This"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" expand their coding skills.\n\nIf"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" reinfor"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" you're interested in learning more"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"ces the previous"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" about why Ruby is recommended or"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" suggestion"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" want to explore its"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" that Ruby is an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" potential applications, I'd be happy"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" excellent programming"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":" to provide more detailed information"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" language for begin"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":"."},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"ners and experienced developers alike"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":".\n\nJust"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1746473089-cNTYJafjUHIaLlP5xE4x","provider":"Anthropic","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1746473089,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":683,"completion_tokens":95,"total_tokens":778,"cost":0.0009264,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" to reiterate some"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" key"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" points about"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" Ruby:"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n- It"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"'s known"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" for its simplicity an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"d readability\n-"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" Widely"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" used in"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" web development, especially"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" with Ruby on Rails"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n- Has"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" a support"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"ive an"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"d active community\n-"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" Versatile for"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" various programming"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" tasks"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n\nWoul"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"d you like me to elaborate"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" on why Ruby might"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" be a"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" goo"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"d choice for you"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":","},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" or "},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"do you have any specific"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" programming"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":" goals you"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"'re intereste"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"d in pursuing"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":"?"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
+
+        data: {"id":"gen-1749646830-3kRbx3HCmdBE1E88MWsA","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646830,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":667,"completion_tokens":126,"total_tokens":793,"cost":0.0010376,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 05 May 2025 19:24:52 GMT
+  recorded_at: Wed, 11 Jun 2025 13:00:35 GMT
 recorded_with: VCR 6.3.1
 ...

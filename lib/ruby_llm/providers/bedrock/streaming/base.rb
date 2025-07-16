@@ -29,7 +29,7 @@ module RubyLLM
             "model/#{@model_id}/invoke-with-response-stream"
           end
 
-          def stream_response(connection, payload, &block) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          def stream_response(connection, payload, &block)
             signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", config: connection.config,
                                                                                          payload:)
             accumulator = StreamAccumulator.new

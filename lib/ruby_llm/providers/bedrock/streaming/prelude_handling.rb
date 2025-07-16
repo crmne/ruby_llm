@@ -24,13 +24,13 @@ module RubyLLM
           end
 
           def read_prelude(chunk, offset)
-            total_length = chunk[offset...offset + 4].unpack1('N')
-            headers_length = chunk[offset + 4...offset + 8].unpack1('N')
+            total_length = chunk[offset...(offset + 4)].unpack1('N')
+            headers_length = chunk[(offset + 4)...(offset + 8)].unpack1('N')
             [total_length, headers_length]
           end
 
           def valid_lengths?(total_length, headers_length)
-            validate_length_constraints(total_length, headers_length)
+            valid_length_constraints?(total_length, headers_length)
           end
 
           def calculate_positions(offset, total_length, headers_length)
@@ -67,17 +67,17 @@ module RubyLLM
 
           def valid_prelude_at_position?(chunk, pos)
             lengths = extract_potential_lengths(chunk, pos)
-            validate_length_constraints(*lengths)
+            valid_length_constraints?(*lengths)
           end
 
           def extract_potential_lengths(chunk, pos)
             [
-              chunk[pos...pos + 4].unpack1('N'),
-              chunk[pos + 4...pos + 8].unpack1('N')
+              chunk[pos...(pos + 4)].unpack1('N'),
+              chunk[(pos + 4)...(pos + 8)].unpack1('N')
             ]
           end
 
-          def validate_length_constraints(total_length, headers_length)
+          def valid_length_constraints?(total_length, headers_length)
             return false if total_length.nil? || headers_length.nil?
             return false if total_length <= 0 || total_length > 1_000_000
             return false if headers_length <= 0 || headers_length >= total_length

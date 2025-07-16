@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:23:35 GMT
+      - Wed, 11 Jun 2025 12:58:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 6bda288eecc89a73fe085b12e5216d76
+      - 3e102a5b0f6128c8f22434fa4daac34e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,15 +52,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"dc5dcc21-aad0-47e3-b287-07715f7a4101","object":"chat.completion","created":1746473015,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_43adfeb9-6c18-4af4-a228-f1da11fe6f53","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":95,"completion_tokens":18,"total_tokens":113,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":95},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Mon, 05 May 2025 19:23:39 GMT
+      string: '{"id":"bf9dd575-963e-4125-b2b2-e880bc13f7e6","object":"chat.completion","created":1749646722,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_d9c19b47-d3cb-49a9-b20e-c15c2a69cc9b","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":95,"completion_tokens":18,"total_tokens":113,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":31},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Wed, 11 Jun 2025 12:58:47 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_43adfeb9-6c18-4af4-a228-f1da11fe6f53","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_0_43adfeb9-6c18-4af4-a228-f1da11fe6f53"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_d9c19b47-d3cb-49a9-b20e-c15c2a69cc9b","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_0_d9c19b47-d3cb-49a9-b20e-c15c2a69cc9b"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -79,7 +79,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:23:40 GMT
+      - Wed, 11 Jun 2025 12:58:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -91,7 +91,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 6081e134310777f53d56fbfc8c60e119
+      - '085d0fc07959c9da655706f25fdfe5e3'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -106,9 +106,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1d9f768c-fea1-4b36-b3a4-c9de4caf4433","object":"chat.completion","created":1746473020,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"c69616aa-b8de-44bb-a188-18efc03e4800","object":"chat.completion","created":1749646727,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
         best language to learn is **Ruby**! It''s a versatile and beginner-friendly
-        language, great for web development and scripting. Would you like more details
-        or recommendations on how to get started with Ruby?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":119,"completion_tokens":41,"total_tokens":160,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Mon, 05 May 2025 19:23:45 GMT
+        language known for its simplicity and productivity, especially in web development.
+        Would you like more details or resources to get started with Ruby?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":119,"completion_tokens":43,"total_tokens":162,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
+  recorded_at: Wed, 11 Jun 2025 12:58:55 GMT
 recorded_with: VCR 6.3.1
