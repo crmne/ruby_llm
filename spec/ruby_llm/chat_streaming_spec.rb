@@ -44,6 +44,15 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'Error handling' do
     let(:chat) { RubyLLM.chat(model: 'claude-3-5-haiku-20241022', provider: :anthropic) }
+    let(:error_response) do
+      {
+        type: 'error',
+        error: {
+          type: 'overloaded_error',
+          message: 'Overloaded'
+        }
+      }.to_json
+    end
 
     describe 'Faraday version 1' do
       before do
@@ -51,33 +60,37 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
-        VCR.use_cassette(
-          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_chunks',
-          record: :none
-        ) do
-          chunks = []
+        stub_request(:post, 'https://api.anthropic.com/v1/messages')
+          .to_return(
+            status: 529,
+            body: "data: #{error_response}\n\n",
+            headers: { 'Content-Type' => 'text/event-stream' }
+          )
 
-          expect do
-            chat.ask('Count from 1 to 3') do |chunk|
-              chunks << chunk
-            end
-          end.to raise_error(RubyLLM::Error, /Overloaded/)
-        end
+        chunks = []
+
+        expect do
+          chat.ask('Count from 1 to 3') do |chunk|
+            chunks << chunk
+          end
+        end.to raise_error(RubyLLM::OverloadedError)
       end
 
       it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
-        VCR.use_cassette(
-          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_events',
-          record: :none
-        ) do
-          chunks = []
+        stub_request(:post, 'https://api.anthropic.com/v1/messages')
+          .to_return(
+            status: 200,
+            body: "event: error\ndata: #{error_response}\n\n",
+            headers: { 'Content-Type' => 'text/event-stream' }
+          )
 
-          expect do
-            chat.ask('Count from 1 to 3') do |chunk|
-              chunks << chunk
-            end
-          end.to raise_error(RubyLLM::Error, /Overloaded/)
-        end
+        chunks = []
+
+        expect do
+          chat.ask('Count from 1 to 3') do |chunk|
+            chunks << chunk
+          end
+        end.to raise_error(RubyLLM::OverloadedError)
       end
     end
 
@@ -87,33 +100,37 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
-        VCR.use_cassette(
-          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_chunks',
-          record: :none
-        ) do
-          chunks = []
+        stub_request(:post, 'https://api.anthropic.com/v1/messages')
+          .to_return(
+            status: 529,
+            body: "data: #{error_response}\n\n",
+            headers: { 'Content-Type' => 'text/event-stream' }
+          )
 
-          expect do
-            chat.ask('Count from 1 to 3') do |chunk|
-              chunks << chunk
-            end
-          end.to raise_error(RubyLLM::Error, /Overloaded/)
-        end
+        chunks = []
+
+        expect do
+          chat.ask('Count from 1 to 3') do |chunk|
+            chunks << chunk
+          end
+        end.to raise_error(RubyLLM::OverloadedError)
       end
 
       it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
-        VCR.use_cassette(
-          'chat_streaming_responses_anthropic_claude-3-5-haiku-20241022_supports_streaming_error_events',
-          record: :none
-        ) do
-          chunks = []
+        stub_request(:post, 'https://api.anthropic.com/v1/messages')
+          .to_return(
+            status: 200,
+            body: "event: error\ndata: #{error_response}\n\n",
+            headers: { 'Content-Type' => 'text/event-stream' }
+          )
 
-          expect do
-            chat.ask('Count from 1 to 3') do |chunk|
-              chunks << chunk
-            end
-          end.to raise_error(RubyLLM::Error, /Overloaded/)
-        end
+        chunks = []
+
+        expect do
+          chat.ask('Count from 1 to 3') do |chunk|
+            chunks << chunk
+          end
+        end.to raise_error(RubyLLM::OverloadedError)
       end
     end
   end
