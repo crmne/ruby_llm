@@ -24,8 +24,8 @@ module RubyLLM
           end
 
           def read_prelude(chunk, offset)
-            total_length = chunk[offset...offset + 4].unpack1('N')
-            headers_length = chunk[offset + 4...offset + 8].unpack1('N')
+            total_length = chunk[offset...(offset + 4)].unpack1('N')
+            headers_length = chunk[(offset + 4)...(offset + 8)].unpack1('N')
             [total_length, headers_length]
           end
 
@@ -72,8 +72,8 @@ module RubyLLM
 
           def extract_potential_lengths(chunk, pos)
             [
-              chunk[pos...pos + 4].unpack1('N'),
-              chunk[pos + 4...pos + 8].unpack1('N')
+              chunk[pos...(pos + 4)].unpack1('N'),
+              chunk[(pos + 4)...(pos + 8)].unpack1('N')
             ]
           end
 
