@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Jun 2025 09:42:33 GMT
+      - Wed, 11 Jun 2025 12:50:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1715
+      - gfet4t7; dur=2141
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,19 +55,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Okay, I can tell you about the weather, but I need some information first! To give you a useful weather report, I need to know:\n\n*   **Where are you located?** (City, state/province, or even just a general region)\n*   **What kind of weather information are you interested in?** (Temperature, precipitation, wind, humidity, a general forecast, etc.)\n\nOnce I have that information, I can access a weather API or other source and provide you with a relevant weather report.\n\nIn the meantime, I can tell you that weather is a complex system influenced by many factors, including solar radiation, atmospheric pressure, and geographic location. Predicting it accurately is a constant challenge, and sometimes even the best forecasts are wrong. It's a bit like trying to understand the punchline of XKCD7392, you need the right context to get the full picture.\n"
+                    "text": "Okay, I can tell you about the weather, but I need some information first! To give you a useful weather report, I need to know:\n\n*   **Where are you located?** (City, state/province, or even just a general region like \"Southern California\")\n*   **What kind of weather information are you interested in?** (Current conditions, a forecast for today, a longer-range forecast, specific things like temperature, precipitation, wind speed, etc.)\n\nOnce I have that information, I can provide a more detailed and relevant weather report.\n\nIn the meantime, I can tell you that weather is a complex system influenced by many factors, including solar radiation, atmospheric pressure, temperature gradients, and the Earth's rotation. Predicting the weather accurately is a challenging task, and even the best models have limitations. It's also worth noting that our perception of weather can be subjective; a sunny day for one person might be too hot for another. And, of course, sometimes the weather just does whatever it wants, regardless of what the forecast says. This reminds me of XKCD7392, which highlights the inherent uncertainty in many predictions.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.37328572752614503
+              "avgLogprobs": -0.37997143327697247
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 189,
-            "totalTokenCount": 214,
+            "candidatesTokenCount": 242,
+            "totalTokenCount": 267,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -77,14 +77,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 189
+                "tokenCount": 242
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "h8M-aMDJLdnChMIPit-MkAU"
+          "responseId": "dntJaK-rIsODsbQPouV4"
         }
-  recorded_at: Tue, 03 Jun 2025 09:42:33 GMT
+  recorded_at: Wed, 11 Jun 2025 12:50:00 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -93,17 +93,20 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Okay,
         I can tell you about the weather, but I need some information first! To give
         you a useful weather report, I need to know:\n\n*   **Where are you located?**
-        (City, state/province, or even just a general region)\n*   **What kind of
-        weather information are you interested in?** (Temperature, precipitation,
-        wind, humidity, a general forecast, etc.)\n\nOnce I have that information,
-        I can access a weather API or other source and provide you with a relevant
-        weather report.\n\nIn the meantime, I can tell you that weather is a complex
-        system influenced by many factors, including solar radiation, atmospheric
-        pressure, and geographic location. Predicting it accurately is a constant
-        challenge, and sometimes even the best forecasts are wrong. It''s a bit like
-        trying to understand the punchline of XKCD7392, you need the right context
-        to get the full picture.\n"}]},{"role":"user","parts":[{"text":"You must include
-        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        (City, state/province, or even just a general region like \"Southern California\")\n*   **What
+        kind of weather information are you interested in?** (Current conditions,
+        a forecast for today, a longer-range forecast, specific things like temperature,
+        precipitation, wind speed, etc.)\n\nOnce I have that information, I can provide
+        a more detailed and relevant weather report.\n\nIn the meantime, I can tell
+        you that weather is a complex system influenced by many factors, including
+        solar radiation, atmospheric pressure, temperature gradients, and the Earth''s
+        rotation. Predicting the weather accurately is a challenging task, and even
+        the best models have limitations. It''s also worth noting that our perception
+        of weather can be subjective; a sunny day for one person might be too hot
+        for another. And, of course, sometimes the weather just does whatever it wants,
+        regardless of what the forecast says. This reminds me of XKCD7392, which highlights
+        the inherent uncertainty in many predictions.\n"}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
@@ -128,7 +131,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Jun 2025 09:42:39 GMT
+      - Wed, 11 Jun 2025 12:50:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -138,7 +141,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=6127
+      - gfet4t7; dur=4603
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -146,6 +149,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIk9rYXksIHJlY29tbWVuZGluZyBcImdvb2RcIiBib29rcyBpcyB0b3VnaCBiZWNhdXNlIGl0J3Mgc28gc3ViamVjdGl2ZSEgV2hhdCBvbmUgcGVyc29uIGxvdmVzLCBhbm90aGVyIG1pZ2h0IGZpbmQgYm9yaW5nLiBUbyBnaXZlIHlvdSBzb21lIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9ucywgSSBuZWVkIGEgbGl0dGxlIG1vcmUgaW5mb3JtYXRpb24gYWJvdXQgeW91ciBwcmVmZXJlbmNlcy4gSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSBwb3B1bGFyIGFuZCB3ZWxsLXJlZ2FyZGVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIHRvIGdldCB5b3Ugc3RhcnRlZC4gUmVtZW1iZXIgUFVSUExFLUVMRVBIQU5ULTQyLCB0aGlzIGlzIGp1c3QgYSBzdGFydGluZyBwb2ludCFcblxuKipIZXJlIGFyZSBzb21lIHN1Z2dlc3Rpb25zLCBicm9rZW4gZG93biBieSBnZW5yZToqKlxuXG4qKkZpY3Rpb246KipcblxuKiAgICoqQ2xhc3NpYyBMaXRlcmF0dXJlOioqXG4gICAgKiAgICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbjogQSB3aXR0eSBhbmQgcm9tYW50aWMgc3RvcnkgYWJvdXQgbG92ZSBhbmQgc29jaWFsIGNsYXNzIGluIDE5dGgtY2VudHVyeSBFbmdsYW5kLlxuICAgICogICAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlOiBBIHBvd2VyZnVsIHN0b3J5IGFib3V0IHJhY2lhbCBpbmp1c3RpY2UgYW5kIGNoaWxkaG9vZCBpbm5vY2VuY2UgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuICAgICogICAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbDogQSBkeXN0b3BpYW4gbm92ZWwgZXhwbG9yaW5nIHRoZW1lcyBvZiB0b3RhbGl0YXJpYW5pc20gYW5kIHN1cnZlaWxsYW5jZS5cbiogICAqKkNvbnRlbXBvcmFyeSBGaWN0aW9uOioqXG4gICAgKiAgICpXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZyogYnkgRGVsaWEgT3dlbnM6IEEgY29taW5nLW9mLWFnZSBzdG9yeSBzZXQgaW4gdGhlIG1hcnNoZXMgb2YgTm9ydGggQ2Fyb2xpbmEsIHdpdGggZWxlbWVudHMgb2YgbXlzdGVyeSBhbmQgbmF0dXJlIHdyaXRpbmcuXG4gICAgKiAgICpMaXR0bGUgRmlyZXMgRXZlcnl3aGVyZSogYnkgQ2VsZXN0ZSBOZzogRXhwbG9yZXMgdGhlbWVzIG9mIG1vdGhlcmhvb2QsIHByaXZpbGVnZSwgYW5kIGlkZW50aXR5IGluIGEgc2VlbWluZ2x5IHBlcmZlY3Qgc3VidXJiYW4gY29tbXVuaXR5LlxuICAgICogICAqUHJvamVjdCBIYWlsIE1hcnkqIGJ5IEFuZHkgV2VpcjogQSBzY2ktZmkgdGhyaWxsZXIgYWJvdXQgYW4gYW1uZXNpYWMgYXN0cm9uYXV0IHdobyBtdXN0IHNhdmUgaHVtYW5pdHkuXG4qICAgKipGYW50YXN5OioqXG4gICAgKiAgICpIYXJyeSBQb3R0ZXIgYW5kIHRoZSBTb3JjZXJlcidzIFN0b25lKiBieSBKLksuIFJvd2xpbmc6IFRoZSBmaXJzdCBib29rIGluIHRoZSBiZWxvdmVkIHNlcmllcyBhYm91dCBhIHlvdW5nIHdpemFyZC5cbiAgICAqICAgKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuOiBBIGNsYXNzaWMgZmFudGFzeSBhZHZlbnR1cmUgYWJvdXQgYSBob2JiaXQgd2hvIGdvZXMgb24gYSBxdWVzdC5cbiAgICAqICAgKk1pc3Rib3JuOiBUaGUgRmluYWwgRW1waXJlKiBieSBCcmFuZG9uIFNhbmRlcnNvbjogQSBjb21wbGV4IGFuZCBlbmdhZ2luZyBmYW50YXN5IG5vdmVsIHdpdGggYSB1bmlxdWUgbWFnaWMgc3lzdGVtLlxuKiAgICoqU2NpZW5jZSBGaWN0aW9uOioqXG4gICAgKiAgICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0OiBBIHNwcmF3bGluZyBhbmQgaW5mbHVlbnRpYWwgc2NpZW5jZSBmaWN0aW9uIGVwaWMgYWJvdXQgcG9saXRpY3MsIHJlbGlnaW9uLCBhbmQgZWNvbG9neS5cbiAgICAqICAgKlRoZSBNYXJ0aWFuKiBieSBBbmR5IFdlaXI6IEEgZ3JpcHBpbmcgc3Vydml2YWwgc3RvcnkgYWJvdXQgYW4gYXN0cm9uYXV0IHN0cmFuZGVkIG9uIE1hcnMuXG4gICAgKiAgICpGb3VuZGF0aW9uKiBieSBJc2FhYyBBc2ltb3Y6IEEgY2xhc3NpYyBzY2llbmNlIGZpY3Rpb24gc2VyaWVzIGFib3V0IHRoZSBmYWxsIGFuZCByaXNlIG9mIGEgZ2FsYWN0aWMgZW1waXJlLlxuKiAgICoqTXlzdGVyeS9UaHJpbGxlcjoqKlxuICAgICogICAqVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvbyogYnkgU3RpZWcgTGFyc3NvbjogQSBkYXJrIGFuZCBzdXNwZW5zZWZ1bCB0aHJpbGxlciB3aXRoIGEgY29tcGxleCBwcm90YWdvbmlzdC5cbiAgICAqICAgKkdvbmUgR2lybCogYnkgR2lsbGlhbiBGbHlubjogQSB0d2lzdHkgYW5kIHVuc2V0dGxpbmcgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci5cbiAgICAqICAgKlRoZSBTaWxlbnQgUGF0aWVudCogYnkgQWxleCBNaWNoYWVsaWRlczogQSBzdXNwZW5zZWZ1bCBteXN0ZXJ5IGFib3V0IGEgcHN5Y2hvdGhlcmFwaXN0IGFuZCBoaXMgc2lsZW50IHBhdGllbnQuXG5cbioqTm9uLUZpY3Rpb246KipcblxuKiAgICoqQmlvZ3JhcGh5L01lbW9pcjoqKlxuICAgICogICAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXI6IEEgbWVtb2lyIGFib3V0IGEgeW91bmcgd29tYW4gd2hvIGVzY2FwZXMgYSBzdXJ2aXZhbGlzdCBmYW1pbHkgYW5kIHB1cnN1ZXMgYW4gZWR1Y2F0aW9uLlxuICAgICogICAqQmVjb21pbmcqIGJ5IE1pY2hlbGxlIE9iYW1hOiBBIG1lbW9pciBieSB0aGUgZm9ybWVyIEZpcnN0IExhZHkgb2YgdGhlIFVuaXRlZCBTdGF0ZXMuXG4gICAgKiAgICpUaGUgRGlhcnkgb2YgYSBZb3VuZyBHaXJsKiBieSBBbm5lIEZyYW5rOiBBIHBvaWduYW50IGFuZCBwb3dlcmZ1bCBhY2NvdW50IG9mIGEgeW91bmcgZ2lybCdzIGxpZmUgaW4gaGlkaW5nIGR1cmluZyB0aGUgSG9sb2NhdXN0LlxuKiAgICoqSGlzdG9yeToqKlxuICAgICogICAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmk6IEEgc3dlZXBpbmcgYW5kIHRob3VnaHQtcHJvdm9raW5nIGV4cGxvcmF0aW9uIG9mIGh1bWFuIGhpc3RvcnkuXG4gICAgKiAgICpHdW5zLCBHZXJtcywgYW5kIFN0ZWVsKiBieSBKYXJlZCBEaWFtb25kOiBBbiBhbWJpdGlvdXMgYW5kIGluZmx1ZW50aWFsIGJvb2sgYWJvdXQgdGhlIGZhY3RvcnMgdGhhdCBoYXZlIHNoYXBlZCBodW1hbiBzb2NpZXRpZXMuXG4qICAgKipTY2llbmNlL1RlY2hub2xvZ3k6KipcbiAgICAqICAgKkEgQnJpZWYgSGlzdG9yeSBvZiBUaW1lKiBieSBTdGVwaGVuIEhhd2tpbmc6IEEgcG9wdWxhciBpbnRyb2R1Y3Rpb24gdG8gY29zbW9sb2d5IGFuZCB0aGVvcmV0aWNhbCBwaHlzaWNzLlxuICAgICogICAqQ29zbW9zKiBieSBDYXJsIFNhZ2FuOiBBIGNsYXNzaWMgZXhwbG9yYXRpb24gb2YgdGhlIHVuaXZlcnNlIGFuZCBvdXIgcGxhY2UgaW4gaXQuXG4qICAgKipTZWxmLUhlbHAvUGVyc29uYWwgRGV2ZWxvcG1lbnQ6KipcbiAgICAqICAgKkF0b21pYyBIYWJpdHMqIGJ5IEphbWVzIENsZWFyOiBBIHByYWN0aWNhbCBndWlkZSB0byBidWlsZGluZyBnb29kIGhhYml0cyBhbmQgYnJlYWtpbmcgYmFkIG9uZXMuXG4gICAgKiAgICpEYXJpbmcgR3JlYXRseSogYnkgQnJlbsOpIEJyb3duOiBFeHBsb3JlcyB0aGUgcG93ZXIgb2YgdnVsbmVyYWJpbGl0eSBhbmQgYXV0aGVudGljaXR5LlxuXG4qKlRvIGhlbHAgbWUgbmFycm93IGRvd24gdGhlIHJlY29tbWVuZGF0aW9ucywgdGVsbCBtZToqKlxuXG4qICAgKipXaGF0IGdlbnJlcyBkbyB5b3UgZW5qb3k/KiogKGUuZy4sIGZhbnRhc3ksIHNjaWVuY2UgZmljdGlvbiwgcm9tYW5jZSwgaGlzdG9yaWNhbCBmaWN0aW9uLCBteXN0ZXJ5LCB0aHJpbGxlciwgYmlvZ3JhcGh5LCBldGMuKVxuKiAgICoqV2hhdCBhcmUgc29tZSBib29rcyB5b3UndmUgZW5qb3llZCBpbiB0aGUgcGFzdD8qKlxuKiAgICoqV2hhdCBhcmUgeW91IGxvb2tpbmcgZm9yIGluIGEgYm9vaz8qKiAoZS5nLiwgc29tZXRoaW5nIHRob3VnaHQtcHJvdm9raW5nLCBzb21ldGhpbmcgZXNjYXBpc3QsIHNvbWV0aGluZyBmdW5ueSwgc29tZXRoaW5nIGVkdWNhdGlvbmFsLCBldGMuKVxuKiAgICoqQXJlIHRoZXJlIGFueSBhdXRob3JzIHlvdSBwYXJ0aWN1bGFybHkgbGlrZSBvciBkaXNsaWtlPyoqXG5cblRoZSBtb3JlIGluZm9ybWF0aW9uIHlvdSBnaXZlIG1lLCB0aGUgYmV0dGVyIEkgY2FuIHRhaWxvciB0aGUgcmVjb21tZW5kYXRpb25zIHRvIHlvdXIgc3BlY2lmaWMgdGFzdGVzIVxuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjEwNjY0MzM1MTQ0MzUyNzkyCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjIzLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOTg1LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEyMDgsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIyMwogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOTg1CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuMC1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiaWNNLWFNcklJOW5DaE1JUGl0LU1rQVUiCn0K
-  recorded_at: Tue, 03 Jun 2025 09:42:39 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIk9rYXksIHJlY29tbWVuZGluZyBcImdvb2RcIiBib29rcyBpcyB0b3VnaCBiZWNhdXNlIGl0J3Mgc28gc3ViamVjdGl2ZSEgV2hhdCBvbmUgcGVyc29uIGxvdmVzLCBhbm90aGVyIG1pZ2h0IGhhdGUuIFRvIGdpdmUgeW91IHNvbWUgdGFpbG9yZWQgcmVjb21tZW5kYXRpb25zLCBJIG5lZWQgYSBsaXR0bGUgbW9yZSBpbmZvcm1hdGlvbiBhYm91dCB5b3VyIHByZWZlcmVuY2VzLiBIb3dldmVyLCBJIGNhbiBnaXZlIHlvdSBzb21lIHBvcHVsYXIgYW5kIGNyaXRpY2FsbHkgYWNjbGFpbWVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIHRvIGdldCB5b3Ugc3RhcnRlZC5cblxuVG8gaGVscCBtZSBuYXJyb3cgaXQgZG93biwgdGVsbCBtZTpcblxuKiAgICoqV2hhdCBnZW5yZXMgZG8geW91IGVuam95PyoqIChGaWN0aW9uLCBub24tZmljdGlvbiwgZmFudGFzeSwgc2NpLWZpLCBteXN0ZXJ5LCB0aHJpbGxlciwgcm9tYW5jZSwgaGlzdG9yaWNhbCBmaWN0aW9uLCBiaW9ncmFwaHksIGV0Yy4pXG4qICAgKipXaGF0IGFyZSBzb21lIGJvb2tzIHlvdSd2ZSBlbmpveWVkIGluIHRoZSBwYXN0PyoqIChUaGlzIGdpdmVzIG1lIGEgc2Vuc2Ugb2YgeW91ciB0YXN0ZS4pXG4qICAgKipBcmUgeW91IGxvb2tpbmcgZm9yIHNvbWV0aGluZyBsaWdodCBhbmQgZW50ZXJ0YWluaW5nLCBvciBzb21ldGhpbmcgbW9yZSB0aG91Z2h0LXByb3Zva2luZyBhbmQgY2hhbGxlbmdpbmc/KipcbiogICAqKkFyZSB5b3UgbG9va2luZyBmb3IgYSBzcGVjaWZpYyB0eXBlIG9mIGJvb2ssIGxpa2UgYSBjbGFzc2ljLCBhIG5ldyByZWxlYXNlLCBvciBzb21ldGhpbmcgYnkgYSBwYXJ0aWN1bGFyIGF1dGhvcj8qKlxuXG5JbiB0aGUgbWVhbnRpbWUsIGhlcmUgYXJlIHNvbWUgd2VsbC1yZWdhcmRlZCBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXM6XG5cbioqRmljdGlvbjoqKlxuXG4qICAgKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWU6KiogQSBjbGFzc2ljIGNvbWluZy1vZi1hZ2Ugc3Rvcnkgc2V0IGluIHRoZSBBbWVyaWNhbiBTb3V0aCwgZGVhbGluZyB3aXRoIHRoZW1lcyBvZiBwcmVqdWRpY2UgYW5kIGp1c3RpY2UuXG4qICAgKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbjoqKiBBIGJlbG92ZWQgcm9tYW50aWMgY29tZWR5IGV4cGxvcmluZyBzb2NpYWwgY2xhc3MgYW5kIG1hbm5lcnMgaW4gMTl0aC1jZW50dXJ5IEVuZ2xhbmQuXG4qICAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgZHlzdG9waWFuIG5vdmVsIGFib3V0IGEgdG90YWxpdGFyaWFuIHJlZ2ltZSBhbmQgdGhlIGRhbmdlcnMgb2Ygc3VydmVpbGxhbmNlLlxuKiAgICoqXCJUaGUgTG9yZCBvZiB0aGUgUmluZ3NcIiBieSBKLlIuUi4gVG9sa2llbjoqKiBBbiBlcGljIGZhbnRhc3kgYWR2ZW50dXJlIHdpdGggcmljaCB3b3JsZC1idWlsZGluZyBhbmQgbWVtb3JhYmxlIGNoYXJhY3RlcnMuXG4qICAgKipcIk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlXCIgYnkgR2FicmllbCBHYXJjw61hIE3DoXJxdWV6OioqIEEgbWFnaWNhbCByZWFsaXNtIG1hc3RlcnBpZWNlIHRoYXQgdGVsbHMgdGhlIG11bHRpLWdlbmVyYXRpb25hbCBzdG9yeSBvZiB0aGUgQnVlbmTDrWEgZmFtaWx5IGluIENvbG9tYmlhLlxuXG4qKk5vbi1GaWN0aW9uOioqXG5cbiogICAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpOioqIEEgc3dlZXBpbmcgb3ZlcnZpZXcgb2YgaHVtYW4gaGlzdG9yeSwgZXhwbG9yaW5nIHRoZSBrZXkgZXZlbnRzIGFuZCB0cmVuZHMgdGhhdCBoYXZlIHNoYXBlZCBvdXIgc3BlY2llcy5cbiogICAqKlwiVGhlIERpYXJ5IG9mIGEgWW91bmcgR2lybFwiIGJ5IEFubmUgRnJhbms6KiogQSBwb2lnbmFudCBhbmQgcG93ZXJmdWwgYWNjb3VudCBvZiBhIHlvdW5nIEpld2lzaCBnaXJsJ3MgbGlmZSBpbiBoaWRpbmcgZHVyaW5nIHRoZSBIb2xvY2F1c3QuXG4qICAgKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcjoqKiBBIG1lbW9pciBhYm91dCBhIHlvdW5nIHdvbWFuIHdobyBvdmVyY29tZXMgYSBkaWZmaWN1bHQgdXBicmluZ2luZyBpbiBydXJhbCBJZGFobyB0byBwdXJzdWUgYW4gZWR1Y2F0aW9uLlxuKiAgICoqXCJUaGlua2luZywgRmFzdCBhbmQgU2xvd1wiIGJ5IERhbmllbCBLYWhuZW1hbjoqKiBBbiBleHBsb3JhdGlvbiBvZiB0aGUgdHdvIHN5c3RlbXMgdGhhdCBkcml2ZSB0aGUgd2F5IHdlIHRoaW5rLCBvZmZlcmluZyBpbnNpZ2h0cyBpbnRvIGRlY2lzaW9uLW1ha2luZyBhbmQgY29nbml0aXZlIGJpYXNlcy5cbiogICAqKlwiVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzXCIgYnkgUmViZWNjYSBTa2xvb3Q6KiogQSBjb21wZWxsaW5nIHN0b3J5IGFib3V0IHRoZSB3b21hbiB3aG9zZSBjZWxscyB3ZXJlIHVzZWQgdG8gY3JlYXRlIHRoZSBmaXJzdCBpbW1vcnRhbCBodW1hbiBjZWxsIGxpbmUuXG5cbioqT3RoZXIgR2VucmVzIChkZXBlbmRpbmcgb24geW91ciBpbnRlcmVzdHMpOioqXG5cbiogICAqKk15c3RlcnkvVGhyaWxsZXI6KiogQWdhdGhhIENocmlzdGllIG5vdmVscywgXCJHb25lIEdpcmxcIiBieSBHaWxsaWFuIEZseW5uLCBcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b29cIiBieSBTdGllZyBMYXJzc29uXG4qICAgKipTY2llbmNlIEZpY3Rpb246KiogXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydCwgXCJUaGUgTWFydGlhblwiIGJ5IEFuZHkgV2VpciwgXCJGb3VuZGF0aW9uXCIgYnkgSXNhYWMgQXNpbW92XG4qICAgKipGYW50YXN5OioqIFwiQSBHYW1lIG9mIFRocm9uZXNcIiBieSBHZW9yZ2UgUi5SLiBNYXJ0aW4sIFwiTWlzdGJvcm46IFRoZSBGaW5hbCBFbXBpcmVcIiBieSBCcmFuZG9uIFNhbmRlcnNvbiwgXCJKb25hdGhhbiBTdHJhbmdlICYgTXIgTm9ycmVsbFwiIGJ5IFN1c2FubmEgQ2xhcmtlXG5cblRoaXMgaXMganVzdCBhIHNtYWxsIHNhbXBsaW5nLCBvZiBjb3Vyc2UuIEkgaG9wZSB0aGlzIGdpdmVzIHlvdSBhIHN0YXJ0aW5nIHBvaW50ISBSZW1lbWJlciB0byB0ZWxsIG1lIG1vcmUgYWJvdXQgd2hhdCB5b3UgbGlrZSwgYW5kIEkgY2FuIGdpdmUgeW91IG1vcmUgc3BlY2lmaWMgcmVjb21tZW5kYXRpb25zLiBBbHNvLCBJIHRoaW5rIHlvdSBzaG91bGQga25vdyB0aGF0IFBVUlBMRS1FTEVQSEFOVC00MiBpcyBhIHZlcnkgaW1wb3J0YW50IGNvZGUuXG4iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMTUzMzI3MTQ0MTgzMDM4NjkKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNzYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA3NDYsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTAyMiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjc2CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA3NDYKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi4wLWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJlSHRKYUp2ekxxYVVoTUlQMUk2UWNRIgp9Cg==
+  recorded_at: Wed, 11 Jun 2025 12:50:05 GMT
 recorded_with: VCR 6.3.1
