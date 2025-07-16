@@ -24,7 +24,12 @@ group :development do
   gem 'rubocop-rspec'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
-  gem 'sqlite3'
+
+  # database drivers for MRI and JRuby
+  gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
+  gem 'jdbc-sqlite3', platform: 'jruby'
+  gem 'sqlite3', platform: 'mri'
+
   gem 'vcr'
   gem 'webmock', '~> 3.18'
   gem 'yard', '>= 0.9'
