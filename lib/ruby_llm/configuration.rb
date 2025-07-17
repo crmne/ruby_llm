@@ -29,6 +29,7 @@ module RubyLLM
                   :default_embedding_model,
                   :default_image_model,
                   # Default model settings
+                  :default_temperature,
                   :default_thinking,
                   :default_thinking_budget,
                   # Connection configuration
@@ -57,7 +58,7 @@ module RubyLLM
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'dall-e-3'
-      
+
       # Default model settings
       @default_thinking = false
       @default_thinking_budget = 2048

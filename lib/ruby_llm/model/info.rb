@@ -58,6 +58,10 @@ module RubyLLM
         function_calling?
       end
 
+      def thinking?
+        reasoning?
+      end
+
       def input_price_per_million
         pricing.text_tokens.input
       end
