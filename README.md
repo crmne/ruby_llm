@@ -121,6 +121,32 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 
 Add persistence to your chat models effortlessly:
 
+### Option 1: Rails Generate
+
+Simply run the generator to set up all required models:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This creates all necessary migrations, models, and database tables. Then just use them:
+
+```ruby
+# In your controller
+chat = Chat.create!(model_id: "gpt-4o-mini")
+chat.ask("What's your favorite Ruby gem?") do |chunk|
+  Turbo::StreamsChannel.broadcast_append_to(
+    chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+  )
+end
+
+# That's it - chat history is automatically saved
+```
+
+### Option 2: Manually
+
+Or, add RubyLLM to your existing ActiveRecord models:
+
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord

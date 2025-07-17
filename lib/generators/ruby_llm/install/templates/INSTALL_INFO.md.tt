@@ -1,0 +1,75 @@
+# RubyLLM Rails Setup Complete!
+
+Thanks for installing RubyLLM in your Rails application. Here's what was created:
+
+## Models
+
+- `<%= options[:chat_model_name] %>` - Stores chat sessions and their associated model ID
+- `<%= options[:message_model_name] %>` - Stores individual messages in a chat
+- `<%= options[:tool_call_model_name] %>` - Stores tool calls made by language models
+
+## Configuration Options
+
+The generator supports the following options to customize model names:
+
+```bash
+rails generate ruby_llm:install \
+  --chat-model-name=Conversation \
+  --message-model-name=ChatMessage \
+  --tool-call-model-name=FunctionCall
+```
+
+This is useful when you need to avoid namespace collisions with existing models in your application. Table names will be automatically derived from the model names following Rails conventions.
+
+## Next Steps
+
+1. **Run migrations:**
+   ```bash
+   rails db:migrate
+   ```
+
+2. **Set your API keys** in `config/initializers/ruby_llm.rb` or using environment variables:
+   ```ruby
+   # config/initializers/ruby_llm.rb
+   RubyLLM.configure do |config|
+     config.openai_api_key = ENV["OPENAI_API_KEY"]
+     config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
+     # etc.
+   end
+   ```
+
+3. **Start using RubyLLM in your code:**
+   ```ruby
+   # In a background job
+   class ChatJob < ApplicationJob
+     def perform(chat_id, question)
+       chat = <%= options[:chat_model_name] %>.find(chat_id)
+       chat.ask(question) do |chunk|
+         Turbo::StreamsChannel.broadcast_append_to(
+           chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+         )
+       end
+     end
+   end
+
+   # Queue the job
+   chat = <%= options[:chat_model_name] %>.create!(model_id: "gpt-4o-mini")
+   ChatJob.perform_later(chat.id, "What's your favorite Ruby gem?")
+   ```
+
+4. **For streaming responses** with ActionCable or Turbo:
+   ```ruby
+   chat.ask("Tell me about Ruby on Rails") do |chunk|
+     Turbo::StreamsChannel.broadcast_append_to(
+       chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
+     )
+   end
+   ```
+
+## Advanced Usage
+
+- Add more fields to your models as needed
+- Customize the views to match your application design
+- Create a controller for chat interactions
+
+For more information, visit the [RubyLLM Documentation](https://github.com/crmne/ruby_llm)

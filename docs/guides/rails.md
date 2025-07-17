@@ -58,9 +58,41 @@ This approach has one important consequence: **you cannot use `validates :conten
 
 ## Setting Up Your Rails Application
 
-### Database Migrations
+### Quick Setup with Generator
 
-First, generate migrations for your `Chat`, `Message`, and `ToolCall` models.
+The easiest way to get started is using the provided Rails generator:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This generator automatically creates:
+- All required migrations (Chat, Message, ToolCall tables)
+- Model files with `acts_as_chat`, `acts_as_message`, and `acts_as_tool_call` configured
+- A RubyLLM initializer in `config/initializers/ruby_llm.rb`
+
+After running the generator:
+
+```bash
+rails db:migrate
+```
+
+You're ready to go! The generator handles all the setup complexity for you.
+
+#### Generator Options
+
+The generator supports custom model names if needed:
+
+```bash
+# Use custom model names
+rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+```
+
+This is useful if you already have models with these names or prefer different naming conventions.
+
+### Manual Setup
+
+If you prefer to set up manually or need custom table/model names, you can create the migrations yourself:
 
 ```bash
 # Generate basic models and migrations
@@ -69,7 +101,7 @@ rails g model Message chat:references role:string content:text model_id:string i
 rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
 ```
 
-Adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
+Then adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
