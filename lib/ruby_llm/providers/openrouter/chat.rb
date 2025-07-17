@@ -2,8 +2,8 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
-      # Chat methods of the OpenAI API integration
+    module OpenRouter
+      # Chat methods of the OpenRouter API integration
       module Chat
         def completion_url
           'chat/completions'
@@ -11,26 +11,23 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
-          payload = {
+        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Metrics/MethodLength
+          {
             model: model,
             messages: format_messages(messages),
-            stream: stream
-          }
-
-          # Only include temperature if it's not nil (some models don't accept it)
-          payload[:temperature] = temperature unless temperature.nil?
-
-          if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-            payload[:tool_choice] = 'auto'
+            temperature: temperature,
+            stream: stream,
+            provider: format_provider_options # @todo Allow for assistant overriding
+          }.tap do |payload|
+            if tools.any?
+              payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+              payload[:tool_choice] = 'auto'
+            end
+            payload[:stream_options] = { include_usage: true } if stream
           end
-
-          payload[:stream_options] = { include_usage: true } if stream
-          payload
         end
 
-        def parse_completion_response(response)
+        def parse_completion_response(response) # rubocop:disable Metrics/MethodLength
           data = response.body
           return if data.empty?
 
@@ -67,6 +64,18 @@ module RubyLLM
           else
             role.to_s
           end
+        end
+
+        def format_provider_options
+          {
+            order: @connection.config.openrouter_provider_order,
+            allow_fallbacks: @connection.config.openrouter_provider_allow_fallbacks,
+            require_parameters: @connection.config.openrouter_provider_require_parameters,
+            data_collection: @connection.config.openrouter_provider_data_collection,
+            ignore: @connection.config.openrouter_provider_ignore,
+            quantizations: @connection.config.openrouter_provider_quantizations,
+            sort: @connection.config.openrouter_provider_sort
+          }.compact
         end
       end
     end
