@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
+  include StreamingErrorHelpers
 
   describe 'streaming responses' do
     CHAT_MODELS.each do |model_info|
@@ -43,94 +44,80 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'Error handling' do
-    let(:chat) { RubyLLM.chat(model: 'claude-3-5-haiku-20241022', provider: :anthropic) }
-    let(:error_response) do
-      {
-        type: 'error',
-        error: {
-          type: 'overloaded_error',
-          message: 'Overloaded'
-        }
-      }.to_json
-    end
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
 
-    describe 'Faraday version 1' do
-      before do
-        stub_const('Faraday::VERSION', '1.10.0')
-      end
+      context "with #{provider}/#{model}" do
+        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
-        stub_request(:post, 'https://api.anthropic.com/v1/messages')
-          .to_return(
-            status: 529,
-            body: "data: #{error_response}\n\n",
-            headers: { 'Content-Type' => 'text/event-stream' }
-          )
-
-        chunks = []
-
-        expect do
-          chat.ask('Count from 1 to 3') do |chunk|
-            chunks << chunk
+        describe 'Faraday version 1' do # rubocop:disable RSpec/NestedGroups
+          before do
+            stub_const('Faraday::VERSION', '1.10.0')
           end
-        end.to raise_error(RubyLLM::OverloadedError)
-      end
 
-      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
-        stub_request(:post, 'https://api.anthropic.com/v1/messages')
-          .to_return(
-            status: 200,
-            body: "event: error\ndata: #{error_response}\n\n",
-            headers: { 'Content-Type' => 'text/event-stream' }
-          )
+          it "#{provider}/#{model} supports handling streaming error chunks" do # rubocop:disable RSpec/ExampleLength
+            skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
-        chunks = []
+            stub_error_response(provider, :chunk)
 
-        expect do
-          chat.ask('Count from 1 to 3') do |chunk|
-            chunks << chunk
+            chunks = []
+
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
           end
-        end.to raise_error(RubyLLM::OverloadedError)
-      end
-    end
 
-    describe 'Faraday version 2' do
-      before do
-        stub_const('Faraday::VERSION', '2.0.0')
-      end
+          it "#{provider}/#{model} supports handling streaming error events" do # rubocop:disable RSpec/ExampleLength
+            skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
-      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error chunks' do # rubocop:disable RSpec/ExampleLength
-        stub_request(:post, 'https://api.anthropic.com/v1/messages')
-          .to_return(
-            status: 529,
-            body: "data: #{error_response}\n\n",
-            headers: { 'Content-Type' => 'text/event-stream' }
-          )
+            stub_error_response(provider, :event)
 
-        chunks = []
+            chunks = []
 
-        expect do
-          chat.ask('Count from 1 to 3') do |chunk|
-            chunks << chunk
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
           end
-        end.to raise_error(RubyLLM::OverloadedError)
-      end
+        end
 
-      it 'anthropic/claude-3-5-haiku-20241022 supports handling streaming error events' do # rubocop:disable RSpec/ExampleLength
-        stub_request(:post, 'https://api.anthropic.com/v1/messages')
-          .to_return(
-            status: 200,
-            body: "event: error\ndata: #{error_response}\n\n",
-            headers: { 'Content-Type' => 'text/event-stream' }
-          )
-
-        chunks = []
-
-        expect do
-          chat.ask('Count from 1 to 3') do |chunk|
-            chunks << chunk
+        describe 'Faraday version 2' do # rubocop:disable RSpec/NestedGroups
+          before do
+            stub_const('Faraday::VERSION', '2.0.0')
           end
-        end.to raise_error(RubyLLM::OverloadedError)
+
+          it "#{provider}/#{model} supports handling streaming error chunks" do # rubocop:disable RSpec/ExampleLength
+            skip('Error handling not implemented yet') unless error_handling_supported?(provider)
+
+            stub_error_response(provider, :chunk)
+
+            chunks = []
+
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
+          end
+
+          it "#{provider}/#{model} supports handling streaming error events" do # rubocop:disable RSpec/ExampleLength
+            skip('Error handling not implemented yet') unless error_handling_supported?(provider)
+
+            stub_error_response(provider, :event)
+
+            chunks = []
+
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
+          end
+        end
       end
     end
   end
