@@ -24,6 +24,10 @@ module RubyLLM
         'gpustack'
       end
 
+      def local?
+        true
+      end
+
       def configuration_requirements
         %i[gpustack_api_base gpustack_api_key]
       end

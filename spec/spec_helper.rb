@@ -68,6 +68,9 @@ VCR.configure do |config|
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
 
+  config.filter_sensitive_data('<GPUSTACK_API_BASE>') { ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:8080/v1') }
+  config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', 'test') }
+
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
   config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }
@@ -117,6 +120,9 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
+      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'test')
+      config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')      
+
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_region = 'us-west-2'
@@ -138,7 +144,8 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' }
+  { provider: :ollama, model: 'qwen3' },
+  { provider: :gpustack, model: 'llama3.2' }
 ].freeze
 
 PDF_MODELS = [
