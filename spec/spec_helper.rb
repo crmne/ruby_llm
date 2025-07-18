@@ -120,7 +120,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
-      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'test')
+      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:8080/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
