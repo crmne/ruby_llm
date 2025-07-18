@@ -160,3 +160,14 @@ VISION_MODELS = [
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
 ].freeze
+
+THINKING_MODELS = [
+  { model: 'claude-3-7-sonnet', provider: 'anthropic' },
+  { model: 'claude-sonnet-4', provider: 'anthropic' },
+  { model: 'claude-opus-4', provider: 'anthropic' }
+].freeze
+
+NON_THINKING_MODELS = [
+  { model: 'claude-3-haiku', provider: 'anthropic' },
+  { model: 'claude-3-sonnet', provider: 'anthropic' }
+].freeze
