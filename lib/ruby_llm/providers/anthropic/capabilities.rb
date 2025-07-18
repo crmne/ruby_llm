@@ -140,7 +140,7 @@ module RubyLLM
           end
 
           # Extended thinking for Claude 3.7 and Claude 4
-          capabilities << 'reasoning' if supports_extended_thinking?(model_id)
+          capabilities << 'thinking' if supports_extended_thinking?(model_id)
 
           # Citations
           capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7|claude-sonnet-4|claude-opus-4/)
