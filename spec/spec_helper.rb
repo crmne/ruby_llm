@@ -121,7 +121,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'test')
-      config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')      
+      config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
@@ -145,7 +145,7 @@ CHAT_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :ollama, model: 'qwen3' },
-  { provider: :gpustack, model: 'llama3.2' }
+  { provider: :gpustack, model: 'qwen3' }
 ].freeze
 
 PDF_MODELS = [
