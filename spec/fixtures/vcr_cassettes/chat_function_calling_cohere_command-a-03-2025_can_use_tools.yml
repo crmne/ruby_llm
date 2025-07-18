@@ -33,11 +33,11 @@ http_interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 01 Jan 1970 00:00:00 UTC
+      - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
       - '6909'
       Num-Tokens:
-      - '101'
+      - '102'
       Pragma:
       - no-cache
       Vary:
@@ -45,13 +45,13 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 9b0d41500aff40c0e22cbdfdeb879732
+      - 4bf56d1ec788d51b00fc7554ef5b2b4b
       Date:
-      - Mon, 07 Jul 2025 00:36:48 GMT
+      - Fri, 18 Jul 2025 06:08:14 GMT
       Content-Length:
-      - '461'
+      - '459'
       X-Envoy-Upstream-Service-Time:
-      - '493'
+      - '1042'
       Server:
       - envoy
       Via:
@@ -60,16 +60,16 @@ http_interactions:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"360b4bb7-032d-406c-b4d0-ffce431c6008","message":{"role":"assistant","tool_plan":"I
-        will look up the weather in Berlin using the coordinates provided.","tool_calls":[{"id":"weather_8a28r34bhsw9","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":66,"output_tokens":35},"tokens":{"input_tokens":1503,"output_tokens":66}}}'
-  recorded_at: Mon, 07 Jul 2025 00:36:48 GMT
+      string: '{"id":"9e983857-ad96-488a-85c5-03fe3214c30a","message":{"role":"assistant","tool_plan":"I
+        will use the weather tool to find the current weather in Berlin.","tool_calls":[{"id":"weather_1xytd2xejv4r","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":66,"output_tokens":36},"tokens":{"input_tokens":1503,"output_tokens":67}}}'
+  recorded_at: Fri, 18 Jul 2025 06:08:14 GMT
 - request:
     method: post
     uri: https://api.cohere.ai/v2/chat
     body:
       encoding: UTF-8
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","tool_calls":[{"id":"weather_8a28r34bhsw9","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_8a28r34bhsw9","content":"Current
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","tool_calls":[{"id":"weather_1xytd2xejv4r","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","tool_call_id":"weather_1xytd2xejv4r","content":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"temperature":0.7,"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
@@ -97,11 +97,11 @@ http_interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 01 Jan 1970 00:00:00 UTC
+      - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
       - '7406'
       Num-Tokens:
-      - '116'
+      - '126'
       Pragma:
       - no-cache
       Vary:
@@ -109,13 +109,13 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 32615ed828e3a03002c33775453c55fe
+      - ce22f0b3398162d6a97de77af1d155b2
       Date:
-      - Mon, 07 Jul 2025 00:36:48 GMT
+      - Fri, 18 Jul 2025 06:08:15 GMT
       Content-Length:
-      - '507'
+      - '571'
       X-Envoy-Upstream-Service-Time:
-      - '293'
+      - '465'
       Server:
       - envoy
       Via:
@@ -125,6 +125,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImMyZGRjYzgxLTVhMzEtNGIyMC1iMDgzLWMyMmY5MTMzZmFlYiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IjE1wrBDLCBXaW5kOiAxMCBrbS9oIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjowLCJlbmQiOjE5LCJ0ZXh0IjoiMTXCsEMsIFdpbmQ6IDEwIGttL2giLCJzb3VyY2VzIjpbeyJ0eXBlIjoidG9vbCIsImlkIjoid2VhdGhlcl84YTI4cjM0Ymhzdzk6MCIsInRvb2xfb3V0cHV0Ijp7ImNvbnRlbnQiOiJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2gifX1dLCJ0eXBlIjoiVEVYVF9DT05URU5UIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTAzLCJvdXRwdXRfdG9rZW5zIjoxM30sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjE2MzgsIm91dHB1dF90b2tlbnMiOjI2fX19
-  recorded_at: Mon, 07 Jul 2025 00:36:48 GMT
+        eyJpZCI6ImRhZjg2YTlmLTVmYmItNDBhMy05NGE5LWFiNTY2MjdjMjQwYiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0IjozMywiZW5kIjo2NywidGV4dCI6IjE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwic291cmNlcyI6W3sidHlwZSI6InRvb2wiLCJpZCI6IndlYXRoZXJfMXh5dGQyeGVqdjRyOjAiLCJ0b29sX291dHB1dCI6eyJjb250ZW50IjoiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyMDAsIDEzLjQwNTA6IDE1wrBDLCBXaW5kOiAxMCBrbS9oIn19XSwidHlwZSI6IlRFWFRfQ09OVEVOVCJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjEwMywib3V0cHV0X3Rva2VucyI6MjN9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjoxNjM4LCJvdXRwdXRfdG9rZW5zIjozNH19fQ==
+  recorded_at: Fri, 18 Jul 2025 06:08:15 GMT
 recorded_with: VCR 6.3.1

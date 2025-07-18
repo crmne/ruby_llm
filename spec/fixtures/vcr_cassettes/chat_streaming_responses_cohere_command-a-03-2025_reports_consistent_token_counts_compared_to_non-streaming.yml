@@ -30,7 +30,7 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Expires:
-      - Thu, 01 Jan 1970 00:00:00 UTC
+      - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Vary:
@@ -38,11 +38,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 3fc20c101623773ce0180076d36015cf
+      - 67a4820f10abe1b207cad4011f29390e
       Date:
-      - Mon, 07 Jul 2025 00:37:18 GMT
+      - Fri, 18 Jul 2025 06:08:12 GMT
       X-Envoy-Upstream-Service-Time:
-      - '94'
+      - '134'
       Server:
       - envoy
       Via:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"c541d396-f2d0-4e8e-a9aa-f53a743dd06f","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"856ac3b1-519c-4391-89c7-a5e355465329","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
@@ -73,7 +73,10 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"'s"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" counting"}}}}
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" count"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" from"}}}}
@@ -112,11 +115,11 @@ http_interactions:
         data: {"type":"content-end","index":0}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":21},"tokens":{"input_tokens":502,"output_tokens":23}}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":22},"tokens":{"input_tokens":502,"output_tokens":25}}}}
 
         data: [DONE]
 
-  recorded_at: Mon, 07 Jul 2025 00:37:19 GMT
+  recorded_at: Fri, 18 Jul 2025 06:08:12 GMT
 - request:
     method: post
     uri: https://api.cohere.ai/v2/chat
@@ -147,11 +150,11 @@ http_interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 01 Jan 1970 00:00:00 UTC
+      - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
       - '2595'
       Num-Tokens:
-      - '28'
+      - '29'
       Pragma:
       - no-cache
       Vary:
@@ -159,13 +162,13 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - feb909a6b38994d1100f9e47577cc823
+      - ae5f918a0a67f806236106fbcaca46c2
       Date:
-      - Mon, 07 Jul 2025 00:37:19 GMT
+      - Fri, 18 Jul 2025 06:08:13 GMT
       Content-Length:
-      - '299'
+      - '300'
       X-Envoy-Upstream-Service-Time:
-      - '256'
+      - '318'
       Server:
       - envoy
       Via:
@@ -174,8 +177,8 @@ http_interactions:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"275cdbe5-912f-4e9a-a984-88f324297464","message":{"role":"assistant","content":[{"type":"text","text":"Sure!
-        Here''s counting from 1 to 3:\n\n1, 2, 3."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":21},"tokens":{"input_tokens":502,"output_tokens":24}}}'
-  recorded_at: Mon, 07 Jul 2025 00:37:19 GMT
+      string: '{"id":"b52d8f61-7c01-4cdf-a17a-771cb6b128c1","message":{"role":"assistant","content":[{"type":"text","text":"Sure!
+        Here''s the count from 1 to 3:\n\n1, 2, 3."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":22},"tokens":{"input_tokens":502,"output_tokens":25}}}'
+  recorded_at: Fri, 18 Jul 2025 06:08:13 GMT
 recorded_with: VCR 6.3.1
 ...
