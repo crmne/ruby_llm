@@ -157,6 +157,10 @@ VISION_MODELS = [
   { provider: :ollama, model: 'qwen3' }
 ].freeze
 
+VIDEO_MODELS = [
+  { provider: :gemini, model: 'gemini-2.0-flash' }
+].freeze
+
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
 ].freeze

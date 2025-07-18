@@ -150,7 +150,7 @@ You can also analyze video files or URLs with vision-capable models. RubyLLM wil
 
 ```ruby
 # Ask about a local video file
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: 'gemini-2.0-flash')
 response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
 puts response.content
 
@@ -165,7 +165,7 @@ puts response.content
 
 **Notes:**
 - Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
-- Not all models or providers support video input; check the [Available Models Guide]({% link guides/available-models.md %}) for details.
+- Only Google Gemini models currently support video input; check the [Available Models Guide]({% link guides/available-models.md %}) for details.
 - Large video files may be subject to size or duration limits imposed by the provider.
 
 ### Working with Audio

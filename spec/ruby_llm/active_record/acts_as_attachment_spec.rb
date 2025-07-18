@@ -89,22 +89,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(attachment.type).to eq(:image)
     end
 
-    it 'handles videos' do # rubocop:disable RSpec/ExampleLength
-      video_path = File.expand_path('../../fixtures/ruby.mp4', __dir__)
-      chat = Chat.create!(model_id: model)
-      message = chat.messages.create!(role: 'user', content: 'Video test')
-
-      message.attachments.attach(
-        io: File.open(video_path),
-        filename: 'test.mp4',
-        content_type: 'video/mp4'
-      )
-
-      llm_message = message.to_llm
-      attachment = llm_message.content.attachments.first
-      expect(attachment.type).to eq(:video)
-    end
-
     it 'handles PDFs' do # rubocop:disable RSpec/ExampleLength
       chat = Chat.create!(model_id: model)
       message = chat.messages.create!(role: 'user', content: 'PDF test')

@@ -69,7 +69,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 
 ```ruby
 # Just ask questions
-chat = RubyLLM.chat
+chat = RubyLLM.chat(model: "gemini-2.0-flash")
 chat.ask "What's the best way to learn Ruby?"
 
 # Analyze images, videos, audio, documents, and text files
