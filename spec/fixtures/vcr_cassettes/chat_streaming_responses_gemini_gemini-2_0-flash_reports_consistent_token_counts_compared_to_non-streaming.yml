@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 11 Jun 2025 12:53:35 GMT
+      - Thu, 17 Jul 2025 09:57:25 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=302
+      - gfet4t7; dur=543
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -51,14 +51,18 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"1\"}],\"role\":
         \"model\"}}],\"usageMetadata\": {\"promptTokenCount\": 8,\"totalTokenCount\":
         8,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\":
-        \"gemini-2.0-flash\",\"responseId\": \"T3xJaPqZBYiVsbQPl6ee0Qs\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\\n2\\n3\\n\"}],\"role\":
+        \"gemini-2.0-flash\",\"responseId\": \"Bcl4aLWpH9yZhMIPkrv-gA4\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\\n2\\n\"}],\"role\":
+        \"model\"}}],\"usageMetadata\": {\"promptTokenCount\": 8,\"totalTokenCount\":
+        8,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\":
+        \"gemini-2.0-flash\",\"responseId\": \"Bcl4aLWpH9yZhMIPkrv-gA4\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"3\\n\"}],\"role\":
         \"model\"},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
         7,\"candidatesTokenCount\": 6,\"totalTokenCount\": 13,\"promptTokensDetails\":
         [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\":
         [{\"modality\": \"TEXT\",\"tokenCount\": 6}]},\"modelVersion\": \"gemini-2.0-flash\",\"responseId\":
-        \"T3xJaPqZBYiVsbQPl6ee0Qs\"}\r\n\r\n"
-  recorded_at: Wed, 11 Jun 2025 12:53:35 GMT
+        \"Bcl4aLWpH9yZhMIPkrv-gA4\"}\r\n\r\n"
+  recorded_at: Thu, 17 Jul 2025 09:57:25 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -67,7 +71,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -88,7 +92,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 11 Jun 2025 12:53:35 GMT
+      - Thu, 17 Jul 2025 09:57:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -98,7 +102,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=334
+      - gfet4t7; dur=399
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -118,7 +122,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.067976435025533036
+              "avgLogprobs": -0.055669178565343223
             }
           ],
           "usageMetadata": {
@@ -139,7 +143,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "T3xJaLOZHfr3_NUPucOfkAg"
+          "responseId": "Bsl4aK2kArW3mNAP3Pv2wA4"
         }
-  recorded_at: Wed, 11 Jun 2025 12:53:35 GMT
+  recorded_at: Thu, 17 Jul 2025 09:57:26 GMT
 recorded_with: VCR 6.3.1

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 28 May 2025 09:09:09 GMT
+      - Wed, 16 Jul 2025 15:35:29 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6836d2b5-9c6"
+      - W/"6877c6c1-9c6"
       Expires:
-      - Wed, 11 Jun 2025 09:37:51 GMT
+      - Thu, 17 Jul 2025 07:25:20 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E0D:1A1E1:ED23E5:EF5D0B:68494C17
+      - A671:3B165:AFAA75:B103CB:6878A307
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 11 Jun 2025 12:43:55 GMT
+      - Thu, 17 Jul 2025 09:43:45 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '379'
+      - '55'
       X-Served-By:
-      - cache-fra-etou8220130-FRA
+      - cache-fra-etou8220116-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1749645836.562219,VS0,VE2
+      - S1752745425.395072,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - fcd21f6afc4c176a4b7b61cacc0afc59093c4ab8
+      - 43ea6963a5cb26166d55def02d240984513bfa67
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 11 Jun 2025 12:43:55 GMT
+  recorded_at: Thu, 17 Jul 2025 09:43:45 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:58 GMT
+      - Thu, 17 Jul 2025 09:43:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -162,15 +164,15 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -178,17 +180,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1749645835-5XhxXI7yjaYEKQVN8ec0\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645835,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This
-        is the license text for Ruby, a programming language created by Yukihiro Matsumoto.
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752745425-baTHJSQNTlGHf8kweqF3\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752745425,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This
+        is a license file for Ruby, written by Yukihiro Matsumoto (also known as Matz).
         It appears to be a modified BSD-style license that outlines the terms and
-        conditions for redistributing and using Ruby software. The key points include:\\n\\n1.
-        You can freely redistribute the source code\\n2. You can modify the software
-        with certain conditions\\n3. You can distribute binaries with specific requirements\\n4.
-        You can incorporate parts of Ruby into other software\\n5. Scripts and library
-        files generated using Ruby do not automatically fall under Ruby's copyright\\n6.
-        The software is provided \\\"AS IS\\\" without warranties\\n\\nThis license
-        grants significant freedom to users while providing some protections for the
-        original author.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":148,\"total_tokens\":736}}"
-  recorded_at: Wed, 11 Jun 2025 12:44:00 GMT
+        conditions for redistributing and using the Ruby programming language software.
+        The key points of the license include:\\n\\n1. You can freely redistribute
+        the source code\\n2. You can modify the software with certain conditions\\n3.
+        You can distribute binaries with specific requirements\\n4. You can include
+        Ruby software in other software\\n5. Scripts and library files generated using
+        Ruby do not automatically fall under Ruby's copyright\\n6. The software is
+        provided \\\"AS IS\\\" without warranties\\n\\nThis is essentially a permissive
+        open-source license that allows for wide use and modification of the Ruby
+        software.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":163,\"total_tokens\":751}}"
+  recorded_at: Thu, 17 Jul 2025 09:43:49 GMT
 recorded_with: VCR 6.3.1
