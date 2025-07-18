@@ -24,15 +24,16 @@ module RubyLLM
           }
         end
 
-        def parse_embedding_response(response, model:)
+        def parse_embedding_response(response, model:, text:)
           data = response.body
           raise Error.new(response, data['message']) if data['message'] && response.status != 200
 
           vectors = data.dig('embeddings', 'float') || []
           input_tokens = data.dig('meta', 'billed_units', 'input_tokens') || 0
 
-          # If we only got one embedding, return it as a single vector
-          vectors = vectors.first if vectors.length == 1
+          # If we only got one embedding AND the input was a single string (not an array),
+          # return it as a single vector
+          vectors = vectors.first if vectors.length == 1 && !text.is_a?(Array)
 
           Embedding.new(vectors:, model:, input_tokens:)
         end
