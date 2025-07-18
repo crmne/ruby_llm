@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:55:23 GMT
+      - Thu, 17 Jul 2025 09:59:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,11 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '334'
+      - '295'
+      Openai-Project:
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '339'
+      - '301'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -77,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhFH8YRQGpksSLi7EU5CFPMcTm0Ko",
+          "id": "chatcmpl-BuFgMrnTJUENgtVwLWZvfeMhDMgUM",
           "object": "chat.completion",
-          "created": 1749646522,
+          "created": 1752746350,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_Zt233j3cpdW8e1c0uIcQCNfW",
+                    "id": "call_iUSheTniJCAoDpKZKvhSvZ99",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -120,23 +122,23 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": null
         }
-  recorded_at: Wed, 11 Jun 2025 12:55:23 GMT
+  recorded_at: Thu, 17 Jul 2025 09:59:10 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_Zt233j3cpdW8e1c0uIcQCNfW","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_Zt233j3cpdW8e1c0uIcQCNfW"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_iUSheTniJCAoDpKZKvhSvZ99","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_iUSheTniJCAoDpKZKvhSvZ99"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -151,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:55:23 GMT
+      - Thu, 17 Jul 2025 09:59:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,11 +165,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '293'
+      - '289'
+      Openai-Project:
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '297'
+      - '293'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -200,6 +204,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1CaEZIOVFMZmFaMnN3WUE2UEpOd2hyZkdBWmVOZCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc0OTY0NjUyMywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogMTYzLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfMzgzNDNhMmY4ZiIKfQo=
-  recorded_at: Wed, 11 Jun 2025 12:55:23 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1CdUZnTjh0V2tyMllKYnZndVZXa3VUMk9NeFY1VyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1Mjc0NjM1MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogMTYzLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 17 Jul 2025 09:59:11 GMT
 recorded_with: VCR 6.3.1

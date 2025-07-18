@@ -194,6 +194,29 @@ class ToolCall < ApplicationRecord
 end
 ```
 
+### Setup RubyLLM.chat yourself
+
+In some scenarios, you need to tap into the power and arguments of `RubyLLM.chat`. For example, if want to use model aliases with alternate providers. Here is a working example:
+
+```ruby
+ class Chat < ApplicationRecord
+    acts_as_chat
+
+    validates :model_id, presence: true
+    validates :provider, presence: true
+
+    after_initialize :set_chat
+
+    def set_chat
+      @chat = RubyLLM.chat(model: model_id, provider:)
+    end
+  end
+
+  # Then in your controller or background job:
+  Chat.new(model_id: 'alias', provider: 'provider_name')
+```
+
+
 ## Basic Usage
 
 Once your models are set up, the `acts_as_chat` helper delegates common `RubyLLM::Chat` methods to your `Chat` model:

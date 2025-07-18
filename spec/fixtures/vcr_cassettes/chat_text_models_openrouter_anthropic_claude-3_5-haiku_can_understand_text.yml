@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:52 GMT
+      - Thu, 17 Jul 2025 09:43:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,26 +34,26 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749645831-0l7sjcck6NMTgWUuwxDB\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645831,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
-        file 'ruby.txt' contains the text: \\\"Ruby is the best.\\\"\\n\\nThe file
-        appears to be a plain text file (mime_type='text/plain') with a simple one-line
-        statement expressing an opinion about the Ruby programming language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":36,\"completion_tokens\":56,\"total_tokens\":92}}"
-  recorded_at: Wed, 11 Jun 2025 12:43:53 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752745421-BjCMnZIGaXegvjetfucO\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752745421,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Based
+        on the file details you've provided, the file 'ruby.txt' contains the text:\\n\\n\\\"Ruby
+        is the best.\\\"\\n\\nThe file is a plain text file (mime type 'text/plain')
+        with a simple one-line statement about the Ruby programming language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":36,\"completion_tokens\":61,\"total_tokens\":97}}"
+  recorded_at: Thu, 17 Jul 2025 09:43:43 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -61,15 +61,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file ''ruby.txt''
-        contains the text: \"Ruby is the best.\"\n\nThe file appears to be a plain
-        text file (mime_type=''text/plain'') with a simple one-line statement expressing
-        an opinion about the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"Based on the file details
+        you''ve provided, the file ''ruby.txt'' contains the text:\n\n\"Ruby is the
+        best.\"\n\nThe file is a plain text file (mime type ''text/plain'') with a
+        simple one-line statement about the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:54 GMT
+      - Thu, 17 Jul 2025 09:43:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -93,26 +93,26 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749645833-X6Wm36UHBtgHjvmsBK7r\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749645833,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
-        file 'ruby.xml' contains an XML document with a single element:\\n\\n```xml\\n<truism>Ruby
-        is the best</truism>\\n```\\n\\nThis is an XML file (mime_type='application/xml')
-        with a custom XML tag <truism> that contains the text \\\"Ruby is the best\\\".
-        The XML structure suggests this is a simple XML document expressing an opinion
-        about Ruby.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":130,\"completion_tokens\":88,\"total_tokens\":218}}"
-  recorded_at: Wed, 11 Jun 2025 12:43:55 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752745423-v4IpnD2ZhEKmjJf4z9H7\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752745423,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"In
+        the file 'ruby.xml', which is an XML file (mime type 'application/xml'), the
+        content is:\\n\\n```xml\\n<truism>Ruby is the best</truism>\\n```\\n\\nThis
+        is a simple XML document with a custom `<truism>` tag containing the text
+        \\\"Ruby is the best\\\". It's structured in XML format, with an opening and
+        closing tag encapsulating the text content.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":135,\"completion_tokens\":94,\"total_tokens\":229}}"
+  recorded_at: Thu, 17 Jul 2025 09:43:45 GMT
 recorded_with: VCR 6.3.1

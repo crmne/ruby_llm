@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:55:02 GMT
+      - Thu, 17 Jul 2025 09:59:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 494e6d542c05e518c9ee76b338ea2d9f
+      - 72685c39935076e4acdb628d1d5b8fda
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -54,22 +54,22 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8ce1a78f-8d88-473d-a046-267c2c7cf11f","object":"chat.completion","created":1749646502,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_2be52a07-79d0-486e-a0f9-a7735b2bfd01","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":172,"completion_tokens":28,"total_tokens":200,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Wed, 11 Jun 2025 12:55:17 GMT
+      string: '{"id":"d0cec8a7-c62c-40d7-ac07-b6d191b7f857","object":"chat.completion","created":1752746340,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_9b8ade28-f9e1-42a6-b512-0141cc51ad70","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":172,"completion_tokens":28,"total_tokens":200,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":172},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
+  recorded_at: Thu, 17 Jul 2025 09:59:05 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_2be52a07-79d0-486e-a0f9-a7735b2bfd01","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_0_2be52a07-79d0-486e-a0f9-a7735b2bfd01"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_9b8ade28-f9e1-42a6-b512-0141cc51ad70","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_0_9b8ade28-f9e1-42a6-b512-0141cc51ad70"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:55:18 GMT
+      - Thu, 17 Jul 2025 09:59:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -96,7 +96,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d155c811ce94f2d9a154d3b1cc2ddbb0
+      - '0783fce57e2e462cf174e9cf06958470'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -112,6 +112,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjgzZmRlNWMwLWNkM2MtNDk2My1hNjk4LTY4OGE1MTdlMDY4YyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDY1MTgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMzEsImNvbXBsZXRpb25fdG9rZW5zIjoyMCwidG90YWxfdG9rZW5zIjoyNTEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTkyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjM5fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDQyNWZwOCJ9
-  recorded_at: Wed, 11 Jun 2025 12:55:22 GMT
+        eyJpZCI6ImJlMDViMWQ2LTY1MWMtNGVmOS04M2VkLTJmZmZhYWRlZmM5ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI3NDYzNDUsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMzEsImNvbXBsZXRpb25fdG9rZW5zIjoyMCwidG90YWxfdG9rZW5zIjoyNTEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTkyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjM5fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDYyM19mcDhfa3ZjYWNoZSJ9
+  recorded_at: Thu, 17 Jul 2025 09:59:10 GMT
 recorded_with: VCR 6.3.1

@@ -93,7 +93,7 @@ module RubyLLM
         end
         response = connection.get 'https://api.parsera.org/v1/llm-specs'
         models = response.body.map { |data| Model::Info.new(data) }
-        models.select { |m| m.provider && m.id }
+        models.reject { |model| model.provider.nil? || model.id.nil? }
       end
 
       def merge_models(provider_models, parsera_models)
