@@ -214,6 +214,7 @@ module RubyLLM
 
           if supports_vision?(model_id)
             modalities[:input] << 'image'
+            modalities[:input] << 'video'
             modalities[:input] << 'pdf'
           end
 

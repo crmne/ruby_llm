@@ -89,9 +89,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(attachment.type).to eq(:image)
     end
 
-    it 'handles videos' do # rubocop:disable RSpec/ExampleLength
+    it 'handles videos' do
       video_path = File.expand_path('../../fixtures/ruby.mp4', __dir__)
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       message = chat.messages.create!(role: 'user', content: 'Video test')
 
       message.attachments.attach(

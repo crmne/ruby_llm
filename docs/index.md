@@ -95,7 +95,7 @@ RubyLLM gives you one beautiful API for all of them. Same interface whether you'
 
 ```ruby
 # Just ask questions
-chat = RubyLLM.chat
+chat = RubyLLM.chat(model: "gemini-2.0-flash")
 chat.ask "What's the best way to learn Ruby?"
 ```
 
