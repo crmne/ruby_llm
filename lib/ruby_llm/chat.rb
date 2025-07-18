@@ -75,12 +75,13 @@ module RubyLLM
       self
     end
 
-    def with_thinking(thinking: true, budget: nil)
-      raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.thinking?
+    def with_thinking(thinking: true, budget: nil, temperature: 1)
+      raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.supports_thinking?
 
       @thinking = thinking
-      @temperature = 1 if thinking # Thinking requires temperature be set to 1
 
+      # Most thinking models require set temperature so force it 1 here, however allowing override via param.
+      @temperature = temperature
       @thinking_budget = budget if budget
 
       self
