@@ -1,0 +1,93 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-4-20250514","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2? Think through this step by step."}]}],"temperature":1,"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":2048}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 05:39:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-07-18T05:38:55Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-07-18T05:39:03Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-07-18T05:38:55Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-07-18T05:38:55Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01ELjQtoVzofUkfT2MG4NnvY","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"thinking","thinking":"This
+        is a very basic arithmetic question. Let me think through it step by step
+        as requested.\n\n2 + 2\n\nThis is asking me to add the number 2 to itself.\n\nStep
+        1: I start with the first number, which is 2.\nStep 2: I need to add 2 to
+        it.\nStep 3: 2 + 2 = 4\n\nI can think of this in several ways:\n- Counting:
+        If I have 2 items, and I add 2 more items, I have 4 items total\n- On a number
+        line: Starting at 2, if I move 2 spaces to the right, I land on 4\n- Basic
+        addition fact: This is one of the fundamental addition facts that 2 + 2 =
+        4","signature":"ErkFCkYIBRgCKkAGD5ERRvwl/3LTfinLm7VjiqqC4SUrYGpZtWlYkibMcIFwHN/sTGd8t4tNZmDLjZrsHp4qLIeQ2ZaXrx/cdekJEgwdoMEt+uVUTc41uWkaDNgGvIHy6w6qICAlXiIwPii9Ia+JG/IRms/CawNXQ8IutTtFXpmc5cE0XCSXq3BEohpEaGHVUwzMbnG2KH5OKqAE/u5S+Nw+AsmuwpxOzd+CnFM6yvqYDBbRCZRDJqlWaffXEmeZp5066Yl9CePSoBqP7MXRbJE35kvwrfZZXuwFH88Xmkxv7WOZkL2L8keUXX9LamLnxrQthqSqivuhskIJUiup5gsUTQUztKOztDxcwEfGDOeBIVeZ8GRqXusIy2cZxQNF87fPvj712KyXkrUej05qAAmyLLlRF2U+e0Rmuq2uKVqifmk6uvL+qM/5nVxknMAlBgU3h8wPR0NYQdVGC8Y6qi+IDn5vahBSADCnraBXv/PeY/dLzyIq1WsBFbnOriSIYNhVhulBlGm6e3dIk6L54j1xT41d5RxFXYXZi5ROSAgyapLN0eX/XI+m6Fd09Y953n0YSSKlBiEJvet6ZB/9PD06oQf7zWrQ4Edqm0QBc97UZjPVZp/7aAbpfkSmYq3JkyT0YLUGbDOvEQTdaJLN5dlPkB5fmihZKA2DrqhOrI4+/bBtj4wO66M3wvnQqIBJkivzHVOqwJz4eJ7ZjZFw8dHTmb7/lEY8f3dn42kNwfY735j7vvrvpHCXw5ST3h4fW88/IHymeWtr0U7ohFMbzhxo2vY7nFah5wHd7RUqEOwtSlDvicXj4O0tvp/0cITCn6dqYCAk1fh1EBiw+OfLLRypTfFGSH5KV0Wb3TF3m944/KeSx8Jetmd2xVSBEwfhYolr9UacGENv8eoQAvMm1hMM5lBC+DGTLJZErRgB"},{"type":"text","text":"I''ll
+        work through this step by step:\n\n**Step 1:** Start with the first number:
+        2\n\n**Step 2:** Add the second number: 2\n\n**Step 3:** Combine them: 2 +
+        2\n\n**Step 4:** Calculate the sum: 4\n\nSo 2 + 2 = 4.\n\nYou can think of
+        this as having 2 objects, then adding 2 more objects, which gives you 4 objects
+        total."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":51,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":298,"service_tier":"standard"}}'
+  recorded_at: Fri, 18 Jul 2025 05:39:01 GMT
+recorded_with: VCR 6.3.1

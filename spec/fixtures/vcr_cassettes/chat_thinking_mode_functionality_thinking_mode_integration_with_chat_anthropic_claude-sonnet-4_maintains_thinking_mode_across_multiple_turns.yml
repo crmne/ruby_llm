@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-4-20250514","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        5 + 3?"}]}],"temperature":1,"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":2048}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 05:39:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-07-18T05:39:03Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-07-18T05:39:03Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-07-18T05:39:03Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-07-18T05:39:03Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01BzuwUNCKCLie4m3CUR9sRr","type":"message","role":"assistant","model":"claude-sonnet-4-20250514","content":[{"type":"thinking","thinking":"This
+        is a simple addition problem. 5 + 3 = 8.","signature":"EtUBCkYIBRgCKkBTKgGEUioRSsJoxhuzo1AT0IuxJmwIxAkRRNe15z10h5e8CMTYppvz7xt2wwXONyqpRoWYmGBQfSlspsv8kJpBEgzBiQiuQU2am3MN3YQaDJow1tAgVZRXRLLi3CIw67uUejmUfdAYNzynxnnHwd6Ba6C4OgDvQ8yqX7Au6xBHmHFYDhUYzbinIo/WSGLjKj0jXruNlLkGAoGxJ0IGvpuX0979sQApiBQaoBJFXMoa4ryX9E77kbLyprbcwg76uE6yCTbh41h0yxU/G+/BGAE="},{"type":"text","text":"5
+        + 3 = 8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":44,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":39,"service_tier":"standard"}}'
+  recorded_at: Fri, 18 Jul 2025 05:39:03 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-4-20250514","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        5 + 3?"}]},{"role":"assistant","content":[{"type":"text","text":"5 + 3 = 8"}]},{"role":"user","content":[{"type":"text","text":"Now
+        multiply that result by 2"}]}],"temperature":1,"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":2048}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 05:39:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '30000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-07-18T05:39:14Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-07-18T05:39:15Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-07-18T05:39:05Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '38000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-07-18T05:39:14Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ18wMThabnY0d1BGYWtWeHJFaUs5Yjd2a3ciLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNC0yMDI1MDUxNCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrZWQgbWUgdG8gbXVsdGlwbHkgdGhlIHJlc3VsdCBmcm9tIHRoZSBwcmV2aW91cyBjYWxjdWxhdGlvbiBieSAyLiBUaGUgcHJldmlvdXMgcmVzdWx0IHdhcyA4LCBzbyBJIG5lZWQgdG8gY2FsY3VsYXRlIDggw5cgMi5cblxuOCDDlyAyID0gMTYiLCJzaWduYXR1cmUiOiJFcndDQ2tZSUJSZ0NLa0J4TGdyNWdYVTVyOEJJN000cXVkUFRsdmdUaTBheGFFRWZLdmttaWxkMFQxYjBCajB6cHB6UUc4WE1GU1gyOC91WldnL21QM1UyK1JGZy9PRmpON2RjRWd5ZW0xMDMvbXg1UENhN1QrUWFESGEvVk5oR2RBd2ZwMEc1ZFNJd1lKdU5MbXNBMHptR01IZy8wNjFpZWVxcXRiN3lKQVkxSGE0NU5aVElDZ1M5SkQ1NC9lQ2dJMnIvVlJxckZQbHdLcU1CWDltenU3UU12Q3pXNWJrMjhPRVp5MDA4TS9LSVVqZkZNWHZlSE1DbzFMWWJUaWxFLzBPbEJ5RFdpRVNQRzVPVTE5R3Q3SWpqT3dwUkFSaERGcnNJSTJiNE9WeHhXMzdZc0x2RG1vclFodkdxYTBHQWFYNjQ5dUVFNWkxZExzQURUdTN4a3lWZGRsZGJKeXYyQ290TllNR0JBNW9nNk1FRlpNNVlxUlJCcmdSUlBpVDNFaUNZK2R4TWxKRjRmejZ1U3lHeFRvaktMTEM5L211c0NrYitWQ09vZ2hnQiJ9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiOCDDlyAyID0gMTYifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjY3LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJvdXRwdXRfdG9rZW5zIjo2Niwic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
+  recorded_at: Fri, 18 Jul 2025 05:39:14 GMT
+recorded_with: VCR 6.3.1

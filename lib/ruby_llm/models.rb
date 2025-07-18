@@ -57,7 +57,7 @@ module RubyLLM
             id: model_id,
             name: model_id.gsub('-', ' ').capitalize,
             provider: provider.slug,
-            capabilities: %w[function_calling streaming],
+            capabilities: %w[function_calling streaming thinking],
             modalities: { input: %w[text image], output: %w[text] },
             metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
           )

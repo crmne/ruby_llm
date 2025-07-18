@@ -1,0 +1,88 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-7-sonnet-20250219","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2? Think through this step by step."}]}],"temperature":1,"stream":false,"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":2048}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 05:38:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '20000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '20000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-07-18T05:38:47Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '8000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-07-18T05:38:51Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-07-18T05:38:47Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '28000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '28000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-07-18T05:38:47Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01H8phMkgUJm2jRb6mjh1TyE","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"thinking","thinking":"This
+        is a very basic arithmetic problem. Let''s solve it step by step.\n\n2 + 2
+        means I need to add the number 2 with the number 2.\n\nTo add these numbers,
+        I can think of it as:\n- Starting with 2\n- Then adding 2 more\n\nSo:\n2 +
+        2 = 4\n\nThat''s the answer: 4.","signature":"ErUBCkYIBRgCIkDYEWR6TDzVtqVJyMdFWFx9CUzT61wYklKVzM6g2GYLr0biNf88UKUY851WNn5+NWQ5BImkpVnBXuPrXYTLXLeoEgwajyIH8En4csCcQXMaDLvR03WVgYn4llf4SyIw9obvmcjnLQiqW1pJbZAYyBVChfUdu+4geQF/17LMVmH0j5hHgJOFlxeJRkKixyZQKh3F2jQ9AjbxG8PVSclPOFIi/2Ckm7Pgy8dzCm/fNxgC"},{"type":"text","text":"To
+        solve 2 + 2, I''ll break it down:\n\n1. I need to add the number 2 with another
+        number 2\n2. Addition means combining quantities together\n3. If I have 2
+        items and get 2 more items, I''ll have a total of 4 items\n4. Therefore, 2
+        + 2 = 4\n\nThe answer is 4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":51,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":190,"service_tier":"standard"}}'
+  recorded_at: Fri, 18 Jul 2025 05:38:50 GMT
+recorded_with: VCR 6.3.1
