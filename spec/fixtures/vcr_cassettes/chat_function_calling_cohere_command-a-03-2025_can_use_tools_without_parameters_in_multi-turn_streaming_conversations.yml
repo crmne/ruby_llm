@@ -1,0 +1,418 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 1d2de96e1634635462ed66ff3e136c76
+      Date:
+      - Fri, 18 Jul 2025 06:08:22 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '258'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"836c6ce7-775c-4997-b2d9-acb4202d1ba7","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"I"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" will"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" use"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" best"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"language"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"learn"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" tool"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" find"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" out"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" what"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" best"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" language"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" learn"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" is"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"."}}}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_x9mcjavy3gcj","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":28,"output_tokens":31},"tokens":{"input_tokens":1471,"output_tokens":60}}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 18 Jul 2025 06:08:23 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","tool_calls":[{"id":"best_language_to_learn_x9mcjavy3gcj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_x9mcjavy3gcj","content":"Ruby"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 9a35b7a4c5896d9a092f052c507162af
+      Date:
+      - Fri, 18 Jul 2025 06:08:23 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '37'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"3baeaa1b-e764-4543-bcde-f33601330fe6","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" "}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":30,"end":35,"text":"Ruby.","sources":[{"type":"tool","id":"best_language_to_learn_x9mcjavy3gcj:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":0}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":31,"output_tokens":8},"tokens":{"input_tokens":1556,"output_tokens":20}}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 18 Jul 2025 06:08:24 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","tool_calls":[{"id":"best_language_to_learn_x9mcjavy3gcj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_x9mcjavy3gcj","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"The
+        best language to learn is Ruby."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 29f1b790d54524adf8386899d03e3b51
+      Date:
+      - Fri, 18 Jul 2025 06:08:24 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '40'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"7b8ef6db-5029-47d8-a326-c52b9e12a830","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_c3bdq4cwh7sp","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":52,"output_tokens":8},"tokens":{"input_tokens":1584,"output_tokens":35}}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 18 Jul 2025 06:08:24 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","tool_calls":[{"id":"best_language_to_learn_x9mcjavy3gcj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_x9mcjavy3gcj","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"The
+        best language to learn is Ruby."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]},{"role":"assistant","tool_calls":[{"id":"best_language_to_learn_c3bdq4cwh7sp","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_c3bdq4cwh7sp","content":"Ruby"}],"temperature":0.7,"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 9027b118aa30991b58ecbc536fa7bdc5
+      Date:
+      - Fri, 18 Jul 2025 06:08:25 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '39'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"7b0aa765-fe46-4689-bb10-eccead5aca98","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":55,"output_tokens":8},"tokens":{"input_tokens":1669,"output_tokens":10}}}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 18 Jul 2025 06:08:25 GMT
+recorded_with: VCR 6.3.1
+...
