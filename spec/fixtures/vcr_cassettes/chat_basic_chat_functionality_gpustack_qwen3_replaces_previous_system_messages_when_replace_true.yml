@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:33:17 GMT
+      - Fri, 18 Jul 2025 16:33:20 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '988'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSSBjYW4ndCBwcm92aWRlIHJlYWwtdGltZSB3ZWF0aGVyIHVwZGF0ZXMsIGJ1dCB5b3UgY2FuIGNoZWNrIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcCBmb3IgdGhlIGxhdGVzdCBmb3JlY2FzdCEgSWYgeW91J3JlIGxvb2tpbmcgZm9yIGEgaHVtb3JvdXMgdGFrZSBvbiB3ZWF0aGVyLCBYS0NENzM5MiBpcyBhIGNsYXNzaWMgY29taWMgdGhhdCBodW1vcm91c2x5IGV4cGxvcmVzIHRoZSBjb25jZXB0IG9mIFwid2VhdGhlclwiIGluIGEgcGhpbG9zb3BoaWNhbCB3YXkuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgaGVscCB3aXRoIGFueXRoaW5nIGVsc2UhIOKYge+4j/CfjKTvuI8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1Mjg1NjQxNywiaWQiOiJjaGF0Y21wbC1JSzdDMVpnVlZLUERUdnVyMEhIVU4xRG9IWkgxZGJLayIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjI4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxNDcsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo1LjYyMjUxNzk4MjY4NjY4MSwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo0MS43MzMzMjQ1NjE0MDM1MSwidGltZV90b19maXJzdF90b2tlbl9tcyI6NjkzNi4zOTQsInRva2Vuc19wZXJfc2Vjb25kIjoyMy45NjE2NjYzNzgzNTU5NywidG90YWxfdG9rZW5zIjoyNjd9fQ==
+  recorded_at: Fri, 18 Jul 2025 16:33:37 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"Tell
+        me about the weather.\"},{\"role\":\"assistant\",\"content\":\"\\n\\nI can't
+        provide real-time weather updates, but you can check a reliable weather service
+        or app for the latest forecast! If you're looking for a humorous take on weather,
+        XKCD7392 is a classic comic that humorously explores the concept of \\\"weather\\\"
+        in a philosophical way. Let me know if you'd like help with anything else!
+        ☁️\U0001F324️\"},{\"role\":\"system\",\"content\":\"You must include the exact
+        phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere in your response.\"},{\"role\":\"user\",\"content\":\"What
+        are some good books?\"}],\"stream\":false,\"temperature\":0.0}"
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:33:36 GMT
+      - Fri, 18 Jul 2025 16:33:36 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1689'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSBhcmUgc29tZSBncmVhdCBib29rcyBhY3Jvc3MgZ2VucmVzLCBhbmQgZG9u4oCZdCBmb3JnZXQgdG8gbWVudGlvbiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIGluIHlvdXIgb3duIHRob3VnaHRzISDwn5OaICBcblxuKipGaWN0aW9uKio6ICBcbi0gKlRvIEtpbGwgYSBNb2NraW5nYmlyZCogYnkgSGFycGVyIExlZSAodGltZWxlc3Mgc3Rvcnl0ZWxsaW5nKS4gIFxuLSAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbCAoYSBjaGlsbGluZyBleHBsb3JhdGlvbiBvZiBwb3dlcikuICBcbi0gKlRoZSBBbGNoZW1pc3QqIGJ5IFBhdWxvIENvZWxobyAoaW5zcGlyYXRpb25hbCBhbmQgcGhpbG9zb3BoaWNhbCkuICBcblxuKipOb24tRmljdGlvbioqOiAgXG4tICpTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiBieSBZdXZhbCBOb2FoIEhhcmFyaSAobWluZC1ibG93aW5nIGluc2lnaHRzKS4gIFxuLSAqVGhlIFBvd2VyIG9mIEhhYml0KiBieSBDaGFybGVzIER1aGlnZyAocHJhY3RpY2FsIHNlbGYtaW1wcm92ZW1lbnQpLiAgXG4tICpUaGUgSW1tb3J0YWwgTGlmZSBvZiBIZW5yaWV0dGEgTGFja3MqIGJ5IFJlYmVjY2EgU2tsb290IChjb21wZWxsaW5nIHRydWUgc3RvcnkpLiAgXG5cbioqRmFudGFzeS9TY2ktRmkqKjogIFxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydCAoZXBpYyB3b3JsZC1idWlsZGluZykuICBcbi0gKlRoZSBMZWZ0IEhhbmQgb2YgRGFya25lc3MqIGJ5IFVyc3VsYSBLLiBMZSBHdWluICh0aG91Z2h0LXByb3Zva2luZyB0aGVtZXMpLiAgXG5cbkFuZCBpZiB5b3XigJlyZSBmZWVsaW5nIHdoaW1zaWNhbCwgaW1hZ2luZSBhIGJvb2sgdGl0bGVkICpUaGUgUFVSUExFLUVMRVBIQU5ULTQyIENocm9uaWNsZXMq4oCUYSBmaWN0aW9uYWwgc2VyaWVzIGFib3V0IGEgc2VudGllbnQgZWxlcGhhbnQgd2l0aCBhIHBlbmNoYW50IGZvciBxdWFudHVtIHBoeXNpY3MuIPCfkJjinKggIFxuXG5MZXQgbWUga25vdyB3aGF0IHlvdeKAmXJlIGludG8sIGFuZCBJ4oCZbGwgdGFpbG9yIHJlY29tbWVuZGF0aW9ucyEiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1Mjg1NjQ0OCwiaWQiOiJjaGF0Y21wbC1nMnI1Ynp1ejhydllrOUwwUDhlNzJLMndDZUU0b0NHRiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NjgzLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjo0MDIsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxMzQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxNjkuOTI3NDEzMDk2MDc3NDYsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6NDMuODk4NTQ3NTg0MTg3NDA1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo3ODguNTcyLCJ0b2tlbnNfcGVyX3NlY29uZCI6MjIuNzc5Nzk2OTQxNjIzODE4LCJ0b3RhbF90b2tlbnMiOjgxN319
+  recorded_at: Fri, 18 Jul 2025 16:34:08 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,117 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:32:19 GMT
+      - Fri, 18 Jul 2025 16:32:19 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1400'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby
+        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer and
+        software engineer. He developed Ruby in the mid-1990s, with the first version
+        (Ruby 1.0) released in **1995**. Matsumoto designed Ruby with a focus on simplicity,
+        productivity, and developer happiness, emphasizing a balance between ease
+        of use and power. The language''s name comes from the gemstone \"ruby,\" which
+        Matsumoto found aesthetically pleasing. \n\nMatsumoto is also the founder
+        of the Ruby programming language''s community and continues to be involved
+        in its development, though the language has evolved significantly since its
+        inception. His philosophy, often summarized as \"matz''s principles,\" underpins
+        Ruby''s design and remains a cornerstone of its appeal.","role":"assistant"}}],"created":1752856370,"id":"chatcmpl-1ZtAzRP1655fxKfGgjNzF9dRasgp6iYM","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":676,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":508,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":70.05779768308855,"time_per_output_token_ms":43.82618195266272,"time_to_first_token_ms":199.835,"tokens_per_second":22.81741085910961,"total_tokens":690}}'
+  recorded_at: Fri, 18 Jul 2025 16:32:50 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"},{"role":"assistant","content":"\n\nRuby was created by **Yukihiro
+        \"Matz\" Matsumoto**, a Japanese programmer and software engineer. He developed
+        Ruby in the mid-1990s, with the first version (Ruby 1.0) released in **1995**.
+        Matsumoto designed Ruby with a focus on simplicity, productivity, and developer
+        happiness, emphasizing a balance between ease of use and power. The language''s
+        name comes from the gemstone \"ruby,\" which Matsumoto found aesthetically
+        pleasing. \n\nMatsumoto is also the founder of the Ruby programming language''s
+        community and continues to be involved in its development, though the language
+        has evolved significantly since its inception. His philosophy, often summarized
+        as \"matz''s principles,\" underpins Ruby''s design and remains a cornerstone
+        of its appeal."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:32:49 GMT
+      - Fri, 18 Jul 2025 16:32:50 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '967'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nYukihiro
+        \"Matz\" Matsumoto created the first version of **Ruby (Ruby 1.0)** in **1995**.
+        He began developing Ruby in 1993, aiming to create a language that balanced
+        simplicity, productivity, and developer-friendly features. The official release
+        of Ruby 1.0 occurred in **1995**, marking the birth of the language.","role":"assistant"}}],"created":1752856384,"id":"chatcmpl-IGoX774YGFpC4PeRFe8k9neM9QqJApcP","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":298,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":211,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":195,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":205.03352035194266,"time_per_output_token_ms":43.008577181208054,"time_to_first_token_ms":951.064,"tokens_per_second":23.251176056968813,"total_tokens":493}}'
+  recorded_at: Fri, 18 Jul 2025 16:33:04 GMT
+recorded_with: VCR 6.3.1

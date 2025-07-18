@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:35:43 GMT
+      - Fri, 18 Jul 2025 16:35:43 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '796'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-vq1xCRlSdiNGfdCfWWQ51KxrcClboKOx","type":"function"}]}}],"created":1752856549,"id":"chatcmpl-p4ZbAvHVJz1xV7yzkm5vcj4TiwjGcQqw","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":110,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":89,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":249.92033789229683,"time_per_output_token_ms":41.75309090909091,"time_to_first_token_ms":800.255,"tokens_per_second":23.95032267616551,"total_tokens":310}}'
+  recorded_at: Fri, 18 Jul 2025 16:35:49 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-vq1xCRlSdiNGfdCfWWQ51KxrcClboKOx","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-vq1xCRlSdiNGfdCfWWQ51KxrcClboKOx"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:35:48 GMT
+      - Fri, 18 Jul 2025 16:35:48 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '687'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        best language to learn is Ruby.","role":"assistant"}}],"created":1752856556,"id":"chatcmpl-9RT05dpeUuwOJz63Gr3ytgYnJkADbt4d","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":155,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":143,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":226,"prompt_tokens_details":{"cached_tokens":199},"prompt_tokens_per_second":1144.6689323682997,"time_per_output_token_ms":42.14805161290323,"time_to_first_token_ms":197.437,"tokens_per_second":23.72588913917576,"total_tokens":381}}'
+  recorded_at: Fri, 18 Jul 2025 16:35:56 GMT
+recorded_with: VCR 6.3.1
