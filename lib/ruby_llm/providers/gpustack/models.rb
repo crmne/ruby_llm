@@ -14,7 +14,7 @@ module RubyLLM
         def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           items = response.body['items'] || []
           items.map do |model|
-            ModelInfo.new(
+            Model::Info.new(
               id: model['name'],
               created_at: model['created_at'] ? Time.parse(model['created_at']) : nil,
               display_name: model['source'] + '/' + model['name'],
