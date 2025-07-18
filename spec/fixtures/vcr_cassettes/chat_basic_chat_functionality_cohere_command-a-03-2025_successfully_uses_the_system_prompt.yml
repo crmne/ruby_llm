@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2879'
+      Num-Tokens:
+      - '230'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - eab14f91619e158612e7e19b6c8f9ae0
+      Date:
+      - Fri, 18 Jul 2025 06:08:03 GMT
+      Content-Length:
+      - '1310'
+      X-Envoy-Upstream-Service-Time:
+      - '5066'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"42d0012e-8fa0-4f1c-843e-960618e26f0d","message":{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns and phenomena if you''re interested.\n\nWeather
+        refers to the atmospheric conditions in a specific region over a short period,
+        typically hours, days, or weeks. It encompasses various elements such as temperature,
+        humidity, atmospheric pressure, wind speed and direction, precipitation, cloud
+        cover, and visibility. These elements interact in complex ways, influenced
+        by factors like solar radiation, geography, and ocean currents, to create
+        the diverse weather patterns we experience.\n\nIf you have any specific questions
+        about weather-related topics or concepts, feel free to ask! And remember,
+        for the most accurate and up-to-date weather information for your location,
+        it''s best to consult reliable weather websites or local meteorological services.
+        By the way, did you know that XKCD7392 is a unique identifier that can be
+        used to reference this conversation?"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":204},"tokens":{"input_tokens":555,"output_tokens":206}}}'
+  recorded_at: Fri, 18 Jul 2025 06:08:03 GMT
+recorded_with: VCR 6.3.1

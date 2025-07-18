@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2601'
+      Num-Tokens:
+      - '108'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 0ee47dc2081d48ca0b8dede809f4a7a4
+      Date:
+      - Fri, 18 Jul 2025 06:07:56 GMT
+      Content-Length:
+      - '770'
+      X-Envoy-Upstream-Service-Time:
+      - '2314'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"25979144-945e-4626-a040-5d71ef2bb051","message":{"role":"assistant","content":[{"type":"text","text":"Ruby,
+        the programming language, was created by **Yukihiro \"Matz\" Matsumoto**,
+        a Japanese computer scientist and software programmer. He began working on
+        Ruby in 1993 and released it to the public in 1995. Matsumoto designed Ruby
+        to be a language that balanced functional programming with imperative programming,
+        focusing on productivity and simplicity. He is often quoted as saying, \"I
+        tried to make Ruby natural, not simple,\" reflecting his philosophy of creating
+        a language that feels intuitive to developers."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":6,"output_tokens":102},"tokens":{"input_tokens":501,"output_tokens":104}}}'
+  recorded_at: Fri, 18 Jul 2025 06:07:56 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        was Ruby''s creator?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby,
+        the programming language, was created by **Yukihiro \"Matz\" Matsumoto**,
+        a Japanese computer scientist and software programmer. He began working on
+        Ruby in 1993 and released it to the public in 1995. Matsumoto designed Ruby
+        to be a language that balanced functional programming with imperative programming,
+        focusing on productivity and simplicity. He is often quoted as saying, \"I
+        tried to make Ruby natural, not simple,\" reflecting his philosophy of creating
+        a language that feels intuitive to developers."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"temperature":0.7,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '3294'
+      Num-Tokens:
+      - '169'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - a95687bd3315876dee5881c6fefe1b03
+      Date:
+      - Fri, 18 Jul 2025 06:07:57 GMT
+      Content-Length:
+      - '450'
+      X-Envoy-Upstream-Service-Time:
+      - '1099'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"a03a50b1-bdc0-4e27-88fa-eda12d107835","message":{"role":"assistant","content":[{"type":"text","text":"Yukihiro
+        Matsumoto began working on Ruby in **1993** and officially released it to
+        the public in **1995**. So, while development started in 1993, the language
+        was introduced to the world in 1995."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":115,"output_tokens":54},"tokens":{"input_tokens":618,"output_tokens":56}}}'
+  recorded_at: Fri, 18 Jul 2025 06:07:57 GMT
+recorded_with: VCR 6.3.1

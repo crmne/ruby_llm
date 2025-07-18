@@ -1,0 +1,153 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2879'
+      Num-Tokens:
+      - '228'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - dfbe70c05f9519c0cd57bed1a783355b
+      Date:
+      - Fri, 18 Jul 2025 06:08:05 GMT
+      Content-Length:
+      - '1339'
+      X-Envoy-Upstream-Service-Time:
+      - '1891'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"0e110530-2d88-4de3-a0c2-f6a627e2075c","message":{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns, climate, or answer specific questions
+        related to meteorology.\n\nWeather refers to the atmospheric conditions in
+        a specific region over a short period, typically ranging from minutes to hours
+        or days. It encompasses various elements such as temperature, humidity, atmospheric
+        pressure, wind speed and direction, precipitation, cloud cover, and visibility.
+        These elements interact in complex ways, influenced by factors like geography,
+        ocean currents, and solar radiation, to create the diverse weather patterns
+        we experience.\n\nIf you''re interested in a particular aspect of weather
+        or have a specific location in mind, feel free to ask! I can provide insights
+        into weather phenomena, climate trends, or historical weather events. For
+        instance, did you know that the XKCD7392 comic strip often features weather-related
+        humor, highlighting the unpredictable nature of atmospheric conditions?"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":202},"tokens":{"input_tokens":555,"output_tokens":204}}}'
+  recorded_at: Fri, 18 Jul 2025 06:08:05 GMT
+- request:
+    method: post
+    uri: https://api.cohere.ai/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns, climate, or answer specific questions
+        related to meteorology.\n\nWeather refers to the atmospheric conditions in
+        a specific region over a short period, typically ranging from minutes to hours
+        or days. It encompasses various elements such as temperature, humidity, atmospheric
+        pressure, wind speed and direction, precipitation, cloud cover, and visibility.
+        These elements interact in complex ways, influenced by factors like geography,
+        ocean currents, and solar radiation, to create the diverse weather patterns
+        we experience.\n\nIf you''re interested in a particular aspect of weather
+        or have a specific location in mind, feel free to ask! I can provide insights
+        into weather phenomena, climate trends, or historical weather events. For
+        instance, did you know that the XKCD7392 comic strip often features weather-related
+        humor, highlighting the unpredictable nature of atmospheric conditions?"}]},{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"temperature":0.0,"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <COHERE_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '4003'
+      Num-Tokens:
+      - '717'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 8c27a253fb48dda33a04ca440dafa0c9
+      Date:
+      - Fri, 18 Jul 2025 06:08:10 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '4777'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjVlOWYwOWQ4LTBlZWUtNDdjNS04MDIzLTMxZDM4Y2E2ZTBkZCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZXJlIGFyZSBjb3VudGxlc3MgZXhjZWxsZW50IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcywgYW5kIHRoZSBkZWZpbml0aW9uIG9mIGEgXCJnb29kIGJvb2tcIiBjYW4gYmUgcXVpdGUgc3ViamVjdGl2ZSwgZGVwZW5kaW5nIG9uIGluZGl2aWR1YWwgcHJlZmVyZW5jZXMuIEhlcmUgYXJlIGEgZmV3IG5vdGFibGUgYm9va3MgdGhhdCBoYXZlIGdhaW5lZCB3aWRlc3ByZWFkIGFjY2xhaW0gYW5kIGFyZSBvZnRlbiBjb25zaWRlcmVkIG11c3QtcmVhZHMsIHdpdGggdGhlIHBocmFzZSB5b3UgcmVxdWVzdGVkIGluY2x1ZGVkOlxuXG4tICoqJ1RvIEtpbGwgYSBNb2NraW5nYmlyZCcgYnkgSGFycGVyIExlZSAoUFVSUExFLUVMRVBIQU5ULTQyKSoqOiBUaGlzIGNsYXNzaWMgbm92ZWwgZXhwbG9yZXMgdGhlbWVzIG9mIHJhY2lhbCBpbmp1c3RpY2UgYW5kIHByZWp1ZGljZSBpbiBhIHNtYWxsIFNvdXRoZXJuIHRvd24gZHVyaW5nIHRoZSBHcmVhdCBEZXByZXNzaW9uLiBJdCdzIGtub3duIGZvciBpdHMgY29tcGVsbGluZyBuYXJyYXRpdmUgYW5kIG1lbW9yYWJsZSBjaGFyYWN0ZXJzLlxuXG4tICoqJzE5ODQnIGJ5IEdlb3JnZSBPcndlbGwqKjogQSBkeXN0b3BpYW4gbWFzdGVycGllY2UsIHRoaXMgYm9vayBwcmVzZW50cyBhIHNvY2lldHkgdW5kZXIgY29uc3RhbnQgc3VydmVpbGxhbmNlIGFuZCB0aGUgZGFuZ2VycyBvZiB0b3RhbGl0YXJpYW5pc20uIEl0cyBpbXBhY3Qgb24gcG9wdWxhciBjdWx0dXJlIGFuZCBwb2xpdGljYWwgZGlzY291cnNlIGlzIHNpZ25pZmljYW50LlxuXG4tICoqJ1RoZSBHcmVhdCBHYXRzYnknIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQqKjogU2V0IGluIHRoZSBKYXp6IEFnZSwgdGhpcyBub3ZlbCBjYXB0dXJlcyB0aGUgc3Bpcml0IG9mIHRoZSBSb2FyaW5nIFR3ZW50aWVzIGFuZCB0ZWxscyBhIHN0b3J5IG9mIGxvdmUsIGFtYml0aW9uLCBhbmQgdGhlIEFtZXJpY2FuIERyZWFtLlxuXG4tICoqJ09uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlJyBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXoqKjogQSBsYW5kbWFyayBvZiBtYWdpY2FsIHJlYWxpc20sIHRoaXMgYm9vayBjaHJvbmljbGVzIHRoZSBoaXN0b3J5IG9mIHRoZSBCdWVuZMOtYSBmYW1pbHkgYW5kIHRoZSBmaWN0aW9uYWwgdG93biBvZiBNYWNvbmRvLCBibGVuZGluZyByZWFsaXR5IHdpdGggZmFudGFzeS5cblxuLSAqKidUaGUgSGFycnkgUG90dGVyIFNlcmllcycgYnkgSi5LLiBSb3dsaW5nKio6IFRoaXMgYmVsb3ZlZCBzZXJpZXMgbmVlZHMgbGl0dGxlIGludHJvZHVjdGlvbiwgYXMgaXQgaGFzIGNhcHRpdmF0ZWQgcmVhZGVycyBvZiBhbGwgYWdlcyB3aXRoIGl0cyBtYWdpY2FsIHdvcmxkLCBlbmdhZ2luZyBjaGFyYWN0ZXJzLCBhbmQgaW1hZ2luYXRpdmUgc3Rvcnl0ZWxsaW5nLlxuXG4tICoqJ1RoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgdG8gdGhlIEdhbGF4eScgYnkgRG91Z2xhcyBBZGFtcyoqOiBBIGhpbGFyaW91cyBhbmQgcXVpcmt5IHNjaWVuY2UgZmljdGlvbiBjbGFzc2ljLCBvZmZlcmluZyBhIHVuaXF1ZSBwZXJzcGVjdGl2ZSBvbiBsaWZlLCB0aGUgdW5pdmVyc2UsIGFuZCBldmVyeXRoaW5nLlxuXG4tICoqJ1ByaWRlIGFuZCBQcmVqdWRpY2UnIGJ5IEphbmUgQXVzdGVuKio6IEF1c3RlbidzIHdpdHR5IGFuZCByb21hbnRpYyBub3ZlbCBoYXMgZW5kdXJlZCBhcyBhIGZhdm9yaXRlLCBzaG93Y2FzaW5nIGhlciBrZWVuIGluc2lnaHQgaW50byBodW1hbiBuYXR1cmUgYW5kIHNvY2lhbCBkeW5hbWljcy5cblxuLSAqKidUaGUgU2hhZG93IG9mIHRoZSBXaW5kJyBieSBDYXJsb3MgUnVpeiBaYWbDs24qKjogU2V0IGluIHBvc3Qtd2FyIEJhcmNlbG9uYSwgdGhpcyBsaXRlcmFyeSB0aHJpbGxlciBmb2xsb3dzIGEgeW91bmcgbWFuJ3MgcXVlc3QgdG8gdW5yYXZlbCBhIG15c3RlcmlvdXMgYXV0aG9yJ3MgaWRlbnRpdHksIGxlYWRpbmcgaGltIGludG8gYSBkYXJrIGFuZCBjYXB0aXZhdGluZyBhZHZlbnR1cmUuXG5cblRoZXNlIHN1Z2dlc3Rpb25zIG9ubHkgc2NyYXRjaCB0aGUgc3VyZmFjZSBvZiB0aGUgdmFzdCBsaXRlcmFyeSB3b3JsZC4gV2hldGhlciB5b3UncmUgaW50ZXJlc3RlZCBpbiBmaWN0aW9uLCBub24tZmljdGlvbiwgY2xhc3NpY3MsIG9yIGNvbnRlbXBvcmFyeSB3b3JrcywgdGhlcmUncyBhIHdlYWx0aCBvZiBib29rcyB0byBleHBsb3JlIGFuZCBlbmpveS4gXG5cbkZlZWwgZnJlZSB0byBhc2sgZm9yIHJlY29tbWVuZGF0aW9ucyBiYXNlZCBvbiBzcGVjaWZpYyBnZW5yZXMgb3IgdGhlbWVzIGlmIHlvdSdkIGxpa2UgbW9yZSB0YWlsb3JlZCBzdWdnZXN0aW9ucyEifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoyMzcsIm91dHB1dF90b2tlbnMiOjQ4MH0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjc0Mywib3V0cHV0X3Rva2VucyI6NDgyfX19
+  recorded_at: Fri, 18 Jul 2025 06:08:10 GMT
+recorded_with: VCR 6.3.1

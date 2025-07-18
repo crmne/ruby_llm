@@ -7,13 +7,12 @@ RSpec.describe RubyLLM::Embedding do
 
   let(:test_text) { "Ruby is a programmer's best friend" }
   let(:test_texts) { %w[Ruby Python JavaScript] }
-  let(:test_dimensions) { 768 }
-
-  embedding_models = %w[text-embedding-004 text-embedding-3-small].freeze
 
   describe 'basic functionality' do
-    embedding_models.each do |model|
-      provider = RubyLLM::Models.provider_for(model).slug
+    EMBEDDINGS_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      dimensions = model_info[:default_dimensions]
       it "#{provider}/#{model} can handle a single text" do # rubocop:disable RSpec/MultipleExpectations
         embedding = RubyLLM.embed(test_text, model: model)
         expect(embedding.vectors).to be_an(Array)
@@ -23,9 +22,9 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle a single text with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations
-        embedding = RubyLLM.embed(test_text, model: model, dimensions: test_dimensions)
+        embedding = RubyLLM.embed(test_text, model: model, dimensions: dimensions)
         expect(embedding.vectors).to be_an(Array)
-        expect(embedding.vectors.length).to eq(test_dimensions)
+        expect(embedding.vectors.length).to eq(dimensions)
       end
 
       it "#{provider}/#{model} can handle multiple texts" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
@@ -38,10 +37,10 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations
-        embeddings = RubyLLM.embed(test_texts, model: model, dimensions: test_dimensions)
+        embeddings = RubyLLM.embed(test_texts, model: model, dimensions: dimensions)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|
-          expect(vector.length).to eq(test_dimensions)
+          expect(vector.length).to eq(dimensions)
         end
       end
 
@@ -51,6 +50,20 @@ RSpec.describe RubyLLM::Embedding do
         expect(embeddings.vectors.size).to eq(1)
         expect(embeddings.vectors.first).to be_an(Array)
         expect(embeddings.vectors.first.first).to be_a(Float)
+      end
+    end
+  end
+
+  describe 'image embeddings' do
+    EMBEDDINGS_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      input_modalities = RubyLLM.models.find(model)&.modalities&.input
+      next if input_modalities&.exclude?('image')
+
+      it "#{provider}/#{model} can handle a single image" do
+        skip "Image embeddings for #{provider}/#{model} are not supported by RubyLLM yet."
       end
     end
   end

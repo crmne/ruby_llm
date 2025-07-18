@@ -50,6 +50,7 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
+  config.cohere_api_key = ENV.fetch('COHERE_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
 
@@ -67,9 +68,10 @@ RubyLLM.configure do |config|
 
   # --- Default Models ---
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
-  config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
+  config.default_model = 'gpt-4.1-nano'                      # Default: 'gpt-4.1-nano'
   config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'dall-e-3'            # Default: 'dall-e-3'
+  config.default_rerank_model = 'rerank-v3.5'                # Default: 'rerank-v3.5'
+  config.default_image_model = 'dall-e-3'                 # Default: 'dall-e-3'
 
   # --- Connection Settings ---
   config.request_timeout = 120  # Request timeout in seconds (default: 120)
@@ -104,6 +106,7 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `anthropic_api_key`
 *   `gemini_api_key`
 *   `deepseek_api_key`
+*   `cohere_api_key`
 *   `openrouter_api_key`
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
 
@@ -146,6 +149,7 @@ These settings determine which models are used by the top-level helper methods (
 
 *   `config.default_model`: Used by `RubyLLM.chat`. Default: `'gpt-4.1-nano'`.
 *   `config.default_embedding_model`: Used by `RubyLLM.embed`. Default: `'text-embedding-3-small'`.
+*   `config.default_rerank_model`: Used by `RubyLLM.rerank`. Default: `'rerank-v3.5'`.
 *   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'dall-e-3'`.
 
 Choose defaults that match your most common use case and provider availability.

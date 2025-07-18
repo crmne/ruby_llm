@@ -46,6 +46,10 @@ module RubyLLM
       Embedding.embed(...)
     end
 
+    def rerank(...)
+      Rerank.rank(...)
+    end
+
     def paint(...)
       Image.paint(...)
     end
@@ -80,6 +84,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :cohere, RubyLLM::Providers::Cohere
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
