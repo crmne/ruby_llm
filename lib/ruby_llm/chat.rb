@@ -76,7 +76,7 @@ module RubyLLM
     end
 
     def with_thinking(thinking: true, budget: nil, temperature: 1)
-      raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.supports_thinking?
+      raise UnsupportedThinkingError, "Model #{@model.id} doesn't support thinking" if thinking && !@model.thinking?
 
       @thinking = thinking
 
