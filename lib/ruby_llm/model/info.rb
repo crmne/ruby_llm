@@ -35,7 +35,7 @@ module RubyLLM
         capabilities.include?(capability.to_s)
       end
 
-      %w[function_calling structured_output batch reasoning citations streaming].each do |cap|
+      %w[function_calling structured_output batch reasoning citations streaming thinking].each do |cap|
         define_method "#{cap}?" do
           supports?(cap)
         end
@@ -56,10 +56,6 @@ module RubyLLM
 
       def supports_functions?
         function_calling?
-      end
-
-      def thinking?
-        reasoning?
       end
 
       def input_price_per_million
