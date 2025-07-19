@@ -11,7 +11,7 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
+        def render_payload(messages, tools:, temperature:, model:, stream: false, # rubocop:disable Metrics/ParameterLists
                            cache_prompts: { system: false, user: false, tools: false })
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, cache: cache_prompts[:system])

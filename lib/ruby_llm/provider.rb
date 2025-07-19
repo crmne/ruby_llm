@@ -10,7 +10,7 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:,
+      def complete(messages, tools:, temperature:, model:, connection:, # rubocop:disable Metrics/ParameterLists
                    cache_prompts: { system: false, user: false, tools: false }, &)
         normalized_temperature = maybe_normalize_temperature(temperature, model)
 
