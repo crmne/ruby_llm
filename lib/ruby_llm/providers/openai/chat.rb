@@ -26,6 +26,7 @@ module RubyLLM
             payload[:tool_choice] = 'auto'
           end
           payload[:stream_options] = { include_usage: true } if stream
+          payload
         end
 
         def parse_completion_response(response)
