@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :params
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -25,6 +25,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @params = {}
       @on = {
         new_message: nil,
         end_message: nil
@@ -78,6 +79,11 @@ module RubyLLM
       self
     end
 
+    def with_params(**params)
+      @params = params
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -99,6 +105,7 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         connection: @connection,
+        params: @params,
         &wrap_streaming_block(&)
       )
 
