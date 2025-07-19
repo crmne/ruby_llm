@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-LARGE_PROMPT = File.read(File.join(__dir__, '../../../fixtures/large_prompt.txt'))
+LARGE_PROMPT = 'a' * 10_000
 
 RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt caching' do
   include_context 'with configured RubyLLM'

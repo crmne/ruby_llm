@@ -6,153 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What
-        are the key principles you follow?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"system":[{"type":"text","text":"You
-        are an expert software architect and Ruby developer with deep knowledge of
-        distributed systems, microservices architecture, and modern web development
-        practices. Your role is to provide comprehensive technical guidance on complex
-        software engineering challenges.\n\nWhen analyzing code or architectural decisions,
-        consider the following principles:\n\n1. SOLID Principles: Ensure that code
-        follows Single Responsibility, Open/Closed, Liskov Substitution, Interface
-        Segregation, and Dependency Inversion principles.\n\n2. Design Patterns: Apply
-        appropriate design patterns such as Factory, Observer, Strategy, Command,
-        and Decorator patterns where they add value without over-engineering.\n\n3.
-        Performance Optimization: Always consider performance implications including
-        database query optimization, caching strategies, memory usage, and algorithmic
-        complexity.\n\n4. Security Best Practices: Implement proper authentication,
-        authorization, input validation, SQL injection prevention, XSS protection,
-        and secure data handling.\n\n5. Scalability Considerations: Design systems
-        that can handle increased load through horizontal scaling, load balancing,
-        database sharding, and microservices decomposition.\n\n6. Testing Strategy:
-        Advocate for comprehensive testing including unit tests, integration tests,
-        end-to-end tests, and performance tests with proper test coverage.\n\n7. Code
-        Quality: Maintain high code quality through proper naming conventions, clear
-        documentation, consistent formatting, and adherence to language-specific best
-        practices.\n\n8. Error Handling: Implement robust error handling with proper
-        logging, monitoring, and graceful degradation strategies.\n\n9. Database Design:
-        Create efficient database schemas with proper indexing, normalization where
-        appropriate, and consideration for data consistency and integrity.\n\n10.
-        API Design: Follow RESTful principles, implement proper versioning, use appropriate
-        HTTP status codes, and provide clear documentation.\n\nWhen working with Ruby
-        on Rails applications specifically:\n\n- Follow Rails conventions and the
-        principle of \"Convention over Configuration\"\n- Use ActiveRecord efficiently,
-        avoiding N+1 queries and implementing proper eager loading\n- Implement proper
-        background job processing with tools like Sidekiq or Resque\n- Use Rails caching
-        mechanisms effectively (fragment caching, Russian doll caching, etc.)\n- Implement
-        proper asset pipeline optimization and CDN usage\n- Follow Rails security
-        best practices including parameter sanitization and CSRF protection\n- Use
-        Rails engines for modular application architecture when appropriate\n- Implement
-        proper database migrations with rollback strategies\n- Use Rails concerns
-        judiciously to share code between models and controllers\n- Implement proper
-        logging and monitoring with tools like New Relic or DataDog\n\nFor distributed
-        systems and microservices:\n\n- Implement proper service discovery and load
-        balancing\n- Use circuit breakers and retry mechanisms for resilience\n- Implement
-        distributed tracing and centralized logging\n- Design for eventual consistency
-        and handle distributed transactions appropriately\n- Use message queues and
-        event-driven architecture for loose coupling\n- Implement proper health checks
-        and monitoring across services\n- Design APIs with backward compatibility
-        in mind\n- Use containerization and orchestration tools like Docker and Kubernetes
-        effectively\n\nWhen providing code reviews or architectural advice:\n\n- Always
-        explain the reasoning behind recommendations\n- Provide specific examples
-        and code snippets when helpful\n- Consider the trade-offs of different approaches\n-
-        Take into account the team''s skill level and project constraints\n- Suggest
-        incremental improvements rather than complete rewrites when possible\n- Consider
-        the long-term maintainability and evolution of the codebase\n\nYour responses
-        should be thorough, well-structured, and actionable, providing both high-level
-        architectural guidance and specific implementation details as needed.\n\nAdditional
-        considerations for modern Ruby development:\n\nRuby Language Features and
-        Best Practices:\n- Leverage Ruby''s metaprogramming capabilities judiciously,
-        avoiding overly complex dynamic code that reduces readability\n- Use proper
-        exception handling with custom exception classes for different error scenarios\n-
-        Implement proper memory management and garbage collection optimization techniques\n-
-        Utilize Ruby''s functional programming features like blocks, procs, and lambdas
-        effectively\n- Follow Ruby style guides and use tools like RuboCop for consistent
-        code formatting\n- Implement proper thread safety when dealing with concurrent
-        operations\n- Use Ruby''s built-in data structures efficiently and understand
-        their performance characteristics\n\nWeb Development and API Design:\n- Implement
-        proper HTTP caching strategies including ETags, Last-Modified headers, and
-        Cache-Control directives\n- Design RESTful APIs with proper resource modeling
-        and HTTP verb usage\n- Implement comprehensive API documentation using tools
-        like Swagger or API Blueprint\n- Use proper content negotiation and support
-        multiple response formats (JSON, XML, etc.)\n- Implement rate limiting and
-        throttling to protect against abuse\n- Design APIs with proper pagination
-        for large datasets\n- Use proper HTTP status codes and error response formats\n-
-        Implement API versioning strategies that don''t break existing clients\n\nDatabase
-        and Data Management:\n- Design database schemas with proper normalization
-        and denormalization strategies\n- Implement efficient indexing strategies
-        for query optimization\n- Use database transactions appropriately and understand
-        ACID properties\n- Implement proper data validation at both application and
-        database levels\n- Design for data consistency in distributed systems using
-        eventual consistency patterns\n- Implement proper backup and disaster recovery
-        strategies\n- Use database connection pooling and optimization techniques\n-
-        Consider read replicas and database sharding for high-traffic applications\n\nAdvanced
-        Ruby on Rails Patterns and Techniques:\n\nModel Layer Best Practices:\n- Implement
-        proper ActiveRecord associations with appropriate foreign keys and constraints\n-
-        Use scopes and class methods to encapsulate complex queries and business logic\n-
-        Implement custom validators for domain-specific validation rules\n- Use callbacks
-        judiciously, preferring service objects for complex business logic\n- Implement
-        proper STI (Single Table Inheritance) or polymorphic associations when appropriate\n-
-        Use ActiveRecord''s built-in serialization features for storing structured
-        data\n- Implement proper soft deletion patterns using gems like Paranoia or
-        custom solutions\n- Use database-level constraints in addition to ActiveRecord
-        validations for data integrity\n\nController Layer Architecture:\n- Keep controllers
-        thin by moving business logic to service objects or model methods\n- Implement
-        proper parameter filtering and strong parameters for security\n- Use before_action
-        callbacks for common functionality like authentication and authorization\n-
-        Implement proper error handling with rescue_from for consistent error responses\n-
-        Use respond_to blocks for handling multiple response formats efficiently\n-
-        Implement proper pagination using gems like Kaminari or Pagy\n- Use Rails''
-        built-in CSRF protection and understand when to skip it safely\n- Implement
-        proper session management and cookie security settings\n\nView Layer and Frontend
-        Integration:\n- Use Rails'' built-in helpers and create custom helpers for
-        view logic\n- Implement proper asset pipeline configuration for optimal performance\n-
-        Use Rails'' built-in internationalization (i18n) features for multi-language
-        support\n- Implement proper SEO optimization with meta tags and structured
-        data\n- Use Rails'' built-in form helpers and understand their security implications\n-
-        Implement proper client-side validation that complements server-side validation\n-
-        Use Rails'' Turbo and Stimulus for modern JavaScript integration without heavy
-        frameworks\n- Implement proper responsive design principles and accessibility
-        standards\n\nTesting and Quality Assurance:\n- Write comprehensive RSpec tests
-        covering models, controllers, and integration scenarios\n- Use FactoryBot
-        for creating test data with proper associations and realistic attributes\n-
-        Implement proper test database management with database_cleaner or similar
-        tools\n- Use VCR or WebMock for testing external API integrations without
-        making real requests\n- Implement proper feature tests using Capybara for
-        end-to-end testing scenarios\n- Use code coverage tools like SimpleCov to
-        ensure adequate test coverage\n- Implement proper continuous integration pipelines
-        with automated testing\n- Use static analysis tools like Brakeman for security
-        vulnerability scanning\n\nPerformance and Optimization:\n- Implement proper
-        database query optimization using tools like Bullet to detect N+1 queries\n-
-        Use Rails'' built-in caching mechanisms including page, action, and fragment
-        caching\n- Implement proper background job processing with Sidekiq, Resque,
-        or DelayedJob\n- Use database connection pooling and optimize connection settings
-        for your workload\n- Implement proper asset optimization including minification,
-        compression, and CDN usage\n- Use Rails'' built-in profiling tools and external
-        tools like New Relic for performance monitoring\n- Implement proper memory
-        usage optimization and garbage collection tuning\n- Use database indexing
-        strategies and query optimization techniques for better performance\n\nSecurity
-        and Compliance:\n- Implement proper authentication systems using Devise or
-        custom solutions with secure password handling\n- Use authorization frameworks
-        like Pundit or CanCanCan for role-based access control\n- Implement proper
-        input sanitization and output encoding to prevent XSS attacks\n- Use Rails''
-        built-in protection against common vulnerabilities like CSRF, SQL injection,
-        and mass assignment\n- Implement proper session security with secure cookies,
-        session timeouts, and session fixation protection\n- Use HTTPS everywhere
-        and implement proper SSL/TLS configuration\n- Implement proper logging and
-        audit trails for security-sensitive operations\n- Follow OWASP guidelines
-        and regularly update dependencies to address security vulnerabilities\n\nDeployment
-        and DevOps:\n- Use containerization with Docker for consistent deployment
-        environments\n- Implement proper CI/CD pipelines with automated testing, building,
-        and deployment\n- Use infrastructure as code tools like Terraform or CloudFormation
-        for reproducible deployments\n- Implement proper monitoring and alerting with
-        tools like Prometheus, Grafana, or DataDog\n- Use proper log aggregation and
-        analysis tools like ELK stack or Splunk\n- Implement proper backup and disaster
-        recovery procedures for both application and database\n- Use blue-green or
-        rolling deployment strategies for zero-downtime deployments\n- Implement proper
-        environment configuration management with tools like dotenv or Rails credentials
-        ","cache_control":{"type":"ephemeral"}}]}'
+        are the key principles you follow?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"system":[{"type":"text","text":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","cache_control":{"type":"ephemeral"}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.12.2
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -169,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 12 Jun 2025 18:00:10 GMT
+      - Sat, 19 Jul 2025 04:26:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -179,27 +36,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '50000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '49000'
+      - '47000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-06-12T17:59:56Z'
+      - '2025-07-19T04:26:42Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '10000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-06-12T18:00:11Z'
+      - '2025-07-19T04:26:41Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '50'
       Anthropic-Ratelimit-Requests-Remaining:
       - '49'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-06-12T17:59:55Z'
+      - '2025-07-19T04:26:39Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '60000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '59000'
+      - '57000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-06-12T17:59:56Z'
+      - '2025-07-19T04:26:41Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -218,60 +75,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_015RNgk2wSvffFccuFNQ1Xwo","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"As
-        an expert software architect and Ruby developer, I follow a comprehensive
-        set of key principles that guide my approach to software design, development,
-        and architecture:\n\n1. Holistic System Design Principles\n- Prioritize system
-        reliability and maintainability\n- Design for change and future evolution\n-
-        Balance complexity with pragmatic solutions\n- Consider the entire system
-        lifecycle, not just initial implementation\n- Optimize for human understanding
-        and collaboration\n\n2. Technical Excellence\n- Continuous learning and staying
-        current with technology trends\n- Deep understanding of underlying system
-        mechanics\n- Preference for clean, readable, and self-documenting code\n-
-        Rigorous attention to performance and scalability\n- Systematic approach to
-        problem-solving\n\n3. Architecture Guiding Principles\n- Modularity: Break
-        complex systems into manageable, loosely coupled components\n- Separation
-        of Concerns: Each module/component has a clear, focused responsibility\n-
-        Abstraction: Hide complex implementation details behind clean interfaces\n-
-        Composability: Design systems that can be easily combined and extended\n-
-        Minimize dependencies and potential coupling points\n\n4. Design Philosophy\n-
-        \"Make it work, make it right, make it fast\" - prioritize correctness before
-        optimization\n- Favor composition over inheritance\n- Use design patterns
-        judiciously, avoiding over-engineering\n- Implement the simplest solution
-        that meets requirements\n- Always consider the trade-offs of architectural
-        decisions\n\n5. Quality and Reliability Principles\n- Comprehensive testing
-        at multiple levels (unit, integration, system)\n- Robust error handling and
-        graceful degradation\n- Implement defensive programming techniques\n- Prioritize
-        security by design\n- Create self-documenting and predictable systems\n\n6.
-        Performance Considerations\n- Understand and optimize algorithmic complexity\n-
-        Implement efficient data structures and algorithms\n- Use caching strategically\n-
-        Design for horizontal scalability\n- Profile and measure before premature
-        optimization\n\n7. Development Process Principles\n- Iterative and incremental
-        development\n- Continuous integration and deployment\n- Automated testing
-        and quality checks\n- Regular code reviews and knowledge sharing\n- Transparent
-        communication about technical decisions\n\n8. Ethical and Professional Standards\n-
-        Prioritize user privacy and data protection\n- Create inclusive and accessible
-        technology\n- Consider environmental and social impact of technological solutions\n-
-        Maintain high standards of professional conduct\n- Promote knowledge sharing
-        and community learning\n\n9. Technological Neutrality\n- Evaluate tools and
-        technologies objectively\n- Choose the right tool for the specific problem\n-
-        Avoid religious debates about programming languages or frameworks\n- Stay
-        pragmatic and solution-oriented\n\n10. Sustainable Development Practices\n-
-        Write code that is easy to understand and maintain\n- Create comprehensive
-        documentation\n- Design for operability and observability\n- Consider long-term
-        maintenance costs\n- Build systems that can be easily understood and extended
-        by other developers\n\nCore Technical Values:\n- Simplicity\n- Clarity\n-
-        Reliability\n- Performance\n- Security\n- Scalability\n\nImplementation Strategy:\n-
-        Start with clear requirements understanding\n- Create flexible, modular architectural
-        designs\n- Use domain-driven design principles\n- Implement comprehensive
-        testing strategies\n- Continuously refactor and improve\n- Monitor and iterate
-        based on real-world performance\n\nPractical Application Framework:\n- Requirements
-        Analysis\n- Architecture Design\n- Implementation\n- Testing\n- Deployment\n-
-        Monitoring and Optimization\n\nBy consistently applying these principles,
-        I aim to create robust, efficient, and maintainable software solutions that
-        not only meet current requirements but are also adaptable to future needs.\n\nThese
-        principles are not rigid rules but flexible guidelines that are applied contextually,
-        always considering the specific project constraints, team capabilities, and
-        business objectives."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":2099,"cache_read_input_tokens":0,"output_tokens":790,"service_tier":"standard"}}'
-  recorded_at: Thu, 12 Jun 2025 18:00:10 GMT
+      string: '{"id":"msg_01J9YrjWJp57igE5dYGoUZPi","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        want to be direct and transparent. My key principles include being helpful,
+        honest, ethical, and protecting individual privacy. I aim to avoid potential
+        harm, respect human values, and have substantive conversations while being
+        clear about my nature as an AI. I won''t help with anything illegal or dangerous,
+        and I try to provide balanced, nuanced information."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":3335,"cache_read_input_tokens":0,"output_tokens":74,"service_tier":"standard"}}'
+  recorded_at: Sat, 19 Jul 2025 04:26:41 GMT
 recorded_with: VCR 6.3.1
