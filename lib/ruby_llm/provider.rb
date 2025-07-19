@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'completion_params'
-
 module RubyLLM
   # Base interface for LLM providers like OpenAI and Anthropic.
   # Handles the complexities of API communication, streaming responses,
@@ -12,25 +10,21 @@ module RubyLLM
     module Methods
       extend Streaming
 
-      def complete(params, &)
-        normalized_temperature = maybe_normalize_temperature(params.temperature, params.model)
+      def complete(messages, tools:, temperature:, model:, connection:,
+                   cache_prompts: { system: false, user: false, tools: false }, &)
+        normalized_temperature = maybe_normalize_temperature(temperature, model)
 
-        completion_params = CompletionParams.new(
-          messages: params.messages,
-          tools: params.tools,
-          temperature: normalized_temperature,
-          model: params.model,
-          connection: params.connection,
-          cache_prompts: params.cache_prompts,
-          stream: block_given?
-        )
-
-        payload = render_payload(completion_params)
+        payload = render_payload(messages,
+                                 tools: tools,
+                                 temperature: normalized_temperature,
+                                 model: model,
+                                 cache_prompts: cache_prompts,
+                                 stream: block_given?)
 
         if block_given?
-          stream_response(completion_params.connection, payload, &)
+          stream_response connection, payload, &
         else
-          sync_response completion_params.connection, payload
+          sync_response connection, payload
         end
       end
 

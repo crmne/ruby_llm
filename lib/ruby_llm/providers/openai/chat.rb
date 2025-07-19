@@ -11,23 +11,21 @@ module RubyLLM
 
         module_function
 
-        def render_payload(params)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument
           payload = {
-            model: params.model,
-            messages: format_messages(params.messages),
-            stream: params.stream
+            model: model,
+            messages: format_messages(messages),
+            stream: stream
           }
 
           # Only include temperature if it's not nil (some models don't accept it)
-          payload[:temperature] = params.temperature unless params.temperature.nil?
+          payload[:temperature] = temperature unless temperature.nil?
 
-          if params.tools.any?
-            payload[:tools] = params.tools.map { |_, tool| tool_for(tool) }
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = 'auto'
           end
-
-          payload[:stream_options] = { include_usage: true } if params.stream
-          payload
+          payload[:stream_options] = { include_usage: true } if stream
         end
 
         def parse_completion_response(response)

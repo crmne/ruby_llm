@@ -11,15 +11,15 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(params)
-          @model = params.model # Store model for completion_url/stream_url
+        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument
+          @model = model # Store model for completion_url/stream_url
           payload = {
-            contents: format_messages(params.messages),
+            contents: format_messages(messages),
             generationConfig: {
-              temperature: params.temperature
+              temperature: temperature
             }
           }
-          payload[:tools] = format_tools(params.tools) if params.tools.any?
+          payload[:tools] = format_tools(tools) if tools.any?
           payload
         end
 
