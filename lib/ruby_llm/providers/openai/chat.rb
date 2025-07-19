@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
           payload = {
             model: model,
             messages: format_messages(messages),
@@ -25,7 +25,6 @@ module RubyLLM
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = 'auto'
           end
-
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
@@ -45,6 +44,7 @@ module RubyLLM
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],
+            cached_tokens: data['usage']['cached_tokens'],
             model_id: data['model']
           )
         end
