@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-LARGE_PROMPT = 'a' * 10_000
+LARGE_PROMPT = 'a' * (2048 * 4)
 
 RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt caching' do
   include_context 'with configured RubyLLM'
