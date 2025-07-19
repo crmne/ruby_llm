@@ -130,8 +130,8 @@ module RubyLLM
         self
       end
 
-      def with_request_options(...)
-        to_llm.with_request_options(...)
+      def with_params(...)
+        to_llm.with_params(...)
         self
       end
 

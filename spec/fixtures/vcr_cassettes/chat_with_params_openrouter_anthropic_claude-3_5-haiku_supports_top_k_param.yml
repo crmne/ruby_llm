@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 03 Jul 2025 02:35:13 GMT
+      - Sat, 19 Jul 2025 19:53:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,13 +35,20 @@ http_interactions:
       - "*"
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1751510112-xLg5OxX2KgL0qJOHgQAo\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1751510112,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\\n
+      string: "\n         \n{\"id\":\"gen-1752954827-41LuhLq98dKxehFNZkEa\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752954827,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\\n
         \   \\\"result\\\": 8\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":28,\"completion_tokens\":12,\"total_tokens\":40}}"
-  recorded_at: Thu, 03 Jul 2025 02:35:13 GMT
+  recorded_at: Sat, 19 Jul 2025 19:53:48 GMT
 recorded_with: VCR 6.3.1

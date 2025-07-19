@@ -5,8 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
-  describe 'with request_options' do
-    # Supported request_options vary by provider, and to lesser degree, by model.
+  describe 'with params' do
+    # Supported params vary by provider, and to lesser degree, by model.
 
     # Providers [:openai, :ollama, :deepseek] support {response_format: {type: 'json_object'}}
     # to guarantee a JSON object is returned.
@@ -14,10 +14,10 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| %i[openai ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports response_format option" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports response_format param" do # rubocop:disable RSpec/ExampleLength
         chat = RubyLLM
                .chat(model: model, provider: provider)
-               .with_request_options(response_format: { type: 'json_object' })
+               .with_params(response_format: { type: 'json_object' })
 
         response = chat.ask('What is the square root of 64? Answer with a JSON object with the key `result`.')
 
@@ -26,15 +26,15 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    # Provider [:gemini] supports a {generationConfig: {responseMimeType: ..., responseSchema: ...} } option,
-    # which can specify a JSON schema, requiring a deep_merge of request_options into the payload.
+    # Provider [:gemini] supports a {generationConfig: {responseMimeType: ..., responseSchema: ...} } param,
+    # which can specify a JSON schema, requiring a deep_merge of params into the payload.
     CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports responseSchema option" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports responseSchema param" do # rubocop:disable RSpec/ExampleLength
         chat = RubyLLM
                .chat(model: model, provider: provider)
-               .with_request_options(
+               .with_params(
                  generationConfig: {
                    responseMimeType: 'application/json',
                    responseSchema: {
@@ -51,14 +51,14 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    # Provider [:anthropic] supports a service_tier option.
+    # Provider [:anthropic] supports a service_tier param.
     CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports service_tier option" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports service_tier param" do # rubocop:disable RSpec/ExampleLength
         chat = RubyLLM
                .chat(model: model, provider: provider)
-               .with_request_options(service_tier: 'standard_only')
+               .with_params(service_tier: 'standard_only')
 
         chat.add_message(
           role: :user,
@@ -80,14 +80,14 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    # Providers [:openrouter, :bedrock] supports a {top_k: ...} option to remove low-probability next tokens.
+    # Providers [:openrouter, :bedrock] supports a {top_k: ...} param to remove low-probability next tokens.
     CHAT_MODELS.select { |model_info| %i[openrouter bedrock].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports top_k option" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports top_k param" do # rubocop:disable RSpec/ExampleLength
         chat = RubyLLM
                .chat(model: model, provider: provider)
-               .with_request_options(top_k: 5)
+               .with_params(top_k: 5)
 
         chat.add_message(
           role: :user,
