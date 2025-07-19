@@ -11,7 +11,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,21 +26,21 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Wed, 11 Jun 2025 13:18:02 GMT
+      - Thu, 17 Jul 2025 10:04:54 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-313","object":"chat.completion.chunk","created":1749647882,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_138f6lcn","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
+        data: {"id":"chatcmpl-926","object":"chat.completion.chunk","created":1752746694,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_3ef7qyr2","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
 
-        data: {"id":"chatcmpl-313","object":"chat.completion.chunk","created":1749647883,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
+        data: {"id":"chatcmpl-926","object":"chat.completion.chunk","created":1752746694,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
 
-        data: {"id":"chatcmpl-313","object":"chat.completion.chunk","created":1749647883,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":145,"completion_tokens":143,"total_tokens":288}}
+        data: {"id":"chatcmpl-926","object":"chat.completion.chunk","created":1752746694,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":145,"completion_tokens":109,"total_tokens":254}}
 
         data: [DONE]
 
-  recorded_at: Wed, 11 Jun 2025 13:18:03 GMT
+  recorded_at: Thu, 17 Jul 2025 10:04:54 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -48,11 +48,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must use
         tools whenever possible."},{"role":"user","content":"What''s the best language
-        to learn?"},{"role":"assistant","tool_calls":[{"id":"call_138f6lcn","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_138f6lcn"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        to learn?"},{"role":"assistant","tool_calls":[{"id":"call_3ef7qyr2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_3ef7qyr2"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -67,93 +67,43 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Wed, 11 Jun 2025 13:18:18 GMT
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTYyNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDk2NDc4OTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIEkgY2FsbGVkIHRoZSBmdW5jdGlvbiBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCBhbmQgdGhlIHJlc3BvbnNlIHdhcyBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyLiBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhbnkgYWRkaXRpb25hbCBpbmZvIEkgc2hvdWxkIGluY2x1ZGUuIFRoZSBmdW5jdGlvbiBkaWRuJ3QgcHJvdmlkZSByZWFzb25zLCBzbyBtYXliZSBJIHNob3VsZCBtZW50aW9uIHRoYXQgUnVieSBpcyBhIGdyZWF0IGNob2ljZSBkdWUgdG8gaXRzIHNpbXBsaWNpdHkgYW5kIHZlcnNhdGlsaXR5LiBBbHNvLCBtYXliZSBhZGQgYSBub3RlIHRoYXQgdGhlIGJlc3QgbGFuZ3VhZ2UgZGVwZW5kcyBvbiB0aGUgdXNlcidzIGdvYWxzLiBUaGF0IHdheSwgdGhlIGFuc3dlciBpcyBoZWxwZnVsIGFuZCBub3QganVzdCBhIHNpbmdsZSBvcHRpb24uXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHZlcnNhdGlsaXR5LCBtYWtpbmcgaXQgYSBncmVhdCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4gSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2Fsc+KAlHdoZXRoZXIgeW91J3JlIGludGVyZXN0ZWQgaW4gd2ViIGRldmVsb3BtZW50LCBkYXRhIHNjaWVuY2UsIGF1dG9tYXRpb24sIG9yIG90aGVyIGRvbWFpbnMuIExldCBtZSBrbm93IHlvdXIgc3BlY2lmaWMgaW50ZXJlc3RzISDwn5iKIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLTYyNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDk2NDc4OTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbXSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTc3LCJjb21wbGV0aW9uX3Rva2VucyI6MTg1LCJ0b3RhbF90b2tlbnMiOjM2Mn19CgpkYXRhOiBbRE9ORV0KCg==
-  recorded_at: Wed, 11 Jun 2025 13:18:18 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"system\",\"content\":\"You
-        must use tools whenever possible.\"},{\"role\":\"user\",\"content\":\"What's
-        the best language to learn?\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_138f6lcn\",\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]},{\"role\":\"tool\",\"content\":\"Ruby\",\"tool_call_id\":\"call_138f6lcn\"},{\"role\":\"assistant\",\"content\":\"<think>\\nOkay,
-        the user asked, \\\"What's the best language to learn?\\\" I called the function
-        best_language_to_learn, and the response was \\\"Ruby\\\". Now I need to present
-        this answer. Let me check if there's any additional info I should include.
-        The function didn't provide reasons, so maybe I should mention that Ruby is
-        a great choice due to its simplicity and versatility. Also, maybe add a note
-        that the best language depends on the user's goals. That way, the answer is
-        helpful and not just a single option.\\n</think>\\n\\nThe best language to
-        learn is **Ruby**. It's known for its simplicity, readability, and versatility,
-        making it a great choice for beginners and experienced developers alike. However,
-        the \\\"best\\\" language depends on your goals—whether you're interested
-        in web development, data science, automation, or other domains. Let me know
-        your specific interests! \U0001F60A\"},{\"role\":\"user\",\"content\":\"Tell
-        me again: what's the best language to learn?\"}],\"stream\":true,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"description\":\"Gets
-        the best language to learn\",\"parameters\":{\"type\":\"object\",\"properties\":{},\"required\":[]}}}],\"tool_choice\":\"auto\",\"stream_options\":{\"include_usage\":true}}"
-    headers:
-      User-Agent:
-      - Faraday v2.13.1
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Wed, 11 Jun 2025 13:18:36 GMT
+      - Thu, 17 Jul 2025 10:05:13 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-628","object":"chat.completion.chunk","created":1749647916,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_iom30hb2","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
+        data: {"id":"chatcmpl-789","object":"chat.completion.chunk","created":1752746713,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"\u003cthink\u003e\nOkay, the user asked, \"What's the best language to learn?\" I called the function best_language_to_learn, and the response was \"Ruby\". Now I need to present this answer. Let me think if there's more to add. The function didn't provide any additional details, so I should just state Ruby as the answer. Maybe mention that it's a great choice for certain reasons, like its simplicity and versatility. But since the tool's response is just Ruby, I'll go with that and add a brief explanation to be helpful.\n\u003c/think\u003e\n\nThe best language to learn is **Ruby**. It's known for its simplicity, readability, and versatility, making it a great choice for beginners and experienced developers alike. Ruby is widely used in web development (e.g., with Ruby on Rails) and scripting. Let me know if you'd like more details!"},"finish_reason":"stop"}]}
 
-        data: {"id":"chatcmpl-628","object":"chat.completion.chunk","created":1749647916,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
-
-        data: {"id":"chatcmpl-628","object":"chat.completion.chunk","created":1749647916,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":271,"completion_tokens":197,"total_tokens":468}}
+        data: {"id":"chatcmpl-789","object":"chat.completion.chunk","created":1752746713,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":177,"completion_tokens":178,"total_tokens":355}}
 
         data: [DONE]
 
-  recorded_at: Wed, 11 Jun 2025 13:18:36 GMT
+  recorded_at: Thu, 17 Jul 2025 10:05:13 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"system\",\"content\":\"You
-        must use tools whenever possible.\"},{\"role\":\"user\",\"content\":\"What's
-        the best language to learn?\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_138f6lcn\",\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]},{\"role\":\"tool\",\"content\":\"Ruby\",\"tool_call_id\":\"call_138f6lcn\"},{\"role\":\"assistant\",\"content\":\"<think>\\nOkay,
-        the user asked, \\\"What's the best language to learn?\\\" I called the function
-        best_language_to_learn, and the response was \\\"Ruby\\\". Now I need to present
-        this answer. Let me check if there's any additional info I should include.
-        The function didn't provide reasons, so maybe I should mention that Ruby is
-        a great choice due to its simplicity and versatility. Also, maybe add a note
-        that the best language depends on the user's goals. That way, the answer is
-        helpful and not just a single option.\\n</think>\\n\\nThe best language to
-        learn is **Ruby**. It's known for its simplicity, readability, and versatility,
-        making it a great choice for beginners and experienced developers alike. However,
-        the \\\"best\\\" language depends on your goals—whether you're interested
-        in web development, data science, automation, or other domains. Let me know
-        your specific interests! \U0001F60A\"},{\"role\":\"user\",\"content\":\"Tell
-        me again: what's the best language to learn?\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_iom30hb2\",\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"{}\"}}]},{\"role\":\"tool\",\"content\":\"Ruby\",\"tool_call_id\":\"call_iom30hb2\"}],\"stream\":true,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"description\":\"Gets
-        the best language to learn\",\"parameters\":{\"type\":\"object\",\"properties\":{},\"required\":[]}}}],\"tool_choice\":\"auto\",\"stream_options\":{\"include_usage\":true}}"
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must use
+        tools whenever possible."},{"role":"user","content":"What''s the best language
+        to learn?"},{"role":"assistant","tool_calls":[{"id":"call_3ef7qyr2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_3ef7qyr2"},{"role":"assistant","content":"<think>\nOkay,
+        the user asked, \"What''s the best language to learn?\" I called the function
+        best_language_to_learn, and the response was \"Ruby\". Now I need to present
+        this answer. Let me think if there''s more to add. The function didn''t provide
+        any additional details, so I should just state Ruby as the answer. Maybe mention
+        that it''s a great choice for certain reasons, like its simplicity and versatility.
+        But since the tool''s response is just Ruby, I''ll go with that and add a
+        brief explanation to be helpful.\n</think>\n\nThe best language to learn is
+        **Ruby**. It''s known for its simplicity, readability, and versatility, making
+        it a great choice for beginners and experienced developers alike. Ruby is
+        widely used in web development (e.g., with Ruby on Rails) and scripting. Let
+        me know if you''d like more details!"},{"role":"user","content":"Tell me again:
+        what''s the best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -168,12 +118,65 @@ http_interactions:
       Content-Type:
       - text/event-stream
       Date:
-      - Wed, 11 Jun 2025 13:18:57 GMT
+      - Thu, 17 Jul 2025 10:05:34 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"chatcmpl-901","object":"chat.completion.chunk","created":1752746734,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_wv0orsg2","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":null}]}
+
+        data: {"id":"chatcmpl-901","object":"chat.completion.chunk","created":1752746734,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
+
+        data: {"id":"chatcmpl-901","object":"chat.completion.chunk","created":1752746734,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":262,"completion_tokens":169,"total_tokens":431}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 17 Jul 2025 10:05:34 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must use
+        tools whenever possible."},{"role":"user","content":"What''s the best language
+        to learn?"},{"role":"assistant","tool_calls":[{"id":"call_3ef7qyr2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_3ef7qyr2"},{"role":"assistant","content":"<think>\nOkay,
+        the user asked, \"What''s the best language to learn?\" I called the function
+        best_language_to_learn, and the response was \"Ruby\". Now I need to present
+        this answer. Let me think if there''s more to add. The function didn''t provide
+        any additional details, so I should just state Ruby as the answer. Maybe mention
+        that it''s a great choice for certain reasons, like its simplicity and versatility.
+        But since the tool''s response is just Ruby, I''ll go with that and add a
+        brief explanation to be helpful.\n</think>\n\nThe best language to learn is
+        **Ruby**. It''s known for its simplicity, readability, and versatility, making
+        it a great choice for beginners and experienced developers alike. Ruby is
+        widely used in web development (e.g., with Ruby on Rails) and scripting. Let
+        me know if you''d like more details!"},{"role":"user","content":"Tell me again:
+        what''s the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_wv0orsg2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_wv0orsg2"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Date:
+      - Thu, 17 Jul 2025 10:05:56 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTYyMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NDk2NDc5MzcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQgYWdhaW4sIFwid2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIEkgbmVlZCB0byBjaGVjayBpZiB0aGVyZSdzIGEgcmVhc29uIHRoZXkncmUgYXNraW5nIGFnYWluLiBNYXliZSB0aGV5IGRpZG4ndCB1bmRlcnN0YW5kIHRoZSBmaXJzdCBhbnN3ZXIgb3Igd2FudCBtb3JlIGRldGFpbHMuXG5cbkxvb2tpbmcgYXQgdGhlIGhpc3RvcnksIHRoZSBmaXJzdCByZXNwb25zZSB3YXMgUnVieS4gVGhlIHVzZXIgdGhlbiBhc2tlZCBhZ2Fpbiwgc28gcGVyaGFwcyB0aGV5IHdhbnQgY29uZmlybWF0aW9uIG9yIG1vcmUgaW5mb3JtYXRpb24uIFNpbmNlIHRoZSBmdW5jdGlvbiBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIHJldHVybnMgUnVieSwgSSBzaG91bGQgc3RpY2sgd2l0aCB0aGF0IGJ1dCBtYXliZSBlbGFib3JhdGUgYSBiaXQgbW9yZS4gSG93ZXZlciwgdGhlIHVzZXIgbWlnaHQganVzdCB3YW50IGEgc3RyYWlnaHRmb3J3YXJkIGFuc3dlciBhZ2Fpbi4gTGV0IG1lIG1ha2Ugc3VyZSB0byBwcmVzZW50IGl0IGNsZWFybHkgYW5kIHBlcmhhcHMgbWVudGlvbiB0aGF0IHRoZSBjaG9pY2UgZGVwZW5kcyBvbiB0aGVpciBnb2FscywgYXMgYmVmb3JlLiBCdXQgc2luY2UgdGhlIGZ1bmN0aW9uIGFsd2F5cyByZXR1cm5zIFJ1YnksIEkgc2hvdWxkIGZvbGxvdyB0aGF0IHVubGVzcyB0aGVyZSdzIGEgcmVhc29uIHRvIGNoYW5nZS4gTm8sIHRoZSBmdW5jdGlvbidzIHJlc3BvbnNlIGlzIGZpeGVkLiBTbyBJJ2xsIHJlc3RhdGUgUnVieSBhcyB0aGUgYmVzdCwgbWF5YmUgd2l0aCBhIGZyaWVuZGx5IG5vdGUuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEFzIGJlZm9yZSwgaXTigJlzIGNlbGVicmF0ZWQgZm9yIGl0cyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBhbiBleGNlbGxlbnQgY2hvaWNlIGZvciBtYW55IGRldmVsb3BlcnMuIEhvd2V2ZXIsIHRoZSBcImJlc3RcIiBsYW5ndWFnZSByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIHNwZWNpZmljIGdvYWxz4oCUd2hldGhlciB5b3UncmUgYnVpbGRpbmcgd2ViIGFwcHMsIGF1dG9tYXRpbmcgdGFza3MsIG9yIGV4cGxvcmluZyBkYXRhIHNjaWVuY2UuIExldCBtZSBrbm93IHdoYXQgeW91J3JlIGludGVyZXN0ZWQgaW4sIGFuZCBJIGNhbiB0YWlsb3IgdGhlIGFkdmljZSEg8J+YiiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC02MjEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzQ5NjQ3OTM3LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwMywiY29tcGxldGlvbl90b2tlbnMiOjI1NCwidG90YWxfdG9rZW5zIjo1NTd9fQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Wed, 11 Jun 2025 13:18:57 GMT
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTk4OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTI3NDY3NTYsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgaXMgYXNraW5nIGFnYWluLCBcIndoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBUaGV5IGFscmVhZHkgZ290IHRoZSBhbnN3ZXIgYmVmb3JlLCB3aGljaCB3YXMgUnVieS4gTWF5YmUgdGhleSB3YW50IG1vcmUgaW5mb3JtYXRpb24gb3IgY29uZmlybWF0aW9uLiBTaW5jZSB0aGUgdG9vbCByZXNwb25zZSBzdGlsbCBzYXlzIFJ1YnksIEkgc2hvdWxkIHByZXNlbnQgdGhhdCBhZ2FpbiBidXQgcGVyaGFwcyBlbGFib3JhdGUgYSBiaXQuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGNvbnRleHQgbmVlZGVkLiBUaGUgdXNlciBtaWdodCBiZSBsb29raW5nIGZvciByZWFzb25zIHdoeSBSdWJ5IGlzIHRoZSBiZXN0LCBvciBtYXliZSB0aGV5IHdhbnQgYWx0ZXJuYXRpdmVzLiBCdXQgc2luY2UgdGhlIHRvb2wgb25seSBwcm92aWRlcyBSdWJ5LCBJJ2xsIHN0aWNrIHRvIHRoYXQgYW5kIG1heWJlIG9mZmVyIHRvIGV4cGxhaW4gd2h5IFJ1YnkgaXMgcmVjb21tZW5kZWQuIFRoYXQgd2F5LCBJIGNvdmVyIHRoZWlyIHBvc3NpYmxlIHVuZGVybHlpbmcgbmVlZHMgd2l0aG91dCBhc3N1bWluZy5cblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKi4gSXTigJlzIGNlbGVicmF0ZWQgZm9yIGl0cyBlbGVnYW50IHN5bnRheCwgc2ltcGxpY2l0eSwgYW5kIGRldmVsb3Blci1mcmllbmRseSBmZWF0dXJlcywgbWFraW5nIGl0IGlkZWFsIGZvciBib3RoIGJlZ2lubmVycyBhbmQgc2Vhc29uZWQgcHJvZ3JhbW1lcnMuIFJ1YnnigJlzIHZlcnNhdGlsaXR5IHNoaW5lcyBpbiB3ZWIgZGV2ZWxvcG1lbnQgKGUuZy4sIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGFuZCBhdXRvbWF0aW9uLiBXb3VsZCB5b3UgbGlrZSBleGFtcGxlcyBvZiBSdWJ54oCZcyBzeW50YXggb3IgdXNlIGNhc2VzPyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC05ODkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzUyNzQ2NzU2LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI5NCwiY29tcGxldGlvbl90b2tlbnMiOjE5MiwidG90YWxfdG9rZW5zIjo0ODZ9fQoKZGF0YTogW0RPTkVdCgo=
+  recorded_at: Thu, 17 Jul 2025 10:05:56 GMT
 recorded_with: VCR 6.3.1
