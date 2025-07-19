@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
 
           response = chat.ask('What are the key principles you follow?')
 
-          expect(response.cache_creation_input_tokens).to be_positive
+          expect(response.cache_creation_tokens).to be_positive
         end
       end
 
@@ -38,7 +38,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
           chat.cache_prompts(user: true)
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
-          expect(response.cache_creation_input_tokens).to be_positive
+          expect(response.cache_creation_tokens).to be_positive
         end
       end
 
@@ -49,8 +49,8 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
 
           response = chat.ask('Tell me about Ruby')
 
-          expect(chat.messages[1].cache_creation_input_tokens).to be_positive
-          expect(response.cache_read_input_tokens).to be_positive
+          expect(chat.messages[1].cache_creation_tokens).to be_positive
+          expect(response.cached_tokens).to be_positive
         end
       end
 
@@ -62,8 +62,8 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat, '.complete with prompt cachi
 
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
-          expect(chat.messages[2].cache_creation_input_tokens).to be_positive
-          expect(response.cache_read_input_tokens).to be_positive
+          expect(chat.messages[2].cache_creation_tokens).to be_positive
+          expect(response.cached_tokens).to be_positive
         end
       end
     end

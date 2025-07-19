@@ -81,8 +81,8 @@ module RubyLLM
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
             model_id: data['model'],
-            cache_creation_input_tokens: data.dig('usage', 'cache_creation_input_tokens'),
-            cache_read_input_tokens: data.dig('usage', 'cache_read_input_tokens')
+            cache_creation_tokens: data.dig('usage', 'cache_creation_input_tokens'),
+            cached_tokens: data.dig('usage', 'cache_read_input_tokens')
           )
         end
 
