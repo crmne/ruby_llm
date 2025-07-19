@@ -99,7 +99,6 @@ module RubyLLM
     end
 
     def complete(&)
-      @on[:new_message]&.call
       response = @provider.complete(
         messages,
         tools: @tools,
@@ -107,11 +106,13 @@ module RubyLLM
         model: @model.id,
         connection: @connection,
         params: @params,
-        &
+        &wrap_streaming_block(&)
       )
+
+      @on[:new_message]&.call unless block_given?
+      add_message response
       @on[:end_message]&.call(response)
 
-      add_message response
       if response.tool_call?
         handle_tool_calls(response, &)
       else
@@ -131,11 +132,28 @@ module RubyLLM
 
     private
 
+    def wrap_streaming_block(&block)
+      return nil unless block_given?
+
+      first_chunk_received = false
+
+      proc do |chunk|
+        # Create message on first content chunk
+        unless first_chunk_received
+          first_chunk_received = true
+          @on[:new_message]&.call
+        end
+
+        # Pass chunk to user's block
+        block.call chunk
+      end
+    end
+
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         result = execute_tool tool_call
-        message = add_tool_result tool_call.id, result
+        message = add_message role: :tool, content: result.to_s, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
       end
 
@@ -146,14 +164,6 @@ module RubyLLM
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
-    end
-
-    def add_tool_result(tool_use_id, result)
-      add_message(
-        role: :tool,
-        content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
-        tool_call_id: tool_use_id
-      )
     end
   end
 end

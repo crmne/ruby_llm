@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:53:14 GMT
+      - Thu, 17 Jul 2025 09:57:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-06-11T12:53:14Z'
+      - '2025-07-17T09:57:09Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-06-11T12:53:14Z'
+      - '2025-07-17T09:57:09Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-06-11T12:53:13Z'
+      - '2025-07-17T09:57:09Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-06-11T12:53:14Z'
+      - '2025-07-17T09:57:09Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -75,8 +75,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_016VJsLNerddrTecEyaJnrCj","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5,"service_tier":"standard"}}'
-  recorded_at: Wed, 11 Jun 2025 12:53:14 GMT
+      string: '{"id":"msg_01PFfUpXk3sqiVvWyhB2U9WN","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5,"service_tier":"standard"}}'
+  recorded_at: Thu, 17 Jul 2025 09:57:09 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -87,16 +87,16 @@ http_interactions:
         4 + 4?"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250611T125314Z
+      - 20250717T095709Z
       X-Amz-Content-Sha256:
       - f51b41569ee8b8afa436b4c6765c7378c91c4e4b51edc7a6bfc737fb6fd6aac4
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250611/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=43b975924778063ee6e90149d6b75917eb770c93d7332072412bc964c4a36c18
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250717/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=958eb54028d9e1aff5198bd013b88e6b1443714ff8a8ef36f332e7844c73ea55
       Content-Type:
       - application/json
       Accept:
@@ -109,7 +109,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:53:15 GMT
+      - Thu, 17 Jul 2025 09:57:10 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -117,15 +117,15 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 711d55ce-6950-461a-a584-462aefbdf44e
+      - 8d4eb0df-d849-42b9-9691-b47a510052a8
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1042'
+      - '389'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '32'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_013cnpoDAPuRtUQj9ZfaG4mP","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"output_tokens":5}}'
-  recorded_at: Wed, 11 Jun 2025 12:53:15 GMT
+      string: '{"id":"msg_bdrk_01QXKkGBojyX1DRGBARepjpt","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"output_tokens":5}}'
+  recorded_at: Thu, 17 Jul 2025 09:57:10 GMT
 recorded_with: VCR 6.3.1

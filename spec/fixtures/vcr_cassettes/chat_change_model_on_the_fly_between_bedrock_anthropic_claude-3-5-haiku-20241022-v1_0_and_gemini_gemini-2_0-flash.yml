@@ -9,16 +9,16 @@ http_interactions:
         2 + 2?"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250611T125317Z
+      - 20250717T095713Z
       X-Amz-Content-Sha256:
       - c9959b2464b5ac20dc26dcc5555c64745b5fb1d651b2c68adbb1e8b276b03a01
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250611/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=7cf2770c04469129f9fe647d8fd60e062f47e02e29d5ec714e8ec2a1b058235c
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250717/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d008758ab41e2f5b036cba5499e8e4ed0961ffdbff7c73ce286c978c9945ac32
       Content-Type:
       - application/json
       Accept:
@@ -31,25 +31,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:53:18 GMT
+      - Thu, 17 Jul 2025 09:57:14 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '305'
+      - '245'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1a7ad3c0-9130-4e5c-9383-baee6f64f04f
+      - 73526a35-24b7-41bd-8c18-2e744650b8f6
       X-Amzn-Bedrock-Invocation-Latency:
-      - '441'
+      - '402'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01VCybvTevWqzgyHjkQGJcNv","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Wed, 11 Jun 2025 12:53:18 GMT
+      string: '{"id":"msg_bdrk_01TPrZsFF2iRkYu2LEZAh3DW","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"output_tokens":5}}'
+  recorded_at: Thu, 17 Jul 2025 09:57:14 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -59,7 +59,7 @@ http_interactions:
         4 + 4?"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -80,7 +80,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 11 Jun 2025 12:53:18 GMT
+      - Thu, 17 Jul 2025 09:57:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -90,7 +90,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=343
+      - gfet4t7; dur=1155
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -110,7 +110,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0011287105735391378
+              "avgLogprobs": -0.000974015798419714
             }
           ],
           "usageMetadata": {
@@ -131,7 +131,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "PnxJaNPDGPr3_NUPucOfkAg"
+          "responseId": "-8h4aO-JC9eKn9kPr_mp-Ak"
         }
-  recorded_at: Wed, 11 Jun 2025 12:53:18 GMT
+  recorded_at: Thu, 17 Jul 2025 09:57:15 GMT
 recorded_with: VCR 6.3.1
