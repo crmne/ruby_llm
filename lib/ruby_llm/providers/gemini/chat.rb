@@ -73,48 +73,11 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: extract_content(data),
-            images: extract_images(data),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
           )
-        end
-
-        def extract_content(data)
-          candidate = data.dig('candidates', 0)
-          return '' unless candidate
-
-          # Content will be empty for function calls
-          return '' if function_call?(candidate)
-
-          # Extract text content
-          parts = candidate.dig('content', 'parts')
-          text_parts = parts&.select { |p| p['text'] }
-          return '' unless text_parts&.any?
-
-          text_parts.map { |p| p['text'] }.join
-        end
-
-        def extract_images(data)
-          candidate = data.dig('candidates', 0)
-          return '' unless candidate
-
-          # Content will be empty for function calls
-          return '' if function_call?(candidate)
-
-          # Extract image content
-          parts = candidate.dig('content', 'parts')
-          image_parts = parts&.select { |p| p['inlineData'] }
-          return '' unless image_parts&.any?
-
-          image_parts.map do |p|
-            Image.new(
-              data: p['inlineData']['data'],
-              mime_type: p['inlineData']['mimeType'],
-              model_id: data['modelVersion']
-            )
-          end
         end
 
         def function_call?(candidate)
