@@ -62,7 +62,6 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
