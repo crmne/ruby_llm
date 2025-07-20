@@ -175,14 +175,6 @@ module RubyLLM
       tool.call(args)
     end
 
-    def add_tool_result(tool_use_id, result)
-      add_message(
-        role: :tool,
-        content: result.is_a?(Hash) && result[:error] ? result[:error] : result.to_s,
-        tool_call_id: tool_use_id
-      )
-    end
-
     def tool_name(tool)
       tool.name.to_sym
     end
