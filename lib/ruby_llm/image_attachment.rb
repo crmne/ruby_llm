@@ -8,7 +8,8 @@ module RubyLLM
     def initialize(data:, mime_type:, model_id:)
       super(nil, filename: nil)
       @image = Image.new(data:, mime_type:, model_id:)
-      @content = data
+      @content = Base64.strict_decode64(data)
+      @mime_type = mime_type
     end
 
     def image?
