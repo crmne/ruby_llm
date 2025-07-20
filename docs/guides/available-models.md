@@ -39,7 +39,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 ## Last Updated
 {: .d-inline-block }
 
-2025-07-16
+2025-07-17
 {: .label .label-green }
 
 ## Models by Provider
@@ -101,7 +101,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Omni Moderation 20240926 | omni-moderation-2024-09-26 | openai | - | - | - |
 | TTS-1 | tts-1 | openai | - | - | In: $15.00 |
 | TTS-1 1106 | tts-1-1106 | openai | - | - | In: $15.00, Out: $15.00 |
-| TTS-1 HD | tts-1-hd | openai | - | - | Out: $30.00 |
+| TTS-1 HD | tts-1-hd | openai | - | - | In: $30.00 |
 | TTS-1 HD 1106 | tts-1-hd-1106 | openai | - | - | In: $30.00, Out: $30.00 |
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
 | babbage-002 | babbage-002 | openai | - | 16384 | In: $0.40, Out: $0.40 |
@@ -190,13 +190,13 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
-| Gemini 2.5 Flash Preview TTS | gemini-2.5-flash-preview-tts | gemini | 8000 | 16000 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash Preview Text-to-Speech | gemini-2.5-flash-preview-tts | gemini | 8000 | 16000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite Preview | gemini-2.5-flash-lite-preview-06-17 | gemini | 1000000 | 64000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Pro | gemini-2.5-pro | gemini | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
 | Gemini 2.5 Pro | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
 | Gemini 2.5 Pro | gemini-2.5-pro-preview-05-06 | gemini | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
 | Gemini 2.5 Pro | gemini-2.5-pro-preview-06-05 | gemini | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
-| Gemini 2.5 Pro Preview TTS | gemini-2.5-pro-preview-tts | gemini | 8000 | 16000 | In: $1.25, Out: $10.00, Cache: $0.31 |
+| Gemini 2.5 Pro Preview Text-to-Speech | gemini-2.5-pro-preview-tts | gemini | 8000 | 16000 | In: $1.25, Out: $10.00, Cache: $0.31 |
 | Gemini Embedding | gemini-embedding-001 | gemini | 2048 | - | In: $0.15 |
 | Gemini Embedding | gemini-embedding-exp-03-07 | gemini | 2048 | - | In: $0.15 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
@@ -207,12 +207,12 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemma 3 4B | gemma-3-4b-it | gemini | 32768 | 8192 | In: $0.08, Out: $0.30 |
 | Gemma 3n E2B | gemma-3n-e2b-it | gemini | 8192 | 2048 | In: $0.08, Out: $0.30 |
 | Gemma 3n E4B | gemma-3n-e4b-it | gemini | 8192 | 2048 | In: $0.08, Out: $0.30 |
-| Imagen 3 | imagen-3.0-generate-002 | gemini | - | - | Out: $0.03 |
-| Imagen 4 | imagen-4.0-generate-preview-06-06 | gemini | 480 | - | Out: $0.04 |
-| Imagen 4 | imagen-4.0-ultra-generate-preview-06-06 | gemini | 480 | - | Out: $0.04 |
+| Imagen 3 | imagen-3.0-generate-002 | gemini | - | 4 | - |
+| Imagen 4 | imagen-4.0-generate-preview-06-06 | gemini | 480 | 1 | - |
+| Imagen 4 | imagen-4.0-ultra-generate-preview-06-06 | gemini | 480 | 1 | - |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Legacy Embedding Models | text-embedding-004 | gemini | 2048 | - | - |
-| Veo 2 | veo-2.0-generate-001 | gemini | - | - | Out: $0.35 |
+| Veo 2 | veo-2.0-generate-001 | gemini | - | 2 | - |
 
 
 ### Deepseek (2)
@@ -259,7 +259,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 
 
-### Openrouter (318)
+### Openrouter (319)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -472,6 +472,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | NousResearch: Hermes 2 Pro - Llama-3 8B | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 131072 | 131072 | In: $0.02, Out: $0.04 |
 | OpenAI: ChatGPT-4o | openai/chatgpt-4o-latest | openrouter | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | OpenAI: Codex Mini | openai/codex-mini | openrouter | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
+| OpenAI: GPT-3.5 Turbo | openai/gpt-3.5-turbo | openrouter | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | OpenAI: GPT-3.5 Turbo (older v0613) | openai/gpt-3.5-turbo-0613 | openrouter | 4095 | 4096 | In: $1.00, Out: $2.00 |
 | OpenAI: GPT-3.5 Turbo 16k | openai/gpt-3.5-turbo-16k | openrouter | 16385 | 4096 | In: $3.00, Out: $4.00 |
 | OpenAI: GPT-3.5 Turbo Instruct | openai/gpt-3.5-turbo-instruct | openrouter | 4095 | 4096 | In: $1.50, Out: $2.00 |
@@ -585,7 +586,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 
 ## Models by Capability
 
-### Function Calling (260)
+### Function Calling (261)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -807,6 +808,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | NVIDIA: Llama 3.1 Nemotron 70B Instruct | nvidia/llama-3.1-nemotron-70b-instruct | openrouter | 131072 | 131072 | In: $0.12, Out: $0.30 |
 | Nous: Hermes 3 70B Instruct | nousresearch/hermes-3-llama-3.1-70b | openrouter | 131072 | - | In: $0.10, Out: $0.28 |
 | OpenAI: Codex Mini | openai/codex-mini | openrouter | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
+| OpenAI: GPT-3.5 Turbo | openai/gpt-3.5-turbo | openrouter | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | OpenAI: GPT-3.5 Turbo (older v0613) | openai/gpt-3.5-turbo-0613 | openrouter | 4095 | 4096 | In: $1.00, Out: $2.00 |
 | OpenAI: GPT-3.5 Turbo 16k | openai/gpt-3.5-turbo-16k | openrouter | 16385 | 4096 | In: $3.00, Out: $4.00 |
 | OpenAI: GPT-4 | openai/gpt-4 | openrouter | 8191 | 4096 | In: $30.00, Out: $60.00 |
@@ -851,7 +853,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok 4 | x-ai/grok-4 | openrouter | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
 
 
-### Structured Output (283)
+### Structured Output (284)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1069,6 +1071,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | NousResearch: Hermes 2 Pro - Llama-3 8B | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 131072 | 131072 | In: $0.02, Out: $0.04 |
 | OpenAI: ChatGPT-4o | openai/chatgpt-4o-latest | openrouter | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | OpenAI: Codex Mini | openai/codex-mini | openrouter | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
+| OpenAI: GPT-3.5 Turbo | openai/gpt-3.5-turbo | openrouter | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | OpenAI: GPT-3.5 Turbo (older v0613) | openai/gpt-3.5-turbo-0613 | openrouter | 4095 | 4096 | In: $1.00, Out: $2.00 |
 | OpenAI: GPT-3.5 Turbo 16k | openai/gpt-3.5-turbo-16k | openrouter | 16385 | 4096 | In: $3.00, Out: $4.00 |
 | OpenAI: GPT-3.5 Turbo Instruct | openai/gpt-3.5-turbo-instruct | openrouter | 4095 | 4096 | In: $1.50, Out: $2.00 |
@@ -1140,7 +1143,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (391)
+### Streaming (392)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1426,6 +1429,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | NousResearch: Hermes 2 Pro - Llama-3 8B | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 131072 | 131072 | In: $0.02, Out: $0.04 |
 | OpenAI: ChatGPT-4o | openai/chatgpt-4o-latest | openrouter | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | OpenAI: Codex Mini | openai/codex-mini | openrouter | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
+| OpenAI: GPT-3.5 Turbo | openai/gpt-3.5-turbo | openrouter | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | OpenAI: GPT-3.5 Turbo (older v0613) | openai/gpt-3.5-turbo-0613 | openrouter | 4095 | 4096 | In: $1.00, Out: $2.00 |
 | OpenAI: GPT-3.5 Turbo 16k | openai/gpt-3.5-turbo-16k | openrouter | 16385 | 4096 | In: $3.00, Out: $4.00 |
 | OpenAI: GPT-3.5 Turbo Instruct | openai/gpt-3.5-turbo-instruct | openrouter | 4095 | 4096 | In: $1.50, Out: $2.00 |
@@ -1684,7 +1688,7 @@ Models that can process images:
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
-| Veo 2 | veo-2.0-generate-001 | gemini | - | - | Out: $0.35 |
+| Veo 2 | veo-2.0-generate-001 | gemini | - | 2 | - |
 | ChatGPT-4o | chatgpt-4o-latest | openai | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | GPT Image 1 | gpt-image-1 | openai | - | - | In: $5.00, Out: $40.00, Cache: $1.25 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |

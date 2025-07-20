@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:57:06 GMT
+      - Thu, 17 Jul 2025 10:00:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,25 +36,25 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749646624-qNHki8xiWEs11OhMBfTD\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646624,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        help you check the current weather in Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01At8rA8ndie4zdUjggSRuBQ\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752746444-zhvH9w3qCILp2i7kcjBd\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752746444,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you check the current weather in Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01JmZBbFD26Vs9cZHtCF9yWJ\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":90,\"total_tokens\":479}}"
-  recorded_at: Wed, 11 Jun 2025 12:57:07 GMT
+  recorded_at: Thu, 17 Jul 2025 10:00:45 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -62,14 +62,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01At8rA8ndie4zdUjggSRuBQ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01At8rA8ndie4zdUjggSRuBQ"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:57:08 GMT
+      - Thu, 17 Jul 2025 10:00:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -93,15 +93,15 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -109,8 +109,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3NDk2NDY2MjctRVhvMlB1akFrWmVySmVrTVFERFUiLCJwcm92aWRlciI6Ikdvb2dsZSIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS0zLjUtaGFpa3UiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzQ5NjQ2NjI3LCJjaG9pY2VzIjpbeyJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkJhc2VkIG9uIHRoZSBjdXJyZW50IHdlYXRoZXIgZGF0YSwgaW4gQmVybGluOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKDU5wrBGKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oXG5cbkl0IHNlZW1zIGxpa2UgYSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBhIG1vZGVyYXRlIHRlbXBlcmF0dXJlIGFuZCBsaWdodCB3aW5kLiBBIGxpZ2h0IGphY2tldCBvciBzd2VhdGVyIG1pZ2h0IGJlIGNvbWZvcnRhYmxlIGZvciBvdXRkb29yIGFjdGl2aXRpZXMuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MTgsImNvbXBsZXRpb25fdG9rZW5zIjo2OCwidG90YWxfdG9rZW5zIjo1ODZ9fQ==
-  recorded_at: Wed, 11 Jun 2025 12:57:10 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAp7ImlkIjoiZ2VuLTE3NTI3NDY0NDUtb1p2NEN5eGFtV1NNV3lVaVAwb2IiLCJwcm92aWRlciI6IkFudGhyb3BpYyIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS0zLjUtaGFpa3UiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzUyNzQ2NDQ1LCJjaG9pY2VzIjpbeyJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkJhc2VkIG9uIHRoZSB3ZWF0aGVyIGRhdGEsIGhlcmUncyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbjpcbi0gVGVtcGVyYXR1cmU6IDE1wrBDICg1OcKwRilcbi0gV2luZCBTcGVlZDogMTAga20vaFxuXG5JdCBzZWVtcyBsaWtlIGEgbWlsZCBkYXkgaW4gQmVybGluIHdpdGggYSBtb2RlcmF0ZSBicmVlemUuIFRoZSB0ZW1wZXJhdHVyZSBpcyBjb21mb3J0YWJsZSwgcGVyZmVjdCBmb3IgbGlnaHQgb3V0ZG9vciBhY3Rpdml0aWVzIG9yIHdhbGtpbmcgYXJvdW5kIHRoZSBjaXR5LiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTE4LCJjb21wbGV0aW9uX3Rva2VucyI6NzMsInRvdGFsX3Rva2VucyI6NTkxfX0=
+  recorded_at: Thu, 17 Jul 2025 10:00:48 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -118,19 +118,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01At8rA8ndie4zdUjggSRuBQ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01At8rA8ndie4zdUjggSRuBQ"},{"role":"assistant","content":"Based
-        on the current weather data, in Berlin:\n- Temperature: 15°C (59°F)\n- Wind
-        Speed: 10 km/h\n\nIt seems like a mild day in Berlin with a moderate temperature
-        and light wind. A light jacket or sweater might be comfortable for outdoor
-        activities."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
-        2.3514)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ"},{"role":"assistant","content":"Based
+        on the weather data, here''s the current weather in Berlin:\n- Temperature:
+        15°C (59°F)\n- Wind Speed: 10 km/h\n\nIt seems like a mild day in Berlin with
+        a moderate breeze. The temperature is comfortable, perfect for light outdoor
+        activities or walking around the city."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -145,7 +145,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:57:11 GMT
+      - Thu, 17 Jul 2025 10:00:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -154,26 +154,26 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749646630-45D0IOBfz9cdbfNlQvHt\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646630,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752746448-d7rp4PFW3VKBnwQiNH0Y\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752746448,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
         retrieve the current weather information for Paris using the coordinates you
-        provided.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01FefndEPtmgz9aZ9VcKs7SH\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":608,\"completion_tokens\":90,\"total_tokens\":698}}"
-  recorded_at: Wed, 11 Jun 2025 12:57:12 GMT
+        provided.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01UHu4KY6ctSz8uCDmVaH635\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":613,\"completion_tokens\":90,\"total_tokens\":703}}"
+  recorded_at: Thu, 17 Jul 2025 10:00:50 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -181,21 +181,22 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01At8rA8ndie4zdUjggSRuBQ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01At8rA8ndie4zdUjggSRuBQ"},{"role":"assistant","content":"Based
-        on the current weather data, in Berlin:\n- Temperature: 15°C (59°F)\n- Wind
-        Speed: 10 km/h\n\nIt seems like a mild day in Berlin with a moderate temperature
-        and light wind. A light jacket or sweater might be comfortable for outdoor
-        activities."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
-        2.3514)"},{"role":"assistant","content":"I''ll retrieve the current weather
-        information for Paris using the coordinates you provided.","tool_calls":[{"id":"toolu_vrtx_01FefndEPtmgz9aZ9VcKs7SH","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01FefndEPtmgz9aZ9VcKs7SH"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01JmZBbFD26Vs9cZHtCF9yWJ"},{"role":"assistant","content":"Based
+        on the weather data, here''s the current weather in Berlin:\n- Temperature:
+        15°C (59°F)\n- Wind Speed: 10 km/h\n\nIt seems like a mild day in Berlin with
+        a moderate breeze. The temperature is comfortable, perfect for light outdoor
+        activities or walking around the city."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"I''ll
+        retrieve the current weather information for Paris using the coordinates you
+        provided.","tool_calls":[{"id":"toolu_vrtx_01UHu4KY6ctSz8uCDmVaH635","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01UHu4KY6ctSz8uCDmVaH635"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -210,7 +211,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:57:13 GMT
+      - Thu, 17 Jul 2025 10:00:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -219,15 +220,15 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -235,6 +236,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc0OTY0NjYzMi1HcTZIZTlEdk1mNkF4RFVvVXBreSIsInByb3ZpZGVyIjoiQW50aHJvcGljIiwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTMuNS1oYWlrdSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDY2MzIsImNob2ljZXMiOlt7ImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXM6XG4tIFRlbXBlcmF0dXJlOiAxNcKwQyAoNTnCsEYpXG4tIFdpbmQgU3BlZWQ6IDEwIGttL2hcblxuSW50ZXJlc3RpbmdseSwgdGhlIHdlYXRoZXIgY29uZGl0aW9ucyBpbiBQYXJpcyBhcmUgcXVpdGUgc2ltaWxhciB0byB3aGF0IHdlIGp1c3Qgc2F3IGluIEJlcmxpbiAtIGEgbWlsZCB0ZW1wZXJhdHVyZSBhbmQgbGlnaHQgd2luZC4gSXQgbG9va3MgbGlrZSBhIHBsZWFzYW50IGRheSBpbiB0aGUgRnJlbmNoIGNhcGl0YWwsIHN1aXRhYmxlIGZvciB3YWxraW5nIGFyb3VuZCBhbmQgZW5qb3lpbmcgdGhlIGNpdHkuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MzcsImNvbXBsZXRpb25fdG9rZW5zIjo4NSwidG90YWxfdG9rZW5zIjo4MjJ9fQ==
-  recorded_at: Wed, 11 Jun 2025 12:57:15 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzUyNzQ2NDUwLVlpTjhnSjJMUHFVVDhGbXdYamo4IiwicHJvdmlkZXIiOiJHb29nbGUiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc1Mjc0NjQ1MCwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpczpcbi0gVGVtcGVyYXR1cmU6IDE1wrBDICg1OcKwRilcbi0gV2luZCBTcGVlZDogMTAga20vaFxuXG5JbnRlcmVzdGluZ2x5LCB0aGUgd2VhdGhlciBpbiBQYXJpcyBpcyBxdWl0ZSBzaW1pbGFyIHRvIHdoYXQgd2UganVzdCBzYXcgaW4gQmVybGluIC0gYSBtaWxkIHRlbXBlcmF0dXJlIHdpdGggYSBsaWdodCBicmVlemUuIEl0J3MgYSBwbGVhc2FudCBkYXkgdGhhdCB3b3VsZCBiZSBjb21mb3J0YWJsZSBmb3IgZXhwbG9yaW5nIHRoZSBjaXR5LCB2aXNpdGluZyBhdHRyYWN0aW9ucywgb3IgZW5qb3lpbmcgYSBjYWbDqSB0ZXJyYWNlLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzQyLCJjb21wbGV0aW9uX3Rva2VucyI6OTAsInRvdGFsX3Rva2VucyI6ODMyfX0=
+  recorded_at: Thu, 17 Jul 2025 10:00:53 GMT
 recorded_with: VCR 6.3.1

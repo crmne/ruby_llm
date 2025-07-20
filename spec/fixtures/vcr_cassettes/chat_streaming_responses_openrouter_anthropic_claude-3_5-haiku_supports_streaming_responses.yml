@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}],"stream":true,"temperature":0.7,"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -24,59 +24,49 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:54:00 GMT
+      - Thu, 17 Jul 2025 09:58:07 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Cache-Control:
       - no-cache
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: |+
         : OPENROUTER PROCESSING
 
-        : OPENROUTER PROCESSING
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":"1, 2"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":"Here"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":", 3"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
 
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":"'s"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
 
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":" counting"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
-
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":" from 1 to"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
-
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":" 3:\n\n1"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
-
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":"\n2\n3"},"finish_reason":null,"native_finish_reason":null,"logprobs":null}]}
-
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"stop","native_finish_reason":"stop","logprobs":null}]}
-
-        data: {"id":"gen-1749646439-WBjK0kqNKQEgZYYQ8GGp","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1749646439,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":15,"completion_tokens":20,"total_tokens":35,"cost":0.000092,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
+        data: {"id":"gen-1752746286-FNc8NLY2Ry1tVmUcsnr6","provider":"Google","model":"anthropic/claude-3.5-haiku","object":"chat.completion.chunk","created":1752746286,"choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null,"native_finish_reason":null,"logprobs":null}],"usage":{"prompt_tokens":15,"completion_tokens":11,"total_tokens":26,"cost":0.000056,"is_byok":false,"prompt_tokens_details":{"cached_tokens":0},"cost_details":{"upstream_inference_cost":null},"completion_tokens_details":{"reasoning_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Wed, 11 Jun 2025 12:54:00 GMT
+  recorded_at: Thu, 17 Jul 2025 09:58:07 GMT
 recorded_with: VCR 6.3.1
 ...

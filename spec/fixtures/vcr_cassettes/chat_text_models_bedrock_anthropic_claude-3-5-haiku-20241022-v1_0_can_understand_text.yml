@@ -10,16 +10,16 @@ http_interactions:
         is the best.</file>"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250611T124255Z
+      - 20250717T094254Z
       X-Amz-Content-Sha256:
       - f6869e22081f6306c726e679cddeba013e72d195b54bb1557e1d87f342dffda7
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250611/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=bc69a1ca0114c114ee3e481e4ce1dee31fc8f518728b517da26b2448aae17634
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250717/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=91caec11e4e7a7a9c023cfa861209d4273a8b4687eada3c901937ae07c73e275
       Content-Type:
       - application/json
       Accept:
@@ -32,28 +32,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:42:57 GMT
+      - Thu, 17 Jul 2025 09:42:57 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '437'
+      - '576'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 5105fc9d-edeb-4ba9-a0d0-347635776582
+      - 5ed66405-18df-4a67-a1bf-86a6a43c56b8
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1531'
+      - '3295'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '54'
+      - '66'
       X-Amzn-Bedrock-Input-Token-Count:
       - '36'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_019LQCSmcaBZBy3vinU2JEsg","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
-        on the provided file, the text file named ''ruby.txt'' contains the simple
-        text: \"Ruby is the best.\"\n\nThe file has a MIME type of ''text/plain'',
-        which indicates it is a plain text file."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"output_tokens":54}}'
-  recorded_at: Wed, 11 Jun 2025 12:42:57 GMT
+      string: '{"id":"msg_bdrk_01WvrRLBC5MDWBDijEvUZUrq","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
+        on the file details you''ve provided, the contents of the file ''ruby.txt''
+        is simply the text:\n\n\"Ruby is the best.\"\n\nThe file is a plain text file
+        (mime_type=''text/plain'') and contains a short statement expressing an opinion
+        about the Ruby programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":66}}'
+  recorded_at: Thu, 17 Jul 2025 09:42:58 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -62,23 +63,24 @@ http_interactions:
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"Based
-        on the provided file, the text file named ''ruby.txt'' contains the simple
-        text: \"Ruby is the best.\"\n\nThe file has a MIME type of ''text/plain'',
-        which indicates it is a plain text file."}]},{"role":"user","content":[{"type":"text","text":"and
+        on the file details you''ve provided, the contents of the file ''ruby.txt''
+        is simply the text:\n\n\"Ruby is the best.\"\n\nThe file is a plain text file
+        (mime_type=''text/plain'') and contains a short statement expressing an opinion
+        about the Ruby programming language."}]},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"temperature":0.7,"max_tokens":4096}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250611T124257Z
+      - 20250717T094258Z
       X-Amz-Content-Sha256:
-      - 95649fa7b25c406f03264c8926bf2fd6dd64bd3acb3deddf1db9bfd3e5998d3b
+      - c79c96e75a5ee1a99f4babf444285c69a42f1fc83ffb0a97756a344fbad82ede
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250611/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=6a0db8462b61c46b09d38e9f28b4d0048662aeadd6863808740467cc1d123183
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250717/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=8b05d9427966ef65906e730ba3d95e96ccd2fd1cf0aa5b430645f3cb0f1c8182
       Content-Type:
       - application/json
       Accept:
@@ -91,27 +93,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:42:59 GMT
+      - Thu, 17 Jul 2025 09:43:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '583'
+      - '656'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 41ab7186-649f-41b1-85ec-6cbeeef6785a
+      - 9e8764f1-bde5-4f1d-8060-438cf784726a
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1663'
+      - '2834'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '80'
+      - '90'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '128'
+      - '140'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01B6SE4fq9LvvgsoUe7Na7Pk","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"In
-        the file ''ruby.xml'' with a MIME type of ''application/xml'', the content
-        is an XML document with a single element:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis
-        is a simple XML structure with a root element named ''truism'' and the text
-        content \"Ruby is the best\"."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":128,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":80}}'
-  recorded_at: Wed, 11 Jun 2025 12:42:59 GMT
+      string: '{"id":"msg_bdrk_01SHZM9VEYhyM1SgBjW2sJP4","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"In
+        the file ''ruby.xml'', the contents are an XML document with the following
+        structure:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis is a
+        simple XML file with a single custom tag called \"truism\" containing the
+        text \"Ruby is the best\". The file has an XML MIME type (application/xml),
+        which indicates it''s formatted as an XML document."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":140,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Thu, 17 Jul 2025 09:43:01 GMT
 recorded_with: VCR 6.3.1
