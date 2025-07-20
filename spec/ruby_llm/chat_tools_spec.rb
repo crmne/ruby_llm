@@ -62,6 +62,26 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} can remove tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+
+        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        expect(response.content).to include('15')
+        expect(response.content).to include('10')
+
+        chat.without_tool(Weather)
+
+        response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
+        expect(response.content).not_to include('15')
+        expect(response.content).not_to include('10')
+      end
+    end
+
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
