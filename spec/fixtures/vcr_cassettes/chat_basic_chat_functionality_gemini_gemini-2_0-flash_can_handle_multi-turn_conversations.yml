@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 11 Jun 2025 12:49:56 GMT
+      - Thu, 17 Jul 2025 09:51:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=486
+      - gfet4t7; dur=539
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -80,9 +80,9 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "c3tJaLTuK6aUhMIP1I6QcQ"
+          "responseId": "scd4aNT4Ic6ZhMIP5-SH0AM"
         }
-  recorded_at: Wed, 11 Jun 2025 12:49:56 GMT
+  recorded_at: Thu, 17 Jul 2025 09:51:46 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -93,7 +93,7 @@ http_interactions:
         year did he create Ruby?"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -114,7 +114,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 11 Jun 2025 12:49:56 GMT
+      - Thu, 17 Jul 2025 09:51:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -124,7 +124,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=468
+      - gfet4t7; dur=464
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -138,19 +138,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**, and the first public release was in **1995**.\n"
+                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.044084757566452026
+              "avgLogprobs": -0.085678927103678387
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 28,
-            "candidatesTokenCount": 28,
-            "totalTokenCount": 56,
+            "candidatesTokenCount": 15,
+            "totalTokenCount": 43,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -160,12 +160,12 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 28
+                "tokenCount": 15
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "dHtJaN3qDMuM1PIPkIuSsAI"
+          "responseId": "ssd4aJirC6qr7dcPzq686Qw"
         }
-  recorded_at: Wed, 11 Jun 2025 12:49:56 GMT
+  recorded_at: Thu, 17 Jul 2025 09:51:46 GMT
 recorded_with: VCR 6.3.1
