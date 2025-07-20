@@ -52,6 +52,10 @@ module RubyLLM
           model_id.match?(/gemini|flash|pro|imagen/)
         end
 
+        def supports_video?(model_id)
+          model_id.match?(/gemini/)
+        end
+
         def supports_functions?(model_id)
           return false if model_id.match?(/text-embedding|embedding-001|aqa|flash-lite|imagen|gemini-2\.0-flash-lite/)
 
@@ -214,10 +218,10 @@ module RubyLLM
 
           if supports_vision?(model_id)
             modalities[:input] << 'image'
-            modalities[:input] << 'video'
             modalities[:input] << 'pdf'
           end
 
+          modalities[:input] << 'video' if supports_video?(model_id)
           modalities[:input] << 'audio' if model_id.match?(/audio/)
           modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
           modalities[:output] = ['image'] if model_id.match?(/imagen/)
