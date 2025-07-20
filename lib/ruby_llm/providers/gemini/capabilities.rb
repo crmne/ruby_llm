@@ -61,13 +61,20 @@ module RubyLLM
           context_window_for(model_id) > 128_000 ? base_price * 2 : base_price
         end
 
-        # Determines if the model supports vision (image/video) inputs
+        # Determines if the model supports vision (image/document) inputs
         # @param model_id [String] the model identifier
         # @return [Boolean] true if the model supports vision inputs
         def supports_vision?(model_id)
           return false if model_id.match?(/text-embedding|embedding-001|aqa/)
 
           model_id.match?(/gemini|flash|pro|imagen/)
+        end
+
+        # Determines if the model supports video inputs
+        # @param model_id [String] the model identifier
+        # @return [Boolean] true if the model supports video inputs
+        def supports_video?(model_id)
+          model_id.match?(/gemini/)
         end
 
         # Determines if the model supports function calling
@@ -271,9 +278,11 @@ module RubyLLM
           # Vision support
           if supports_vision?(model_id)
             modalities[:input] << 'image'
-            modalities[:input] << 'video'
             modalities[:input] << 'pdf'
           end
+
+          # Video support
+          modalities[:input] << 'video' if supports_video?(model_id)
 
           # Audio support
           modalities[:input] << 'audio' if model_id.match?(/audio/)

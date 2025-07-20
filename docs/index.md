@@ -115,7 +115,8 @@ chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
 ## Core Capabilities
 
 *   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
-*   👁️ **Vision:** Analyze images within chats.
+*   👁️ **Vision:** Analyze images and documents within chats.
+*   🎞️ **Video:** Analyze videos within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
 *   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
