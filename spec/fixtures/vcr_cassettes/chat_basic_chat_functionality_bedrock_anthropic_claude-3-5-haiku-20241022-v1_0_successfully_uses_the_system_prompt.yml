@@ -11,16 +11,16 @@ http_interactions:
         in your response.\"}"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250611T124945Z
+      - 20250717T095129Z
       X-Amz-Content-Sha256:
       - 6fa1f6e36225dd0a2537e8247886b67be2b376fe920373042b894f15df345016
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250611/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d594639ed595e430393a67943017cd3351e80a781b052346d9e1f2a3fd51cd5e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250717/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2963d97da531987efd15e5952c22a6a782f829779e6e03de3e35bc66e0af5607
       Content-Type:
       - application/json
       Accept:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:49:48 GMT
+      - Thu, 17 Jul 2025 09:51:33 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,21 +41,21 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 6ddb4c32-ad44-406c-a4d3-83c41401a49c
+      - 22969fbd-422a-4202-98c1-ea40fdcf11b9
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1793'
+      - '2846'
       X-Amzn-Bedrock-Output-Token-Count:
       - '93'
       X-Amzn-Bedrock-Input-Token-Count:
       - '42'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01Gk51auqpeBm5KrxpcJZWYN","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+      string: '{"id":"msg_bdrk_016MZ9dbdc8dcKuFrzQgkZWz","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
         apologize, but I can''t provide real-time weather information. As an AI, I
         don''t have access to current weather conditions. However, I can suggest checking
         a local weather app, website, or watching a local weather forecast to get
         up-to-date information about the current weather in your area. XKCD7392 Just
         remember that weather can change quickly, so it''s always best to check recent
         forecasts."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":42,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":93}}'
-  recorded_at: Wed, 11 Jun 2025 12:49:48 GMT
+  recorded_at: Thu, 17 Jul 2025 09:51:33 GMT
 recorded_with: VCR 6.3.1

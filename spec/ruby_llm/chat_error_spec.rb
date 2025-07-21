@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Chat do
           # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
           Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)
 
-          # Create a huge conversation
+          # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
           massive_text = 'a' * 1_000_000
 
           # Create a few copies in the conversation

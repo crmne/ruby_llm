@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:06 GMT
+      - Thu, 17 Jul 2025 09:43:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 259fca9ab8e39d739e4d9a04205c9a8d
+      - 34b80cb9b7504f34bdf37e42c1e5d700
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,17 +46,20 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=.tnlWdXiPcMDe9wR4viizvqZdTt3jYqXDzit.J886A4-1752745389-1.0.1.1-V2l8o8IkBJhI56monJwly0IJm2CueKGUmCzfGuc6SUjgz4VjZdHVnPi2oRbFmHbfsys_FPwmEbkWooqljACRnao8AEY7mkLCE0rvVSmo6VvkrSjA1.cJIELm8_qD5PEKKJbZlpLfwEASJ1HT5ZTBv32oOvZtaaBaAeNpiVpKQTI"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.tnlWdXiPcMDe9wR4viizvqZdTt3jYqXDzit.J886A4-1752745389-1.0.1.1-V2l8o8IkBJhI56monJwly0IJm2CueKGUmCzfGuc6SUjgz4VjZdHVnPi2oRbFmHbfsys_FPwmEbkWooqljACRnao8AEY7mkLCE0rvVSmo6VvkrSjA1.cJIELm8_qD5PEKKJbZlpLfwEASJ1HT5ZTBv32oOvZtaaBaAeNpiVpKQTI;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"02c1e5f4-7984-4661-90f1-c4b6c86e7e57","object":"chat.completion","created":1749645786,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file (MIME type `text/plain`) with a single line of content
-        praising the Ruby programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion_tokens":46,"total_tokens":78,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":32},"system_fingerprint":"fp_8802369eaa_prod0425fp8"}'
-  recorded_at: Wed, 11 Jun 2025 12:43:12 GMT
+      string: '{"id":"c8102918-7fe3-40e8-b4fe-83c413766134","object":"chat.completion","created":1752745389,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion_tokens":19,"total_tokens":51,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":32},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
+  recorded_at: Thu, 17 Jul 2025 09:43:13 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -65,14 +68,12 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
-        text file (MIME type `text/plain`) with a single line of content praising
-        the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
+        contains the following text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -87,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:12 GMT
+      - Thu, 17 Jul 2025 09:43:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -99,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 0d34e3fde62a9ddd1ed113ed4b0b5f5b
+      - 5758e0b4dda9e615210b9e3c4958e15e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -114,7 +115,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijk0MWI2NTg1LWFjMGMtNGViMy04ZGMzLTYxNWE4YmJiZWU1ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NDk2NDU3OTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OiAgXG5cbmBgYHhtbFxuPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+XG5gYGAgIFxuXG4tICoqRmlsZSB0eXBlOioqIFhNTCAoTUlNRSB0eXBlIGBhcHBsaWNhdGlvbi94bWxgKSAgXG4tICoqU3RydWN0dXJlOioqIEEgc2luZ2xlIFhNTCBlbGVtZW50IGA8dHJ1aXNtPmAgd2l0aCB0aGUgdGV4dCBjb250ZW50IFwiUnVieSBpcyB0aGUgYmVzdFwiLiAgXG5cbiooTm90ZTogVGhlcmUncyBhIHNtYWxsIHR5cG/igJR0aGUgY2xvc2luZyB0YWcgc2hvdWxkIGJlIGA8L3RydWlzbT5gIGluc3RlYWQgb2YgYDwvdHJ1aXNtPmAsIGJ1dCBpdCBhcHBlYXJzIGNvcnJlY3RseSBpbiB0aGUgb3JpZ2luYWwgaW5wdXQuKSoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMTgsImNvbXBsZXRpb25fdG9rZW5zIjoxMTIsInRvdGFsX3Rva2VucyI6MjMwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NjR9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NjQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NTR9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNDI1ZnA4In0=
-  recorded_at: Wed, 11 Jun 2025 12:43:21 GMT
+      string: '{"id":"c2e09fde-0ae0-4e0e-94ac-56d8a0cdde55","object":"chat.completion","created":1752745393,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:  \n\n```xml\n<truism>Ruby
+        is the best</truism>\n```  \n\nIt is a well-formed XML document with a root
+        element `<truism>` containing the text \"Ruby is the best\"."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":91,"completion_tokens":57,"total_tokens":148,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":91},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
+  recorded_at: Thu, 17 Jul 2025 09:43:20 GMT
 recorded_with: VCR 6.3.1

@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:51:28 GMT
+      - Thu, 17 Jul 2025 09:53:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,15 +34,15 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -50,14 +50,13 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n{\"id\":\"gen-1749646287-bMazhacWZz5prDMarp18\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646287,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I
-        apologize, but I can't provide real-time weather information as I don't have
-        access to current weather data. Weather conditions vary depending on your
-        specific location and the current time. If you'd like to know about the weather,
-        I recommend:\\n\\n1. Checking a local weather website or app\\n2. Looking
-        at a weather forecast on TV\\n3. Checking your local meteorological service
-        website\\n4. Using a smartphone weather app\\n\\nXKCD7392 Just remember that
-        weather can change quickly, so it's always best to get the most up-to-date
-        information from a live source.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":130,\"total_tokens\":162}}"
-  recorded_at: Wed, 11 Jun 2025 12:51:31 GMT
+        \        \n{\"id\":\"gen-1752745989-otzQ59LRixqan9MaZQ33\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752745989,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        weather can vary widely depending on your specific location and current atmospheric
+        conditions. Today might be sunny, cloudy, rainy, or something in between.
+        XKCD7392 If you're interested in knowing the precise weather for your area,
+        I recommend checking a local weather forecast or using a weather app that
+        can provide real-time updates for your specific region. Factors like temperature,
+        humidity, wind speed, and precipitation can all play a role in determining
+        the day's weather conditions.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":103,\"total_tokens\":135}}"
+  recorded_at: Thu, 17 Jul 2025 09:53:12 GMT
 recorded_with: VCR 6.3.1

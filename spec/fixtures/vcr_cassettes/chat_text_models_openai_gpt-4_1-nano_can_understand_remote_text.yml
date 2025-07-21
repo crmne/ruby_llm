@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 28 May 2025 09:09:09 GMT
+      - Wed, 16 Jul 2025 15:35:29 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6836d2b5-9c6"
+      - W/"6877c6c1-9c6"
       Expires:
-      - Wed, 11 Jun 2025 09:37:51 GMT
+      - Thu, 17 Jul 2025 07:25:20 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E0D:1A1E1:ED23E5:EF5D0B:68494C17
+      - A671:3B165:AFAA75:B103CB:6878A307
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 11 Jun 2025 12:43:49 GMT
+      - Thu, 17 Jul 2025 09:43:39 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '373'
+      - '49'
       X-Served-By:
-      - cache-fra-etou8220062-FRA
+      - cache-fra-etou8220173-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1749645830.864507,VS0,VE3
+      - S1752745419.220630,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 84e56c648115f8ecdcc3a9e08e2cc5af65723665
+      - 0142c139699a6ec0e2f7e342ede2f8d60d853225
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 11 Jun 2025 12:43:49 GMT
+  recorded_at: Thu, 17 Jul 2025 09:43:39 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:43:51 GMT
+      - Thu, 17 Jul 2025 09:43:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,11 +167,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '973'
+      - '1612'
+      Openai-Project:
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '975'
+      - '1615'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -203,16 +207,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BhF5ytufjqLvfNdTlrS0AbgMO2hvE",
+          "id": "chatcmpl-BuFRLqfX49YkipLJah13gH3IlMUBm",
           "object": "chat.completion",
-          "created": 1749645830,
+          "created": 1752745419,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "This file contains the license information for the Ruby programming language. It states that Ruby is free software created by Yukihiro Matsumoto and provides terms under which it can be redistributed, modified, and used. The license offers two options: the 2-clause Berkeley Software Distribution License (BSDL) or specific conditions outlined in the document. It details permissions for copying, modifying, and distributing the software, including conditions for binary distribution and inclusion in other software. It also includes disclaimers of warranty, emphasizing that the software is provided \"as is\" without guarantees.",
+                "content": "The file 'license.txt' contains the licensing information for the Ruby programming language. It states that Ruby is free software copyrighted by Yukihiro Matsumoto. You are permitted to redistribute and modify Ruby under either the 2-clause Berkeley Software Distribution License (BSDL) or the conditions outlined in the document.\n\nThe license details various permissions and conditions, including:\n\n- Making and distributing verbatim copies of the source code.\n- Modifying the software, with options such as placing modifications in the public domain, internal organizational use, or giving binaries non-standard names.\n- Distributing the software in object or binary form, with options for including source code or providing instructions.\n- Incorporating parts of the software into other software, with the note that some files may not be under these terms.\n- Clarification that scripts and generated files are not automatically covered by the license.\n- A disclaimer of warranties, emphasizing that the software is provided \"as is\" without guarantees.\n\nOverall, this is a permissive license allowing broad use and modification, provided certain conditions are met.",
                 "refusal": null,
                 "annotations": []
               },
@@ -222,8 +226,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 114,
-            "total_tokens": 654,
+            "completion_tokens": 213,
+            "total_tokens": 753,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -236,7 +240,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": null
         }
-  recorded_at: Wed, 11 Jun 2025 12:43:51 GMT
+  recorded_at: Thu, 17 Jul 2025 09:43:41 GMT
 recorded_with: VCR 6.3.1

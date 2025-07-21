@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 28 May 2025 09:09:09 GMT
+      - Wed, 16 Jul 2025 15:35:29 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6836d2b5-9c6"
+      - W/"6877c6c1-9c6"
       Expires:
-      - Wed, 11 Jun 2025 09:37:51 GMT
+      - Thu, 17 Jul 2025 07:25:20 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E0D:1A1E1:ED23E5:EF5D0B:68494C17
+      - A671:3B165:AFAA75:B103CB:6878A307
       Accept-Ranges:
       - bytes
       Age:
-      - '315'
+      - '0'
       Date:
-      - Wed, 11 Jun 2025 12:42:50 GMT
+      - Thu, 17 Jul 2025 09:42:50 GMT
       Via:
       - 1.1 varnish
       X-Served-By:
-      - cache-fra-etou8220040-FRA
+      - cache-fra-etou8220068-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1749645771.978538,VS0,VE2
+      - S1752745370.408747,VS0,VE104
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 38403066eeb0684d9da0a6612fc30ee7ac99d90f
+      - 7e7932f75ed78838f76a1ee3e3813f894bced6ef
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 11 Jun 2025 12:42:50 GMT
+  recorded_at: Thu, 17 Jul 2025 09:42:50 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -155,7 +157,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:42:55 GMT
+      - Thu, 17 Jul 2025 09:42:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,25 +169,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-06-11T12:42:52Z'
+      - '2025-07-17T09:42:51Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-06-11T12:42:55Z'
+      - '2025-07-17T09:42:54Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-06-11T12:42:51Z'
+      - '2025-07-17T09:42:50Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-06-11T12:42:52Z'
+      - '2025-07-17T09:42:51Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -204,16 +206,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01Tf8RLANPxr4aWzet2LrZHH","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        is the license text for Ruby, written by its creator Yukihiro Matsumoto (Matz).
-        It appears to be a permissive open-source license that allows:\n\n1. Redistribution
-        of the source code\n2. Modification of the software\n3. Distribution of modified
-        or unmodified versions under certain conditions\n4. Use in commercial and
-        non-commercial projects\n\nThe license includes several key provisions:\n-
-        You can make and distribute copies\n- You can modify the software\n- You must
-        preserve copyright notices\n- There are specific guidelines for distributing
-        modifications\n- The software is provided \"AS IS\" without warranties\n\nThis
-        looks like a variant of the BSD-style license, which is known for being very
-        permissive in terms of how the software can be used and distributed."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":172,"service_tier":"standard"}}'
-  recorded_at: Wed, 11 Jun 2025 12:42:55 GMT
+      string: '{"id":"msg_0146VnPHJiZya97iynubtn1d","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
+        file is a license text for Ruby, the programming language. It appears to be
+        a modified BSD-style license written by Yukihiro Matsumoto (Matz), the creator
+        of Ruby. The license outlines the terms under which Ruby can be redistributed
+        and modified, including:\n\n1. Allowing verbatim copies of the source code\n2.
+        Permitting modifications under certain conditions\n3. Allowing distribution
+        of binaries or source code\n4. Allowing incorporation into other software\n5.
+        Clarifying copyright status of scripts and library files\n6. Providing the
+        software \"AS IS\" without warranties\n\nThe license is quite permissive,
+        giving users significant freedom to use, modify, and distribute the Ruby software
+        with relatively few restrictions."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":162,"service_tier":"standard"}}'
+  recorded_at: Thu, 17 Jul 2025 09:42:54 GMT
 recorded_with: VCR 6.3.1
