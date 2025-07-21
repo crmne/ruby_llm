@@ -496,10 +496,9 @@ This setup allows for:
 
 Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. You can add any other associations, validations, scopes, callbacks, or methods as needed for your application logic. The `acts_as` helpers provide the core persistence bridge to RubyLLM without interfering with other model behavior.
 
-{: .note }
 You can use custom model names by passing parameters to the `acts_as` helpers. For example, if you prefer `Conversation` over `Chat`, you could use `acts_as_chat` in your `Conversation` model and then specify `chat_class: 'Conversation'` in your `Message` model's `acts_as_message` call.
 
-#### Using Custom Model Names
+### Using Custom Model Names
 
 If your application uses different model names, you can configure the `acts_as` helpers accordingly:
 
