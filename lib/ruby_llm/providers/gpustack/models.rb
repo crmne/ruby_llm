@@ -11,13 +11,13 @@ module RubyLLM
           'models'
         end
 
-        def parse_list_models_response(response, slug, capabilities) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def parse_list_models_response(response, slug, _capabilities)
           items = response.body['items'] || []
           items.map do |model|
             Model::Info.new(
               id: model['name'],
               created_at: model['created_at'] ? Time.parse(model['created_at']) : nil,
-              display_name: model['source'] + '/' + model['name'],
+              display_name: "#{model['source']}/#{model['name']}",
               provider: slug,
               type: determine_model_type(model),
               metadata: {
@@ -30,7 +30,8 @@ module RubyLLM
                 categories: model['categories']
               },
               context_window: model.dig('meta', 'n_ctx'),
-              max_tokens: model.dig('meta', 'n_ctx'), # Using context window as max tokens since it's not explicitly provided
+              # Using context window as max tokens since it's not explicitly provided
+              max_tokens: model.dig('meta', 'n_ctx'),
               supports_vision: model.dig('meta', 'support_vision') || false,
               supports_functions: model.dig('meta', 'support_tool_calls') || false,
               supports_json_mode: true, # Assuming all models support JSON mode
@@ -45,6 +46,7 @@ module RubyLLM
         def determine_model_type(model)
           return 'embedding' if model['categories']&.include?('embedding')
           return 'chat' if model['categories']&.include?('llm')
+
           'other'
         end
       end
