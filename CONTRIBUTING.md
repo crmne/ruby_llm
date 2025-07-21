@@ -53,6 +53,8 @@ The git hooks handle style, tests, and file generation for you. No excuses for b
 
 ## Testing
 
+Run linting: `bundle exec rubocop`
+
 Run tests: `bundle exec rspec`
 
 **Re-recording VCR cassettes?** Set API keys and run:
