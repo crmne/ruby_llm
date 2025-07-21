@@ -492,6 +492,100 @@ This setup allows for:
 2. Background processing to prevent request timeouts
 3. Automatic persistence of all messages and tool calls
 
+### Handling Message Ordering with ActionCable
+
+ActionCable doesn't guarantee message order when using certain adapters. If you experience messages appearing out of order (e.g., assistant responses appearing above user messages), you have several options:
+
+#### Option 1: Client-Side Reordering with Stimulus
+
+Add a Stimulus controller that maintains correct chronological order based on timestamps:
+
+```javascript
+// app/javascript/controllers/message_ordering_controller.js
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["message"]
+
+  connect() {
+    this.reorderMessages()
+    this.observeNewMessages()
+  }
+
+  observeNewMessages() {
+    // Watch for new messages being added to the DOM
+    const observer = new MutationObserver((mutations) => {
+      let shouldReorder = false
+
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.matches('[data-message-ordering-target="message"]')) {
+            shouldReorder = true
+          }
+        })
+      })
+
+      if (shouldReorder) {
+        // Small delay to ensure all attributes are set
+        setTimeout(() => this.reorderMessages(), 10)
+      }
+    })
+
+    observer.observe(this.element, { childList: true, subtree: true })
+    this.observer = observer
+  }
+
+  disconnect() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  reorderMessages() {
+    const messages = Array.from(this.messageTargets)
+
+    // Sort by timestamp (created_at)
+    messages.sort((a, b) => {
+      const timeA = new Date(a.dataset.createdAt).getTime()
+      const timeB = new Date(b.dataset.createdAt).getTime()
+      return timeA - timeB
+    })
+
+    // Reorder in DOM
+    messages.forEach((message) => {
+      this.element.appendChild(message)
+    })
+  }
+}
+```
+
+Update your views to use the controller:
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<!-- Add the Stimulus controller to the messages container -->
+<div id="messages" data-controller="message-ordering">
+  <%= render @chat.messages %>
+</div>
+
+<%# app/views/messages/_message.html.erb %>
+<%= turbo_frame_tag message,
+    data: {
+      message_ordering_target: "message",
+      created_at: message.created_at.iso8601
+    } do %>
+  <!-- message content -->
+<% end %>
+```
+
+#### Option 2: Use the Async Stack
+
+The async Ruby stack (Falcon + async-cable + async-job) may help with message ordering in single-machine deployments. See our [Async Guide]({% link guides/async.md %}) for details. Note that this approach might not guarantee ordering in all deployment scenarios, particularly in distributed systems.
+
+#### Option 3: Use AnyCable
+
+[AnyCable](https://anycable.io) provides order guarantees at the server level, eliminating the need for client-side reordering code.
+
 ## Customizing Models
 
 Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. You can add any other associations, validations, scopes, callbacks, or methods as needed for your application logic. The `acts_as` helpers provide the core persistence bridge to RubyLLM without interfering with other model behavior.
