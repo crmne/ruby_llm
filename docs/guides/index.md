@@ -10,3 +10,4 @@ description: Learn to build with AI. From chat basics to production Rails apps, 
 # RubyLLM Guides
 
 Everything you need to know to build amazing AI features in Ruby.
+{: .fs-6 .fw-300 }

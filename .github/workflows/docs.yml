@@ -39,6 +39,26 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends libvips-dev
 
+      - name: Install fonts for OG image generation
+        run: |
+          # Install Inter font from apt
+          sudo apt-get install -y fonts-inter fonts-inter-variable
+
+          # Download and install Plus Jakarta Sans from official GitHub repository
+          wget -q https://github.com/tokotype/PlusJakartaSans/archive/refs/heads/master.zip -O PlusJakartaSans.zip
+          unzip -q PlusJakartaSans.zip
+          sudo mkdir -p /usr/share/fonts/truetype/plus-jakarta-sans
+          sudo cp PlusJakartaSans-master/fonts/ttf/*.ttf /usr/share/fonts/truetype/plus-jakarta-sans/
+          rm -rf PlusJakartaSans.zip PlusJakartaSans-master
+
+          # Update font cache
+          sudo fc-cache -fv
+
+          # Verify fonts are installed
+          echo "Installed fonts:"
+          fc-list | grep -i inter || echo "Inter font not found"
+          fc-list | grep -i jakarta || echo "Plus Jakarta Sans not found"
+
       - name: Setup Ruby for Jekyll build (ruby_llm environment)
         uses: ruby/setup-ruby@v1
         with:
