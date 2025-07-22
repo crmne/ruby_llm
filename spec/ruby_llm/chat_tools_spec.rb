@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-        skip 'Ollama models do not reliably use tools' if provider == :ollama
+        skip 'Local providers do not reliably use tools' if RubyLLM::Provider.providers[provider]&.local?
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(DiceRoll)
                       .with_instructions(
