@@ -8,12 +8,13 @@ module RubyLLM
       extend OpenAI
       extend AzureOpenAI::Chat
       extend AzureOpenAI::Streaming
+      extend AzureOpenAI::Models
 
       module_function
 
       def api_base(config)
         # https://<ENDPOINT>/openai/deployments/<MODEL>/chat/completions?api-version=<APIVERSION>
-        "#{config.azure_openai_api_base}/openai/deployments"
+        "#{config.azure_openai_api_base}/openai"
       end
 
       def headers(config)
