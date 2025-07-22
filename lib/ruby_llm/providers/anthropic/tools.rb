@@ -7,8 +7,8 @@ module RubyLLM
       module Tools
         module_function
 
-        def find_tool_use(blocks)
-          blocks.find { |c| c['type'] == 'tool_use' }
+        def find_tool_uses(blocks)
+          blocks.select { |c| c['type'] == 'tool_use' }
         end
 
         def format_tool_call(msg)

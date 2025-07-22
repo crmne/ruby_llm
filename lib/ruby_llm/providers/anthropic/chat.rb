@@ -55,7 +55,7 @@ module RubyLLM
           content_blocks = data['content'] || []
 
           text_content = extract_text_content(content_blocks)
-          tool_use_blocks = content_blocks.select { |c| c['type'] == 'tool_use' }
+          tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
           build_message(data, text_content, tool_use_blocks)
         end
