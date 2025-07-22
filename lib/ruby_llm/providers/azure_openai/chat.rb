@@ -17,7 +17,7 @@ module RubyLLM
 
         def completion_url
           # https://<ENDPOINT>/openai/deployments/<MODEL>/chat/completions?api-version=<APIVERSION>
-          "#{@model_id}/chat/completions?api-version=#{@config.azure_openai_api_version}"
+          "deployments/#{@model_id}/chat/completions?api-version=#{@config.azure_openai_api_version}"
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false)
