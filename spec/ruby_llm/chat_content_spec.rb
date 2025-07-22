@@ -156,4 +156,30 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       end
     end
   end
+
+  describe 'URL attachment handling' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    it 'handles URL MIME type detection without ArgumentError' do
+      attachment = RubyLLM::Attachment.new(image_url)
+
+      expect(attachment.mime_type).to be_present
+    end
+
+    it 'creates content with URL attachments' do # rubocop:disable RSpec/MultipleExpectations
+      content = RubyLLM::Content.new('Describe this image', image_url)
+
+      expect(content.attachments).not_to be_empty
+      expect(content.attachments.first).to be_a(RubyLLM::Attachment)
+    end
+
+    it 'prevents ArgumentError: wrong number of arguments when processing URL attachments' do # rubocop:disable RSpec/MultipleExpectations
+      require 'open-uri' # required to trigger the marcel/open-uri compatibility issue
+
+      attachment = RubyLLM::Attachment.new(image_url)
+
+      expect { attachment.mime_type }.not_to raise_error
+
+      expect(attachment.mime_type).to eq('image/png')
+      expect(attachment.send(:url?)).to be true
+    end
+  end
 end

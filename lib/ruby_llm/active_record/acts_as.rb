@@ -130,6 +130,11 @@ module RubyLLM
         self
       end
 
+      def with_params(...)
+        to_llm.with_params(...)
+        self
+      end
+
       def on_new_message(...)
         to_llm.on_new_message(...)
         self

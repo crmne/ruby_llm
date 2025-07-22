@@ -4,8 +4,9 @@ title: Guides
 nav_order: 3
 has_children: true
 permalink: /guides/
+description: Learn to build with AI. From chat basics to production Rails apps, we've got you covered.
 ---
 
 # RubyLLM Guides
 
-This section contains detailed guides covering specific features and use cases for RubyLLM.
+Everything you need to know to build amazing AI features in Ruby.

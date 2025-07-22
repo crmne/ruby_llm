@@ -34,6 +34,11 @@ jobs:
       - name: Run models:docs rake task
         run: bundle exec rake models:docs
 
+      - name: Install libvips for jekyll-og-image
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libvips-dev
+
       - name: Setup Ruby for Jekyll build (ruby_llm environment)
         uses: ruby/setup-ruby@v1
         with:
@@ -42,6 +47,7 @@ jobs:
           working-directory: docs
 
       - name: Setup Pages
+        id: pages
         uses: actions/configure-pages@v4
 
       - name: Build with Jekyll

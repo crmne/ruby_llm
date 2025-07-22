@@ -69,7 +69,12 @@ RSpec.describe RubyLLM::Chat do
 
         it 'handles context length exceeded errors' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
           skip('Ollama does not throw an error for context length exceeded') if provider == :ollama
-          # Create a huge conversation
+          skip('GPUStack does not throw an error for context length exceeded') if provider == :gpustack
+
+          # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
+          Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)
+
+          # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
           massive_text = 'a' * 1_000_000
 
           # Create a few copies in the conversation
