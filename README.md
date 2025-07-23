@@ -124,7 +124,7 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 Add persistence to your chat models effortlessly:
 
 ```bash
-# Generate models and migrations
+# Generate models and migrations (available in v1.4.0)
 rails generate ruby_llm:install
 ```
 
