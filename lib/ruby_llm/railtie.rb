@@ -9,12 +9,6 @@ module RubyLLM
       end
     end
 
-    # Include rake tasks
-    rake_tasks do
-      path = File.expand_path(__dir__)
-      Dir.glob("#{path}/tasks/**/*.rake").each { |f| load f }
-    end
-
     # Register generators
     generators do
       require 'generators/ruby_llm/install_generator'
