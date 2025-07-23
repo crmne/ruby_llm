@@ -8,6 +8,8 @@ Thanks for installing RubyLLM in your Rails application. Here's what was created
 - `<%= options[:message_model_name] %>` - Stores individual messages in a chat
 - `<%= options[:tool_call_model_name] %>` - Stores tool calls made by language models
 
+**Note:** Do not add `validates :content, presence: true` to your Message model - RubyLLM creates empty assistant messages before API calls for streaming support.
+
 ## Configuration Options
 
 The generator supports the following options to customize model names:
@@ -28,48 +30,79 @@ This is useful when you need to avoid namespace collisions with existing models 
    rails db:migrate
    ```
 
+   **Database Note:** The migrations use `jsonb` for PostgreSQL and `json` for MySQL/SQLite automatically.
+
 2. **Set your API keys** in `config/initializers/ruby_llm.rb` or using environment variables:
    ```ruby
    # config/initializers/ruby_llm.rb
    RubyLLM.configure do |config|
-     config.openai_api_key = ENV["OPENAI_API_KEY"]
-     config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
-     # etc.
+     config.openai_api_key = ENV['OPENAI_API_KEY']
+     config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
+     config.gemini_api_key = ENV['GEMINI_API_KEY']
+     # ... add other providers as needed
    end
    ```
 
 3. **Start using RubyLLM in your code:**
    ```ruby
-   # In a background job
-   class ChatJob < ApplicationJob
-     def perform(chat_id, question)
+   # Basic usage
+   chat = <%= options[:chat_model_name] %>.create!(model_id: 'gpt-4.1-nano')
+   response = chat.ask("What is Ruby on Rails?")
+
+   # With file attachments (requires ActiveStorage setup)
+   chat.ask("What's in this file?", with: "report.pdf")
+   chat.ask("Analyze these files", with: ["image.jpg", "data.csv", "notes.txt"])
+   ```
+
+4. **For streaming responses** with Hotwire/Turbo:
+   ```ruby
+   # app/models/<%= options[:message_model_name].underscore %>.rb
+   class <%= options[:message_model_name] %> < ApplicationRecord
+     acts_as_message
+
+     # Helper to broadcast chunks during streaming
+     def broadcast_append_chunk(chunk_content)
+       broadcast_append_to [ chat, "messages" ],
+         target: dom_id(self, "content"),
+         html: chunk_content
+     end
+   end
+
+   # app/jobs/chat_stream_job.rb
+   class ChatStreamJob < ApplicationJob
+     def perform(chat_id, user_content)
        chat = <%= options[:chat_model_name] %>.find(chat_id)
-       chat.ask(question) do |chunk|
-         Turbo::StreamsChannel.broadcast_append_to(
-           chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
-         )
+       chat.ask(user_content) do |chunk|
+         assistant_message = chat.messages.last
+         if chunk.content && assistant_message
+           assistant_message.broadcast_append_chunk(chunk.content)
+         end
        end
      end
    end
 
-   # Queue the job
-   chat = <%= options[:chat_model_name] %>.create!(model_id: "gpt-4o-mini")
-   ChatJob.perform_later(chat.id, "What's your favorite Ruby gem?")
+   # In your controller
+   ChatStreamJob.perform_later(@chat.id, params[:content])
    ```
 
-4. **For streaming responses** with ActionCable or Turbo:
-   ```ruby
-   chat.ask("Tell me about Ruby on Rails") do |chunk|
-     Turbo::StreamsChannel.broadcast_append_to(
-       chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
-     )
-   end
-   ```
+## Optional: ActiveStorage for Attachments
 
-## Advanced Usage
+If you want to use file attachments (PDFs, images, etc.), set up ActiveStorage:
 
-- Add more fields to your models as needed
-- Customize the views to match your application design
-- Create a controller for chat interactions
+```bash
+rails active_storage:install
+rails db:migrate
+```
 
-For more information, visit the [RubyLLM Documentation](https://github.com/crmne/ruby_llm)
+Then add to your Message model:
+```ruby
+class <%= options[:message_model_name] %> < ApplicationRecord
+  acts_as_message
+  has_many_attached :attachments
+end
+```
+
+## Learn More
+
+- See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for detailed examples
+- Visit the [RubyLLM Documentation](https://rubyllm.com) for full API reference
