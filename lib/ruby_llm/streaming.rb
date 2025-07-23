@@ -88,7 +88,13 @@ module RubyLLM
     def handle_error_chunk(chunk, env)
       error_data = chunk.split("\n")[1].delete_prefix('data: ')
       status, _message = parse_streaming_error(error_data)
-      error_response = env.merge(body: JSON.parse(error_data), status: status)
+
+      error_response = create_error_response(
+        body: JSON.parse(error_data),
+        status: status,
+        env: env
+      )
+
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error chunk: #{e.message}"
@@ -97,7 +103,13 @@ module RubyLLM
     def handle_failed_response(chunk, buffer, env)
       buffer << chunk
       error_data = JSON.parse(buffer)
-      error_response = env.merge(body: error_data)
+
+      error_response = create_error_response(
+        body: error_data,
+        status: env&.status || 500,
+        env: env
+      )
+
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError
       RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
@@ -122,10 +134,30 @@ module RubyLLM
 
     def handle_error_event(data, env)
       status, _message = parse_streaming_error(data)
-      error_response = env.merge(body: JSON.parse(data), status: status)
+
+      error_response = create_error_response(
+        body: JSON.parse(data),
+        status: status,
+        env: env
+      )
+
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error event: #{e.message}"
     end
+
+    # Create a response-like object that mimics Faraday::Response interface
+    def create_error_response(body:, status:, env:)
+      # Simple struct to mimic Faraday::Response interface
+      ErrorResponse.new(
+        body: body.is_a?(String) ? body : JSON.generate(body),
+        status: status,
+        headers: env&.headers || {},
+        env: env || {}
+      )
+    end
+
+    # Simple struct to hold error response data
+    ErrorResponse = Struct.new(:body, :status, :headers, :env, keyword_init: true) # rubocop:disable Lint/UselessConstantScoping
   end
 end
