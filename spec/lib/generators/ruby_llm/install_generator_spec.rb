@@ -44,7 +44,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       end
 
       it 'includes chat reference' do
-        expect(message_migration).to include('t.references :<%= options[:chat_model_name].tableize.singularize %>, null: false, foreign_key: true')
+        expect(message_migration).to include('t.references :<%= options[:chat_model_name].tableize.singularize %>, null: false, foreign_key: true') # rubocop:disable Layout/LineLength
       end
 
       it 'includes role field' do

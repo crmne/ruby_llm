@@ -72,18 +72,18 @@ module RubyLLM
       # Create migrations with timestamps to ensure proper order
       # First create chats table
       timestamp = Time.now.utc
-      migration_template 'create_chats_migration.rb.tt', 
-                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:chat_model_name].tableize}.rb"
-      
+      migration_template 'create_chats_migration.rb.tt',
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:chat_model_name].tableize}.rb" # rubocop:disable Layout/LineLength
+
       # Then create tool_calls table with timestamp + 1 second
       timestamp += 1
       migration_template 'create_tool_calls_migration.rb.tt',
-                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:tool_call_model_name].tableize}.rb"
-      
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:tool_call_model_name].tableize}.rb" # rubocop:disable Layout/LineLength
+
       # Finally create messages table with timestamp + 2 seconds
       timestamp += 1
       migration_template 'create_messages_migration.rb.tt',
-                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:message_model_name].tableize}.rb"
+                         "db/migrate/#{timestamp.strftime('%Y%m%d%H%M%S')}_create_#{options[:message_model_name].tableize}.rb" # rubocop:disable Layout/LineLength
     end
 
     def create_model_files
@@ -97,7 +97,7 @@ module RubyLLM
     end
 
     def show_install_info
-      content = ERB.new(File.read(source_paths.first + '/INSTALL_INFO.md.tt')).result(binding)
+      content = ERB.new(File.read("#{source_paths.first}/INSTALL_INFO.md.tt")).result(binding)
       say content
     end
   end
