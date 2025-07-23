@@ -137,16 +137,22 @@ class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
       t.references :message, null: false, foreign_key: true # Assistant message making the call
-      t.string :tool_call_id, null: false, index: { unique: true } # Provider's ID for the call
+      t.string :tool_call_id, null: false # Provider's ID for the call
       t.string :name, null: false
-      t.jsonb :arguments, default: {} # Use jsonb for PostgreSQL
+      # Use jsonb for PostgreSQL, json for MySQL/SQLite
+      t.jsonb :arguments, default: {} # Change to t.json for non-PostgreSQL databases
       t.timestamps
     end
+
+    add_index :tool_calls, :tool_call_id, unique: true
   end
 end
 ```
 
 Run the migrations: `rails db:migrate`
+
+{: .note }
+**Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 
 ### ActiveStorage Setup for Attachments (Optional)
 
