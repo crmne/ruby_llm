@@ -1,0 +1,304 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"o4-mini","input":[{"type":"message","role":"user","content":"What
+        is the current computer''s weight in pounds?","status":"completed"}],"stream":false,"temperature":1.0,"tools":[{"type":"function","name":"current_computer_weight","description":"Get
+        the current computer weight in kg","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Jul 2025 06:31:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999689'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 9ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_c1LXe0DmfaJxa0MxGDmocdjJ
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '4448'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_688081c5c8888198a6728996c7bf787a0f2a380e1c1b09f0",
+          "object": "response",
+          "created_at": 1753252293,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "o4-mini-2025-04-16",
+          "output": [
+            {
+              "id": "rs_688081c6df5c819884872de943b0dd090f2a380e1c1b09f0",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_688081c9c190819889aacf6f863eb9a00f2a380e1c1b09f0",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_laMqYMWMrbZP4k0iPh7MJYSj",
+              "name": "current_computer_weight"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Get the current computer weight in kg",
+              "name": "current_computer_weight",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 47,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 338,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 385
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 23 Jul 2025 06:31:38 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"o4-mini","input":[{"type":"message","role":"user","content":"What
+        is the current computer''s weight in pounds?","status":"completed"},{"type":"function_call","call_id":"call_laMqYMWMrbZP4k0iPh7MJYSj","name":"current_computer_weight","arguments":"{}","status":"completed"},{"type":"function_call_output","call_id":"call_laMqYMWMrbZP4k0iPh7MJYSj","output":"100
+        kg","status":"completed"}],"stream":false,"temperature":1.0,"tools":[{"type":"function","name":"current_computer_weight","description":"Get
+        the current computer weight in kg","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 23 Jul 2025 06:31:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999662'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 10ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_c1LXe0DmfaJxa0MxGDmocdjJ
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '3125'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_688081ca7fc8819bbf60f869941f50b9088e3676a06e1449",
+          "object": "response",
+          "created_at": 1753252298,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "o4-mini-2025-04-16",
+          "output": [
+            {
+              "id": "rs_688081cb08cc819ba87d267957e3856f088e3676a06e1449",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_688081ccda9c819bb558696f4b3d1a12088e3676a06e1449",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The computer weighs 100 kg, which is about 220.46 lb (using 1 kg \u2248 2.20462 lb)."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Get the current computer weight in kg",
+              "name": "current_computer_weight",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 75,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 167,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 242
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 23 Jul 2025 06:31:41 GMT
+recorded_with: VCR 6.3.1

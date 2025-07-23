@@ -15,7 +15,7 @@ module RubyLLM
 
         payload = deep_merge(
           params,
-          render_payload(
+          render_completion_payload(
             messages,
             tools: tools,
             temperature: normalized_temperature,
@@ -25,9 +25,30 @@ module RubyLLM
         )
 
         if block_given?
-          stream_response connection, payload, &
+          stream_response connection, completion_stream_url, payload, &
         else
-          sync_response connection, payload
+          sync_completion_response connection, payload
+        end
+      end
+
+      def respond(messages, tools:, temperature:, model:, connection:, params: {}, &) # rubocop:disable Metrics/ParameterLists
+        normalized_temperature = maybe_normalize_temperature(temperature, model)
+
+        payload = deep_merge(
+          params,
+          render_response_payload(
+            messages,
+            tools: tools,
+            temperature: normalized_temperature,
+            model: model,
+            stream: block_given?
+          )
+        )
+
+        if block_given?
+          stream_response connection, responses_stream_url, payload, &
+        else
+          sync_respond_response connection, payload
         end
       end
 
@@ -88,9 +109,14 @@ module RubyLLM
         end
       end
 
-      def sync_response(connection, payload)
+      def sync_completion_response(connection, payload)
         response = connection.post completion_url, payload
         parse_completion_response response
+      end
+
+      def sync_respond_response(connection, payload)
+        response = connection.post responses_url, payload
+        parse_respond_response response
       end
     end
 

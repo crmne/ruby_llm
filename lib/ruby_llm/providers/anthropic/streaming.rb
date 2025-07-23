@@ -7,8 +7,12 @@ module RubyLLM
       module Streaming
         private
 
-        def stream_url
+        def completion_stream_url
           completion_url
+        end
+
+        def responses_stream_url
+          responses_url
         end
 
         def build_chunk(data)

@@ -7,7 +7,7 @@ module RubyLLM
       module Chat
         module_function
 
-        def sync_response(connection, payload)
+        def sync_completion_response(connection, payload)
           signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", config: connection.config,
                                                                                            payload:)
           response = connection.post completion_url, payload do |req|
@@ -39,8 +39,8 @@ module RubyLLM
           "model/#{@model_id}/invoke"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
-          # Hold model_id in instance variable for use in completion_url and stream_url
+        def render_completion_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
+          # Hold model_id in instance variable for use in completion_url and completion_stream_url
           @model_id = model
 
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
