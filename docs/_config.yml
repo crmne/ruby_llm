@@ -7,6 +7,11 @@ remote_theme: just-the-docs/just-the-docs
 logo: "/assets/images/logotype.svg"
 favicon_ico: "/assets/images/logo.svg"
 
+# Twitter username (without @)
+twitter:
+  username: paolino
+  card: summary_large_image
+
 # Enable search
 search_enabled: true
 search:
@@ -22,6 +27,9 @@ search:
 nav_external_links:
   - title: GitHub
     url: https://github.com/crmne/ruby_llm
+    hide_icon: false
+  - title: Blog
+    url: https://paolino.me
     hide_icon: false
 
 # Footer content
@@ -57,3 +65,32 @@ plugins:
   - jekyll-remote-theme
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-og-image
+
+# Jekyll OG Image configuration
+og_image:
+  output_dir: "assets/images/og"
+  force: true
+  collections:
+    - pages
+  image:
+    path: "assets/images/logotype.jpg"
+    width: 290
+    height: 100
+  domain: "rubyllm.com"
+  header:
+    prefix: "RubyLLM Docs: "
+    font_family: "Plus Jakarta Sans, bold"
+  content:
+    font_family: "Inter, regular"
+  metadata:
+    fields:
+      - description
+  border_bottom:
+    width: 20
+    fill:
+      - "#820C02"
+      - "#A91401"
+      - "#D51F06"
+      - "#DE3F24"
+      - "#EDA895"

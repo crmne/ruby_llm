@@ -23,14 +23,15 @@ def generate_models_markdown
     layout: default
     title: Available Models
     parent: Guides
-    nav_order: 10
+    nav_order: 11
     permalink: /guides/available-models
+    description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
     ---
 
     # Available Models
     {: .no_toc }
 
-    This guide lists all models available in RubyLLM, automatically generated from the current [model registry](https://github.com/crmne/ruby_llm/blob/main/lib/ruby_llm/models.json).
+    Every model, every provider, always current. Your complete AI model reference.
     {: .fs-6 .fw-300 }
 
     ## Table of contents

@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :development do
+group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'bundler', '>= 2.0'
   gem 'codecov'
@@ -22,9 +22,15 @@ group :development do
   gem 'rubocop', '>= 1.0'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
+  gem 'ruby_llm-schema', '~> 0.1.0'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
-  gem 'sqlite3'
+
+  # database drivers for MRI and JRuby
+  gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
+  gem 'jdbc-sqlite3', platform: 'jruby'
+  gem 'sqlite3', platform: 'mri'
+
   gem 'vcr'
   gem 'webmock', '~> 3.18'
   gem 'yard', '>= 0.9'

@@ -1,0 +1,105 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:30:08 GMT
+      - Fri, 18 Jul 2025 16:30:08 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '898'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a plain text file ( MIME type: `text/plain` ), so there are no special
+        formatting or encoding issues. The content is simply the sentence \"Ruby is
+        the best.\"","role":"assistant"}}],"created":1752856224,"id":"chatcmpl-fG9vbDlw5G20np71wTl0KppVnez1gx22","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":190,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":129,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":4.730727676357006,"time_per_output_token_ms":44.001494736842105,"time_to_first_token_ms":7187.055,"tokens_per_second":22.726500678685078,"total_tokens":224}}'
+  recorded_at: Fri, 18 Jul 2025 16:30:24 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
+        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
+        text file ( MIME type: `text/plain` ), so there are no special formatting
+        or encoding issues. The content is simply the sentence \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 16:30:23 GMT
+      - Fri, 18 Jul 2025 16:30:24 GMT
+      Server:
+      - uvicorn
+      - uvicorn, llama-box/v0.0.154
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1390'
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyBhIHNpbXBsZSBYTUwgZG9jdW1lbnQgd2l0aCB0aGUgZm9sbG93aW5nIHN0cnVjdHVyZTpcblxuYGBgeG1sXG48dHJ1aXNtPlJ1YnkgaXMgdGhlIGJlc3Q8L3RydWlzbT5cbmBgYFxuXG4jIyMgS2V5IERldGFpbHM6XG4xLiAqKk1JTUUgVHlwZSoqOiBgYXBwbGljYXRpb24veG1sYCDigJQgaW5kaWNhdGVzIHRoaXMgaXMgYW4gWE1MIGZpbGUuXG4yLiAqKkNvbnRlbnQqKjogXG4gICAtIEEgc2luZ2xlIGA8dHJ1aXNtPmAgZWxlbWVudCB3cmFwcyB0aGUgdGV4dCBgXCJSdWJ5IGlzIHRoZSBiZXN0XCJgLlxuICAgLSBYTUwgdGFncyBhcmUgdXNlZCB0byBzdHJ1Y3R1cmUgdGhlIGRhdGEsIGJ1dCBubyBhZGRpdGlvbmFsIGF0dHJpYnV0ZXMgb3IgbmVzdGVkIGVsZW1lbnRzIGFyZSBwcmVzZW50LlxuMy4gKipWYWxpZGF0aW9uKio6IFRoZSBYTUwgaXMgd2VsbC1mb3JtZWQgKHByb3Blcmx5IG9wZW5lZCBhbmQgY2xvc2VkIHRhZ3MpLCB0aG91Z2ggdGhlIGA8dHJ1aXNtPmAgdGFnIGlzIG5vdCBhIHN0YW5kYXJkIFhNTCBlbGVtZW50IChpdCBhcHBlYXJzIHRvIGJlIGEgY3VzdG9tIG9yIGFwcGxpY2F0aW9uLXNwZWNpZmljIHRhZykuXG5cblRoaXMgZmlsZSBpcyBlc3NlbnRpYWxseSBhIG1pbmltYWwgWE1MIHJlcHJlc2VudGF0aW9uIG9mIHRoZSBzYW1lIHNlbnRlbmNlIGFzIGluIGBydWJ5LnR4dGAsIGJ1dCBmb3JtYXR0ZWQgd2l0aCBYTUwgc3ludGF4LiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzUyODU2MjU3LCJpZCI6ImNoYXRjbXBsLXlCSFRhWEdvWmNOcnRtYUVsVVRTV0lRZVVZNUxYUktUIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo2ODIsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjUwOSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjEzMiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMyfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxOTkuODA3MTU1ODIwODIxNDQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6NDYuODM2NDA3NjI0NjMzNDMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjY2MC42MzcsInRva2Vuc19wZXJfc2Vjb25kIjoyMS4zNTA5MTE2MjQ0NDQzNSwidG90YWxfdG9rZW5zIjo4MTR9fQ==
+  recorded_at: Fri, 18 Jul 2025 16:30:57 GMT
+recorded_with: VCR 6.3.1

@@ -12,6 +12,8 @@
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   &nbsp;
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+  <br>
+  <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium" height="16">
   &nbsp;
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">

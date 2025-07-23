@@ -2,7 +2,7 @@
 layout: default
 title: Home
 nav_order: 1
-description: "RubyLLM is a delightful Ruby way to work with AI."
+description: RubyLLM is a delightful Ruby way to work with AI.
 permalink: /
 ---
 
@@ -11,7 +11,7 @@ permalink: /
   <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
 </div>
 
-A delightful Ruby way to work with AI through a unified interface to Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, OpenRouter, and any OpenAI-compatible API.
+One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
 {: .fs-6 .fw-300 }
 
 <a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
@@ -33,6 +33,9 @@ A delightful Ruby way to work with AI through a unified interface to Anthropic, 
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+  </div>
+  <div class="provider-logo">
+    <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
