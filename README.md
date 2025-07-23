@@ -123,60 +123,31 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 
 Add persistence to your chat models effortlessly:
 
-### Option 1: Rails Generate
-
-Simply run the generator to set up all required models:
-
 ```bash
+# Generate models and migrations
 rails generate ruby_llm:install
 ```
 
-This creates all necessary migrations, models, and database tables. Then just use them:
-
 ```ruby
-# In your controller
-chat = Chat.create!(model_id: "gpt-4o-mini")
-chat.ask("What's your favorite Ruby gem?") do |chunk|
-  Turbo::StreamsChannel.broadcast_append_to(
-    chat, target: "response", partial: "messages/chunk", locals: { chunk: chunk }
-  )
-end
-
-# That's it - chat history is automatically saved
-```
-
-### Option 2: Manually
-
-Or, add RubyLLM to your existing ActiveRecord models:
-
-```ruby
-# app/models/chat.rb
+# Or add to existing models
 class Chat < ApplicationRecord
   acts_as_chat # Automatically saves messages & tool calls
-  # ... your other model logic ...
 end
 
-# app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
-  # ...
 end
 
-# app/models/tool_call.rb (if using tools)
 class ToolCall < ApplicationRecord
   acts_as_tool_call
-  # ...
 end
 
-# Now interacting with a Chat record persists the conversation:
-chat_record = Chat.create!(model_id: "gpt-4.1-nano")
-chat_record.ask("Explain Active Record callbacks.") # User & Assistant messages saved
-
-# Works seamlessly with file attachments - types automatically detected
-chat_record.ask("What's in this file?", with: "report.pdf")
-chat_record.ask("Analyze these", with: ["image.jpg", "data.csv", "notes.txt"])
+# Now chats persist automatically
+chat = Chat.create!(model_id: "gpt-4.1-nano")
+chat.ask("What's in this file?", with: "report.pdf")
 ```
-Check the [Rails Integration Guide](https://rubyllm.com/guides/rails) for more.
+
+See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for details.
 
 ## Learn More
 
