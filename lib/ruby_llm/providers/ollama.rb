@@ -7,6 +7,7 @@ module RubyLLM
       extend OpenAI
       extend Ollama::Chat
       extend Ollama::Media
+      extend Ollama::Models
 
       module_function
 
