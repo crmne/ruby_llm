@@ -43,6 +43,10 @@ module RubyLLM
       Chat.new(...)
     end
 
+    def response(...)
+      Response.new(...)
+    end
+
     def embed(...)
       Embedding.embed(...)
     end

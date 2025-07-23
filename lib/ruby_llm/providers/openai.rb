@@ -8,6 +8,7 @@ module RubyLLM
     module OpenAI
       extend Provider
       extend OpenAI::Chat
+      extend OpenAI::Response
       extend OpenAI::Embeddings
       extend OpenAI::Models
       extend OpenAI::Streaming
@@ -18,6 +19,7 @@ module RubyLLM
       def self.extended(base)
         base.extend(Provider)
         base.extend(OpenAI::Chat)
+        base.extend(OpenAI::Response)
         base.extend(OpenAI::Embeddings)
         base.extend(OpenAI::Models)
         base.extend(OpenAI::Streaming)

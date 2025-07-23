@@ -25,11 +25,11 @@ module RubyLLM
             base.include PreludeHandling
           end
 
-          def stream_url
+          def completion_stream_url
             "model/#{@model_id}/invoke-with-response-stream"
           end
 
-          def stream_response(connection, payload, &block)
+          def stream_response(connection, stream_url, payload, &block)
             signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", config: connection.config,
                                                                                          payload:)
             accumulator = StreamAccumulator.new
