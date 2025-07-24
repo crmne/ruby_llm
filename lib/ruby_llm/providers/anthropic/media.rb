@@ -7,13 +7,13 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
+        def format_content(content, cache: false)
           # Convert Hash/Array back to JSON string for API
-          return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [format_text(content)] unless content.is_a?(Content)
+          return [format_text(content.to_json, cache:)] if content.is_a?(Hash) || content.is_a?(Array)
+          return [format_text(content, cache:)] unless content.is_a?(Content)
 
           parts = []
-          parts << format_text(content.text) if content.text
+          parts << format_text(content.text, cache:) if content.text
 
           content.attachments.each do |attachment|
             case attachment.type
@@ -31,60 +31,84 @@ module RubyLLM
           parts
         end
 
-        def format_text(text)
-          {
-            type: 'text',
-            text: text
-          }
+        def format_text(text, cache: false)
+          with_cache_control(
+            {
+              type: 'text',
+              text: text
+            },
+            cache:
+          )
         end
 
-        def format_image(image)
+        def format_image(image, cache: false)
           if image.url?
-            {
-              type: 'image',
-              source: {
-                type: 'url',
-                url: image.source
-              }
-            }
+            with_cache_control(
+              {
+                type: 'image',
+                source: {
+                  type: 'url',
+                  url: image.source
+                }
+              },
+              cache:
+            )
           else
-            {
-              type: 'image',
-              source: {
-                type: 'base64',
-                media_type: image.mime_type,
-                data: image.encoded
-              }
-            }
+            with_cache_control(
+              {
+                type: 'image',
+                source: {
+                  type: 'base64',
+                  media_type: image.mime_type,
+                  data: image.encoded
+                }
+              },
+              cache:
+            )
           end
         end
 
-        def format_pdf(pdf)
+        def format_pdf(pdf, cache: false)
           if pdf.url?
-            {
-              type: 'document',
-              source: {
-                type: 'url',
-                url: pdf.source
-              }
-            }
+            with_cache_control(
+              {
+                type: 'document',
+                source: {
+                  type: 'url',
+                  url: pdf.source
+                }
+              },
+              cache:
+            )
           else
-            {
-              type: 'document',
-              source: {
-                type: 'base64',
-                media_type: pdf.mime_type,
-                data: pdf.encoded
-              }
-            }
+            with_cache_control(
+              {
+                type: 'document',
+                source: {
+                  type: 'base64',
+                  media_type: pdf.mime_type,
+                  data: pdf.encoded
+                }
+              },
+              cache:
+            )
           end
         end
 
-        def format_text_file(text_file)
-          {
-            type: 'text',
-            text: Utils.format_text_file_for_llm(text_file)
-          }
+        def format_text_file(text_file, cache: false)
+          with_cache_control(
+            {
+              type: 'text',
+              text: Utils.format_text_file_for_llm(text_file)
+            },
+            cache:
+          )
+        end
+
+        def with_cache_control(hash, cache: false)
+          return hash unless cache
+
+          hash.merge(cache_control: { type: 'ephemeral' })
         end
       end
     end
