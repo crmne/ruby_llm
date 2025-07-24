@@ -11,7 +11,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false) # rubocop:disable Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           @model = model # Store model for completion_url/stream_url
           payload = {
             contents: format_messages(messages),
@@ -20,6 +20,12 @@ module RubyLLM
               responseModalities: capabilities.modalities_for(model)[:output]
             }
           }
+
+          if schema
+            payload[:generationConfig][:responseMimeType] = 'application/json'
+            payload[:generationConfig][:responseSchema] = convert_schema_to_gemini(schema)
+          end
+
           payload[:tools] = format_tools(tools) if tools.any?
           payload
         end
@@ -78,6 +84,49 @@ module RubyLLM
             output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
           )
+        end
+
+        def convert_schema_to_gemini(schema) # rubocop:disable Metrics/PerceivedComplexity
+          return nil unless schema
+
+          case schema[:type]
+          when 'object'
+            {
+              type: 'OBJECT',
+              properties: schema[:properties]&.transform_values { |prop| convert_schema_to_gemini(prop) } || {},
+              required: schema[:required] || []
+            }
+          when 'array'
+            {
+              type: 'ARRAY',
+              items: schema[:items] ? convert_schema_to_gemini(schema[:items]) : { type: 'STRING' }
+            }
+          when 'string'
+            result = { type: 'STRING' }
+            result[:enum] = schema[:enum] if schema[:enum]
+            result
+          when 'number', 'integer'
+            { type: 'NUMBER' }
+          when 'boolean'
+            { type: 'BOOLEAN' }
+          else
+            { type: 'STRING' }
+          end
+        end
+
+        def extract_content(data)
+          candidate = data.dig('candidates', 0)
+          return '' unless candidate
+
+          # Content will be empty for function calls
+          return '' if function_call?(candidate)
+
+          # Extract text content
+          parts = candidate.dig('content', 'parts')
+          text_parts = parts&.select { |p| p['text'] }
+          return '' unless text_parts&.any?
+
+          text_parts.map { |p| p['text'] }.join
         end
 
         def function_call?(candidate)

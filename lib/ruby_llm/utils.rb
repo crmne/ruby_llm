@@ -23,5 +23,15 @@ module RubyLLM
         Array(item)
       end
     end
+
+    def deep_merge(params, payload)
+      params.merge(payload) do |_key, params_value, payload_value|
+        if params_value.is_a?(Hash) && payload_value.is_a?(Hash)
+          deep_merge(params_value, payload_value)
+        else
+          payload_value
+        end
+      end
+    end
   end
 end

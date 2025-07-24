@@ -4,12 +4,13 @@ title: Streaming Responses
 parent: Guides
 nav_order: 4
 permalink: /guides/streaming
+description: Build instant, engaging AI experiences with real-time streaming responses
 ---
 
 # Streaming Responses
 {: .no_toc }
 
-RubyLLM provides streaming capabilities that allow you to receive AI responses in real-time as they're being generated, rather than waiting for the complete response. This creates a more interactive experience, especially for long responses or applications with real-time UI updates.
+Build blazing fast AI interfaces that feel instant! 🚀 RubyLLM's streaming lets you display responses as they're generated, transforming long waits into engaging, real-time conversations.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
