@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
           payload = {
             model: model,
             messages: format_messages(messages),
@@ -25,6 +25,21 @@ module RubyLLM
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = 'auto'
           end
+
+          if schema
+            # Use strict mode from schema if specified, default to true
+            strict = schema[:strict] != false
+
+            payload[:response_format] = {
+              type: 'json_schema',
+              json_schema: {
+                name: 'response',
+                schema: schema,
+                strict: strict
+              }
+            }
+          end
+
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end

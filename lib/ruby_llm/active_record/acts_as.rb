@@ -130,6 +130,16 @@ module RubyLLM
         self
       end
 
+      def with_params(...)
+        to_llm.with_params(...)
+        self
+      end
+
+      def with_schema(...)
+        to_llm.with_schema(...)
+        self
+      end
+
       def on_new_message(...)
         to_llm.on_new_message(...)
         self
@@ -175,9 +185,13 @@ module RubyLLM
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
+          # Convert parsed JSON back to JSON string for storage
+          content = message.content
+          content = content.to_json if content.is_a?(Hash) || content.is_a?(Array)
+
           @message.update!(
             role: message.role,
-            content: message.content,
+            content: content,
             model_id: message.model_id,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens

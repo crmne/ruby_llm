@@ -4,12 +4,13 @@ title: Error Handling
 parent: Guides
 nav_order: 8
 permalink: /guides/error-handling
+description: Build rock-solid AI apps with intelligent error handling and automatic retries
 ---
 
 # Error Handling
 {: .no_toc }
 
-Working with external AI services inevitably involves handling potential errors, from network issues to API key problems or rate limits. RubyLLM provides a structured error hierarchy and automatic retries to help you build robust applications.
+Make your AI features bulletproof! 🛡️ RubyLLM's smart error handling and automatic retries keep your app running smoothly even when AI services hiccup, ensuring reliability your users can count on.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

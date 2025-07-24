@@ -9,6 +9,7 @@ module RubyLLM
 
     attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id,
                 :cached_tokens, :cache_creation_tokens
+    attr_writer :content
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym

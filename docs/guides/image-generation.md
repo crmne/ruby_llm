@@ -4,12 +4,13 @@ title: Image Generation
 parent: Guides
 nav_order: 6
 permalink: /guides/image-generation
+description: Transform ideas into stunning visuals with AI-powered image generation
 ---
 
 # Image Generation
 {: .no_toc }
 
-RubyLLM makes it easy to generate images using AI models like DALL-E 3 and Google's Imagen. This guide explains how to create images and customize the generation process.
+Turn your wildest imagination into reality! 🎨 Create professional artwork, product mockups, or creative visuals with simple text prompts using DALL-E 3, Imagen, and more.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

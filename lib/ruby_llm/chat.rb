@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools
+    attr_reader :model, :messages, :tools, :params, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -26,6 +26,8 @@ module RubyLLM
       @messages = []
       @tools = {}
       @cache_prompts = { system: false, user: false, tools: false }
+      @params = {}
+      @schema = nil
       @on = {
         new_message: nil,
         end_message: nil
@@ -79,6 +81,28 @@ module RubyLLM
       self
     end
 
+    def with_params(**params)
+      @params = params
+      self
+    end
+
+    def with_schema(schema, force: false)
+      unless force || @model.structured_output?
+        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
+      end
+
+      schema_instance = schema.is_a?(Class) ? schema.new : schema
+
+      # Accept both RubyLLM::Schema instances and plain JSON schemas
+      @schema = if schema_instance.respond_to?(:to_json_schema)
+                  schema_instance.to_json_schema[:schema]
+                else
+                  schema_instance
+                end
+
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -98,7 +122,7 @@ module RubyLLM
       self
     end
 
-    def complete(&)
+    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
         messages,
         tools: @tools,
@@ -106,10 +130,22 @@ module RubyLLM
         model: @model.id,
         cache_prompts: @cache_prompts.dup,
         connection: @connection,
+        params: @params,
+        schema: @schema,
         &wrap_streaming_block(&)
       )
 
       @on[:new_message]&.call unless block_given?
+
+      # Parse JSON if schema was set
+      if @schema && response.content.is_a?(String)
+        begin
+          response.content = JSON.parse(response.content)
+        rescue JSON::ParserError
+          # If parsing fails, keep content as string
+        end
+      end
+
       add_message response
       @on[:end_message]&.call(response)
 

@@ -11,7 +11,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, cache_prompts: {}) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           @model = model # Store model for completion_url/stream_url
           payload = {
             contents: format_messages(messages),
@@ -19,6 +19,12 @@ module RubyLLM
               temperature: temperature
             }
           }
+
+          if schema
+            payload[:generationConfig][:responseMimeType] = 'application/json'
+            payload[:generationConfig][:responseSchema] = convert_schema_to_gemini(schema)
+          end
+
           payload[:tools] = format_tools(tools) if tools.any?
           payload
         end
@@ -78,6 +84,34 @@ module RubyLLM
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0]
           )
+        end
+
+        def convert_schema_to_gemini(schema) # rubocop:disable Metrics/PerceivedComplexity
+          return nil unless schema
+
+          case schema[:type]
+          when 'object'
+            {
+              type: 'OBJECT',
+              properties: schema[:properties]&.transform_values { |prop| convert_schema_to_gemini(prop) } || {},
+              required: schema[:required] || []
+            }
+          when 'array'
+            {
+              type: 'ARRAY',
+              items: schema[:items] ? convert_schema_to_gemini(schema[:items]) : { type: 'STRING' }
+            }
+          when 'string'
+            result = { type: 'STRING' }
+            result[:enum] = schema[:enum] if schema[:enum]
+            result
+          when 'number', 'integer'
+            { type: 'NUMBER' }
+          when 'boolean'
+            { type: 'BOOLEAN' }
+          else
+            { type: 'STRING' }
+          end
         end
 
         def extract_content(data)

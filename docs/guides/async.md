@@ -4,12 +4,13 @@ title: Scale with Async
 parent: Guides
 nav_order: 10
 permalink: /guides/async
+description: Handle hundreds of concurrent AI requests on modest hardware. Ruby's async ecosystem meets AI.
 ---
 
 # Scale with Async
 {: .no_toc }
 
-This guide covers using RubyLLM with Ruby's async ecosystem for handling thousands of concurrent AI conversations efficiently.
+Scale your AI features without breaking the bank. Efficient concurrency on a single server.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
