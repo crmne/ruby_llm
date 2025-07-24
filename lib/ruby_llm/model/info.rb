@@ -9,6 +9,7 @@ module RubyLLM
     # Example:
     #   model = RubyLLM.models.find('gpt-4')
     #   model.supports_vision?          # => true
+    #   model.supports_video?           # => false
     #   model.supports_functions?       # => true
     #   model.input_price_per_million   # => 30.0
     class Info
@@ -52,6 +53,10 @@ module RubyLLM
 
       def supports_vision?
         modalities.input.include?('image')
+      end
+
+      def supports_video?
+        modalities.input.include?('video')
       end
 
       def supports_functions?
