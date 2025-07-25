@@ -37,7 +37,7 @@ module RubyLLM
       end
 
       def fetch_from_providers
-        configured = Provider.configured_providers(RubyLLM.config).filter(&:remote?)
+        configured = Provider.configured_providers(RubyLLM.config)
 
         RubyLLM.logger.info "Fetching models from providers: #{configured.map(&:slug).join(', ')}"
 
@@ -47,23 +47,24 @@ module RubyLLM
       end
 
       def resolve(model_id, provider: nil, assume_exists: false) # rubocop:disable Metrics/PerceivedComplexity
-        assume_exists = true if provider && Provider.providers[provider.to_sym].local?
-
-        if assume_exists
+        if assume_exists || local_provider?(provider)
+          model = find_local_model(model_id, provider) if local_provider?(provider)
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
           provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
-          model = Model::Info.new(
-            id: model_id,
-            name: model_id.gsub('-', ' ').capitalize,
-            provider: provider.slug,
-            capabilities: %w[function_calling streaming],
-            modalities: { input: %w[text image], output: %w[text] },
-            metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
-          )
-          if RubyLLM.config.log_assume_model_exists
-            RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
-                                'Capabilities may not be accurately reflected.'
+          unless model
+            model = Model::Info.new(
+              id: model_id,
+              name: model_id.gsub('-', ' ').capitalize,
+              provider: provider.slug,
+              capabilities: %w[function_calling streaming],
+              modalities: { input: %w[text image], output: %w[text] },
+              metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
+            )
+            if RubyLLM.config.log_assume_model_exists
+              RubyLLM.logger.warn "Assuming model '#{model_id}' exists for provider '#{provider}'. " \
+                                  'Capabilities may not be accurately reflected.'
+            end
           end
         else
           model = Models.find model_id, provider
@@ -222,6 +223,16 @@ module RubyLLM
       all.find { |m| m.id == model_id } ||
         all.find { |m| m.id == Aliases.resolve(model_id) } ||
         raise(ModelNotFoundError, "Unknown model: #{model_id}")
+    end
+
+    def self.local_provider?(provider)
+      provider && Provider.providers[provider.to_sym]&.local?
+    end
+
+    def self.find_local_model(model_id, provider)
+      Models.find(model_id, provider)
+    rescue ModelNotFoundError
+      nil
     end
   end
 end
