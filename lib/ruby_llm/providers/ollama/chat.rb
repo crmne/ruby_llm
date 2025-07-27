@@ -7,6 +7,10 @@ module RubyLLM
       module Chat
         module_function
 
+        def completion_url
+          'chat'
+        end
+
         def format_messages(messages)
           messages.map do |msg|
             {
@@ -16,6 +20,25 @@ module RubyLLM
               tool_call_id: msg.tool_call_id
             }.compact
           end
+        end
+
+        def parse_completion_response(response)
+          data = response.body
+          return if data.empty?
+
+          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+
+          message_data = data['message']
+          return unless message_data
+
+          Message.new(
+            role: :assistant,
+            content: message_data['content'],
+            tool_calls: parse_tool_calls(message_data['tool_calls']),
+            input_tokens: data['prompt_eval_count'],
+            output_tokens: data['eval_count'],
+            model_id: data['model']
+          )
         end
 
         def format_role(role)
