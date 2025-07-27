@@ -29,7 +29,8 @@ module RubyLLM
       @schema = nil
       @on = {
         new_message: nil,
-        end_message: nil
+        end_message: nil,
+        tool_call: nil
       }
     end
 
@@ -112,6 +113,11 @@ module RubyLLM
       self
     end
 
+    def on_tool_call(&block)
+      @on[:tool_call] = block
+      self
+    end
+
     def each(&)
       messages.each(&)
     end
@@ -181,6 +187,7 @@ module RubyLLM
     def handle_tool_calls(response, &)
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
+        @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
         message = add_message role: :tool, content: result.to_s, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)

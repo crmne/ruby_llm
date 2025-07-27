@@ -172,6 +172,25 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'tool call callbacks' do
+    it 'calls on_tool_call callback when tools are used' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      tool_calls_received = []
+
+      chat = RubyLLM.chat
+                    .with_tool(Weather)
+                    .on_tool_call { |tool_call| tool_calls_received << tool_call }
+
+      response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+      expect(tool_calls_received).not_to be_empty
+      expect(tool_calls_received.first).to respond_to(:name)
+      expect(tool_calls_received.first).to respond_to(:arguments)
+      expect(tool_calls_received.first.name).to eq('weather')
+      expect(response.content).to include('15')
+      expect(response.content).to include('10')
+    end
+  end
+
   describe 'error handling' do
     it 'raises an error when tool execution fails' do # rubocop:disable RSpec/MultipleExpectations
       chat = RubyLLM.chat.with_tool(BrokenTool)
