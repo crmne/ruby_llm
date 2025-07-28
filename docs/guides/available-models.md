@@ -40,7 +40,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 ## Last Updated
 {: .d-inline-block }
 
-2025-07-23
+2025-07-24
 {: .label .label-green }
 
 ## Models by Provider
@@ -59,22 +59,22 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | GPT-3.5 Turbo 16k | gpt-3.5-turbo-16k | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo Instruct | gpt-3.5-turbo-instruct | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo Instruct 0914 | gpt-3.5-turbo-instruct-0914 | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
-| GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 | gpt-4-2023-11-30 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
+| GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 0125 Preview | gpt-4-0125-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 0613 | gpt-4-0613 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 1106 Preview | gpt-4-1106-preview | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
-| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 mini | gpt-4.1-mini-2025-04-14 | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | GPT-4.1 nano | gpt-4.1-nano-2025-04-14 | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o | gpt-4o-2024-08-06 | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
+| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o 20240513 | gpt-4o-2024-05-13 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o 20241120 | gpt-4o-2024-11-20 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o Audio | gpt-4o-audio-preview | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
@@ -108,13 +108,13 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
 | babbage-002 | babbage-002 | openai | - | 16384 | In: $0.40, Out: $0.40 |
 | codex-mini-latest | codex-mini-latest | openai | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
-| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | computer-use-preview | computer-use-preview-2025-03-11 | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
+| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | davinci-002 | davinci-002 | openai | - | 16384 | In: $2.00, Out: $2.00 |
-| o1 | o1 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1 | o1-2024-12-17 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
-| o1-mini | o1-mini | openai | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
+| o1 | o1 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1-mini | o1-mini-2024-09-12 | openai | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
+| o1-mini | o1-mini | openai | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | o1-pro | o1-pro | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro | o1-pro-2025-03-19 | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o3 | o3 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -125,10 +125,10 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | o3-mini | o3-mini-2025-01-31 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | o3-pro | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o3-pro | o3-pro-2025-06-10 | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
-| o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini | o4-mini-2025-04-16 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| o4-mini-deep-research | o4-mini-deep-research | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini-deep-research | o4-mini-deep-research-2025-06-26 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| o4-mini-deep-research | o4-mini-deep-research | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | omni-moderation | omni-moderation-latest | openai | - | - | - |
 | text-embedding-3-large | text-embedding-3-large | openai | - | - | In: $0.13 |
 | text-embedding-3-small | text-embedding-3-small | openai | - | - | In: $0.02 |
@@ -144,8 +144,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude Haiku 3.5 | claude-3-5-haiku-20241022 | anthropic | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $1.00 |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude Opus 4 | claude-opus-4-20250514 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $18.75 |
-| Claude Sonnet 3.5 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 3.5 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
+| Claude Sonnet 3.5 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 3.7 | claude-3-7-sonnet-20250219 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 4 | claude-sonnet-4-20250514 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 
@@ -156,22 +156,22 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | :-- | :-- | :-- | --: | --: | :-- |
 | Embedding 001 | embedding-001 | gemini | 2048 | 1 | - |
 | Embedding Gecko | embedding-gecko-001 | gemini | 1024 | 1 | - |
-| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
+| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
+| Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-002 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
+| Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Pro | gemini-1.5-pro-001 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
+| Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Live | gemini-2.0-flash-live-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Preview Image Generation | gemini-2.0-flash-preview-image-generation | gemini | 32000 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -180,13 +180,13 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini 2.0 Flash-Lite Preview 02-05 | gemini-2.0-flash-lite-preview-02-05 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental | gemini-2.0-pro-exp | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental 02-05 | gemini-2.0-pro-exp-02-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Live | gemini-live-2.5-flash-preview | gemini | 1048576 | 8192 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Native Audio | gemini-2.5-flash-exp-native-audio-thinking-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Native Audio | gemini-2.5-flash-preview-native-audio-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview TTS | gemini-2.5-flash-preview-tts | gemini | 8000 | 16000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
@@ -229,34 +229,34 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
-| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
+| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Opus 4 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 
@@ -602,64 +602,64 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude Sonnet 3.5 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 3.7 | claude-3-7-sonnet-20250219 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 4 | claude-sonnet-4-20250514 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
-| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Opus 4 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | deepseek-chat | deepseek-chat | deepseek | 64000 | 8000 | In: $0.27, Out: $1.10, Cache: $0.07 |
 | deepseek-reasoner | deepseek-reasoner | deepseek | 64000 | 64000 | In: $0.55, Out: $2.19, Cache: $0.14 |
-| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
-| Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-002 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-001 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
+| Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Live | gemini-2.0-flash-live-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Pro Experimental | gemini-2.0-pro-exp | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental 02-05 | gemini-2.0-pro-exp-02-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
-| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Live | gemini-live-2.5-flash-preview | gemini | 1048576 | 8192 | In: $0.30, Out: $2.50, Cache: $0.08 |
-| Gemini 2.5 Flash Native Audio | gemini-2.5-flash-exp-native-audio-thinking-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Native Audio | gemini-2.5-flash-preview-native-audio-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash Native Audio | gemini-2.5-flash-exp-native-audio-thinking-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
@@ -672,17 +672,17 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
-| GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
+| GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
-| GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 mini | gpt-4.1-mini-2025-04-14 | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
-| GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 nano | gpt-4.1-nano-2025-04-14 | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
+| GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | GPT-4o | gpt-4o-2024-08-06 | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
+| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o 20240513 | gpt-4o-2024-05-13 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o 20241120 | gpt-4o-2024-11-20 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o Audio | gpt-4o-audio-preview | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
@@ -696,8 +696,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | O1-Preview | o1-preview | openai | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | O1-Preview 20240912 | o1-preview-2024-09-12 | openai | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | codex-mini-latest | codex-mini-latest | openai | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
-| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | computer-use-preview | computer-use-preview-2025-03-11 | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
+| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | o1 | o1 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1 | o1-2024-12-17 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1-pro | o1-pro | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
@@ -864,31 +864,31 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
@@ -898,32 +898,32 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | deepseek-reasoner | deepseek-reasoner | deepseek | 64000 | 64000 | In: $0.55, Out: $2.19, Cache: $0.14 |
 | Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
-| Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-002 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-001 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Live | gemini-2.0-flash-live-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Preview Image Generation | gemini-2.0-flash-preview-image-generation | gemini | 32000 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Pro Experimental | gemini-2.0-pro-exp | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental 02-05 | gemini-2.0-pro-exp-02-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Live | gemini-live-2.5-flash-preview | gemini | 1048576 | 8192 | In: $0.30, Out: $2.50, Cache: $0.08 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite-06-17 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite Preview 06-17 | gemini-2.5-flash-lite-preview-06-17 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -934,8 +934,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
-| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 mini | gpt-4.1-mini-2025-04-14 | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -944,8 +944,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | GPT-4o | gpt-4o-2024-08-06 | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o 20240513 | gpt-4o-2024-05-13 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o 20241120 | gpt-4o-2024-11-20 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
-| GPT-4o Search Preview | gpt-4o-search-preview | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o Search Preview | gpt-4o-search-preview-2025-03-11 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
+| GPT-4o Search Preview | gpt-4o-search-preview | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o mini | gpt-4o-mini | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | GPT-4o mini | gpt-4o-mini-2024-07-18 | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | GPT-4o mini Search Preview | gpt-4o-mini-search-preview | openai | 128000 | 16384 | In: $0.15, Out: $0.60 |
@@ -957,12 +957,12 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | o1 | o1-2024-12-17 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1-pro | o1-pro | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro | o1-pro-2025-03-19 | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
-| o3 | o3 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | o3 | o3-2025-04-16 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| o3 | o3 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | o3-mini | o3-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | o3-mini | o3-mini-2025-01-31 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
-| o3-pro | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o3-pro | o3-pro-2025-06-10 | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
+| o3-pro | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini | o4-mini-2025-04-16 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | 01.AI: Yi Large | 01-ai/yi-large | openrouter | 32768 | 4096 | In: $3.00, Out: $3.00 |
@@ -1159,39 +1159,39 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Opus 4 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Embedding 001 | embedding-001 | gemini | 2048 | 1 | - |
 | Embedding Gecko | embedding-gecko-001 | gemini | 1024 | 1 | - |
-| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
+| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Flash-Lite Preview | gemini-2.0-flash-lite-preview | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Flash-Lite Preview 02-05 | gemini-2.0-flash-lite-preview-02-05 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental | gemini-2.0-pro-exp | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -1565,8 +1565,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Embedding 001 | embedding-001 | gemini | 2048 | 1 | - |
 | Embedding Gecko | embedding-gecko-001 | gemini | 1024 | 1 | - |
-| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
+| Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -1574,46 +1574,46 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini 2.0 Flash-Lite Preview 02-05 | gemini-2.0-flash-lite-preview-02-05 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
-| Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite-06-17 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite Preview 06-17 | gemini-2.5-flash-lite-preview-06-17 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Pro | gemini-2.5-pro | gemini | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | GPT-3.5 Turbo | gpt-3.5-turbo | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
-| GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 | gpt-4-2023-11-30 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
-| GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
+| GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
+| GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
-| GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 mini | gpt-4.1-mini-2025-04-14 | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
+| GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | GPT-4.1 nano | gpt-4.1-nano-2025-04-14 | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o | gpt-4o-2024-08-06 | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
+| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o mini | gpt-4o-mini | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | GPT-4o mini | gpt-4o-mini-2024-07-18 | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
-| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | computer-use-preview | computer-use-preview-2025-03-11 | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
-| o1 | o1 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
+| computer-use-preview | computer-use-preview | openai | 8192 | 1024 | In: $3.00, Out: $12.00 |
 | o1 | o1-2024-12-17 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
+| o1 | o1 | openai | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | o1-pro | o1-pro | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro | o1-pro-2025-03-19 | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o3 | o3 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | o3 | o3-2025-04-16 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
-| o3-deep-research | o3-deep-research | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
 | o3-deep-research | o3-deep-research-2025-06-26 | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
-| o3-mini | o3-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
+| o3-deep-research | o3-deep-research | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
 | o3-mini | o3-mini-2025-01-31 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
+| o3-mini | o3-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | o3-pro | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o3-pro | o3-pro-2025-06-10 | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
-| o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini | o4-mini-2025-04-16 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
+| o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini-deep-research | o4-mini-deep-research | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | o4-mini-deep-research | o4-mini-deep-research-2025-06-26 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | text-embedding-3-large | text-embedding-3-large | openai | - | - | In: $0.13 |
@@ -1633,56 +1633,56 @@ Models that can process images:
 | Claude Haiku 3.5 | claude-3-5-haiku-20241022 | anthropic | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $1.00 |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude Opus 4 | claude-opus-4-20250514 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $18.75 |
-| Claude Sonnet 3.5 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 3.5 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
+| Claude Sonnet 3.5 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 3.7 | claude-3-7-sonnet-20250219 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude Sonnet 4 | claude-sonnet-4-20250514 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
-| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Opus 4 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
-| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
+| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-002 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-001 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
+| Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| Gemini 2.0 Flash | gemini-2.0-flash-exp | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash Preview Image Generation | gemini-2.0-flash-preview-image-generation | gemini | 32000 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -1692,9 +1692,9 @@ Models that can process images:
 | Gemini 2.0 Pro Experimental 02-05 | gemini-2.0-pro-exp-02-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite | gemini-2.5-flash-lite-06-17 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash-Lite Preview 06-17 | gemini-2.5-flash-lite-preview-06-17 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -1711,18 +1711,18 @@ Models that can process images:
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
-| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
+| GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 mini | gpt-4.1-mini-2025-04-14 | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
 | GPT-4.1 nano | gpt-4.1-nano | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | GPT-4.1 nano | gpt-4.1-nano-2025-04-14 | openai | 1047576 | 32768 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o | gpt-4o-2024-08-06 | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
+| GPT-4o | gpt-4o | openai | 128000 | 16384 | In: $2.50, Out: $10.00, Cache: $1.25 |
 | GPT-4o 20240513 | gpt-4o-2024-05-13 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o 20241120 | gpt-4o-2024-11-20 | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
-| GPT-4o mini | gpt-4o-mini | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | GPT-4o mini | gpt-4o-mini-2024-07-18 | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
+| GPT-4o mini | gpt-4o-mini | openai | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | O1-Preview | o1-preview | openai | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | O1-Preview 20240912 | o1-preview-2024-09-12 | openai | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | Omni Moderation 20240926 | omni-moderation-2024-09-26 | openai | - | - | - |
@@ -1735,8 +1735,8 @@ Models that can process images:
 | o1-pro | o1-pro-2025-03-19 | openai | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o3 | o3 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | o3 | o3-2025-04-16 | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
-| o3-deep-research | o3-deep-research | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
 | o3-deep-research | o3-deep-research-2025-06-26 | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
+| o3-deep-research | o3-deep-research | openai | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
 | o3-pro | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o3-pro | o3-pro-2025-06-10 | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
@@ -1845,15 +1845,15 @@ Models that can process audio:
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Gemini 1.5 Flash | gemini-1.5-flash | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
-| Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-002 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Flash | gemini-1.5-flash-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash | gemini-1.5-flash-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-001 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | Gemini 1.5 Flash-8B | gemini-1.5-flash-8b-latest | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
+| Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-001 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
-| Gemini 1.5 Pro | gemini-1.5-pro-002 | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 1.5 Pro | gemini-1.5-pro-latest | gemini | 2097152 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
 | Gemini 2.0 Flash | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -1862,8 +1862,8 @@ Models that can process audio:
 | Gemini 2.0 Flash Preview Image Generation | gemini-2.0-flash-preview-image-generation | gemini | 32000 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | Gemini 2.0 Flash-Lite | gemini-2.0-flash-lite-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash | gemini-2.5-flash-preview-05-20 | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
+| Gemini 2.5 Flash | gemini-2.5-flash | gemini | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Live | gemini-live-2.5-flash-preview | gemini | 1048576 | 8192 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Native Audio | gemini-2.5-flash-exp-native-audio-thinking-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | Gemini 2.5 Flash Native Audio | gemini-2.5-flash-preview-native-audio-dialog | gemini | 128000 | 8000 | In: $0.30, Out: $2.50, Cache: $0.08 |
@@ -1873,8 +1873,8 @@ Models that can process audio:
 | GPT-4o Audio | gpt-4o-audio-preview | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | GPT-4o Realtime | gpt-4o-realtime-preview | openai | 32000 | 4096 | In: $5.00, Out: $20.00, Cache: $2.50 |
 | GPT-4o Transcribe | gpt-4o-transcribe | openai | 16000 | 2000 | In: $2.50, Out: $10.00 |
-| GPT-4o mini Audio | gpt-4o-mini-audio-preview | openai | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | GPT-4o mini Audio | gpt-4o-mini-audio-preview-2024-12-17 | openai | 128000 | 16384 | In: $0.15, Out: $0.60 |
+| GPT-4o mini Audio | gpt-4o-mini-audio-preview | openai | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | GPT-4o mini Realtime | gpt-4o-mini-realtime-preview | openai | 128000 | 4096 | In: $0.60, Out: $2.40, Cache: $0.30 |
 | GPT-4o mini Realtime | gpt-4o-mini-realtime-preview-2024-12-17 | openai | 128000 | 4096 | In: $0.60, Out: $2.40, Cache: $0.30 |
 | GPT-4o mini Transcribe | gpt-4o-mini-transcribe | openai | 16000 | 2000 | In: $1.25, Out: $5.00 |
@@ -1893,45 +1893,45 @@ Models that can process PDF documents:
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude | anthropic.claude-v2:1:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| Claude | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
+| Claude 3 Haiku | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
+| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Opus | anthropic.claude-3-opus-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
-| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3 Sonnet | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Haiku | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 4096 | In: $0.80, Out: $4.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet | anthropic.claude-3-5-sonnet-20240620-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
-| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:200k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:51k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
+| Claude 3.5 Sonnet v2 | anthropic.claude-3-5-sonnet-20241022-v2:0:18k | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Claude Instant | anthropic.claude-instant-v1 | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Instant | anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | Claude Opus 4 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
-| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 1.0 Pro Vision | gemini-pro-vision | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
+| Gemini 1.0 Pro Vision | gemini-1.0-pro-vision-latest | gemini | 12288 | 4096 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Flash-Lite Preview | gemini-2.0-flash-lite-preview | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Flash-Lite Preview 02-05 | gemini-2.0-flash-lite-preview-02-05 | gemini | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental | gemini-2.0-pro-exp | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.0 Pro Experimental 02-05 | gemini-2.0-pro-exp-02-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
+| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-01-21 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
-| Gemini 2.5 Flash Preview 05-20 | gemini-2.0-flash-thinking-exp-1219 | gemini | 1048576 | 65536 | In: $0.10, Out: $0.40 |
 | Gemini 2.5 Flash-Lite Preview 06-17 | gemini-2.5-flash-lite-preview-06-17 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Pro Preview | gemini-2.5-pro-preview-06-05 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | Gemini 2.5 Pro Preview 03-25 | gemini-2.5-pro-preview-03-25 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -1955,8 +1955,8 @@ Models that generate embeddings:
 | :-- | :-- | :-- | --: | --: | :-- |
 | Embedding 001 | embedding-001 | gemini | 2048 | 1 | - |
 | Embedding Gecko | embedding-gecko-001 | gemini | 1024 | 1 | - |
-| Gemini Embedding | gemini-embedding-001 | gemini | 2048 | - | In: $0.15 |
 | Gemini Embedding | gemini-embedding-exp-03-07 | gemini | 2048 | - | In: $0.15 |
+| Gemini Embedding | gemini-embedding-001 | gemini | 2048 | - | In: $0.15 |
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Legacy Embedding Models | text-embedding-004 | gemini | 2048 | - | - |
 | text-embedding-3-large | text-embedding-3-large | openai | - | - | In: $0.13 |
