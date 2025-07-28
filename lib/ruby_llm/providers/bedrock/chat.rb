@@ -46,16 +46,15 @@ module RubyLLM
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
           system_content = Anthropic::Chat.build_system_content(system_messages)
 
-          build_base_payload(chat_messages, temperature, model).tap do |payload|
+          build_base_payload(chat_messages, model).tap do |payload|
             Anthropic::Chat.add_optional_fields(payload, system_content:, tools:, temperature:)
           end
         end
 
-        def build_base_payload(chat_messages, temperature, model)
+        def build_base_payload(chat_messages, model)
           {
             anthropic_version: 'bedrock-2023-05-31',
             messages: chat_messages.map { |msg| format_message(msg) },
-            temperature: temperature,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
