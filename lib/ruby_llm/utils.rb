@@ -24,12 +24,12 @@ module RubyLLM
       end
     end
 
-    def deep_merge(params, payload)
-      params.merge(payload) do |_key, params_value, payload_value|
-        if params_value.is_a?(Hash) && payload_value.is_a?(Hash)
-          deep_merge(params_value, payload_value)
+    def deep_merge(hash1, hash2)
+      hash1.merge(hash2) do |_key, value1, value2|
+        if value1.is_a?(Hash) && value2.is_a?(Hash)
+          deep_merge(value1, value2)
         else
-          payload_value
+          value2
         end
       end
     end
