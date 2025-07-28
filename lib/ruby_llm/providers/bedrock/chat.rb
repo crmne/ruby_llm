@@ -47,7 +47,7 @@ module RubyLLM
           system_content = Anthropic::Chat.build_system_content(system_messages)
 
           build_base_payload(chat_messages, temperature, model).tap do |payload|
-            Anthropic::Chat.add_optional_fields(payload, system_content:, tools:)
+            Anthropic::Chat.add_optional_fields(payload, system_content:, tools:, temperature:)
           end
         end
 

@@ -15,8 +15,8 @@ module RubyLLM
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
-          build_base_payload(chat_messages, temperature, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:)
+          build_base_payload(chat_messages, model, stream).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:, temperature:)
           end
         end
 
@@ -32,22 +32,22 @@ module RubyLLM
             )
           end
 
-          system_messages.map { |msg| format_message(msg)[:content] }.join("\n\n")
+          system_messages.map(&:content).join("\n\n")
         end
 
-        def build_base_payload(chat_messages, temperature, model, stream)
+        def build_base_payload(chat_messages, model, stream)
           {
             model: model,
             messages: chat_messages.map { |msg| format_message(msg) },
-            temperature: temperature,
             stream: stream,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:)
+        def add_optional_fields(payload, system_content:, tools:, temperature:)
           payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
+          payload[:temperature] = temperature unless temperature.nil?
         end
 
         def parse_completion_response(response)

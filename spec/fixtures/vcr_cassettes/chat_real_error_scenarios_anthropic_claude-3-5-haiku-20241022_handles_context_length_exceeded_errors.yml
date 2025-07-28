@@ -5,10 +5,10 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -25,7 +25,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Mon, 21 Jul 2025 01:05:33 GMT
+      - Mon, 28 Jul 2025 14:26:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,7 +39,7 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 40072724-019e-4d79-83c0-8afb86354812
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -54,5 +54,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"type":"error","error":{"type":"invalid_request_error","message":"too
         many total text bytes: 10000002 > 9000000"}}'
-  recorded_at: Mon, 21 Jul 2025 01:05:33 GMT
+  recorded_at: Mon, 28 Jul 2025 14:26:52 GMT
 recorded_with: VCR 6.3.1

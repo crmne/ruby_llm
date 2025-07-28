@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+        is the best.</file>"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:48 GMT
+      - Mon, 28 Jul 2025 14:26:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,31 +39,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-07-17T09:42:46Z'
+      - '2025-07-28T14:26:04Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-07-17T09:42:48Z'
+      - '2025-07-28T14:26:05Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-07-17T09:42:46Z'
+      - '2025-07-28T14:26:03Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-07-17T09:42:46Z'
+      - '2025-07-28T14:26:04Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -76,12 +76,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01EMpGNtoReRnsSo64KcKudN","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
-        on the provided file details, the file named ''ruby.txt'' contains the text:\n\n\"Ruby
-        is the best.\"\n\nThe file is a plain text file (mime type ''text/plain'')
-        with a simple one-line statement expressing an opinion about the Ruby programming
-        language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":63,"service_tier":"standard"}}'
-  recorded_at: Thu, 17 Jul 2025 09:42:48 GMT
+      string: '{"id":"msg_017BfWvESpUKuQytF2jjk3T6","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
+        on the provided file details, the contents of the ''ruby.txt'' file is:\n\n\"Ruby
+        is the best.\"\n\nThe file is a plain text file (mime_type=''text/plain'')
+        with a simple one-line message praising the Ruby programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":61,"service_tier":"standard"}}'
+  recorded_at: Mon, 28 Jul 2025 14:26:05 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -90,15 +89,14 @@ http_interactions:
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"Based
-        on the provided file details, the file named ''ruby.txt'' contains the text:\n\n\"Ruby
-        is the best.\"\n\nThe file is a plain text file (mime type ''text/plain'')
-        with a simple one-line statement expressing an opinion about the Ruby programming
-        language."}]},{"role":"user","content":[{"type":"text","text":"and in this
-        one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"temperature":0.7,"stream":false,"max_tokens":8192}'
+        on the provided file details, the contents of the ''ruby.txt'' file is:\n\n\"Ruby
+        is the best.\"\n\nThe file is a plain text file (mime_type=''text/plain'')
+        with a simple one-line message praising the Ruby programming language."}]},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -115,7 +113,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:50 GMT
+      - Mon, 28 Jul 2025 14:26:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -127,31 +125,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-07-17T09:42:48Z'
+      - '2025-07-28T14:26:05Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-07-17T09:42:50Z'
+      - '2025-07-28T14:26:07Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-07-17T09:42:48Z'
+      - '2025-07-28T14:26:05Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-07-17T09:42:48Z'
+      - '2025-07-28T14:26:05Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -164,11 +162,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_0187xmPW46W9Royc7iVBdb3x","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"In
-        the file ''ruby.xml'', which is an XML document (mime type ''application/xml''),
-        the content is:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis
-        is a simple XML file with a custom tag `<truism>` containing the text \"Ruby
-        is the best\". The XML structure suggests this is a statement or declaration
-        about Ruby, marked as a \"truism\" (a self-evident truth)."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":137,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":101,"service_tier":"standard"}}'
-  recorded_at: Thu, 17 Jul 2025 09:42:50 GMT
+      string: '{"id":"msg_01FWAE92AXgXyv1L7Z6Zvmeg","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"In
+        the ''ruby.xml'' file, the contents are:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis
+        is an XML file with a simple XML structure. It contains a custom XML tag `<truism>`
+        with the text \"Ruby is the best\" inside it. The file''s MIME type is ''application/xml'',
+        which indicates it is an XML document."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":135,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":92,"service_tier":"standard"}}'
+  recorded_at: Mon, 28 Jul 2025 14:26:07 GMT
 recorded_with: VCR 6.3.1
