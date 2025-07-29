@@ -28,8 +28,8 @@ module RubyLLM
 
         def build_system_content(system_messages, cache: false)
           system_messages.flat_map.with_index do |msg, idx|
-            cache = false unless idx == system_messages.size - 1
-            format_system_message(msg, cache:)
+            message_cache = cache if idx == system_messages.size - 1
+            format_system_message(msg, cache: message_cache)
           end
         end
 
