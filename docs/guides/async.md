@@ -170,17 +170,80 @@ puts "Sentiment: #{result[:sentiment]}"
 
 ## Background Processing with `Async::Job`
 
-The real power comes from using `Async::Job` for background processing. Your existing Active Job code doesn't need to change!
+The real power comes from using `Async::Job` for background processing. Unlike traditional thread-based job processors that get blocked during long LLM operations, `Async::Job` uses fibers to handle thousands of concurrent jobs efficiently.
 
-### Installation
+### Setup with Falcon (Recommended)
+
+Falcon is a Ruby application server built on fibers. With Falcon, async just works™.
 
 ```ruby
 # Gemfile
+gem 'falcon'
 gem 'async-job-adapter-active_job'
+```
 
+```ruby
 # config/application.rb
 config.active_job.queue_adapter = :async_job
 ```
+
+```ruby
+# config/initializers/async_job_adapter.rb
+require 'async/job/processor/inline'
+
+Rails.application.configure do
+  config.async_job.define_queue "default" do
+    dequeue Async::Job::Processor::Inline
+  end
+end
+```
+
+That's it. Start your server with `bin/dev` and enjoy concurrent job processing. Your jobs now run concurrently without any additional infrastructure. One process, thousands of concurrent LLM operations.
+
+### Note on Puma
+
+Still using Puma? You'll need a Redis-backed job processor for concurrent execution:
+
+```ruby
+# Gemfile additions
+gem 'async-job-processor-redis'
+
+# config/initializers/async_job_adapter.rb
+require 'async/job/processor/redis'
+
+Rails.application.configure do
+  config.async_job.define_queue "default" do
+    dequeue Async::Job::Processor::Redis
+  end
+end
+```
+
+Then run these processes:
+
+**Option 1: Add to Procfile.dev (Recommended)**
+```ruby
+# Procfile.dev
+web: bin/rails server
+css: bin/rails tailwindcss:watch  # or your CSS processor
+redis: redis-server
+async_job: bundle exec async-job-adapter-active_job-server
+```
+
+Then just run `bin/dev` to start everything.
+
+**Option 2: Separate terminals**
+```bash
+# Terminal 1: Redis
+redis-server
+
+# Terminal 2: Job processor (auto-scales to CPU cores)
+bundle exec async-job-adapter-active_job-server
+
+# Terminal 3: Rails
+bin/dev
+```
+
+This setup requires more infrastructure but still delivers the concurrency benefits of async for your LLM operations.
 
 ### Your Jobs Work Unchanged
 
@@ -203,33 +266,38 @@ class DocumentAnalyzerJob < ApplicationJob
 end
 ```
 
-### Using Different Adapters for Different Jobs
+### Mixing Job Adapters: Best of Both Worlds
 
-You might want to use `Async::Job` only for LLM operations while keeping CPU-intensive work on traditional adapters:
+You don't have to go all-in. Use async-job only for LLM operations while keeping your existing job processor for everything else:
 
 ```ruby
-# Base job for LLM operations
+# Keep your existing adapter as default
+config.active_job.queue_adapter = :solid_queue  # or :sidekiq, :good_job, etc.
+
+# Base class for all LLM jobs
 class LLMJob < ApplicationJob
   self.queue_adapter = :async_job
 end
 
-# All LLM jobs inherit from this
+# LLM jobs inherit the async adapter
 class ChatResponseJob < LLMJob
   def perform(conversation_id, message)
-    # Runs with async-job adapter
+    # Runs with async-job - perfect for streaming
     response = RubyLLM.chat.ask(message)
     # ...
   end
 end
 
-# CPU-intensive jobs use default adapter (e.g., Sidekiq)
+# Regular jobs use your default adapter
 class ImageProcessingJob < ApplicationJob
   def perform(image_id)
-    # Runs with your default adapter
+    # Runs with solid_queue - better for CPU work
     # ...
   end
 end
 ```
+
+This approach lets you optimize each job type for its workload without disrupting your existing infrastructure.
 
 ## Rate Limiting with Semaphores
 

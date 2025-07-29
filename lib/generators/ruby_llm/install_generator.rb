@@ -7,6 +7,7 @@ module RubyLLM
   # Generator for RubyLLM Rails models and migrations
   class InstallGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
+
     namespace 'ruby_llm:install'
 
     source_root File.expand_path('install/templates', __dir__)
