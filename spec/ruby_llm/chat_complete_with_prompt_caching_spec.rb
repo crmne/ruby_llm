@@ -94,17 +94,20 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
     end
   end
 
-  #   CACHED_MODELS.each do |model_info|
-  #     provider = model_info[:provider]
-  #     model = model_info[:model]
+  # CACHED_MODELS.each do |model_info|
+  #   provider = model_info[:provider]
+  #   model = model_info[:model]
 
-  #     describe "with #{provider} provider (#{model})" do
-  #       let(:chat) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
-  #       it 'reports cached tokens' do
-  #         response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
+  #   describe "with #{provider} provider (#{model})" do
+  #     let(:chat) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
 
-  #         expect(response.cached_tokens).to be_positive
-  #       end
+  #     it 'reports cached tokens' do
+  #       chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
+
+  #       response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
+
+  #       expect(response.cached_tokens).to be_positive
   #     end
   #   end
+  # end
 end
