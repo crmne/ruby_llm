@@ -489,7 +489,7 @@ chat.ask "What is metaprogramming in Ruby?"
 
 ## Raw Responses
 
-You can access the raw response from the API provider by setting the `raw` option to `true` when calling `ask`.
+You can access the raw response from the API provider with `response.raw`.
 
 ```ruby
 response = chat.ask("What is the capital of France?")
