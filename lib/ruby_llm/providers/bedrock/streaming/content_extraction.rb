@@ -39,6 +39,14 @@ module RubyLLM
             data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
           end
 
+          def extract_cached_tokens(data)
+            data.dig('message', 'usage', 'cache_read_input_tokens')
+          end
+
+          def extract_cache_creation_tokens(data)
+            data.dig('message', 'usage', 'cache_creation_input_tokens')
+          end
+
           private
 
           def extract_content_by_type(data)

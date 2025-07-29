@@ -23,22 +23,30 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       let(:chat) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
 
       context 'with system message caching' do
-        it 'adds cache_control to the last system message when system caching is requested' do
+        it 'adds cache_control to the last system message when system caching is requested' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
           chat.with_instructions(LARGE_PROMPT)
           chat.cache_prompts(system: true)
 
           response = chat.ask('What are the key principles you follow?')
 
           expect(response.cache_creation_tokens).to be_positive
+
+          response = chat.ask('What are the key principles you follow?')
+
+          expect(response.cached_tokens).to be_positive
         end
       end
 
       context 'with user message caching' do
-        it 'adds cache_control to user messages when user caching is requested' do
+        it 'adds cache_control to user messages when user caching is requested' do # rubocop:disable RSpec/MultipleExpectations
           chat.cache_prompts(user: true)
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
           expect(response.cache_creation_tokens).to be_positive
+
+          response = chat.ask('Tell me more about Ruby')
+
+          expect(response.cached_tokens).to be_positive
         end
       end
 
@@ -63,6 +71,23 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
           expect(chat.messages[2].cache_creation_tokens).to be_positive
+          expect(response.cached_tokens).to be_positive
+        end
+      end
+
+      context 'with streaming' do
+        it 'reports cached tokens' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+          chat.cache_prompts(user: true)
+          response = chat.ask("#{LARGE_PROMPT}\n\nCount from 1 to 3") do |chunk|
+            # do nothing
+          end
+
+          expect(response.cache_creation_tokens).to be_positive
+
+          response = chat.ask("#{LARGE_PROMPT}\n\nCount from 1 to 3") do |chunk|
+            # do nothing
+          end
+
           expect(response.cached_tokens).to be_positive
         end
       end
