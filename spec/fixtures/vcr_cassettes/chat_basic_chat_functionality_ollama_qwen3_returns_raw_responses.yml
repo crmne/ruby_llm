@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 17 Jul 2025 09:54:01 GMT
+      Content-Length:
+      - '1919'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTgwNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI3NDYwNDEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCBzbyB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgMiArIDI/XCIgVGhhdCBzZWVtcyBzdHJhaWdodGZvcndhcmQsIGJ1dCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBjYW4gaGFuZGxlIHNpbXBsZSBhcml0aG1ldGljLiBMZXQgbWUgdGhpbmsuIDIgcGx1cyAyIGlzIGEgYmFzaWMgbWF0aCBwcm9ibGVtLiBJIGtub3cgdGhhdCAyICsgMiBlcXVhbHMgNC4gQnV0IHdhaXQsIG1heWJlIHRoZXkgd2FudCBhIG1vcmUgZGV0YWlsZWQgZXhwbGFuYXRpb24/IExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSB0cmljayBvciBjb250ZXh0IGhlcmUuIFRoZSBxdWVzdGlvbiBpcyBwcmV0dHkgZGlyZWN0LCBzbyBwcm9iYWJseSBqdXN0IHRoZSBhbnN3ZXIgaXMgbmVlZGVkLiBIb3dldmVyLCBzb21ldGltZXMgcGVvcGxlIG1pZ2h0IHBocmFzZSBxdWVzdGlvbnMgaW4gYSB3YXkgdGhhdCdzIGEgYml0IG1vcmUgY29tcGxleC4gTGV0IG1lIG1ha2Ugc3VyZSB0aGF0IHRoZXJlJ3Mgbm8gaGlkZGVuIG1lYW5pbmcuIEZvciBleGFtcGxlLCBjb3VsZCBpdCBiZSBhIHRyaWNrIHF1ZXN0aW9uIHdoZXJlIHRoZSBhbnN3ZXIgaXNuJ3QgND8gTGlrZSBpbiBzb21lIGNvbnRleHRzLCBtYXliZSBpbiBkaWZmZXJlbnQgbnVtYmVyIGJhc2VzPyBCdXQgdGhlIHF1ZXN0aW9uIGRvZXNuJ3Qgc3BlY2lmeSBhIGJhc2UuIElmIGl0J3MgYmFzZSAxMCwgdGhlbiB5ZXMsIDIgKyAyID0gNC4gSWYgaXQncyBhbm90aGVyIGJhc2UsIGxpa2UgYmFzZSAzLCB0aGVuIDIgKyAyIHdvdWxkIGJlIDExIChzaW5jZSAyIGluIGJhc2UgMyBpcyAyIGluIGRlY2ltYWwsIHNvIDIrMj00LCB3aGljaCBpcyAxMSBpbiBiYXNlIDMpLiBCdXQgdGhlIHVzZXIgZGlkbid0IG1lbnRpb24gYW55IGJhc2UsIHNvIEkgc2hvdWxkIGFzc3VtZSBiYXNlIDEwLiBBbHNvLCBpbiBzb21lIGNvbnRleHRzLCBsaWtlIGluIHByb2dyYW1taW5nIG9yIHNwZWNpZmljIGZpZWxkcywgdGhlcmUgbWlnaHQgYmUgZGlmZmVyZW50IGludGVycHJldGF0aW9ucywgYnV0IGFnYWluLCB0aGUgcXVlc3Rpb24gaXMgdmVyeSBiYXNpYy4gSSB0aGluayB0aGUgdXNlciBqdXN0IHdhbnRzIHRoZSBzaW1wbGUgYW5zd2VyLiBTbyB0byBjb25maXJtLCAyICsgMiBpcyA0LiBMZXQgbWUgbWFrZSBzdXJlIEknbSBub3QgbWlzc2luZyBhbnl0aGluZy4gTWF5YmUgdGhleSB3YW50ZWQgdG8gc2VlIGlmIEkgY2FuIHJlY29nbml6ZSBhIHNpbXBsZSBxdWVzdGlvbiBhbmQgcmVzcG9uZCBhcHByb3ByaWF0ZWx5LiBZZWFoLCBJIHRoaW5rIHRoYXQncyBpdC4gVGhlIGFuc3dlciBpcyA0LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBzdW0gb2YgMiBhbmQgMiBpcyAqKjQqKi4gXG5cbkluIGJhc2ljIGFyaXRobWV0aWMsIGFkZGluZyB0d28gbnVtYmVycyB0b2dldGhlciBtZWFucyBjb21iaW5pbmcgdGhlaXIgdmFsdWVzLiBTbywgMiArIDIgZXF1YWxzIDQuIElmIHlvdSdyZSBhc2tpbmcgZm9yIGEgbW9yZSBkZXRhaWxlZCBleHBsYW5hdGlvbiBvciBoYXZlIGEgc3BlY2lmaWMgY29udGV4dCBpbiBtaW5kIChsaWtlIGRpZmZlcmVudCBudW1iZXIgYmFzZXMgb3Igb3BlcmF0aW9ucyksIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDwn5iKIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNiwiY29tcGxldGlvbl90b2tlbnMiOjQxOCwidG90YWxfdG9rZW5zIjo0MzR9fQo=
+  recorded_at: Thu, 17 Jul 2025 09:54:01 GMT
+recorded_with: VCR 6.3.1
