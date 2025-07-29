@@ -173,3 +173,15 @@ VISION_MODELS = [
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
 ].freeze
+
+# Models that require prompt caching configuration
+CACHING_MODELS = [
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' }
+].freeze
+
+# Models that report cached tokens
+CACHED_MODELS = [
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :openai, model: 'gpt-4.1-nano' }
+].freeze
