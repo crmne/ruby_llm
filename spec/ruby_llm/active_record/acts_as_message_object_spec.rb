@@ -138,5 +138,16 @@ RSpec.describe 'ActiveRecord ask with message objects' do
         expect(message.role).to eq(:user)
       end
     end
+
+    it 'raises an error when trying to pass both message object and attachments' do
+      user_message = chat.messages.create!(
+        role: 'user',
+        content: 'Test message'
+      )
+      
+      expect {
+        chat.ask(user_message, with: ['some_file.txt'])
+      }.to raise_error(ArgumentError, /Cannot provide attachments.*when passing a message object/)
+    end
   end
 end

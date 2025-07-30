@@ -86,5 +86,16 @@ RSpec.describe 'Chat ask with message objects' do
       expect(user_message.role).to eq(:user)
       expect(user_message.model_id).to eq('custom-model')
     end
+
+    it 'raises an error when trying to pass both message object and attachments' do
+      message = RubyLLM::Message.new(
+        role: :user,
+        content: 'Test message'
+      )
+      
+      expect {
+        chat.ask(message, with: ['some_file.txt'])
+      }.to raise_error(ArgumentError, /Cannot provide attachments.*when passing a message object/)
+    end
   end
 end

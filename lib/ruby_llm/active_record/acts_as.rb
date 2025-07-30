@@ -161,9 +161,11 @@ module RubyLLM
       end
 
       def ask(message, with: nil, &)
-        # Allow passing an existing message object
         if message.respond_to?(:role) && message.respond_to?(:content)
-          # It's already a message record, just ensure it's in our collection
+          if with.present?
+            raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
+                                'Add attachments to the message object directly or pass a string instead.'
+          end
           messages << message unless messages.include?(message)
           to_llm.add_message(message.to_llm)
         else
