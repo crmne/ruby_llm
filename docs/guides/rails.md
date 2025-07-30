@@ -498,10 +498,11 @@ ActionCable does not guarantee message order due to its concurrent processing mo
 
 #### Option 1: Client-Side Reordering with Stimulus (Recommended)
 
-Add a Stimulus controller that maintains correct chronological order based on timestamps:
+Add a Stimulus controller that maintains correct chronological order based on timestamps. This example demonstrates the concept - adapt it to your specific needs:
 
 ```javascript
 // app/javascript/controllers/message_ordering_controller.js
+// Note: This is an example implementation. Test thoroughly before production use.
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
