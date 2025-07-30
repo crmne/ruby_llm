@@ -574,23 +574,6 @@ class MessagesController < ApplicationController
 end
 ```
 
-**How This Pattern Works:**
-
-1. **Controller creates and broadcasts user message immediately**
-   - User submits form → controller creates `user_message` record
-   - `user_message` is broadcast via `after_create_commit` callback
-   - User sees their message instantly in the UI
-
-2. **Background job handles AI response streaming**
-   - Job receives `user_message.id` (not content string)
-   - `chat.ask(user_message)` reuses existing message - **no duplication**
-   - AI response streams to UI via turbo streams
-
-3. **Clean separation of concerns**
-   - Frontend: Instant user feedback via immediate broadcast
-   - Backend: AI processing and streaming in background
-   - No duplicate database records or UI elements
-
 ### Advanced Pattern: Instant User Message Display
 
 For optimal user experience in real-time chat applications, you want user messages to appear instantly in the UI while AI responses stream in separately. RubyLLM supports passing existing message objects to the `ask` method, enabling this immediate feedback pattern:
@@ -663,44 +646,29 @@ class Message < ApplicationRecord
 end
 ```
 
+**How This Pattern Works:**
+
+1. **Controller creates and broadcasts user message immediately**
+   - User submits form → controller creates `user_message` record
+   - `user_message` is broadcast via `after_create_commit` callback
+   - User sees their message instantly in the UI
+
+2. **Background job handles AI response streaming**
+   - Job receives `user_message.id` (not content string)
+   - `chat.ask(user_message)` reuses existing message - **no duplication**
+   - AI response streams to UI via turbo streams
+
+3. **Clean separation of concerns**
+   - Frontend: Instant user feedback via immediate broadcast
+   - Backend: AI processing and streaming in background
+   - No duplicate database records or UI elements
+
 **Key benefits:**
 - ✅ User sees their message instantly (no waiting for AI)
 - ✅ AI response streams in real-time
 - ✅ No message duplication in database
 - ✅ Preserves all message metadata
-- ✅ Works seamlessly with Turbo Streams
-
-**Why This Pattern is Better:**
-
-1. **Instant feedback**: User sees their message immediately, not after job processing
-2. **No duplication**: The existing message is used, preventing database duplicates  
-3. **Preserves attributes**: Custom fields and metadata are maintained
-4. **Clean separation**: UI updates and AI processing are decoupled
-
-**Use Case Example:**
-
-This pattern is perfect when users create messages with rich content (ActionText/Trix editor) or when you need to broadcast user messages immediately for real-time collaborative features:
-
-```ruby
-# app/models/message.rb
-class Message < ApplicationRecord
-  acts_as_message
-  has_rich_text :rich_content
-  
-  broadcasts_to ->(message) { [message.chat, "messages"] }
-  
-  # Broadcast user messages immediately on create
-  after_create_commit :broadcast_if_user_message
-  
-  private
-  
-  def broadcast_if_user_message
-    if role == 'user'
-      broadcast_append_to([chat, "messages"])
-    end
-  end
-end
-```
+  - ✅ Works seamlessly with Turbo Streams
 
 **Error Prevention:**
 
