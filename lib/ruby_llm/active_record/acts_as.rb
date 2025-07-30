@@ -161,7 +161,14 @@ module RubyLLM
       end
 
       def ask(message, with: nil, &)
-        create_user_message(message, with:)
+        # Allow passing an existing message object
+        if message.respond_to?(:role) && message.respond_to?(:content)
+          # It's already a message record, just ensure it's in our collection
+          messages << message unless messages.include?(message)
+          to_llm.add_message(message.to_llm)
+        else
+          create_user_message(message, with:)
+        end
         complete(&)
       end
 

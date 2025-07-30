@@ -35,7 +35,12 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: Content.new(message, with)
+      # Allow passing an existing message object
+      if message.respond_to?(:role) && message.respond_to?(:content)
+        add_message message
+      else
+        add_message role: :user, content: Content.new(message, with)
+      end
       complete(&)
     end
 
