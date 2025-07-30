@@ -13,12 +13,18 @@ RSpec.describe RubyLLM::Chat do
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
 
-        chat.ask('Count from 1 to 3') do |chunk|
+        response = chat.ask('Count from 1 to 3') do |chunk|
           chunks << chunk
         end
 
         expect(chunks).not_to be_empty
         expect(chunks.first).to be_a(RubyLLM::Chunk)
+        expect(response.raw).to be_present
+        expect(response.raw.headers).to be_present
+        expect(response.raw.status).to be_present
+        expect(response.raw.status).to eq(200)
+        expect(response.raw.env.request_body).to be_present
+        puts response.raw.env.request_body
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations

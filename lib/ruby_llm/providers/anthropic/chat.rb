@@ -57,7 +57,7 @@ module RubyLLM
           text_content = extract_text_content(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
-          build_message(data, text_content, tool_use_blocks)
+          build_message(data, text_content, tool_use_blocks, response)
         end
 
         def extract_text_content(blocks)
@@ -65,14 +65,15 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use_blocks)
+        def build_message(data, content, tool_use_blocks, response)
           Message.new(
             role: :assistant,
             content: content,
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: data.dig('usage', 'input_tokens'),
             output_tokens: data.dig('usage', 'output_tokens'),
-            model_id: data['model']
+            model_id: data['model'],
+            raw: response
           )
         end
 
