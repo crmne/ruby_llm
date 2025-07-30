@@ -4,12 +4,13 @@ title: Tools
 parent: Guides
 nav_order: 3
 permalink: /guides/tools
+description: Let AI call your Ruby code. Connect to databases, APIs, or any external system with function calling.
 ---
 
 # Using Tools with RubyLLM
 {: .no_toc }
 
-Tools (also known as Function Calling or Plugins) allow AI models to interact with external systems by calling your Ruby code. This enables them to access real-time data, perform actions, or use capabilities beyond their built-in knowledge.
+Give AI superpowers by letting it call your Ruby methods.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

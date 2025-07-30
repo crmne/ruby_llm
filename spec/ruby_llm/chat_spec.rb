@@ -19,6 +19,17 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
 
+      it "#{provider}/#{model} returns raw responses" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What is the capital of France?')
+        expect(response.raw).to be_present
+        expect(response.raw.headers).to be_present
+        expect(response.raw.body).to be_present
+        expect(response.raw.status).to be_present
+        expect(response.raw.status).to eq(200)
+        expect(response.raw.env.request_body).to be_present
+      end
+
       it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
         chat = RubyLLM.chat(model: model, provider: provider)
 

@@ -31,6 +31,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class DiceRoll < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Rolls a single six-sided die and returns the result'
+
+    def execute
+      { roll: rand(1..6) }
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -126,6 +134,60 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+    end
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} can handle multiple tool calls in a single response" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        skip 'Local providers do not reliably use tools' if RubyLLM::Provider.providers[provider]&.local?
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(DiceRoll)
+                      .with_instructions(
+                        'You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.'
+                      )
+
+        # Track tool calls to ensure all 3 are executed
+        tool_call_count = 0
+
+        original_execute = DiceRoll.instance_method(:execute)
+        DiceRoll.define_method(:execute) do
+          tool_call_count += 1
+          # Return a fixed result for VCR consistency
+          { roll: tool_call_count }
+        end
+
+        response = chat.ask('Roll the dice 3 times')
+
+        # Restore original method
+        DiceRoll.define_method(:execute, original_execute)
+
+        # Verify all 3 tool calls were made
+        expect(tool_call_count).to eq(3)
+
+        # Verify the response contains some dice roll results
+        expect(response.content).to match(/\d+/) # Contains at least one number
+        expect(response.content.downcase).to match(/roll|dice|result/) # Mentions rolling or results
+      end
+    end
+  end
+
+  describe 'tool call callbacks' do
+    it 'calls on_tool_call callback when tools are used' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      tool_calls_received = []
+
+      chat = RubyLLM.chat
+                    .with_tool(Weather)
+                    .on_tool_call { |tool_call| tool_calls_received << tool_call }
+
+      response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+      expect(tool_calls_received).not_to be_empty
+      expect(tool_calls_received.first).to respond_to(:name)
+      expect(tool_calls_received.first).to respond_to(:arguments)
+      expect(tool_calls_received.first.name).to eq('weather')
+      expect(response.content).to include('15')
+      expect(response.content).to include('10')
     end
   end
 

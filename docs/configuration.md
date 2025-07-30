@@ -3,12 +3,13 @@ layout: default
 title: Configuration
 nav_order: 3
 permalink: /configuration
+description: Configure once, use everywhere. API keys, defaults, timeouts, and multi-tenant contexts made simple.
 ---
 
 # Configuring RubyLLM
 {: .no_toc }
 
-This guide covers all the configuration options available in RubyLLM, from setting API keys and default models to customizing connection behavior and using scoped contexts.
+Set it and forget it. Everything you need to configure RubyLLM in one place.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -52,6 +53,8 @@ RubyLLM.configure do |config|
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
+  config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', nil) # Available in v1.4.0
+  config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil) # Available in v1.4.0
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)
@@ -105,8 +108,13 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `gemini_api_key`
 *   `deepseek_api_key`
 *   `openrouter_api_key`
-*   `ollama_api_base`
+*   `gpustack_api_key` (Available in v1.4.0)
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
+
+## Ollama API Base (`ollama_api_base`)
+
+When using a local model running via Ollama, set the `ollama_api_base` to the URL of your Ollama server, e.g. `http://localhost:11434/v1`
+
 
 ## Custom OpenAI API Base (`openai_api_base`)
 {: .d-inline-block }

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:58:59 GMT
+      - Thu, 17 Jul 2025 10:02:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,36 +34,36 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749646737-HTKtik59eYBVH8tx6t0R\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646737,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Let
-        me help you find out the best language to learn by using the available tool.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01Ch1fsbW7mQSBC8XHQsnyaD\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":327,\"completion_tokens\":58,\"total_tokens\":385}}"
-  recorded_at: Wed, 11 Jun 2025 12:58:59 GMT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1752746563-of4CXO8nb9vh3rJ8oqaM\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752746563,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you find out the best language to learn by using the available tool.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01VKzrdhejTTevYjeTwTKgYx\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":327,\"completion_tokens\":58,\"total_tokens\":385}}"
+  recorded_at: Thu, 17 Jul 2025 10:02:45 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"Let me help you
-        find out the best language to learn by using the available tool.","tool_calls":[{"id":"toolu_01Ch1fsbW7mQSBC8XHQsnyaD","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01Ch1fsbW7mQSBC8XHQsnyaD"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"I''ll help you
+        find out the best language to learn by using the available tool.","tool_calls":[{"id":"toolu_01VKzrdhejTTevYjeTwTKgYx","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01VKzrdhejTTevYjeTwTKgYx"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.2
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -78,7 +78,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jun 2025 12:59:03 GMT
+      - Thu, 17 Jul 2025 10:02:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -87,15 +87,15 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      X-Clerk-Auth-Message:
-      - Invalid JWT form. A JWT consists of three parts separated by dots. (reason=token-invalid,
-        token-carrier=header)
-      X-Clerk-Auth-Reason:
-      - token-invalid
-      X-Clerk-Auth-Status:
-      - signed-out
       Vary:
       - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -103,19 +103,18 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1749646739-DISdretNhFb0zEHhVVEg\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1749646739,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"According
-        to the tool, Ruby is the best language to learn right now! Ruby is a dynamic,
-        object-oriented programming language known for its simplicity and readability.
-        It's particularly popular for web development, especially with the Ruby on
-        Rails framework. \\n\\nSome reasons why Ruby might be a great language to
-        learn:\\n1. Easy to read and write syntax\\n2. Strong community support\\n3.
-        Widely used in web development\\n4. Versatile and can be used for various
-        types of projects\\n5. Great for beginners due to its intuitive nature\\n\\nKeep
-        in mind that the \\\"best\\\" language can depend on your specific goals,
-        such as web development, data science, mobile apps, or other areas of programming.
-        But Ruby is certainly an excellent choice for many programmers, especially
-        those just starting their coding journey.\\n\\nWould you like to know more
-        about Ruby or discuss how it might fit into your programming goals?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":397,\"completion_tokens\":194,\"total_tokens\":591}}"
-  recorded_at: Wed, 11 Jun 2025 12:59:06 GMT
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1752746565-b7BWaRbUe8KNhxkSwQqo\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1752746565,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"According
+        to the tool, Ruby is the best language to learn! Ruby is a dynamic, object-oriented
+        programming language known for its simplicity and readability. It's particularly
+        popular for web development, especially with the Ruby on Rails framework.
+        \\n\\nSome reasons why Ruby might be a great language to learn:\\n1. Easy
+        to read and write syntax\\n2. Strong community support\\n3. Versatile for
+        web development\\n4. Good for beginners due to its intuitive nature\\n5. Used
+        in various domains like web applications, scripting, and automation\\n\\nHowever,
+        the \\\"best\\\" language can depend on your specific goals, such as:\\n-
+        Web development\\n- Data science\\n- Mobile app development\\n- Game development\\n-
+        Career opportunities\\n\\nIf you have a specific area of interest, I'd be
+        happy to provide more context about why Ruby might be a good choice or discuss
+        other programming languages that might suit your needs.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":397,\"completion_tokens\":195,\"total_tokens\":592}}"
+  recorded_at: Thu, 17 Jul 2025 10:02:49 GMT
 recorded_with: VCR 6.3.1
