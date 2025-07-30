@@ -59,9 +59,45 @@ This approach has one important consequence: **you cannot use `validates :conten
 
 ## Setting Up Your Rails Application
 
-### Database Migrations
+### Quick Setup with Generator
+{: .d-inline-block }
 
-First, generate migrations for your `Chat`, `Message`, and `ToolCall` models.
+Available in v1.4.0
+{: .label .label-yellow }
+
+The easiest way to get started is using the provided Rails generator:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This generator automatically creates:
+- All required migrations (Chat, Message, ToolCall tables)
+- Model files with `acts_as_chat`, `acts_as_message`, and `acts_as_tool_call` configured
+- A RubyLLM initializer in `config/initializers/ruby_llm.rb`
+
+After running the generator:
+
+```bash
+rails db:migrate
+```
+
+You're ready to go! The generator handles all the setup complexity for you.
+
+#### Generator Options
+
+The generator supports custom model names if needed:
+
+```bash
+# Use custom model names
+rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+```
+
+This is useful if you already have models with these names or prefer different naming conventions.
+
+### Manual Setup
+
+If you prefer to set up manually or need custom table/model names, you can create the migrations yourself:
 
 ```bash
 # Generate basic models and migrations
@@ -70,7 +106,7 @@ rails g model Message chat:references role:string content:text model_id:string i
 rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
 ```
 
-Adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
+Then adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
@@ -105,16 +141,22 @@ class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
       t.references :message, null: false, foreign_key: true # Assistant message making the call
-      t.string :tool_call_id, null: false, index: { unique: true } # Provider's ID for the call
+      t.string :tool_call_id, null: false # Provider's ID for the call
       t.string :name, null: false
-      t.jsonb :arguments, default: {} # Use jsonb for PostgreSQL
+      # Use jsonb for PostgreSQL, json for MySQL/SQLite
+      t.jsonb :arguments, default: {} # Change to t.json for non-PostgreSQL databases
       t.timestamps
     end
+
+    add_index :tool_calls, :tool_call_id, unique: true
   end
 end
 ```
 
 Run the migrations: `rails db:migrate`
+
+{: .note }
+**Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 
 ### ActiveStorage Setup for Attachments (Optional)
 
@@ -318,7 +360,6 @@ chat_record.ask("What's in this document?", with: user.profile_document)
 The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, PDF, or text document - RubyLLM figures it out for you!
 
 ### Structured Output with Schemas
-
 {: .d-inline-block }
 
 Available in v1.4.0

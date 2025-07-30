@@ -35,6 +35,9 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
   </div>
   <div class="provider-logo">
+    <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
   </div>
@@ -147,31 +150,28 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 
 Add persistence to your chat models effortlessly:
 
+```bash
+# Generate models and migrations (available in v1.4.0)
+rails generate ruby_llm:install
+```
+
 ```ruby
-# app/models/chat.rb
+# Or add to existing models
 class Chat < ApplicationRecord
   acts_as_chat # Automatically saves messages & tool calls
-  # ... your other model logic ...
 end
 
-# app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
-  # ...
 end
 
-# app/models/tool_call.rb (if using tools)
 class ToolCall < ApplicationRecord
   acts_as_tool_call
-  # ...
 end
 
-# Now interacting with a Chat record persists the conversation:
-chat_record = Chat.create!(model_id: "gpt-4.1-nano")
-chat_record.ask("Explain Active Record callbacks.") # User & Assistant messages saved
-
-# Works seamlessly with file attachments - types automatically detected
-chat_record.ask("What's in this file?", with: "report.pdf")
-chat_record.ask("Analyze these", with: ["image.jpg", "data.csv", "notes.txt"])
+# Now chats persist automatically
+chat = Chat.create!(model_id: "gpt-4.1-nano")
+chat.ask("What's in this file?", with: "report.pdf")
 ```
-Check the [Rails Integration Guide](https://rubyllm.com/guides/rails) for more.
+
+See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for details.

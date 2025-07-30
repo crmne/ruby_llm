@@ -299,7 +299,7 @@ response = chat.ask("List 3 programming languages with their year created")
 
 ### Using RubyLLM::Schema (Recommended)
 
-The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/afomera/ruby_llm-schema) gem:
+The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) gem:
 
 ```ruby
 # First, install the gem: gem install ruby_llm-schema
@@ -464,7 +464,11 @@ Refer to the [Working with Models Guide]({% link guides/models.md %}) for detail
 
 ## Chat Event Handlers
 
-You can register blocks to be called when certain events occur during the chat lifecycle, useful for UI updates or logging.
+You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
+
+### Available Event Handlers
+
+RubyLLM provides three event handlers that cover the complete chat lifecycle:
 
 ```ruby
 chat = RubyLLM.chat
@@ -483,9 +487,25 @@ chat.on_end_message do |message|
   end
 end
 
+# Called when the AI decides to use a tool
+chat.on_tool_call do |tool_call|
+  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
+end
+
 # These callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+## Raw Responses
+
+You can access the raw response from the API provider with `response.raw`.
+
+```ruby
+response = chat.ask("What is the capital of France?")
+puts response.raw.body
+```
+
+The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
 ## Next Steps
 

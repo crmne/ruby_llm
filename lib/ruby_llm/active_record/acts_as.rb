@@ -84,8 +84,12 @@ module RubyLLM
         attr_reader :tool_call_class
       end
 
-      def to_llm
-        @chat ||= RubyLLM.chat(model: model_id)
+      def to_llm(context: nil)
+        @chat ||= if context
+                    context.chat(model: model_id)
+                  else
+                    RubyLLM.chat(model: model_id)
+                  end
         @chat.reset_messages!
 
         messages.each do |msg|
@@ -125,8 +129,8 @@ module RubyLLM
         self
       end
 
-      def with_context(...)
-        to_llm.with_context(...)
+      def with_context(context)
+        to_llm(context: context)
         self
       end
 
