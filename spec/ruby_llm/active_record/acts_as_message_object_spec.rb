@@ -149,5 +149,17 @@ RSpec.describe 'ActiveRecord ask with message objects' do
         chat.ask(user_message, with: ['some_file.txt'])
       }.to raise_error(ArgumentError, /Cannot provide attachments.*when passing a message object/)
     end
+
+    it 'raises an error when trying to use a message from a different chat' do
+      other_chat = Chat.create!(model_id: 'gpt-4.1-nano')
+      other_message = other_chat.messages.create!(
+        role: 'user',
+        content: 'Message from different chat'
+      )
+      
+      expect {
+        chat.ask(other_message)
+      }.to raise_error(ArgumentError, /Message belongs to a different chat/)
+    end
   end
 end

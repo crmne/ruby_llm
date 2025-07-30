@@ -166,7 +166,12 @@ module RubyLLM
             raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
                                 'Add attachments to the message object directly or pass a string instead.'
           end
-          messages << message unless messages.include?(message)
+          
+          # Validate message belongs to this chat if it's an ActiveRecord model
+          if message.respond_to?(:chat) && message.chat && message.chat != self
+            raise ArgumentError, 'Message belongs to a different chat. Create a new message for this chat instead.'
+          end
+          
           to_llm.add_message(message.to_llm)
         else
           create_user_message(message, with:)
