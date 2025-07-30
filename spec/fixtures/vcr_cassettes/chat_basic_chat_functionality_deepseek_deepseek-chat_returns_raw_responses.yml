@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:51:54 GMT
+      - Wed, 30 Jul 2025 14:31:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5b664ee5c8ff6597624823bc9ee80b7b
+      - c232dec044e058e516db4aa2106bbc3c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,7 +51,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"344a47f5-689a-4d25-b190-8cd129a2a93e","object":"chat.completion","created":1752745914,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        sum of 2 + 2 is **4**. \n\nLet me know if you''d like help with anything else!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":25,"total_tokens":36,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Thu, 17 Jul 2025 09:52:00 GMT
+      string: !binary |-
+        eyJpZCI6IjZmZWRiNjk2LTk2MDgtNDdlYi1iYTA1LTg3NTMxMWI4Y2FhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTM4ODU4ODgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi4gSXQgaXMga25vd24gZm9yIGl0cyBpY29uaWMgbGFuZG1hcmtzIHN1Y2ggYXMgdGhlIEVpZmZlbCBUb3dlciwgdGhlIExvdXZyZSBNdXNldW0sIGFuZCB0aGUgQXJjIGRlIFRyaW9tcGhlLiAgXG5cbldvdWxkIHlvdSBsaWtlIGluZm9ybWF0aW9uIG9uIGFueXRoaW5nIGVsc2UgcmVsYXRlZCB0byBQYXJpcyBvciBGcmFuY2U/IPCfmIoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMCwiY29tcGxldGlvbl90b2tlbnMiOjUxLCJ0b3RhbF90b2tlbnMiOjYxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDYyM19mcDhfa3ZjYWNoZSJ9
+  recorded_at: Wed, 30 Jul 2025 14:31:35 GMT
 recorded_with: VCR 6.3.1

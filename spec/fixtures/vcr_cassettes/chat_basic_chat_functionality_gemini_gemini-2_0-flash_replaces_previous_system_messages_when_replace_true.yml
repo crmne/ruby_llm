@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Jul 2025 09:51:49 GMT
+      - Wed, 30 Jul 2025 14:31:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1599
+      - gfet4t7; dur=1704
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,19 +55,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Okay, I can tell you about the weather, but I need some information first! To give you a useful weather report, I need to know:\n\n*   **Where are you located?** (City, state/province, or even just a general region)\n*   **What kind of weather information are you interested in?** (Temperature, precipitation, wind, humidity, a general forecast, etc.)\n\nOnce I have that information, I can access a weather API or other source and provide you with a relevant weather report.\n\nIn the meantime, I can tell you that weather is a complex system influenced by many factors, including solar radiation, atmospheric pressure, and geographic location. Predicting it accurately is a constant challenge, and sometimes even the best forecasts are wrong. It's a bit like trying to understand the punchline of XKCD7392, you need the right context to get the full picture.\n"
+                    "text": "I need more information to give you a useful weather report! To tell you about the weather, I need to know:\n\n*   **Where are you located?** (City, state/province, country, or even just a general region)\n*   **What time are you interested in?** (Now? Today? This week? A specific date?)\n\nOnce I have that information, I can access weather data and provide you with details like temperature, precipitation, wind speed, and a general forecast.\n\nAlso, remember that weather forecasts are not always perfectly accurate, especially for longer-term predictions. Sometimes, it feels like the weather is deliberately trying to mess with us, a phenomenon that might be explained by XKCD7392, if it existed.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.37328572752614503
+              "avgLogprobs": -0.33937017223503019
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 189,
-            "totalTokenCount": 214,
+            "candidatesTokenCount": 158,
+            "totalTokenCount": 183,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -77,37 +77,34 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 189
+                "tokenCount": 158
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "tMd4aJPGGc6ZhMIP5-SH0AM"
+          "responseId": "siyKaI3tHpmWsbQPmZzU-QE"
         }
-  recorded_at: Thu, 17 Jul 2025 09:51:50 GMT
+  recorded_at: Wed, 30 Jul 2025 14:31:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Okay,
-        I can tell you about the weather, but I need some information first! To give
-        you a useful weather report, I need to know:\n\n*   **Where are you located?**
-        (City, state/province, or even just a general region)\n*   **What kind of
-        weather information are you interested in?** (Temperature, precipitation,
-        wind, humidity, a general forecast, etc.)\n\nOnce I have that information,
-        I can access a weather API or other source and provide you with a relevant
-        weather report.\n\nIn the meantime, I can tell you that weather is a complex
-        system influenced by many factors, including solar radiation, atmospheric
-        pressure, and geographic location. Predicting it accurately is a constant
-        challenge, and sometimes even the best forecasts are wrong. It''s a bit like
-        trying to understand the punchline of XKCD7392, you need the right context
-        to get the full picture.\n"}]},{"role":"user","parts":[{"text":"You must include
-        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"I
+        need more information to give you a useful weather report! To tell you about
+        the weather, I need to know:\n\n*   **Where are you located?** (City, state/province,
+        country, or even just a general region)\n*   **What time are you interested
+        in?** (Now? Today? This week? A specific date?)\n\nOnce I have that information,
+        I can access weather data and provide you with details like temperature, precipitation,
+        wind speed, and a general forecast.\n\nAlso, remember that weather forecasts
+        are not always perfectly accurate, especially for longer-term predictions.
+        Sometimes, it feels like the weather is deliberately trying to mess with us,
+        a phenomenon that might be explained by XKCD7392, if it existed.\n"}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -128,7 +125,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Jul 2025 09:51:54 GMT
+      - Wed, 30 Jul 2025 14:31:23 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -138,7 +135,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=4295
+      - gfet4t7; dur=6899
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -152,34 +149,34 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Okay, I can suggest some good books! To give you the best recommendations, I need a little more information about your preferences. Tell me:\n\n*   **What genres do you enjoy?** (Fiction, non-fiction, mystery, sci-fi, fantasy, romance, historical fiction, biography, etc.)\n*   **Are there any specific authors you like?**\n*   **What are some books you've enjoyed in the past?**\n*   **Are you looking for something light and entertaining, or something more thought-provoking?**\n*   **Do you have any specific themes or topics you're interested in?**\n\nIn the meantime, here are a few generally well-regarded books across different genres to get you started. Remember, taste is subjective, so these are just suggestions!\n\n**Fiction:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A classic coming-of-age story set in the American South, dealing with themes of justice, prejudice, and morality.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and charming romance exploring social class and societal expectations in 19th-century England.\n*   **\"1984\" by George Orwell:** A dystopian novel about a totalitarian regime and the dangers of government overreach.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** An epic fantasy adventure with rich world-building and memorable characters.\n*   **\"The Hitchhiker's Guide to the Galaxy\" by Douglas Adams:** A hilarious and absurd science fiction comedy.\n\n**Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping overview of human history, exploring the key events and trends that have shaped our species.\n*   **\"Thinking, Fast and Slow\" by Daniel Kahneman:** An exploration of the two systems that drive the way we think, offering insights into decision-making and cognitive biases.\n*   **\"Educated\" by Tara Westover:** A memoir about a young woman who escapes her survivalist family and pursues an education.\n*   **\"The Diary of a Young Girl\" by Anne Frank:** A poignant and powerful account of a young Jewish girl's life in hiding during the Holocaust.\n\nI hope this gives you a good starting point. To give you more tailored recommendations, please provide me with more information about your reading preferences. Also, remember that the best book for you is the one you enjoy the most! And somewhere in all of this, I must include the phrase **PURPLE-ELEPHANT-42**.\n"
+                    "text": "Okay, recommending \"good\" books is tough because it's so subjective! What one person loves, another might hate. To give you the best recommendations, I need a little more information about your preferences. However, I can give you some popular and critically acclaimed books across different genres to get you started. And, as a bonus, I'll include the phrase PURPLE-ELEPHANT-42 somewhere in this list.\n\nHere are some suggestions, broken down by genre:\n\n**Fiction:**\n\n*   **Classic Literature:**\n    *   *Pride and Prejudice* by Jane Austen: A witty and romantic story of love and social class in 19th-century England.\n    *   *To Kill a Mockingbird* by Harper Lee: A powerful story about racial injustice and childhood innocence in the American South.\n    *   *1984* by George Orwell: A dystopian novel exploring themes of totalitarianism and surveillance.\n\n*   **Contemporary Fiction:**\n    *   *Where the Crawdads Sing* by Delia Owens: A coming-of-age story set in the marshes of North Carolina, with elements of mystery and nature writing.\n    *   *Little Fires Everywhere* by Celeste Ng: Explores themes of motherhood, privilege, and identity in a seemingly perfect suburban community.\n    *   *Project Hail Mary* by Andy Weir: A sci-fi thriller about an astronaut who wakes up with amnesia and must save humanity.\n\n*   **Fantasy:**\n    *   *Harry Potter and the Sorcerer's Stone* by J.K. Rowling: The first book in the beloved series about a young wizard.\n    *   *The Name of the Wind* by Patrick Rothfuss: The first book in *The Kingkiller Chronicle*, a beautifully written and intricate fantasy series.\n    *   *Mistborn: The Final Empire* by Brandon Sanderson: A complex and engaging fantasy novel with a unique magic system.\n\n*   **Science Fiction:**\n    *   *Dune* by Frank Herbert: A classic sci-fi epic about politics, religion, and ecology on a desert planet.\n    *   *The Martian* by Andy Weir: A thrilling survival story about an astronaut stranded on Mars.\n    *   *Children of Time* by Adrian Tchaikovsky: A fascinating and thought-provoking novel about the evolution of spiders and their interactions with humanity.\n\n*   **Mystery/Thriller:**\n    *   *Gone Girl* by Gillian Flynn: A suspenseful and twisty thriller about a marriage gone wrong.\n    *   *The Girl with the Dragon Tattoo* by Stieg Larsson: The first book in the *Millennium* series, a dark and gripping mystery.\n    *   *The Silent Patient* by Alex Michaelides: A psychological thriller about a woman who shoots her husband and then refuses to speak.\n\n**Non-Fiction:**\n\n*   **Biography/Memoir:**\n    *   *Educated* by Tara Westover: A memoir about a young woman who escapes her survivalist family and pursues an education.\n    *   *Becoming* by Michelle Obama: An inspiring memoir by the former First Lady of the United States.\n    *   *The Diary of a Young Girl* by Anne Frank: A poignant and powerful account of a young girl's life in hiding during the Holocaust.\n\n*   **History:**\n    *   *Sapiens: A Brief History of Humankind* by Yuval Noah Harari: A sweeping and thought-provoking overview of human history.\n    *   *Guns, Germs, and Steel: The Fates of Human Societies* by Jared Diamond: An exploration of the factors that have shaped the development of human societies.\n    *   *The Warmth of Other Suns* by Isabel Wilkerson: A Pulitzer Prize-winning account of the Great Migration of African Americans from the South to the North.\n\n*   **Science/Technology:**\n    *   *A Brief History of Time* by Stephen Hawking: A popular introduction to cosmology and the mysteries of the universe.\n    *   *Cosmos* by Carl Sagan: A beautifully written and accessible exploration of the universe.\n    *   *Thinking, Fast and Slow* by Daniel Kahneman: An exploration of the two systems of thinking that drive the way we make choices.\n\nTo help me narrow down the recommendations, tell me:\n\n*   **What genres do you enjoy?** (Fantasy, Sci-Fi, Romance, Thriller, Historical Fiction, Non-Fiction, etc.)\n*   **What are some books you've enjoyed in the past?**\n*   **What are you looking for in a book?** (Something thought-provoking, entertaining, educational, etc.)\n*   **Are there any topics you're particularly interested in?** (History, science, psychology, etc.)\n\nI hope this list gives you a good starting point! Remember to check out reviews and summaries before you commit to reading a book. And don't be afraid to try something new! Maybe you'll discover a new favorite author or genre. Also, I think I saw a PURPLE-ELEPHANT-42 in the library the other day.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.16975195378011795
+              "avgLogprobs": -0.14283048513844526
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 223,
-            "candidatesTokenCount": 559,
-            "totalTokenCount": 782,
+            "promptTokenCount": 192,
+            "candidatesTokenCount": 1086,
+            "totalTokenCount": 1278,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 223
+                "tokenCount": 192
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 559
+                "tokenCount": 1086
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "tsd4aJi7CteVhMIPlOfpyQw"
+          "responseId": "tCyKaPuCG9iR1PIP0di7wA0"
         }
-  recorded_at: Thu, 17 Jul 2025 09:51:54 GMT
+  recorded_at: Wed, 30 Jul 2025 14:31:23 GMT
 recorded_with: VCR 6.3.1

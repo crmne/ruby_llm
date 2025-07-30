@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Wed, 16 Jul 2025 15:35:29 GMT
+      - Thu, 24 Jul 2025 16:53:18 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6877c6c1-9c6"
+      - W/"688264fe-9c6"
       Expires:
-      - Thu, 17 Jul 2025 07:25:20 GMT
+      - Wed, 30 Jul 2025 08:18:03 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - A671:3B165:AFAA75:B103CB:6878A307
+      - B9F5:398FA3:40DFB0B:414A685:6889D2E3
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 17 Jul 2025 09:43:39 GMT
+      - Wed, 30 Jul 2025 14:21:50 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '49'
+      - '294'
       X-Served-By:
-      - cache-fra-etou8220173-FRA
+      - cache-fra-etou8220031-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1752745419.220630,VS0,VE2
+      - S1753885310.357591,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 0142c139699a6ec0e2f7e342ede2f8d60d853225
+      - 9bd0654660f092d3ba04fda84dffbc145a1d1c46
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 17 Jul 2025 09:43:39 GMT
+  recorded_at: Wed, 30 Jul 2025 14:21:50 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -140,7 +138,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:43:41 GMT
+      - Wed, 30 Jul 2025 14:21:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,13 +165,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1612'
+      - '4398'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1615'
+      - '4401'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -181,20 +179,20 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199352'
+      - '199353'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
       - 194ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -207,16 +205,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFRLqfX49YkipLJah13gH3IlMUBm",
+          "id": "chatcmpl-Bz1ygdVwRLc6Y7B3B7iYo6nrUIgvw",
           "object": "chat.completion",
-          "created": 1752745419,
+          "created": 1753885310,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file 'license.txt' contains the licensing information for the Ruby programming language. It states that Ruby is free software copyrighted by Yukihiro Matsumoto. You are permitted to redistribute and modify Ruby under either the 2-clause Berkeley Software Distribution License (BSDL) or the conditions outlined in the document.\n\nThe license details various permissions and conditions, including:\n\n- Making and distributing verbatim copies of the source code.\n- Modifying the software, with options such as placing modifications in the public domain, internal organizational use, or giving binaries non-standard names.\n- Distributing the software in object or binary form, with options for including source code or providing instructions.\n- Incorporating parts of the software into other software, with the note that some files may not be under these terms.\n- Clarification that scripts and generated files are not automatically covered by the license.\n- A disclaimer of warranties, emphasizing that the software is provided \"as is\" without guarantees.\n\nOverall, this is a permissive license allowing broad use and modification, provided certain conditions are met.",
+                "content": "The file 'license.txt' contains the licensing information for the Ruby programming language. It states that Ruby is copyrighted free software created by Yukihiro Matsumoto. You are allowed to redistribute and modify Ruby under either the 2-clause Berkeley Software Distribution License (BSDL) or the conditions outlined in the document itself.\n\nThe license details various permissions and conditions, including:\n- Making and distributing copies of the software.\n- Modifying the software and the ways to do so.\n- Distributing the software in source or binary form.\n- Including parts of the software into other projects, including commercial ones.\n- Clarifies that scripts or library files used as input or output are not automatically covered by the license.\n- It disclaims warranties, stating the software is provided \"AS IS\" without guarantees of merchantability or fitness for a particular purpose.\n\nIn summary, this license provides broad permissions for usage, modification, and distribution, with some conditions and disclaimers.",
                 "refusal": null,
                 "annotations": []
               },
@@ -226,8 +224,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 213,
-            "total_tokens": 753,
+            "completion_tokens": 192,
+            "total_tokens": 732,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -240,7 +238,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:43:41 GMT
+  recorded_at: Wed, 30 Jul 2025 14:21:55 GMT
 recorded_with: VCR 6.3.1

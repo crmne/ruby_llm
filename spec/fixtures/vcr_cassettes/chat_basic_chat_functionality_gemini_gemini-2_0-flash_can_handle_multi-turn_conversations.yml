@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Jul 2025 09:51:45 GMT
+      - Wed, 30 Jul 2025 14:31:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=539
+      - gfet4t7; dur=629
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,19 +53,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Ruby was created by **Yukihiro \"Matz\" Matsumoto**.\n"
+                    "text": "Ruby was created by **Yukihiro Matsumoto**, often referred to as \"Matz\".\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.027757231678281511
+              "avgLogprobs": -0.14594440990024143
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 7,
-            "candidatesTokenCount": 14,
-            "totalTokenCount": 21,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 25,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -75,25 +75,25 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 14
+                "tokenCount": 18
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "scd4aNT4Ic6ZhMIP5-SH0AM"
+          "responseId": "riyKaJb1ErqYhMIP4Zu7yAE"
         }
-  recorded_at: Thu, 17 Jul 2025 09:51:46 GMT
+  recorded_at: Wed, 30 Jul 2025 14:31:10 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto**.\n"}]},{"role":"user","parts":[{"text":"What
+        was created by **Yukihiro Matsumoto**, often referred to as \"Matz\".\n"}]},{"role":"user","parts":[{"text":"What
         year did he create Ruby?"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -114,7 +114,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 17 Jul 2025 09:51:46 GMT
+      - Wed, 30 Jul 2025 14:31:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -124,7 +124,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=464
+      - gfet4t7; dur=918
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -138,34 +138,34 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**.\n"
+                    "text": "Yukihiro Matsumoto started working on Ruby in **1993**. The first public release was in **1995**.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.085678927103678387
+              "avgLogprobs": -0.16179370880126953
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 28,
-            "candidatesTokenCount": 15,
-            "totalTokenCount": 43,
+            "promptTokenCount": 32,
+            "candidatesTokenCount": 27,
+            "totalTokenCount": 59,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 28
+                "tokenCount": 32
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 15
+                "tokenCount": 27
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "ssd4aJirC6qr7dcPzq686Qw"
+          "responseId": "ryyKaOLYCJaCsbQP-6yPQQ"
         }
-  recorded_at: Thu, 17 Jul 2025 09:51:46 GMT
+  recorded_at: Wed, 30 Jul 2025 14:31:12 GMT
 recorded_with: VCR 6.3.1

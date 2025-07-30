@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Thu, 24 Jul 2025 16:53:18 GMT
       Access-Control-Allow-Origin:
@@ -35,33 +33,33 @@ http_interactions:
       Etag:
       - W/"688264fe-9c6"
       Expires:
-      - Mon, 28 Jul 2025 14:34:04 GMT
+      - Wed, 30 Jul 2025 08:18:03 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 99B5:1DD40F:53D63C1:5463F04:68878803
+      - B9F5:398FA3:40DFB0B:414A685:6889D2E3
       Accept-Ranges:
       - bytes
       Age:
-      - '0'
+      - '232'
       Date:
-      - Mon, 28 Jul 2025 14:26:07 GMT
+      - Wed, 30 Jul 2025 14:20:48 GMT
       Via:
       - 1.1 varnish
       X-Served-By:
-      - cache-bru1480030-BRU
+      - cache-fra-etou8220099-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1753712768.591832,VS0,VE101
+      - S1753885249.699932,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 5fe6e5d6863c87023f87cea44c5a047b835ca25c
+      - 83e97a10a6b3ba57fb4abf998a27f83d821c6057
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 28 Jul 2025 14:26:07 GMT
+  recorded_at: Wed, 30 Jul 2025 14:20:48 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -140,7 +138,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -157,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 28 Jul 2025 14:26:11 GMT
+      - Wed, 30 Jul 2025 14:20:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,25 +167,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-07-28T14:26:08Z'
+      - '2025-07-30T14:20:49Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-07-28T14:26:11Z'
+      - '2025-07-30T14:20:52Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-07-28T14:26:07Z'
+      - '2025-07-30T14:20:49Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-07-28T14:26:08Z'
+      - '2025-07-30T14:20:49Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -206,16 +204,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_015Pzdk8V7L55df16rL9gy6A","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        file is a license text for Ruby, the programming language. It appears to be
-        a permissive open-source license that allows redistribution and modification
+      string: '{"id":"msg_012rr6gxprBo4FB9jnCw6Fa6","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
+        file is a license text for Ruby, the programming language. Specifically, it
+        appears to be the Ruby license, which allows for redistribution and modification
         of the software under certain conditions. The key points of the license include:\n\n1.
-        Copyright is held by Yukihiro Matsumoto (Matz)\n2. Users can redistribute
-        and modify the software\n3. Modifications can be made with various conditions
-        (such as placing them in the public domain or using them internally)\n4. Binary
-        distributions have specific requirements\n5. The software is provided \"AS
-        IS\" without warranties\n\nThe license seems to be similar to a BSD-style
-        license, with flexible terms for using and distributing the Ruby programming
-        language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":152,"service_tier":"standard"}}'
-  recorded_at: Mon, 28 Jul 2025 14:26:11 GMT
+        Copyright is held by Yukihiro Matsumoto (Matz)\n2. Allows free redistribution
+        of source code\n3. Permits modifications with some restrictions\n4. Allows
+        distribution in binary or source form\n5. Allows incorporation into other
+        software\n6. Includes a standard disclaimer of warranties\n\nThe license seems
+        to be a variant of the BSD-style open-source license, with flexible terms
+        for using and distributing Ruby."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":147,"service_tier":"standard"}}'
+  recorded_at: Wed, 30 Jul 2025 14:20:52 GMT
 recorded_with: VCR 6.3.1

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Thu, 17 Jul 2025 09:57:25 GMT
+      - Wed, 30 Jul 2025 14:37:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=518
+      - gfet4t7; dur=461
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -51,12 +51,16 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"1\"}],\"role\":
         \"model\"}}],\"usageMetadata\": {\"promptTokenCount\": 8,\"totalTokenCount\":
         8,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\":
-        \"gemini-2.0-flash\",\"responseId\": \"BMl4aLn5Lq3-hMIPmJGb6AQ\"}\r\n\r\ndata:
-        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"\\n2\\n3\\n\"}],\"role\":
+        \"gemini-2.0-flash\",\"responseId\": \"Li6KaLzXCNOVhMIPkuG6iA8\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \", 2\"}],\"role\":
+        \"model\"}}],\"usageMetadata\": {\"promptTokenCount\": 8,\"totalTokenCount\":
+        8,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\":
+        \"gemini-2.0-flash\",\"responseId\": \"Li6KaLzXCNOVhMIPkuG6iA8\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \", 3\\n\"}],\"role\":
         \"model\"},\"finishReason\": \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\":
-        7,\"candidatesTokenCount\": 6,\"totalTokenCount\": 13,\"promptTokensDetails\":
+        7,\"candidatesTokenCount\": 8,\"totalTokenCount\": 15,\"promptTokensDetails\":
         [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 6}]},\"modelVersion\": \"gemini-2.0-flash\",\"responseId\":
-        \"BMl4aLn5Lq3-hMIPmJGb6AQ\"}\r\n\r\n"
-  recorded_at: Thu, 17 Jul 2025 09:57:25 GMT
+        [{\"modality\": \"TEXT\",\"tokenCount\": 8}]},\"modelVersion\": \"gemini-2.0-flash\",\"responseId\":
+        \"Li6KaLzXCNOVhMIPkuG6iA8\"}\r\n\r\n"
+  recorded_at: Wed, 30 Jul 2025 14:37:34 GMT
 recorded_with: VCR 6.3.1

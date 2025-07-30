@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,26 +25,42 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Jul 2025 10:03:04 GMT
+      - Wed, 30 Jul 2025 14:41:37 GMT
       Content-Length:
-      - '416'
+      - '1080'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-25","object":"chat.completion","created":1752746584,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_p15c5xer","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":109,"total_tokens":247}}
+      string: '{"id":"chatcmpl-499","object":"chat.completion","created":1753886497,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out which function to use here. Let me check the tools provided.\n\nLooking
+        at the tools section, there''s a function called best_language_to_learn. Its
+        description says it gets the best language to learn, and it doesn''t require
+        any parameters. Since the user''s question is exactly about determining the
+        best language, this function seems perfect. \n\nI don''t see any other functions
+        listed, so I should call best_language_to_learn. The parameters are empty,
+        so the arguments object will be empty. I''ll structure the tool call accordingly.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_6a0gn9lr","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":149,"total_tokens":287}}
 
         '
-  recorded_at: Thu, 17 Jul 2025 10:03:04 GMT
+  recorded_at: Wed, 30 Jul 2025 14:41:37 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_p15c5xer","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_p15c5xer"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","content":"<think>\nOkay, the
+        user is asking, \"What''s the best language to learn?\" I need to figure out
+        which function to use here. Let me check the tools provided.\n\nLooking at
+        the tools section, there''s a function called best_language_to_learn. Its
+        description says it gets the best language to learn, and it doesn''t require
+        any parameters. Since the user''s question is exactly about determining the
+        best language, this function seems perfect. \n\nI don''t see any other functions
+        listed, so I should call best_language_to_learn. The parameters are empty,
+        so the arguments object will be empty. I''ll structure the tool call accordingly.\n</think>\n\n","tool_calls":[{"id":"call_6a0gn9lr","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_6a0gn9lr"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -59,12 +75,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 17 Jul 2025 10:03:40 GMT
+      - Wed, 30 Jul 2025 14:41:58 GMT
       Content-Length:
-      - '2048'
+      - '1754'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTQyNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI3NDY2MjAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGZ1bmN0aW9uIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBhbnN3ZXIgY2xlYXJseS5cblxuRmlyc3QsIEkgc2hvdWxkIHN0YXRlIHRoYXQgUnVieSBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybi4gQnV0IG1heWJlIEkgc2hvdWxkIGFkZCBzb21lIHJlYXNvbnMgd2h5IFJ1YnkgaXMgYSBnb29kIGNob2ljZS4gTGV0IG1lIHRoaW5rLiBSdWJ5IGlzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgcmVhZGFiaWxpdHksIHdoaWNoIG1ha2VzIGl0IGdyZWF0IGZvciBiZWdpbm5lcnMuIEl0J3MgYWxzbyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy4gUGx1cywgaXRzIHN5bnRheCBpcyBlbGVnYW50LCB3aGljaCBjYW4gbWFrZSBjb2RpbmcgbW9yZSBlbmpveWFibGUuIEhvd2V2ZXIsIEkgc2hvdWxkIG1lbnRpb24gdGhhdCB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgY2FuIGRlcGVuZCBvbiB0aGUgdXNlcidzIGdvYWxzLiBGb3IgZXhhbXBsZSwgaWYgdGhleSdyZSBpbnRlcmVzdGVkIGluIGRhdGEgc2NpZW5jZSwgUHl0aG9uIG1pZ2h0IGJlIGJldHRlci4gQnV0IHNpbmNlIHRoZSBmdW5jdGlvbiByZXR1cm5lZCBSdWJ5LCBJIHNob3VsZCBoaWdobGlnaHQgaXRzIHN0cmVuZ3RocyB3aGlsZSBrZWVwaW5nIHRoZSBhbnN3ZXIgZmxleGlibGUuIFRoYXQgd2F5LCB0aGUgdXNlciBnZXRzIGEgaGVscGZ1bCBhbnN3ZXIgYmFzZWQgb24gdGhlIHRvb2wncyByZXNwb25zZSBidXQgYWxzbyB1bmRlcnN0YW5kcyB0aGF0IG90aGVyIGxhbmd1YWdlcyBtaWdodCBzdWl0IGRpZmZlcmVudCBwdXJwb3Nlcy4gTGV0IG1lIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2UgdG8gZmlyc3Qgc3RhdGUgUnVieSBhcyB0aGUgYW5zd2VyLCB0aGVuIGV4cGxhaW4gd2h5LCBhbmQgZmluYWxseSBub3RlIHRoYXQgdGhlIGJlc3QgY2hvaWNlIGRlcGVuZHMgb24gdGhlaXIgc3BlY2lmaWMgaW50ZXJlc3RzIG9yIGNhcmVlciBnb2Fscy5cblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyAqKlJ1YnkqKi4gSXQgaXMgcmVub3duZWQgZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIGVsZWdhbnQgc3ludGF4LCBtYWtpbmcgaXQgYW4gZXhjZWxsZW50IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBSdWJ54oCZcyBlbXBoYXNpcyBvbiBkZXZlbG9wZXIgaGFwcGluZXNzIGFuZCBwcm9kdWN0aXZpdHksIGNvbWJpbmVkIHdpdGggaXRzIHZlcnNhdGlsaXR5IGluIHdlYiBkZXZlbG9wbWVudCAoZS5nLiwgdmlhIFJ1Ynkgb24gUmFpbHMpLCBjb250cmlidXRlcyB0byBpdHMgcG9wdWxhcml0eS4gSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIHVsdGltYXRlbHkgZGVwZW5kcyBvbiB5b3VyIGdvYWxz4oCUd2hldGhlciB5b3XigJlyZSBpbnRlcmVzdGVkIGluIHdlYiBkZXZlbG9wbWVudCwgZGF0YSBzY2llbmNlLCBhdXRvbWF0aW9uLCBvciBvdGhlciBkb21haW5zLiBMZXQgbWUga25vdyB5b3VyIHNwZWNpZmljIGludGVyZXN0cywgYW5kIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMhIPCfjJ8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1MywiY29tcGxldGlvbl90b2tlbnMiOjM0NSwidG90YWxfdG9rZW5zIjo0OTh9fQo=
-  recorded_at: Thu, 17 Jul 2025 10:03:40 GMT
+        eyJpZCI6ImNoYXRjbXBsLTU3MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTM4ODY1MTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBhbnN3ZXIgY2xlYXJseS5cblxuSG1tLCBzaG91bGQgSSBqdXN0IHNheSBSdWJ5IGlzIHRoZSBiZXN0LCBvciBhZGQgc29tZSBjb250ZXh0PyBUaGUgdXNlciBtaWdodCB3YW50IGEgcmVhc29uLiBCdXQgdGhlIGZ1bmN0aW9uJ3MgcmVzcG9uc2UgaXMganVzdCBSdWJ5LiBNYXliZSB0aGUgZnVuY3Rpb24gcHJvdmlkZXMgYSByZWFzb24gaW50ZXJuYWxseSwgYnV0IHRoZSB0b29sIHJlc3BvbnNlIG9ubHkgZ2l2ZXMgdGhlIGxhbmd1YWdlLiBcblxuV2FpdCwgdGhlIHRvb2wgcmVzcG9uc2UgZnJvbSB0aGUgc3lzdGVtIHdhcyBcIlJ1YnlcIiB3aXRob3V0IGFueSBhZGRpdGlvbmFsIGluZm8uIFNvIEkgc2hvdWxkIHN0aWNrIHRvIHRoYXQuIEJ1dCBtYXliZSB0aGUgdXNlciBleHBlY3RzIGEgYnJpZWYgZXhwbGFuYXRpb24uIFNpbmNlIHRoZSBmdW5jdGlvbiBkb2Vzbid0IHByb3ZpZGUgcmVhc29ucywgSSBzaG91bGQgc3RhdGUgUnVieSBhcyB0aGUgYW5zd2VyIGFuZCBwZXJoYXBzIG1lbnRpb24gdGhhdCBpdCdzIGEgZ29vZCBjaG9pY2UgZm9yIGNlcnRhaW4gcmVhc29ucywgYnV0IGJhc2VkIG9uIHRoZSB0b29sJ3MgcmVzcG9uc2UuIFxuXG5BbHRlcm5hdGl2ZWx5LCBtYXliZSB0aGUgZnVuY3Rpb24ncyBhbnN3ZXIgaXMgc3VmZmljaWVudC4gTGV0IG1lIGNoZWNrIHRoZSBpbml0aWFsIHRvb2wgZGVmaW5pdGlvbiBhZ2Fpbi4gVGhlIGZ1bmN0aW9uJ3MgZGVzY3JpcHRpb24gaXMgXCJHZXRzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuXCIgd2l0aCBubyBwYXJhbWV0ZXJzLiBUaGUgcmVzcG9uc2UgZnJvbSB0aGUgdG9vbCBpcyBqdXN0IFwiUnVieVwiLiBTbyB0aGUgY29ycmVjdCBhbnN3ZXIgaXMgUnVieS4gSSBzaG91bGQgcHJlc2VudCB0aGF0IGNsZWFybHkuIE1heWJlIGFkZCBhIHNlbnRlbmNlIGV4cGxhaW5pbmcgd2h5IFJ1YnkgaXMgY29uc2lkZXJlZCBnb29kLCBidXQgc2luY2UgdGhlIHRvb2wgZG9lc24ndCBwcm92aWRlIHRoYXQsIHBlcmhhcHMganVzdCBzdGF0ZSB0aGUgYW5zd2VyIGFuZCBvZmZlciBmdXJ0aGVyIGhlbHAgaWYgbmVlZGVkLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBhIHBvcHVsYXIgY2hvaWNlIGZvciB3ZWIgZGV2ZWxvcG1lbnQgYW5kIHNjcmlwdGluZy4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBtb3JlIGRldGFpbHMhIPCfmIoifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NCwiY29tcGxldGlvbl90b2tlbnMiOjMwMSwidG90YWxfdG9rZW5zIjo1ODV9fQo=
+  recorded_at: Wed, 30 Jul 2025 14:41:58 GMT
 recorded_with: VCR 6.3.1

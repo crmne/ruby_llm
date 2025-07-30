@@ -9,7 +9,7 @@ http_interactions:
         your favorite Ruby feature?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:35 GMT
+      - Wed, 30 Jul 2025 14:20:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '989'
+      - '4325'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '997'
+      - '4328'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -50,20 +50,20 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199988'
+      - '199989'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
       - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -76,16 +76,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFQIGVJmiLqmwY64dkupEnvrGiKm",
+          "id": "chatcmpl-Bz1xJiFbfgcIJ1BSNDq1UHbduGFWW",
           "object": "chat.completion",
-          "created": 1752745354,
+          "created": 1753885225,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks allow for concise and readable code when working with collections, making operations like iteration, filtering, and transformation straightforward and intuitive. For example, methods like `each`, `map`, and `select` leverage blocks to enable clean and declarative code, which enhances both readability and developer productivity. This feature embodies Ruby's philosophy of making programming enjoyable and natural.",
+                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks make it easy to write concise and readable code for iteration, callbacks, and domain-specific languages. For example, methods like `each`, `map`, and `select` allow for elegant data manipulation:\n\n```ruby\n[1, 2, 3].map { |n| n * 2 } # => [2, 4, 6]\n```\n\nThis feature promotes clean, maintainable code and encourages a functional programming style within an object-oriented language. Additionally, Ruby's flexible metaprogramming capabilities, like dynamically defining methods or creating domain-specific languages, make it a powerful and enjoyable language to work with.",
                 "refusal": null,
                 "annotations": []
               },
@@ -95,8 +95,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 95,
-            "total_tokens": 108,
+            "completion_tokens": 152,
+            "total_tokens": 165,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -109,7 +109,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:42:35 GMT
+  recorded_at: Wed, 30 Jul 2025 14:20:30 GMT
 recorded_with: VCR 6.3.1

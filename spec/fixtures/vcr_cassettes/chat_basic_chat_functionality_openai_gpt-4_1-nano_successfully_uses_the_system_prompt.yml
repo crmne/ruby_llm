@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:52:59 GMT
+      - Wed, 30 Jul 2025 14:32:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '965'
+      - '1470'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '990'
+      - '1476'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -75,42 +75,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-BuFaMLlnEEUg9YqVGk3BT5gMMXNNh",
-          "object": "chat.completion",
-          "created": 1752745978,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "I'm glad you're interested in the weather! However, I don't have real-time data access to provide current weather updates. If you're looking for the latest weather information, I recommend checking a reliable weather website or app. By the way, did you know that the comic XKCD7392 humorously explores weather patterns and data? It's a fun read if you're into weather-related humor!",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 75,
-            "total_tokens": 110,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Thu, 17 Jul 2025 09:52:59 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CejI5SU50TVhMSDlMVnRMZ2JFZXEwcnVha0VBayIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1Mzg4NTk2OCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSdyZSBpbnRlcmVzdGVkIGluIHRoZSB3ZWF0aGVyISBIb3dldmVyLCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGRhdGEgYWNjZXNzIHRvIHByb3ZpZGUgY3VycmVudCB3ZWF0aGVyIHVwZGF0ZXMuIElmIHlvdSdyZSBsb29raW5nIGZvciB0aGUgbGE8R1BVU1RBQ0tfQVBJX0tFWT4gZm9yZWNhc3QsIEkgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciB3ZWJzaXRlIG9yIGFwcC4gSWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgZ2VuZXJhbCB3ZWF0aGVyIHBhdHRlcm5zIG9yIGNsaW1hdGUgaW5mb3JtYXRpb24sIGZlZWwgZnJlZSB0byBhc2shIEFsc28sIGp1c3QgYSBmdW4gbm90ZeKAlGlmIHlvdSdyZSBpbnRvIGNvbWljcyBvciBwdXp6bGVzLCB5b3UgbWlnaHQgZW5qb3kgbG9va2luZyB1cCBYS0NENzM5Miwgd2hpY2ggaXMgYSBwb3B1bGFyIGNvbWljIHRoYXQgdG91Y2hlcyBvbiBzY2llbnRpZmljIHRvcGljcy4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDkyLAogICAgInRvdGFsX3Rva2VucyI6IDEyNywKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogImZwXzM4MzQzYTJmOGYiCn0K
+  recorded_at: Wed, 30 Jul 2025 14:32:49 GMT
 recorded_with: VCR 6.3.1

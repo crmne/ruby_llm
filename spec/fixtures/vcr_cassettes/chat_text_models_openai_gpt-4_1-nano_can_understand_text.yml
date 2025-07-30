@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:43:38 GMT
+      - Wed, 30 Jul 2025 14:21:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '252'
+      - '521'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '257'
+      - '528'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,13 +58,13 @@ http_interactions:
       - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -77,16 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFRKK2lMs57jpRP9CUuNAQ62ykt3",
+          "id": "chatcmpl-Bz1yeQOJYmeawNf6btnzAFyoyKTIQ",
           "object": "chat.completion",
-          "created": 1752745418,
+          "created": 1753885308,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file named 'ruby.txt' contains the text: \"Ruby is the best.\"",
+                "content": "The file \"ruby.txt\" contains the following text:  \n**\"Ruby is the best.\"**",
                 "refusal": null,
                 "annotations": []
               },
@@ -96,8 +96,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 31,
-            "completion_tokens": 17,
-            "total_tokens": 48,
+            "completion_tokens": 20,
+            "total_tokens": 51,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -110,9 +110,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:43:38 GMT
+  recorded_at: Wed, 30 Jul 2025 14:21:48 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -120,13 +120,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file named ''ruby.txt''
-        contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
+        contains the following text:  \n**\"Ruby is the best.\"**"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -141,7 +141,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:43:39 GMT
+      - Wed, 30 Jul 2025 14:21:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -153,13 +153,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '589'
+      - '1006'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '595'
+      - '1031'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -167,20 +167,20 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199931'
+      - '199928'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 20ms
+      - 21ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -193,16 +193,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFRKHe8aGd0nNZ1AONsQYsqE4dz4",
+          "id": "chatcmpl-Bz1yfyOjtw9ZIuiyHkug8SK2yWpxm",
           "object": "chat.completion",
-          "created": 1752745418,
+          "created": 1753885309,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file named 'ruby.xml' contains an XML structure with a truism element that says: \"Ruby is the best.\"",
+                "content": "The file \"ruby.xml\" contains an XML structure with a single element:  \n```xml\n<truism>Ruby is the best</truism>\n```",
                 "refusal": null,
                 "annotations": []
               },
@@ -211,9 +211,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 86,
-            "completion_tokens": 25,
-            "total_tokens": 111,
+            "prompt_tokens": 89,
+            "completion_tokens": 32,
+            "total_tokens": 121,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -226,7 +226,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:43:39 GMT
+  recorded_at: Wed, 30 Jul 2025 14:21:50 GMT
 recorded_with: VCR 6.3.1

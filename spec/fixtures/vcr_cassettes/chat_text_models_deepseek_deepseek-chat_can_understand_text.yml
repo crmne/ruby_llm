@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:43:09 GMT
+      - Wed, 30 Jul 2025 14:21:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 34b80cb9b7504f34bdf37e42c1e5d700
+      - 3c5ff17ff5422fe4643069d973dfa336
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,20 +46,15 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Report-To:
-      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=.tnlWdXiPcMDe9wR4viizvqZdTt3jYqXDzit.J886A4-1752745389-1.0.1.1-V2l8o8IkBJhI56monJwly0IJm2CueKGUmCzfGuc6SUjgz4VjZdHVnPi2oRbFmHbfsys_FPwmEbkWooqljACRnao8AEY7mkLCE0rvVSmo6VvkrSjA1.cJIELm8_qD5PEKKJbZlpLfwEASJ1HT5ZTBv32oOvZtaaBaAeNpiVpKQTI"}],"group":"cf-csp-endpoint","max_age":86400}'
-      Content-Security-Policy-Report-Only:
-      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.tnlWdXiPcMDe9wR4viizvqZdTt3jYqXDzit.J886A4-1752745389-1.0.1.1-V2l8o8IkBJhI56monJwly0IJm2CueKGUmCzfGuc6SUjgz4VjZdHVnPi2oRbFmHbfsys_FPwmEbkWooqljACRnao8AEY7mkLCE0rvVSmo6VvkrSjA1.cJIELm8_qD5PEKKJbZlpLfwEASJ1HT5ZTBv32oOvZtaaBaAeNpiVpKQTI;
-        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c8102918-7fe3-40e8-b4fe-83c413766134","object":"chat.completion","created":1752745389,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"5c456ec9-5f1f-425a-b4d6-73de0cb9033f","object":"chat.completion","created":1753885265,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":32,"completion_tokens":19,"total_tokens":51,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":32},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Thu, 17 Jul 2025 09:43:13 GMT
+  recorded_at: Wed, 30 Jul 2025 14:21:09 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -73,7 +68,7 @@ http_interactions:
         is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.3
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -88,7 +83,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:43:13 GMT
+      - Wed, 30 Jul 2025 14:21:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +95,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5758e0b4dda9e615210b9e3c4958e15e
+      - cd792774e12afc20c24d9f62fd092845
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,9 +110,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c2e09fde-0ae0-4e0e-94ac-56d8a0cdde55","object":"chat.completion","created":1752745393,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains the following XML content:  \n\n```xml\n<truism>Ruby
-        is the best</truism>\n```  \n\nIt is a well-formed XML document with a root
-        element `<truism>` containing the text \"Ruby is the best\"."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":91,"completion_tokens":57,"total_tokens":148,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":91},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Thu, 17 Jul 2025 09:43:20 GMT
+      string: !binary |-
+        eyJpZCI6IjcxODA4MTFiLTY3YzUtNDliNC1iZTg1LTMyYTNhNGJjYzkxMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTM4ODUyNzAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OiAgXG5cbmBgYHhtbFxuPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+XG5gYGAgIFxuXG4oTm90ZTogVGhlcmUncyBhIHR5cG8gaW4gdGhlIGNsb3NpbmcgdGFn4oCUaXQgc2hvdWxkIGJlIGA8L3RydWlzbT5gIGluc3RlYWQgb2YgYDwvdHJ1aXNtPmAgdG8gYmUgd2VsbC1mb3JtZWQgWE1MLikifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5MSwiY29tcGxldGlvbl90b2tlbnMiOjY4LCJ0b3RhbF90b2tlbnMiOjE1OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo5MX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA2MjNfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Wed, 30 Jul 2025 14:21:16 GMT
 recorded_with: VCR 6.3.1
