@@ -496,6 +496,17 @@ end
 chat.ask "What is metaprogramming in Ruby?"
 ```
 
+## Raw Responses
+
+You can access the raw response from the API provider with `response.raw`.
+
+```ruby
+response = chat.ask("What is the capital of France?")
+puts response.raw.body
+```
+
+The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
+
 ## Next Steps
 
 This guide covered the core `Chat` interface. Now you might want to explore:

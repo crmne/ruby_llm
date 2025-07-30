@@ -11,7 +11,7 @@ module RubyLLM
     def stream_response(connection, payload, &block)
       accumulator = StreamAccumulator.new
 
-      connection.post stream_url, payload do |req|
+      response = connection.post stream_url, payload do |req|
         if req.options.respond_to?(:on_data)
           # Handle Faraday 2.x streaming with on_data method
           req.options.on_data = handle_stream do |chunk|
@@ -27,7 +27,7 @@ module RubyLLM
         end
       end
 
-      accumulator.to_message
+      accumulator.to_message(response)
     end
 
     def handle_stream(&block)

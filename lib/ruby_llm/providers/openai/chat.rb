@@ -59,7 +59,8 @@ module RubyLLM
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],
-            model_id: data['model']
+            model_id: data['model'],
+            raw: response
           )
         end
 
