@@ -94,6 +94,43 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'structured output' do
+    it 'supports with_schema for structured responses' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      chat = Chat.create!(model_id: model)
+
+      schema = {
+        type: 'object',
+        properties: {
+          name: { type: 'string' },
+          age: { type: 'integer' }
+        },
+        required: %w[name age],
+        additionalProperties: false
+      }
+
+      result = chat.with_schema(schema)
+      expect(result).to eq(chat) # Should return self for chaining
+
+      response = chat.ask('Generate a person named Alice who is 25 years old')
+
+      # The response content should be parsed JSON
+      expect(response.content).to be_a(Hash)
+      expect(response.content['name']).to eq('Alice')
+      expect(response.content['age']).to eq(25)
+
+      # Check that the message is saved in ActiveRecord with valid JSON
+      saved_message = chat.messages.last
+      expect(saved_message.role).to eq('assistant')
+      expect(saved_message.content).to be_a(String)
+
+      # The saved content should be parseable JSON
+      parsed_saved_content = JSON.parse(saved_message.content)
+      expect(parsed_saved_content).to be_a(Hash)
+      expect(parsed_saved_content['name']).to eq('Alice')
+      expect(parsed_saved_content['age']).to eq(25)
+    end
+  end
+
   describe 'error handling' do
     it 'destroys empty assistant messages on API failure' do # rubocop:disable RSpec/MultipleExpectations
       chat = Chat.create!(model_id: model)
@@ -155,17 +192,20 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       class BotChat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
         self.table_name = 'bot_chats'
         include RubyLLM::ActiveRecord::ActsAs
+
         acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
       end
     end
 
     class BotMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       include RubyLLM::ActiveRecord::ActsAs
+
       acts_as_message chat_class: 'Assistants::BotChat', tool_call_class: 'BotToolCall'
     end
 
     class BotToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       include RubyLLM::ActiveRecord::ActsAs
+
       acts_as_tool_call message_class: 'BotMessage'
     end
 
