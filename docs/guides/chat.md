@@ -464,7 +464,11 @@ Refer to the [Working with Models Guide]({% link guides/models.md %}) for detail
 
 ## Chat Event Handlers
 
-You can register blocks to be called when certain events occur during the chat lifecycle, useful for UI updates or logging.
+You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
+
+### Available Event Handlers
+
+RubyLLM provides three event handlers that cover the complete chat lifecycle:
 
 ```ruby
 chat = RubyLLM.chat
@@ -481,6 +485,11 @@ chat.on_end_message do |message|
   if message && message.output_tokens
     puts "Used #{message.input_tokens + message.output_tokens} tokens"
   end
+end
+
+# Called when the AI decides to use a tool
+chat.on_tool_call do |tool_call|
+  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
 # These callbacks work for both streaming and non-streaming requests
