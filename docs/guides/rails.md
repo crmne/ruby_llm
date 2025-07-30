@@ -494,9 +494,9 @@ This setup allows for:
 
 ### Handling Message Ordering with ActionCable
 
-ActionCable doesn't guarantee message order when using certain adapters. If you experience messages appearing out of order (e.g., assistant responses appearing above user messages), you have several options:
+ActionCable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
 
-#### Option 1: Client-Side Reordering with Stimulus
+#### Option 1: Client-Side Reordering with Stimulus (Recommended)
 
 Add a Stimulus controller that maintains correct chronological order based on timestamps:
 
@@ -578,13 +578,20 @@ Update your views to use the controller:
 <% end %>
 ```
 
-#### Option 2: Use the Async Stack
+#### Option 2: Server-Side Ordering with AnyCable
 
-The async Ruby stack (Falcon + async-cable + async-job) may help with message ordering in single-machine deployments. See our [Async Guide]({% link guides/async.md %}) for details. Note that this approach might not guarantee ordering in all deployment scenarios, particularly in distributed systems.
+[AnyCable](https://anycable.io) provides order guarantees at the server level through "sticky concurrency" - ensuring messages from the same stream are processed by the same worker. This eliminates the need for client-side reordering code.
 
-#### Option 3: Use AnyCable
+#### Understanding the Root Cause
 
-[AnyCable](https://anycable.io) provides order guarantees at the server level, eliminating the need for client-side reordering code.
+As confirmed by the ActionCable maintainers, ActionCable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
+
+The most reliable solution is client-side reordering with order information in the payload. For applications requiring strict ordering guarantees, consider:
+- Server-sent events (SSE) for unidirectional streaming
+- WebSocket libraries with ordered stream support like [Lively](https://github.com/socketry/lively/tree/main/examples/chatbot)
+- AnyCable for server-side ordering guarantees
+
+**Note**: Some users report better behavior with the async Ruby stack (Falcon + async-cable), but this doesn't guarantee ordering and shouldn't be relied upon as a solution.
 
 ## Customizing Models
 
