@@ -574,10 +574,153 @@ class MessagesController < ApplicationController
 end
 ```
 
-This setup allows for:
-1. Real-time UI updates as the AI generates its response
-2. Background processing to prevent request timeouts
-3. Automatic persistence of all messages and tool calls
+**How This Pattern Works:**
+
+1. **Controller creates and broadcasts user message immediately**
+   - User submits form → controller creates `user_message` record
+   - `user_message` is broadcast via `after_create_commit` callback
+   - User sees their message instantly in the UI
+
+2. **Background job handles AI response streaming**
+   - Job receives `user_message.id` (not content string)
+   - `chat.ask(user_message)` reuses existing message - **no duplication**
+   - AI response streams to UI via turbo streams
+
+3. **Clean separation of concerns**
+   - Frontend: Instant user feedback via immediate broadcast
+   - Backend: AI processing and streaming in background
+   - No duplicate database records or UI elements
+
+### Advanced Pattern: Instant User Message Display
+
+For optimal user experience in real-time chat applications, you want user messages to appear instantly in the UI while AI responses stream in separately. RubyLLM supports passing existing message objects to the `ask` method, enabling this immediate feedback pattern:
+
+```ruby
+# Controller: Create and display user message immediately
+class MessagesController < ApplicationController
+  def create
+    @chat = Chat.find(params[:chat_id])
+    
+    # Create user message immediately - appears in UI instantly via turbo stream
+    user_message = @chat.messages.create!(
+      role: 'user',
+      content: params[:content]
+    )
+    
+    # Queue background job with IDs
+    StreamChatResponseJob.perform_later(@chat.id, user_message.id)
+    
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+    end
+  end
+end
+
+# Background Job: Stream AI response using existing message
+class StreamChatResponseJob < ApplicationJob
+  include ActionView::RecordIdentifier
+  include ActionView::Helpers::TagHelper
+  
+  def perform(chat_id, user_message_id)
+    chat = Chat.find(chat_id)
+    user_message = chat.messages.find(user_message_id)
+    
+    accumulated_content = ""
+
+    chat.ask(user_message) do |chunk|      
+      # Get the last assistant message created by the ask method
+      assistant_message = chat.messages.where(role: 'assistant').last
+      
+      if chunk.content.present? && assistant_message
+        # Accumulate the content
+        accumulated_content += chunk.content
+        
+        # Render the accumulated markdown
+        rendered_html = assistant_message.markdown_to_html(accumulated_content)
+        
+        # Broadcast the updated content to all connected clients
+        assistant_message.broadcast_update_to [chat, "messages"],
+          target: dom_id(assistant_message, "content"),
+          html: rendered_html
+      end
+    end
+  end
+end
+
+# Your Chat model
+class Chat < ApplicationRecord
+  acts_as_chat message_class: 'Message'
+end
+
+# Your Message model  
+class Message < ApplicationRecord
+  acts_as_message chat_class: 'Chat'
+  
+  def markdown_to_html(content)
+    # Implement with your preferred markdown renderer (e.g., redcarpet)
+    content # Return plain content or rendered HTML
+  end
+end
+```
+
+**Key benefits:**
+- ✅ User sees their message instantly (no waiting for AI)
+- ✅ AI response streams in real-time
+- ✅ No message duplication in database
+- ✅ Preserves all message metadata
+- ✅ Works seamlessly with Turbo Streams
+
+**Why This Pattern is Better:**
+
+1. **Instant feedback**: User sees their message immediately, not after job processing
+2. **No duplication**: The existing message is used, preventing database duplicates  
+3. **Preserves attributes**: Custom fields and metadata are maintained
+4. **Clean separation**: UI updates and AI processing are decoupled
+
+**Use Case Example:**
+
+This pattern is perfect when users create messages with rich content (ActionText/Trix editor) or when you need to broadcast user messages immediately for real-time collaborative features:
+
+```ruby
+# app/models/message.rb
+class Message < ApplicationRecord
+  acts_as_message
+  has_rich_text :rich_content
+  
+  broadcasts_to ->(message) { [message.chat, "messages"] }
+  
+  # Broadcast user messages immediately on create
+  after_create_commit :broadcast_if_user_message
+  
+  private
+  
+  def broadcast_if_user_message
+    if role == 'user'
+      broadcast_append_to([chat, "messages"])
+    end
+  end
+end
+```
+
+**Error Prevention:**
+
+RubyLLM includes safeguards to prevent common mistakes:
+
+```ruby
+# These will raise clear ArgumentError exceptions:
+
+# ❌ Trying to add attachments to existing message
+chat.ask(existing_message, with: ['file.pdf'])
+# => ArgumentError: Cannot provide attachments when passing a message object
+
+# ❌ Using message from different chat  
+chat.ask(other_chat.messages.first)
+# => ArgumentError: Message belongs to a different chat
+
+# ❌ Message with nil role/content
+chat.ask(invalid_message)
+# => ArgumentError: Message object must have non-nil role and content values
+```
 
 ### Handling Message Ordering with ActionCable
 

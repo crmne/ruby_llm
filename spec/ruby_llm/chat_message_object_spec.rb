@@ -97,5 +97,24 @@ RSpec.describe 'Chat ask with message objects' do
         chat.ask(message, with: ['some_file.txt'])
       }.to raise_error(ArgumentError, /Cannot provide attachments.*when passing a message object/)
     end
+
+    it 'raises an error when message object has nil role or content' do
+      # Object that responds to methods but returns nil
+      invalid_message = Object.new
+      def invalid_message.role; nil; end
+      def invalid_message.content; 'some content'; end
+      
+      expect {
+        chat.ask(invalid_message)
+      }.to raise_error(ArgumentError, /Message object must have non-nil role and content values/)
+      
+      # Test with nil content too
+      def invalid_message.role; :user; end
+      def invalid_message.content; nil; end
+      
+      expect {
+        chat.ask(invalid_message)
+      }.to raise_error(ArgumentError, /Message object must have non-nil role and content values/)
+    end
   end
 end

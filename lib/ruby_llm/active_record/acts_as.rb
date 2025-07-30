@@ -162,6 +162,11 @@ module RubyLLM
 
       def ask(message, with: nil, &)
         if message.respond_to?(:role) && message.respond_to?(:content)
+          # Validate that role and content return valid values
+          unless message.role && message.content
+            raise ArgumentError, 'Message object must have non-nil role and content values'
+          end
+          
           if with.present?
             raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
                                 'Add attachments to the message object directly or pass a string instead.'

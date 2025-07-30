@@ -161,5 +161,14 @@ RSpec.describe 'ActiveRecord ask with message objects' do
         chat.ask(other_message)
       }.to raise_error(ArgumentError, /Message belongs to a different chat/)
     end
+
+    it 'raises an error when message object has nil role or content' do
+      # Create a message with nil content
+      invalid_message = chat.messages.new(role: 'user', content: nil)
+      
+      expect {
+        chat.ask(invalid_message)
+      }.to raise_error(ArgumentError, /Message object must have non-nil role and content values/)
+    end
   end
 end

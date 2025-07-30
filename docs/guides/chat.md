@@ -75,6 +75,59 @@ end
 
 Each call to `ask` sends the *entire* current message history (up to the model's context limit) to the provider, allowing the AI to understand the context of your follow-up questions.
 
+## Passing Message Objects
+
+{: .d-inline-block }
+In addition to strings, you can pass existing message objects directly to the `ask` method.
+
+
+```ruby
+# Simple example using RubyLLM::Message objects
+chat = RubyLLM.chat
+
+message = chat.ask("Give me a random number between 1 and 10")
+
+# Pass the existing message object to receive a response to the same message
+response = chat.ask(message)
+response2 = chat.ask(message)
+
+# Key benefits:
+# ✅ Works with any object that responds to role and content  
+# ✅ Enables message reuse and reconstruction patterns
+# ✅ No database dependencies - pure Ruby objects
+```
+
+**Common Use Cases:**
+
+1. **Preserving metadata**: When messages have custom attributes that must be maintained
+2. **Rails integration**: Using pre-created ActiveRecord message objects (see [Rails Integration Guide]({% link guides/rails.md %}))
+3. **Message reconstruction**: When rebuilding conversations from stored data
+
+For a complete Rails implementation with real-time streaming and Turbo integration, see the [Advanced Pattern in the Rails Guide]({% link guides/rails.md %}#advanced-pattern-instant-user-message-display).
+
+**Duck Typing Support:**
+
+The `ask` method uses duck typing - it works with any object that responds to `role` and `content` methods, not just `RubyLLM::Message` objects:
+
+```ruby
+# Works with any object that has role and content methods
+custom_message = OpenStruct.new(role: :user, content: "Hello!")
+chat.ask(custom_message)
+```
+
+**Important Constraints:**
+
+You cannot combine message objects with the `with:` parameter for attachments:
+
+```ruby
+message = RubyLLM::Message.new(role: :user, content: "Analyze this")
+
+# ❌ This will raise an ArgumentError
+chat.ask(message, with: ["document.pdf"])
+```
+
+The message object must have valid `role` and `content` values - `nil` values will raise an error to prevent silent failures.
+
 ## Guiding the AI with Instructions
 
 You can provide instructions, also known as system prompts, to guide the AI's behavior, persona, or response format throughout the conversation. Use the `with_instructions` method.
@@ -516,3 +569,5 @@ This guide covered the core `Chat` interface. Now you might want to explore:
 *   [Streaming Responses]({% link guides/streaming.md %}): Get real-time feedback from the AI.
 *   [Rails Integration]({% link guides/rails.md %}): Persist your chat conversations easily.
 *   [Error Handling]({% link guides/error-handling.md %}): Build robust applications that handle API issues.
+
+
