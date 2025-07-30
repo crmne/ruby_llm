@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
+    uri: "<OLLAMA_API_BASE>/chat"
     body:
       encoding: UTF-8
       string: '{"response_format":{"type":"json_object"},"model":"qwen3","messages":[{"role":"user","content":"What
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -18,20 +18,17 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Content-Type:
-      - application/json
+      - text/plain
       Date:
-      - Sat, 19 Jul 2025 19:53:45 GMT
+      - Sun, 27 Jul 2025 19:07:56 GMT
       Content-Length:
-      - '301'
+      - '18'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-176","object":"chat.completion","created":1752954825,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
-        8\n}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":10,"total_tokens":39}}
-
-        '
-  recorded_at: Sat, 19 Jul 2025 19:53:45 GMT
+      string: 404 page not found
+  recorded_at: Sun, 27 Jul 2025 19:07:56 GMT
 recorded_with: VCR 6.3.1

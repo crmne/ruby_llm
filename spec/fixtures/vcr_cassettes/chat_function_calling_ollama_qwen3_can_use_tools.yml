@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
+    uri: "<OLLAMA_API_BASE>/chat"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -21,55 +21,17 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Content-Type:
-      - application/json
+      - text/plain
       Date:
-      - Thu, 17 Jul 2025 09:59:42 GMT
+      - Sun, 27 Jul 2025 19:07:57 GMT
       Content-Length:
-      - '452'
+      - '18'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-870","object":"chat.completion","created":1752746382,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_bj6zcu60","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":169,"total_tokens":369}}
-
-        '
-  recorded_at: Thu, 17 Jul 2025 09:59:42 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_bj6zcu60","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_bj6zcu60"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 17 Jul 2025 09:59:59 GMT
-      Content-Length:
-      - '901'
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTM1MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI3NDYzOTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzLiBUaGUgcmVzcG9uc2UgY2FtZSBiYWNrIHdpdGggMTXCsEMgYW5kIHdpbmQgc3BlZWQgb2YgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgZGV0YWlscyBuZWVkZWQsIGJ1dCB0aGUgdXNlciBqdXN0IHdhbnRlZCB0aGUgY3VycmVudCB3ZWF0aGVyLiBJJ2xsIGZvcm1hdCB0aGUgYW5zd2VyIHVzaW5nIHRoZSB0ZW1wZXJhdHVyZSBhbmQgd2luZCBpbmZvIGZyb20gdGhlIHRvb2wgcmVzcG9uc2UuIE1ha2Ugc3VyZSB0byBtZW50aW9uIEJlcmxpbiBhbmQgaW5jbHVkZSB0aGUgdW5pdHMgZm9yIGNsYXJpdHkuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIHdpbmRzIGF0ICoqMTAga20vaCoqLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjQ3LCJjb21wbGV0aW9uX3Rva2VucyI6MTQ0LCJ0b3RhbF90b2tlbnMiOjM5MX19Cg==
-  recorded_at: Thu, 17 Jul 2025 09:59:59 GMT
+      string: 404 page not found
+  recorded_at: Sun, 27 Jul 2025 19:07:57 GMT
 recorded_with: VCR 6.3.1

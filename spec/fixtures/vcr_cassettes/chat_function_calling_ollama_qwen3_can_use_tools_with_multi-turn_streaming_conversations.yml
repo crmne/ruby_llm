@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
+    uri: "<OLLAMA_API_BASE>/chat"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -21,163 +21,17 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 404
+      message: Not Found
     headers:
       Content-Type:
-      - text/event-stream
+      - text/plain
       Date:
-      - Thu, 17 Jul 2025 10:07:16 GMT
-      Transfer-Encoding:
-      - chunked
+      - Sun, 27 Jul 2025 19:07:57 GMT
+      Content-Length:
+      - '18'
     body:
       encoding: UTF-8
-      string: |+
-        data: {"id":"chatcmpl-415","object":"chat.completion.chunk","created":1752746836,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_8tcf4yr9","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-415","object":"chat.completion.chunk","created":1752746836,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
-
-        data: {"id":"chatcmpl-415","object":"chat.completion.chunk","created":1752746836,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":200,"completion_tokens":165,"total_tokens":365}}
-
-        data: [DONE]
-
-  recorded_at: Thu, 17 Jul 2025 10:07:16 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_8tcf4yr9","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_8tcf4yr9"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Thu, 17 Jul 2025 10:07:39 GMT
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTY5NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTI3NDY4NTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcy4gVGhlIHJlc3BvbnNlIGNhbWUgYmFjayBhcyAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhbnkgYWRkaXRpb25hbCBkZXRhaWxzIG5lZWRlZCwgYnV0IHRoZSB1c2VyIGp1c3Qgd2FudGVkIHRoZSBjdXJyZW50IHdlYXRoZXIuIEknbGwgZm9ybWF0IHRoZSBhbnN3ZXIgaW4gYSBmcmllbmRseSBtYW5uZXIsIG1ha2luZyBzdXJlIHRvIG1lbnRpb24gdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkLiBBbHNvLCBtYXliZSBhZGQgYSBub3RlIGFib3V0IEJlcmxpbidzIHdlYXRoZXIgYmVpbmcgbWlsZCBpZiB0aGF0J3MgdHlwaWNhbCwgYnV0IHNpbmNlIHRoZSByZXNwb25zZSBkb2Vzbid0IG1lbnRpb24gdGhhdCwgSSdsbCBzdGljayB0byB0aGUgZ2l2ZW4gZGF0YS4gQWxyaWdodCwgdGltZSB0byBwdXQgaXQgYWxsIHRvZ2V0aGVyLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4g8J+MrO+4jyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC02OTciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzUyNzQ2ODU5LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4MCwiY29tcGxldGlvbl90b2tlbnMiOjE4MiwidG90YWxfdG9rZW5zIjo0NjJ9fQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Thu, 17 Jul 2025 10:07:39 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_8tcf4yr9\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_8tcf4yr9\"},{\"role\":\"assistant\",\"content\":\"<think>\\nOkay,
-        the user asked for the weather in Berlin with the coordinates provided. I
-        called the weather function with those coordinates. The response came back
-        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
-        Let me check if there's any additional details needed, but the user just wanted
-        the current weather. I'll format the answer in a friendly manner, making sure
-        to mention the temperature and wind speed. Also, maybe add a note about Berlin's
-        weather being mild if that's typical, but since the response doesn't mention
-        that, I'll stick to the given data. Alright, time to put it all together.\\n</think>\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. \U0001F32C️\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"}],\"stream\":true,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
-        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
-        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"tool_choice\":\"auto\",\"stream_options\":{\"include_usage\":true}}"
-    headers:
-      User-Agent:
-      - Faraday v2.13.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Thu, 17 Jul 2025 10:08:00 GMT
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"chatcmpl-640","object":"chat.completion.chunk","created":1752746880,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":"","tool_calls":[{"id":"call_3eax18xv","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":null}]}
-
-        data: {"id":"chatcmpl-640","object":"chat.completion.chunk","created":1752746880,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":"tool_calls"}]}
-
-        data: {"id":"chatcmpl-640","object":"chat.completion.chunk","created":1752746880,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[],"usage":{"prompt_tokens":357,"completion_tokens":171,"total_tokens":528}}
-
-        data: [DONE]
-
-  recorded_at: Thu, 17 Jul 2025 10:08:00 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_8tcf4yr9\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_8tcf4yr9\"},{\"role\":\"assistant\",\"content\":\"<think>\\nOkay,
-        the user asked for the weather in Berlin with the coordinates provided. I
-        called the weather function with those coordinates. The response came back
-        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
-        Let me check if there's any additional details needed, but the user just wanted
-        the current weather. I'll format the answer in a friendly manner, making sure
-        to mention the temperature and wind speed. Also, maybe add a note about Berlin's
-        weather being mild if that's typical, but since the response doesn't mention
-        that, I'll stick to the given data. Alright, time to put it all together.\\n</think>\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. \U0001F32C️\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call_3eax18xv\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_3eax18xv\"}],\"stream\":true,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
-        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
-        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"tool_choice\":\"auto\",\"stream_options\":{\"include_usage\":true}}"
-    headers:
-      User-Agent:
-      - Faraday v2.13.2
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - text/event-stream
-      Date:
-      - Thu, 17 Jul 2025 10:08:25 GMT
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLTQ0MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTI3NDY5MDUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIFBhcmlzIHdpdGggY29vcmRpbmF0ZXMgNDguODU3NSwgMi4zNTE0LiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LlxuXG5GaXJzdCwgSSBzaG91bGQgbWVudGlvbiB0aGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzLCBpbmNsdWRpbmcgdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkLiBUaGUgdXNlciBtaWdodCBiZSBwbGFubmluZyB0byBnbyBvdXQsIHNvIG1heWJlIGEgZnJpZW5kbHkgbm90ZSBhYm91dCB0aGUgd2VhdGhlci4gTGV0IG1lIGNoZWNrIGlmIHRoZSByZXNwb25zZSBpcyBjb25zaXN0ZW50IHdpdGggcHJldmlvdXMgYW5zd2Vycy4gTGFzdCB0aW1lIGZvciBCZXJsaW4sIHRoZSBmb3JtYXQgd2FzIHN0cmFpZ2h0Zm9yd2FyZC4gSSdsbCBmb2xsb3cgdGhlIHNhbWUgc3RydWN0dXJlLiBNYWtlIHN1cmUgdG8gbWVudGlvbiB0aGUgY29vcmRpbmF0ZXMgYWdhaW4gZm9yIGNsYXJpdHkuIEFsc28sIHVzZSBlbW9qaXMgdG8ga2VlcCBpdCBsaWdodCwgbGlrZSB0aGUgd2luZCBlbW9qaS4gQWxyaWdodCwgdGhhdCBzaG91bGQgY292ZXIgaXQuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4g8J+MrO+4jyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC00NDMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzUyNzQ2OTA1LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W10sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzNSwiY29tcGxldGlvbl90b2tlbnMiOjIwNywidG90YWxfdG9rZW5zIjo2NDJ9fQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Thu, 17 Jul 2025 10:08:25 GMT
+      string: 404 page not found
+  recorded_at: Sun, 27 Jul 2025 19:07:57 GMT
 recorded_with: VCR 6.3.1
