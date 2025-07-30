@@ -257,7 +257,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 
 
-### Openrouter (319)
+### Openrouter (318)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -524,8 +524,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Qwen: Qwen3 14B (free) | qwen/qwen3-14b:free | openrouter | 40960 | - | - |
 | Qwen: Qwen3 235B A22B | qwen/qwen3-235b-a22b | openrouter | 40960 | 40960 | In: $0.13, Out: $0.60 |
 | Qwen: Qwen3 235B A22B (free) | qwen/qwen3-235b-a22b:free | openrouter | 131072 | - | - |
-| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | 262144 | In: $0.12, Out: $0.59 |
-| Qwen: Qwen3 235B A22B Instruct 2507 (free) | qwen/qwen3-235b-a22b-2507:free | openrouter | 262144 | - | - |
+| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 235B A22B Thinking 2507 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 30B A3B | qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.29 |
 | Qwen: Qwen3 30B A3B (free) | qwen/qwen3-30b-a3b:free | openrouter | 40960 | - | - |
@@ -831,7 +830,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Qwen: Qwen3 14B | qwen/qwen3-14b | openrouter | 40960 | - | In: $0.06, Out: $0.24 |
 | Qwen: Qwen3 235B A22B | qwen/qwen3-235b-a22b | openrouter | 40960 | 40960 | In: $0.13, Out: $0.60 |
 | Qwen: Qwen3 235B A22B (free) | qwen/qwen3-235b-a22b:free | openrouter | 131072 | - | - |
-| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | 262144 | In: $0.12, Out: $0.59 |
+| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 235B A22B Thinking 2507 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 30B A3B | qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.29 |
 | Qwen: Qwen3 32B | qwen/qwen3-32b | openrouter | 40960 | - | In: $0.03, Out: $0.03 |
@@ -1111,7 +1110,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Qwen: Qwen3 14B | qwen/qwen3-14b | openrouter | 40960 | - | In: $0.06, Out: $0.24 |
 | Qwen: Qwen3 235B A22B | qwen/qwen3-235b-a22b | openrouter | 40960 | 40960 | In: $0.13, Out: $0.60 |
 | Qwen: Qwen3 235B A22B (free) | qwen/qwen3-235b-a22b:free | openrouter | 131072 | - | - |
-| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | 262144 | In: $0.12, Out: $0.59 |
+| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 235B A22B Thinking 2507 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 30B A3B | qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.29 |
 | Qwen: Qwen3 32B | qwen/qwen3-32b | openrouter | 40960 | - | In: $0.03, Out: $0.03 |
@@ -1139,7 +1138,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (395)
+### Streaming (394)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1482,8 +1481,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Qwen: Qwen3 14B (free) | qwen/qwen3-14b:free | openrouter | 40960 | - | - |
 | Qwen: Qwen3 235B A22B | qwen/qwen3-235b-a22b | openrouter | 40960 | 40960 | In: $0.13, Out: $0.60 |
 | Qwen: Qwen3 235B A22B (free) | qwen/qwen3-235b-a22b:free | openrouter | 131072 | - | - |
-| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | 262144 | In: $0.12, Out: $0.59 |
-| Qwen: Qwen3 235B A22B Instruct 2507 (free) | qwen/qwen3-235b-a22b-2507:free | openrouter | 262144 | - | - |
+| Qwen: Qwen3 235B A22B Instruct 2507 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 235B A22B Thinking 2507 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | - | In: $0.12, Out: $0.12 |
 | Qwen: Qwen3 30B A3B | qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.29 |
 | Qwen: Qwen3 30B A3B (free) | qwen/qwen3-30b-a3b:free | openrouter | 40960 | - | - |
