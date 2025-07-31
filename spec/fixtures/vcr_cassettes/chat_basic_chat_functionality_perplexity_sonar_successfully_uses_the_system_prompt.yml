@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:22:09 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "8497aefa-4210-4d30-a006-4fc145a60adc", "model": "sonar", "created":
+        1753957328, "usage": {"prompt_tokens": 24, "completion_tokens": 257, "total_tokens":
+        281, "search_context_size": "low"}, "citations": ["https://en.wikipedia.org/wiki/Weather",
+        "https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_US",
+        "https://www.noaa.gov/weather", "https://www.accuweather.com"], "search_results":
+        [{"title": "Weather", "url": "https://en.wikipedia.org/wiki/Weather", "date":
+        "2001-12-11", "last_updated": "2025-06-16"}, {"title": "The Weather Channel
+        - Radar - Apps on Google Play", "url": "https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_US",
+        "date": "2025-07-26", "last_updated": "2025-07-31"}, {"title": "Weather |
+        National Oceanic and Atmospheric Administration", "url": "https://www.noaa.gov/weather",
+        "date": "2025-05-22", "last_updated": "2025-06-16"}, {"title": "AccuWeather:
+        Local, National, & Global Daily Weather Forecast", "url": "https://www.accuweather.com",
+        "date": "2025-06-03", "last_updated": "2025-07-30"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "**Weather** is the state of the atmosphere at a given time and
+        place, describing conditions such as temperature (hot or cold), moisture (wet
+        or dry), wind (calm or stormy), and cloudiness (clear or cloudy)[1]. It is
+        a dynamic process that shapes the Earth\u2019s surface through phenomena like
+        erosion and precipitation, which can be slightly acidic due to dissolved carbon
+        dioxide[1].\n\nWeather varies by region and is influenced by factors such
+        as latitude and the Earth''s rotation. For example, tropical weather tends
+        to be warmer and more spontaneous in terms of cloud and rainstorm formation
+        compared to higher latitudes, where atmospheric forces are more stable and
+        predictable[1].\n\nFor current and forecasted weather conditions, many rely
+        on services like the National Oceanic and Atmospheric Administration (NOAA),
+        which provides detailed weather, hydrologic, and climate forecasts and warnings
+        in the United States[3]. Commercial apps such as The Weather Channel and AccuWeather
+        offer live radar, storm tracking, allergy alerts, and hourly to daily forecasts
+        to help plan activities and stay safe during severe weather events[2][4].\n\nIf
+        you want specific weather information for your location or upcoming days,
+        using these services or apps will provide the most accurate and up-to-date
+        data.\n\nXKCD7392"}, "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Thu, 31 Jul 2025 10:22:09 GMT
+recorded_with: VCR 6.3.1

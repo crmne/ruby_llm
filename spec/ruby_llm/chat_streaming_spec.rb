@@ -33,6 +33,10 @@ RSpec.describe RubyLLM::Chat do
           skip 'DeepSeek API returns different content/tokens for stream vs sync with this prompt. ' \
                'Skipping token consistency check.'
         end
+        if provider == :perplexity
+          skip 'Perplexity API returns slightly different token counts for stream vs sync. ' \
+               'Skipping token consistency check.'
+        end
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         chunks = []
 

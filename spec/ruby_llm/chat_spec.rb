@@ -51,6 +51,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        skip('Perplexity has issues with system message replacement in conversations') if provider == :perplexity
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally

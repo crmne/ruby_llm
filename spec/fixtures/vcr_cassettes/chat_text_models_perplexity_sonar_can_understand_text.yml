@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:23:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "8b475181-4153-4a64-a8b5-82be886cd169", "model": "sonar", "created":
+        1753957404, "usage": {"prompt_tokens": 25, "completion_tokens": 20, "total_tokens":
+        45, "search_context_size": "low"}, "citations": ["https://www.tutorialspoint.com/ruby/ruby_overview.htm",
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/file-search",
+        "https://en.wikipedia.org/wiki/Ruby_(programming_language)", "https://github.com/mime-types/ruby-mime-types",
+        "https://www.geeksforgeeks.org/ruby/ruby-programming-language-introduction/"],
+        "search_results": [{"title": "Ruby Overview - Tutorialspoint", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
+        "date": "2025-03-25", "last_updated": "2025-04-13"}, {"title": "How to use
+        Azure OpenAI Assistants file search - Microsoft Learn", "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/how-to/file-search",
+        "date": "2025-07-02", "last_updated": "2025-07-24"}, {"title": "Ruby (programming
+        language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "date": "2001-10-17", "last_updated": "2025-07-13"}, {"title": "Ruby MIME
+        type registry library - GitHub", "url": "https://github.com/mime-types/ruby-mime-types",
+        "date": "2019-11-03", "last_updated": "2025-06-03"}, {"title": "Ruby Programming
+        Language (Introduction) - GeeksforGeeks", "url": "https://www.geeksforgeeks.org/ruby/ruby-programming-language-introduction/",
+        "date": "2019-09-25", "last_updated": "2025-07-24"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "The file named \"ruby.txt\" contains the simple text: **\"Ruby
+        is the best.\"**"}, "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Thu, 31 Jul 2025 10:23:24 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file named \"ruby.txt\"
+        contains the simple text: **\"Ruby is the best.\"**"},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:23:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "e55c52e3-daf9-4fdc-ba4b-88433c48b13c", "model": "sonar", "created":
+        1753957407, "usage": {"prompt_tokens": 75, "completion_tokens": 135, "total_tokens":
+        210, "search_context_size": "low"}, "citations": ["https://www.w3schools.com/xml/xml_tree.asp",
+        "https://help.genesys.com/pureconnect/mergedProjects/wh_soap/desktop/structure_of_an_xml_file.htm",
+        "https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/",
+        "https://helpx.adobe.com/indesign/using/structuring-documents-xml.html", "https://www.w3schools.com/xml/xml_elements.asp"],
+        "search_results": [{"title": "XML Tree - W3Schools", "url": "https://www.w3schools.com/xml/xml_tree.asp",
+        "date": "2025-01-01", "last_updated": "2025-07-01"}, {"title": "SOAP API Developer''s
+        Guide - Structure of an XML file - Genesys", "url": "https://help.genesys.com/pureconnect/mergedProjects/wh_soap/desktop/structure_of_an_xml_file.htm",
+        "date": "2019-01-01", "last_updated": "2025-04-30"}, {"title": "How to define
+        structure of XML document ? - GeeksforGeeks", "url": "https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/",
+        "date": "2022-03-09", "last_updated": "2025-07-24"}, {"title": "Structure
+        documents for XML in InDesign - Adobe Support", "url": "https://helpx.adobe.com/indesign/using/structuring-documents-xml.html",
+        "date": "2023-05-24", "last_updated": "2025-07-10"}, {"title": "XML Elements
+        - W3Schools", "url": "https://www.w3schools.com/xml/xml_elements.asp", "date":
+        "2008-01-10", "last_updated": "2025-07-01"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "The file named \"ruby.xml\" contains an XML document with a single
+        root element `<truism>`, which encloses the text **\"Ruby is the best\"**.
+        In XML structure terms, `<truism>` is the root element, and \"Ruby is the
+        best\" is the text content of that element[1][2][3].\n\nIn other words, compared
+        to the plain text file you showed earlier, this XML file encapsulates the
+        same phrase inside an XML tag, making it a structured data element rather
+        than just plain text. This structure allows programs that process XML to recognize
+        \"Ruby is the best\" as the content of the element named `truism`."}, "delta":
+        {"role": "assistant", "content": ""}}]}'
+  recorded_at: Thu, 31 Jul 2025 10:23:27 GMT
+recorded_with: VCR 6.3.1

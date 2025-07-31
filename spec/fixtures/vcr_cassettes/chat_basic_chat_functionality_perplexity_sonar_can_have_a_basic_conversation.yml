@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:21:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "eaf43d2f-2d39-4474-8c4f-8305d0ecf3a9", "model": "sonar", "created":
+        1753957312, "usage": {"prompt_tokens": 8, "completion_tokens": 27, "total_tokens":
+        35, "search_context_size": "low"}, "citations": ["https://www.youtube.com/watch?v=tY46Kmm0LOo",
+        "https://www.youtube.com/watch?v=HsqLhj7YeGU", "https://en.wikipedia.org/wiki/2_+_2_=_5",
+        "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en", "https://www.tiktok.com/@macynicolewalker/video/7152270660444917038?lang=en"],
+        "search_results": [{"title": "What is half of 2 plus 2? The \"correct\" answer
+        explained - YouTube", "url": "https://www.youtube.com/watch?v=tY46Kmm0LOo",
+        "date": "2024-11-04", "last_updated": "2025-06-29"}, {"title": "2 + 2 divided
+        by 2 =? You might get this WRONG! - YouTube", "url": "https://www.youtube.com/watch?v=HsqLhj7YeGU",
+        "date": "2023-03-15", "last_updated": "2025-07-02"}, {"title": "2 + 2 = 5
+        - Wikipedia", "url": "https://en.wikipedia.org/wiki/2_+_2_=_5", "date": "2003-06-29",
+        "last_updated": "2025-07-21"}, {"title": "Why was she so excited for 2+2 \ud83d\udc80
+        - #HarrisAY - #interview - TikTok", "url": "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en",
+        "date": "2024-03-07", "last_updated": null}, {"title": "2 Plus 2 Meme: A Fun
+        and Confusing Mathematical Conundrum", "url": "https://www.tiktok.com/@macynicolewalker/video/7152270660444917038?lang=en",
+        "date": "2022-10-08", "last_updated": null}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "**2 + 2 equals 4**. This is a basic arithmetic fact where adding
+        two and two results in four[3]."}, "delta": {"role": "assistant", "content":
+        ""}}]}'
+  recorded_at: Thu, 31 Jul 2025 10:21:52 GMT
+recorded_with: VCR 6.3.1

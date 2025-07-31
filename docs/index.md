@@ -49,6 +49,10 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
   </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
+  </div>
 </div>
 
 <div class="badge-container">
@@ -129,7 +133,7 @@ response = chat.with_schema(ProductSchema)
 
 ## Core Capabilities
 
-*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
+*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
 *   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.
@@ -141,7 +145,7 @@ response = chat.with_schema(ProductSchema)
 *   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
 *   ⚡ **Async Support:** Built-in fiber-based concurrency for high-performance operations.
 *   🎯 **Smart Configuration:** Global and scoped configs with automatic retries and proxy support.
-*   📚 **Model Registry:** Access 100+ models with capability detection and pricing info.
+*   📚 **Model Registry:** Access 500+ models with capability detection and pricing info.
 
 ## Installation
 
@@ -168,7 +172,7 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 Add persistence to your chat models effortlessly:
 
 ```bash
-# Generate models and migrations (available in v1.4.0)
+# Generate models and migrations
 rails generate ruby_llm:install
 ```
 

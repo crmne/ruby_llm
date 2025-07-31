@@ -1,0 +1,944 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Count from 1
+        to 3"}],"stream":true,"temperature":0.7,"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:22:10 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: "data: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\":
+        \"sonar\", \"created\": 1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\":
+        2, \"total_tokens\": 9, \"search_context_size\": \"low\"}, \"citations\":
+        [\"https://www.youtube.com/watch?v=3ku3FueLlV8\", \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"https://numbergenerator.org/randomnumbergenerator/1-3\", \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"], \"search_results\": [{\"title\":
+        \"Count 1 2 3 | Counting Song for Kids | Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \"Counting\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 3, \"total_tokens\":
+        10, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" from\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 4, \"total_tokens\":
+        11, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from \"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" \"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957330, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 5, \"total_tokens\": 12, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \"1\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 6, \"total_tokens\":
+        13, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \" to\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 7, \"total_tokens\":
+        14, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to \"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \" \"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 8, \"total_tokens\":
+        15, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \"3\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 9, \"total_tokens\":
+        16, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is\"}, \"delta\": {\"role\": \"assistant\", \"content\": \" is\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 10, \"total_tokens\":
+        17, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is:\"}, \"delta\": {\"role\": \"assistant\", \"content\": \":\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 11, \"total_tokens\":
+        18, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **\"}, \"delta\": {\"role\": \"assistant\", \"content\": \" **\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 12, \"total_tokens\":
+        19, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1\"}, \"delta\": {\"role\": \"assistant\", \"content\": \"1\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 13, \"total_tokens\":
+        20, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1,\"}, \"delta\": {\"role\": \"assistant\", \"content\": \",\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 14, \"total_tokens\":
+        21, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, \"}, \"delta\": {\"role\": \"assistant\", \"content\": \" \"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 15, \"total_tokens\":
+        22, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2\"}, \"delta\": {\"role\": \"assistant\", \"content\": \"2\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 16, \"total_tokens\":
+        23, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2,\"}, \"delta\": {\"role\": \"assistant\", \"content\": \",\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 17, \"total_tokens\":
+        24, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, \"}, \"delta\": {\"role\": \"assistant\", \"content\": \" \"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957330, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 18, \"total_tokens\":
+        25, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3\"}, \"delta\": {\"role\": \"assistant\", \"content\": \"3\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 19, \"total_tokens\":
+        26, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**\"}, \"delta\": {\"role\": \"assistant\", \"content\": \"**\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 20, \"total_tokens\":
+        27, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\n\"}, \"delta\": {\"role\": \"assistant\", \"content\":
+        \".\\n\\n\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 21, \"total_tokens\": 28, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese\"}, \"delta\": {\"role\": \"assistant\", \"content\":
+        \"These\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 22, \"total_tokens\": 29, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are\"}, \"delta\": {\"role\": \"assistant\", \"content\":
+        \" are\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 23, \"total_tokens\": 30, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the\"}, \"delta\": {\"role\": \"assistant\",
+        \"content\": \" the\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 24, \"total_tokens\": 31, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first\"}, \"delta\": {\"role\": \"assistant\",
+        \"content\": \" first\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 25, \"total_tokens\": 32, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three\"}, \"delta\": {\"role\":
+        \"assistant\", \"content\": \" three\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 26, \"total_tokens\": 33, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural\"}, \"delta\": {\"role\":
+        \"assistant\", \"content\": \" natural\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 27, \"total_tokens\": 34, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" numbers\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 28, \"total_tokens\":
+        35, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" in\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 29, \"total_tokens\": 36, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \" sequence\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 30, \"total_tokens\":
+        37, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \",\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 31, \"total_tokens\":
+        38, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly\"}, \"delta\": {\"role\": \"assistant\", \"content\": \" commonly\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 32, \"total_tokens\":
+        39, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught\"}, \"delta\": {\"role\": \"assistant\", \"content\": \" taught\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 33, \"total_tokens\":
+        40, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to\"}, \"delta\": {\"role\": \"assistant\", \"content\": \"
+        to\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\":
+        \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\":
+        34, \"total_tokens\": 41, \"search_context_size\": \"low\"}, \"citations\":
+        [\"https://www.youtube.com/watch?v=3ku3FueLlV8\", \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"https://numbergenerator.org/randomnumbergenerator/1-3\", \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"], \"search_results\": [{\"title\":
+        \"Count 1 2 3 | Counting Song for Kids | Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children\"}, \"delta\": {\"role\": \"assistant\", \"content\":
+        \" children\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 35, \"total_tokens\": 42, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and\"}, \"delta\": {\"role\": \"assistant\", \"content\":
+        \" and\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 36, \"total_tokens\": 43, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used\"}, \"delta\": {\"role\": \"assistant\",
+        \"content\": \" used\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 37, \"total_tokens\": 44, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as\"}, \"delta\": {\"role\": \"assistant\",
+        \"content\": \" as\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 38, \"total_tokens\": 45, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the\"}, \"delta\": {\"role\": \"assistant\",
+        \"content\": \" the\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 39, \"total_tokens\": 46, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic\"}, \"delta\": {\"role\":
+        \"assistant\", \"content\": \" basic\"}}]}\r\n\r\ndata: {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\",
+        \"model\": \"sonar\", \"created\": 1753957331, \"usage\": {\"prompt_tokens\":
+        7, \"completion_tokens\": 40, \"total_tokens\": 47, \"search_context_size\":
+        \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" starting\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 41, \"total_tokens\":
+        48, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" point\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 42, \"total_tokens\":
+        49, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point for\"}, \"delta\":
+        {\"role\": \"assistant\", \"content\": \" for\"}}]}\r\n\r\ndata: {\"id\":
+        \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 43, \"total_tokens\":
+        50, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point for counting\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \" counting\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 46, \"total_tokens\":
+        53, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point for counting[1]\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \"[1]\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 49, \"total_tokens\":
+        56, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": null,
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point for counting[1][4].\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \"[4].\"}}]}\r\n\r\ndata:
+        {\"id\": \"188ba176-cf9a-42c6-833b-3a89045d9633\", \"model\": \"sonar\", \"created\":
+        1753957331, \"usage\": {\"prompt_tokens\": 7, \"completion_tokens\": 49, \"total_tokens\":
+        56, \"search_context_size\": \"low\"}, \"citations\": [\"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"https://www.youtube.com/watch?v=8HE26KFjWnw\", \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\", \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\"],
+        \"search_results\": [{\"title\": \"Count 1 2 3 | Counting Song for Kids |
+        Pancake Manor\", \"url\": \"https://www.youtube.com/watch?v=3ku3FueLlV8\",
+        \"date\": \"2011-12-19\", \"last_updated\": \"2025-07-16\"}, {\"title\": \"1,
+        2, 3! Come and Count with Akili and Me\", \"url\": \"https://www.youtube.com/watch?v=8HE26KFjWnw\",
+        \"date\": \"2023-04-08\", \"last_updated\": \"2025-07-06\"}, {\"title\": \"Random
+        Number Between 1 And 3 - Number Generator\", \"url\": \"https://numbergenerator.org/randomnumbergenerator/1-3\",
+        \"date\": \"2025-06-09\", \"last_updated\": \"2025-06-16\"}, {\"title\": \"Numbers
+        1, 2 and 3 - Learn to Write and Count from 1 to 3\", \"url\": \"https://www.youtube.com/watch?v=NO2Q4o6ke6w\",
+        \"date\": \"2022-01-04\", \"last_updated\": \"2025-07-02\"}, {\"title\": \"Counting
+        to 20 Song For Kids | Learn To Count From 1-20\", \"url\": \"https://www.youtube.com/watch?v=Be4j6lJpFTQ\",
+        \"date\": \"2021-08-19\", \"last_updated\": \"2025-06-30\"}], \"object\":
+        \"chat.completion\", \"choices\": [{\"index\": 0, \"finish_reason\": \"stop\",
+        \"message\": {\"role\": \"assistant\", \"content\": \"Counting from 1 to 3
+        is: **1, 2, 3**.\\n\\nThese are the first three natural numbers in sequence,
+        commonly taught to children and used as the basic starting point for counting[1][4].\"},
+        \"delta\": {\"role\": \"assistant\", \"content\": \"\"}}]}\r\n\r\n"
+  recorded_at: Thu, 31 Jul 2025 10:22:11 GMT
+recorded_with: VCR 6.3.1

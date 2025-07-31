@@ -62,8 +62,6 @@ This approach has one important consequence: **you cannot use `validates :conten
 ### Quick Setup with Generator
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 The easiest way to get started is using the provided Rails generator:
 
@@ -362,8 +360,6 @@ The attachment API automatically detects file types based on file extension or c
 ### Structured Output with Schemas
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 Structured output works seamlessly with Rails persistence:
 

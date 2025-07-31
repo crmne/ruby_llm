@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"What is the
+        capital of France?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 10:21:56 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "3f57620d-3227-4130-b292-1ab266941c45", "model": "sonar", "created":
+        1753957316, "usage": {"prompt_tokens": 7, "completion_tokens": 214, "total_tokens":
+        221, "search_context_size": "low"}, "citations": ["https://home.adelphi.edu/~ca19535/page%204.html",
+        "https://en.wikipedia.org/wiki/Paris", "https://www.iroamly.com/france-travel/what-is-the-capital-of-france.html",
+        "https://www.coe.int/en/web/interculturalcities/paris", "https://www.instagram.com/reel/DEVmGsIMGRM/?hl=en"],
+        "search_results": [{"title": "Paris facts: the capital of France in history",
+        "url": "https://home.adelphi.edu/~ca19535/page%204.html", "date": "2000-01-01",
+        "last_updated": "2025-07-19"}, {"title": "Paris", "url": "https://en.wikipedia.org/wiki/Paris",
+        "date": "2001-11-06", "last_updated": "2025-07-30"}, {"title": "What is the
+        capital of France? Overview of Paris", "url": "https://www.iroamly.com/france-travel/what-is-the-capital-of-france.html",
+        "date": "2024-11-28", "last_updated": "2025-06-16"}, {"title": "Paris, France
+        - Intercultural Cities Programme", "url": "https://www.coe.int/en/web/interculturalcities/paris",
+        "date": "2024-10-15", "last_updated": "2025-07-19"}, {"title": "Paris, the
+        capital of France, is often referred to as the \"City ...", "url": "https://www.instagram.com/reel/DEVmGsIMGRM/?hl=en",
+        "date": "2025-01-02", "last_updated": null}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "The capital of France is **Paris**. \n\nParis is the largest city
+        in France and serves as the political, cultural, commercial, and administrative
+        center of the country. It is located on the Seine River in the north-central
+        part of France and is the core of the \u00cele-de-France region. As of 2025,
+        Paris has an estimated population of about 2 million people within its administrative
+        limits and over 12 million in the wider metropolitan area[1][2][4].\n\nHistorically,
+        Paris became the capital of France in 508 under King Clovis and has maintained
+        this status almost continuously since, except during the German occupation
+        in World War II when the capital was temporarily moved to Vichy[1].\n\nParis
+        is renowned worldwide for its significant cultural landmarks, such as the
+        Louvre Museum, Notre Dame Cathedral, and the Eiffel Tower, as well as its
+        influence in fashion, finance, diplomacy, and gastronomy. It is also famously
+        known as the \"City of Light\" and the \"City of Love\"[2][3]."}, "delta":
+        {"role": "assistant", "content": ""}}]}'
+  recorded_at: Thu, 31 Jul 2025 10:21:56 GMT
+recorded_with: VCR 6.3.1

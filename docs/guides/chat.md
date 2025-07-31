@@ -251,8 +251,6 @@ You can set the temperature using `with_temperature`, which returns the `Chat` i
 ## Custom Request Parameters (`with_params`)
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 You can configure additional provider-specific features by adding custom fields to each API request. Use the `with_params` method.
 
@@ -268,8 +266,6 @@ Allowed parameters vary widely by provider and model. Please consult the provide
 ## Structured Output with JSON Schemas (`with_schema`)
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 RubyLLM supports structured output, which guarantees that AI responses conform to your specified JSON schema. This is different from JSON mode – while JSON mode guarantees valid JSON syntax, structured output enforces the exact schema you define.
 
