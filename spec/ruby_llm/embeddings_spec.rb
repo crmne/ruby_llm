@@ -37,7 +37,7 @@ RSpec.describe RubyLLM::Embedding do
         expect(embeddings.input_tokens).to be >= 0
       end
 
-      it "#{provider}/#{model} can handle multiple texts with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multiple texts with custom dimensions" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
         skip("Mistral doesn't support custom dimensions") if provider == :mistral
         embeddings = RubyLLM.embed(test_texts, model: model, dimensions: test_dimensions)
         expect(embeddings.vectors).to be_an(Array)

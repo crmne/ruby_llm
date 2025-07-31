@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.raw.env.request_body).to be_present
       end
 
-      it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
         skip("ministral-3b doesn't know Ruby's creator is Matz") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider)
 
