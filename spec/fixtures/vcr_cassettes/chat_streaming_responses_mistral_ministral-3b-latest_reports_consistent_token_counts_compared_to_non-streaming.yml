@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"user","content":"Count
+        from 1 to 3"}],"stream":true,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 11:15:31 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '01986031-c516-7054-b96c-f89fb9081c33'
+      X-Kong-Request-Id:
+      - '01986031-c516-7054-b96c-f89fb9081c33'
+      X-Envoy-Upstream-Service-Time:
+      - '50'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '50'
+      X-Kong-Proxy-Latency:
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"Sure"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":","},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" here"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" is"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" the"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" count from 1"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" to 3:\n\n"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"1,"},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" 2, "},"finish_reason":null}]}
+
+        data: {"id":"c588e576f5224cad94829fb7ff255a61","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":31,"completion_tokens":21}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 31 Jul 2025 11:15:31 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"user","content":"Count
+        from 1 to 3"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 31 Jul 2025 11:15:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '01986031-c611-76c8-ad3a-a0cc1054b824'
+      X-Kong-Request-Id:
+      - '01986031-c611-76c8-ad3a-a0cc1054b824'
+      X-Envoy-Upstream-Service-Time:
+      - '144'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '500000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '498420'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '1000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '999996089'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '31'
+      X-Ratelimit-Limit-Req-Minute:
+      - '60'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '49'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '144'
+      X-Kong-Proxy-Latency:
+      - '5'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"b479e1185aec45b4b60a947c933e4954","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":10,"total_tokens":31,"completion_tokens":21},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Sure,
+        here is the count from 1 to 3:\n\n1, 2, 3"}}]}'
+  recorded_at: Thu, 31 Jul 2025 11:15:31 GMT
+recorded_with: VCR 6.3.1
+...

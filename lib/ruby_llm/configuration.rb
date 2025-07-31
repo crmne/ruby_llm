@@ -27,6 +27,7 @@ module RubyLLM
                   :ollama_api_base,
                   :gpustack_api_base,
                   :gpustack_api_key,
+                  :mistral_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,

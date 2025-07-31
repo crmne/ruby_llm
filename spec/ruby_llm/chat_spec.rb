@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations
+        skip("ministral-3b doesn't know Ruby's creator is Matz") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider)
 
         first = chat.ask("Who was Ruby's creator?")
@@ -41,6 +42,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} successfully uses the system prompt" do
+        skip("ministral-3b doesn't reliably follow system prompts") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
@@ -52,6 +54,7 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
         skip('Perplexity has issues with system message replacement in conversations') if provider == :perplexity
+        skip("ministral-3b doesn't reliably follow system prompts") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally

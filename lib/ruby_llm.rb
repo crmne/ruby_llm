@@ -20,6 +20,7 @@ loader.inflector.inflect(
   'bedrock' => 'Bedrock',
   'openrouter' => 'OpenRouter',
   'gpustack' => 'GPUStack',
+  'mistral' => 'Mistral',
   'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
@@ -79,15 +80,16 @@ module RubyLLM
   end
 end
 
-RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
-RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
-RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
-RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
-RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
-RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
+RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
+RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
+RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
+RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
+RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
+RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
