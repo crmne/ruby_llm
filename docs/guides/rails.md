@@ -579,9 +579,9 @@ This setup allows for:
 2. Background processing to prevent request timeouts
 3. Automatic persistence of all messages and tool calls
 
-### Handling Message Ordering with ActionCable
+### Handling Message Ordering with Action Cable
 
-ActionCable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
+Action Cable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
 
 #### Option 1: Client-Side Reordering with Stimulus (Recommended)
 
@@ -672,7 +672,7 @@ Update your views to use the controller:
 
 #### Understanding the Root Cause
 
-As confirmed by the ActionCable maintainers, ActionCable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
+As confirmed by the Action Cable maintainers, Action Cable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
 
 The most reliable solution is client-side reordering with order information in the payload. For applications requiring strict ordering guarantees, consider:
 - Server-sent events (SSE) for unidirectional streaming
