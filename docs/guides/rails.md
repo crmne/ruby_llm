@@ -477,7 +477,37 @@ With this approach:
 
 ## Streaming Responses with Hotwire/Turbo
 
-The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates. Here's a simplified approach using a background job:
+The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates.
+
+### Basic Pattern: Instant User Messages
+
+For a better user experience, show user messages immediately while processing AI responses in the background:
+
+```ruby
+# app/controllers/messages_controller.rb
+class MessagesController < ApplicationController
+  def create
+    @chat = Chat.find(params[:chat_id])
+
+    # Create and persist the user message immediately
+    @chat.create_user_message(params[:content])
+
+    # Process AI response in background
+    ChatStreamJob.perform_later(@chat.id)
+
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+      format.html { redirect_to @chat }
+    end
+  end
+end
+```
+
+The `create_user_message` method handles message persistence and returns the created message record. This pattern provides instant feedback to users while the AI processes their request.
+
+### Complete Streaming Setup
+
+Here's a full implementation with background job streaming:
 
 ```ruby
 # app/models/chat.rb
@@ -503,9 +533,11 @@ end
 class ChatStreamJob < ApplicationJob
   queue_as :default
 
-  def perform(chat_id, user_content)
+  def perform(chat_id)
     chat = Chat.find(chat_id)
-    chat.ask(user_content) do |chunk|
+
+    # Process the latest user message
+    chat.complete do |chunk|
       # Get the assistant message record (created before streaming starts)
       assistant_message = chat.messages.last
       if chunk.content && assistant_message
@@ -544,35 +576,6 @@ end
 <% end %>
 ```
 
-### Controller Integration
-
-Putting it all together in a controller:
-
-```ruby
-# app/controllers/messages_controller.rb
-class MessagesController < ApplicationController
-  before_action :set_chat
-
-  def create
-    message_content = params[:content]
-
-    # Queue the background job to handle the streaming response
-    ChatStreamJob.perform_later(@chat.id, message_content)
-
-    # Immediately return success to the user
-    respond_to do |format|
-      format.turbo_stream { head :ok }
-      format.html { redirect_to @chat }
-    end
-  end
-
-  private
-
-  def set_chat
-    @chat = Chat.find(params[:chat_id])
-  end
-end
-```
 
 This setup allows for:
 1. Real-time UI updates as the AI generates its response
