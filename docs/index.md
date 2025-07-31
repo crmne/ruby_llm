@@ -53,6 +53,10 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
   </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral.svg" alt="Mistral" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-text.svg" alt="Mistral" class="logo-small">
+  </div>
 </div>
 
 <div class="badge-container">
@@ -133,7 +137,7 @@ response = chat.with_schema(ProductSchema)
 
 ## Core Capabilities
 
-*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
+*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Mistral, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
 *   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.

@@ -53,6 +53,7 @@ RubyLLM.configure do |config|
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
   config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil) # Available in v1.5.0
+  config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil) # Available in v1.5.0
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
   config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', nil)
   config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
@@ -111,6 +112,7 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `openrouter_api_key`
 *   `gpustack_api_key`
 *   `perplexity_api_key` (Available in v1.5.0)
+*   `mistral_api_key` (Available in v1.5.0)
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
 
 ## Ollama API Base (`ollama_api_base`)
