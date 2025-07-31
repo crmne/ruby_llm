@@ -25,8 +25,15 @@ def configure_from_env
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
     configure_bedrock(config)
+    configure_azure_openai(config)
     config.request_timeout = 30
   end
+end
+
+def configure_azure_openai(config)
+  config.azure_openai_api_base = ENV.fetch('AZURE_OPENAI_ENDPOINT', nil)
+  config.azure_openai_api_key = ENV.fetch('AZURE_OPENAI_API_KEY', nil)
+  config.azure_openai_api_version = ENV.fetch('AZURE_OPENAI_API_VER', nil)
 end
 
 def configure_bedrock(config)

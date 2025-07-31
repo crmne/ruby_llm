@@ -27,6 +27,10 @@ module RubyLLM
                   :ollama_api_base,
                   :gpustack_api_base,
                   :gpustack_api_key,
+                  # Azure OpenAI Provider configuration
+                  :azure_openai_api_base,
+                  :azure_openai_api_version,
+                  :azure_openai_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,
