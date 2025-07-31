@@ -85,6 +85,19 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
+
+# Get structured output with JSON schemas
+class ProductSchema < RubyLLM::Schema
+  string :name, description: "Product name"
+  number :price, description: "Price in USD"
+  array :features, description: "Key features" do
+    string description: "Feature description"
+  end
+end
+
+response = chat.with_schema(ProductSchema)
+               .ask "Analyze this product description", with: "product.txt"
+# response.content => { "name" => "...", "price" => 99.99, "features" => [...] }
 ```
 
 ## Core Capabilities
@@ -92,12 +105,16 @@ chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
 *   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
-*   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
+*   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
 *   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
 *   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
+*   📋 **Structured Output:** Guarantee responses conform to JSON schemas with `RubyLLM::Schema`.
 *   🚂 **Rails Integration:** Easily persist chats, messages, and tool calls using `acts_as_chat` and `acts_as_message`.
 *   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
+*   ⚡ **Async Support:** Built-in fiber-based concurrency for high-performance operations.
+*   🎯 **Smart Configuration:** Global and scoped configs with automatic retries and proxy support.
+*   📚 **Model Registry:** Access 100+ models with capability detection and pricing info.
 
 ## Installation
 

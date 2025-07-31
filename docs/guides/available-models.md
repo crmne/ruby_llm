@@ -40,7 +40,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 ## Last Updated
 {: .d-inline-block }
 
-2025-07-30
+2025-07-31
 {: .label .label-green }
 
 ## Models by Provider
