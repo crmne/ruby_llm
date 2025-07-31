@@ -161,23 +161,9 @@ module RubyLLM
       end
 
       def ask(message, with: nil, &)
-        if message.respond_to?(:role) && message.respond_to?(:content)
-          # Validate that role and content return valid values
-          unless message.role && message.content
-            raise ArgumentError, 'Message object must have non-nil role and content values'
-          end
-          
-          if with.present?
-            raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
-                                'Add attachments to the message object directly or pass a string instead.'
-          end
-          
-          # Validate message belongs to this chat if it's an ActiveRecord model
-          if message.respond_to?(:chat) && message.chat && message.chat != self
-            raise ArgumentError, 'Message belongs to a different chat. Create a new message for this chat instead.'
-          end
-          
-          to_llm.add_message(message.to_llm)
+        if message_object?(message)
+          validate_message_object!(message, with)
+          add_message_object(message, with)
         else
           create_user_message(message, with:)
         end
@@ -197,6 +183,44 @@ module RubyLLM
       end
 
       private
+
+      def message_object?(message)
+        message.respond_to?(:role) && message.respond_to?(:content)
+      end
+
+      def validate_message_object!(message, with)
+        validate_message_content!(message)
+        validate_no_attachments!(with)
+        validate_message_ownership!(message)
+      end
+
+      def validate_message_content!(message)
+        return if message.role && message.content
+
+        raise ArgumentError, 'Message object must have non-nil role and content'
+      end
+
+      def validate_no_attachments!(with)
+        return unless with.present?
+
+        raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
+                             'Add attachments to the message object directly or pass a string instead.'
+      end
+
+      def validate_message_ownership!(message)
+        return unless message.respond_to?(:chat) && message.chat && message.chat != self
+
+        raise ArgumentError,
+              'Message belongs to a different chat. Create a new message for this chat instead.'
+      end
+
+      def add_message_object(message, with)
+        if message.is_a?(ApplicationRecord)
+          to_llm.add_message(message.to_llm)
+        else
+          to_llm.add_message(create_user_message(message.content, with: with).to_llm)
+        end
+      end
 
       def persist_new_message
         @message = messages.create!(role: :assistant, content: String.new)

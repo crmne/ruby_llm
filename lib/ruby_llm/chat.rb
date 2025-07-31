@@ -37,13 +37,11 @@ module RubyLLM
     def ask(message = nil, with: nil, &)
       if message.respond_to?(:role) && message.respond_to?(:content)
         # Validate that role and content return valid values
-        unless message.role && message.content
-          raise ArgumentError, 'Message object must have non-nil role and content values'
-        end
+        raise ArgumentError, 'Message object must have non-nil role and content' unless message.role && message.content
 
         if with.present?
           raise ArgumentError, 'Cannot provide attachments (with:) when passing a message object. ' \
-                              'Add attachments to the message object directly or pass a string instead.'
+                               'Add attachments to the message object directly or pass a string instead.'
         end
         add_message message
       else
@@ -169,7 +167,17 @@ module RubyLLM
     end
 
     def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      message = if message_or_attributes.is_a?(Message)
+                  message_or_attributes
+                elsif message_or_attributes.is_a?(Hash)
+                  Message.new(message_or_attributes)
+                else
+                  Message.new(
+                    role: message_or_attributes.try(:role),
+                    content: message_or_attributes.try(:content)
+                  )
+                end
+
       messages << message
       message
     end

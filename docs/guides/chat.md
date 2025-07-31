@@ -84,15 +84,16 @@ In addition to strings, you can pass existing message objects directly to the `a
 ```ruby
 # Simple example using RubyLLM::Message objects
 chat = RubyLLM.chat
+chat2 = RubyLLM.chat # (model: 'pick-a-supported-model')
 
-message = chat.ask("Give me a random number between 1 and 10")
+message = RubyLLM::Message.new(role: 'user', content: "Give me a random number between 1 and 10")
 
 # Pass the existing message object to receive a response to the same message
 response = chat.ask(message)
-response2 = chat.ask(message)
+response2 = chat2.ask(message)
 
 # Key benefits:
-# ✅ Works with any object that responds to role and content  
+# ✅ Works with any object that responds to role and content
 # ✅ Enables message reuse and reconstruction patterns
 # ✅ No database dependencies - pure Ruby objects
 ```
@@ -102,6 +103,7 @@ response2 = chat.ask(message)
 1. **Preserving metadata**: When messages have custom attributes that must be maintained
 2. **Rails integration**: Using pre-created ActiveRecord message objects (see [Rails Integration Guide]({% link guides/rails.md %}))
 3. **Message reconstruction**: When rebuilding conversations from stored data
+4. **Real-time applications**: Instant user feedback while AI processes in background
 
 For a complete Rails implementation with real-time streaming and Turbo integration, see the [Advanced Pattern in the Rails Guide]({% link guides/rails.md %}#advanced-pattern-instant-user-message-display).
 
@@ -110,9 +112,23 @@ For a complete Rails implementation with real-time streaming and Turbo integrati
 The `ask` method uses duck typing - it works with any object that responds to `role` and `content` methods, not just `RubyLLM::Message` objects:
 
 ```ruby
-# Works with any object that has role and content methods
+# Works with OpenStruct
 custom_message = OpenStruct.new(role: :user, content: "Hello!")
-chat.ask(custom_message)
+response = chat.ask(custom_message)
+
+# Works with completely custom objects
+class CustomMessage
+  attr_reader :role, :content, :metadata
+
+  def initialize(role, content, metadata = {})
+    @role = role
+    @content = content
+    @metadata = metadata
+  end
+end
+
+message = CustomMessage.new(:user, "What's the weather like?", { location: "Paris" })
+response = chat.ask(message)
 ```
 
 **Important Constraints:**
@@ -126,7 +142,18 @@ message = RubyLLM::Message.new(role: :user, content: "Analyze this")
 chat.ask(message, with: ["document.pdf"])
 ```
 
-The message object must have valid `role` and `content` values - `nil` values will raise an error to prevent silent failures.
+The message object must have valid `role` and `content` - `nil` values will raise an error to prevent silent failures.
+
+```ruby
+# This works - falls back to string handling
+empty_struct = OpenStruct.new()
+chat.ask(empty_struct)  # No error - treated as string
+
+# This raises an error - responds to methods but has nil values
+invalid_message = OpenStruct.new(role: nil, content: "content")
+chat.ask(invalid_message)
+# => ArgumentError: Message object must have non-nil role and content
+```
 
 ## Guiding the AI with Instructions
 

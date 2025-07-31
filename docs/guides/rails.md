@@ -576,23 +576,23 @@ end
 
 ### Advanced Pattern: Instant User Message Display
 
-For optimal user experience in real-time chat applications, you want user messages to appear instantly in the UI while AI responses stream in separately. RubyLLM supports passing existing message objects to the `ask` method, enabling this immediate feedback pattern:
+For optimal user experience in real-time chat applications, you want user messages to appear instantly in the UI while AI responses stream in separately. RubyLLM supports passing existing message objects to the `ask` method, enabling this immediate feedback pattern that eliminates perceived latency:
 
 ```ruby
 # Controller: Create and display user message immediately
 class MessagesController < ApplicationController
   def create
     @chat = Chat.find(params[:chat_id])
-    
+
     # Create user message immediately - appears in UI instantly via turbo stream
     user_message = @chat.messages.create!(
       role: 'user',
       content: params[:content]
     )
-    
+
     # Queue background job with IDs
     StreamChatResponseJob.perform_later(@chat.id, user_message.id)
-    
+
     respond_to do |format|
       format.turbo_stream { head :ok }
     end
@@ -603,24 +603,24 @@ end
 class StreamChatResponseJob < ApplicationJob
   include ActionView::RecordIdentifier
   include ActionView::Helpers::TagHelper
-  
+
   def perform(chat_id, user_message_id)
     chat = Chat.find(chat_id)
     user_message = chat.messages.find(user_message_id)
-    
+
     accumulated_content = ""
 
-    chat.ask(user_message) do |chunk|      
+    chat.ask(user_message) do |chunk|
       # Get the last assistant message created by the ask method
       assistant_message = chat.messages.where(role: 'assistant').last
-      
+
       if chunk.content.present? && assistant_message
         # Accumulate the content
         accumulated_content += chunk.content
-        
+
         # Render the accumulated markdown
         rendered_html = assistant_message.markdown_to_html(accumulated_content)
-        
+
         # Broadcast the updated content to all connected clients
         assistant_message.broadcast_update_to [chat, "messages"],
           target: dom_id(assistant_message, "content"),
@@ -635,10 +635,10 @@ class Chat < ApplicationRecord
   acts_as_chat message_class: 'Message'
 end
 
-# Your Message model  
+# Your Message model
 class Message < ApplicationRecord
   acts_as_message chat_class: 'Chat'
-  
+
   def markdown_to_html(content)
     # Implement with your preferred markdown renderer (e.g., redcarpet)
     content # Return plain content or rendered HTML
@@ -648,46 +648,48 @@ end
 
 **How This Pattern Works:**
 
-1. **Controller creates and broadcasts user message immediately**
+1. **Instant user feedback** → Controller creates and broadcasts user message immediately
    - User submits form → controller creates `user_message` record
    - `user_message` is broadcast via `after_create_commit` callback
-   - User sees their message instantly in the UI
+   - User sees their message instantly in the UI (0ms perceived latency)
 
-2. **Background job handles AI response streaming**
+2. **Background AI processing** → Job handles streaming response using existing message
    - Job receives `user_message.id` (not content string)
    - `chat.ask(user_message)` reuses existing message - **no duplication**
-   - AI response streams to UI via turbo streams
+   - AI response streams to UI via turbo streams in real-time
 
-3. **Clean separation of concerns**
-   - Frontend: Instant user feedback via immediate broadcast
+3. **Clean architecture** → Separation of concerns with optimal performance
+   - Frontend: Immediate user feedback via broadcast
    - Backend: AI processing and streaming in background
-   - No duplicate database records or UI elements
 
 **Key benefits:**
 - ✅ User sees their message instantly (no waiting for AI)
 - ✅ AI response streams in real-time
 - ✅ No message duplication in database
 - ✅ Preserves all message metadata
-  - ✅ Works seamlessly with Turbo Streams
+- ✅ Works seamlessly with Turbo Streams
 
-**Error Prevention:**
+**Defensive Programming:**
 
-RubyLLM includes safeguards to prevent common mistakes:
+RubyLLM includes comprehensive safeguards to prevent common mistakes and ensure reliable operation:
 
 ```ruby
-# These will raise clear ArgumentError exceptions:
+# These scenarios raise clear, actionable ArgumentError exceptions:
 
-# ❌ Trying to add attachments to existing message
+# ❌ Attempting to add attachments to existing message objects
 chat.ask(existing_message, with: ['file.pdf'])
-# => ArgumentError: Cannot provide attachments when passing a message object
+# => ArgumentError: Cannot provide attachments when passing a message object.
+#    Add attachments to the message object directly or pass a string instead.
 
-# ❌ Using message from different chat  
+# ❌ Cross-chat message usage (ActiveRecord only)
 chat.ask(other_chat.messages.first)
-# => ArgumentError: Message belongs to a different chat
+# => ArgumentError: Message belongs to a different chat.
+#    Create a new message for this chat instead.
 
-# ❌ Message with nil role/content
+# ❌ Message objects with nil role or content values
+invalid_message = OpenStruct.new(role: nil, content: "some content")
 chat.ask(invalid_message)
-# => ArgumentError: Message object must have non-nil role and content values
+# => ArgumentError: Message object must have non-nil role and content
 ```
 
 ### Handling Message Ordering with ActionCable
