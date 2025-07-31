@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools in multi-turn conversations" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools without parameters" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} can use tools without parameters" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -99,7 +99,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -131,7 +131,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -164,7 +164,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can handle multiple tool calls in a single response" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         skip 'Local providers do not reliably use tools' if RubyLLM::Provider.providers[provider]&.local?
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
@@ -203,7 +203,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'tool call callbacks' do
-    it 'calls on_tool_call callback when tools are used' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'calls on_tool_call callback when tools are used' do
       tool_calls_received = []
 
       chat = RubyLLM.chat
@@ -222,7 +222,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'error handling' do
-    it 'raises an error when tool execution fails' do # rubocop:disable RSpec/MultipleExpectations
+    it 'raises an error when tool execution fails' do
       chat = RubyLLM.chat.with_tool(BrokenTool)
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|

@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Context do
   include_context 'with configured RubyLLM'
 
   describe '#initialize' do
-    it 'creates a copy of the global configuration' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'creates a copy of the global configuration' do
       # Get current config values
       original_model = RubyLLM.config.default_model
       original_api_key = RubyLLM.config.openai_api_key
@@ -28,7 +28,7 @@ RSpec.describe RubyLLM::Context do
   end
 
   describe 'context chat operations' do
-    it 'creates a chat with context-specific configuration' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'creates a chat with context-specific configuration' do
       context = RubyLLM.context do |config|
         config.default_model = 'claude-3-5-haiku-20241022'
       end
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Context do
       expect(global_chat.model.id).to eq(RubyLLM.config.default_model)
     end
 
-    it 'uses context-specific API keys' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'uses context-specific API keys' do
       original_openai_key = RubyLLM.config.openai_api_key
 
       context = RubyLLM.context do |config|
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Context do
   end
 
   describe 'context embed operations' do
-    it 'respects context-specific embedding model' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'respects context-specific embedding model' do
       context = RubyLLM.context do |config|
         config.default_embedding_model = 'text-embedding-3-large'
       end
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Context do
   end
 
   describe 'multiple independent contexts' do
-    it 'allows multiple contexts with different configurations' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'allows multiple contexts with different configurations' do
       context1 = RubyLLM.context do |config|
         config.default_model = 'gpt-4.1-nano'
       end
@@ -108,7 +108,7 @@ RSpec.describe RubyLLM::Context do
       expect(chat2.model.id).to eq('claude-3-5-haiku-20241022')
     end
 
-    it 'ensures changes in one context do not affect another' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'ensures changes in one context do not affect another' do
       context1 = RubyLLM.context do |config|
         config.openai_api_key = 'key1'
         config.default_model = 'model1'

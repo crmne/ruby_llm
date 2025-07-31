@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can have a basic conversation" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can have a basic conversation" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's 2 + 2?")
 
@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
 
-      it "#{provider}/#{model} returns raw responses" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} returns raw responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the capital of France?')
         expect(response.raw).to be_present
@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.raw.env.request_body).to be_present
       end
 
-      it "#{provider}/#{model} can handle multi-turn conversations" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can handle multi-turn conversations" do
         skip("ministral-3b doesn't know Ruby's creator is Matz") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider)
 
@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to match(/XKCD7392/i)
       end
 
-      it "#{provider}/#{model} replaces previous system messages when replace: true" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} replaces previous system messages when replace: true" do
         skip('Perplexity has issues with system message replacement in conversations') if provider == :perplexity
         skip("ministral-3b doesn't reliably follow system prompts") if model == 'ministral-3b-latest'
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'change model on the fly' do
     CHAT_MODELS.first(3).combination(2).each do |first, second|
-      it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
         chat = RubyLLM.chat(model: first[:model], provider: first[:provider])
         response = chat.ask("What's 2 + 2?")
 

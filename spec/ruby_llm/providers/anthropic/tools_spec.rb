@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       })
     end
 
-    it 'formats a message with content and tool call' do # rubocop:disable RSpec/ExampleLength
+    it 'formats a message with content and tool call' do
       result = tools.format_tool_call(msg)
 
       expect(result).to eq({
@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                         })
       end
 
-      it 'formats a message with only tool call' do # rubocop:disable RSpec/ExampleLength
+      it 'formats a message with only tool call' do
         result = tools.format_tool_call(msg)
 
         expect(result).to eq({
@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                         })
       end
 
-      it 'formats a message with only tool call' do # rubocop:disable RSpec/ExampleLength
+      it 'formats a message with only tool call' do
         result = tools.format_tool_call(msg)
 
         expect(result).to eq({
@@ -92,7 +92,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
     end
 
-    it 'formats messages with multiple tool calls correctly' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'formats messages with multiple tool calls correctly' do
       tool_calls = {
         'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {}),
         'tool_2' => RubyLLM::ToolCall.new(id: 'tool_2', name: 'dice_roll', arguments: {}),
@@ -119,7 +119,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(tool_use_blocks.map { |b| b[:name] }).to all(eq('dice_roll'))
     end
 
-    it 'does not include empty text content with multiple tool calls' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'does not include empty text content with multiple tool calls' do
       tool_calls = {
         'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {})
       }
@@ -145,7 +145,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       content: 'Tool result')
     end
 
-    it 'formats a tool result message' do # rubocop:disable RSpec/ExampleLength
+    it 'formats a tool result message' do
       result = tools.format_tool_result(msg)
 
       expect(result).to eq({
@@ -162,7 +162,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
   end
 
   describe '.parse_tool_calls' do
-    it 'parses multiple tool calls from content blocks' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'parses multiple tool calls from content blocks' do
       content_blocks = [
         { 'type' => 'text', 'text' => 'Rolling dice' },
         { 'type' => 'tool_use', 'id' => 'tool_1', 'name' => 'dice_roll', 'input' => {} },
@@ -178,7 +178,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(tool_calls.values.map(&:name)).to all(eq('dice_roll'))
     end
 
-    it 'handles single tool call for backward compatibility' do # rubocop:disable RSpec/MultipleExpectations
+    it 'handles single tool call for backward compatibility' do
       single_block = { 'type' => 'tool_use', 'id' => 'tool_1', 'name' => 'dice_roll', 'input' => {} }
 
       tool_calls = described_class.parse_tool_calls(single_block)
@@ -188,7 +188,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(tool_calls['tool_1'].name).to eq('dice_roll')
     end
 
-    it 'returns nil for empty or nil input' do # rubocop:disable RSpec/MultipleExpectations
+    it 'returns nil for empty or nil input' do
       expect(described_class.parse_tool_calls(nil)).to be_nil
       expect(described_class.parse_tool_calls([])).to be_nil
     end

@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::Chat do
       end.to raise_error(ArgumentError, /Provider must be specified/)
     end
 
-    it 'skips registry validation when assuming model exists' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'skips registry validation when assuming model exists' do
       expect(RubyLLM::Models).not_to receive(:find) # rubocop:disable RSpec/MessageSpies
 
       chat = described_class.new(
@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.model.provider).to eq(provider)
     end
 
-    it 'works with RubyLLM.chat convenience method' do # rubocop:disable RSpec/ExampleLength
+    it 'works with RubyLLM.chat convenience method' do
       chat = RubyLLM.chat(
         model: custom_model,
         provider: provider,
@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.model.id).to eq(custom_model)
     end
 
-    it 'works with models not in registry but available in API' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'works with models not in registry but available in API' do
       # Simulate model missing from registry
       filtered_models = original_models.reject { |m| m.id == real_model }
       RubyLLM::Models.instance.instance_variable_set(:@models, filtered_models)
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to include('4')
     end
 
-    it 'works with with_model method' do # rubocop:disable RSpec/MultipleExpectations
+    it 'works with with_model method' do
       chat = RubyLLM.chat
 
       chat.with_model(custom_model, provider: provider, assume_exists: true)
