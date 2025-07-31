@@ -323,7 +323,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | text-moderation | text-moderation-latest | openai | - | 32768 | - |
 
 
-### Openrouter (320)
+### Openrouter (318)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -550,8 +550,6 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-mini | openai/o1-mini | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | OpenAI: o1-mini (2024-09-12) | openai/o1-mini-2024-09-12 | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
-| OpenAI: o1-preview | openai/o1-preview | openrouter | 128000 | 32768 | In: $15.00, Out: $60.00, Cache: $7.50 |
-| OpenAI: o1-preview (2024-09-12) | openai/o1-preview-2024-09-12 | openrouter | 128000 | 32768 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-pro | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | OpenAI: o3 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | OpenAI: o3 Mini | openai/o3-mini | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
@@ -1224,7 +1222,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (404)
+### Streaming (402)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1530,8 +1528,6 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-mini | openai/o1-mini | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | OpenAI: o1-mini (2024-09-12) | openai/o1-mini-2024-09-12 | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
-| OpenAI: o1-preview | openai/o1-preview | openrouter | 128000 | 32768 | In: $15.00, Out: $60.00, Cache: $7.50 |
-| OpenAI: o1-preview (2024-09-12) | openai/o1-preview-2024-09-12 | openrouter | 128000 | 32768 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-pro | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | OpenAI: o3 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | OpenAI: o3 Mini | openai/o3-mini | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
