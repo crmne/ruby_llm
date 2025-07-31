@@ -1,9 +1,8 @@
 ---
 layout: default
 title: Available Models
-parent: Guides
-nav_order: 11
-permalink: /guides/available-models
+nav_order: 5
+permalink: /available-models
 description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
 ---
 

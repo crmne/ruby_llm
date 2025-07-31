@@ -6,14 +6,14 @@ require 'fileutils'
 namespace :models do
   desc 'Generate available models documentation'
   task :docs do
-    FileUtils.mkdir_p('docs/guides') # ensure output directory exists
+    FileUtils.mkdir_p('docs') # ensure output directory exists
 
     # Generate markdown content
     output = generate_models_markdown
 
     # Write the output
-    File.write('docs/guides/available-models.md', output)
-    puts 'Generated docs/guides/available-models.md'
+    File.write('docs/available-models.md', output)
+    puts 'Generated docs/available-models.md'
   end
 end
 
@@ -22,9 +22,8 @@ def generate_models_markdown
     ---
     layout: default
     title: Available Models
-    parent: Guides
-    nav_order: 11
-    permalink: /guides/available-models
+    nav_order: 5
+    permalink: /available-models
     description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
     ---
 
