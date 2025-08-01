@@ -154,6 +154,11 @@ module RubyLLM
         self
       end
 
+      def on_tool_call(...)
+        to_llm.on_tool_call(...)
+        self
+      end
+
       def create_user_message(content, with: nil)
         message_record = messages.create!(role: :user, content: content)
         persist_content(message_record, with) if with.present?
