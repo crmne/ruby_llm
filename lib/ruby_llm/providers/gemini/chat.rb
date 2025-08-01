@@ -16,7 +16,8 @@ module RubyLLM
           payload = {
             contents: format_messages(messages),
             generationConfig: {
-              temperature: temperature
+              temperature: temperature,
+              responseModalities: capabilities.modalities_for(model)[:output]
             }
           }
 

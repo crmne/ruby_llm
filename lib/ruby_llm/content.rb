@@ -19,6 +19,11 @@ module RubyLLM
       self
     end
 
+    def attach(attachment)
+      @attachments << attachment
+      self
+    end
+
     def format
       if @text && @attachments.empty?
         @text
