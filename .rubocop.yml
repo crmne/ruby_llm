@@ -25,6 +25,8 @@ Metrics/ModuleLength:
 Performance/CollectionLiteralInLoop:
   Exclude:
     - spec/**/*
+Performance/RedundantBlockCall:
+  Enabled: false # TODO: temporarily disabled to avoid potential breaking change
 Performance/StringInclude:
   Exclude:
     - lib/ruby_llm/providers/**/capabilities.rb
