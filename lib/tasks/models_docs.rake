@@ -86,7 +86,7 @@ def generate_models_markdown
 end
 
 def generate_provider_sections
-  RubyLLM::Provider.providers.map do |provider, provider_class|
+  RubyLLM::Provider.providers.filter_map do |provider, provider_class|
     models = RubyLLM.models.by_provider(provider)
     next if models.none?
 
@@ -95,7 +95,7 @@ def generate_provider_sections
 
       #{models_table(models)}
     PROVIDER
-  end.compact.join("\n\n")
+  end.join("\n\n")
 end
 
 def generate_capability_sections
@@ -107,7 +107,7 @@ def generate_capability_sections
     'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
   }
 
-  capabilities.map do |capability, models|
+  capabilities.filter_map do |capability, models|
     next if models.none?
 
     <<~CAPABILITY
@@ -115,7 +115,7 @@ def generate_capability_sections
 
       #{models_table(models)}
     CAPABILITY
-  end.compact.join("\n\n")
+  end.join("\n\n")
 end
 
 def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
