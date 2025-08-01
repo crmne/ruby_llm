@@ -78,6 +78,21 @@ RSpec.describe RubyLLM::Chat do
         json_response = JSON.parse('{' + response.content) # rubocop:disable Style/StringConcatenation
         expect(json_response).to eq({ 'result' => 8 })
       end
+
+      it "#{provider}/#{model} can override max_tokens param with a custom value" do # rubocop:disable RSpec/ExampleLength
+        chat = RubyLLM
+               .chat(model: model, provider: provider)
+               .with_params(max_tokens: 2)
+
+        chat.add_message(
+          role: :user,
+          content: 'Always answer with "Once upon a time"'
+        )
+
+        response = chat.complete
+
+        expect(response.content).to eq('Once upon') # Only 2 tokens
+      end
     end
 
     # Providers [:openrouter, :bedrock] supports a {top_k: ...} param to remove low-probability next tokens.
