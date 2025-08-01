@@ -55,7 +55,7 @@ module RubyLLM
           provider = Provider.providers[provider.to_sym] || raise(Error, "Unknown provider: #{provider.to_sym}")
           model = Model::Info.new(
             id: model_id,
-            name: model_id.gsub('-', ' ').capitalize,
+            name: model_id.tr('-', ' ').capitalize,
             provider: provider.slug,
             capabilities: %w[function_calling streaming],
             modalities: { input: %w[text image], output: %w[text] },

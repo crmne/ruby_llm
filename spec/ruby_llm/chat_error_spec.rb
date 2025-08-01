@@ -14,7 +14,7 @@ end
 
 RSpec::Matchers.define :look_like_json do
   match do |actual|
-    actual.strip.start_with?('{') || actual.strip.start_with?('[')
+    actual.strip.start_with?('{', '[')
   end
 
   failure_message do |actual|

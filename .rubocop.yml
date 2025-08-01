@@ -1,4 +1,5 @@
 plugins:
+  - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
@@ -21,6 +22,9 @@ Metrics/MethodLength:
   Enabled: false
 Metrics/ModuleLength:
   Enabled: false
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - spec/**/*
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:
