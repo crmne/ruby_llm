@@ -8,16 +8,16 @@ http_interactions:
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"max_tokens":4096,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250730T142857Z
+      - 20250801T095556Z
       X-Amz-Content-Sha256:
       - 90e692a8f11d928f4efbdd82efd66540ba95611753ad34a4fb1be8969bd45294
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250730/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=360489a35f717dccceb63a7cf748c9e6388d07f28d9f7a136ef61dc12c96d18e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250801/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=59dc08d7d7369763b9eda01c236b63596d640267ae78220139f92657e12c6151
       Content-Type:
       - application/json
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:29:09 GMT
+      - Fri, 01 Aug 2025 09:56:04 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,11 +38,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d548b5c0-c159-4562-9ba4-bbe85fd8e8a4
+      - a6623de1-54e4-4ace-b696-15a2002dfd69
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
       encoding: UTF-8
       string: '{"message":"too many total text bytes: 10000002 > 9000000"}'
-  recorded_at: Wed, 30 Jul 2025 14:29:09 GMT
+  recorded_at: Fri, 01 Aug 2025 09:56:04 GMT
 recorded_with: VCR 6.3.1

@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}],"stream":true,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 31 Jul 2025 11:15:31 GMT
+      - Fri, 01 Aug 2025 10:20:44 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -32,17 +32,17 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01986031-c425-7dce-8eb4-b7cf6684ce19'
+      - '01986525-f941-7f7c-98b8-7ea392af5e6d'
       X-Kong-Request-Id:
-      - '01986031-c425-7dce-8eb4-b7cf6684ce19'
+      - '01986525-f941-7f7c-98b8-7ea392af5e6d'
       X-Envoy-Upstream-Service-Time:
-      - '79'
+      - '61'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '79'
+      - '62'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -59,18 +59,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"9c88473422734ebeb1cd9d5b14dc0912","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"f3fd5ae732a24040989fee5ebba703c9","object":"chat.completion.chunk","created":1754043644,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"9c88473422734ebeb1cd9d5b14dc0912","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}]}
+        data: {"id":"f3fd5ae732a24040989fee5ebba703c9","object":"chat.completion.chunk","created":1754043644,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}]}
 
-        data: {"id":"9c88473422734ebeb1cd9d5b14dc0912","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":","},"finish_reason":null}]}
+        data: {"id":"f3fd5ae732a24040989fee5ebba703c9","object":"chat.completion.chunk","created":1754043644,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":","},"finish_reason":null}]}
 
-        data: {"id":"9c88473422734ebeb1cd9d5b14dc0912","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" 2, "},"finish_reason":null}]}
+        data: {"id":"f3fd5ae732a24040989fee5ebba703c9","object":"chat.completion.chunk","created":1754043644,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" 2, "},"finish_reason":null}]}
 
-        data: {"id":"9c88473422734ebeb1cd9d5b14dc0912","object":"chat.completion.chunk","created":1753960531,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":18,"completion_tokens":8}}
+        data: {"id":"f3fd5ae732a24040989fee5ebba703c9","object":"chat.completion.chunk","created":1754043644,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":18,"completion_tokens":8}}
 
         data: [DONE]
 
-  recorded_at: Thu, 31 Jul 2025 11:15:31 GMT
+  recorded_at: Fri, 01 Aug 2025 10:20:44 GMT
 recorded_with: VCR 6.3.1
 ...

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Thu, 24 Jul 2025 16:53:18 GMT
+      - Fri, 01 Aug 2025 01:17:08 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"688264fe-9c6"
+      - W/"688c1594-9c6"
       Expires:
-      - Wed, 30 Jul 2025 08:18:03 GMT
+      - Fri, 01 Aug 2025 05:20:19 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B9F5:398FA3:40DFB0B:414A685:6889D2E3
+      - B236:345B54:360B62E:3669196:688C4C3B
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 30 Jul 2025 14:21:17 GMT
+      - Fri, 01 Aug 2025 10:49:26 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '260'
+      - '30'
       X-Served-By:
-      - cache-fra-etou8220122-FRA
+      - cache-fra-etou8220140-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1753885277.008493,VS0,VE2
+      - S1754045367.508903,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 17711938430bd683dcc909f34f6311cea0f51a35
+      - c984e59c23e08fd04c3702238b45419cb81991f4
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 30 Jul 2025 14:21:17 GMT
+  recorded_at: Fri, 01 Aug 2025 10:49:26 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:21:17 GMT
+      - Fri, 01 Aug 2025 10:49:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,7 +167,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - dbd826b4da3f88ad860f55516d5d9469
+      - bc4439c98c75a78ab916bf1fb261ec4f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -180,7 +182,30 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjY2ZjNkZmZkLTM0MDMtNDIzMC04ZWY5LTIyZTc4MGNlMGYxOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTM4ODUyNzcsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgYGxpY2Vuc2UudHh0YCBjb250YWlucyB0aGUgbGljZW5zZSB0ZXJtcyBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGNvcHlyaWdodGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAoXCJNYXR6XCIpLiBJdCBvdXRsaW5lcyB0aGUgY29uZGl0aW9ucyB1bmRlciB3aGljaCB1c2VycyBjYW4gcmVkaXN0cmlidXRlIGFuZC9vciBtb2RpZnkgdGhlIHNvZnR3YXJlLiBIZXJlJ3MgYSBzdW1tYXJ5IG9mIGl0cyBjb250ZW50czpcblxuIyMjIEtleSBQb2ludHMgb2YgdGhlIExpY2Vuc2U6XG4xLiAqKlJlZGlzdHJpYnV0aW9uICYgTW9kaWZpY2F0aW9uIFJpZ2h0cyoqOlxuICAgLSBZb3UgY2FuIGZyZWVseSBkaXN0cmlidXRlIHZlcmJhdGltIGNvcGllcyBpZiBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcyBhcmUgcHJlc2VydmVkLlxuICAgLSBNb2RpZmljYXRpb25zIGFyZSBhbGxvd2VkIGlmIHlvdTpcbiAgICAgLSBNYWtlIHRoZW0gcHVibGljIGRvbWFpbi9mcmVlbHkgYXZhaWxhYmxlIChlLmcuLCB2aWEgVXNlbmV0KS5cbiAgICAgLSBVc2UgbW9kaWZpZWQgdmVyc2lvbnMgb25seSBpbnRlcm5hbGx5IHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvbi5cbiAgICAgLSBSZW5hbWUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIGFuZCBwcm92aWRlIG9yaWdpbmFsIGRpc3RyaWJ1dGlvbiBpbnN0cnVjdGlvbnMuXG4gICAgIC0gTmVnb3RpYXRlIG90aGVyIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IuXG5cbjIuICoqQmluYXJ5L09iamVjdCBDb2RlIERpc3RyaWJ1dGlvbioqOlxuICAgLSBZb3UgbWF5IGRpc3RyaWJ1dGUgYmluYXJpZXMgaWYgeW91OlxuICAgICAtIEluY2x1ZGUgaW5zdHJ1Y3Rpb25zIHRvIGZldGNoIHRoZSBvcmlnaW5hbCBzb3VyY2UuXG4gICAgIC0gUHJvdmlkZSBtYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBhbG9uZ3NpZGUgYmluYXJpZXMuXG4gICAgIC0gUmVuYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBhbmQgZ3VpZGUgdXNlcnMgdG8gdGhlIG9yaWdpbmFsLlxuICAgICAtIEFncmVlIG9uIGFsdGVybmF0aXZlIHRlcm1zIHdpdGggdGhlIGF1dGhvci5cblxuMy4gKipJbmNvcnBvcmF0aW9uIGludG8gT3RoZXIgU29mdHdhcmUqKjpcbiAgIC0gUGFydHMgb2YgUnVieSBjYW4gYmUgdXNlZCBpbiBvdGhlciAoZXZlbiBjb21tZXJjaWFsKSBzb2Z0d2FyZSwgYnV0IHNvbWUgZmlsZXMgKGxpc3RlZCBpbiBgTEVHQUxgKSBoYXZlIHNlcGFyYXRlIHRlcm1zLlxuXG40LiAqKlNjcmlwdHMgJiBHZW5lcmF0ZWQgRmlsZXMqKjpcbiAgIC0gU2NyaXB0cyBvciBmaWxlcyBnZW5lcmF0ZWQgdXNpbmcgUnVieSBhcmUgbm90IGNvdmVyZWQgYnkgUnVieeKAmXMgbGljZW5zZSBhbmQgY2FuIGJlIHNvbGQvY29tbWVyY2lhbGx5IHVzZWQuXG5cbjUuICoqTm8gV2FycmFudHkqKjpcbiAgIC0gVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIFwiQVMgSVNcIiB3aXRob3V0IHdhcnJhbnRpZXMgb2YgbWVyY2hhbnRhYmlsaXR5IG9yIGZpdG5lc3MgZm9yIGEgcGFydGljdWxhciBwdXJwb3NlLlxuXG4jIyMgQWRkaXRpb25hbCBOb3Rlczpcbi0gVGhlIGxpY2Vuc2UgcmVmZXJlbmNlcyB0d28gb3RoZXIgZmlsZXM6XG4gIC0gYEJTRExgOiBDb250YWlucyB0aGUgMi1jbGF1c2UgQlNEIExpY2Vuc2UgdGVybXMgKGFuIGFsdGVybmF0aXZlIGxpY2Vuc2Ugb3B0aW9uKS5cbiAgLSBgTEVHQUxgOiBMaXN0cyBmaWxlcyB3aXRoIGRpZmZlcmVudCBjb3B5cmlnaHQvbGljZW5zZSB0ZXJtcyAoZS5nLiwgdGhpcmQtcGFydHkgY29kZSkuXG5cblRoaXMgaXMgYSBwZXJtaXNzaXZlIGxpY2Vuc2UgYWxsb3dpbmcgYnJvYWQgdXNlLCBtb2RpZmljYXRpb24sIGFuZCBkaXN0cmlidXRpb24sIHByb3ZpZGVkIGNlcnRhaW4gY29uZGl0aW9ucyAobGlrZSBhdHRyaWJ1dGlvbiBvciByZW5hbWluZyBub24tc3RhbmRhcmQgYmluYXJpZXMpIGFyZSBtZXQuIEl0IHJlc2VtYmxlcyBhIGNvbWJpbmF0aW9uIG9mIEJTRC1saWtlIHRlcm1zIHdpdGggYWRkaXRpb25hbCBmbGV4aWJpbGl0eSBmb3IgbW9kaWZpY2F0aW9ucy4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NDMsImNvbXBsZXRpb25fdG9rZW5zIjo0MTUsInRvdGFsX3Rva2VucyI6OTU4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NTEyfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjUxMiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjozMX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzg4MDIzNjllYWFfcHJvZDA2MjNfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Wed, 30 Jul 2025 14:21:47 GMT
+      string: '{"id":"8d68d590-5f94-4b31-aac5-65fa64c5a7ed","object":"chat.completion","created":1754045366,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `license.txt` contains the license terms for the Ruby programming language,
+        as specified by its creator Yukihiro Matsumoto. Here''s a summary of its contents:\n\n1.
+        **Copyright Notice**: Ruby is copyrighted free software by Yukihiro Matsumoto
+        (`matz@netlab.jp`). It can be redistributed or modified under either the 2-clause
+        BSDL (referenced in the file `BSDL`) or the conditions listed in this license.\n\n2.
+        **Redistribution and Modification Terms**:\n   - **Verbatim Copies**: You
+        can distribute exact copies of the source code if you retain all original
+        copyright notices and disclaimers.\n   - **Modifications**: You can modify
+        the software if you:\n     - Make modifications public domain or freely available
+        (e.g., via Usenet).\n     - Use modified software only within your organization.\n     -
+        Give non-standard binaries unique names and provide instructions to obtain
+        the original.\n     - Arrange distribution terms with the author.\n   - **Binary
+        Distribution**: You can distribute binaries if you:\n     - Include instructions
+        to obtain the original source.\n     - Provide machine-readable source code
+        with the binaries.\n     - Use non-standard names for non-standard binaries.\n     -
+        Arrange distribution terms with the author.\n   - **Inclusion in Other Software**:
+        Parts of Ruby can be included in other (even commercial) software, but some
+        files (listed in `LEGAL`) have different terms.\n\n3. **Scripts and Output**:
+        Scripts or files generated by Ruby are not covered by Ruby''s copyright and
+        can be sold or aggregated freely.\n\n4. **Disclaimer**: The software is provided
+        \"AS IS\" without warranties, including merchantability or fitness for a particular
+        purpose.\n\nThis is a permissive license allowing broad use, modification,
+        and redistribution, with some conditions to ensure attribution and clarity
+        about modifications."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":543,"completion_tokens":376,"total_tokens":919,"prompt_tokens_details":{"cached_tokens":512},"prompt_cache_hit_tokens":512,"prompt_cache_miss_tokens":31},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
+  recorded_at: Fri, 01 Aug 2025 10:49:48 GMT
 recorded_with: VCR 6.3.1

@@ -6,6 +6,11 @@ require 'tempfile'
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
 
+  # Reset Models singleton after tests that modify it
+  after do
+    described_class.instance_variable_set(:@instance, nil)
+  end
+
   describe 'filtering and chaining' do
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')

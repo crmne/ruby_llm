@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 31 Jul 2025 10:21:52 GMT
+      - Fri, 01 Aug 2025 10:06:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,25 +43,29 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "eaf43d2f-2d39-4474-8c4f-8305d0ecf3a9", "model": "sonar", "created":
-        1753957312, "usage": {"prompt_tokens": 8, "completion_tokens": 27, "total_tokens":
-        35, "search_context_size": "low"}, "citations": ["https://www.youtube.com/watch?v=tY46Kmm0LOo",
-        "https://www.youtube.com/watch?v=HsqLhj7YeGU", "https://en.wikipedia.org/wiki/2_+_2_=_5",
-        "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en", "https://www.tiktok.com/@macynicolewalker/video/7152270660444917038?lang=en"],
-        "search_results": [{"title": "What is half of 2 plus 2? The \"correct\" answer
-        explained - YouTube", "url": "https://www.youtube.com/watch?v=tY46Kmm0LOo",
-        "date": "2024-11-04", "last_updated": "2025-06-29"}, {"title": "2 + 2 divided
-        by 2 =? You might get this WRONG! - YouTube", "url": "https://www.youtube.com/watch?v=HsqLhj7YeGU",
-        "date": "2023-03-15", "last_updated": "2025-07-02"}, {"title": "2 + 2 = 5
-        - Wikipedia", "url": "https://en.wikipedia.org/wiki/2_+_2_=_5", "date": "2003-06-29",
-        "last_updated": "2025-07-21"}, {"title": "Why was she so excited for 2+2 \ud83d\udc80
-        - #HarrisAY - #interview - TikTok", "url": "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en",
-        "date": "2024-03-07", "last_updated": null}, {"title": "2 Plus 2 Meme: A Fun
-        and Confusing Mathematical Conundrum", "url": "https://www.tiktok.com/@macynicolewalker/video/7152270660444917038?lang=en",
-        "date": "2022-10-08", "last_updated": null}], "object": "chat.completion",
+      string: '{"id": "dd7b26da-427f-49a3-9bad-a7450581479e", "model": "sonar", "created":
+        1754042809, "usage": {"prompt_tokens": 8, "completion_tokens": 76, "total_tokens":
+        84, "search_context_size": "low", "cost": {"input_tokens_cost": 8e-06, "output_tokens_cost":
+        7.6e-05, "request_cost": 0.005, "total_cost": 0.005084}}, "citations": ["https://www.youtube.com/watch?v=tY46Kmm0LOo",
+        "http://mathcentral.uregina.ca/QQ/database/QQ.09.09/h/alex5.html", "https://www.tiktok.com/discover/what-is-2-plus-2-i-dont-get-it-original",
+        "https://www.tiktok.com/@spreadinghopelesscore/video/7449347360662048033",
+        "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en"], "search_results":
+        [{"title": "What is half of 2 plus 2? The \"correct\" answer explained - YouTube",
+        "url": "https://www.youtube.com/watch?v=tY46Kmm0LOo", "date": "2024-11-04",
+        "last_updated": "2025-06-29"}, {"title": "What is -2^2? - Math Central", "url":
+        "http://mathcentral.uregina.ca/QQ/database/QQ.09.09/h/alex5.html", "date":
+        null, "last_updated": "2025-06-16"}, {"title": "What Is 2 Plus 2 I Dont Get
+        It Original | TikTok", "url": "https://www.tiktok.com/discover/what-is-2-plus-2-i-dont-get-it-original",
+        "date": "2024-03-24", "last_updated": null}, {"title": "Understanding 2+2:
+        A Hopeful Meme Perspective - TikTok", "url": "https://www.tiktok.com/@spreadinghopelesscore/video/7449347360662048033",
+        "date": "2024-12-17", "last_updated": null}, {"title": "Why was she so excited
+        for 2+2 \ud83d\udc80 #HarrisAY #interview #math #viral", "url": "https://www.tiktok.com/@harrisay15/video/7343706642715774240?lang=en",
+        "date": "2024-03-07", "last_updated": null}], "object": "chat.completion",
         "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "**2 + 2 equals 4**. This is a basic arithmetic fact where adding
-        two and two results in four[3]."}, "delta": {"role": "assistant", "content":
-        ""}}]}'
-  recorded_at: Thu, 31 Jul 2025 10:21:52 GMT
+        "content": "The sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic fact:
+        when you add two and two together, the result is four. The sources mention
+        some playful confusion around expressions like \"half of 2 + 2\" due to order
+        of operations, but the straightforward addition 2 + 2 equals 4 without ambiguity[1][3]."},
+        "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:06:49 GMT
 recorded_with: VCR 6.3.1

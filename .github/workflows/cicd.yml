@@ -68,7 +68,7 @@ jobs:
       run: bundle exec appraisal ${{ matrix.rails-version }} rspec
       env: # Dummy environment variables for local providers
         OLLAMA_API_BASE: http://localhost:11434/v1
-        GPUSTACK_API_BASE: http://localhost:8080/v1
+        GPUSTACK_API_BASE: http://localhost:11444/v1
         GPUSTACK_API_KEY: test
 
     - name: Upload coverage to Codecov
@@ -86,7 +86,7 @@ jobs:
         bundle exec appraisal ${{ matrix.rails-version }} rspec
       env: # Dummy environment variables for local providers
         OLLAMA_API_BASE: http://localhost:11434/v1
-        GPUSTACK_API_BASE: http://localhost:8080/v1
+        GPUSTACK_API_BASE: http://localhost:11444/v1
         GPUSTACK_API_KEY: test
 
   publish:

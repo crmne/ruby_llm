@@ -71,7 +71,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
 
-  config.filter_sensitive_data('<GPUSTACK_API_BASE>') { ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:8080/v1') }
+  config.filter_sensitive_data('<GPUSTACK_API_BASE>') { ENV.fetch('GPUSTACK_API_BASE', 'http://http://localhost:11444/v1') }
   config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', 'test') }
 
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
@@ -131,7 +131,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
-      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:8080/v1')
+      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')

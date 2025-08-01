@@ -15,6 +15,8 @@ RSpec.describe RubyLLM::Chat do
     # Clean up the model registry after each test
     after do
       RubyLLM::Models.instance.instance_variable_set(:@models, original_models)
+      # Also reset the singleton to ensure clean state
+      RubyLLM::Models.instance_variable_set(:@instance, nil)
     end
 
     it 'requires provider when assuming model exists' do

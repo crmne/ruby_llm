@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 31 Jul 2025 10:22:09 GMT
+      - Fri, 01 Aug 2025 10:07:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,37 +44,41 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "8497aefa-4210-4d30-a006-4fc145a60adc", "model": "sonar", "created":
-        1753957328, "usage": {"prompt_tokens": 24, "completion_tokens": 257, "total_tokens":
-        281, "search_context_size": "low"}, "citations": ["https://en.wikipedia.org/wiki/Weather",
+      string: '{"id": "9bc26091-a07d-40d2-b0b1-592a1c6a0388", "model": "sonar", "created":
+        1754042837, "usage": {"prompt_tokens": 24, "completion_tokens": 284, "total_tokens":
+        308, "search_context_size": "low", "cost": {"input_tokens_cost": 2.4e-05,
+        "output_tokens_cost": 0.000284, "request_cost": 0.005, "total_cost": 0.005308}},
+        "citations": ["https://www.weatherbug.com", "https://en.wikipedia.org/wiki/Weather",
         "https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_US",
-        "https://www.noaa.gov/weather", "https://www.accuweather.com"], "search_results":
-        [{"title": "Weather", "url": "https://en.wikipedia.org/wiki/Weather", "date":
-        "2001-12-11", "last_updated": "2025-06-16"}, {"title": "The Weather Channel
-        - Radar - Apps on Google Play", "url": "https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_US",
+        "https://www.noaa.gov/weather", "https://www.youtube.com/user/TheWeatherChannel"],
+        "search_results": [{"title": "WeatherBug: Local and National Weather Forecasts,
+        Radar ...", "url": "https://www.weatherbug.com", "date": "2025-08-01", "last_updated":
+        "2025-08-01"}, {"title": "Weather", "url": "https://en.wikipedia.org/wiki/Weather",
+        "date": "2001-12-11", "last_updated": "2025-06-16"}, {"title": "The Weather
+        Channel - Radar - Apps on Google Play", "url": "https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_US",
         "date": "2025-07-26", "last_updated": "2025-07-31"}, {"title": "Weather |
         National Oceanic and Atmospheric Administration", "url": "https://www.noaa.gov/weather",
-        "date": "2025-05-22", "last_updated": "2025-06-16"}, {"title": "AccuWeather:
-        Local, National, & Global Daily Weather Forecast", "url": "https://www.accuweather.com",
-        "date": "2025-06-03", "last_updated": "2025-07-30"}], "object": "chat.completion",
+        "date": "2025-05-22", "last_updated": "2025-06-16"}, {"title": "The Weather
+        Channel", "url": "https://www.youtube.com/user/TheWeatherChannel", "date":
+        "2025-03-18", "last_updated": "2025-03-20"}], "object": "chat.completion",
         "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "**Weather** is the state of the atmosphere at a given time and
-        place, describing conditions such as temperature (hot or cold), moisture (wet
-        or dry), wind (calm or stormy), and cloudiness (clear or cloudy)[1]. It is
-        a dynamic process that shapes the Earth\u2019s surface through phenomena like
-        erosion and precipitation, which can be slightly acidic due to dissolved carbon
-        dioxide[1].\n\nWeather varies by region and is influenced by factors such
-        as latitude and the Earth''s rotation. For example, tropical weather tends
-        to be warmer and more spontaneous in terms of cloud and rainstorm formation
-        compared to higher latitudes, where atmospheric forces are more stable and
-        predictable[1].\n\nFor current and forecasted weather conditions, many rely
-        on services like the National Oceanic and Atmospheric Administration (NOAA),
-        which provides detailed weather, hydrologic, and climate forecasts and warnings
-        in the United States[3]. Commercial apps such as The Weather Channel and AccuWeather
-        offer live radar, storm tracking, allergy alerts, and hourly to daily forecasts
-        to help plan activities and stay safe during severe weather events[2][4].\n\nIf
-        you want specific weather information for your location or upcoming days,
-        using these services or apps will provide the most accurate and up-to-date
-        data.\n\nXKCD7392"}, "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Thu, 31 Jul 2025 10:22:09 GMT
+        "content": "The current weather varies by location, but for example, in the
+        Dulles North Area on August 1, 2025, the temperature is around 66\u00b0F,
+        feeling like 69\u00b0F, with a high of 73\u00b0F and a low of 64\u00b0F. There
+        is a 70% chance of light rain, humidity is high at 92%, and winds are light
+        at about 5 mph with gusts up to 9 mph. The UV index is high at 6, sunrise
+        was at 6:10 AM, and sunset will be at 8:21 PM[1].\n\nMore generally, weather
+        describes the state of the atmosphere at a given time and place, including
+        temperature, humidity, precipitation, wind, and pressure. It influences daily
+        life and activities and is shaped by complex atmospheric processes. Tropical
+        weather tends to be warmer and more variable in terms of rainstorms compared
+        to higher latitudes, where weather patterns are more controlled by large-scale
+        atmospheric forces[2].\n\nFor ongoing updates, apps like The Weather Channel
+        provide live radar, storm tracking, allergy alerts, and detailed forecasts
+        to help plan activities and stay informed about severe weather[3]. In the
+        U.S., the National Weather Service under NOAA offers authoritative weather
+        forecasts and warnings to protect lives and property[4].\n\nIf you want weather
+        information for a specific location or more detailed forecasts, I can help
+        with that too. XKCD7392"}, "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:07:17 GMT
 recorded_with: VCR 6.3.1

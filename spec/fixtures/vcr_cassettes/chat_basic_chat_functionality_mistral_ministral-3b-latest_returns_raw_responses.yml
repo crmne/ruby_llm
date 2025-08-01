@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 31 Jul 2025 11:15:30 GMT
+      - Fri, 01 Aug 2025 10:07:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01986031-bfc3-7a64-b1d1-8fbf00c9c359'
+      - '01986519-af53-7d04-a74b-ff2c620d00ce'
       X-Kong-Request-Id:
-      - '01986031-bfc3-7a64-b1d1-8fbf00c9c359'
+      - '01986519-af53-7d04-a74b-ff2c620d00ce'
       X-Envoy-Upstream-Service-Time:
-      - '193'
+      - '228'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498500'
+      - '499918'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999996169'
+      - '999986158'
       X-Ratelimit-Tokens-Query-Cost:
-      - '51'
+      - '58'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '52'
+      - '58'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '194'
+      - '229'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,9 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"da55d91e9866402b8b4a996090be1dfa","created":1753960529,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":10,"total_tokens":51,"completion_tokens":41},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        capital of France is Paris. It''s known for its art, culture, fashion, gastronomy,
-        and historic landmarks such as the Eiffel Tower, Louvre Museum, and Notre-Dame
-        Cathedral."}}]}'
-  recorded_at: Thu, 31 Jul 2025 11:15:30 GMT
+      string: '{"id":"636d61e6d3724d669b0022b3f5ac3b08","created":1754042838,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":10,"total_tokens":58,"completion_tokens":48},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is Paris. It''s known for its art, culture, cuisine, and
+        fashion. Paris is the most populous city in France and is a major global center
+        for art, fashion, gastronomy, and culture."}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:07:19 GMT
 recorded_with: VCR 6.3.1

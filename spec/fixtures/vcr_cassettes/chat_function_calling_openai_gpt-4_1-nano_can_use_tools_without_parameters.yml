@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:41:15 GMT
+      - Fri, 01 Aug 2025 10:54:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '566'
+      - '470'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '622'
+      - '481'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,13 +58,15 @@ http_interactions:
       - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -77,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Bz2HT2APjhRYhSrBH115a170bN5uz",
+          "id": "chatcmpl-BzhgqsVyfZPfej2LwR5RTyVcj7Dat",
           "object": "chat.completion",
-          "created": 1753886475,
+          "created": 1754045652,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_CTHX2AU0E8f1tKpaKPDiUZFF",
+                    "id": "call_4SHB2gIfsTQOkEA0ZX6q2hVi",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -122,18 +124,18 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Wed, 30 Jul 2025 14:41:16 GMT
+  recorded_at: Fri, 01 Aug 2025 10:54:13 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_CTHX2AU0E8f1tKpaKPDiUZFF","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_CTHX2AU0E8f1tKpaKPDiUZFF"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_4SHB2gIfsTQOkEA0ZX6q2hVi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_4SHB2gIfsTQOkEA0ZX6q2hVi"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -148,7 +150,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:41:17 GMT
+      - Fri, 01 Aug 2025 10:54:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -160,13 +162,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '538'
+      - '416'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1270'
+      - '430'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -181,13 +183,15 @@ http_interactions:
       - 4ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -200,9 +204,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Bz2HVaIzh3bD4BDRrjvcuUHbQ4HI9",
+          "id": "chatcmpl-Bzhgr2Uvk1MYxIFpMqDuCvX0Mz1fG",
           "object": "chat.completion",
-          "created": 1753886477,
+          "created": 1754045653,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -235,5 +239,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Wed, 30 Jul 2025 14:41:17 GMT
+  recorded_at: Fri, 01 Aug 2025 10:54:13 GMT
 recorded_with: VCR 6.3.1

@@ -55,7 +55,10 @@ RSpec.describe RubyLLM::Chat do
       it "#{provider}/#{model} replaces previous system messages when replace: true" do
         skip('Perplexity has issues with system message replacement in conversations') if provider == :perplexity
         skip("ministral-3b doesn't reliably follow system prompts") if model == 'ministral-3b-latest'
+
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        # Disable thinking mode for qwen models to avoid <think> tags in output
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'

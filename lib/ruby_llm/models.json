@@ -18,6 +18,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -26,6 +27,10 @@
           "input_per_million": 0.8,
           "cached_input_per_million": 1.0,
           "output_per_million": 4.0
+        },
+        "batch": {
+          "input_per_million": 0.4,
+          "output_per_million": 2.0
         }
       }
     },
@@ -50,6 +55,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -58,6 +64,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -82,6 +92,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -90,6 +101,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -114,6 +129,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -122,6 +138,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -146,6 +166,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -154,6 +175,10 @@
           "input_per_million": 0.25,
           "cached_input_per_million": 0.3,
           "output_per_million": 1.25
+        },
+        "batch": {
+          "input_per_million": 0.125,
+          "output_per_million": 0.625
         }
       }
     },
@@ -217,6 +242,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -225,6 +251,10 @@
           "input_per_million": 15.0,
           "cached_input_per_million": 18.75,
           "output_per_million": 75.0
+        },
+        "batch": {
+          "input_per_million": 7.5,
+          "output_per_million": 37.5
         }
       }
     },
@@ -249,6 +279,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -257,6 +288,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -4090,7 +4125,7 @@
         "pdf"
       ],
       "output": [
-        "text"
+        "image"
       ]
     },
     "capabilities": [
@@ -4121,7 +4156,7 @@
         "pdf"
       ],
       "output": [
-        "text"
+        "image"
       ]
     },
     "capabilities": [
@@ -4152,7 +4187,7 @@
         "pdf"
       ],
       "output": [
-        "text"
+        "image"
       ]
     },
     "capabilities": [
@@ -4308,13 +4343,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4338,13 +4373,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4368,13 +4403,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4398,13 +4433,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4425,12 +4460,12 @@
         "text"
       ],
       "output": [
-        "embedding"
+        "embeddings"
       ]
     },
-    "capabilities": {
-      "embeddings": true
-    },
+    "capabilities": [
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4451,12 +4486,12 @@
         "text"
       ],
       "output": [
-        "embedding"
+        "embeddings"
       ]
     },
-    "capabilities": {
-      "embeddings": true
-    },
+    "capabilities": [
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4480,13 +4515,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4510,13 +4545,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4540,13 +4575,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4570,13 +4605,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4600,13 +4635,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4630,13 +4665,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4660,13 +4695,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4690,13 +4725,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4720,13 +4755,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4750,13 +4785,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4780,13 +4815,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4810,13 +4845,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4840,13 +4875,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4870,13 +4905,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4900,13 +4935,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4930,13 +4965,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4957,12 +4992,10 @@
         "text"
       ],
       "output": [
-        "embedding"
+        "embeddings"
       ]
     },
-    "capabilities": {
-      "embeddings": true
-    },
+    "capabilities": [],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -4986,13 +5019,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5016,13 +5049,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5046,13 +5079,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5077,13 +5110,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5107,13 +5141,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5137,13 +5172,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5167,13 +5203,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5197,9 +5234,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "moderation": true
-    },
+    "capabilities": [
+      "moderation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5223,9 +5260,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "moderation": true
-    },
+    "capabilities": [
+      "moderation"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5249,13 +5286,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "vision"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5279,13 +5312,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "vision"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5309,13 +5338,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "vision"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5339,13 +5364,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5369,13 +5393,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5399,13 +5422,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5429,13 +5452,11 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5459,13 +5480,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5489,13 +5510,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5519,13 +5540,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5549,13 +5571,14 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5579,13 +5602,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5609,13 +5632,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5639,13 +5661,10 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5669,13 +5688,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5699,13 +5717,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5729,13 +5746,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5759,13 +5775,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5789,13 +5804,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5819,13 +5833,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5849,13 +5862,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5879,13 +5891,12 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5910,13 +5921,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5941,13 +5952,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -5972,13 +5983,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6003,13 +6014,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6034,13 +6045,13 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": true,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6064,13 +6075,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6094,13 +6101,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6124,13 +6127,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -6154,13 +6153,9 @@
         "text"
       ]
     },
-    "capabilities": {
-      "chat": true,
-      "streaming": true,
-      "tools": true,
-      "vision": false,
-      "json_mode": true
-    },
+    "capabilities": [
+      "streaming"
+    ],
     "pricing": {},
     "metadata": {
       "object": "model",
@@ -9097,7 +9092,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "output_per_million": 30.0
+          "input_per_million": 30.0
         }
       }
     },
@@ -29477,7 +29472,7 @@
     "name": "Sonar",
     "provider": "perplexity",
     "family": "sonar",
-    "created_at": "2025-08-01 00:17:19 +0200",
+    "created_at": "2025-08-01 14:48:12 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29509,7 +29504,7 @@
     "name": "Sonar Deep Research",
     "provider": "perplexity",
     "family": "sonar_deep_research",
-    "created_at": "2025-08-01 00:17:19 +0200",
+    "created_at": "2025-08-01 14:48:12 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29544,7 +29539,7 @@
     "name": "Sonar Pro",
     "provider": "perplexity",
     "family": "sonar_pro",
-    "created_at": "2025-08-01 00:17:19 +0200",
+    "created_at": "2025-08-01 14:48:12 +0200",
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
@@ -29576,7 +29571,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2025-08-01 00:17:19 +0200",
+    "created_at": "2025-08-01 14:48:12 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29608,7 +29603,7 @@
     "name": "Sonar Reasoning Pro",
     "provider": "perplexity",
     "family": "sonar_reasoning_pro",
-    "created_at": "2025-08-01 00:17:19 +0200",
+    "created_at": "2025-08-01 14:48:12 +0200",
     "context_window": 128000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,

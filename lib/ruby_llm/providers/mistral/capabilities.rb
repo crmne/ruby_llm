@@ -7,20 +7,24 @@ module RubyLLM
       module Capabilities
         module_function
 
-        def supports_streaming?(_model_id)
-          true
+        def supports_streaming?(model_id)
+          # All chat models support streaming, but not embedding/moderation/OCR/transcription
+          !model_id.match?(/embed|moderation|ocr|transcriptions/)
         end
 
-        def supports_tools?(_model_id)
-          true
+        def supports_tools?(model_id)
+          # Most chat models support tools except embedding/moderation/OCR/voxtral/transcription
+          !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions|mistral-(tiny|small)-(2312|2402)/)
         end
 
         def supports_vision?(model_id)
-          model_id.include?('pixtral')
+          # Models with vision capabilities
+          model_id.match?(/pixtral|mistral-small-(2503|2506)|mistral-medium/)
         end
 
-        def supports_json_mode?(_model_id)
-          true
+        def supports_json_mode?(model_id)
+          # Most chat models support JSON mode (structured output)
+          !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions/) && supports_tools?(model_id)
         end
 
         def format_display_name(model_id)
@@ -71,7 +75,7 @@ module RubyLLM
           when /embed/
             {
               input: ['text'],
-              output: ['embedding']
+              output: ['embeddings']
             }
           else
             {
@@ -81,18 +85,26 @@ module RubyLLM
           end
         end
 
-        def capabilities_for(model_id)
+        def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
           case model_id
-          when /embed/ then { embeddings: true }
-          when /moderation/ then { moderation: true }
+          when /moderation/ then ['moderation']
+          when /voxtral.*transcribe/ then ['transcription']
+          when /ocr/ then ['vision']
           else
-            {
-              chat: true,
-              streaming: supports_streaming?(model_id),
-              tools: supports_tools?(model_id),
-              vision: supports_vision?(model_id),
-              json_mode: supports_json_mode?(model_id)
-            }
+            capabilities = []
+            capabilities << 'streaming' if supports_streaming?(model_id)
+            capabilities << 'function_calling' if supports_tools?(model_id)
+            capabilities << 'structured_output' if supports_json_mode?(model_id)
+            capabilities << 'vision' if supports_vision?(model_id)
+
+            # Model-specific capabilities
+            capabilities << 'reasoning' if model_id.match?(/magistral/)
+            capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
+            capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
+            capabilities << 'distillation' if model_id.match?(/ministral/)
+            capabilities << 'predicted_outputs' if model_id.match?(/codestral/)
+
+            capabilities.uniq
           end
         end
 

@@ -39,7 +39,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 ## Last Updated
 {: .d-inline-block }
 
-2025-07-31
+2025-08-01
 {: .label .label-green }
 
 ## Models by Provider
@@ -290,7 +290,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Omni Moderation 20240926 | omni-moderation-2024-09-26 | openai | - | - | - |
 | TTS-1 | tts-1 | openai | - | - | In: $15.00 |
 | TTS-1 1106 | tts-1-1106 | openai | - | - | In: $15.00, Out: $15.00 |
-| TTS-1 HD | tts-1-hd | openai | - | - | Out: $30.00 |
+| TTS-1 HD | tts-1-hd | openai | - | - | In: $30.00 |
 | TTS-1 HD 1106 | tts-1-hd-1106 | openai | - | - | In: $30.00, Out: $30.00 |
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
 | babbage-002 | babbage-002 | openai | - | 16384 | In: $0.40, Out: $0.40 |
@@ -660,7 +660,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 
 ## Models by Capability
 
-### Function Calling (263)
+### Function Calling (312)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -741,6 +741,55 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini Embedding Experimental 03-07 | gemini-embedding-exp-03-07 | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
+| Codestral | codestral-2411-rc5 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2412 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2501 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2508 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-latest | mistral | 32768 | 8192 | - |
+| Devstral Medium 2507 | devstral-medium-2507 | mistral | 32768 | 8192 | - |
+| Devstral Medium Latest | devstral-medium-latest | mistral | 32768 | 8192 | - |
+| Devstral Small 2505 | devstral-small-2505 | mistral | 32768 | 8192 | - |
+| Devstral Small 2507 | devstral-small-2507 | mistral | 32768 | 8192 | - |
+| Devstral Small Latest | devstral-small-latest | mistral | 32768 | 8192 | - |
+| Magistral Medium 2506 | magistral-medium-2506 | mistral | 32768 | 8192 | - |
+| Magistral Medium 2507 | magistral-medium-2507 | mistral | 32768 | 8192 | - |
+| Magistral Medium Latest | magistral-medium-latest | mistral | 32768 | 8192 | - |
+| Magistral Small 2506 | magistral-small-2506 | mistral | 32768 | 8192 | - |
+| Magistral Small 2507 | magistral-small-2507 | mistral | 32768 | 8192 | - |
+| Magistral Small Latest | magistral-small-latest | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-latest | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2407 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2411 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-pixtral-2411 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-2505 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-latest | mistral | 32768 | 8192 | - |
+| Mistral Saba 2502 | mistral-saba-2502 | mistral | 32768 | 8192 | - |
+| Mistral Saba Latest | mistral-saba-latest | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2409 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2501 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2503 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2506 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-latest | mistral | 32768 | 8192 | - |
+| Mistral Tiny | mistral-tiny | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2407 | mistral-tiny-2407 | mistral | 32768 | 8192 | - |
+| Mistral Tiny Latest | mistral-tiny-latest | mistral | 32768 | 8192 | - |
+| Open Mistral 7b | open-mistral-7b | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo | open-mistral-nemo | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo 2407 | open-mistral-nemo-2407 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b | open-mixtral-8x22b | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b 2404 | open-mixtral-8x22b-2404 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x7b | open-mixtral-8x7b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-2409 | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-latest | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-2411 | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-latest | mistral | 32768 | 8192 | - |
 | GPT-4 Turbo | gpt-4-turbo | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo | gpt-4-turbo-2024-04-09 | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
 | GPT-4 Turbo Preview | gpt-4-turbo-preview | openai | 128000 | 4096 | In: $10.00, Out: $30.00 |
@@ -929,7 +978,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok 4 | x-ai/grok-4 | openrouter | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
 
 
-### Structured Output (287)
+### Structured Output (336)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1003,6 +1052,55 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini Embedding Experimental 03-07 | gemini-embedding-exp-03-07 | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Experimental 1206 | gemini-exp-1206 | gemini | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
+| Codestral | codestral-2411-rc5 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2412 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2501 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2508 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-latest | mistral | 32768 | 8192 | - |
+| Devstral Medium 2507 | devstral-medium-2507 | mistral | 32768 | 8192 | - |
+| Devstral Medium Latest | devstral-medium-latest | mistral | 32768 | 8192 | - |
+| Devstral Small 2505 | devstral-small-2505 | mistral | 32768 | 8192 | - |
+| Devstral Small 2507 | devstral-small-2507 | mistral | 32768 | 8192 | - |
+| Devstral Small Latest | devstral-small-latest | mistral | 32768 | 8192 | - |
+| Magistral Medium 2506 | magistral-medium-2506 | mistral | 32768 | 8192 | - |
+| Magistral Medium 2507 | magistral-medium-2507 | mistral | 32768 | 8192 | - |
+| Magistral Medium Latest | magistral-medium-latest | mistral | 32768 | 8192 | - |
+| Magistral Small 2506 | magistral-small-2506 | mistral | 32768 | 8192 | - |
+| Magistral Small 2507 | magistral-small-2507 | mistral | 32768 | 8192 | - |
+| Magistral Small Latest | magistral-small-latest | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-latest | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2407 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2411 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-pixtral-2411 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-2505 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-latest | mistral | 32768 | 8192 | - |
+| Mistral Saba 2502 | mistral-saba-2502 | mistral | 32768 | 8192 | - |
+| Mistral Saba Latest | mistral-saba-latest | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2409 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2501 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2503 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2506 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-latest | mistral | 32768 | 8192 | - |
+| Mistral Tiny | mistral-tiny | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2407 | mistral-tiny-2407 | mistral | 32768 | 8192 | - |
+| Mistral Tiny Latest | mistral-tiny-latest | mistral | 32768 | 8192 | - |
+| Open Mistral 7b | open-mistral-7b | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo | open-mistral-nemo | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo 2407 | open-mistral-nemo-2407 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b | open-mixtral-8x22b | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b 2404 | open-mixtral-8x22b-2404 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x7b | open-mixtral-8x7b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-2409 | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-latest | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-2411 | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-latest | mistral | 32768 | 8192 | - |
 | GPT-4.1 | gpt-4.1 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 | gpt-4.1-2025-04-14 | openai | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | GPT-4.1 mini | gpt-4.1-mini | openai | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache: $0.10 |
@@ -1222,7 +1320,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (402)
+### Streaming (457)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1287,6 +1385,61 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Model that performs Attributed Question Answering. | aqa | gemini | 7168 | 1024 | - |
 | Text Embedding 004 | text-embedding-004 | gemini | 2048 | 1 | - |
 | Veo 2 | veo-2.0-generate-001 | gemini | 480 | 8192 | In: $0.08, Out: $0.30 |
+| Codestral | codestral-2411-rc5 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2412 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2501 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2508 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-latest | mistral | 32768 | 8192 | - |
+| Devstral Medium 2507 | devstral-medium-2507 | mistral | 32768 | 8192 | - |
+| Devstral Medium Latest | devstral-medium-latest | mistral | 32768 | 8192 | - |
+| Devstral Small 2505 | devstral-small-2505 | mistral | 32768 | 8192 | - |
+| Devstral Small 2507 | devstral-small-2507 | mistral | 32768 | 8192 | - |
+| Devstral Small Latest | devstral-small-latest | mistral | 32768 | 8192 | - |
+| Magistral Medium 2506 | magistral-medium-2506 | mistral | 32768 | 8192 | - |
+| Magistral Medium 2507 | magistral-medium-2507 | mistral | 32768 | 8192 | - |
+| Magistral Medium Latest | magistral-medium-latest | mistral | 32768 | 8192 | - |
+| Magistral Small 2506 | magistral-small-2506 | mistral | 32768 | 8192 | - |
+| Magistral Small 2507 | magistral-small-2507 | mistral | 32768 | 8192 | - |
+| Magistral Small Latest | magistral-small-latest | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-latest | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2407 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2411 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-pixtral-2411 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-2505 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-latest | mistral | 32768 | 8192 | - |
+| Mistral Saba 2502 | mistral-saba-2502 | mistral | 32768 | 8192 | - |
+| Mistral Saba Latest | mistral-saba-latest | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2312 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2409 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2501 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2503 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2506 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-latest | mistral | 32768 | 8192 | - |
+| Mistral Tiny | mistral-tiny | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2312 | mistral-tiny-2312 | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2407 | mistral-tiny-2407 | mistral | 32768 | 8192 | - |
+| Mistral Tiny Latest | mistral-tiny-latest | mistral | 32768 | 8192 | - |
+| Open Mistral 7b | open-mistral-7b | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo | open-mistral-nemo | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo 2407 | open-mistral-nemo-2407 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b | open-mixtral-8x22b | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b 2404 | open-mixtral-8x22b-2404 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x7b | open-mixtral-8x7b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-2409 | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-latest | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-2411 | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-latest | mistral | 32768 | 8192 | - |
+| Voxtral Mini 2507 | voxtral-mini-2507 | mistral | 32768 | 8192 | - |
+| Voxtral Mini Latest | voxtral-mini-latest | mistral | 32768 | 8192 | - |
+| Voxtral Small 2507 | voxtral-small-2507 | mistral | 32768 | 8192 | - |
+| Voxtral Small Latest | voxtral-small-latest | mistral | 32768 | 8192 | - |
 | GPT-3.5 Turbo 0125 | gpt-3.5-turbo-0125 | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo 1106 | gpt-3.5-turbo-1106 | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-3.5 Turbo 16k | gpt-3.5-turbo-16k | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
@@ -1630,11 +1783,18 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Sonar Reasoning Pro | sonar-reasoning-pro | perplexity | 128000 | 8192 | In: $2.00, Out: $8.00 |
 
 
-### Batch Processing (61)
+### Batch Processing (119)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
+| Claude Haiku 3 | claude-3-haiku-20240307 | anthropic | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.30 |
+| Claude Haiku 3.5 | claude-3-5-haiku-20241022 | anthropic | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $1.00 |
 | Claude Opus 3 | claude-3-opus-20240229 | anthropic | 200000 | 4096 | In: $15.00, Out: $75.00 |
+| Claude Opus 4 | claude-opus-4-20250514 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $18.75 |
+| Claude Sonnet 3.5 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
+| Claude Sonnet 3.5 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $3.75 |
+| Claude Sonnet 3.7 | claude-3-7-sonnet-20250219 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
+| Claude Sonnet 4 | claude-sonnet-4-20250514 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $3.75 |
 | Claude 3.7 Sonnet | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | Embedding 001 | embedding-001 | gemini | 2048 | 1 | - |
 | Embedding Gecko | embedding-gecko-001 | gemini | 1024 | 1 | - |
@@ -1659,6 +1819,57 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Gemini Embedding Experimental 03-07 | gemini-embedding-exp-03-07 | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | LearnLM 2.0 Flash Experimental | learnlm-2.0-flash-experimental | gemini | 1048576 | 32768 | In: $0.08, Out: $0.30 |
 | Text Embedding 004 | text-embedding-004 | gemini | 2048 | 1 | - |
+| Codestral | codestral-2411-rc5 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2412 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2501 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-2508 | mistral | 32768 | 8192 | - |
+| Codestral | codestral-latest | mistral | 32768 | 8192 | - |
+| Devstral Medium 2507 | devstral-medium-2507 | mistral | 32768 | 8192 | - |
+| Devstral Medium Latest | devstral-medium-latest | mistral | 32768 | 8192 | - |
+| Devstral Small 2505 | devstral-small-2505 | mistral | 32768 | 8192 | - |
+| Devstral Small 2507 | devstral-small-2507 | mistral | 32768 | 8192 | - |
+| Devstral Small Latest | devstral-small-latest | mistral | 32768 | 8192 | - |
+| Magistral Medium 2506 | magistral-medium-2506 | mistral | 32768 | 8192 | - |
+| Magistral Medium 2507 | magistral-medium-2507 | mistral | 32768 | 8192 | - |
+| Magistral Medium Latest | magistral-medium-latest | mistral | 32768 | 8192 | - |
+| Magistral Small 2506 | magistral-small-2506 | mistral | 32768 | 8192 | - |
+| Magistral Small 2507 | magistral-small-2507 | mistral | 32768 | 8192 | - |
+| Magistral Small Latest | magistral-small-latest | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 3B | ministral-3b-latest | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-2410 | mistral | 32768 | 8192 | - |
+| Ministral 8B | ministral-8b-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2407 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-2411 | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-latest | mistral | 32768 | 8192 | - |
+| Mistral Large | mistral-large-pixtral-2411 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-2505 | mistral | 32768 | 8192 | - |
+| Mistral Medium | mistral-medium-latest | mistral | 32768 | 8192 | - |
+| Mistral Saba 2502 | mistral-saba-2502 | mistral | 32768 | 8192 | - |
+| Mistral Saba Latest | mistral-saba-latest | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2312 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2409 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2501 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2503 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-2506 | mistral | 32768 | 8192 | - |
+| Mistral Small | mistral-small-latest | mistral | 32768 | 8192 | - |
+| Mistral Tiny | mistral-tiny | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2312 | mistral-tiny-2312 | mistral | 32768 | 8192 | - |
+| Mistral Tiny 2407 | mistral-tiny-2407 | mistral | 32768 | 8192 | - |
+| Mistral Tiny Latest | mistral-tiny-latest | mistral | 32768 | 8192 | - |
+| Open Mistral 7b | open-mistral-7b | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo | open-mistral-nemo | mistral | 32768 | 8192 | - |
+| Open Mistral Nemo 2407 | open-mistral-nemo-2407 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b | open-mixtral-8x22b | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x22b 2404 | open-mixtral-8x22b-2404 | mistral | 32768 | 8192 | - |
+| Open Mixtral 8x7b | open-mixtral-8x7b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-2409 | mistral | 32768 | 8192 | - |
+| Pixtral 12B | pixtral-12b-latest | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-2411 | mistral | 32768 | 8192 | - |
+| Pixtral Large | pixtral-large-latest | mistral | 32768 | 8192 | - |
 | GPT-3.5 Turbo | gpt-3.5-turbo | openai | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | GPT-4 | gpt-4 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
 | GPT-4 | gpt-4-0613 | openai | 8192 | 8192 | In: $30.00, Out: $60.00 |
@@ -2028,7 +2239,7 @@ Models that can process PDF documents:
 | Omni Moderation 20240926 | omni-moderation-2024-09-26 | openai | - | - | - |
 
 
-### Embedding Models (69)
+### Embedding Models (72)
 
 Models that generate embeddings:
 
@@ -2040,6 +2251,9 @@ Models that generate embeddings:
 | Gemini Embedding Experimental | gemini-embedding-exp | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Gemini Embedding Experimental 03-07 | gemini-embedding-exp-03-07 | gemini | 8192 | 1 | In: $0.00, Out: $0.00 |
 | Text Embedding 004 | text-embedding-004 | gemini | 2048 | 1 | - |
+| Codestral | codestral-embed | mistral | 32768 | 8192 | - |
+| Codestral | codestral-embed-2505 | mistral | 32768 | 8192 | - |
+| Mistral Embed | mistral-embed | mistral | 32768 | 8192 | - |
 | ChatGPT-4o | chatgpt-4o-latest | openai | 128000 | 16384 | In: $5.00, Out: $15.00 |
 | DALL·E 2 | dall-e-2 | openai | - | - | - |
 | DALL·E 3 | dall-e-3 | openai | - | - | - |
@@ -2073,7 +2287,7 @@ Models that generate embeddings:
 | GPT-4o mini TTS | gpt-4o-mini-tts | openai | 2000 | - | In: $0.60, Out: $12.00 |
 | GPT-4o mini Transcribe | gpt-4o-mini-transcribe | openai | 16000 | 2000 | In: $1.25, Out: $5.00 |
 | TTS-1 | tts-1 | openai | - | - | In: $15.00 |
-| TTS-1 HD | tts-1-hd | openai | - | - | Out: $30.00 |
+| TTS-1 HD | tts-1-hd | openai | - | - | In: $30.00 |
 | Whisper | whisper-1 | openai | - | - | In: $0.01 |
 | babbage-002 | babbage-002 | openai | - | 16384 | In: $0.40, Out: $0.40 |
 | codex-mini-latest | codex-mini-latest | openai | 200000 | 100000 | In: $1.50, Out: $6.00, Cache: $0.38 |
