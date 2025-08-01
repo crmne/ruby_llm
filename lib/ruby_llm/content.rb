@@ -43,7 +43,7 @@ module RubyLLM
     def process_attachments(attachments)
       if attachments.is_a?(Hash)
         # Ignores types (like :image, :audio, :text, :pdf) since we have robust MIME type detection
-        attachments.each_value(&method(:process_attachments_array_or_string))
+        attachments.each_value { |attachment| process_attachments_array_or_string(attachment) }
       else
         process_attachments_array_or_string attachments
       end
