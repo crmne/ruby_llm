@@ -60,7 +60,8 @@ module RubyLLM
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],
             cached_tokens: data['usage']['cached_tokens'],
-            model_id: data['model']
+            model_id: data['model'],
+            raw: response
           )
         end
 

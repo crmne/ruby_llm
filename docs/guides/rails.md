@@ -62,8 +62,6 @@ This approach has one important consequence: **you cannot use `validates :conten
 ### Quick Setup with Generator
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 The easiest way to get started is using the provided Rails generator:
 
@@ -362,8 +360,6 @@ The attachment API automatically detects file types based on file extension or c
 ### Structured Output with Schemas
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 Structured output works seamlessly with Rails persistence:
 
@@ -477,7 +473,37 @@ With this approach:
 
 ## Streaming Responses with Hotwire/Turbo
 
-The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates. Here's a simplified approach using a background job:
+The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates.
+
+### Basic Pattern: Instant User Messages
+
+For a better user experience, show user messages immediately while processing AI responses in the background:
+
+```ruby
+# app/controllers/messages_controller.rb
+class MessagesController < ApplicationController
+  def create
+    @chat = Chat.find(params[:chat_id])
+
+    # Create and persist the user message immediately
+    @chat.create_user_message(params[:content])
+
+    # Process AI response in background
+    ChatStreamJob.perform_later(@chat.id)
+
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+      format.html { redirect_to @chat }
+    end
+  end
+end
+```
+
+The `create_user_message` method handles message persistence and returns the created message record. This pattern provides instant feedback to users while the AI processes their request.
+
+### Complete Streaming Setup
+
+Here's a full implementation with background job streaming:
 
 ```ruby
 # app/models/chat.rb
@@ -503,9 +529,11 @@ end
 class ChatStreamJob < ApplicationJob
   queue_as :default
 
-  def perform(chat_id, user_content)
+  def perform(chat_id)
     chat = Chat.find(chat_id)
-    chat.ask(user_content) do |chunk|
+
+    # Process the latest user message
+    chat.complete do |chunk|
       # Get the assistant message record (created before streaming starts)
       assistant_message = chat.messages.last
       if chunk.content && assistant_message
@@ -544,40 +572,113 @@ end
 <% end %>
 ```
 
-### Controller Integration
-
-Putting it all together in a controller:
-
-```ruby
-# app/controllers/messages_controller.rb
-class MessagesController < ApplicationController
-  before_action :set_chat
-
-  def create
-    message_content = params[:content]
-
-    # Queue the background job to handle the streaming response
-    ChatStreamJob.perform_later(@chat.id, message_content)
-
-    # Immediately return success to the user
-    respond_to do |format|
-      format.turbo_stream { head :ok }
-      format.html { redirect_to @chat }
-    end
-  end
-
-  private
-
-  def set_chat
-    @chat = Chat.find(params[:chat_id])
-  end
-end
-```
 
 This setup allows for:
 1. Real-time UI updates as the AI generates its response
 2. Background processing to prevent request timeouts
 3. Automatic persistence of all messages and tool calls
+
+### Handling Message Ordering with Action Cable
+
+Action Cable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
+
+#### Option 1: Client-Side Reordering with Stimulus (Recommended)
+
+Add a Stimulus controller that maintains correct chronological order based on timestamps. This example demonstrates the concept - adapt it to your specific needs:
+
+```javascript
+// app/javascript/controllers/message_ordering_controller.js
+// Note: This is an example implementation. Test thoroughly before production use.
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["message"]
+
+  connect() {
+    this.reorderMessages()
+    this.observeNewMessages()
+  }
+
+  observeNewMessages() {
+    // Watch for new messages being added to the DOM
+    const observer = new MutationObserver((mutations) => {
+      let shouldReorder = false
+
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.matches('[data-message-ordering-target="message"]')) {
+            shouldReorder = true
+          }
+        })
+      })
+
+      if (shouldReorder) {
+        // Small delay to ensure all attributes are set
+        setTimeout(() => this.reorderMessages(), 10)
+      }
+    })
+
+    observer.observe(this.element, { childList: true, subtree: true })
+    this.observer = observer
+  }
+
+  disconnect() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  reorderMessages() {
+    const messages = Array.from(this.messageTargets)
+
+    // Sort by timestamp (created_at)
+    messages.sort((a, b) => {
+      const timeA = new Date(a.dataset.createdAt).getTime()
+      const timeB = new Date(b.dataset.createdAt).getTime()
+      return timeA - timeB
+    })
+
+    // Reorder in DOM
+    messages.forEach((message) => {
+      this.element.appendChild(message)
+    })
+  }
+}
+```
+
+Update your views to use the controller:
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<!-- Add the Stimulus controller to the messages container -->
+<div id="messages" data-controller="message-ordering">
+  <%= render @chat.messages %>
+</div>
+
+<%# app/views/messages/_message.html.erb %>
+<%= turbo_frame_tag message,
+    data: {
+      message_ordering_target: "message",
+      created_at: message.created_at.iso8601
+    } do %>
+  <!-- message content -->
+<% end %>
+```
+
+#### Option 2: Server-Side Ordering with AnyCable
+
+[AnyCable](https://anycable.io) provides order guarantees at the server level through "sticky concurrency" - ensuring messages from the same stream are processed by the same worker. This eliminates the need for client-side reordering code.
+
+#### Understanding the Root Cause
+
+As confirmed by the Action Cable maintainers, Action Cable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
+
+The most reliable solution is client-side reordering with order information in the payload. For applications requiring strict ordering guarantees, consider:
+- Server-sent events (SSE) for unidirectional streaming
+- WebSocket libraries with ordered stream support like [Lively](https://github.com/socketry/lively/tree/main/examples/chatbot)
+- AnyCable for server-side ordering guarantees
+
+**Note**: Some users report better behavior with the async Ruby stack (Falcon + async-cable), but this doesn't guarantee ordering and shouldn't be relied upon as a solution.
 
 ## Customizing Models
 

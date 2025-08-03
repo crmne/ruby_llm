@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 10:07:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "410ae07e-f30d-49ec-a39b-2bf122705679", "model": "sonar", "created":
+        1754042827, "usage": {"prompt_tokens": 6, "completion_tokens": 96, "total_tokens":
+        102, "search_context_size": "low", "cost": {"input_tokens_cost": 6e-06, "output_tokens_cost":
+        9.6e-05, "request_cost": 0.005, "total_cost": 0.005102}}, "citations": ["https://auth0.com/blog/a-brief-history-of-ruby/",
+        "https://www.ruby-lang.org/en/about/", "https://evrone.com/blog/yukihiro-matsumoto-interview",
+        "https://changelog.com/podcast/202", "https://www.youtube.com/watch?v=4MM5b2F9zrM"],
+        "search_results": [{"title": "A Brief History of Ruby", "url": "https://auth0.com/blog/a-brief-history-of-ruby/",
+        "date": "2023-04-12", "last_updated": "2025-05-14"}, {"title": "About Ruby",
+        "url": "https://www.ruby-lang.org/en/about/", "date": "2003-12-22", "last_updated":
+        "2025-06-17"}, {"title": "Yukihiro Matsumoto: \"Ruby is designed for humans,
+        not ...", "url": "https://evrone.com/blog/yukihiro-matsumoto-interview", "date":
+        null, "last_updated": "2025-08-01"}, {"title": "23 years of Ruby with Matz
+        (Yukihiro Matsumoto), creator of ...", "url": "https://changelog.com/podcast/202",
+        "date": "2016-05-07", "last_updated": "2025-07-31"}, {"title": "RubyConf 2023
+        - Keynote by Yukihiro \"Matz\" Matsumoto", "url": "https://www.youtube.com/watch?v=4MM5b2F9zrM",
+        "date": null, "last_updated": "2024-07-19"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "Ruby was created by **Yukihiro Matsumoto**, also known as \"Matz,\"
+        in 1993. He designed Ruby as an object-oriented, easy-to-use scripting language
+        that balanced features from his favorite languages and focused on making programming
+        natural for humans rather than simple machines[1][2][4]. The name \"Ruby\"
+        was chosen because it was short, beautiful, and fit the jewel-themed naming
+        idea he and his colleagues considered during development[1][4]."}, "delta":
+        {"role": "assistant", "content": ""}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:07:07 GMT
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"},{"role":"assistant","content":"Ruby was created by **Yukihiro Matsumoto**,
+        also known as \"Matz,\" in 1993. He designed Ruby as an object-oriented, easy-to-use
+        scripting language that balanced features from his favorite languages and
+        focused on making programming natural for humans rather than simple machines[1][2][4].
+        The name \"Ruby\" was chosen because it was short, beautiful, and fit the
+        jewel-themed naming idea he and his colleagues considered during development[1][4]."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <PERPLEXITY_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 10:07:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id": "97b462c0-6981-4d09-a868-deb9e528195c", "model": "sonar", "created":
+        1754042830, "usage": {"prompt_tokens": 109, "completion_tokens": 48, "total_tokens":
+        157, "search_context_size": "low", "cost": {"input_tokens_cost": 0.000109,
+        "output_tokens_cost": 4.8e-05, "request_cost": 0.005, "total_cost": 0.005157}},
+        "citations": ["https://pwrteams.com/content-hub/blog/29-years-ruby", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "https://sumatosoft.com/blog/everything-you-should-know-about-ruby", "https://www.ruby-lang.org/en/about/",
+        "https://twobithistory.org/2017/11/19/the-ruby-story.html"], "search_results":
+        [{"title": "Celebrating Ruby: a journey through 29 years of programming ...",
+        "url": "https://pwrteams.com/content-hub/blog/29-years-ruby", "date": "2024-12-20",
+        "last_updated": "2025-07-15"}, {"title": "Ruby (programming language) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)", "date":
+        "2001-10-17", "last_updated": "2025-07-13"}, {"title": "Complete Guide: Everything
+        You Should Know About Ruby Use", "url": "https://sumatosoft.com/blog/everything-you-should-know-about-ruby",
+        "date": "2023-03-09", "last_updated": "2025-07-01"}, {"title": "About Ruby",
+        "url": "https://www.ruby-lang.org/en/about/", "date": "2003-12-22", "last_updated":
+        "2025-06-17"}, {"title": "The Ruby Story - Two-Bit History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
+        "date": "2017-11-19", "last_updated": "2025-07-29"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "Yukihiro Matsumoto began **creating Ruby in 1993**. The first
+        public release of Ruby (version 0.95) was announced on December 21, 1995[1][2][3][4]."},
+        "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:07:11 GMT
+recorded_with: VCR 6.3.1

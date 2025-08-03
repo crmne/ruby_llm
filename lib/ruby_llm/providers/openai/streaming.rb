@@ -22,6 +22,20 @@ module RubyLLM
             cached_tokens: data.dig('usage', 'cached_tokens')
           )
         end
+
+        def parse_streaming_error(data)
+          error_data = JSON.parse(data)
+          return unless error_data['error']
+
+          case error_data.dig('error', 'type')
+          when 'server_error'
+            [500, error_data['error']['message']]
+          when 'rate_limit_exceeded', 'insufficient_quota'
+            [429, error_data['error']['message']]
+          else
+            [400, error_data['error']['message']]
+          end
+        end
       end
     end
   end

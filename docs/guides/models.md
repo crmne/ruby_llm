@@ -50,7 +50,7 @@ The registry stores crucial information about each model, including:
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.
 
-You can see the full list of currently registered models in the [Available Models Guide]({% link guides/available-models.md %}).
+You can see the full list of currently registered models in the [Available Models Guide]({% link available-models.md %}).
 
 ### Refreshing the Registry
 

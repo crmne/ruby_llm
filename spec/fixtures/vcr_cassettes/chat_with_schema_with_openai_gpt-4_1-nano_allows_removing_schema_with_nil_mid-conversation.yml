@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"temperature":0.7,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Jul 2025 12:06:11 GMT
+      - Fri, 01 Aug 2025 09:57:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '232'
+      - '400'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '236'
+      - '439'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -57,13 +57,15 @@ http_interactions:
       - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -76,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BwSWYoYt5rGHDBqWti0LR8Yi8xsN9",
+          "id": "chatcmpl-Bzgngioek6ATqDcnxstgV0FWQrTLh",
           "object": "chat.completion",
-          "created": 1753272370,
+          "created": 1754042232,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -109,9 +111,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Wed, 23 Jul 2025 12:06:11 GMT
+  recorded_at: Fri, 01 Aug 2025 09:57:13 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -122,7 +124,7 @@ http_interactions:
         just tell me about Ruby"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -137,7 +139,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 23 Jul 2025 12:06:12 GMT
+      - Fri, 01 Aug 2025 09:57:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -149,34 +151,24 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1419'
+      - '1279'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1424'
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199976'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - '1398'
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -189,16 +181,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BwSWZZrp3KwnYi5ndWUTaG7AvBGZP",
+          "id": "chatcmpl-BzgnhKtfPqHqMvEUyiwOR0NElKx4l",
           "object": "chat.completion",
-          "created": 1753272371,
+          "created": 1754042233,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby is a dynamic, open-source programming language known for its simplicity and productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby emphasizes human-readable syntax and elegance, making it popular among developers for web development, automation, and more. It is especially well-known for the Ruby on Rails framework, which streamlines web application development. Ruby supports multiple programming paradigms, including object-oriented, functional, and imperative programming, and has a vibrant community that contributes numerous libraries and tools.",
+                "content": "Certainly! Ruby is a dynamic, open-source programming language known for its simplicity and productivity. Created by Yukihiro Matsumoto in the mid-1990s, Ruby emphasizes clean and readable code, making it popular among developers for web development, scripting, and automation. It is particularly famous for its powerful web framework, Ruby on Rails, which has revolutionized web application development. Ruby features an elegant syntax that is easy to learn, supports object-oriented programming, and has a vibrant community that contributes to a rich ecosystem of libraries and tools.",
                 "refusal": null,
                 "annotations": []
               },
@@ -208,8 +200,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 35,
-            "completion_tokens": 106,
-            "total_tokens": 141,
+            "completion_tokens": 109,
+            "total_tokens": 144,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -222,7 +214,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Wed, 23 Jul 2025 12:06:12 GMT
+  recorded_at: Fri, 01 Aug 2025 09:57:14 GMT
 recorded_with: VCR 6.3.1

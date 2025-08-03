@@ -30,7 +30,7 @@ module RubyLLM
     end
 
     def postgresql?
-      ActiveRecord::Base.connection.adapter_name.downcase.include?('postgresql')
+      ::ActiveRecord::Base.connection.adapter_name.downcase.include?('postgresql')
     rescue StandardError
       false
     end
@@ -81,15 +81,15 @@ module RubyLLM
       migration_template 'create_chats_migration.rb.tt',
                          "db/migrate/create_#{options[:chat_model_name].tableize}.rb"
 
-      # Then create tool_calls table
-      sleep 1 # Ensure different timestamp
-      migration_template 'create_tool_calls_migration.rb.tt',
-                         "db/migrate/create_#{options[:tool_call_model_name].tableize}.rb"
-
-      # Finally create messages table
+      # Then create messages table (must come before tool_calls due to foreign key)
       sleep 1 # Ensure different timestamp
       migration_template 'create_messages_migration.rb.tt',
                          "db/migrate/create_#{options[:message_model_name].tableize}.rb"
+
+      # Finally create tool_calls table (references messages)
+      sleep 1 # Ensure different timestamp
+      migration_template 'create_tool_calls_migration.rb.tt',
+                         "db/migrate/create_#{options[:tool_call_model_name].tableize}.rb"
     end
 
     def create_model_files

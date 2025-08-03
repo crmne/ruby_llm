@@ -9,10 +9,16 @@
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -21,6 +27,10 @@
           "input_per_million": 0.8,
           "cached_input_per_million": 1.0,
           "output_per_million": 4.0
+        },
+        "batch": {
+          "input_per_million": 0.4,
+          "output_per_million": 2.0
         }
       }
     },
@@ -36,10 +46,16 @@
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -48,6 +64,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -63,10 +83,16 @@
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -75,6 +101,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -90,10 +120,16 @@
     "max_output_tokens": 64000,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -102,6 +138,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -117,10 +157,16 @@
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -129,6 +175,10 @@
           "input_per_million": 0.25,
           "cached_input_per_million": 0.3,
           "output_per_million": 1.25
+        },
+        "batch": {
+          "input_per_million": 0.125,
+          "output_per_million": 0.625
         }
       }
     },
@@ -192,6 +242,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -200,6 +251,10 @@
           "input_per_million": 15.0,
           "cached_input_per_million": 18.75,
           "output_per_million": 75.0
+        },
+        "batch": {
+          "input_per_million": 7.5,
+          "output_per_million": 37.5
         }
       }
     },
@@ -224,6 +279,7 @@
       ]
     },
     "capabilities": [
+      "batch",
       "function_calling"
     ],
     "pricing": {
@@ -232,6 +288,10 @@
           "input_per_million": 3.0,
           "cached_input_per_million": 3.75,
           "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
         }
       }
     },
@@ -938,9 +998,7 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
-      "inference_types": [
-        "PROVISIONED"
-      ],
+      "inference_types": [],
       "streaming_supported": true,
       "input_modalities": [
         "TEXT",
@@ -989,9 +1047,7 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
-      "inference_types": [
-        "PROVISIONED"
-      ],
+      "inference_types": [],
       "streaming_supported": true,
       "input_modalities": [
         "TEXT",
@@ -1040,9 +1096,7 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
-      "inference_types": [
-        "PROVISIONED"
-      ],
+      "inference_types": [],
       "streaming_supported": true,
       "input_modalities": [
         "TEXT",
@@ -1937,52 +1991,6 @@
     }
   },
   {
-    "id": "gemini-1.0-pro-vision-latest",
-    "name": "Gemini 1.0 Pro Vision",
-    "provider": "gemini",
-    "family": "other",
-    "created_at": null,
-    "context_window": 12288,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "caching"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        }
-      }
-    },
-    "metadata": {
-      "version": "001",
-      "description": "The original Gemini 1.0 Pro Vision model version which was optimized for image understanding. Gemini 1.0 Pro Vision was deprecated on July 12, 2024. Move to a newer Gemini version.",
-      "supported_generation_methods": [
-        "generateContent",
-        "countTokens"
-      ]
-    }
-  },
-  {
     "id": "gemini-1.5-flash",
     "name": "Gemini 1.5 Flash",
     "provider": "gemini",
@@ -2185,40 +2193,33 @@
   },
   {
     "id": "gemini-1.5-flash-8b-latest",
-    "name": "Gemini 1.5 Flash-8B Latest",
+    "name": "Gemini 1.5 Flash-8B",
     "provider": "gemini",
-    "family": "gemini15_flash_8b",
+    "family": "gemini-1.5-flash-8b",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        },
-        "batch": {
-          "input_per_million": 0.01875,
-          "output_per_million": 0.075
+          "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
+          "output_per_million": 0.3
         }
       }
     },
@@ -2234,40 +2235,33 @@
   },
   {
     "id": "gemini-1.5-flash-latest",
-    "name": "Gemini 1.5 Flash Latest",
+    "name": "Gemini 1.5 Flash",
     "provider": "gemini",
-    "family": "gemini15_flash",
+    "family": "gemini-1.5-flash",
     "created_at": null,
-    "context_window": 1000000,
+    "context_window": 1048576,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "batch",
-      "caching",
-      "fine_tuning"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.075,
+          "cached_input_per_million": 0.01875,
           "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
         }
       }
     },
@@ -2399,38 +2393,33 @@
   },
   {
     "id": "gemini-1.5-pro-latest",
-    "name": "Gemini 1.5 Pro Latest",
+    "name": "Gemini 1.5 Pro",
     "provider": "gemini",
-    "family": "gemini15_pro",
+    "family": "gemini-1.5-pro",
     "created_at": null,
-    "context_window": 2000000,
+    "context_window": 2097152,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
+        "audio",
         "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output",
-      "caching"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 1.25,
+          "cached_input_per_million": 0.3125,
           "output_per_million": 5.0
-        },
-        "batch": {
-          "input_per_million": 0.625,
-          "output_per_million": 2.5
         }
       }
     },
@@ -3647,26 +3636,30 @@
   },
   {
     "id": "gemini-embedding-001",
-    "name": "Gemini Embedding",
+    "name": "Gemini Embedding 001",
     "provider": "gemini",
-    "family": "gemini-embedding-001",
+    "family": "embedding1",
     "created_at": null,
     "context_window": 2048,
-    "max_output_tokens": null,
+    "max_output_tokens": 1,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
       ],
       "output": [
+        "text",
         "embeddings"
       ]
     },
-    "capabilities": [],
+    "capabilities": [
+      "streaming",
+      "batch"
+    ],
     "pricing": {
-      "text_tokens": {
+      "embeddings": {
         "standard": {
-          "input_per_million": 0.15
+          "input_per_million": 0.002
         }
       }
     },
@@ -3736,26 +3729,45 @@
   },
   {
     "id": "gemini-embedding-exp-03-07",
-    "name": "Gemini Embedding",
+    "name": "Gemini Embedding Experimental 03-07",
     "provider": "gemini",
-    "family": "gemini-embedding-001",
+    "family": "gemini_embedding_exp",
     "created_at": null,
-    "context_window": 2048,
-    "max_output_tokens": null,
+    "context_window": 8192,
+    "max_output_tokens": 1,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image",
+        "pdf"
       ],
       "output": [
+        "text",
         "embeddings"
       ]
     },
-    "capabilities": [],
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "caching"
+    ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.15
+          "input_per_million": 0.002,
+          "output_per_million": 0.004
+        },
+        "batch": {
+          "input_per_million": 0.001,
+          "output_per_million": 0.002
+        }
+      },
+      "embeddings": {
+        "standard": {
+          "input_per_million": 0.002
         }
       }
     },
@@ -3850,52 +3862,6 @@
       }
     },
     "metadata": {}
-  },
-  {
-    "id": "gemini-pro-vision",
-    "name": "Gemini 1.0 Pro Vision",
-    "provider": "gemini",
-    "family": "other",
-    "created_at": null,
-    "context_window": 12288,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "caching"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
-        }
-      }
-    },
-    "metadata": {
-      "version": "001",
-      "description": "The original Gemini 1.0 Pro Vision model version which was optimized for image understanding. Gemini 1.0 Pro Vision was deprecated on July 12, 2024. Move to a newer Gemini version.",
-      "supported_generation_methods": [
-        "generateContent",
-        "countTokens"
-      ]
-    }
   },
   {
     "id": "gemma-3-12b-it",
@@ -4145,29 +4111,27 @@
   },
   {
     "id": "imagen-3.0-generate-002",
-    "name": "Imagen 3",
+    "name": "Imagen 3.0 002 model",
     "provider": "gemini",
-    "family": "imagen-3.0-generate-002",
+    "family": "imagen3",
     "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 4,
+    "context_window": 480,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image",
+        "pdf"
       ],
       "output": [
         "image"
       ]
     },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.03
-        }
-      }
-    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
     "metadata": {
       "version": "002",
       "description": "Vertex served Imagen 3.0 002 model",
@@ -4178,29 +4142,27 @@
   },
   {
     "id": "imagen-4.0-generate-preview-06-06",
-    "name": "Imagen 4",
+    "name": "Imagen 4 (Preview)",
     "provider": "gemini",
-    "family": "imagen-4.0-generate-preview-06-06",
+    "family": "other",
     "created_at": null,
     "context_window": 480,
-    "max_output_tokens": 1,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image",
+        "pdf"
       ],
       "output": [
         "image"
       ]
     },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.04
-        }
-      }
-    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
     "metadata": {
       "version": "01",
       "description": "Vertex served Imagen 4.0 model",
@@ -4211,30 +4173,34 @@
   },
   {
     "id": "imagen-4.0-ultra-generate-preview-06-06",
-    "name": "Imagen 4",
+    "name": "Imagen 4 Ultra (Preview)",
     "provider": "gemini",
-    "family": "imagen-4.0-generate-preview-06-06",
+    "family": "other",
     "created_at": null,
     "context_window": 480,
-    "max_output_tokens": 1,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text"
+        "text",
+        "image",
+        "pdf"
       ],
       "output": [
         "image"
       ]
     },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.04
-        }
-      }
-    },
-    "metadata": {}
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "version": "01",
+      "description": "Vertex served Imagen 4.0 ultra model",
+      "supported_generation_methods": [
+        "predict"
+      ]
+    }
   },
   {
     "id": "learnlm-2.0-flash-experimental",
@@ -4284,27 +4250,6 @@
     }
   },
   {
-    "id": "models/text-embedding-004",
-    "name": "Legacy Embedding Models",
-    "provider": "gemini",
-    "family": "models/text-embedding-004",
-    "created_at": null,
-    "context_window": 2048,
-    "max_output_tokens": 768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "embeddings"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {},
-    "metadata": {}
-  },
-  {
     "id": "text-embedding-004",
     "name": "Text Embedding 004",
     "provider": "gemini",
@@ -4345,54 +4290,1877 @@
     "id": "veo-2.0-generate-001",
     "name": "Veo 2",
     "provider": "gemini",
-    "family": "veo-2.0-generate-001",
+    "family": "other",
     "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 2,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": []
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "output_per_million": 0.35
-        }
-      }
-    },
-    "metadata": {}
-  },
-  {
-    "id": "veo-3.0-generate-preview",
-    "name": "Veo 3 Preview",
-    "provider": "gemini",
-    "family": "veo-3.0-generate-preview",
-    "created_at": null,
-    "context_window": 1024,
-    "max_output_tokens": 1,
+    "context_window": 480,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
       ],
       "output": [
-        "audio"
+        "text"
       ]
     },
-    "capabilities": [],
+    "capabilities": [
+      "streaming"
+    ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "output_per_million": 0.75
+          "input_per_million": 0.075,
+          "output_per_million": 0.3
+        },
+        "batch": {
+          "input_per_million": 0.0375,
+          "output_per_million": 0.15
         }
       }
     },
-    "metadata": {}
+    "metadata": {
+      "version": "2.0",
+      "description": "Vertex served Veo 2 model. Access to this model requires billing to be enabled on the associated Google Cloud Platform account. Please visit https://console.cloud.google.com/billing to enable it.",
+      "supported_generation_methods": [
+        "predictLongRunning"
+      ]
+    }
+  },
+  {
+    "id": "codestral-2411-rc5",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2024-11-26 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-2412",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2024-12-17 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-2501",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2025-01-14 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-2508",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2025-08-30 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-embed",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2025-05-21 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-embed-2505",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2025-05-21 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "codestral-latest",
+    "name": "Codestral",
+    "provider": "mistral",
+    "family": "codestral",
+    "created_at": "2025-08-30 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "devstral-medium-2507",
+    "name": "Devstral Medium 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-07-09 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "devstral-medium-latest",
+    "name": "Devstral Medium Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-07-09 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "devstral-small-2505",
+    "name": "Devstral Small 2505",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-05-28 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "devstral-small-2507",
+    "name": "Devstral Small 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-07-09 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "devstral-small-latest",
+    "name": "Devstral Small Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-07-09 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-medium-2506",
+    "name": "Magistral Medium 2506",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-06-10 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-medium-2507",
+    "name": "Magistral Medium 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-medium-latest",
+    "name": "Magistral Medium Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-06-10 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-small-2506",
+    "name": "Magistral Small 2506",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-small-2507",
+    "name": "Magistral Small 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "magistral-small-latest",
+    "name": "Magistral Small Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "ministral-3b-2410",
+    "name": "Ministral 3B",
+    "provider": "mistral",
+    "family": "ministral",
+    "created_at": "2024-10-16 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "ministral-3b-latest",
+    "name": "Ministral 3B",
+    "provider": "mistral",
+    "family": "ministral",
+    "created_at": "2024-10-16 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "ministral-8b-2410",
+    "name": "Ministral 8B",
+    "provider": "mistral",
+    "family": "ministral",
+    "created_at": "2024-10-16 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "ministral-8b-latest",
+    "name": "Ministral 8B",
+    "provider": "mistral",
+    "family": "ministral",
+    "created_at": "2024-10-16 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "distillation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-embed",
+    "name": "Mistral Embed",
+    "provider": "mistral",
+    "family": "mistral-embed",
+    "created_at": "2024-01-11 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-large-2407",
+    "name": "Mistral Large",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2024-07-24 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-large-2411",
+    "name": "Mistral Large",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2024-11-20 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-large-latest",
+    "name": "Mistral Large",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2024-11-20 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-large-pixtral-2411",
+    "name": "Mistral Large",
+    "provider": "mistral",
+    "family": "mistral-large",
+    "created_at": "2024-11-12 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-medium",
+    "name": "Mistral Medium",
+    "provider": "mistral",
+    "family": "mistral-medium",
+    "created_at": "2025-05-06 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-medium-2505",
+    "name": "Mistral Medium",
+    "provider": "mistral",
+    "family": "mistral-medium",
+    "created_at": "2025-05-06 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-medium-latest",
+    "name": "Mistral Medium",
+    "provider": "mistral",
+    "family": "mistral-medium",
+    "created_at": "2025-05-06 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-moderation-2411",
+    "name": "Mistral Moderation",
+    "provider": "mistral",
+    "family": "mistral-moderation",
+    "created_at": "2024-11-26 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "moderation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-moderation-latest",
+    "name": "Mistral Moderation",
+    "provider": "mistral",
+    "family": "mistral-moderation",
+    "created_at": "2024-11-26 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "moderation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-ocr-2503",
+    "name": "Mistral Ocr 2503",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-03-21 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-ocr-2505",
+    "name": "Mistral Ocr 2505",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-05-23 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-ocr-latest",
+    "name": "Mistral Ocr Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-05-23 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-saba-2502",
+    "name": "Mistral Saba 2502",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-02-18 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-saba-latest",
+    "name": "Mistral Saba Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2025-02-18 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2023-12-11 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-2312",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2023-12-11 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-2409",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2024-09-18 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-2501",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2025-01-13 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-2503",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2025-03-03 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-2506",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2025-06-10 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-small-latest",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": "2025-06-10 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-tiny",
+    "name": "Mistral Tiny",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2023-09-27 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-tiny-2312",
+    "name": "Mistral Tiny 2312",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2023-12-11 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-tiny-2407",
+    "name": "Mistral Tiny 2407",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-07-18 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "mistral-tiny-latest",
+    "name": "Mistral Tiny Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-07-18 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mistral-7b",
+    "name": "Open Mistral 7b",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2023-09-27 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mistral-nemo",
+    "name": "Open Mistral Nemo",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-07-18 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mistral-nemo-2407",
+    "name": "Open Mistral Nemo 2407",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-07-18 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mixtral-8x22b",
+    "name": "Open Mixtral 8x22b",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-04-17 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mixtral-8x22b-2404",
+    "name": "Open Mixtral 8x22b 2404",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2024-04-17 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "open-mixtral-8x7b",
+    "name": "Open Mixtral 8x7b",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": "2023-12-11 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "pixtral-12b",
+    "name": "Pixtral 12B",
+    "provider": "mistral",
+    "family": "pixtral",
+    "created_at": "2024-09-17 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "pixtral-12b-2409",
+    "name": "Pixtral 12B",
+    "provider": "mistral",
+    "family": "pixtral",
+    "created_at": "2024-09-17 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "pixtral-12b-latest",
+    "name": "Pixtral 12B",
+    "provider": "mistral",
+    "family": "pixtral",
+    "created_at": "2024-09-17 00:00:00 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "pixtral-large-2411",
+    "name": "Pixtral Large",
+    "provider": "mistral",
+    "family": "pixtral",
+    "created_at": "2024-11-12 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "pixtral-large-latest",
+    "name": "Pixtral Large",
+    "provider": "mistral",
+    "family": "pixtral",
+    "created_at": "2024-11-12 00:00:00 +0100",
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "vision",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-mini-2507",
+    "name": "Voxtral Mini 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-mini-latest",
+    "name": "Voxtral Mini Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-small-2507",
+    "name": "Voxtral Small 2507",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-small-latest",
+    "name": "Voxtral Small Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
   },
   {
     "id": "babbage-002",
@@ -4400,7 +6168,7 @@
     "provider": "openai",
     "family": "babbage-002",
     "created_at": null,
-    "context_window": 16384,
+    "context_window": null,
     "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
@@ -4408,6 +6176,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4440,6 +6209,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4472,6 +6242,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4508,6 +6279,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4544,6 +6316,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4579,6 +6352,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "image"
       ]
     },
@@ -4603,6 +6377,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "image"
       ]
     },
@@ -4619,7 +6394,7 @@
     "provider": "openai",
     "family": "davinci-002",
     "created_at": null,
-    "context_window": 16384,
+    "context_window": null,
     "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
@@ -4627,6 +6402,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4658,6 +6434,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4860,6 +6637,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -4930,6 +6708,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5001,6 +6780,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5040,6 +6820,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5115,6 +6896,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5156,6 +6938,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5197,6 +6980,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5238,6 +7022,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5279,6 +7064,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5320,6 +7106,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5361,6 +7148,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5439,6 +7227,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5518,6 +7307,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -5663,6 +7453,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5704,6 +7495,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5746,6 +7538,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -5781,6 +7574,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -5816,6 +7610,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -5852,6 +7647,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -5886,6 +7682,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5919,6 +7716,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5953,6 +7751,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -5984,7 +7783,8 @@
         "text"
       ],
       "output": [
-        "audio"
+        "audio",
+        "embeddings"
       ]
     },
     "capabilities": [],
@@ -6017,6 +7817,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -6150,6 +7951,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6183,6 +7985,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6217,6 +8020,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6249,6 +8053,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "image"
       ]
     },
@@ -6282,6 +8087,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6323,6 +8129,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6363,6 +8170,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6395,6 +8203,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6405,82 +8214,6 @@
           "input_per_million": 1.1,
           "cached_input_per_million": 0.55,
           "output_per_million": 4.4
-        }
-      }
-    },
-    "metadata": {
-      "object": "model",
-      "owned_by": "system"
-    }
-  },
-  {
-    "id": "o1-preview",
-    "name": "O1-Preview",
-    "provider": "openai",
-    "family": "o1",
-    "created_at": "2024-09-06 20:54:57 +0200",
-    "context_window": 200000,
-    "max_output_tokens": 100000,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15.0,
-          "output_per_million": 60.0
-        }
-      }
-    },
-    "metadata": {
-      "object": "model",
-      "owned_by": "system"
-    }
-  },
-  {
-    "id": "o1-preview-2024-09-12",
-    "name": "O1-Preview 20240912",
-    "provider": "openai",
-    "family": "o1",
-    "created_at": "2024-09-06 20:54:25 +0200",
-    "context_window": 200000,
-    "max_output_tokens": 100000,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15.0,
-          "output_per_million": 60.0
         }
       }
     },
@@ -6504,6 +8237,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6544,6 +8278,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6584,6 +8319,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6625,6 +8361,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6666,6 +8403,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6705,6 +8443,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6743,6 +8482,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6783,6 +8523,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6824,6 +8565,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6864,6 +8606,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6904,6 +8647,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6945,6 +8689,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -6986,6 +8731,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -7025,6 +8771,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -7078,7 +8825,7 @@
   },
   {
     "id": "omni-moderation-latest",
-    "name": "omni-moderation-latest",
+    "name": "omni-moderation",
     "provider": "openai",
     "family": "omni-moderation-latest",
     "created_at": null,
@@ -7091,6 +8838,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -7235,7 +8983,7 @@
   },
   {
     "id": "text-moderation-latest",
-    "name": "text-moderation-latest",
+    "name": "text-moderation",
     "provider": "openai",
     "family": "text-moderation-latest",
     "created_at": null,
@@ -7247,6 +8995,7 @@
         "text"
       ],
       "output": [
+        "embeddings",
         "text"
       ]
     },
@@ -7268,7 +9017,9 @@
         "text"
       ],
       "output": [
-        "audio"
+        "audio",
+        "embeddings",
+        "text"
       ]
     },
     "capabilities": [],
@@ -7333,14 +9084,15 @@
         "text"
       ],
       "output": [
-        "audio"
+        "audio",
+        "embeddings"
       ]
     },
     "capabilities": [],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "output_per_million": 30.0
+          "input_per_million": 30.0
         }
       }
     },
@@ -7399,6 +9151,7 @@
       ],
       "output": [
         "audio",
+        "embeddings",
         "text"
       ]
     },
@@ -7413,72 +9166,6 @@
     "metadata": {
       "object": "model",
       "owned_by": "openai-internal"
-    }
-  },
-  {
-    "id": "01-ai/yi-large",
-    "name": "01.AI: Yi Large",
-    "provider": "openrouter",
-    "family": "01-ai",
-    "created_at": "2024-06-25 02:00:00 +0200",
-    "context_window": 32768,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "structured_output",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3.0,
-          "output_per_million": 3.0
-        }
-      }
-    },
-    "metadata": {
-      "description": "The Yi Large model was designed by 01.AI with the following usecases in mind: knowledge search, data classification, human-like chat bots, and customer service.\n\nIt stands out for its multilingual proficiency, particularly in Spanish, Chinese, Japanese, German, and French.\n\nCheck out the [launch announcement](https://01-ai.github.io/blog/01.ai-yi-large-llm-launch) to learn more.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Yi",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "top_k",
-        "repetition_penalty",
-        "response_format",
-        "structured_outputs",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
-      ]
     }
   },
   {
@@ -8698,68 +10385,6 @@
   {
     "id": "anthropic/claude-3.5-haiku-20241022",
     "name": "Anthropic: Claude 3.5 Haiku (2024-10-22)",
-    "provider": "openrouter",
-    "family": "anthropic",
-    "created_at": "2024-11-04 01:00:00 +0100",
-    "context_window": 200000,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.7999999999999999,
-          "output_per_million": 4.0,
-          "cached_input_per_million": 0.08
-        }
-      }
-    },
-    "metadata": {
-      "description": "Claude 3.5 Haiku features enhancements across all skill sets including coding, tool use, and reasoning. As the fastest model in the Anthropic lineup, it offers rapid response times suitable for applications that require high interactivity and low latency, such as user-facing chatbots and on-the-fly code completions. It also excels in specialized tasks like data extraction and real-time content moderation, making it a versatile tool for a broad range of industries.\n\nIt does not support image inputs.\n\nSee the launch announcement and benchmark results [here](https://www.anthropic.com/news/3-5-models-and-computer-use)",
-      "architecture": {
-        "modality": "text+image->text",
-        "input_modalities": [
-          "text",
-          "image"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Claude",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 200000,
-        "max_completion_tokens": 8192,
-        "is_moderated": true
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "tools",
-        "tool_choice",
-        "top_k",
-        "stop"
-      ]
-    }
-  },
-  {
-    "id": "anthropic/claude-3.5-haiku-20241022:beta",
-    "name": "Anthropic: Claude 3.5 Haiku (2024-10-22) (self-moderated)",
     "provider": "openrouter",
     "family": "anthropic",
     "created_at": "2024-11-04 01:00:00 +0100",
@@ -11387,7 +13012,6 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {},
@@ -11425,9 +13049,7 @@
         "repetition_penalty",
         "logprobs",
         "logit_bias",
-        "top_logprobs",
-        "structured_outputs",
-        "response_format"
+        "top_logprobs"
       ]
     }
   },
@@ -12104,67 +13726,6 @@
       },
       "top_provider": {
         "context_length": 4096,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "repetition_penalty",
-        "top_k",
-        "min_p",
-        "seed"
-      ]
-    }
-  },
-  {
-    "id": "eva-unit-01/eva-qwen-2.5-72b",
-    "name": "EVA Qwen2.5 72B",
-    "provider": "openrouter",
-    "family": "eva-unit-01",
-    "created_at": "2024-11-21 18:36:46 +0100",
-    "context_window": 16384,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 4.0,
-          "output_per_million": 6.0
-        }
-      }
-    },
-    "metadata": {
-      "description": "EVA Qwen2.5 72B is a roleplay and storywriting specialist model. It's a full-parameter finetune of Qwen2.5-72B on mixture of synthetic and natural data.\n\nIt uses Celeste 70B 0.1 data mixture, greatly expanding it to improve versatility, creativity and \"flavor\" of the resulting model.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen",
-        "instruct_type": "chatml"
-      },
-      "top_provider": {
-        "context_length": 16384,
         "max_completion_tokens": 4096,
         "is_moderated": false
       },
@@ -14493,19 +16054,19 @@
         "max_tokens",
         "temperature",
         "top_p",
+        "tools",
+        "tool_choice",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "top_k",
         "repetition_penalty",
-        "logit_bias",
-        "min_p",
         "response_format",
-        "top_logprobs",
-        "logprobs",
+        "top_k",
         "seed",
-        "tools",
-        "tool_choice"
+        "min_p",
+        "logit_bias",
+        "top_logprobs",
+        "logprobs"
       ]
     }
   },
@@ -14571,11 +16132,11 @@
         "stop",
         "min_p",
         "logit_bias",
-        "tools",
-        "tool_choice",
         "response_format",
         "top_logprobs",
-        "logprobs"
+        "logprobs",
+        "tools",
+        "tool_choice"
       ]
     }
   },
@@ -14703,15 +16264,15 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "top_k",
         "repetition_penalty",
         "response_format",
+        "top_k",
+        "seed",
+        "min_p",
         "structured_outputs",
         "logit_bias",
         "logprobs",
-        "top_logprobs",
-        "min_p",
-        "seed"
+        "top_logprobs"
       ]
     }
   },
@@ -14823,16 +16384,16 @@
         "max_tokens",
         "temperature",
         "top_p",
-        "tools",
-        "tool_choice",
-        "response_format",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "repetition_penalty",
-        "top_k",
         "seed",
+        "top_k",
         "min_p",
+        "repetition_penalty",
+        "tools",
+        "tool_choice",
+        "response_format",
         "logit_bias",
         "logprobs",
         "top_logprobs",
@@ -14896,18 +16457,18 @@
         "top_p",
         "tools",
         "tool_choice",
+        "structured_outputs",
+        "response_format",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs",
-        "response_format",
-        "min_p",
         "repetition_penalty",
         "top_k",
-        "structured_outputs"
+        "seed",
+        "min_p",
+        "logit_bias",
+        "logprobs",
+        "top_logprobs"
       ]
     }
   },
@@ -15350,17 +16911,17 @@
         "max_tokens",
         "temperature",
         "top_p",
+        "structured_outputs",
+        "response_format",
+        "seed",
         "tools",
         "tool_choice",
         "stop",
         "frequency_penalty",
         "presence_penalty",
         "repetition_penalty",
-        "response_format",
         "top_k",
-        "seed",
         "min_p",
-        "structured_outputs",
         "logit_bias",
         "logprobs",
         "top_logprobs"
@@ -17888,10 +19449,7 @@
         "presence_penalty",
         "response_format",
         "structured_outputs",
-        "seed",
-        "top_logprobs",
-        "logprobs",
-        "logit_bias"
+        "seed"
       ]
     }
   },
@@ -18770,8 +20328,8 @@
     "provider": "openrouter",
     "family": "moonshotai",
     "created_at": "2025-07-11 21:47:32 +0200",
-    "context_window": 63000,
-    "max_output_tokens": 63000,
+    "context_window": 32768,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -18790,8 +20348,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.14,
-          "output_per_million": 2.4899999999999998
+          "input_per_million": 0.0878,
+          "output_per_million": 0.0878
         }
       }
     },
@@ -18809,8 +20367,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 63000,
-        "max_completion_tokens": 63000,
+        "context_length": 32768,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -18829,9 +20387,9 @@
         "repetition_penalty",
         "logit_bias",
         "min_p",
+        "seed",
         "logprobs",
-        "top_logprobs",
-        "seed"
+        "top_logprobs"
       ]
     }
   },
@@ -19311,8 +20869,8 @@
     "provider": "openrouter",
     "family": "neversleep",
     "created_at": "2023-11-26 01:00:00 +0100",
-    "context_window": 8192,
-    "max_output_tokens": 2048,
+    "context_window": 4096,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -19324,13 +20882,14 @@
     },
     "capabilities": [
       "streaming",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.25,
-          "output_per_million": 2.0
+          "input_per_million": 1.0,
+          "output_per_million": 1.75
         }
       }
     },
@@ -19348,8 +20907,8 @@
         "instruct_type": "alpaca"
       },
       "top_provider": {
-        "context_length": 8192,
-        "max_completion_tokens": 2048,
+        "context_length": 4096,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -19360,6 +20919,8 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
+        "response_format",
+        "structured_outputs",
         "repetition_penalty",
         "logit_bias",
         "top_k",
@@ -19611,11 +21172,12 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
+        "response_format",
+        "structured_outputs",
         "seed",
         "logit_bias",
         "logprobs",
         "top_logprobs",
-        "response_format",
         "min_p",
         "repetition_penalty",
         "top_k"
@@ -21815,114 +23377,6 @@
     }
   },
   {
-    "id": "openai/o1-preview",
-    "name": "OpenAI: o1-preview",
-    "provider": "openrouter",
-    "family": "openai",
-    "created_at": "2024-09-12 02:00:00 +0200",
-    "context_window": 128000,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15.0,
-          "output_per_million": 60.0,
-          "cached_input_per_million": 7.5
-        }
-      }
-    },
-    "metadata": {
-      "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "GPT",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": 32768,
-        "is_moderated": true
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "seed",
-        "max_tokens"
-      ]
-    }
-  },
-  {
-    "id": "openai/o1-preview-2024-09-12",
-    "name": "OpenAI: o1-preview (2024-09-12)",
-    "provider": "openrouter",
-    "family": "openai",
-    "created_at": "2024-09-12 02:00:00 +0200",
-    "context_window": 128000,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15.0,
-          "output_per_million": 60.0,
-          "cached_input_per_million": 7.5
-        }
-      }
-    },
-    "metadata": {
-      "description": "The latest and strongest model family from OpenAI, o1 is designed to spend more time thinking before responding.\n\nThe o1 models are optimized for math, science, programming, and other STEM-related tasks. They consistently exhibit PhD-level accuracy on benchmarks in physics, chemistry, and biology. Learn more in the [launch announcement](https://openai.com/o1).\n\nNote: This model is currently experimental and not suitable for production use-cases, and may be heavily rate-limited.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "GPT",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": 32768,
-        "is_moderated": true
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "seed",
-        "max_tokens"
-      ]
-    }
-  },
-  {
     "id": "openai/o1-pro",
     "name": "OpenAI: o1-pro",
     "provider": "openrouter",
@@ -22450,6 +23904,59 @@
       },
       "per_request_limits": null,
       "supported_parameters": []
+    }
+  },
+  {
+    "id": "openrouter/horizon-alpha",
+    "name": "Horizon Alpha",
+    "provider": "openrouter",
+    "family": "openrouter",
+    "created_at": "2025-07-31 00:18:04 +0200",
+    "context_window": 256000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "This is a cloaked model provided to the community to gather feedback.\n\nNote: It’s free to use during this testing period, and prompts and completions are logged by the model creator for feedback and training.",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "image",
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 256000,
+        "max_completion_tokens": 128000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "tool_choice",
+        "tools",
+        "response_format",
+        "structured_outputs"
+      ]
     }
   },
   {
@@ -23130,12 +24637,12 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
+        "seed",
         "top_k",
+        "min_p",
         "repetition_penalty",
         "logit_bias",
-        "min_p",
-        "response_format",
-        "seed"
+        "response_format"
       ]
     }
   },
@@ -24095,9 +25602,9 @@
         "top_k",
         "min_p",
         "repetition_penalty",
+        "logit_bias",
         "logprobs",
-        "top_logprobs",
-        "logit_bias"
+        "top_logprobs"
       ]
     }
   },
@@ -24108,7 +25615,7 @@
     "family": "qwen",
     "created_at": "2025-07-21 19:39:15 +0200",
     "context_window": 262144,
-    "max_output_tokens": 262144,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -24127,73 +25634,11 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.12,
-          "output_per_million": 0.59
+          "input_per_million": 0.1179,
+          "output_per_million": 0.1179
         }
       }
     },
-    "metadata": {
-      "description": "Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-experts language model based on the Qwen3-235B architecture, with 22B active parameters per forward pass. It is optimized for general-purpose text generation, including instruction following, logical reasoning, math, code, and tool usage. The model supports a native 262K context length and does not implement \"thinking mode\" (<think> blocks).\n\nCompared to its base variant, this version delivers significant gains in knowledge coverage, long-context reasoning, coding benchmarks, and alignment with open-ended tasks. It is particularly strong on multilingual understanding, math reasoning (e.g., AIME, HMMT), and alignment evaluations like Arena-Hard and WritingBench.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen3",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 262144,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "temperature",
-        "top_p",
-        "seed",
-        "tools",
-        "tool_choice",
-        "stop",
-        "frequency_penalty",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "top_k",
-        "min_p",
-        "structured_outputs",
-        "logit_bias",
-        "logprobs",
-        "top_logprobs"
-      ]
-    }
-  },
-  {
-    "id": "qwen/qwen3-235b-a22b-2507:free",
-    "name": "Qwen: Qwen3 235B A22B Instruct 2507 (free)",
-    "provider": "openrouter",
-    "family": "qwen",
-    "created_at": "2025-07-21 19:39:15 +0200",
-    "context_window": 262144,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {},
     "metadata": {
       "description": "Qwen3-235B-A22B-Instruct-2507 is a multilingual, instruction-tuned mixture-of-experts language model based on the Qwen3-235B architecture, with 22B active parameters per forward pass. It is optimized for general-purpose text generation, including instruction following, logical reasoning, math, code, and tool usage. The model supports a native 262K context length and does not implement \"thinking mode\" (<think> blocks).\n\nCompared to its base variant, this version delivers significant gains in knowledge coverage, long-context reasoning, coding benchmarks, and alignment with open-ended tasks. It is particularly strong on multilingual understanding, math reasoning (e.g., AIME, HMMT), and alignment evaluations like Arena-Hard and WritingBench.",
       "architecture": {
@@ -24217,15 +25662,19 @@
         "max_tokens",
         "temperature",
         "top_p",
+        "seed",
+        "tools",
+        "tool_choice",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "seed",
+        "repetition_penalty",
+        "response_format",
         "top_k",
         "min_p",
-        "repetition_penalty",
-        "logprobs",
+        "structured_outputs",
         "logit_bias",
+        "logprobs",
         "top_logprobs"
       ]
     }
@@ -24426,18 +25875,76 @@
         "tool_choice",
         "reasoning",
         "include_reasoning",
+        "structured_outputs",
         "response_format",
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "repetition_penalty",
-        "top_k",
         "seed",
+        "top_k",
         "min_p",
-        "structured_outputs",
+        "repetition_penalty",
         "logit_bias",
         "logprobs",
         "top_logprobs"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen3-30b-a3b-instruct-2507",
+    "name": "Qwen: Qwen3 30B A3B Instruct 2507",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2025-07-29 18:36:05 +0200",
+    "context_window": 131072,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.7999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen3-30B-A3B-Instruct-2507 is a 30.5B-parameter mixture-of-experts language model from Qwen, with 3.3B active parameters per inference. It operates in non-thinking mode and is designed for high-quality instruction following, multilingual understanding, and agentic tool use. Post-trained on instruction data, it demonstrates competitive performance across reasoning (AIME, ZebraLogic), coding (MultiPL-E, LiveCodeBench), and alignment (IFEval, WritingBench) benchmarks. It outperforms its non-instruct variant on subjective and open-ended tasks while retaining strong factual and coding performance.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 32768,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "seed",
+        "response_format",
+        "presence_penalty"
       ]
     }
   },
@@ -25075,10 +26582,7 @@
         "stop",
         "frequency_penalty",
         "presence_penalty",
-        "top_k",
-        "reasoning",
-        "include_reasoning",
-        "seed"
+        "top_k"
       ]
     }
   },
@@ -26158,8 +27662,8 @@
     "provider": "openrouter",
     "family": "thedrummer",
     "created_at": "2025-06-29 16:45:47 +0200",
-    "context_window": 131072,
-    "max_output_tokens": 131072,
+    "context_window": 16384,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -26170,13 +27674,14 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 0.7999999999999999
+          "input_per_million": 0.39999999999999997,
+          "output_per_million": 0.7
         }
       }
     },
@@ -26194,8 +27699,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": 131072,
+        "context_length": 16384,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -26209,7 +27714,9 @@
         "repetition_penalty",
         "seed",
         "stop",
-        "top_k"
+        "top_k",
+        "response_format",
+        "structured_outputs"
       ]
     }
   },
@@ -26350,7 +27857,7 @@
     "provider": "openrouter",
     "family": "thedrummer",
     "created_at": "2025-03-10 20:56:06 +0100",
-    "context_window": 16384,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -26369,8 +27876,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.01512,
-          "output_per_million": 0.01512
+          "input_per_million": 0.0728,
+          "output_per_million": 0.0728
         }
       }
     },
@@ -26388,7 +27895,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 16384,
+        "context_length": 32768,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -27758,5 +29265,369 @@
         "tool_choice"
       ]
     }
+  },
+  {
+    "id": "z-ai/glm-4.5",
+    "name": "Z.AI: GLM 4.5",
+    "provider": "openrouter",
+    "family": "z-ai",
+    "created_at": "2025-07-25 21:22:27 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.19999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "GLM-4.5 is our latest flagship foundation model, purpose-built for agent-based applications. It leverages a Mixture-of-Experts (MoE) architecture and supports a context length of up to 128k tokens. GLM-4.5 delivers significantly enhanced capabilities in reasoning, code generation, and agent alignment. It supports a hybrid inference mode with two options, a \"thinking mode\" designed for complex reasoning and tool use, and a \"non-thinking mode\" optimized for instant responses. Users can control the reasoning behaviour with the `reasoning` `enabled` boolean. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#enable-reasoning-with-default-config)",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "tools",
+        "tool_choice",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "top_k",
+        "seed",
+        "min_p",
+        "logprobs",
+        "logit_bias",
+        "top_logprobs"
+      ]
+    }
+  },
+  {
+    "id": "z-ai/glm-4.5-air",
+    "name": "Z.AI: GLM 4.5 Air",
+    "provider": "openrouter",
+    "family": "z-ai",
+    "created_at": "2025-07-25 21:20:58 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 96000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 1.1,
+          "cached_input_per_million": 0.03
+        }
+      }
+    },
+    "metadata": {
+      "description": "GLM-4.5-Air is the lightweight variant of our latest flagship model family, also purpose-built for agent-centric applications. Like GLM-4.5, it adopts the Mixture-of-Experts (MoE) architecture but with a more compact parameter size. GLM-4.5-Air also supports hybrid inference modes, offering a \"thinking mode\" for advanced reasoning and tool use, and a \"non-thinking mode\" for real-time interaction. Users can control the reasoning behaviour with the `reasoning` `enabled` boolean. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#enable-reasoning-with-default-config)",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 96000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "tools",
+        "tool_choice",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "top_k",
+        "seed",
+        "min_p"
+      ]
+    }
+  },
+  {
+    "id": "z-ai/glm-4.5-air:free",
+    "name": "Z.AI: GLM 4.5 Air (free)",
+    "provider": "openrouter",
+    "family": "z-ai",
+    "created_at": "2025-07-25 21:20:58 +0200",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "GLM-4.5-Air is the lightweight variant of our latest flagship model family, also purpose-built for agent-centric applications. Like GLM-4.5, it adopts the Mixture-of-Experts (MoE) architecture but with a more compact parameter size. GLM-4.5-Air also supports hybrid inference modes, offering a \"thinking mode\" for advanced reasoning and tool use, and a \"non-thinking mode\" for real-time interaction. Users can control the reasoning behaviour with the `reasoning` `enabled` boolean. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#enable-reasoning-with-default-config)",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "reasoning",
+        "include_reasoning",
+        "stop",
+        "frequency_penalty",
+        "presence_penalty",
+        "seed",
+        "top_k",
+        "min_p",
+        "repetition_penalty",
+        "logprobs",
+        "logit_bias",
+        "top_logprobs"
+      ]
+    }
+  },
+  {
+    "id": "sonar",
+    "name": "Sonar",
+    "provider": "perplexity",
+    "family": "sonar",
+    "created_at": "2025-08-01 14:48:12 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "json_mode",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.0,
+          "output_per_million": 1.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "sonar-deep-research",
+    "name": "Sonar Deep Research",
+    "provider": "perplexity",
+    "family": "sonar_deep_research",
+    "created_at": "2025-08-01 14:48:12 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "json_mode",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.0,
+          "output_per_million": 8.0,
+          "citation_per_million": 2.0,
+          "reasoning_per_million": 3.0,
+          "search_per_thousand": 5.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "sonar-pro",
+    "name": "Sonar Pro",
+    "provider": "perplexity",
+    "family": "sonar_pro",
+    "created_at": "2025-08-01 14:48:12 +0200",
+    "context_window": 200000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "json_mode",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 3.0,
+          "output_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "sonar-reasoning",
+    "name": "Sonar Reasoning",
+    "provider": "perplexity",
+    "family": "sonar_reasoning",
+    "created_at": "2025-08-01 14:48:12 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "json_mode",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.0,
+          "output_per_million": 5.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "sonar-reasoning-pro",
+    "name": "Sonar Reasoning Pro",
+    "provider": "perplexity",
+    "family": "sonar_reasoning_pro",
+    "created_at": "2025-08-01 14:48:12 +0200",
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "json_mode",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.0,
+          "output_per_million": 8.0
+        }
+      }
+    },
+    "metadata": {}
   }
 ]

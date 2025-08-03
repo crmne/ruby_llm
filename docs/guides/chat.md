@@ -251,8 +251,6 @@ You can set the temperature using `with_temperature`, which returns the `Chat` i
 ## Custom Request Parameters (`with_params`)
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 You can configure additional provider-specific features by adding custom fields to each API request. Use the `with_params` method.
 
@@ -268,8 +266,6 @@ Allowed parameters vary widely by provider and model. Please consult the provide
 ## Structured Output with JSON Schemas (`with_schema`)
 {: .d-inline-block }
 
-Available in v1.4.0
-{: .label .label-yellow }
 
 RubyLLM supports structured output, which guarantees that AI responses conform to your specified JSON schema. This is different from JSON mode – while JSON mode guarantees valid JSON syntax, structured output enforces the exact schema you define.
 
@@ -488,7 +484,11 @@ For Anthropic, you can see the tokens written to cache by looking at the `cache_
 
 ## Chat Event Handlers
 
-You can register blocks to be called when certain events occur during the chat lifecycle, useful for UI updates or logging.
+You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
+
+### Available Event Handlers
+
+RubyLLM provides three event handlers that cover the complete chat lifecycle:
 
 ```ruby
 chat = RubyLLM.chat
@@ -507,9 +507,25 @@ chat.on_end_message do |message|
   end
 end
 
+# Called when the AI decides to use a tool
+chat.on_tool_call do |tool_call|
+  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
+end
+
 # These callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+## Raw Responses
+
+You can access the raw response from the API provider with `response.raw`.
+
+```ruby
+response = chat.ask("What is the capital of France?")
+puts response.raw.body
+```
+
+The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
 ## Next Steps
 

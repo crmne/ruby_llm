@@ -16,8 +16,8 @@ module RubyLLM
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, cache: cache_prompts[:system])
 
-          build_base_payload(chat_messages, temperature, model, stream, cache: cache_prompts[:user]).tap do |payload|
-            add_optional_fields(payload, system_content: system_content, tools: tools,
+          build_base_payload(chat_messages, model, stream, cache: cache_prompts[:user]).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:, temperature:,
                                          cache_tools: cache_prompts[:tools])
           end
         end
@@ -41,14 +41,13 @@ module RubyLLM
 
           {
             model: model,
-            messages: messages,
-            temperature: temperature,
+            messages:,
             stream: stream,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:, cache_tools: false)
+        def add_optional_fields(payload, system_content:, tools:, temperature:, cache_tools: false)
           if tools.any?
             tool_definitions = tools.values.map { |t| Tools.function_for(t) }
             tool_definitions[-1][:cache_control] = { type: 'ephemeral' } if cache_tools
@@ -56,6 +55,7 @@ module RubyLLM
           end
 
           payload[:system] = system_content unless system_content.empty?
+          payload[:temperature] = temperature unless temperature.nil?
         end
 
         def parse_completion_response(response)
@@ -65,7 +65,7 @@ module RubyLLM
           text_content = extract_text_content(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
-          build_message(data, text_content, tool_use_blocks)
+          build_message(data, text_content, tool_use_blocks, response)
         end
 
         def extract_text_content(blocks)
@@ -73,7 +73,7 @@ module RubyLLM
           text_blocks.map { |c| c['text'] }.join
         end
 
-        def build_message(data, content, tool_use_blocks)
+        def build_message(data, content, tool_use_blocks, response)
           Message.new(
             role: :assistant,
             content: content,
@@ -82,7 +82,8 @@ module RubyLLM
             output_tokens: data.dig('usage', 'output_tokens'),
             model_id: data['model'],
             cache_creation_tokens: data.dig('usage', 'cache_creation_input_tokens'),
-            cached_tokens: data.dig('usage', 'cache_read_input_tokens')
+            cached_tokens: data.dig('usage', 'cache_read_input_tokens'),
+            raw: response
           )
         end
 

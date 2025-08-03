@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'attachment handling' do
-    it 'converts ActiveStorage attachments to RubyLLM Content' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model_id: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
     end
 
-    it 'handles multiple attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'handles multiple attachments' do
       chat = Chat.create!(model_id: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
@@ -60,7 +60,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(response.content).to be_present
     end
 
-    it 'handles attachments in ask method' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'handles attachments in ask method' do
       chat = Chat.create!(model_id: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'attachment types' do
-    it 'handles images' do # rubocop:disable RSpec/ExampleLength
+    it 'handles images' do
       chat = Chat.create!(model_id: model)
       message = chat.messages.create!(role: 'user', content: 'Image test')
 
@@ -89,7 +89,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(attachment.type).to eq(:image)
     end
 
-    it 'handles PDFs' do # rubocop:disable RSpec/ExampleLength
+    it 'handles PDFs' do
       chat = Chat.create!(model_id: model)
       message = chat.messages.create!(role: 'user', content: 'PDF test')
 

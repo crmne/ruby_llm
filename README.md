@@ -15,6 +15,9 @@
   <br>
   <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium" height="16">
   &nbsp;
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-color.svg" alt="Mistral" class="logo-medium">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-text.svg" alt="Mistral" class="logo-small">
+  &nbsp;
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
   &nbsp;
@@ -24,10 +27,12 @@
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
   <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
   &nbsp;
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
+  <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
 </div>
 
 <div class="badge-container">
-  <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
+  <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg?a=2" alt="Gem Version" /></a>
   <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
   <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
@@ -85,19 +90,36 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
+
+# Get structured output with JSON schemas
+class ProductSchema < RubyLLM::Schema
+  string :name, description: "Product name"
+  number :price, description: "Price in USD"
+  array :features, description: "Key features" do
+    string description: "Feature description"
+  end
+end
+
+response = chat.with_schema(ProductSchema)
+               .ask "Analyze this product description", with: "product.txt"
+# response.content => { "name" => "...", "price" => 99.99, "features" => [...] }
 ```
 
 ## Core Capabilities
 
-*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
+*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Mistral, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
-*   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
+*   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
 *   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
 *   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
+*   📋 **Structured Output:** Guarantee responses conform to JSON schemas with `RubyLLM::Schema`.
 *   🚂 **Rails Integration:** Easily persist chats, messages, and tool calls using `acts_as_chat` and `acts_as_message`.
 *   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
+*   ⚡ **Async Support:** Built-in fiber-based concurrency for high-performance operations.
+*   🎯 **Smart Configuration:** Global and scoped configs with automatic retries and proxy support.
+*   📚 **Model Registry:** Access 500+ models with capability detection and pricing info.
 
 ## Installation
 
@@ -124,7 +146,7 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 Add persistence to your chat models effortlessly:
 
 ```bash
-# Generate models and migrations (available in v1.4.0)
+# Generate models and migrations
 rails generate ruby_llm:install
 ```
 

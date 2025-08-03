@@ -27,7 +27,7 @@ RSpec.describe RubyLLM::Chat do
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-        it 'accepts a JSON schema and returns structured output' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        it 'accepts a JSON schema and returns structured output' do
           skip 'Model does not support structured output' unless chat.model.structured_output?
 
           response = chat
@@ -56,7 +56,7 @@ RSpec.describe RubyLLM::Chat do
           end.not_to raise_error
         end
 
-        it 'allows removing schema with nil mid-conversation' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        it 'allows removing schema with nil mid-conversation' do
           # First, ask with schema - should get parsed JSON
           chat.with_schema(person_schema)
           response1 = chat.ask('Generate a person named Bob')
@@ -82,7 +82,7 @@ RSpec.describe RubyLLM::Chat do
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-        it 'converts JSON schema to Gemini format and returns structured output' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        it 'converts JSON schema to Gemini format and returns structured output' do
           skip 'Model does not support structured output' unless chat.model.structured_output?
 
           response = chat
@@ -138,7 +138,7 @@ RSpec.describe RubyLLM::Chat do
         model = test_model[:model]
         provider = test_model[:provider]
 
-        it "#{provider}/#{model} handles complex nested schemas" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        it "#{provider}/#{model} handles complex nested schemas" do
           chat = RubyLLM.chat(model: model, provider: provider)
           skip 'Model does not support structured output' unless chat.model.structured_output?
 

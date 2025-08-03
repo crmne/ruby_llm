@@ -47,17 +47,18 @@ module RubyLLM
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
           system_content = Anthropic::Chat.build_system_content(system_messages, cache: cache_prompts[:system])
 
-          build_base_payload(chat_messages, temperature, model, cache: cache_prompts[:user]).tap do |payload|
+          build_base_payload(chat_messages, model, cache: cache_prompts[:user]).tap do |payload|
             Anthropic::Chat.add_optional_fields(
               payload,
-              system_content: system_content,
-              tools: tools,
+              system_content:,
+              tools:,
+              temperature:,
               cache_tools: cache_prompts[:tools]
             )
           end
         end
 
-        def build_base_payload(chat_messages, temperature, model, cache: false)
+        def build_base_payload(chat_messages, model, cache: false)
           messages = chat_messages.map.with_index do |msg, idx|
             message_cache = cache if idx == chat_messages.size - 1
             format_message(msg, cache: message_cache)
@@ -65,7 +66,6 @@ module RubyLLM
           {
             anthropic_version: 'bedrock-2023-05-31',
             messages: messages,
-            temperature: temperature,
             max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
           }
         end

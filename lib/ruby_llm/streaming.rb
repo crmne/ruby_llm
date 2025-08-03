@@ -11,7 +11,7 @@ module RubyLLM
     def stream_response(connection, payload, &block)
       accumulator = StreamAccumulator.new
 
-      connection.post stream_url, payload do |req|
+      response = connection.post stream_url, payload do |req|
         if req.options.respond_to?(:on_data)
           # Handle Faraday 2.x streaming with on_data method
           req.options.on_data = handle_stream do |chunk|
@@ -27,7 +27,7 @@ module RubyLLM
         end
       end
 
-      accumulator.to_message
+      accumulator.to_message(response)
     end
 
     def handle_stream(&block)
@@ -55,13 +55,13 @@ module RubyLLM
       end
     end
 
-    def process_stream_chunk(chunk, parser, _env, &)
+    def process_stream_chunk(chunk, parser, env, &)
       RubyLLM.logger.debug "Received chunk: #{chunk}"
 
       if error_chunk?(chunk)
-        handle_error_chunk(chunk, nil)
+        handle_error_chunk(chunk, env)
       else
-        yield handle_sse(chunk, parser, nil, &)
+        yield handle_sse(chunk, parser, env, &)
       end
     end
 
@@ -88,7 +88,16 @@ module RubyLLM
     def handle_error_chunk(chunk, env)
       error_data = chunk.split("\n")[1].delete_prefix('data: ')
       status, _message = parse_streaming_error(error_data)
-      error_response = env.merge(body: JSON.parse(error_data), status: status)
+      parsed_data = JSON.parse(error_data)
+
+      # Create a response-like object that works for both Faraday v1 and v2
+      error_response = if env
+                         env.merge(body: parsed_data, status: status)
+                       else
+                         # For Faraday v1, create a simple object that responds to .status and .body
+                         Struct.new(:body, :status).new(parsed_data, status)
+                       end
+
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error chunk: #{e.message}"
@@ -122,7 +131,16 @@ module RubyLLM
 
     def handle_error_event(data, env)
       status, _message = parse_streaming_error(data)
-      error_response = env.merge(body: JSON.parse(data), status: status)
+      parsed_data = JSON.parse(data)
+
+      # Create a response-like object that works for both Faraday v1 and v2
+      error_response = if env
+                         env.merge(body: parsed_data, status: status)
+                       else
+                         # For Faraday v1, create a simple object that responds to .status and .body
+                         Struct.new(:body, :status).new(parsed_data, status)
+                       end
+
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error event: #{e.message}"

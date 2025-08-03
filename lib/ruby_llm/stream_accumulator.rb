@@ -31,7 +31,7 @@ module RubyLLM
       RubyLLM.logger.debug inspect
     end
 
-    def to_message
+    def to_message(response)
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
@@ -40,7 +40,8 @@ module RubyLLM
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
         output_tokens: @output_tokens.positive? ? @output_tokens : nil,
         cached_tokens: @cached_tokens.positive? ? @cached_tokens : nil,
-        cache_creation_tokens: @cache_creation_tokens.positive? ? @cache_creation_tokens : nil
+        cache_creation_tokens: @cache_creation_tokens.positive? ? @cache_creation_tokens : nil,
+        raw: response
       )
     end
 

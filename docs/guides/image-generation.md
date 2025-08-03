@@ -96,7 +96,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link guides/available-models.md %}) to find image models.
+Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link available-models.md %}) to find image models.
 
 ## Image Sizes
 
@@ -120,7 +120,7 @@ image_portrait = RubyLLM.paint(
 ```
 
 {: .note }
-Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link guides/available-models.md %}) for supported sizes.
+Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link available-models.md %}) for supported sizes.
 
 ## Working with Generated Images
 
