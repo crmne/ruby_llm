@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       let(:chat) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
 
       context 'with system message caching' do
-        it 'adds cache_control to the last system message when system caching is requested' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        it 'adds cache_control to the last system message when system caching is requested' do
           chat.with_instructions(LARGE_PROMPT)
           chat.cache_prompts(system: true)
 
@@ -38,7 +38,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       end
 
       context 'with user message caching' do
-        it 'adds cache_control to user messages when user caching is requested' do # rubocop:disable RSpec/MultipleExpectations
+        it 'adds cache_control to user messages when user caching is requested' do
           chat.cache_prompts(user: true)
           response = chat.ask("#{LARGE_PROMPT}\n\nBased on the above, tell me about Ruby")
 
@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       end
 
       context 'with tool definition caching' do
-        it 'adds cache_control to tool definitions when tools caching is requested' do # rubocop:disable RSpec/MultipleExpectations
+        it 'adds cache_control to tool definitions when tools caching is requested' do
           chat.with_tools(DescribeRubyDev)
           chat.cache_prompts(tools: true)
 
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       end
 
       context 'with multiple caching types' do
-        it 'handles multiple caching types together' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        it 'handles multiple caching types together' do
           chat.with_tools(DescribeRubyDev)
           chat.with_instructions(LARGE_PROMPT)
           chat.cache_prompts(system: true, tools: true, user: true)
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       end
 
       context 'with streaming' do
-        it 'reports cached tokens' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+        it 'reports cached tokens' do
           chat.cache_prompts(user: true)
           response = chat.ask("#{LARGE_PROMPT}\n\nCount from 1 to 3") do |chunk|
             # do nothing
@@ -99,21 +99,21 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
     model = model_info[:model]
 
     describe "with #{provider} provider (#{model})" do
-      let(:chat_1) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
-      let(:chat_2) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
+      let(:chat_first) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
+      let(:chat_second) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
 
       it 'reports cached tokens' do
         large_prompt = LARGE_PROMPT * 2
 
         # Not sure why, but Gemini seems to only report cached tokens when the prompt is sufficiently complex
-        large_prompt = large_prompt + 'b' * 1024 if provider == :gemini
+        large_prompt += ('b' * 1024) if provider == :gemini
 
-        response_1 = chat_1.ask("#{large_prompt}\n\nBased on the above, tell me about Ruby")
+        response_first = chat_first.ask("#{large_prompt}\n\nBased on the above, tell me about Ruby")
 
-        response_2 = chat_2.ask("#{large_prompt}\n\nBased on the above, tell me about Ruby")
+        response_second = chat_second.ask("#{large_prompt}\n\nBased on the above, tell me about Ruby")
 
-        expect(response_1.cached_tokens).to be_zero
-        expect(response_2.cached_tokens).to be_positive
+        expect(response_first.cached_tokens).to be_zero
+        expect(response_second.cached_tokens).to be_positive
       end
     end
   end
