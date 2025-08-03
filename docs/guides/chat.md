@@ -125,7 +125,7 @@ Modern AI models can often process more than just text. RubyLLM provides a unifi
 
 ### Working with Images
 
-Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-opus`, `gemini-1.5-pro`).
+Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-opus`, `gemini-1.5-pro`) for analysis and understanding. Some specialized models can also generate and edit images.
 
 ```ruby
 # Ensure you select a vision-capable model
@@ -145,6 +145,34 @@ puts response.content
 ```
 
 RubyLLM handles converting the image source into the format required by the specific provider API.
+
+### Image Generation with Chat
+
+While most vision models analyze images, some specialized models can generate and edit images through the chat interface. This approach is ideal for image editing workflows and iterative refinement:
+
+```ruby
+# Use a model capable of image generation
+chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
+
+# Edit an existing image
+response = chat.ask('make this look more futuristic', with: 'current_design.png')
+
+# Access generated images from attachments
+if response.content.attachments.any?
+  generated_image = response.content.attachments.first.image
+  puts "Generated image: #{generated_image.mime_type}"
+  
+  # Save the generated image
+  generated_image.save('futuristic_design.png')
+end
+
+# Continue refining in the same conversation
+response = chat.ask('add some neon lighting effects')
+refined_image = response.content.attachments.first.image
+refined_image.save('futuristic_with_neon.png')
+```
+
+For simple text-to-image generation without existing images, see the [Image Generation Guide]({% link guides/image-generation.md %}).
 
 ### Working with Audio
 
