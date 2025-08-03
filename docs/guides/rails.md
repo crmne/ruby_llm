@@ -4,12 +4,13 @@ title: Rails Integration
 parent: Guides
 nav_order: 5
 permalink: /guides/rails
+description: Rails + AI made simple. Persist chats with ActiveRecord. Stream with Hotwire. Deploy with confidence.
 ---
 
 # Rails Integration
 {: .no_toc }
 
-RubyLLM offers seamless integration with Ruby on Rails applications through helpers for ActiveRecord models. This allows you to easily persist chat conversations, including messages and tool interactions, directly in your database.
+Rails ❤️ AI. Build production AI features with conventions you already know.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -58,9 +59,43 @@ This approach has one important consequence: **you cannot use `validates :conten
 
 ## Setting Up Your Rails Application
 
-### Database Migrations
+### Quick Setup with Generator
+{: .d-inline-block }
 
-First, generate migrations for your `Chat`, `Message`, and `ToolCall` models.
+
+The easiest way to get started is using the provided Rails generator:
+
+```bash
+rails generate ruby_llm:install
+```
+
+This generator automatically creates:
+- All required migrations (Chat, Message, ToolCall tables)
+- Model files with `acts_as_chat`, `acts_as_message`, and `acts_as_tool_call` configured
+- A RubyLLM initializer in `config/initializers/ruby_llm.rb`
+
+After running the generator:
+
+```bash
+rails db:migrate
+```
+
+You're ready to go! The generator handles all the setup complexity for you.
+
+#### Generator Options
+
+The generator supports custom model names if needed:
+
+```bash
+# Use custom model names
+rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+```
+
+This is useful if you already have models with these names or prefer different naming conventions.
+
+### Manual Setup
+
+If you prefer to set up manually or need custom table/model names, you can create the migrations yourself:
 
 ```bash
 # Generate basic models and migrations
@@ -69,7 +104,7 @@ rails g model Message chat:references role:string content:text model_id:string i
 rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
 ```
 
-Adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
+Then adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
@@ -104,16 +139,22 @@ class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
       t.references :message, null: false, foreign_key: true # Assistant message making the call
-      t.string :tool_call_id, null: false, index: { unique: true } # Provider's ID for the call
+      t.string :tool_call_id, null: false # Provider's ID for the call
       t.string :name, null: false
-      t.jsonb :arguments, default: {} # Use jsonb for PostgreSQL
+      # Use jsonb for PostgreSQL, json for MySQL/SQLite
+      t.jsonb :arguments, default: {} # Change to t.json for non-PostgreSQL databases
       t.timestamps
     end
+
+    add_index :tool_calls, :tool_call_id, unique: true
   end
 end
 ```
 
 Run the migrations: `rails db:migrate`
+
+{: .note }
+**Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 
 ### ActiveStorage Setup for Attachments (Optional)
 
@@ -163,7 +204,7 @@ Include the RubyLLM helpers in your ActiveRecord models:
 class Chat < ApplicationRecord
   # Includes methods like ask, with_tool, with_instructions, etc.
   # Automatically persists associated messages and tool calls.
-  acts_as_chat # Assumes Message and ToolCall model names
+  acts_as_chat # Defaults to Message and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
   belongs_to :user, optional: true # Example
@@ -173,7 +214,7 @@ end
 # app/models/message.rb
 class Message < ApplicationRecord
   # Provides methods like tool_call?, tool_result?
-  acts_as_message # Assumes Chat and ToolCall model names
+  acts_as_message # Defaults to Chat and ToolCall model names
 
   # --- Add your standard Rails model logic below ---
   # Note: Do NOT add "validates :content, presence: true"
@@ -187,7 +228,7 @@ end
 # app/models/tool_call.rb (Only if using tools)
 class ToolCall < ApplicationRecord
   # Sets up associations to the calling message and the result message.
-  acts_as_tool_call # Assumes Message model name
+  acts_as_tool_call # Defaults to Message model name
 
   # --- Add your standard Rails model logic below ---
 end
@@ -316,6 +357,48 @@ chat_record.ask("What's in this document?", with: user.profile_document)
 
 The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, PDF, or text document - RubyLLM figures it out for you!
 
+### Structured Output with Schemas
+{: .d-inline-block }
+
+
+Structured output works seamlessly with Rails persistence:
+
+```ruby
+# Define a schema
+class PersonSchema < RubyLLM::Schema
+  string :name
+  integer :age
+  string :city, required: false
+end
+
+# Use with your persisted chat
+chat_record = Chat.create!(model_id: 'gpt-4o')
+response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
+
+# The structured response is automatically parsed as a Hash
+puts response.content # => {"name" => "Marie", "age" => 28, "city" => "Paris"}
+
+# But it's stored as JSON in the database
+message = chat_record.messages.last
+puts message.content # => "{\"name\":\"Marie\",\"age\":28,\"city\":\"Paris\"}"
+puts JSON.parse(message.content) # => {"name" => "Marie", "age" => 28, "city" => "Paris"}
+```
+
+You can use schemas in multi-turn conversations:
+
+```ruby
+# Start with a schema
+chat_record.with_schema(PersonSchema)
+person = chat_record.ask("Generate a French person")
+
+# Remove the schema for analysis
+chat_record.with_schema(nil)
+analysis = chat_record.ask("What's interesting about this person?")
+
+# All messages are persisted correctly
+puts chat_record.messages.count # => 4
+```
+
 ## Handling Persistence Edge Cases
 
 ### Orphaned Empty Messages
@@ -390,7 +473,37 @@ With this approach:
 
 ## Streaming Responses with Hotwire/Turbo
 
-The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates. Here's a simplified approach using a background job:
+The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates.
+
+### Basic Pattern: Instant User Messages
+
+For a better user experience, show user messages immediately while processing AI responses in the background:
+
+```ruby
+# app/controllers/messages_controller.rb
+class MessagesController < ApplicationController
+  def create
+    @chat = Chat.find(params[:chat_id])
+
+    # Create and persist the user message immediately
+    @chat.create_user_message(params[:content])
+
+    # Process AI response in background
+    ChatStreamJob.perform_later(@chat.id)
+
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+      format.html { redirect_to @chat }
+    end
+  end
+end
+```
+
+The `create_user_message` method handles message persistence and returns the created message record. This pattern provides instant feedback to users while the AI processes their request.
+
+### Complete Streaming Setup
+
+Here's a full implementation with background job streaming:
 
 ```ruby
 # app/models/chat.rb
@@ -416,9 +529,11 @@ end
 class ChatStreamJob < ApplicationJob
   queue_as :default
 
-  def perform(chat_id, user_content)
+  def perform(chat_id)
     chat = Chat.find(chat_id)
-    chat.ask(user_content) do |chunk|
+
+    # Process the latest user message
+    chat.complete do |chunk|
       # Get the assistant message record (created before streaming starts)
       assistant_message = chat.messages.last
       if chunk.content && assistant_message
@@ -457,44 +572,156 @@ end
 <% end %>
 ```
 
-### Controller Integration
-
-Putting it all together in a controller:
-
-```ruby
-# app/controllers/messages_controller.rb
-class MessagesController < ApplicationController
-  before_action :set_chat
-
-  def create
-    message_content = params[:content]
-
-    # Queue the background job to handle the streaming response
-    ChatStreamJob.perform_later(@chat.id, message_content)
-
-    # Immediately return success to the user
-    respond_to do |format|
-      format.turbo_stream { head :ok }
-      format.html { redirect_to @chat }
-    end
-  end
-
-  private
-
-  def set_chat
-    @chat = Chat.find(params[:chat_id])
-  end
-end
-```
 
 This setup allows for:
 1. Real-time UI updates as the AI generates its response
 2. Background processing to prevent request timeouts
 3. Automatic persistence of all messages and tool calls
 
+### Handling Message Ordering with Action Cable
+
+Action Cable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
+
+#### Option 1: Client-Side Reordering with Stimulus (Recommended)
+
+Add a Stimulus controller that maintains correct chronological order based on timestamps. This example demonstrates the concept - adapt it to your specific needs:
+
+```javascript
+// app/javascript/controllers/message_ordering_controller.js
+// Note: This is an example implementation. Test thoroughly before production use.
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = ["message"]
+
+  connect() {
+    this.reorderMessages()
+    this.observeNewMessages()
+  }
+
+  observeNewMessages() {
+    // Watch for new messages being added to the DOM
+    const observer = new MutationObserver((mutations) => {
+      let shouldReorder = false
+
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === 1 && node.matches('[data-message-ordering-target="message"]')) {
+            shouldReorder = true
+          }
+        })
+      })
+
+      if (shouldReorder) {
+        // Small delay to ensure all attributes are set
+        setTimeout(() => this.reorderMessages(), 10)
+      }
+    })
+
+    observer.observe(this.element, { childList: true, subtree: true })
+    this.observer = observer
+  }
+
+  disconnect() {
+    if (this.observer) {
+      this.observer.disconnect()
+    }
+  }
+
+  reorderMessages() {
+    const messages = Array.from(this.messageTargets)
+
+    // Sort by timestamp (created_at)
+    messages.sort((a, b) => {
+      const timeA = new Date(a.dataset.createdAt).getTime()
+      const timeB = new Date(b.dataset.createdAt).getTime()
+      return timeA - timeB
+    })
+
+    // Reorder in DOM
+    messages.forEach((message) => {
+      this.element.appendChild(message)
+    })
+  }
+}
+```
+
+Update your views to use the controller:
+
+```erb
+<%# app/views/chats/show.html.erb %>
+<!-- Add the Stimulus controller to the messages container -->
+<div id="messages" data-controller="message-ordering">
+  <%= render @chat.messages %>
+</div>
+
+<%# app/views/messages/_message.html.erb %>
+<%= turbo_frame_tag message,
+    data: {
+      message_ordering_target: "message",
+      created_at: message.created_at.iso8601
+    } do %>
+  <!-- message content -->
+<% end %>
+```
+
+#### Option 2: Server-Side Ordering with AnyCable
+
+[AnyCable](https://anycable.io) provides order guarantees at the server level through "sticky concurrency" - ensuring messages from the same stream are processed by the same worker. This eliminates the need for client-side reordering code.
+
+#### Understanding the Root Cause
+
+As confirmed by the Action Cable maintainers, Action Cable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
+
+The most reliable solution is client-side reordering with order information in the payload. For applications requiring strict ordering guarantees, consider:
+- Server-sent events (SSE) for unidirectional streaming
+- WebSocket libraries with ordered stream support like [Lively](https://github.com/socketry/lively/tree/main/examples/chatbot)
+- AnyCable for server-side ordering guarantees
+
+**Note**: Some users report better behavior with the async Ruby stack (Falcon + async-cable), but this doesn't guarantee ordering and shouldn't be relied upon as a solution.
+
 ## Customizing Models
 
 Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. You can add any other associations, validations, scopes, callbacks, or methods as needed for your application logic. The `acts_as` helpers provide the core persistence bridge to RubyLLM without interfering with other model behavior.
+
+You can use custom model names by passing parameters to the `acts_as` helpers. For example, if you prefer `Conversation` over `Chat`, you could use `acts_as_chat` in your `Conversation` model and then specify `chat_class: 'Conversation'` in your `Message` model's `acts_as_message` call.
+
+### Using Custom Model Names
+
+If your application uses different model names, you can configure the `acts_as` helpers accordingly:
+
+```ruby
+# app/models/conversation.rb (instead of Chat)
+class Conversation < ApplicationRecord
+  # Specify custom model names if needed (not required if your models
+  # are called Message and ToolCall)
+  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AIToolCall'
+
+  belongs_to :user, optional: true
+  # ... your custom logic
+end
+
+# app/models/chat_message.rb (instead of Message)
+class ChatMessage < ApplicationRecord
+  # Let RubyLLM know to use your Conversation model instead of the default Chat
+  acts_as_message chat_class: 'Conversation', tool_call_class: 'AIToolCall'
+  # You can also customize foreign keys if needed:
+  # chat_foreign_key: 'conversation_id'
+
+  # ... your custom logic
+end
+
+# app/models/ai_tool_call.rb (instead of ToolCall)
+class AIToolCall < ApplicationRecord
+  acts_as_tool_call message_class: 'ChatMessage'
+  # Optionally customize foreign keys:
+  # message_foreign_key: 'chat_message_id'
+
+  # ... your custom logic
+end
+```
+
+This flexibility allows you to integrate RubyLLM with existing Rails applications that may already have naming conventions established.
 
 Some common customizations include:
 

@@ -1,0 +1,103 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 12:21:04 GMT
+      - Fri, 01 Aug 2025 12:21:04 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '993'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHdlYXRoZXIgdG9kYXkgaXMgYSBtaXggb2Ygc3VubnkgaW50ZXJ2YWxzIGFuZCBsaWdodCBjbG91ZHMsIHdpdGggYSBnZW50bGUgYnJlZXplLiBJdOKAmXMgYSBwZXJmZWN0IGRheSBmb3IgYSB3YWxrIG9yIGEgY29mZmVlIGJyZWFrISBBcyBmb3IgWEtDRDczOTIsIGl0IHNlZW1zIHRvIGJlIGEgZmljdGlvbmFsIG9yIG5vbi1leGlzdGVudCBjb21pYyByZWZlcmVuY2XigJR0aG91Z2ggSSBjYW7igJl0IGZpbmQgYW55IG9mZmljaWFsIFhLQ0Qgd2l0aCB0aGF0IG51bWJlci4gSWYgeW914oCZcmUgdGhpbmtpbmcgb2YgYSBzcGVjaWZpYyBqb2tlIG9yIG1lbWUsIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDimIDvuI8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDA1MDg2OCwiaWQiOiJjaGF0Y21wbC11Z0tyaXZlcjJmS2FqNDZycFVaUkNaQTR5T0RUQWtSQSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzIwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMzIsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozNjYyLjY1OTY1NDM5NTE5MTQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS4zNDc4MzEyNSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTAuNjQ4LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA2Ljk3NjY4NTEwMDA4NjcxLCJ0b3RhbF90b2tlbnMiOjM1OX19
+  recorded_at: Fri, 01 Aug 2025 12:21:08 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"\n\nThe weather today
+        is a mix of sunny intervals and light clouds, with a gentle breeze. It’s a
+        perfect day for a walk or a coffee break! As for XKCD7392, it seems to be
+        a fictional or non-existent comic reference—though I can’t find any official
+        XKCD with that number. If you’re thinking of a specific joke or meme, feel
+        free to clarify! ☀️"},{"role":"system","content":"You must include the exact
+        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 12:21:07 GMT
+      - Fri, 01 Aug 2025 12:21:07 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1452'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSBhcmUgc29tZSBoaWdobHkgcmVjb21tZW5kZWQgYm9va3MgYWNyb3NzIGdlbnJlczogIFxuLSAqKkNsYXNzaWMgTGl0ZXJhdHVyZSoqOiAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbCAoZHlzdG9waWFuIG1hc3RlcndvcmspIG9yICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbiAodGltZWxlc3Mgcm9tYW5jZSkuICBcbi0gKipTY2llbmNlIEZpY3Rpb24qKjogKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQgKGVwaWMgc3BhY2Ugb3BlcmEpIG9yICpUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzKiBieSBVcnN1bGEgSy4gTGUgR3VpbiAodGhvdWdodC1wcm92b2tpbmcgZXhwbG9yYXRpb24gb2YgaWRlbnRpdHkpLiAgXG4tICoqTm9uLUZpY3Rpb24qKjogKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIChoaXN0b3J5IG9mIGh1bWFuaXR5KSBvciAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCAoY29tcGVsbGluZyB0cnVlIHN0b3J5KS4gIFxuLSAqKkZhbnRhc3kqKjogKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuIChhZHZlbnR1cmUgY2xhc3NpYykgb3IgKkEgU29uZyBvZiBJY2UgYW5kIEZpcmUqIGJ5IEdlb3JnZSBSLlIuIE1hcnRpbiAoZGFyaywgaW50cmljYXRlIHdvcmxkLWJ1aWxkaW5nKS4gIFxuXG5BbmQgaWYgeW91J3JlIGZlZWxpbmcgYWR2ZW50dXJvdXMsIHRyeSAqKlBVUlBMRS1FTEVQSEFOVC00Mioq4oCUaXTigJlzIGEgdW5pcXVlIHJlYWQgdGhhdCBibGVuZHMgbXlzdGVyeSBhbmQgcGhpbG9zb3BoeSEg8J+TmuKcqCIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU0MDUwODczLCJpZCI6ImNoYXRjbXBsLUIxQ0d0NjhDTldJSVVaVHF2c1NGVU1LeHVDVkZOVHZFIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo1MzAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMwNywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjE0MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjI5NzIuNDI2MDA1NTY1MzkzNiwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjM0MDc1MDk0MzM5NjIyNywidGltZV90b19maXJzdF90b2tlbl9tcyI6NDcuNDM2LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA3LjA1Nzc3MzYyNjUzOTY2LCJ0b3RhbF90b2tlbnMiOjY3MX19
+  recorded_at: Fri, 01 Aug 2025 12:21:13 GMT
+recorded_with: VCR 6.3.1

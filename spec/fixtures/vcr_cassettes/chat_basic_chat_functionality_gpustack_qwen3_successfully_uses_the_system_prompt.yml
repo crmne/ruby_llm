@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 12:21:01 GMT
+      - Fri, 01 Aug 2025 12:21:01 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '937'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSSBjYW4ndCBhY2Nlc3MgcmVhbC10aW1lIHdlYXRoZXIgZGF0YSwgYnV0IGlmIHlvdSdyZSBsb29raW5nIGZvciBhIGh1bW9yb3VzIHRha2Ugb24gd2VhdGhlci1yZWxhdGVkIHRvcGljcywgeW91IG1pZ2h0IGVuam95IFhLQ0Q3MzkyICh0aG91Z2ggaXQncyBmaWN0aW9uYWwsIGFzIFhLQ0QgY29taWNzIGFyZSBudW1iZXJlZCBzZXF1ZW50aWFsbHkgYW5kIDczOTIgZG9lc24ndCBleGlzdCkuIEZvciBhY3R1YWwgd2VhdGhlciB1cGRhdGVzLCBjaGVjayBhIHJlbGlhYmxlIHNvdXJjZSEg4piB77iP8J+Mpu+4jyIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU0MDUwODY1LCJpZCI6ImNoYXRjbXBsLVIyTkF1V3pFcmFFMk9ZSkZzWENSSkdURlF6enZ1bFNKIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjozMDQsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjIzMCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjM5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MjA5Ni4zMjMzNzEzMTc5OTYsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC41NjM3MjAzOTQ3MzY4NDIsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjE4LjYwNCwidG9rZW5zX3Blcl9zZWNvbmQiOjExNi43NzE2Nzc5NTEzOTQ1NSwidG90YWxfdG9rZW5zIjozNDN9fQ==
+  recorded_at: Fri, 01 Aug 2025 12:21:05 GMT
+recorded_with: VCR 6.3.1

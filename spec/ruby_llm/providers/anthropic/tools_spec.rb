@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       })
     end
 
-    it 'formats a message with content and tool call' do # rubocop:disable RSpec/ExampleLength
+    it 'formats a message with content and tool call' do
       result = tools.format_tool_call(msg)
 
       expect(result).to eq({
@@ -46,7 +46,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                         })
       end
 
-      it 'formats a message with only tool call' do # rubocop:disable RSpec/ExampleLength
+      it 'formats a message with only tool call' do
         result = tools.format_tool_call(msg)
 
         expect(result).to eq({
@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                         })
       end
 
-      it 'formats a message with only tool call' do # rubocop:disable RSpec/ExampleLength
+      it 'formats a message with only tool call' do
         result = tools.format_tool_call(msg)
 
         expect(result).to eq({
@@ -91,6 +91,51 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                              })
       end
     end
+
+    it 'formats messages with multiple tool calls correctly' do
+      tool_calls = {
+        'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {}),
+        'tool_2' => RubyLLM::ToolCall.new(id: 'tool_2', name: 'dice_roll', arguments: {}),
+        'tool_3' => RubyLLM::ToolCall.new(id: 'tool_3', name: 'dice_roll', arguments: {})
+      }
+
+      msg = RubyLLM::Message.new(
+        role: :assistant,
+        content: 'Rolling dice 3 times',
+        tool_calls: tool_calls
+      )
+
+      formatted = described_class.format_tool_call(msg)
+
+      expect(formatted[:role]).to eq('assistant')
+      expect(formatted[:content].size).to eq(4) # 1 text + 3 tool_use blocks
+
+      # Check text content
+      expect(formatted[:content][0]).to eq({ type: 'text', text: 'Rolling dice 3 times' })
+      # Check all 3 tool use blocks are present
+      tool_use_blocks = formatted[:content][1..3]
+      expect(tool_use_blocks.map { |b| b[:type] }).to all(eq('tool_use'))
+      expect(tool_use_blocks.map { |b| b[:id] }).to contain_exactly('tool_1', 'tool_2', 'tool_3')
+      expect(tool_use_blocks.map { |b| b[:name] }).to all(eq('dice_roll'))
+    end
+
+    it 'does not include empty text content with multiple tool calls' do
+      tool_calls = {
+        'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {})
+      }
+
+      msg = RubyLLM::Message.new(
+        role: :assistant,
+        content: '', # Empty content
+        tool_calls: tool_calls
+      )
+
+      formatted = described_class.format_tool_call(msg)
+
+      expect(formatted[:role]).to eq('assistant')
+      expect(formatted[:content].size).to eq(1) # Only tool_use block, no text
+      expect(formatted[:content][0][:type]).to eq('tool_use')
+    end
   end
 
   describe '.format_tool_result' do
@@ -100,7 +145,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       content: 'Tool result')
     end
 
-    it 'formats a tool result message' do # rubocop:disable RSpec/ExampleLength
+    it 'formats a tool result message' do
       result = tools.format_tool_result(msg)
 
       expect(result).to eq({
@@ -113,6 +158,39 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                                }
                              ]
                            })
+    end
+  end
+
+  describe '.parse_tool_calls' do
+    it 'parses multiple tool calls from content blocks' do
+      content_blocks = [
+        { 'type' => 'text', 'text' => 'Rolling dice' },
+        { 'type' => 'tool_use', 'id' => 'tool_1', 'name' => 'dice_roll', 'input' => {} },
+        { 'type' => 'tool_use', 'id' => 'tool_2', 'name' => 'dice_roll', 'input' => {} },
+        { 'type' => 'tool_use', 'id' => 'tool_3', 'name' => 'dice_roll', 'input' => {} }
+      ]
+
+      tool_calls = described_class.parse_tool_calls(content_blocks)
+
+      expect(tool_calls).to be_a(Hash)
+      expect(tool_calls.size).to eq(3)
+      expect(tool_calls.keys).to contain_exactly('tool_1', 'tool_2', 'tool_3')
+      expect(tool_calls.values.map(&:name)).to all(eq('dice_roll'))
+    end
+
+    it 'handles single tool call for backward compatibility' do
+      single_block = { 'type' => 'tool_use', 'id' => 'tool_1', 'name' => 'dice_roll', 'input' => {} }
+
+      tool_calls = described_class.parse_tool_calls(single_block)
+
+      expect(tool_calls).to be_a(Hash)
+      expect(tool_calls.size).to eq(1)
+      expect(tool_calls['tool_1'].name).to eq('dice_roll')
+    end
+
+    it 'returns nil for empty or nil input' do
+      expect(described_class.parse_tool_calls(nil)).to be_nil
+      expect(described_class.parse_tool_calls([])).to be_nil
     end
   end
 end

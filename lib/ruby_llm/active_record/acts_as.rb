@@ -84,8 +84,12 @@ module RubyLLM
         attr_reader :tool_call_class
       end
 
-      def to_llm
-        @chat ||= RubyLLM.chat(model: model_id)
+      def to_llm(context: nil)
+        @chat ||= if context
+                    context.chat(model: model_id)
+                  else
+                    RubyLLM.chat(model: model_id)
+                  end
         @chat.reset_messages!
 
         messages.each do |msg|
@@ -125,8 +129,18 @@ module RubyLLM
         self
       end
 
-      def with_context(...)
-        to_llm.with_context(...)
+      def with_context(context)
+        to_llm(context: context)
+        self
+      end
+
+      def with_params(...)
+        to_llm.with_params(...)
+        self
+      end
+
+      def with_schema(...)
+        to_llm.with_schema(...)
         self
       end
 
@@ -137,6 +151,11 @@ module RubyLLM
 
       def on_end_message(...)
         to_llm.on_end_message(...)
+        self
+      end
+
+      def on_tool_call(...)
+        to_llm.on_tool_call(...)
         self
       end
 
@@ -175,9 +194,13 @@ module RubyLLM
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
+          # Convert parsed JSON back to JSON string for storage
+          content = message.content
+          content = content.to_json if content.is_a?(Hash) || content.is_a?(Array)
+
           @message.update!(
             role: message.role,
-            content: message.content,
+            content: content,
             model_id: message.model_id,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens

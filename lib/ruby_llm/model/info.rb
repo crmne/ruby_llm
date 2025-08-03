@@ -20,10 +20,10 @@ module RubyLLM
         @name = data[:name]
         @provider = data[:provider]
         @family = data[:family]
-        @created_at = data[:created_at]
+        @created_at = Utils.to_time(data[:created_at])
         @context_window = data[:context_window]
         @max_output_tokens = data[:max_output_tokens]
-        @knowledge_cutoff = data[:knowledge_cutoff]
+        @knowledge_cutoff = Utils.to_date(data[:knowledge_cutoff])
         @modalities = Modalities.new(data[:modalities] || {})
         @capabilities = data[:capabilities] || []
         @pricing = Pricing.new(data[:pricing] || {})

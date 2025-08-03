@@ -3,12 +3,13 @@ layout: default
 title: Installation
 nav_order: 2
 permalink: /installation
+description: Get RubyLLM up and running in seconds. Just bundle install and add your API key.
 ---
 
 # Installation
 {: .no_toc }
 
-This guide covers how to install RubyLLM.
+The fastest path from zero to AI in Ruby.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

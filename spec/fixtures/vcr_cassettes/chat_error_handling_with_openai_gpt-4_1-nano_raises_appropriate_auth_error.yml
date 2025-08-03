@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Authorization:
       - Bearer invalid-key
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:50:02 GMT
+      - Fri, 01 Aug 2025 09:55:51 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -34,6 +34,10 @@ http_interactions:
       - Origin
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '2'
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -60,5 +64,5 @@ http_interactions:
                 "code": "invalid_api_key"
             }
         }
-  recorded_at: Thu, 17 Jul 2025 09:50:02 GMT
+  recorded_at: Fri, 01 Aug 2025 09:55:51 GMT
 recorded_with: VCR 6.3.1

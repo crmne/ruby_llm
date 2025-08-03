@@ -4,12 +4,13 @@ title: Embeddings
 parent: Guides
 nav_order: 7
 permalink: /guides/embeddings
+description: Power semantic search and recommendations with AI text embeddings
 ---
 
 # Embeddings
 {: .no_toc }
 
-Text embeddings are numerical representations of text that capture semantic meaning. RubyLLM makes it easy to generate embeddings for a variety of applications, including semantic search, clustering, and recommendation systems.
+Unlock the semantic superpowers of AI! 🔮 Build intelligent search, recommendations, and content discovery features that understand meaning, not just keywords.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

@@ -42,6 +42,7 @@ ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'
+require_relative 'support/streaming_error_helpers'
 
 # VCR Configuration
 VCR.configure do |config|
@@ -65,8 +66,13 @@ VCR.configure do |config|
   config.filter_sensitive_data('<ANTHROPIC_API_KEY>') { ENV.fetch('ANTHROPIC_API_KEY', nil) }
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
+  config.filter_sensitive_data('<PERPLEXITY_API_KEY>') { ENV.fetch('PERPLEXITY_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
+  config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
+
+  config.filter_sensitive_data('<GPUSTACK_API_BASE>') { ENV.fetch('GPUSTACK_API_BASE', 'http://http://localhost:11444/v1') }
+  config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', 'test') }
 
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
@@ -76,9 +82,15 @@ VCR.configure do |config|
   config.filter_sensitive_data('<OPENAI_ORGANIZATION>') do |interaction|
     interaction.response.headers['Openai-Organization']&.first
   end
+  config.filter_sensitive_data('<ANTHROPIC_ORGANIZATION_ID>') do |interaction|
+    interaction.response.headers['Anthropic-Organization-Id']&.first
+  end
   config.filter_sensitive_data('<X_REQUEST_ID>') { |interaction| interaction.response.headers['X-Request-Id']&.first }
   config.filter_sensitive_data('<REQUEST_ID>') { |interaction| interaction.response.headers['Request-Id']&.first }
   config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }
+
+  # Filter large strings used to test "context length exceeded" error handling
+  config.filter_sensitive_data('<MASSIVE_TEXT>') { 'a' * 1_000_000 }
 
   # Filter cookies
   config.before_record do |interaction|
@@ -114,8 +126,13 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
+      config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
+      config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+
+      config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://http://localhost:11444/v1')
+      config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', 'test')
 
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
@@ -138,7 +155,10 @@ CHAT_MODELS = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' }
+  { provider: :ollama, model: 'qwen3' },
+  { provider: :gpustack, model: 'qwen3' },
+  { provider: :perplexity, model: 'sonar' },
+  { provider: :mistral, model: 'ministral-3b-latest' }
 ].freeze
 
 PDF_MODELS = [
@@ -154,9 +174,16 @@ VISION_MODELS = [
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' }
+  { provider: :ollama, model: 'qwen3' },
+  { provider: :mistral, model: 'pixtral-12b-latest' }
 ].freeze
 
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
+].freeze
+
+EMBEDDING_MODELS = [
+  { provider: :gemini, model: 'text-embedding-004' },
+  { provider: :openai, model: 'text-embedding-3-small' },
+  { provider: :mistral, model: 'mistral-embed' }
 ].freeze

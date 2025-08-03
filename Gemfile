@@ -4,13 +4,15 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :development do
+group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
   gem 'ferrum'
+  gem 'flay'
   gem 'irb'
+  gem 'json-schema'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
   gem 'pry', '>= 0.14'
@@ -22,6 +24,7 @@ group :development do
   gem 'rubocop', '>= 1.0'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
+  gem 'ruby_llm-schema', '~> 0.1.0'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
 

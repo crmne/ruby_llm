@@ -23,5 +23,27 @@ module RubyLLM
         Array(item)
       end
     end
+
+    def to_time(value)
+      return unless value
+
+      value.is_a?(Time) ? value : Time.parse(value.to_s)
+    end
+
+    def to_date(value)
+      return unless value
+
+      value.is_a?(Date) ? value : Date.parse(value.to_s)
+    end
+
+    def deep_merge(params, payload)
+      params.merge(payload) do |_key, params_value, payload_value|
+        if params_value.is_a?(Hash) && payload_value.is_a?(Hash)
+          deep_merge(params_value, payload_value)
+        else
+          payload_value
+        end
+      end
+    end
   end
 end
