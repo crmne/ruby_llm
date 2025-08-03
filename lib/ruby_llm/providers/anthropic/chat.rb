@@ -33,7 +33,7 @@ module RubyLLM
           end
         end
 
-        def build_base_payload(chat_messages, temperature, model, stream, cache: false)
+        def build_base_payload(chat_messages, model, stream, cache: false)
           messages = chat_messages.map.with_index do |msg, idx|
             message_cache = cache if idx == chat_messages.size - 1
             format_message(msg, cache: message_cache)
