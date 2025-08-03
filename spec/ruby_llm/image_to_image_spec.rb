@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::Image do
   include_context 'with configured RubyLLM'
 
   describe 'basic functionality' do
-    it 'gemini/gemini-2.0-flash-preview-image-generation can paint images' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    it 'gemini/gemini-2.0-flash-preview-image-generation can paint images' do
       chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
       response = chat.ask('put this in a ring', with: 'spec/fixtures/ruby.png')
 
@@ -44,9 +44,9 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_image image
     end
 
-    it 'gemini/gemini-2.0-flash-preview-image-generation can refine images in a conversation' do # rubocop:disable RSpec/MultipleExpectations, RSpec/ExampleLength
+    it 'gemini/gemini-2.0-flash-preview-image-generation can refine images in a conversation' do
       chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
-      response = chat.ask('put this in a ring', with: 'spec/fixtures/ruby.png')
+      chat.ask('put this in a ring', with: 'spec/fixtures/ruby.png')
       response = chat.ask('change the background to blue')
 
       expect(response.content.text).to include('ruby')
