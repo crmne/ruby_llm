@@ -104,7 +104,7 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
 
       it 'reports cached tokens' do
         large_prompt = LARGE_PROMPT * 2
-        large_prompt = large_prompt + 'b' * (1024 * 4) if provider == :gemini
+        large_prompt = large_prompt + 'b' * 1024 if provider == :gemini
 
         response_1 = chat_1.ask("#{large_prompt}\n\nBased on the above, tell me about Ruby")
 
