@@ -43,17 +43,10 @@ module RubyLLM
         parse_embedding_response(response, model:, text:)
       end
 
-      def paint(prompt, model:, size:, connection:)
-        payload = render_image_payload(prompt, model:, size:)
+      def paint(prompt, model:, size:, connection:, with:, params:)
+        payload = render_image_payload(prompt, model:, size:, with:, params:)
         response = connection.post images_url, payload
         parse_image_response(response, model:)
-      end
-
-      def edit(prompt, model:, with:, options:, connection:)
-        payload = render_edit_payload(prompt, model:, with:, options:)
-
-        response = connection.post(edits_url, payload)
-        parse_edit_response(response, model:)
       end
 
       def configured?(config = nil)

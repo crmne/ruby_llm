@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Image do
 
     context 'with local files' do
       it 'supports image edits with a valid local PNG' do
-        image = RubyLLM.edit(prompt, with: { image: 'spec/fixtures/ruby.png' }, model: model)
+        image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model)
 
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
@@ -92,19 +92,19 @@ RSpec.describe RubyLLM::Image do
 
       it 'rejects edits with a non-PNG local file' do
         expect do
-          RubyLLM.edit(prompt, with: { image: 'spec/fixtures/ruby.wav' }, model: model)
+          RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.wav', model: model)
         end.to raise_error(RubyLLM::BadRequestError, /Invalid image file or mode for image 0/)
       end
 
       it 'rejects edits with a non-existent local file' do
         expect do
-          RubyLLM.edit(prompt, with: { image: 'spec/fixtures/nonexistent.png' }, model: model)
+          RubyLLM.paint(prompt, with: 'spec/fixtures/nonexistent.png', model: model)
         end.to raise_error(Errno::ENOENT, /No such file or directory/)
       end
 
       it 'customizes image output' do
-        image = RubyLLM.edit(prompt, with: { image: 'spec/fixtures/ruby.png' }, model: model,
-                                     options: { size: '1024x1024', quality: 'low' })
+        image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model,
+                                     params: { size: '1024x1024', quality: 'low' })
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
         expect(image.usage['output_tokens']).to eq(272)
@@ -113,7 +113,7 @@ RSpec.describe RubyLLM::Image do
 
     context 'with remote URLs' do
       it 'supports image edits with a valid remote PNG URL' do
-        image = RubyLLM.edit(prompt, with: { image: 'https://paolino.me/images/rubyllm-1.0.png' }, model: model)
+        image = RubyLLM.paint(prompt, with: 'https://paolino.me/images/rubyllm-1.0.png', model: model)
 
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
@@ -131,13 +131,13 @@ RSpec.describe RubyLLM::Image do
 
       it 'rejects edits with a URL having invalid content type' do
         expect do
-          RubyLLM.edit(prompt, with: { image: 'https://rubyllm.com/assets/images/logotype.svg' }, model: model)
+          RubyLLM.paint(prompt, with: 'https://rubyllm.com/assets/images/logotype.svg', model: model)
         end.to raise_error(RubyLLM::BadRequestError, /unsupported mimetype/)
       end
 
       it 'rejects edits with a URL that returns 404' do
         expect do
-          RubyLLM.edit(prompt, with: { image: 'https://rubyllm.com/some-asset-that-does-not-exist.png' }, model: model)
+          RubyLLM.paint(prompt, with: 'https://rubyllm.com/some-asset-that-does-not-exist.png', model: model)
         end.to raise_error(OpenURI::HTTPError, /404 Not Found/)
       end
     end

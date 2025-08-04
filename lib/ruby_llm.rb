@@ -56,10 +56,6 @@ module RubyLLM
       Image.paint(...)
     end
 
-    def edit(...)
-      Image.edit(...)
-    end
-
     def models
       Models.instance
     end
