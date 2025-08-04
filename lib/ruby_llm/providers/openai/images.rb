@@ -6,15 +6,19 @@ module RubyLLM
       # Image generation methods for the OpenAI API integration
       module Images
         def paint(prompt, model:, size:, connection:, with:, params:) # rubocop:disable Metrics/ParameterLists
-          @with = with
-          connection = connection_multipart(connection.config) if needs_multipart_connection?(connection)
+          @operation = with.nil? ? :generation : :editing
+          connection = connection_multipart(connection.config) if editing? && !multipart_middleware?(connection)
           super
         end
 
         private
 
-        def needs_multipart_connection?(connection)
-          @with && !multipart_middleware?(connection)
+        def editing?
+          @operation == :editing
+        end
+
+        def generating?
+          @operation == :generation
         end
 
         def multipart_middleware?(connection)
@@ -24,7 +28,7 @@ module RubyLLM
         module_function
 
         def images_url
-          @with.nil? ? generation_url : edits_url
+          generating? ? generation_url : edits_url
         end
 
         def generation_url
@@ -36,8 +40,14 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:, with:, params:)
-          return render_edit_payload(prompt, model:, with:, params:) unless with.nil?
+          if generating?
+            render_generation_payload(prompt, model:, size:)
+          else
+            render_edit_payload(prompt, model:, with:, params:)
+          end
+        end
 
+        def render_generation_payload(prompt, model:, size:)
           {
             model: model,
             prompt: prompt,
@@ -61,17 +71,24 @@ module RubyLLM
         end
 
         def parse_image_response(response, model:)
-          return parse_edit_response(response, model:) if @with
+          if generating?
+            parse_generation_response(response, model:)
+          else
+            parse_edit_response(response, model:)
+          end
+        end
 
+        def parse_generation_response(response, model:)
           data = response.body
           image_data = data['data'].first
 
           Image.new(
             url: image_data['url'],
-            mime_type: 'image/png', # DALL-E typically returns PNGs
+            mime_type: 'image/png',
             revised_prompt: image_data['revised_prompt'],
             model_id: model,
-            data: image_data['b64_json']
+            data: image_data['b64_json'],
+            usage: data['usage']
           )
         end
 
@@ -79,10 +96,10 @@ module RubyLLM
           data = response.body
           image_data = data['data'].first
           Image.new(
-            data: image_data['b64_json'], # Edits API returns base64 when requested
-            mime_type: 'image/png',
+            mime_type: "image/png",
+            model_id: model,
+            data: image_data['b64_json'],
             usage: data['usage'],
-            model_id: model
           )
         end
       end
