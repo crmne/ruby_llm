@@ -5,14 +5,14 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}]}'
+        13.4050)"}},"required":["latitude","longitude"]}}],"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:20:35 GMT
+      - Fri, 01 Aug 2025 10:52:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,31 +41,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-05T19:20:34Z'
+      - '2025-08-01T10:52:21Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-05T19:20:35Z'
+      - '2025-08-01T10:52:22Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-05T19:20:33Z'
+      - '2025-08-01T10:52:20Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-05T19:20:34Z'
+      - '2025-08-01T10:52:21Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -78,24 +78,24 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01D7rETf9DU4cDUdmh5e5tbm","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01592zPmAcDZhb94V6Zv8mrk","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
-  recorded_at: Mon, 05 May 2025 19:20:35 GMT
+      string: '{"id":"msg_013cUvQX4rNPMThs3txwqby4","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01CmAif6sAdNam2JJJHpVM6H","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90,"service_tier":"standard"}}'
+  recorded_at: Fri, 01 Aug 2025 10:52:22 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01592zPmAcDZhb94V6Zv8mrk","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01592zPmAcDZhb94V6Zv8mrk","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"temperature":0.7,"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you check the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_01CmAif6sAdNam2JJJHpVM6H","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01CmAif6sAdNam2JJJHpVM6H","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}]}'
+        13.4050)"}},"required":["latitude","longitude"]}}],"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -112,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 05 May 2025 19:20:39 GMT
+      - Fri, 01 Aug 2025 10:52:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,31 +124,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-05-05T19:20:37Z'
+      - '2025-08-01T10:52:22Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-05-05T19:20:38Z'
+      - '2025-08-01T10:52:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-05-05T19:20:35Z'
+      - '2025-08-01T10:52:22Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-05-05T19:20:37Z'
+      - '2025-08-01T10:52:22Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -162,6 +162,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Im1zZ18wMThpUTRRYUVaSkxlQ3FxSDg0YlNmNkgiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgd2VhdGhlciBkYXRhLCBoZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG4tIFRlbXBlcmF0dXJlOiAxNcKwQyAoNTnCsEYpXG4tIFdpbmQgU3BlZWQ6IDEwIGttL2hcblxuSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIGEgbW9kZXJhdGUgYnJlZXplLiBUaGUgdGVtcGVyYXR1cmUgaXMgY29tZm9ydGFibGUsIHN1aXRhYmxlIGZvciBsaWdodCBjbG90aGluZyBvciBhIGxpZ2h0IGphY2tldC4gRW5qb3kgdGhlIHdlYXRoZXIhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1MTgsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjc2fX0=
-  recorded_at: Mon, 05 May 2025 19:20:39 GMT
+        eyJpZCI6Im1zZ18wMUs1bkpVUEpzRGJwSkdIOVJwZ2pid1EiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJCYXNlZCBvbiB0aGUgY3VycmVudCB3ZWF0aGVyIGRhdGEsIGluIEJlcmxpbjpcbi0gVGVtcGVyYXR1cmU6IDE1wrBDICg1OcKwRilcbi0gV2luZCBTcGVlZDogMTAga20vaFxuXG5JdCBzZWVtcyBsaWtlIGEgbWlsZCBkYXkgaW4gQmVybGluIHdpdGggYSBtb2RlcmF0ZSBicmVlemUuIFRoZSB0ZW1wZXJhdHVyZSBpcyBjb21mb3J0YWJsZSwgc3VpdGFibGUgZm9yIGxpZ2h0IG91dGRvb3IgYWN0aXZpdGllcy4gWW91IG1pZ2h0IHdhbnQgdG8gYnJpbmcgYSBsaWdodCBqYWNrZXQgb3Igc3dlYXRlciBpZiB5b3UncmUgcGxhbm5pbmcgdG8gYmUgb3V0c2lkZSBmb3IgYW4gZXh0ZW5kZWQgcGVyaW9kLiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NTE4LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJvdXRwdXRfdG9rZW5zIjo4Nywic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
+  recorded_at: Fri, 01 Aug 2025 10:52:24 GMT
 recorded_with: VCR 6.3.1

@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Aug 2025 11:08:57 GMT
+      Content-Length:
+      - '1083'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-346","object":"chat.completion","created":1754046537,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out which function to use here. Looking at the tools provided, there''s a
+        function called best_language_to_learn. The description says it gets the best
+        language to learn, and it doesn''t require any parameters. Since the user''s
+        question is exactly about determining the best language, I should call that
+        function. No arguments are needed, so the tool call will just have the name
+        and an empty arguments object. Let me make sure I''m not missing anything
+        else. The function seems perfect for this query. Alright, time to structure
+        the tool call.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_17n9pfpk","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":151,"total_tokens":289}}
+
+        '
+  recorded_at: Fri, 01 Aug 2025 11:08:57 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"<think>\nOkay, the
+        user is asking, \"What''s the best language to learn?\" I need to figure out
+        which function to use here. Looking at the tools provided, there''s a function
+        called best_language_to_learn. The description says it gets the best language
+        to learn, and it doesn''t require any parameters. Since the user''s question
+        is exactly about determining the best language, I should call that function.
+        No arguments are needed, so the tool call will just have the name and an empty
+        arguments object. Let me make sure I''m not missing anything else. The function
+        seems perfect for this query. Alright, time to structure the tool call.\n</think>\n\n","tool_calls":[{"id":"call_17n9pfpk","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_17n9pfpk"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Aug 2025 11:08:58 GMT
+      Content-Length:
+      - '1118'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU0MDQ2NTM4LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIEkgY2FsbGVkIHRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIGZ1bmN0aW9uLCBhbmQgdGhlIHJlc3BvbnNlIHdhcyBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGluZm8gbmVlZGVkLCBidXQgdGhlIGZ1bmN0aW9uIGRpZG4ndCBwcm92aWRlIGFueSBwYXJhbWV0ZXJzIG9yIGV4dHJhIGRldGFpbHMuIFNvIEknbGwganVzdCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIE1heWJlIGFkZCBhIGZyaWVuZGx5IG5vdGUgYWJvdXQgd2h5IFJ1YnkgaXMgZ29vZCwgbGlrZSBpdHMgc2ltcGxpY2l0eSBhbmQgdmVyc2F0aWxpdHkuIFRoYXQgc2hvdWxkIGNvdmVyIGl0LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn4yfXG5cblJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHZlcnNhdGlsaXR5LiBJdCdzIGdyZWF0IGZvciBiZWdpbm5lcnMgYW5kIHBvd2VyZnVsIGVub3VnaCBmb3IgY29tcGxleCBwcm9qZWN0cy4gV2hldGhlciB5b3UncmUgaW50byB3ZWIgZGV2ZWxvcG1lbnQsIGRhdGEgYW5hbHlzaXMsIG9yIGF1dG9tYXRpb24sIFJ1Ynkgb2ZmZXJzIGEgc21vb3RoIGxlYXJuaW5nIGN1cnZlIGFuZCBhIHN1cHBvcnRpdmUgY29tbXVuaXR5LiBIYXBweSBjb2RpbmchIPCfmoAifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NiwiY29tcGxldGlvbl90b2tlbnMiOjE3MiwidG90YWxfdG9rZW5zIjo0NTh9fQo=
+  recorded_at: Fri, 01 Aug 2025 11:08:58 GMT
+recorded_with: VCR 6.3.1

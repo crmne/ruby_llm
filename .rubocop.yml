@@ -8,6 +8,8 @@ AllCops:
   Exclude:
     - docs/**/*
     - vendor/**/*
+    - gemfiles/**/*
+  SuggestExtensions: false
 
 Metrics/ClassLength:
   Enabled: false
@@ -18,4 +20,8 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   Enabled: false
 Metrics/ModuleLength:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleExpectations:
   Enabled: false

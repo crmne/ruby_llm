@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Aug 2025 11:08:28 GMT
+      Content-Length:
+      - '2016'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-187","object":"chat.completion","created":1754046508,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking about Ruby''s creator. Let me think. Ruby is a programming
+        language, right? I remember that the creator''s name is Yukihiro \"Matz\"
+        Matsumoto. Wait, is that correct? Let me verify. Yes, Matsumoto is the original
+        creator of Ruby. He started developing it in the mid-90s. The name Ruby comes
+        from the gemstone, I think. But I should check if there are any other contributors
+        or if Matsumoto is the sole creator. Oh, right, he''s the main one, but there
+        are other developers who contributed to its evolution. But the question specifically
+        asks for the creator, so the answer should be Matsumoto. Maybe the user is
+        a beginner or just curious about the history of Ruby. They might also be interested
+        in knowing why he chose the name Ruby or some of the language''s features.
+        But since the question is straightforward, I should focus on the creator''s
+        name and maybe a brief mention of when it was created. I need to make sure
+        there''s no confusion with other languages or people named Ruby. Also, confirm
+        that there''s no other person associated with creating Ruby. Alright, I think
+        that''s it. The answer is Yukihiro Matsumoto, also known as Matz.\n\u003c/think\u003e\n\nRuby
+        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer. He
+        began developing the Ruby programming language in the mid-1990s, with the
+        first version (Ruby 0.1) released in 1995. The language was designed to balance
+        simplicity with productivity, and its name is derived from the gemstone \"ruby,\"
+        which Matsumoto chose as a nod to the language''s elegance and beauty. Matsumoto
+        is also known for his philosophy of \"matz''s law,\" which emphasizes the
+        importance of user-friendliness and simplicity in programming."},"finish_reason":"stop"}],"usage":{"prompt_tokens":14,"completion_tokens":393,"total_tokens":407}}
+
+        '
+  recorded_at: Fri, 01 Aug 2025 11:08:28 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
+        creator?"},{"role":"assistant","content":"<think>\nOkay, the user is asking
+        about Ruby''s creator. Let me think. Ruby is a programming language, right?
+        I remember that the creator''s name is Yukihiro \"Matz\" Matsumoto. Wait,
+        is that correct? Let me verify. Yes, Matsumoto is the original creator of
+        Ruby. He started developing it in the mid-90s. The name Ruby comes from the
+        gemstone, I think. But I should check if there are any other contributors
+        or if Matsumoto is the sole creator. Oh, right, he''s the main one, but there
+        are other developers who contributed to its evolution. But the question specifically
+        asks for the creator, so the answer should be Matsumoto. Maybe the user is
+        a beginner or just curious about the history of Ruby. They might also be interested
+        in knowing why he chose the name Ruby or some of the language''s features.
+        But since the question is straightforward, I should focus on the creator''s
+        name and maybe a brief mention of when it was created. I need to make sure
+        there''s no confusion with other languages or people named Ruby. Also, confirm
+        that there''s no other person associated with creating Ruby. Alright, I think
+        that''s it. The answer is Yukihiro Matsumoto, also known as Matz.\n</think>\n\nRuby
+        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer. He
+        began developing the Ruby programming language in the mid-1990s, with the
+        first version (Ruby 0.1) released in 1995. The language was designed to balance
+        simplicity with productivity, and its name is derived from the gemstone \"ruby,\"
+        which Matsumoto chose as a nod to the language''s elegance and beauty. Matsumoto
+        is also known for his philosophy of \"matz''s law,\" which emphasizes the
+        importance of user-friendliness and simplicity in programming."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Aug 2025 11:08:31 GMT
+      Content-Length:
+      - '1545'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-738","object":"chat.completion","created":1754046511,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking about the year Ruby was created. I remember from the previous
+        conversation that Yukihiro Matsumoto, or Matz, started developing Ruby in
+        the mid-90s. The first version was Ruby 0.1 in 1995. But wait, was it exactly
+        1995? Let me double-check. I think the initial release was in 1995, but maybe
+        the exact date or the version number might have different sources. Some sources
+        say the first version was in 1995, others might mention 1996. Wait, the user
+        is specifically asking for the year. The original answer I gave was 1995,
+        but I should confirm. Let me recall: Matsumoto started working on Ruby in
+        1993, but the first public release was in 1995. So the answer is 1995. The
+        user might be looking for the year when the first version was released, not
+        the start of development. I should make sure to state that the first version,
+        Ruby 0.1, was released in 1995. That''s the key date. I need to present this
+        clearly without confusion.\n\u003c/think\u003e\n\nYukihiro \"Matz\" Matsumoto
+        created the Ruby programming language, and the **first version (Ruby 0.1)**
+        was released in **1995**. This marked the official debut of Ruby. While Matsumoto
+        began developing the language in the mid-1990s, the public release came in
+        1995."},"finish_reason":"stop"}],"usage":{"prompt_tokens":155,"completion_tokens":336,"total_tokens":491}}
+
+        '
+  recorded_at: Fri, 01 Aug 2025 11:08:31 GMT
+recorded_with: VCR 6.3.1

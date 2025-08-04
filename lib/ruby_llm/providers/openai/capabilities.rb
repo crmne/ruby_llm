@@ -217,10 +217,13 @@ module RubyLLM
           end
         end
 
-        def normalize_temperature(temperature, model_id)
+        def self.normalize_temperature(temperature, model_id)
           if model_id.match?(/^o\d/)
             RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
             1.0
+          elsif model_id.match?(/-search/)
+            RubyLLM.logger.debug "Model #{model_id} does not accept temperature parameter, removing"
+            nil
           else
             temperature
           end
@@ -265,7 +268,7 @@ module RubyLLM
           # Advanced capabilities
           capabilities << 'reasoning' if model_id.match?(/o1/)
 
-          if model_id.match?(/gpt-4-turbo|gpt-4o|claude/)
+          if model_id.match?(/gpt-4-turbo|gpt-4o/)
             capabilities << 'image_generation' if model_id.match?(/vision/)
             capabilities << 'speech_generation' if model_id.match?(/audio/)
             capabilities << 'transcription' if model_id.match?(/audio/)

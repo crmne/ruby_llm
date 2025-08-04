@@ -4,12 +4,13 @@ title: Chatting with AI Models
 parent: Guides
 nav_order: 2
 permalink: /guides/chat
+description: Chat with any AI model using one simple API. Handle images, audio, PDFs, and streaming with ease.
 ---
 
 # Chatting with AI Models
 {: .no_toc }
 
-The heart of RubyLLM is the `Chat` object, providing a unified and intuitive interface for conversational interactions with various AI models.
+One API for all AI conversations. Just ask.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -27,6 +28,7 @@ After reading this guide, you will know:
 *   How to select specific models and providers.
 *   How to interact with models using images, audio, and PDFs.
 *   How to control response creativity using temperature.
+*   How to request structured output with JSON schemas.
 *   How to track token usage.
 *   How to use chat event handlers.
 
@@ -119,7 +121,7 @@ RubyLLM manages a registry of known models and their capabilities. For detailed 
 
 ## Multi-modal Conversations
 
-Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, and even PDFs in your chat messages using the `with:` option in the `ask` method.
+Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, text files, and PDFs in your chat messages using the `with:` option in the `ask` method.
 
 ### Working with Images
 
@@ -130,17 +132,15 @@ Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-o
 chat = RubyLLM.chat(model: 'gpt-4o')
 
 # Ask about a local image file
-response = chat.ask "Describe this logo.", with: { image: "path/to/ruby_logo.png" }
+response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
 puts response.content
 
 # Ask about an image from a URL
-response = chat.ask "What kind of architecture is shown here?", with: { image: "https://example.com/eiffel_tower.jpg" }
+response = chat.ask "What kind of architecture is shown here?", with: "https://example.com/eiffel_tower.jpg"
 puts response.content
 
 # Send multiple images
-response = chat.ask "Compare the user interfaces in these two screenshots.", with: {
-  image: ["screenshot_v1.png", "screenshot_v2.png"]
-}
+response = chat.ask "Compare the user interfaces in these two screenshots.", with: ["screenshot_v1.png", "screenshot_v2.png"]
 puts response.content
 ```
 
@@ -154,11 +154,27 @@ Provide audio file paths to audio-capable models (like `gpt-4o-audio-preview`).
 chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
 
 # Transcribe or ask questions about audio content
-response = chat.ask "Please transcribe this meeting recording.", with: { audio: "path/to/meeting.mp3" }
+response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
 puts response.content
 
 # Ask follow-up questions based on the audio context
 response = chat.ask "What were the main action items discussed?"
+puts response.content
+```
+
+### Working with Text Files
+
+Provide text file paths to models that support document analysis.
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+
+# Analyze a text file
+response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
+puts response.content
+
+# Ask questions about code files
+response = chat.ask "Explain what this Ruby file does.", with: "app/models/user.rb"
 puts response.content
 ```
 
@@ -171,20 +187,48 @@ Provide PDF paths or URLs to models that support document analysis (currently Cl
 chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
 
 # Ask about a local PDF
-response = chat.ask "Summarize the key findings in this research paper.", with: { pdf: "path/to/paper.pdf" }
+response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
 puts response.content
 
 # Ask about a PDF via URL
-response = chat.ask "What are the terms and conditions outlined here?", with: { pdf: "https://example.com/terms.pdf" }
+response = chat.ask "What are the terms and conditions outlined here?", with: "https://example.com/terms.pdf"
 puts response.content
 
 # Combine text and PDF context
-response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: { pdf: "manual.pdf" }
+response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: "manual.pdf"
 puts response.content
 ```
 
 {: .note }
 **PDF Limitations:** Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
+
+### Simplified Attachment API
+
+RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+
+# Single file - type automatically detected
+response = chat.ask "What's in this file?", with: "path/to/document.pdf"
+
+# Multiple files of different types
+response = chat.ask "Analyze these files", with: [
+  "diagram.png",
+  "report.pdf",
+  "meeting_notes.txt",
+  "recording.mp3"
+]
+
+# Still works with the explicit hash format if needed
+response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
+```
+
+**Supported file types:**
+- **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Audio:** .mp3, .wav, .m4a, .ogg, .flac
+- **Documents:** .pdf, .txt, .md, .csv, .json, .xml
+- **Code:** .rb, .py, .js, .html, .css (and many others)
 
 ## Controlling Creativity: Temperature
 
@@ -203,6 +247,184 @@ puts response2.content
 ```
 
 You can set the temperature using `with_temperature`, which returns the `Chat` instance for chaining.
+
+## Custom Request Parameters (`with_params`)
+{: .d-inline-block }
+
+
+You can configure additional provider-specific features by adding custom fields to each API request. Use the `with_params` method.
+
+```ruby
+# response_format parameter is supported by :openai, :ollama, :deepseek
+chat = RubyLLM.chat.with_params(response_format: { type: 'json_object' })
+response = chat.ask "What is the square root of 64? Answer with a JSON object with the key `result`."
+puts JSON.parse(response.content)
+```
+
+Allowed parameters vary widely by provider and model. Please consult the provider's documentation.
+
+## Structured Output with JSON Schemas (`with_schema`)
+{: .d-inline-block }
+
+
+RubyLLM supports structured output, which guarantees that AI responses conform to your specified JSON schema. This is different from JSON mode – while JSON mode guarantees valid JSON syntax, structured output enforces the exact schema you define.
+
+{: .note }
+**Structured Output vs JSON Mode:** JSON mode (using `with_params(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
+
+```ruby
+# JSON mode - guarantees valid JSON, but no specific structure
+chat = RubyLLM.chat.with_params(response_format: { type: 'json_object' })
+response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
+# Could return any valid JSON structure
+
+# Structured output - guarantees exact schema
+class LanguagesSchema < RubyLLM::Schema
+  array :languages do
+    object do
+      string :name
+      integer :year
+    end
+  end
+end
+
+chat = RubyLLM.chat.with_schema(LanguagesSchema)
+response = chat.ask("List 3 programming languages with their year created")
+# Always returns: {"languages" => [{"name" => "...", "year" => ...}, ...]}
+```
+
+### Using RubyLLM::Schema (Recommended)
+
+The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) gem:
+
+```ruby
+# First, install the gem: gem install ruby_llm-schema
+require 'ruby_llm/schema'
+
+# Define your schema as a class
+class PersonSchema < RubyLLM::Schema
+  string :name, description: "Person's full name"
+  integer :age, description: "Person's age in years"
+end
+
+# Use it with a chat
+chat = RubyLLM.chat
+response = chat.with_schema(PersonSchema).ask("Generate a person named Alice who is 30 years old")
+
+# The response is automatically parsed from JSON
+puts response.content # => {"name" => "Alice", "age" => 30}
+puts response.content.class # => Hash
+```
+
+### Using Manual JSON Schemas
+
+If you prefer not to use RubyLLM::Schema, you can provide a JSON Schema directly:
+
+```ruby
+person_schema = {
+  type: 'object',
+  properties: {
+    name: { type: 'string' },
+    age: { type: 'integer' },
+    hobbies: {
+      type: 'array',
+      items: { type: 'string' }
+    }
+  },
+  required: ['name', 'age', 'hobbies'],
+  additionalProperties: false  # Required for OpenAI structured output
+}
+
+chat = RubyLLM.chat
+response = chat.with_schema(person_schema).ask("Generate a person who likes Ruby")
+
+# Response is automatically parsed
+puts response.content
+# => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
+```
+
+{: .warning }
+**OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
+
+### Complex Nested Schemas
+
+Structured output supports complex nested objects and arrays:
+
+```ruby
+class CompanySchema < RubyLLM::Schema
+  string :name, description: "Company name"
+
+  array :employees do
+    object do
+      string :name
+      string :role, enum: ["developer", "designer", "manager"]
+      array :skills, of: :string
+    end
+  end
+
+  object :metadata do
+    integer :founded
+    string :industry
+  end
+end
+
+chat = RubyLLM.chat
+response = chat.with_schema(CompanySchema).ask("Generate a small tech startup")
+
+# Access nested data
+response.content["employees"].each do |employee|
+  puts "#{employee['name']} - #{employee['role']}"
+end
+```
+
+### Provider Support
+
+Not all models support structured output. Currently supported:
+- **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
+- **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
+- **Gemini**: Gemini 1.5 Pro/Flash and newer
+
+Models that don't support structured output will raise an error:
+
+```ruby
+chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
+chat.with_schema(schema) # Raises UnsupportedStructuredOutputError
+```
+
+You can force schema usage even if the model registry says it's unsupported:
+
+```ruby
+chat.with_schema(schema, force: true)
+```
+
+### Multi-turn Conversations with Schemas
+
+You can add or remove schemas during a conversation:
+
+```ruby
+# Start with a schema
+chat = RubyLLM.chat
+chat.with_schema(PersonSchema)
+person = chat.ask("Generate a person")
+
+# Remove the schema for free-form responses
+chat.with_schema(nil)
+analysis = chat.ask("Tell me about this person's potential career paths")
+
+# Add a different schema
+class CareerPlanSchema < RubyLLM::Schema
+  string :title
+  array :steps, of: :string
+  integer :years_required
+end
+
+chat.with_schema(CareerPlanSchema)
+career = chat.ask("Now structure a career plan")
+
+puts person.content
+puts analysis.content
+puts career.content
+```
 
 ## Tracking Token Usage
 
@@ -238,7 +460,11 @@ Refer to the [Working with Models Guide]({% link guides/models.md %}) for detail
 
 ## Chat Event Handlers
 
-You can register blocks to be called when certain events occur during the chat lifecycle, useful for UI updates or logging.
+You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
+
+### Available Event Handlers
+
+RubyLLM provides three event handlers that cover the complete chat lifecycle:
 
 ```ruby
 chat = RubyLLM.chat
@@ -257,9 +483,25 @@ chat.on_end_message do |message|
   end
 end
 
+# Called when the AI decides to use a tool
+chat.on_tool_call do |tool_call|
+  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
+end
+
 # These callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+## Raw Responses
+
+You can access the raw response from the API provider with `response.raw`.
+
+```ruby
+response = chat.ask("What is the capital of France?")
+puts response.raw.body
+```
+
+The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
 ## Next Steps
 

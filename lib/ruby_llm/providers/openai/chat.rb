@@ -11,19 +11,37 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false)
-          {
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+          payload = {
             model: model,
             messages: format_messages(messages),
-            temperature: temperature,
             stream: stream
-          }.tap do |payload|
-            if tools.any?
-              payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-              payload[:tool_choice] = 'auto'
-            end
-            payload[:stream_options] = { include_usage: true } if stream
+          }
+
+          # Only include temperature if it's not nil (some models don't accept it)
+          payload[:temperature] = temperature unless temperature.nil?
+
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tool_choice] = 'auto'
           end
+
+          if schema
+            # Use strict mode from schema if specified, default to true
+            strict = schema[:strict] != false
+
+            payload[:response_format] = {
+              type: 'json_schema',
+              json_schema: {
+                name: 'response',
+                schema: schema,
+                strict: strict
+              }
+            }
+          end
+
+          payload[:stream_options] = { include_usage: true } if stream
+          payload
         end
 
         def parse_completion_response(response)
@@ -41,7 +59,8 @@ module RubyLLM
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: data['usage']['prompt_tokens'],
             output_tokens: data['usage']['completion_tokens'],
-            model_id: data['model']
+            model_id: data['model'],
+            raw: response
           )
         end
 

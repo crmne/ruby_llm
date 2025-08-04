@@ -4,12 +4,13 @@ title: Tools
 parent: Guides
 nav_order: 3
 permalink: /guides/tools
+description: Let AI call your Ruby code. Connect to databases, APIs, or any external system with function calling.
 ---
 
 # Using Tools with RubyLLM
 {: .no_toc }
 
-Tools (also known as Function Calling or Plugins) allow AI models to interact with external systems by calling your Ruby code. This enables them to access real-time data, perform actions, or use capabilities beyond their built-in knowledge.
+Give AI superpowers by letting it call your Ruby methods.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -117,7 +118,7 @@ Attach tools to a `Chat` instance using `with_tool` or `with_tools`.
 chat = RubyLLM.chat(model: 'gpt-4o') # Use a model that supports tools
 
 # Instantiate your tool if it requires arguments, otherwise use the class
-weather_tool = WeatherLookup.new
+weather_tool = Weather.new
 
 # Add the tool(s) to the chat
 chat.with_tool(weather_tool)
@@ -130,7 +131,7 @@ puts response.content
 ```
 
 {: .warning }
-Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
+Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 
@@ -146,6 +147,10 @@ When you `ask` a question that the model determines requires a tool:
 8.  **Final Response Returned:** RubyLLM returns the final `RubyLLM::Message` object containing the text generated in step 7.
 
 This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
+
+## Model Context Protocol (MCP) Support
+
+For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
 
 ## Debugging Tools
 

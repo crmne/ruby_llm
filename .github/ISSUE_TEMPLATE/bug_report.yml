@@ -1,0 +1,67 @@
+name: Bug Report
+description: Report a bug in RubyLLM
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found a bug? Let's fix it.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Basic checks
+      options:
+        - label: I searched existing issues - this hasn't been reported
+          required: true
+        - label: I can reproduce this consistently
+          required: true
+        - label: This is a RubyLLM bug, not my application code
+          required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What's broken?
+      description: Clear description of the bug
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Configure RubyLLM with...
+        2. Call method...
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What actually happened
+      description: Include error messages and debug logs (RUBYLLM_DEBUG=true)
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: |
+        - Ruby version:
+        - RubyLLM version:
+        - Provider (OpenAI, Anthropic, etc.):
+        - OS:
+    validations:
+      required: true

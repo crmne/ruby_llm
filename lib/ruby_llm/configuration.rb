@@ -18,12 +18,16 @@ module RubyLLM
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
+                  :perplexity_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
                   :openrouter_api_key,
                   :ollama_api_base,
+                  :gpustack_api_base,
+                  :gpustack_api_key,
+                  :mistral_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -34,9 +38,12 @@ module RubyLLM
                   :retry_interval,
                   :retry_backoff_factor,
                   :retry_interval_randomness,
+                  :http_proxy,
                   # Logging configuration
+                  :logger,
                   :log_file,
-                  :log_level
+                  :log_level,
+                  :log_assume_model_exists
 
     def initialize
       # Connection configuration
@@ -45,6 +52,7 @@ module RubyLLM
       @retry_interval = 0.1
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
+      @http_proxy = nil
 
       # Default models
       @default_model = 'gpt-4.1-nano'
@@ -54,6 +62,7 @@ module RubyLLM
       # Logging configuration
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
+      @log_assume_model_exists = true
     end
 
     def inspect

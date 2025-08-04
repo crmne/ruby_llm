@@ -20,8 +20,14 @@ PreCommit:
 
   RakeTarget:
     enabled: true
-    targets: ['models:update', 'models:docs']
+    command: ['bundle', 'exec', 'rake']
+    targets: ['models:update', 'models:docs', 'aliases:generate']
     on_warn: fail
+
+  AppraisalGenerate:
+    enabled: true
+    description: 'Generate appraisal gemfiles'
+    command: ['bundle', 'exec', 'appraisal', 'generate']
 
 PostCheckout:
   ALL: # Special hook name that customizes all hooks of this type

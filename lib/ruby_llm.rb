@@ -18,13 +18,17 @@ loader.inflector.inflect(
   'openai' => 'OpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
+  'perplexity' => 'Perplexity',
   'bedrock' => 'Bedrock',
   'openrouter' => 'OpenRouter',
+  'gpustack' => 'GPUStack',
+  'mistral' => 'Mistral',
   'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/ruby_llm/railtie")
 loader.ignore("#{__dir__}/ruby_llm/active_record")
+loader.ignore("#{__dir__}/generators")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -73,7 +77,7 @@ module RubyLLM
     end
 
     def logger
-      @logger ||= Logger.new(
+      @logger ||= config.logger || Logger.new(
         config.log_file,
         progname: 'RubyLLM',
         level: config.log_level
@@ -82,13 +86,16 @@ module RubyLLM
   end
 end
 
-RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
-RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
-RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
-RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
+RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
+RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
+RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
+RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
+RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
+RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
+RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

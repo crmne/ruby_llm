@@ -4,25 +4,30 @@ module RubyLLM
   module Providers
     module Bedrock
       # Media handling methods for the Bedrock API integration
+      # NOTE: Bedrock does not support url attachments
       module Media
         extend Anthropic::Media
 
         module_function
 
         def format_content(content)
+          # Convert Hash/Array back to JSON string for API
+          return [Anthropic::Media.format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
           return [Anthropic::Media.format_text(content)] unless content.is_a?(Content)
 
           parts = []
           parts << Anthropic::Media.format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
+            when :text
+              parts << Anthropic::Media.format_text_file(attachment)
             else
-              raise "Unsupported attachment type: #{attachment.class}"
+              raise UnsupportedAttachmentError, attachment.type
             end
           end
 
@@ -45,7 +50,7 @@ module RubyLLM
             type: 'document',
             source: {
               type: 'base64',
-              media_type: 'application/pdf',
+              media_type: pdf.mime_type,
               data: pdf.encoded
             }
           }

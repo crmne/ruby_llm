@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 01 Aug 2025 11:08:22 GMT
+      Content-Length:
+      - '1202'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-802","object":"chat.completion","created":1754046502,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking \"What''s 2 + 2?\" That''s a basic arithmetic question.
+        Let me think. 2 plus 2 is straightforward. In elementary math, addition is
+        taught as combining quantities. So, adding 2 and 2 would result in 4. Wait,
+        is there any chance they might be asking about something else, like a trick
+        question or a different context? Maybe they''re <GPUSTACK_API_KEY>ing if I
+        know the basics. But the question seems simple. Let me double-check. 2 + 2
+        equals 4 in standard arithmetic. There''s no need to complicate it. Unless
+        they''re referring to a different base or some other mathematical context,
+        but the question doesn''t specify that. I should confirm that the answer is
+        4. Yeah, that''s it. No confusion here. Just a simple addition.\n\u003c/think\u003e\n\nThe
+        result of 2 + 2 is **4**. \n\nThis is a basic arithmetic operation where two
+        quantities (2 and 2) are combined to give their total sum, which is 4."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":218,"total_tokens":234}}
+
+        '
+  recorded_at: Fri, 01 Aug 2025 11:08:22 GMT
+recorded_with: VCR 6.3.1

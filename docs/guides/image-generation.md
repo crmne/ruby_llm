@@ -4,12 +4,13 @@ title: Image Generation
 parent: Guides
 nav_order: 6
 permalink: /guides/image-generation
+description: Transform ideas into stunning visuals with AI-powered image generation
 ---
 
 # Image Generation
 {: .no_toc }
 
-RubyLLM makes it easy to generate images using AI models like DALL-E 3 and Google's Imagen. This guide explains how to create images and customize the generation process.
+Turn your wildest imagination into reality! 🎨 Create professional artwork, product mockups, or creative visuals with simple text prompts using DALL-E 3, Imagen, and more.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -77,6 +78,14 @@ image_imagen = RubyLLM.paint(
   "Cyberpunk city street at night, raining, neon signs",
   model: "imagen-3.0-generate-002"
 )
+
+# Use a model not in the registry (useful for custom endpoints)
+image_custom = RubyLLM.paint(
+  "A sunset over mountains",
+  model: "my-custom-image-model",
+  provider: :openai,
+  assume_model_exists: true
+)
 ```
 
 You can configure the default model globally:
@@ -87,7 +96,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link guides/available-models.md %}) to find image models.
+Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link available-models.md %}) to find image models.
 
 ## Image Sizes
 
@@ -111,7 +120,7 @@ image_portrait = RubyLLM.paint(
 ```
 
 {: .note }
-Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link guides/available-models.md %}) for supported sizes.
+Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link available-models.md %}) for supported sizes.
 
 ## Working with Generated Images
 

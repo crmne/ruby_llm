@@ -5,17 +5,44 @@ module RubyLLM
   module Utils
     module_function
 
-    def deep_symbolize_keys(value)
-      case value
-      when Hash
-        value.each_with_object({}) do |(k, v), new_hash|
-          new_key = k.is_a?(String) ? k.to_sym : k
-          new_hash[new_key] = deep_symbolize_keys(v)
-        end
+    def format_text_file_for_llm(text_file)
+      "<file name='#{text_file.filename}' mime_type='#{text_file.mime_type}'>#{text_file.content}</file>"
+    end
+
+    def hash_get(hash, key)
+      hash[key.to_sym] || hash[key.to_s]
+    end
+
+    def to_safe_array(item)
+      case item
       when Array
-        value.map { |v| deep_symbolize_keys(v) }
+        item
+      when Hash
+        [item]
       else
-        value
+        Array(item)
+      end
+    end
+
+    def to_time(value)
+      return unless value
+
+      value.is_a?(Time) ? value : Time.parse(value.to_s)
+    end
+
+    def to_date(value)
+      return unless value
+
+      value.is_a?(Date) ? value : Date.parse(value.to_s)
+    end
+
+    def deep_merge(params, payload)
+      params.merge(payload) do |_key, params_value, payload_value|
+        if params_value.is_a?(Hash) && payload_value.is_a?(Hash)
+          deep_merge(params_value, payload_value)
+        else
+          payload_value
+        end
       end
     end
   end

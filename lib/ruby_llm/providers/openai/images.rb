@@ -28,7 +28,8 @@ module RubyLLM
             url: image_data['url'],
             mime_type: 'image/png', # DALL-E typically returns PNGs
             revised_prompt: image_data['revised_prompt'],
-            model:
+            model_id: model,
+            data: image_data['b64_json']
           )
         end
       end

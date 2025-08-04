@@ -4,12 +4,13 @@ title: Getting Started
 parent: Guides
 nav_order: 1
 permalink: /guides/getting-started
+description: Start building AI apps in Ruby in 5 minutes. Chat, generate images, create embeddings - all with one gem.
 ---
 
 # Getting Started with RubyLLM
 {: .no_toc }
 
-Welcome to RubyLLM! This guide will get you up and running quickly. We'll cover installing the gem, minimal configuration, and making your first chat, image, and embedding requests.
+From zero to AI in 5 minutes. Let's build something amazing.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

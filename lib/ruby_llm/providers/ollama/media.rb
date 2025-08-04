@@ -10,19 +10,25 @@ module RubyLLM
         module_function
 
         def format_content(content)
-          return [format_text(content)] unless content.is_a?(Content)
+          # Convert Hash/Array back to JSON string for API
+          return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
+          return content unless content.is_a?(Content)
 
           parts = []
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment
-            when Attachments::Image
+            case attachment.type
+            when :image
               parts << Ollama::Media.format_image(attachment)
-            when Attachments::PDF
+            when :pdf
               parts << format_pdf(attachment)
-            when Attachments::Audio
+            when :audio
               parts << format_audio(attachment)
+            when :text
+              parts << format_text_file(attachment)
+            else
+              raise UnsupportedAttachmentError, attachment.mime_type
             end
           end
 

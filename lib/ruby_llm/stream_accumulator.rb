@@ -29,14 +29,15 @@ module RubyLLM
       RubyLLM.logger.debug inspect
     end
 
-    def to_message
+    def to_message(response)
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
-        output_tokens: @output_tokens.positive? ? @output_tokens : nil
+        output_tokens: @output_tokens.positive? ? @output_tokens : nil,
+        raw: response
       )
     end
 

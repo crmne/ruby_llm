@@ -39,7 +39,7 @@ module RubyLLM
           Image.new(
             data: base64_data,
             mime_type: mime_type,
-            model:
+            model_id: model
           )
         end
       end

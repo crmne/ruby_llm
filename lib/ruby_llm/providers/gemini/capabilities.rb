@@ -280,6 +280,9 @@ module RubyLLM
           # Embedding output
           modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
 
+          # Image output for imagen models
+          modalities[:output] = ['image'] if model_id.match?(/imagen/)
+
           modalities
         end
 

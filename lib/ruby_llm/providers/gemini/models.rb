@@ -16,7 +16,7 @@ module RubyLLM
             # Extract model ID without "models/" prefix
             model_id = model_data['name'].gsub('models/', '')
 
-            ModelInfo.new(
+            Model::Info.new(
               id: model_id,
               name: model_data['displayName'],
               provider: slug,

@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 12:21:21 GMT
+      - Fri, 01 Aug 2025 12:21:21 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '830'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-wH7S4he64IwombY8nZYiwQt8gQyRxwYH","type":"function"}]}}],"created":1754050883,"id":"chatcmpl-kOSMRFGKANebdQKhN9BAHcOVClRbeHg2","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":158,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":118,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3420.5125506498975,"time_per_output_token_ms":10.38587341772152,"time_to_first_token_ms":76.012,"tokens_per_second":96.28463199769891,"total_tokens":418}}'
+  recorded_at: Fri, 01 Aug 2025 12:21:23 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-wH7S4he64IwombY8nZYiwQt8gQyRxwYH","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-wH7S4he64IwombY8nZYiwQt8gQyRxwYH"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 12:21:22 GMT
+      - Fri, 01 Aug 2025 12:21:23 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '779'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTQwNTA4ODUsImlkIjoiY2hhdGNtcGwtaUFHZHEwNkJmMXQzNUphUnEzbTdkbmhKSmZoTldOM2YiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE1NSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6OTksInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozMzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjEwNzQ2LjA5NTI2MjY4MjMzLCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjkuNDcwODgzODcwOTY3NzQzLCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjozMC45ODgsInRva2Vuc19wZXJfc2Vjb25kIjoxMDUuNTg2NzY2MDk1MzQwMDgsInRvdGFsX3Rva2VucyI6NDg4fX0=
+  recorded_at: Fri, 01 Aug 2025 12:21:25 GMT
+recorded_with: VCR 6.3.1
