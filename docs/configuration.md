@@ -74,7 +74,7 @@ RubyLLM.configure do |config|
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
   config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
   config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'dall-e-3'            # Default: 'dall-e-3'
+  config.default_image_model = 'gpt-image-1'            # Default: 'gpt-image-1'
 
   # --- Connection Settings ---
   config.request_timeout = 120  # Request timeout in seconds (default: 120)
@@ -154,7 +154,7 @@ These settings determine which models are used by the top-level helper methods (
 
 *   `config.default_model`: Used by `RubyLLM.chat`. Default: `'gpt-4.1-nano'`.
 *   `config.default_embedding_model`: Used by `RubyLLM.embed`. Default: `'text-embedding-3-small'`.
-*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'dall-e-3'`.
+*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'gpt-image-1'`.
 
 Choose defaults that match your most common use case and provider availability.
 

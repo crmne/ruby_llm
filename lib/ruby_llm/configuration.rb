@@ -57,7 +57,7 @@ module RubyLLM
       # Default models
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
-      @default_image_model = 'dall-e-3'
+      @default_image_model = 'gpt-image-1'
 
       # Logging configuration
       @log_file = $stdout
