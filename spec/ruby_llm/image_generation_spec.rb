@@ -112,6 +112,37 @@ RSpec.describe RubyLLM::Image do
       expect(actual_content).to eq(expected_content)
     end
 
+    it 'uses the right payload for editing multiple images' do
+      payload = RubyLLM::Providers::OpenAI::Images.render_edit_payload(
+        'turn the logo to green', model: 'gpt-image-1',
+                                  with: ['spec/fixtures/ruby.png', 'spec/fixtures/ruby_with_blue.png'], params: { size: '1024x1024', quality: 'low' }
+      )
+      expect(payload[:image]).to be_an(Array)
+      expect(payload[:image].length).to eq(2)
+
+      upload_io = payload[:image].first
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby.png')
+
+      expected_content = File.read('spec/fixtures/ruby.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+
+      upload_io = payload[:image].last
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby_with_blue.png')
+
+      expected_content = File.read('spec/fixtures/ruby_with_blue.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+    end
+
     context 'with local files' do
       it 'supports image edits with a valid local PNG' do
         image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model)
