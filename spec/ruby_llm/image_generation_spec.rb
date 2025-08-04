@@ -73,14 +73,14 @@ RSpec.describe RubyLLM::Image do
       expect(image.mime_type).to include('image')
       expect(image.model_id).to eq('gpt-image-1')
       expect(image.usage).to eq({
-        'input_tokens' => 10,
-        'input_tokens_details' => {
-          'image_tokens' => 0,
-          'text_tokens' => 10
-        },
-        'output_tokens' => 1056,
-        'total_tokens' => 1066
-      })
+                                  'input_tokens' => 10,
+                                  'input_tokens_details' => {
+                                    'image_tokens' => 0,
+                                    'text_tokens' => 10
+                                  },
+                                  'output_tokens' => 1056,
+                                  'total_tokens' => 1066
+                                })
 
       save_and_verify_image image
     end
@@ -124,7 +124,8 @@ RSpec.describe RubyLLM::Image do
     it 'uses the right payload for editing multiple images' do
       payload = RubyLLM::Providers::OpenAI::Images.render_edit_payload(
         'turn the logo to green', model: 'gpt-image-1',
-                                  with: ['spec/fixtures/ruby.png', 'spec/fixtures/ruby_with_blue.png'], params: { size: '1024x1024', quality: 'low' }
+                                  with: ['spec/fixtures/ruby.png', 'spec/fixtures/ruby_with_blue.png'],
+                                  params: { size: '1024x1024', quality: 'low' }
       )
       expect(payload[:image]).to be_an(Array)
       expect(payload[:image].length).to eq(2)

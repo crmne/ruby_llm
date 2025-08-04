@@ -96,10 +96,10 @@ module RubyLLM
           data = response.body
           image_data = data['data'].first
           Image.new(
-            mime_type: "image/png",
+            mime_type: 'image/png',
             model_id: model,
             data: image_data['b64_json'],
-            usage: data['usage'],
+            usage: data['usage']
           )
         end
       end
