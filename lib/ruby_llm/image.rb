@@ -7,7 +7,7 @@ module RubyLLM
   class Image
     attr_reader :url, :data, :mime_type, :revised_prompt, :model_id, :usage
 
-    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil, usage: {})
+    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil, usage: {}) # rubocop:disable Metrics/ParameterLists
       @url = url
       @data = data
       @mime_type = mime_type
@@ -53,22 +53,6 @@ module RubyLLM
       connection = context ? context.connection_for(provider) : provider.connection(config)
       provider.paint(prompt, model: model_id, size:, connection:, with:, params:)
     end
-
-    # def self.edit(prompt, # rubocop:disable Metrics/ParameterLists
-    #               model: nil,
-    #               provider: nil,
-    #               assume_model_exists: false,
-    #               context: nil,
-    #               with: {},
-    #               options: {})
-    #   config = context&.config || RubyLLM.config
-    #   model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists) if model
-    #   model_id = model&.id || config.default_image_model
-
-    #   provider = Provider.for(model_id) if provider.nil?
-    #   connection = context ? context.connection_for(provider) : provider.connection_multipart(config)
-    #   provider.edit(prompt, model: model_id, with:, connection:, options:)
-    # end
 
     def total_cost
       input_cost + output_cost

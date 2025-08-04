@@ -5,19 +5,19 @@ module RubyLLM
     module OpenAI
       # Image generation methods for the OpenAI API integration
       module Images
-        def paint(prompt, model:, size:, connection:, with:, params:)
+        def paint(prompt, model:, size:, connection:, with:, params:) # rubocop:disable Metrics/ParameterLists
           @with = with
           connection = connection_multipart(connection.config) if needs_multipart_connection?(connection)
-          super(prompt, model:, size:, connection:, with:, params:)
+          super
         end
 
         private
 
         def needs_multipart_connection?(connection)
-          @with && !has_multipart_middleware?(connection)
+          @with && !multipart_middleware?(connection)
         end
 
-        def has_multipart_middleware?(connection)
+        def multipart_middleware?(connection)
           connection.connection.builder.handlers.include?(Faraday::Multipart::Middleware)
         end
 
@@ -47,12 +47,17 @@ module RubyLLM
         end
 
         def render_edit_payload(prompt, model:, with:, params:)
+          content = Content.new(prompt, with)
+          params[:image] = []
+          content.attachments.each do |attachment|
+            params[:image] << Faraday::UploadIO.new(StringIO.new(attachment.content), attachment.mime_type,
+                                                    attachment.filename)
+          end
           params.merge({
-                          model:,
-                          prompt:,
-                          image: ImageAttachments.new(with).format,
-                          n: 1
-                        })
+                         model:,
+                         prompt: content.text,
+                         n: 1
+                       })
         end
 
         def parse_image_response(response, model:)
@@ -69,7 +74,6 @@ module RubyLLM
             data: image_data['b64_json']
           )
         end
-
 
         def parse_edit_response(response, model:)
           data = response.body

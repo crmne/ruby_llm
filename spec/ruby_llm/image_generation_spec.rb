@@ -81,6 +81,37 @@ RSpec.describe RubyLLM::Image do
     let(:prompt) { 'turn the logo to green' }
     let(:model) { 'gpt-image-1' } # Assuming this model uses the edits endpoint
 
+    it 'uses the right payload for image edits' do
+      payload = RubyLLM::Providers::OpenAI::Images.render_edit_payload(
+        'turn the logo to green', model: 'gpt-image-1',
+                                  with: 'spec/fixtures/ruby.png', params: { size: '1024x1024', quality: 'low' }
+      )
+
+      expect(payload[:model]).to eq('gpt-image-1')
+      expect(payload[:prompt]).to eq('turn the logo to green')
+      expect(payload[:n]).to eq(1)
+      expect(payload[:size]).to eq('1024x1024')
+      expect(payload[:quality]).to eq('low')
+
+      # Verify that the image part contains a Faraday::UploadIO with the correct content
+      expect(payload[:image]).to be_an(Array)
+      expect(payload[:image].length).to eq(1)
+
+      upload_io = payload[:image].first
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby.png')
+
+      # Verify the actual file content matches
+      expected_content = File.read('spec/fixtures/ruby.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+
+      # Ensure both strings use the same encoding for comparison
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+    end
+
     context 'with local files' do
       it 'supports image edits with a valid local PNG' do
         image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model)
@@ -104,7 +135,7 @@ RSpec.describe RubyLLM::Image do
 
       it 'customizes image output' do
         image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model,
-                                     params: { size: '1024x1024', quality: 'low' })
+                                      params: { size: '1024x1024', quality: 'low' })
         expect(image.base64?).to be(true)
         expect(image.mime_type).to eq('image/png')
         expect(image.usage['output_tokens']).to eq(272)
@@ -138,7 +169,7 @@ RSpec.describe RubyLLM::Image do
       it 'rejects edits with a URL that returns 404' do
         expect do
           RubyLLM.paint(prompt, with: 'https://rubyllm.com/some-asset-that-does-not-exist.png', model: model)
-        end.to raise_error(OpenURI::HTTPError, /404 Not Found/)
+        end.to raise_error(Faraday::ResourceNotFound)
       end
     end
   end

@@ -43,7 +43,7 @@ module RubyLLM
         parse_embedding_response(response, model:, text:)
       end
 
-      def paint(prompt, model:, size:, connection:, with:, params:)
+      def paint(prompt, model:, size:, connection:, with:, params:) # rubocop:disable Metrics/ParameterLists
         payload = render_image_payload(prompt, model:, size:, with:, params:)
         response = connection.post images_url, payload
         parse_image_response(response, model:)

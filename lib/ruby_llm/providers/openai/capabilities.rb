@@ -106,7 +106,7 @@ module RubyLLM
         end
 
         PRICES = {
-          gpt_image_1: { input_text: 5.0, input_image: 10.0, output: 8.0, cached_input: 0.5 },
+          gpt_image_1: { input_text: 5.0, input_image: 10.0, output: 8.0, cached_input: 0.5 }, # rubocop:disable Naming/VariableNumber
           gpt41: { input: 2.0, output: 8.0, cached_input: 0.5 },
           gpt41_mini: { input: 0.4, output: 1.6, cached_input: 0.1 },
           gpt41_nano: { input: 0.1, output: 0.4 },
