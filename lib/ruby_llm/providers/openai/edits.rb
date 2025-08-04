@@ -32,7 +32,7 @@ module RubyLLM
             data: image_data['b64_json'], # Edits API returns base64 when requested
             mime_type: 'image/png',
             usage: data['usage'],
-            model:
+            model_id: model
           )
         end
       end
