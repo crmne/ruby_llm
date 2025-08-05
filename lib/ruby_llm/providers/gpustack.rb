@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # GPUStack API integration based on Ollama.
     module GPUStack
-      extend OpenAI
+      extend RubyLLM::Providers::OpenAIChatCompletions
       extend GPUStack::Chat
       extend GPUStack::Models
 

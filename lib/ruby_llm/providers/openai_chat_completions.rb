@@ -2,12 +2,12 @@
 
 module RubyLLM
   module Providers
-    # OpenAI API integration using the new Responses API. Handles response generation,
-    # function calling, and OpenAI's unique streaming format. Supports GPT-4, GPT-3.5,
-    # and other OpenAI models.
-    module OpenAI
+    # OpenAI Chat Completions API integration. This module contains the original
+    # OpenAI chat completions functionality that is used by providers that extend
+    # the OpenAI-compatible API (DeepSeek, Mistral, OpenRouter, etc.)
+    module OpenAIChatCompletions
       extend Provider
-      extend OpenAI::Response
+      extend OpenAI::Chat
       extend OpenAI::Embeddings
       extend OpenAI::Models
       extend OpenAI::Streaming
@@ -17,7 +17,7 @@ module RubyLLM
 
       def self.extended(base)
         base.extend(Provider)
-        base.extend(OpenAI::Response)
+        base.extend(OpenAI::Chat)
         base.extend(OpenAI::Embeddings)
         base.extend(OpenAI::Models)
         base.extend(OpenAI::Streaming)
@@ -27,19 +27,6 @@ module RubyLLM
       end
 
       module_function
-
-      # Map old chat completion methods to new responses API methods
-      def completion_url
-        responses_url
-      end
-
-      def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil)
-        render_response_payload(messages, tools: tools, temperature: temperature, model: model, stream: stream)
-      end
-
-      def parse_completion_response(response)
-        parse_respond_response(response)
-      end
 
       def api_base(config)
         config.openai_api_base || 'https://api.openai.com/v1'

@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # Perplexity API integration.
     module Perplexity
-      extend OpenAI
+      extend RubyLLM::Providers::OpenAIChatCompletions
       extend Perplexity::Chat
       extend Perplexity::Models
 

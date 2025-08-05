@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # Mistral API integration.
     module Mistral
-      extend OpenAI
+      extend RubyLLM::Providers::OpenAIChatCompletions
       extend Mistral::Chat
       extend Mistral::Models
       extend Mistral::Embeddings
