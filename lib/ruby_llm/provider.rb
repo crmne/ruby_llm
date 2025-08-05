@@ -32,27 +32,6 @@ module RubyLLM
         end
       end
 
-      def respond(messages, tools:, temperature:, model:, connection:, params: {}, &) # rubocop:disable Metrics/ParameterLists
-        normalized_temperature = maybe_normalize_temperature(temperature, model)
-
-        payload = deep_merge(
-          params,
-          render_response_payload(
-            messages,
-            tools: tools,
-            temperature: normalized_temperature,
-            model: model,
-            stream: block_given?
-          )
-        )
-
-        if block_given?
-          stream_response connection, responses_stream_url, payload, &
-        else
-          sync_respond_response connection, payload
-        end
-      end
-
       def list_models(connection:)
         response = connection.get models_url
         parse_list_models_response response, slug, capabilities

@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # Ollama API integration.
     module Ollama
-      extend RubyLLM::Providers::OpenAIChatCompletions
+      extend RubyLLM::Providers::OpenAI::ChatCompletions
       extend Ollama::Chat
       extend Ollama::Media
 

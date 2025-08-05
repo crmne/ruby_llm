@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # OpenRouter API integration.
     module OpenRouter
-      extend RubyLLM::Providers::OpenAIChatCompletions
+      extend RubyLLM::Providers::OpenAI::ChatCompletions
       extend OpenRouter::Models
 
       module_function
