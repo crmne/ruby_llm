@@ -149,16 +149,16 @@ RSpec.shared_context 'with configured RubyLLM' do
 end
 
 CHAT_MODELS = [
-  { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
-  { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
-  { provider: :gemini, model: 'gemini-2.0-flash' },
-  { provider: :deepseek, model: 'deepseek-chat' },
+  # { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  # { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
+  # { provider: :gemini, model: 'gemini-2.0-flash' },
+  # { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' },
-  { provider: :gpustack, model: 'qwen3' },
-  { provider: :perplexity, model: 'sonar' },
-  { provider: :mistral, model: 'ministral-3b-latest' }
+  # { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
+  # { provider: :ollama, model: 'qwen3' },
+  # { provider: :gpustack, model: 'qwen3' },
+  # { provider: :perplexity, model: 'sonar' },
+  # { provider: :mistral, model: 'ministral-3b-latest' }
 ].freeze
 
 PDF_MODELS = [

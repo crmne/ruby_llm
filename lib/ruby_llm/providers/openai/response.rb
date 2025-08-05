@@ -11,26 +11,6 @@ module RubyLLM
 
         module_function
 
-        def parse_respond_response(response)
-          data = response.body
-          return if data.empty?
-
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
-
-          outputs = data['output']
-          return unless outputs.any?
-
-          Message.new(
-            role: :assistant,
-            content: all_output_text(outputs),
-            tool_calls: parse_response_tool_calls(outputs),
-            input_tokens: data['usage']['input_tokens'],
-            output_tokens: data['usage']['output_tokens'],
-            model_id: data['model'],
-            raw: response
-          )
-        end
-
         def render_response_payload(messages, tools:, temperature:, model:, stream: false, schema: nil)
           payload = {
             model: model,
@@ -90,14 +70,12 @@ module RubyLLM
               {
                 type: 'message',
                 role: format_role(msg.role),
-                content: Media.format_content(msg.content),
+                content: ResponseMedia.format_content(msg.content),
                 status: 'completed'
               }.compact
             end
           end
         end
-
-
 
         def format_role(role)
           case role
@@ -106,6 +84,26 @@ module RubyLLM
           else
             role.to_s
           end
+        end
+
+        def parse_respond_response(response)
+          data = response.body
+          return if data.empty?
+
+          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+
+          outputs = data['output']
+          return unless outputs.any?
+
+          Message.new(
+            role: :assistant,
+            content: all_output_text(outputs),
+            tool_calls: parse_response_tool_calls(outputs),
+            input_tokens: data['usage']['input_tokens'],
+            output_tokens: data['usage']['output_tokens'],
+            model_id: data['model'],
+            raw: response
+          )
         end
 
         def all_output_text(outputs)
