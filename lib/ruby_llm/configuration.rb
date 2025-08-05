@@ -18,6 +18,7 @@ module RubyLLM
                   :anthropic_api_key,
                   :gemini_api_key,
                   :deepseek_api_key,
+                  :perplexity_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
                   :bedrock_region,
@@ -26,6 +27,7 @@ module RubyLLM
                   :ollama_api_base,
                   :gpustack_api_base,
                   :gpustack_api_key,
+                  :mistral_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -55,7 +57,7 @@ module RubyLLM
       # Default models
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
-      @default_image_model = 'dall-e-3'
+      @default_image_model = 'gpt-image-1'
 
       # Logging configuration
       @log_file = $stdout

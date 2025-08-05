@@ -3,12 +3,13 @@ layout: default
 title: Configuration
 nav_order: 3
 permalink: /configuration
+description: Configure once, use everywhere. API keys, defaults, timeouts, and multi-tenant contexts made simple.
 ---
 
 # Configuring RubyLLM
 {: .no_toc }
 
-This guide covers all the configuration options available in RubyLLM, from setting API keys and default models to customizing connection behavior and using scoped contexts.
+Set it and forget it. Everything you need to configure RubyLLM in one place.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -51,7 +52,11 @@ RubyLLM.configure do |config|
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+  config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil) # Available in v1.5.0
+  config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil) # Available in v1.5.0
   config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
+  config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', nil)
+  config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
 
   # --- AWS Bedrock Credentials ---
   # Uses standard AWS credential chain (environment, shared config, IAM role)
@@ -69,7 +74,7 @@ RubyLLM.configure do |config|
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
   config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
   config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'dall-e-3'            # Default: 'dall-e-3'
+  config.default_image_model = 'gpt-image-1'            # Default: 'gpt-image-1'
 
   # --- Connection Settings ---
   config.request_timeout = 120  # Request timeout in seconds (default: 120)
@@ -105,6 +110,9 @@ Set the corresponding `*_api_key` attribute for each provider you want to enable
 *   `gemini_api_key`
 *   `deepseek_api_key`
 *   `openrouter_api_key`
+*   `gpustack_api_key`
+*   `perplexity_api_key` (Available in v1.5.0)
+*   `mistral_api_key` (Available in v1.5.0)
 *   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
 
 ## Ollama API Base (`ollama_api_base`)
@@ -146,7 +154,7 @@ These settings determine which models are used by the top-level helper methods (
 
 *   `config.default_model`: Used by `RubyLLM.chat`. Default: `'gpt-4.1-nano'`.
 *   `config.default_embedding_model`: Used by `RubyLLM.embed`. Default: `'text-embedding-3-small'`.
-*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'dall-e-3'`.
+*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'gpt-image-1'`.
 
 Choose defaults that match your most common use case and provider availability.
 

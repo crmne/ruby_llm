@@ -4,12 +4,13 @@ title: Working with Models
 parent: Guides
 nav_order: 9
 permalink: /guides/models
+description: Access 100+ AI models from all major providers with one simple API
 ---
 
 # Working with AI Models
 {: .no_toc }
 
-RubyLLM provides a unified interface to a wide array of AI models from different providers like Anthropic, AWS Bedrock Anthropic, DeepSeek, Ollama, OpenAI, Gemini, and OpenRouter. This guide covers how RubyLLM discovers, manages, and allows you to interact with these models, including advanced scenarios like custom endpoints.
+One API, endless possibilities! 🌐 Connect to Claude, GPT-4, Gemini, and dozens more AI models from every major provider. Switch models with a single line of code.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -49,7 +50,7 @@ The registry stores crucial information about each model, including:
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.
 
-You can see the full list of currently registered models in the [Available Models Guide]({% link guides/available-models.md %}).
+You can see the full list of currently registered models in the [Available Models Guide]({% link available-models.md %}).
 
 ### Refreshing the Registry
 

@@ -4,12 +4,13 @@ title: Image Generation
 parent: Guides
 nav_order: 6
 permalink: /guides/image-generation
+description: Transform ideas into stunning visuals with AI-powered image generation
 ---
 
 # Image Generation
 {: .no_toc }
 
-RubyLLM makes it easy to generate images using AI models like DALL-E 3 and Google's Imagen. This guide explains how to create images and customize the generation process.
+Turn your wildest imagination into reality! 🎨 Create professional artwork, product mockups, or creative visuals with simple text prompts using DALL-E 3, Imagen, and more.
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -63,10 +64,10 @@ The `paint` method abstracts the differences between provider APIs.
 
 ## Choosing Models
 
-By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `dall-e-3`), but you can specify a different one.
+By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `gpt-image-1`), but you can specify a different one.
 
 ```ruby
-# Explicitly use DALL-E 3
+# Use DALL-E 3
 image_dalle = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
   model: "dall-e-3"
@@ -91,11 +92,11 @@ You can configure the default model globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_image_model = "dall-e-3" # Or another available image model ID
+  config.default_image_model = "gpt-image-1" # Or another available image model ID
 end
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link guides/available-models.md %}) to find image models.
+Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link available-models.md %}) to find image models.
 
 ## Image Sizes
 
@@ -119,7 +120,7 @@ image_portrait = RubyLLM.paint(
 ```
 
 {: .note }
-Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link guides/available-models.md %}) for supported sizes.
+Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link available-models.md %}) for supported sizes.
 
 ## Working with Generated Images
 

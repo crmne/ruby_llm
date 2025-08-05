@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:45 GMT
+      - Fri, 01 Aug 2025 10:48:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,13 +35,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '177'
+      - '419'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '180'
+      - '508'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -56,6 +56,8 @@ http_interactions:
       - 1ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -75,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFQT34Cc8o9N8t043M93FVXjLpYN",
+          "id": "chatcmpl-Bzhbe3FS1XhQsywX78QYeJZjOG8KY",
           "object": "chat.completion",
-          "created": 1752745365,
+          "created": 1754045330,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -108,7 +110,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:42:45 GMT
+  recorded_at: Fri, 01 Aug 2025 10:48:51 GMT
 recorded_with: VCR 6.3.1

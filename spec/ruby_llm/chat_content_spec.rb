@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can understand text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
 
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(chat.messages[2].content.attachments.first.mime_type).to eq('application/xml')
       end
 
-      it "#{provider}/#{model} can understand remote text" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand remote text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_url)
 
@@ -58,7 +58,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     VISION_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can understand local images" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand local images" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
 
@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/png')
       end
 
-      it "#{provider}/#{model} can understand remote images without extension" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand remote images without extension" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: image_url_no_ext)
 
@@ -82,7 +82,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     end
     model = VISION_MODELS.first[:model]
     provider = VISION_MODELS.first[:provider]
-    it "return errors when content doesn't exist" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it "return errors when content doesn't exist" do
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do
         chat.ask('What do you see in this image?', with: bad_image_url)
@@ -99,7 +99,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     AUDIO_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can understand audio" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand audio" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is being said?', with: { audio: audio_path })
 
@@ -116,7 +116,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     PDF_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} understands PDFs" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} understands PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
         expect(response.content).not_to be_empty
@@ -128,7 +128,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).not_to be_empty
       end
 
-      it "#{provider}/#{model} handles multiple PDFs" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} handles multiple PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         # Using same file twice for testing
         response = chat.ask('Compare these documents', with: [pdf_path, pdf_url])
@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).not_to be_empty
       end
 
-      it "#{provider}/#{model} can handle array of mixed files with auto-detection" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle array of mixed files with auto-detection" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Analyze these files', with: [image_path, pdf_path])
 
@@ -164,14 +164,14 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       expect(attachment.mime_type).to be_present
     end
 
-    it 'creates content with URL attachments' do # rubocop:disable RSpec/MultipleExpectations
+    it 'creates content with URL attachments' do
       content = RubyLLM::Content.new('Describe this image', image_url)
 
       expect(content.attachments).not_to be_empty
       expect(content.attachments.first).to be_a(RubyLLM::Attachment)
     end
 
-    it 'prevents ArgumentError: wrong number of arguments when processing URL attachments' do # rubocop:disable RSpec/MultipleExpectations
+    it 'prevents ArgumentError: wrong number of arguments when processing URL attachments' do
       require 'open-uri' # required to trigger the marcel/open-uri compatibility issue
 
       attachment = RubyLLM::Attachment.new(image_url)

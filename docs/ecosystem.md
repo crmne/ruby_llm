@@ -3,12 +3,13 @@ layout: default
 title: Ecosystem
 nav_order: 4
 permalink: /ecosystem
+description: Extend RubyLLM with MCP servers, structured schemas, and community-built tools for production AI apps.
 ---
 
 # Ecosystem
 {: .no_toc }
 
-The RubyLLM ecosystem includes complementary libraries that extend the core functionality to support advanced use cases like Model Context Protocol (MCP) integration and structured data schemas.
+Power up your AI apps with MCP integration, structured outputs, and community tools.
 {: .fs-6 .fw-300 }
 
 ## Table of contents

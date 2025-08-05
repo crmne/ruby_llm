@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Mon, 21 Jul 2025 01:06:01 GMT
+      - Fri, 01 Aug 2025 09:56:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -46,6 +46,10 @@ http_interactions:
       - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '467'
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -66,11 +70,11 @@ http_interactions:
       string: |
         {
             "error": {
-                "message": "Request too large for gpt-4.1-nano-long-context in organization org-Z7kERRLNdBWBTE8SfmjWYWiF on tokens per min (TPM): Limit 400000, Requested 2500013. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
+                "message": "Request too large for gpt-4.1-nano-long-context in organization org-eLwBCUaB2ePnSi6dlToWtHZK on tokens per min (TPM): Limit 400000, Requested 2500013. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
                 "type": "tokens",
                 "param": null,
                 "code": "rate_limit_exceeded"
             }
         }
-  recorded_at: Mon, 21 Jul 2025 01:06:01 GMT
+  recorded_at: Fri, 01 Aug 2025 09:56:46 GMT
 recorded_with: VCR 6.3.1

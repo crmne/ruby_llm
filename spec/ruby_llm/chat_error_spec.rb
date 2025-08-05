@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Chat do
           end
         end
 
-        it 'raises appropriate auth error' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+        it 'raises appropriate auth error' do
           skip('Only valid for remote providers') if RubyLLM::Provider.providers[provider].local?
           expect { chat.ask('Hello') }.to raise_error do |error|
             expect(error).to be_a(RubyLLM::Error)
@@ -67,9 +67,10 @@ RSpec.describe RubyLLM::Chat do
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-        it 'handles context length exceeded errors' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
-          skip('Ollama does not throw an error for context length exceeded') if provider == :ollama
-          skip('GPUStack does not throw an error for context length exceeded') if provider == :gpustack
+        it 'handles context length exceeded errors' do
+          if RubyLLM::Provider.providers[provider]&.local?
+            skip('Local providers do not throw an error for context length exceeded')
+          end
 
           # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
           Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)

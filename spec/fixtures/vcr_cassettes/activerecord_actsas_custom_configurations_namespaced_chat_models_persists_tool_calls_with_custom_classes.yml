@@ -11,7 +11,7 @@ http_interactions:
         expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:44 GMT
+      - Fri, 01 Aug 2025 10:48:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '496'
+      - '497'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '524'
+      - '518'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -59,13 +59,15 @@ http_interactions:
       - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -78,9 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFQRxiUrK8pOqg1yHF0B6rmf2sMy",
+          "id": "chatcmpl-BzhbclutsRn5jBMbcW8HNJhHo1njB",
           "object": "chat.completion",
-          "created": 1752745363,
+          "created": 1754045328,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -90,7 +92,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_GU6Jf5Gktyc7VjCbdjfqEmTp",
+                    "id": "call_fnTJJRy5VSr25rz8X5XJtDxc",
                     "type": "function",
                     "function": {
                       "name": "calculator",
@@ -121,22 +123,22 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:42:44 GMT
+  recorded_at: Fri, 01 Aug 2025 10:48:49 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","tool_calls":[{"id":"call_GU6Jf5Gktyc7VjCbdjfqEmTp","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_GU6Jf5Gktyc7VjCbdjfqEmTp"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        123 * 456?"},{"role":"assistant","tool_calls":[{"id":"call_fnTJJRy5VSr25rz8X5XJtDxc","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
+        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_fnTJJRy5VSr25rz8X5XJtDxc"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -151,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:42:44 GMT
+      - Fri, 01 Aug 2025 10:48:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,13 +165,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '483'
+      - '655'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '498'
+      - '749'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -184,6 +186,8 @@ http_interactions:
       - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -203,16 +207,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BuFQSB3oTs7aLr3D49lkbPFT6VcRx",
+          "id": "chatcmpl-Bzhbdv1Jp7DJoeO9fAKpM3pVfVjJG",
           "object": "chat.completion",
-          "created": 1752745364,
+          "created": 1754045329,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The result of 123 multiplied by 456 is 56,088.",
+                "content": "The result of 123 multiplied by 456 is 56088.",
                 "refusal": null,
                 "annotations": []
               },
@@ -222,8 +226,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 79,
-            "completion_tokens": 16,
-            "total_tokens": 95,
+            "completion_tokens": 15,
+            "total_tokens": 94,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -236,7 +240,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": null
+          "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Thu, 17 Jul 2025 09:42:44 GMT
+  recorded_at: Fri, 01 Aug 2025 10:48:50 GMT
 recorded_with: VCR 6.3.1

@@ -34,7 +34,7 @@ module RubyLLM
                                                                                          payload:)
             accumulator = StreamAccumulator.new
 
-            connection.post stream_url, payload do |req|
+            response = connection.post stream_url, payload do |req|
               req.headers.merge! build_headers(signature.headers, streaming: block_given?)
               req.options.on_data = handle_stream do |chunk|
                 accumulator.add chunk
@@ -42,7 +42,7 @@ module RubyLLM
               end
             end
 
-            accumulator.to_message
+            accumulator.to_message(response)
           end
 
           def handle_stream(&block)

@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| %i[openai ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports response_format param" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports response_format param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
                .with_params(response_format: { type: 'json_object' })
@@ -31,7 +31,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports responseSchema param" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports responseSchema param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
                .with_params(
@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports service_tier param" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports service_tier param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
                .with_params(service_tier: 'standard_only')
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.select { |model_info| %i[openrouter bedrock].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports top_k param" do # rubocop:disable RSpec/ExampleLength
+      it "#{provider}/#{model} supports top_k param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
                .with_params(top_k: 5)

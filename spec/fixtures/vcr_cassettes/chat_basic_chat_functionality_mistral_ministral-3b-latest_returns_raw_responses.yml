@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 01 Aug 2025 10:07:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '01986519-af53-7d04-a74b-ff2c620d00ce'
+      X-Kong-Request-Id:
+      - '01986519-af53-7d04-a74b-ff2c620d00ce'
+      X-Envoy-Upstream-Service-Time:
+      - '228'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '500000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '499918'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '1000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '999986158'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '58'
+      X-Ratelimit-Limit-Req-Minute:
+      - '60'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '58'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '229'
+      X-Kong-Proxy-Latency:
+      - '6'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"636d61e6d3724d669b0022b3f5ac3b08","created":1754042838,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":10,"total_tokens":58,"completion_tokens":48},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is Paris. It''s known for its art, culture, cuisine, and
+        fashion. Paris is the most populous city in France and is a major global center
+        for art, fashion, gastronomy, and culture."}}]}'
+  recorded_at: Fri, 01 Aug 2025 10:07:19 GMT
+recorded_with: VCR 6.3.1

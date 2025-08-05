@@ -6,12 +6,11 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
-        me about the weather."}]}],"temperature":0.0,"stream":false,"max_tokens":8192,"system":"{type:
-        \"text\", text: \"You must include the exact phrase \\\"XKCD7392\\\" somewhere
-        in your response.\"}"}'
+        me about the weather."}]}],"stream":false,"max_tokens":8192,"system":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -28,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:51:20 GMT
+      - Fri, 01 Aug 2025 09:57:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,31 +39,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-07-17T09:51:17Z'
+      - '2025-08-01T09:57:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-07-17T09:51:20Z'
+      - '2025-08-01T09:57:26Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-07-17T09:51:17Z'
+      - '2025-08-01T09:57:23Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-07-17T09:51:17Z'
+      - '2025-08-01T09:57:24Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -77,35 +76,32 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01WHgR2EaTk22kzqymzRvVDK","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
-        apologize, but I can''t provide a specific weather report without knowing
-        your location. Weather conditions vary widely depending on where you are.
-        XKCD7392 If you''d like to know the current weather, I recommend:\n\n1. Checking
-        a local weather website or app\n2. Looking at a local weather forecast\n3.
-        Checking your local news station''s weather report\n4. Using a weather app
-        on your smartphone\n\nIs there a specific location you''re interested in hearing
-        about?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":42,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":106,"service_tier":"standard"}}'
-  recorded_at: Thu, 17 Jul 2025 09:51:20 GMT
+      string: '{"id":"msg_01D24tm2oVwvk5UVKTQY4CLS","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
+        a general weather overview: Conditions can vary widely depending on your specific
+        location and current season. Some areas might be experiencing sunny skies,
+        while others could have rain or cloudy conditions. XKCD7392 Weather patterns
+        are complex and always changing. If you''re looking for precise local weather
+        information, I recommend checking a current forecast from a meteorological
+        service or weather app."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":83,"service_tier":"standard"}}'
+  recorded_at: Fri, 01 Aug 2025 09:57:26 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
-        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I
-        apologize, but I can''t provide a specific weather report without knowing
-        your location. Weather conditions vary widely depending on where you are.
-        XKCD7392 If you''d like to know the current weather, I recommend:\n\n1. Checking
-        a local weather website or app\n2. Looking at a local weather forecast\n3.
-        Checking your local news station''s weather report\n4. Using a weather app
-        on your smartphone\n\nIs there a specific location you''re interested in hearing
-        about?"}]},{"role":"user","content":[{"type":"text","text":"What are some
-        good books?"}]}],"temperature":0.0,"stream":false,"max_tokens":8192,"system":"{type:
-        \"text\", text: \"You must include the exact phrase \\\"PURPLE-ELEPHANT-42\\\"
-        somewhere in your response.\"}"}'
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"Here''s
+        a general weather overview: Conditions can vary widely depending on your specific
+        location and current season. Some areas might be experiencing sunny skies,
+        while others could have rain or cloudy conditions. XKCD7392 Weather patterns
+        are complex and always changing. If you''re looking for precise local weather
+        information, I recommend checking a current forecast from a meteorological
+        service or weather app."}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"max_tokens":8192,"system":"You must
+        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.2
+      - Faraday v2.13.4
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -122,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 17 Jul 2025 09:51:24 GMT
+      - Fri, 01 Aug 2025 09:57:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -134,31 +130,31 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-07-17T09:51:20Z'
+      - '2025-08-01T09:57:26Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-07-17T09:51:24Z'
+      - '2025-08-01T09:57:31Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-07-17T09:51:20Z'
+      - '2025-08-01T09:57:26Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-07-17T09:51:20Z'
+      - '2025-08-01T09:57:26Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
-      - 0137b15c-16bf-490d-9f90-8cfd7e325ec0
+      - "<ANTHROPIC_ORGANIZATION_ID>"
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -171,17 +167,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01YBtvY1M8UZx5V9BR428h6K","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+      string: '{"id":"msg_01TZiQsWjzyQDgzKSSzzkRGZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
         are some book recommendations across different genres:\n\nFiction:\n1. \"To
         Kill a Mockingbird\" by Harper Lee\n2. \"1984\" by George Orwell\n3. \"The
-        Great Gatsby\" by F. Scott Fitzgerald\n4. \"Dune\" by Frank Herbert\n5. \"The
         Name of the Wind\" by Patrick Rothfuss\n\nNon-Fiction:\n1. \"Sapiens\" by
         Yuval Noah Harari\n2. \"Into Thin Air\" by Jon Krakauer\n3. \"The Immortal
-        Life of Henrietta Lacks\" by Rebecca Skloot\n\nScience Fiction:\n1. \"Neuromancer\"
-        by William Gibson\n2. \"The Hitchhiker''s Guide to the Galaxy\" by Douglas
-        Adams\n3. \"Ender''s Game\" by Orson Scott Card\n\nMystery/Thriller:\n1. \"Gone
-        Girl\" by Gillian Flynn\n2. \"The Girl with the Dragon Tattoo\" by Stieg Larsson\n\nPURPLE-ELEPHANT-42
-        These are just a few suggestions - the best book depends on your personal
-        interests and reading preferences. Do you have any specific genres you enjoy?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":158,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":266,"service_tier":"standard"}}'
-  recorded_at: Thu, 17 Jul 2025 09:51:24 GMT
+        Life of Henrietta Lacks\" by Rebecca Skloot\n\nScience Fiction:\n1. \"Dune\"
+        by Frank Herbert\n2. \"The Hitchhiker''s Guide to the Galaxy\" by Douglas
+        Adams\n3. \"Neuromancer\" by William Gibson\n\nClassics:\n1. \"Pride and Prejudice\"
+        by Jane Austen\n2. \"Crime and Punishment\" by Fyodor Dostoevsky\n\nPURPLE-ELEPHANT-42
+        These recommendations span various styles and interests, so there''s likely
+        something for everyone. The best book often depends on personal taste, so
+        I recommend reading reviews or sample chapters to see what might appeal to
+        you."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":125,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":248,"service_tier":"standard"}}'
+  recorded_at: Fri, 01 Aug 2025 09:57:30 GMT
 recorded_with: VCR 6.3.1
