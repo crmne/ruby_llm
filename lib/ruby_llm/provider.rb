@@ -15,7 +15,7 @@ module RubyLLM
 
         payload = Utils.deep_merge(
           params,
-          render_completion_payload(
+          render_payload(
             messages,
             tools: tools,
             temperature: normalized_temperature,

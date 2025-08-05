@@ -7,7 +7,7 @@ module RubyLLM
       module Streaming
         module_function
 
-        def completion_stream_url
+        def stream_url
           completion_url
         end
 

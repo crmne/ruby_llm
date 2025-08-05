@@ -148,10 +148,6 @@ RSpec.shared_context 'with configured RubyLLM' do
   end
 end
 
-RESPONSE_MODELS = [
-  { provider: :openai, model: 'o4-mini-deep-research', params: { tools: [{ type: 'web_search_preview' }] } }
-].freeze
-
 CHAT_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },

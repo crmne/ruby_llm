@@ -5,7 +5,7 @@ module RubyLLM
     module Gemini
       # Streaming methods for the Gemini API implementation
       module Streaming
-        def completion_stream_url
+        def stream_url
           "models/#{@model}:streamGenerateContent?alt=sse"
         end
 

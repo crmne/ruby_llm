@@ -25,7 +25,7 @@ module RubyLLM
             base.include PreludeHandling
           end
 
-          def completion_stream_url
+          def stream_url
             "model/#{@model_id}/invoke-with-response-stream"
           end
 
