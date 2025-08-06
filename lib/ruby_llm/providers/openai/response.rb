@@ -40,7 +40,6 @@ module RubyLLM
             }
           end
 
-          payload[:stream_options] = { include_usage: true } if stream
           payload
         end
 
