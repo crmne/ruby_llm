@@ -173,7 +173,7 @@ module RubyLLM
       alias say ask
 
       def complete(...)
-        to_llm.process(...)
+        to_llm.complete(...)
       rescue RubyLLM::Error => e
         if @message&.persisted? && @message.content.blank?
           RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
