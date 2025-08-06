@@ -101,7 +101,7 @@ module RubyLLM
               'arguments' => data['delta'] || ''
             }
           }
-          
+
           Chunk.new(
             role: :assistant,
             model_id: nil,
@@ -121,7 +121,7 @@ module RubyLLM
               'arguments' => item['arguments'] || ''
             }
           }
-          
+
           Chunk.new(
             role: :assistant,
             model_id: nil,
@@ -141,7 +141,7 @@ module RubyLLM
               'arguments' => item['arguments'] || ''
             }
           }
-          
+
           Chunk.new(
             role: :assistant,
             model_id: nil,

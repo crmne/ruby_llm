@@ -19,29 +19,30 @@ module RubyLLM
       module_function
 
       # Detect if messages contain audio attachments
-      def has_audio_input?(messages)
+      def audio_input?(messages)
         messages.any? do |message|
           next false unless message.respond_to?(:content) && message.content.respond_to?(:attachments)
-          
+
           message.content.attachments.any? { |attachment| attachment.type == :audio }
         end
       end
 
       # Override render_payload to conditionally route to chat completions or responses API
-      def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil)
+      def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
         # Track which API we're using for later methods
-        @using_responses_api = !has_audio_input?(messages)
-        
+        @using_responses_api = !audio_input?(messages)
+
         if @using_responses_api
           # Use responses API for everything else
-          render_response_payload(messages, tools: tools, temperature: temperature, model: model, stream: stream, schema: schema)
+          render_response_payload(messages, tools: tools, temperature: temperature, model: model, stream: stream,
+                                            schema: schema)
         else
           # Use chat completions for audio - call the original method from ChatCompletions
-          super(messages, tools: tools, temperature: temperature, model: model, stream: stream, schema: schema)
+          super
         end
       end
 
-      # Override completion_url to conditionally route to the right endpoint  
+      # Override completion_url to conditionally route to the right endpoint
       def completion_url
         @using_responses_api ? responses_url : super
       end
@@ -51,7 +52,7 @@ module RubyLLM
         if @using_responses_api
           parse_respond_response(response)
         else
-          super(response)
+          super
         end
       end
     end

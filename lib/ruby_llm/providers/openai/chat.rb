@@ -44,8 +44,6 @@ module RubyLLM
           payload
         end
 
-
-
         def parse_completion_response(response)
           data = response.body
           return if data.empty?
@@ -66,8 +64,6 @@ module RubyLLM
           )
         end
 
-
-
         def format_messages(messages)
           messages.map do |msg|
             {
@@ -78,8 +74,6 @@ module RubyLLM
             }.compact
           end
         end
-
-
 
         def format_role(role)
           case role
