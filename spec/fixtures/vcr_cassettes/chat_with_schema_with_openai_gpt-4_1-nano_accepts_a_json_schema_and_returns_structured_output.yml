@@ -2,125 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
-        a person named John who is 30 years old"}],"stream":false,"temperature":0.7,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <OPENAI_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 01 Aug 2025 09:57:12 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '190'
-      Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '202'
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199986'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 4ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-Bzgngv4uRY1OTvVqpAB28AnlvsQ7r",
-          "object": "chat.completion",
-          "created": 1754042232,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"name\":\"John\",\"age\":30}",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 53,
-            "completion_tokens": 9,
-            "total_tokens": 62,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
-        }
-  recorded_at: Fri, 01 Aug 2025 09:57:12 GMT
-- request:
-    method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named John who is 30 years old","status":"completed"}],"stream":false,"temperature":0.7}'
+        a person named John who is 30 years old","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -138,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 05 Aug 2025 05:04:46 GMT
+      - Wed, 06 Aug 2025 04:18:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -152,7 +38,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '149999962'
+      - '149999932'
       X-Ratelimit-Reset-Requests:
       - 2ms
       X-Ratelimit-Reset-Tokens:
@@ -166,11 +52,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '1189'
+      - '1248'
       X-Envoy-Upstream-Service-Time:
-      - '1196'
-      X-Envoy-Decorator-Operation:
-      - tasksapi.openai.svc.cluster.local:8081/*
+      - '1430'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -190,9 +74,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_689190ed5548819cb3be42fce40467a609fe9fd3f2a749b2",
+          "id": "resp_6892d790e46c81a2b56402f52bd03c280ea79e0ebdf6e752",
           "object": "response",
-          "created_at": 1754370285,
+          "created_at": 1754453905,
           "status": "completed",
           "background": false,
           "error": null,
@@ -203,7 +87,7 @@ http_interactions:
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
-              "id": "msg_689190eda3f0819cbf377e1e5b2edf4009fe9fd3f2a749b2",
+              "id": "msg_6892d791c14881a28a75740b6814ca3a0ea79e0ebdf6e752",
               "type": "message",
               "status": "completed",
               "content": [
@@ -211,7 +95,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Here's a brief description of John, a 30-year-old person:\n\nJohn is a 30-year-old individual with a friendly demeanor. He has short, dark brown hair and blue eyes. He works as a software developer and enjoys playing basketball in his free time. John is known for his positive attitude and dedication to his work and hobbies."
+                  "text": "{\"name\":\"John\",\"age\":30}"
                 }
               ],
               "role": "assistant"
@@ -230,7 +114,26 @@ http_interactions:
           "temperature": 0.7,
           "text": {
             "format": {
-              "type": "text"
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "age"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
             }
           },
           "tool_choice": "auto",
@@ -239,18 +142,18 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 18,
+            "input_tokens": 47,
             "input_tokens_details": {
               "cached_tokens": 0
             },
-            "output_tokens": 69,
+            "output_tokens": 10,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 87
+            "total_tokens": 57
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 05 Aug 2025 05:04:46 GMT
+  recorded_at: Wed, 06 Aug 2025 04:18:25 GMT
 recorded_with: VCR 6.3.1
