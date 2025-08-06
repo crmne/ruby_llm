@@ -136,7 +136,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat = Chat.create!(model_id: model)
 
       # Stub the API to fail
-      allow_any_instance_of(RubyLLM::Chat).to receive(:process).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(RubyLLM::Chat).to receive(:complete).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
 
       expect { chat.ask('This will fail') }.to raise_error(RubyLLM::Error)
 

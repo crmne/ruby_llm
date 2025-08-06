@@ -30,9 +30,9 @@ module RubyLLM
             # Use strict mode from schema if specified, default to true
             strict = schema[:strict] != false
 
-            payload[:response_format] = {
-              type: 'json_schema',
-              json_schema: {
+            payload[:text] = {
+              format: {
+                type: 'json_schema',
                 name: 'response',
                 schema: schema,
                 strict: strict
