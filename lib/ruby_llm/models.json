@@ -23253,8 +23253,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09999999999999999,
-          "output_per_million": 0.5
+          "input_per_million": 0.09,
+          "output_per_million": 0.44999999999999996
         }
       }
     },
@@ -23306,8 +23306,8 @@
     "provider": "openrouter",
     "family": "openai",
     "created_at": "2025-08-05 19:17:09 +0200",
-    "context_window": 134144,
-    "max_output_tokens": 134144,
+    "context_window": 131072,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -23323,7 +23323,14 @@
       "structured_output",
       "predicted_outputs"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.04,
+          "output_per_million": 0.16
+        }
+      }
+    },
     "metadata": {
       "description": "gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the Apache 2.0 license. It uses a Mixture-of-Experts (MoE) architecture with 3.6B active parameters per forward pass, optimized for lower-latency inference and deployability on consumer or single-GPU hardware. The model is trained in OpenAI’s Harmony response format and supports reasoning level configuration, fine-tuning, and agentic capabilities including function calling, tool use, and structured outputs.",
       "architecture": {
@@ -23338,8 +23345,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 134144,
-        "max_completion_tokens": 134144,
+        "context_length": 131072,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -23362,6 +23369,58 @@
         "tools",
         "top_k",
         "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/gpt-oss-20b:free",
+    "name": "OpenAI: gpt-oss-20b (free)",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2025-08-05 19:17:09 +0200",
+    "context_window": 134144,
+    "max_output_tokens": 134144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "gpt-oss-20b is an open-weight 21B parameter model released by OpenAI under the Apache 2.0 license. It uses a Mixture-of-Experts (MoE) architecture with 3.6B active parameters per forward pass, optimized for lower-latency inference and deployability on consumer or single-GPU hardware. The model is trained in OpenAI’s Harmony response format and supports reasoning level configuration, fine-tuning, and agentic capabilities including function calling, tool use, and structured outputs.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 134144,
+        "max_completion_tokens": 134144,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs",
+        "temperature",
         "top_p"
       ]
     }
@@ -29311,7 +29370,7 @@
     "name": "Sonar",
     "provider": "perplexity",
     "family": "sonar",
-    "created_at": "2025-08-06 23:42:34 +0200",
+    "created_at": "2025-08-07 00:49:39 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29343,7 +29402,7 @@
     "name": "Sonar Deep Research",
     "provider": "perplexity",
     "family": "sonar_deep_research",
-    "created_at": "2025-08-06 23:42:34 +0200",
+    "created_at": "2025-08-07 00:49:39 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29378,7 +29437,7 @@
     "name": "Sonar Pro",
     "provider": "perplexity",
     "family": "sonar_pro",
-    "created_at": "2025-08-06 23:42:34 +0200",
+    "created_at": "2025-08-07 00:49:39 +0200",
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
@@ -29410,7 +29469,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2025-08-06 23:42:34 +0200",
+    "created_at": "2025-08-07 00:49:39 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -29442,7 +29501,7 @@
     "name": "Sonar Reasoning Pro",
     "provider": "perplexity",
     "family": "sonar_reasoning_pro",
-    "created_at": "2025-08-06 23:42:34 +0200",
+    "created_at": "2025-08-07 00:49:39 +0200",
     "context_window": 128000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,

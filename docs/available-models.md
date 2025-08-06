@@ -328,7 +328,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | text-moderation | text-moderation-latest | openai | - | 32768 | - |
 
 
-### OpenRouter (313)
+### OpenRouter (314)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -550,8 +550,9 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: GPT-4o-mini | openai/gpt-4o-mini | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini (2024-07-18) | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini Search Preview | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
-| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.10, Out: $0.50 |
-| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 134144 | 134144 | - |
+| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.09, Out: $0.45 |
+| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 131072 | - | In: $0.04, Out: $0.16 |
+| OpenAI: gpt-oss-20b (free) | openai/gpt-oss-20b:free | openrouter | 134144 | 134144 | - |
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-mini | openai/o1-mini | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | OpenAI: o1-mini (2024-09-12) | openai/o1-mini-2024-09-12 | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
@@ -948,8 +949,8 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: GPT-4o (extended) | openai/gpt-4o:extended | openrouter | 128000 | 64000 | In: $6.00, Out: $18.00 |
 | OpenAI: GPT-4o-mini | openai/gpt-4o-mini | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini (2024-07-18) | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
-| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.10, Out: $0.50 |
-| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 134144 | 134144 | - |
+| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.09, Out: $0.45 |
+| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 131072 | - | In: $0.04, Out: $0.16 |
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o3 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | OpenAI: o3 Mini | openai/o3-mini | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.55 |
@@ -983,7 +984,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok 4 | x-ai/grok-4 | openrouter | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
 
 
-### Structured Output (296)
+### Structured Output (297)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1229,8 +1230,9 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: GPT-4o-mini | openai/gpt-4o-mini | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini (2024-07-18) | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini Search Preview | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
-| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.10, Out: $0.50 |
-| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 134144 | 134144 | - |
+| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.09, Out: $0.45 |
+| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 131072 | - | In: $0.04, Out: $0.16 |
+| OpenAI: gpt-oss-20b (free) | openai/gpt-oss-20b:free | openrouter | 134144 | 134144 | - |
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-pro | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | OpenAI: o3 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -1285,7 +1287,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (453)
+### Streaming (454)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1642,8 +1644,9 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | OpenAI: GPT-4o-mini | openai/gpt-4o-mini | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini (2024-07-18) | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | OpenAI: GPT-4o-mini Search Preview | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
-| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.10, Out: $0.50 |
-| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 134144 | 134144 | - |
+| OpenAI: gpt-oss-120b | openai/gpt-oss-120b | openrouter | 131072 | - | In: $0.09, Out: $0.45 |
+| OpenAI: gpt-oss-20b | openai/gpt-oss-20b | openrouter | 131072 | - | In: $0.04, Out: $0.16 |
+| OpenAI: gpt-oss-20b (free) | openai/gpt-oss-20b:free | openrouter | 134144 | 134144 | - |
 | OpenAI: o1 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | OpenAI: o1-mini | openai/o1-mini | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |
 | OpenAI: o1-mini (2024-09-12) | openai/o1-mini-2024-09-12 | openrouter | 128000 | 65536 | In: $1.10, Out: $4.40, Cache: $0.55 |

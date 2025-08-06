@@ -218,6 +218,52 @@ These callbacks are useful for:
 - **Debugging:** Monitor tool inputs and outputs in production
 - **Auditing:** Record tool usage for compliance or billing
 
+## Halting Conversation Continuation
+
+Available in v1.6.0+
+{: .label .label-yellow }
+
+By default, after a tool executes, the LLM continues the conversation. Sometimes you want to stop this continuation:
+- **Handoffs:** When delegating to another agent that handles the response
+- **Terminal Operations:** When the tool completes the task and no further LLM processing is needed
+
+Use the `halt` helper to stop continuation:
+
+```ruby
+class HandoffTool < RubyLLM::Tool
+  description "Delegates complex queries to a specialist"
+  param :query, desc: "The query to delegate"
+
+  def execute(query:)
+    # Sub-agent handles the query
+    response = RubyLLM.chat
+      .with_instructions("You are a Ruby expert...")
+      .ask(query)
+    # Stop main agent from continuing - return sub-agent's response
+    halt response.content
+  end
+end
+
+# Usage
+result = RubyLLM.chat
+  .with_instructions("You are a router agent...")
+  .with_tool(HandoffTool)
+  .ask("Explain Ruby metaprogramming")
+
+# result is a Tool::Halt containing the sub-agent's response
+result.content # => Full explanation from the Ruby expert
+```
+
+The `halt` method returns a `Tool::Halt` object that:
+1. Adds its content to the conversation history (as a tool message)
+2. Prevents the automatic continuation that normally follows tool execution
+3. Returns the halt content to the caller
+
+This is useful for:
+- **Agent Handoffs:** One agent delegates to another without continuing
+- **Token Conservation:** Stop after tool execution without an extra LLM call
+- **Terminal Operations:** Tools that complete the conversation
+
 ## Model Context Protocol (MCP) Support
 
 For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.

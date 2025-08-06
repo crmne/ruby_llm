@@ -206,6 +206,8 @@ module RubyLLM
     end
 
     def handle_tool_calls(response, &)
+      halt_result = nil
+
       response.tool_calls.each_value do |tool_call|
         @on[:new_message]&.call
         @on[:tool_call]&.call(tool_call)
@@ -213,9 +215,11 @@ module RubyLLM
         @on[:tool_result]&.call(result)
         message = add_message role: :tool, content: result.to_s, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
+
+        halt_result = result if result.is_a?(Tool::Halt)
       end
 
-      complete(&)
+      halt_result || complete(&)
     end
 
     def execute_tool(tool_call)
