@@ -70,6 +70,11 @@ RubyLLM.configure do |config|
   # Use this for Azure OpenAI, proxies, or self-hosted models via OpenAI-compatible APIs.
   config.openai_api_base = ENV.fetch('OPENAI_API_BASE', nil) # e.g., "https://your-azure.openai.azure.com"
 
+  # --- OpenAI System Role Behavior --- (Available in > v1.5.1)
+  # Some OpenAI-compatible APIs don't support the 'system' role.
+  # Set to false to convert system messages to user messages with "System: " prefix.
+  config.openai_use_system_role = false # Default: false (nil)
+
   # --- Default Models ---
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
   config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'

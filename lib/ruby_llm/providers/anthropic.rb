@@ -4,38 +4,33 @@ module RubyLLM
   module Providers
     # Anthropic Claude API integration. Handles the complexities of
     # Claude's unique message format and tool calling conventions.
-    module Anthropic
-      extend Provider
-      extend Anthropic::Chat
-      extend Anthropic::Embeddings
-      extend Anthropic::Media
-      extend Anthropic::Models
-      extend Anthropic::Streaming
-      extend Anthropic::Tools
+    class Anthropic < Provider
+      include Anthropic::Chat
+      include Anthropic::Embeddings
+      include Anthropic::Media
+      include Anthropic::Models
+      include Anthropic::Streaming
+      include Anthropic::Tools
 
-      module_function
-
-      def api_base(_config)
+      def api_base
         'https://api.anthropic.com'
       end
 
-      def headers(config)
+      def headers
         {
-          'x-api-key' => config.anthropic_api_key,
+          'x-api-key' => @config.anthropic_api_key,
           'anthropic-version' => '2023-06-01'
         }
       end
 
-      def capabilities
-        Anthropic::Capabilities
-      end
+      class << self
+        def capabilities
+          Anthropic::Capabilities
+        end
 
-      def slug
-        'anthropic'
-      end
-
-      def configuration_requirements
-        %i[anthropic_api_key]
+        def configuration_requirements
+          %i[anthropic_api_key]
+        end
       end
     end
   end

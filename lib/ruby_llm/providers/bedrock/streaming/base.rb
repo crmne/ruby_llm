@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Streaming
         # Base module for AWS Bedrock streaming functionality.
         # Serves as the core module that includes all other streaming-related modules
@@ -30,8 +30,7 @@ module RubyLLM
           end
 
           def stream_response(connection, payload, &block)
-            signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", config: connection.config,
-                                                                                         payload:)
+            signature = sign_request("#{connection.connection.url_prefix}#{stream_url}", payload:)
             accumulator = StreamAccumulator.new
 
             response = connection.post stream_url, payload do |req|

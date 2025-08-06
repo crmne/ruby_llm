@@ -2,14 +2,11 @@
 
 module RubyLLM
   module Providers
-    module DeepSeek
+    class DeepSeek
       # Determines capabilities and pricing for DeepSeek models
       module Capabilities
         module_function
 
-        # Returns the context window size for the given model
-        # @param model_id [String] the model identifier
-        # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
           when /deepseek-(?:chat|reasoner)/ then 64_000
@@ -17,61 +14,37 @@ module RubyLLM
           end
         end
 
-        # Returns the maximum number of tokens that can be generated
-        # @param model_id [String] the model identifier
-        # @return [Integer] the maximum number of tokens
         def max_tokens_for(model_id)
           case model_id
           when /deepseek-(?:chat|reasoner)/ then 8_192
-          else 4_096 # Default if max_tokens not specified
+          else 4_096
           end
         end
 
-        # Returns the price per million tokens for input (cache miss)
-        # @param model_id [String] the model identifier
-        # @return [Float] the price per million tokens in USD
         def input_price_for(model_id)
           PRICES.dig(model_family(model_id), :input_miss) || default_input_price
         end
 
-        # Returns the price per million tokens for output
-        # @param model_id [String] the model identifier
-        # @return [Float] the price per million tokens in USD
         def output_price_for(model_id)
           PRICES.dig(model_family(model_id), :output) || default_output_price
         end
 
-        # Returns the price per million tokens for input with cache hit
-        # @param model_id [String] the model identifier
-        # @return [Float] the price per million tokens in USD
         def cache_hit_price_for(model_id)
           PRICES.dig(model_family(model_id), :input_hit) || default_cache_hit_price
         end
 
-        # Determines if the model supports vision capabilities
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports vision
         def supports_vision?(_model_id)
-          false # DeepSeek models don't currently support vision
+          false
         end
 
-        # Determines if the model supports function calling
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports function calling
         def supports_functions?(model_id)
-          model_id.match?(/deepseek-chat/) # Only deepseek-chat supports function calling
+          model_id.match?(/deepseek-chat/)
         end
 
-        # Determines if the model supports JSON mode
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports JSON mode
         def supports_json_mode?(_model_id)
-          false # DeepSeek function calling is unstable
+          false
         end
 
-        # Returns a formatted display name for the model
-        # @param model_id [String] the model identifier
-        # @return [String] the formatted display name
         def format_display_name(model_id)
           case model_id
           when 'deepseek-chat' then 'DeepSeek V3'
@@ -83,53 +56,41 @@ module RubyLLM
           end
         end
 
-        # Returns the model type
-        # @param model_id [String] the model identifier
-        # @return [String] the model type (e.g., 'chat')
         def model_type(_model_id)
-          'chat' # All DeepSeek models are chat models
+          'chat'
         end
 
-        # Returns the model family
-        # @param model_id [String] the model identifier
-        # @return [Symbol] the model family
         def model_family(model_id)
           case model_id
           when /deepseek-reasoner/ then :reasoner
-          else :chat # Default to chat family
+          else :chat
           end
         end
 
         # Pricing information for DeepSeek models (USD per 1M tokens)
         PRICES = {
           chat: {
-            input_hit: 0.07,   # $0.07 per million tokens on cache hit
-            input_miss: 0.27,  # $0.27 per million tokens on cache miss
-            output: 1.10       # $1.10 per million tokens output
+            input_hit: 0.07,
+            input_miss: 0.27,
+            output: 1.10
           },
           reasoner: {
-            input_hit: 0.14,   # $0.14 per million tokens on cache hit
-            input_miss: 0.55,  # $0.55 per million tokens on cache miss
-            output: 2.19       # $2.19 per million tokens output
+            input_hit: 0.14,
+            input_miss: 0.55,
+            output: 2.19
           }
         }.freeze
 
-        # Default input price when model family can't be determined
-        # @return [Float] the default input price
         def default_input_price
-          0.27 # Default to chat cache miss price
+          0.27
         end
 
-        # Default output price when model family can't be determined
-        # @return [Float] the default output price
         def default_output_price
-          1.10 # Default to chat output price
+          1.10
         end
 
-        # Default cache hit price when model family can't be determined
-        # @return [Float] the default cache hit price
         def default_cache_hit_price
-          0.07 # Default to chat cache hit price
+          0.07
         end
 
         def modalities_for(_model_id)
@@ -142,7 +103,6 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          # Function calling for chat models
           capabilities << 'function_calling' if model_id.match?(/deepseek-chat/)
 
           capabilities
@@ -157,7 +117,6 @@ module RubyLLM
             output_per_million: prices[:output]
           }
 
-          # Add cached pricing if available
           standard_pricing[:cached_input_per_million] = prices[:input_hit] if prices[:input_hit]
 
           {

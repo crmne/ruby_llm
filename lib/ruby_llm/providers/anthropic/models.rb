@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Anthropic
+    class Anthropic
       # Models methods of the Anthropic API integration
       module Models
         module_function

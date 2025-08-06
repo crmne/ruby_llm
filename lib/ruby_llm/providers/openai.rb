@@ -5,51 +5,39 @@ module RubyLLM
     # OpenAI API integration. Handles chat completion, function calling,
     # and OpenAI's unique streaming format. Supports GPT-4, GPT-3.5,
     # and other OpenAI models.
-    module OpenAI
-      extend Provider
-      extend OpenAI::Chat
-      extend OpenAI::Embeddings
-      extend OpenAI::Models
-      extend OpenAI::Streaming
-      extend OpenAI::Tools
-      extend OpenAI::Images
-      extend OpenAI::Media
+    class OpenAI < Provider
+      include OpenAI::Chat
+      include OpenAI::Embeddings
+      include OpenAI::Models
+      include OpenAI::Streaming
+      include OpenAI::Tools
+      include OpenAI::Images
+      include OpenAI::Media
 
-      def self.extended(base)
-        base.extend(Provider)
-        base.extend(OpenAI::Chat)
-        base.extend(OpenAI::Embeddings)
-        base.extend(OpenAI::Models)
-        base.extend(OpenAI::Streaming)
-        base.extend(OpenAI::Tools)
-        base.extend(OpenAI::Images)
-        base.extend(OpenAI::Media)
+      def api_base
+        @config.openai_api_base || 'https://api.openai.com/v1'
       end
 
-      module_function
-
-      def api_base(config)
-        config.openai_api_base || 'https://api.openai.com/v1'
-      end
-
-      def headers(config)
+      def headers
         {
-          'Authorization' => "Bearer #{config.openai_api_key}",
-          'OpenAI-Organization' => config.openai_organization_id,
-          'OpenAI-Project' => config.openai_project_id
+          'Authorization' => "Bearer #{@config.openai_api_key}",
+          'OpenAI-Organization' => @config.openai_organization_id,
+          'OpenAI-Project' => @config.openai_project_id
         }.compact
       end
 
-      def capabilities
-        OpenAI::Capabilities
+      def maybe_normalize_temperature(temperature, model_id)
+        OpenAI::Capabilities.normalize_temperature(temperature, model_id)
       end
 
-      def slug
-        'openai'
-      end
+      class << self
+        def capabilities
+          OpenAI::Capabilities
+        end
 
-      def configuration_requirements
-        %i[openai_api_key]
+        def configuration_requirements
+          %i[openai_api_key]
+        end
       end
     end
   end

@@ -4,7 +4,7 @@ require 'base64'
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Streaming
         # Module for processing payloads from AWS Bedrock streaming responses.
         # Handles JSON payload extraction, decoding, and chunk creation.

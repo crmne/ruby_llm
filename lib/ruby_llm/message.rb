@@ -55,6 +55,10 @@ module RubyLLM
       }.compact
     end
 
+    def instance_variables
+      super - [:@raw]
+    end
+
     private
 
     def normalize_content(content)

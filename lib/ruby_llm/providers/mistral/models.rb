@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Mistral
+    class Mistral
       # Model information for Mistral
       module Models
         module_function

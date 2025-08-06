@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Mistral
+    class Mistral
       # Embeddings methods for Mistral API
       module Embeddings
         module_function

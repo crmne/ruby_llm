@@ -3,32 +3,27 @@
 module RubyLLM
   module Providers
     # DeepSeek API integration.
-    module DeepSeek
-      extend OpenAI
-      extend DeepSeek::Chat
+    class DeepSeek < OpenAI
+      include DeepSeek::Chat
 
-      module_function
-
-      def api_base(_config)
+      def api_base
         'https://api.deepseek.com'
       end
 
-      def headers(config)
+      def headers
         {
-          'Authorization' => "Bearer #{config.deepseek_api_key}"
+          'Authorization' => "Bearer #{@config.deepseek_api_key}"
         }
       end
 
-      def capabilities
-        DeepSeek::Capabilities
-      end
+      class << self
+        def capabilities
+          DeepSeek::Capabilities
+        end
 
-      def slug
-        'deepseek'
-      end
-
-      def configuration_requirements
-        %i[deepseek_api_key]
+        def configuration_requirements
+          %i[deepseek_api_key]
+        end
       end
     end
   end

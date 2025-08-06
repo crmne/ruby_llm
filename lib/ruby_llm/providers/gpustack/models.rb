@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module GPUStack
+    class GPUStack
       # Models methods of the GPUStack API integration
       module Models
         module_function

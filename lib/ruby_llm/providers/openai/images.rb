@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Image generation methods for the OpenAI API integration
       module Images
         module_function

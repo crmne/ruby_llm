@@ -81,8 +81,8 @@ module RubyLLM
     end
 
     def with_model(model_id, provider: nil, assume_exists: false)
-      @model, @provider = Models.resolve(model_id, provider:, assume_exists:)
-      @connection = @context ? @context.connection_for(@provider) : @provider.connection(@config)
+      @model, @provider = Models.resolve(model_id, provider:, assume_exists:, config: @config)
+      @connection = @provider.connection
       self
     end
 
@@ -150,7 +150,6 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
-        connection: @connection,
         params: @params,
         schema: @schema,
         &wrap_streaming_block(&)
@@ -231,6 +230,10 @@ module RubyLLM
 
     def instantiate_tool(tool)
       tool.is_a?(Class) ? tool.new : tool
+    end
+
+    def instance_variables
+      super - %i[@connection @config]
     end
   end
 end

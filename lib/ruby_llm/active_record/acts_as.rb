@@ -144,13 +144,10 @@ module RubyLLM
       end
 
       def on_new_message(&block)
-        # Ensure persistence callbacks are set up first
         to_llm
 
-        # Get existing callback (which should be persistence)
         existing_callback = @chat.instance_variable_get(:@on)[:new_message]
 
-        # Set new callback that chains both
         @chat.on_new_message do
           existing_callback&.call
           block&.call
@@ -159,13 +156,10 @@ module RubyLLM
       end
 
       def on_end_message(&block)
-        # Ensure persistence callbacks are set up first
         to_llm
 
-        # Get existing callback (which should be persistence)
         existing_callback = @chat.instance_variable_get(:@on)[:end_message]
 
-        # Set new callback that chains both
         @chat.on_end_message do |msg|
           existing_callback&.call(msg)
           block&.call(msg)

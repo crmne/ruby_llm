@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Ollama
+    class Ollama
       # Chat methods of the Ollama API integration
       module Chat
         module_function

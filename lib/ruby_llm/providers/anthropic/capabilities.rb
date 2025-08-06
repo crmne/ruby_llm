@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Anthropic
+    class Anthropic
       # Determines capabilities and pricing for Anthropic models
       module Capabilities
         module_function

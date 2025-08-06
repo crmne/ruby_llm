@@ -96,7 +96,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Claude Sonnet 4 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 
 
-### Deepseek (2)
+### DeepSeek (2)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -168,7 +168,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Veo 2 | veo-2.0-generate-001 | gemini | 480 | 8192 | In: $0.08, Out: $0.30 |
 
 
-### Mistral (63)
+### Mistral (64)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -233,11 +233,12 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | Pixtral Large | pixtral-large-latest | mistral | 32768 | 8192 | - |
 | Voxtral Mini 2507 | voxtral-mini-2507 | mistral | 32768 | 8192 | - |
 | Voxtral Mini Latest | voxtral-mini-latest | mistral | 32768 | 8192 | - |
+| Voxtral Mini Transcribe 2507 | voxtral-mini-transcribe-2507 | mistral | 32768 | 8192 | - |
 | Voxtral Small 2507 | voxtral-small-2507 | mistral | 32768 | 8192 | - |
 | Voxtral Small Latest | voxtral-small-latest | mistral | 32768 | 8192 | - |
 
 
-### Openai (84)
+### OpenAI (84)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -327,12 +328,10 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | text-moderation | text-moderation-latest | openai | - | 32768 | - |
 
 
-### Openrouter (315)
+### OpenRouter (313)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
-| AI21: Jamba 1.6 Large | ai21/jamba-1.6-large | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| AI21: Jamba Mini 1.6 | ai21/jamba-1.6-mini | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | Agentica: Deepcoder 14B Preview | agentica-org/deepcoder-14b-preview | openrouter | 96000 | - | In: $0.02, Out: $0.02 |
 | Agentica: Deepcoder 14B Preview (free) | agentica-org/deepcoder-14b-preview:free | openrouter | 96000 | - | - |
 | AionLabs: Aion-1.0 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
@@ -661,7 +660,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 
 ## Models by Capability
 
-### Function Calling (319)
+### Function Calling (317)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -831,8 +830,6 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | o3-pro | o3-pro-2025-06-10 | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o4-mini | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini | o4-mini-2025-04-16 | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| AI21: Jamba 1.6 Large | ai21/jamba-1.6-large | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| AI21: Jamba Mini 1.6 | ai21/jamba-1.6-mini | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | Amazon: Nova Lite 1.0 | amazon/nova-lite-v1 | openrouter | 300000 | 5120 | In: $0.06, Out: $0.24 |
 | Amazon: Nova Micro 1.0 | amazon/nova-micro-v1 | openrouter | 128000 | 5120 | In: $0.04, Out: $0.14 |
 | Amazon: Nova Pro 1.0 | amazon/nova-pro-v1 | openrouter | 300000 | 5120 | In: $0.80, Out: $3.20 |
@@ -1320,7 +1317,7 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | xAI: Grok Vision Beta | x-ai/grok-vision-beta | openrouter | 8192 | - | In: $5.00, Out: $15.00 |
 
 
-### Streaming (455)
+### Streaming (453)
 
 | Model | ID | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | --: | --: | :-- |
@@ -1459,8 +1456,6 @@ See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIB
 | GPT-4o-Realtime Preview 20250603 | gpt-4o-realtime-preview-2025-06-03 | openai | 128000 | 4096 | In: $5.00, Out: $20.00 |
 | TTS-1 1106 | tts-1-1106 | openai | - | - | In: $15.00, Out: $15.00 |
 | TTS-1 HD 1106 | tts-1-hd-1106 | openai | - | - | In: $30.00, Out: $30.00 |
-| AI21: Jamba 1.6 Large | ai21/jamba-1.6-large | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| AI21: Jamba Mini 1.6 | ai21/jamba-1.6-mini | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | Agentica: Deepcoder 14B Preview | agentica-org/deepcoder-14b-preview | openrouter | 96000 | - | In: $0.02, Out: $0.02 |
 | Agentica: Deepcoder 14B Preview (free) | agentica-org/deepcoder-14b-preview:free | openrouter | 96000 | - | - |
 | AionLabs: Aion-1.0 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
