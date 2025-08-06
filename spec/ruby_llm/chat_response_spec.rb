@@ -21,6 +21,5 @@ RSpec.describe RubyLLM::Chat do
         expect(response.output_tokens).to be_positive
       end
     end
-
   end
 end
