@@ -30,7 +30,8 @@ module RubyLLM
       @on = {
         new_message: nil,
         end_message: nil,
-        tool_call: nil
+        tool_call: nil,
+        tool_result: nil
       }
     end
 
@@ -134,6 +135,11 @@ module RubyLLM
       self
     end
 
+    def on_tool_result(&block)
+      @on[:tool_result] = block
+      self
+    end
+
     def each(&)
       messages.each(&)
     end
@@ -205,6 +211,7 @@ module RubyLLM
         @on[:new_message]&.call
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
+        @on[:tool_result]&.call(result)
         message = add_message role: :tool, content: result.to_s, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
       end

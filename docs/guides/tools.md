@@ -188,6 +188,36 @@ When you `ask` a question that the model determines requires a tool:
 
 This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
 
+## Monitoring Tool Calls with Callbacks
+
+You can monitor tool execution using event callbacks to track when tools are called and what they return:
+
+```ruby
+chat = RubyLLM.chat(model: 'gpt-4o')
+      .with_tool(Weather)
+      .on_tool_call do |tool_call|
+        # Called when the AI decides to use a tool
+        puts "Calling tool: #{tool_call.name}"
+        puts "Arguments: #{tool_call.arguments}"
+      end
+      .on_tool_result do |result|  # Available in > 1.5.1
+        # Called after the tool returns its result
+        puts "Tool returned: #{result}"
+      end
+
+response = chat.ask "What's the weather in Paris?"
+# Output:
+# Calling tool: weather
+# Arguments: {"latitude": "48.8566", "longitude": "2.3522"}
+# Tool returned: {"temperature": 15, "conditions": "Partly cloudy"}
+```
+
+These callbacks are useful for:
+- **Logging and Analytics:** Track which tools are used most frequently
+- **UI Updates:** Show loading states or progress indicators
+- **Debugging:** Monitor tool inputs and outputs in production
+- **Auditing:** Record tool usage for compliance or billing
+
 ## Model Context Protocol (MCP) Support
 
 For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.

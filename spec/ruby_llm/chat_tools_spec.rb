@@ -251,6 +251,36 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to include('15')
       expect(response.content).to include('10')
     end
+
+    it 'calls on_tool_result callback when tools return results' do
+      tool_results_received = []
+
+      chat = RubyLLM.chat
+                    .with_tool(Weather)
+                    .on_tool_result { |result| tool_results_received << result }
+
+      response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+      expect(tool_results_received).not_to be_empty
+      expect(tool_results_received.first).to be_a(String)
+      expect(tool_results_received.first).to include('15°C')
+      expect(tool_results_received.first).to include('10 km/h')
+      expect(response.content).to include('15')
+      expect(response.content).to include('10')
+    end
+
+    it 'calls both on_tool_call and on_tool_result callbacks in order' do
+      call_order = []
+
+      chat = RubyLLM.chat
+                    .with_tool(DiceRoll)
+                    .on_tool_call { |_| call_order << :tool_call }
+                    .on_tool_result { |_| call_order << :tool_result }
+
+      chat.ask('Roll a die for me')
+
+      expect(call_order).to eq(%i[tool_call tool_result])
+    end
   end
 
   describe 'error handling' do
