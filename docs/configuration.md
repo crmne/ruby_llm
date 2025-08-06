@@ -95,6 +95,7 @@ RubyLLM.configure do |config|
   config.log_file = '/logs/ruby_llm.log'
   config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
   config.log_assume_model_exists = false # Silence "Assuming model exists for provider" warning
+  config.log_stream_debug = false # Show chunk-by-chunk streaming details (Available in > v1.5.1)
 end
 ```
 
@@ -196,6 +197,14 @@ end
 * `:warn`: Warning messages for non-critical issues that may need attention
 
 You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
+
+### Stream Debug Logging
+
+Available in > v1.5.1
+{: .label .label-yellow }
+
+* `config.log_stream_debug`: When enabled, logs detailed chunk-by-chunk streaming information including intermediate accumulator states. This is useful for debugging streaming issues or understanding how responses are built up over time.
+* Can also be enabled via the `RUBYLLM_STREAM_DEBUG=true` environment variable.
 
 ### Custom Logger
 
