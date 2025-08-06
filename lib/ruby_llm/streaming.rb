@@ -8,7 +8,7 @@ module RubyLLM
   module Streaming
     module_function
 
-    def stream_response(connection, stream_url, payload, &block)
+    def stream_response(connection, payload, &block)
       accumulator = StreamAccumulator.new
 
       response = connection.post stream_url, payload do |req|

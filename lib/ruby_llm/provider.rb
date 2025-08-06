@@ -26,7 +26,7 @@ module RubyLLM
         )
 
         if block_given?
-          stream_response connection, completion_stream_url, payload, &
+          stream_response connection, payload, &
         else
           sync_completion_response connection, payload
         end
