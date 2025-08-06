@@ -1,0 +1,193 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
+        a response with 2 users and metadata with version 1","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"users":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"},"role":{"type":"string","enum":["admin","user","guest"]}},"required":["name","role"],"additionalProperties":false}},"metadata":{"type":"object","properties":{"created_at":{"type":"string"},"version":{"type":"integer"}},"required":["created_at","version"],"additionalProperties":false}},"required":["users","metadata"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 05:07:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999885'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '894'
+      X-Envoy-Upstream-Service-Time:
+      - '904'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_6892e2ffd3d8819181008803a9c784f80251f77e9710ce40",
+          "object": "response",
+          "created_at": 1754456831,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_6892e30007bc81918f93e1e71af03f820251f77e9710ce40",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"users\":[{\"name\":\"Alice\",\"role\":\"admin\"},{\"name\":\"Bob\",\"role\":\"user\"}],\"metadata\":{\"created_at\":\"2023-10-04T12:00:00Z\",\"version\":1}}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "users": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "admin",
+                            "user",
+                            "guest"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "role"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "created_at",
+                      "version"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "users",
+                  "metadata"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 97,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 45,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 142
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Wed, 06 Aug 2025 05:07:12 GMT
+recorded_with: VCR 6.3.1
