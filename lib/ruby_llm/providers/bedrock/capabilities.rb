@@ -62,8 +62,8 @@ module RubyLLM
           'chat'
         end
 
-        def supports_structured_output?(model_id)
-          model_id.match?(/anthropic\.claude/)
+        def supports_structured_output?(_model_id)
+          false
         end
 
         # Model family patterns for capability lookup
@@ -129,8 +129,6 @@ module RubyLLM
           capabilities << 'streaming' if model_id.match?(/anthropic\.claude/)
 
           capabilities << 'function_calling' if supports_functions?(model_id)
-
-          capabilities << 'structured_output' if supports_json_mode?(model_id)
 
           capabilities << 'reasoning' if model_id.match?(/claude-3-7/)
 

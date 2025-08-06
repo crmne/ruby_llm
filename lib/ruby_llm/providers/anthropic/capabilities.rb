@@ -133,7 +133,6 @@ module RubyLLM
           # Function calling for Claude 3+
           if model_id.match?(/claude-3/)
             capabilities << 'function_calling'
-            capabilities << 'structured_output'
             capabilities << 'batch'
           end
 
