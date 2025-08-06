@@ -219,50 +219,88 @@ These callbacks are useful for:
 - **Auditing:** Record tool usage for compliance or billing
 
 ## Halting Conversation Continuation
+{: .d-inline-block }
 
 Available in v1.6.0+
 {: .label .label-yellow }
 
-By default, after a tool executes, the LLM continues the conversation. Sometimes you want to stop this continuation:
-- **Handoffs:** When delegating to another agent that handles the response
-- **Terminal Operations:** When the tool completes the task and no further LLM processing is needed
+Looking at the [Tool Execution Flow](#the-tool-execution-flow) above, step 7 shows that after a tool executes, its result goes back to the LLM which generates a final response. Sometimes you want to skip this final step.
 
-Use the `halt` helper to stop continuation:
+### When to Use Halt
+
+Use `halt` when you want the tool's result to be the final response, without the LLM adding commentary:
+
+- **Sub-agent delegation:** Another agent handles the response completely
+- **Terminal operations:** The tool completes the task (e.g., "file saved")
+- **Token conservation:** Avoid unnecessary LLM calls for simple confirmations
+
+### How Halt Works
+
+Normally (from the execution flow above):
+- Step 6: Tool result sent back to LLM
+- Step 7: LLM generates response about the tool result
+- Step 8: Final response returned
+
+With `halt`:
+- Step 6: Tool result added to history (for context)
+- Step 7: **Skipped** - no LLM continuation
+- Step 8: Halt object returned directly
+
+### Sub-Agent Example
 
 ```ruby
-class HandoffTool < RubyLLM::Tool
-  description "Delegates complex queries to a specialist"
-  param :query, desc: "The query to delegate"
+class RubyExpertTool < RubyLLM::Tool
+  description "Delegate Ruby questions to expert"
+  param :question, desc: "The Ruby question to delegate"
 
-  def execute(query:)
-    # Sub-agent handles the query
+  def execute(question:)
+    # Create sub-agent with different prompt and tools
     response = RubyLLM.chat
-      .with_instructions("You are a Ruby expert...")
-      .ask(query)
-    # Stop main agent from continuing - return sub-agent's response
+      .with_instructions("You are a Ruby expert. Be concise and accurate.")
+      .with_tool(CodeFormatterTool)  # Different tools
+      .ask(question) { |chunk| print chunk }  # Stream to user
+    # Without halt: Router would continue with "The expert says..."
+    # With halt: Router stops, returns expert's response directly
     halt response.content
   end
 end
 
-# Usage
-result = RubyLLM.chat
-  .with_instructions("You are a router agent...")
-  .with_tool(HandoffTool)
-  .ask("Explain Ruby metaprogramming")
+# Router agent delegates to expert
+router = RubyLLM.chat
+  .with_instructions("You are a router. Delegate Ruby questions to ruby_expert.")
+  .with_tool(RubyExpertTool)
 
-# result is a Tool::Halt containing the sub-agent's response
-result.content # => Full explanation from the Ruby expert
+result = router.ask("How does method_missing work?")
+# result is a Tool::Halt containing the expert's full response
+result.content # => "method_missing is a hook method that..."
 ```
 
-The `halt` method returns a `Tool::Halt` object that:
-1. Adds its content to the conversation history (as a tool message)
-2. Prevents the automatic continuation that normally follows tool execution
-3. Returns the halt content to the caller
+### Terminal Operation Example
 
-This is useful for:
-- **Agent Handoffs:** One agent delegates to another without continuing
-- **Token Conservation:** Stop after tool execution without an extra LLM call
-- **Terminal Operations:** Tools that complete the conversation
+```ruby
+class SaveFileTool < RubyLLM::Tool
+  description "Save content to a file"
+  param :path, desc: "File path"
+  param :content, desc: "File content"
+
+  def execute(path:, content:)
+    File.write(path, content)
+    # Without halt: LLM would add "I've successfully saved the file..."
+    # With halt: Just return confirmation
+    halt "Saved to #{path}"
+  end
+end
+```
+
+### Key Points
+
+- The `halt` helper returns a `Tool::Halt` object
+- The halt content is recorded in conversation history (as a tool message)
+- The conversation stops - no further LLM processing
+- The caller receives the Halt object with the content
+
+{: .note }
+Unlike frameworks like ai-agents, RubyLLM doesn't automatically share context between agents. Design your tool parameters to pass necessary context to sub-agents.
 
 ## Model Context Protocol (MCP) Support
 

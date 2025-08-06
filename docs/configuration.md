@@ -204,6 +204,7 @@ end
 You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
 
 ### Stream Debug Logging
+{: .d-inline-block }
 
 Available in > v1.5.1
 {: .label .label-yellow }
