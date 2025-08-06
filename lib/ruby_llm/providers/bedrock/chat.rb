@@ -7,7 +7,7 @@ module RubyLLM
       module Chat
         module_function
 
-        def sync_completion_response(connection, payload)
+        def sync_response(connection, payload)
           signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", config: connection.config,
                                                                                            payload:)
           response = connection.post completion_url, payload do |req|

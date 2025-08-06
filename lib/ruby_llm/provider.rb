@@ -28,7 +28,7 @@ module RubyLLM
         if block_given?
           stream_response connection, payload, &
         else
-          sync_completion_response connection, payload
+          sync_response connection, payload
         end
       end
 
@@ -79,14 +79,9 @@ module RubyLLM
         end
       end
 
-      def sync_completion_response(connection, payload)
+      def sync_response(connection, payload)
         response = connection.post completion_url, payload
         parse_completion_response response
-      end
-
-      def sync_respond_response(connection, payload)
-        response = connection.post responses_url, payload
-        parse_respond_response response
       end
     end
 
