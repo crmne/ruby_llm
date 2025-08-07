@@ -198,11 +198,11 @@ module RubyLLM
             .gsub(/(\d{4}) (\d{2}) (\d{2})/, '\1\2\3')
             .gsub(/^(?:Gpt|Chatgpt|Tts|Dall E) /) { |m| special_prefix_format(m.strip) }
             .gsub(/^O([13]) /, 'O\1-')
-            .gsub(/^O[13] Mini/, '\0'.gsub(' ', '-'))
+            .gsub(/^O[13] Mini/, '\0'.tr(' ', '-'))
             .gsub(/\d\.\d /, '\0'.sub(' ', '-'))
             .gsub(/4o (?=Mini|Preview|Turbo|Audio|Realtime|Transcribe|Tts)/, '4o-')
             .gsub(/\bHd\b/, 'HD')
-            .gsub(/(?:Omni|Text) Moderation/, '\0'.gsub(' ', '-'))
+            .gsub(/(?:Omni|Text) Moderation/, '\0'.tr(' ', '-'))
             .gsub('Text Embedding', 'text-embedding-')
         end
 
