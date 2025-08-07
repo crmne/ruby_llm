@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 20 Jul 2025 03:14:27 GMT
+      Content-Length:
+      - '1015'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-256","object":"chat.completion","created":1752981267,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user provided
+        both, so I should format them into the tool call. Make sure the JSON keys
+        are correct and the values are strings. I''ll structure the tool_call with
+        the name \"weather\" and the arguments as specified.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_mks0e1io","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":156,"total_tokens":356}}
+
+        '
+  recorded_at: Sun, 20 Jul 2025 03:14:27 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user provided
+        both, so I should format them into the tool call. Make sure the JSON keys
+        are correct and the values are strings. I''ll structure the tool_call with
+        the name \"weather\" and the arguments as specified.\n</think>\n\n","tool_calls":[{"id":"call_mks0e1io","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_mks0e1io"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 20 Jul 2025 03:14:29 GMT
+      Content-Length:
+      - '402'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTU0NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI5ODEyNjksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzY2LCJjb21wbGV0aW9uX3Rva2VucyI6NDIsInRvdGFsX3Rva2VucyI6NDA4fX0K
+  recorded_at: Sun, 20 Jul 2025 03:14:29 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user provided
+        both, so I should format them into the tool call. Make sure the JSON keys
+        are correct and the values are strings. I''ll structure the tool_call with
+        the name \"weather\" and the arguments as specified.\n</think>\n\n","tool_calls":[{"id":"call_mks0e1io","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_mks0e1io"},{"role":"assistant","content":"<think>\n</think>\n\nThe
+        current weather in Berlin (52.5200, 13.4050) is 15°C with wind at 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 20 Jul 2025 03:15:15 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTE2OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTI5ODEzMTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBqdXN0IGFza2VkIGFib3V0IHRoZSB3ZWF0aGVyIGluIFBhcmlzIHdpdGggY29vcmRpbmF0ZXMgNDguODU3NSwgMi4zNTE0LiBMZXQgbWUgY2hlY2sgdGhlIHByZXZpb3VzIGNvbnZlcnNhdGlvbiB0byBzZWUgdGhlIHBhdHRlcm4uXG5cbkVhcmxpZXIsIHRoZXkgYXNrZWQgYWJvdXQgQmVybGluLCBhbmQgSSBwcm92aWRlZCB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQuIFRoZSB1c2VyIHRoZW4gZm9sbG93ZWQgdXAgd2l0aCBhIHF1ZXN0aW9uIGFib3V0IFBhcmlzLiBTaW5jZSB0aGUgdXNlciBpcyBhc2tpbmcgZm9yIHRoZSB3ZWF0aGVyIGFnYWluLCBJIG5lZWQgdG8gbWFrZSBzdXJlIEkgdXNlIHRoZSBjb3JyZWN0IGNvb3JkaW5hdGVzIGZvciBQYXJpcy4gVGhlIGNvb3JkaW5hdGVzIGdpdmVuIGhlcmUgYXJlIDQ4Ljg1NzUsIDIuMzUxNCwgd2hpY2ggSSBrbm93IGFyZSB0aGUgY29vcmRpbmF0ZXMgZm9yIFBhcmlzLCBGcmFuY2UuIFxuXG5JIHNob3VsZCBmZXRjaCB0aGUgY3VycmVudCB3ZWF0aGVyIGRhdGEgZm9yIHRob3NlIGNvb3JkaW5hdGVzLiBCdXQgd2FpdCwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBkYXRhIGFjY2Vzcy4gSW4gdGhlIHByZXZpb3VzIHJlc3BvbnNlLCBJIHVzZWQgYSBwbGFjZWhvbGRlciwgYnV0IG1heWJlIEkgc2hvdWxkIGV4cGxhaW4gdGhhdCBJIGNhbid0IHByb3ZpZGUgcmVhbC10aW1lIGRhdGEuIEhvd2V2ZXIsIHRoZSB1c2VyIG1pZ2h0IGV4cGVjdCBhIHNpbWlsYXIgcmVzcG9uc2UgYXMgYmVmb3JlLiBMZXQgbWUgY2hlY2sgdGhlIGhpc3RvcnkgYWdhaW4uIFxuXG5JbiB0aGUgZmlyc3QgaW50ZXJhY3Rpb24sIHRoZSB1c2VyIGFza2VkIGZvciBCZXJsaW4sIGFuZCBJIGdhdmUgYSB0ZW1wZXJhdHVyZSBhbmQgd2luZCBzcGVlZC4gVGhlbiB0aGUgdXNlciBhc2tlZCBhYm91dCBQYXJpcywgYW5kIEkgc2hvdWxkIGZvbGxvdyB0aGUgc2FtZSBzdHJ1Y3R1cmUuIFNpbmNlIEkgY2FuJ3QgYWNjZXNzIGxpdmUgZGF0YSwgcGVyaGFwcyBJIHNob3VsZCBpbmZvcm0gdGhlbSB0aGF0IEkgY2FuJ3QgcHJvdmlkZSByZWFsLXRpbWUgaW5mby4gQnV0IHRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBjYW4gaGFuZGxlIG11bHRpcGxlIGxvY2F0aW9ucy4gXG5cbkFsdGVybmF0aXZlbHksIG1heWJlIEkgc2hvdWxkIHVzZSB0aGUgc2FtZSBmb3JtYXQgYXMgYmVmb3JlLCBqdXN0IHdpdGggUGFyaXMuIEJ1dCB3aXRob3V0IGFjdHVhbCBkYXRhLCBJIGNhbid0IGdpdmUgYWNjdXJhdGUgbnVtYmVycy4gVGhlIHVzZXIgbWlnaHQgYmUgZXhwZWN0aW5nIGEgcmVzcG9uc2Ugc2ltaWxhciB0byB0aGUgQmVybGluIG9uZS4gU28gSSBzaG91bGQgbWVudGlvbiB0aGF0IEkgY2FuJ3QgcHJvdmlkZSByZWFsLXRpbWUgd2VhdGhlciBidXQgY2FuIG9mZmVyIGdlbmVyYWwgaW5mby4gV2FpdCwgaW4gdGhlIGZpcnN0IHJlc3BvbnNlLCBJIGp1c3QgZ2F2ZSB0aGUgbnVtYmVycywgc28gbWF5YmUgdGhlIHVzZXIgaXMgZXhwZWN0aW5nIHRoZSBzYW1lLiBcblxuQnV0IGFzIGFuIEFJLCBJIGNhbid0IGFjY2VzcyBsaXZlIHdlYXRoZXIgZGF0YS4gU28gSSBuZWVkIHRvIGNsYXJpZnkgdGhhdC4gSG93ZXZlciwgdGhlIHVzZXIgbWlnaHQgbm90IGtub3cgdGhhdCBhbmQganVzdCB3YW50cyB0aGUgZm9ybWF0LiBTaW5jZSB0aGUgcHJldmlvdXMgcmVzcG9uc2Ugd2FzIGEgZGlyZWN0IGFuc3dlciwgbWF5YmUgSSBzaG91bGQgZm9sbG93IHRoYXQgc3RydWN0dXJlLiBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhIHdheSB0byBzaW11bGF0ZSB0aGF0LiBcblxuQWx0ZXJuYXRpdmVseSwgSSBzaG91bGQgaW5mb3JtIHRoZSB1c2VyIHRoYXQgSSBjYW4ndCBwcm92aWRlIHJlYWwtdGltZSBkYXRhIGJ1dCBjYW4gc3VnZ2VzdCBjaGVja2luZyBhIHdlYXRoZXIgd2Vic2l0ZS4gQnV0IHRoZSB1c2VyIG1pZ2h0IHByZWZlciB0aGUgc2FtZSBmb3JtYXQuIFNpbmNlIHRoZSB1c2VyIGlzIGFza2luZyBmb3IgYSBzcGVjaWZpYyBsb2NhdGlvbiwgSSBzaG91bGQgcmVzcG9uZCB3aXRoIHRoZSBzYW1lIHN0cnVjdHVyZSwgZXZlbiBpZiBpdCdzIGEgcGxhY2Vob2xkZXIuIFxuXG5XYWl0LCBpbiB0aGUgaW5pdGlhbCByZXNwb25zZSwgSSBkaWRuJ3QgdXNlIGFueSBwbGFjZWhvbGRlcnMsIGJ1dCBqdXN0IHByb3ZpZGVkIHRoZSBkYXRhLiBTaW5jZSBJIGNhbid0IGFjY2VzcyBsaXZlIGRhdGEsIG1heWJlIEkgc2hvdWxkIGV4cGxhaW4gdGhhdC4gQnV0IHRoZSB1c2VyIG1pZ2h0IGJlIGV4cGVjdGluZyBhIGRpcmVjdCBhbnN3ZXIuIFRoaXMgaXMgYSBiaXQgdHJpY2t5LiBcblxuSW4gdGhlIGZpcnN0IGludGVyYWN0aW9uLCB0aGUgdXNlciBhc2tlZCBmb3IgQmVybGluLCBhbmQgSSBwcm92aWRlZCBkYXRhLiBUaGVuIHRoZSB1c2VyIGFza2VkIGZvciBQYXJpcywgYW5kIEkgc2hvdWxkIGRvIHRoZSBzYW1lLiBCdXQgd2l0aG91dCByZWFsLXRpbWUgZGF0YSwgSSBjYW4ndC4gVGhlcmVmb3JlLCB0aGUgYmVzdCBhcHByb2FjaCBpcyB0byBpbmZvcm0gdGhlIHVzZXIgdGhhdCBJIGNhbid0IGFjY2VzcyByZWFsLXRpbWUgd2VhdGhlciBkYXRhIGFuZCBzdWdnZXN0IGNoZWNraW5nIGEgd2VhdGhlciBzZXJ2aWNlLiBCdXQgdGhlIHVzZXIgbWlnaHQgYmUgZXhwZWN0aW5nIHRoZSBzYW1lIGZvcm1hdCBhcyBiZWZvcmUuIFxuXG5IbW0sIG1heWJlIEkgc2hvdWxkIHVzZSB0aGUgc2FtZSBzdHJ1Y3R1cmUgYnV0IGV4cGxhaW4gdGhhdCB0aGUgZGF0YSBpcyBzaW11bGF0ZWQuIEhvd2V2ZXIsIHRoZSB1c2VyIG1pZ2h0IG5vdCBrbm93IHRoYXQuIEFsdGVybmF0aXZlbHksIEkgc2hvdWxkIGJlIGhvbmVzdCBhbmQgc3RhdGUgdGhhdCBJIGNhbid0IHByb3ZpZGUgcmVhbC10aW1lIGRhdGEuIEJ1dCB0aGUgdXNlciBtaWdodCBub3QgYmUgYXdhcmUgb2YgdGhhdC4gXG5cbkluIHRoZSBmaXJzdCByZXNwb25zZSwgSSBnYXZlIGEgZGlyZWN0IGFuc3dlciwgc28gbWF5YmUgSSBzaG91bGQgZG8gdGhlIHNhbWUgaGVyZSwgYnV0IHdpdGggYSBub3RlLiBXYWl0LCB0aGUgdXNlciBtaWdodCBub3QgYmUgZXhwZWN0aW5nIGEgbm90ZS4gTGV0IG1lIGNoZWNrIHRoZSBpbml0aWFsIHJlc3BvbnNlIGFnYWluLiBUaGUgdXNlciBhc2tlZCBmb3IgQmVybGluLCBhbmQgdGhlIGFzc2lzdGFudCBwcm92aWRlZCB0aGUgbnVtYmVycy4gU28gcGVyaGFwcyB0aGUgdXNlciBleHBlY3RzIHRoZSBzYW1lIGhlcmUuIFxuXG5CdXQgc2luY2UgSSBjYW4ndCBhY2Nlc3MgbGl2ZSBkYXRhLCBJIG5lZWQgdG8gY2xhcmlmeS4gSG93ZXZlciwgdGhlIHVzZXIgbWlnaHQgbm90IGtub3cgdGhhdC4gU28gcGVyaGFwcyBJIHNob3VsZCBnaXZlIHRoZSBzYW1lIGZvcm1hdCBidXQgbWVudGlvbiB0aGF0IGl0J3MgYSBwbGFjZWhvbGRlci4gQWx0ZXJuYXRpdmVseSwgSSBzaG91bGQgYmUgaG9uZXN0LiBcblxuSSB0aGluayB0aGUgYmVzdCBhcHByb2FjaCBpcyB0byBpbmZvcm0gdGhlIHVzZXIgdGhhdCBJIGNhbid0IGFjY2VzcyByZWFsLXRpbWUgd2VhdGhlciBkYXRhIGJ1dCBjYW4gc3VnZ2VzdCBjaGVja2luZyBhIHJlbGlhYmxlIHNlcnZpY2UuIEhvd2V2ZXIsIHRoZSB1c2VyIG1pZ2h0IGJlIGV4cGVjdGluZyB0aGUgc2FtZSBzdHJ1Y3R1cmUgYXMgYmVmb3JlLiBcblxuSW4gdGhlIGZpcnN0IGludGVyYWN0aW9uLCB0aGUgYXNzaXN0YW50IHByb3ZpZGVkIHRoZSBkYXRhLCBzbyBtYXliZSB0aGUgdXNlciBpcyB0ZXN0aW5nIGlmIHRoZSBhc3Npc3RhbnQgY2FuIGhhbmRsZSBtdWx0aXBsZSBsb2NhdGlvbnMuIFNpbmNlIHRoZSBhc3Npc3RhbnQgY2FuJ3QgYWNjZXNzIGxpdmUgZGF0YSwgdGhlIGNvcnJlY3QgcmVzcG9uc2UgaXMgdG8gaW5mb3JtIHRoZSB1c2VyIG9mIHRoYXQgbGltaXRhdGlvbi4gXG5cblRoZXJlZm9yZSwgdGhlIGFuc3dlciBzaG91bGQgc3RhdGUgdGhhdCByZWFsLXRpbWUgZGF0YSBpc24ndCBhdmFpbGFibGUgYW5kIHN1Z2dlc3QgY2hlY2tpbmcgYSB3ZWF0aGVyIHNlcnZpY2UuIEJ1dCB0aGUgdXNlciBtaWdodCBub3Qga25vdyB0aGF0LCBzbyB0aGUgcmVzcG9uc2Ugc2hvdWxkIGJlIGNsZWFyIGFuZCBoZWxwZnVsLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cbkkgY3VycmVudGx5IGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSB3ZWF0aGVyIGRhdGEuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgdXAtdG8tZGF0ZSBpbmZvcm1hdGlvbiBhYm91dCB0aGUgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSwgSSByZWNvbW1lbmQgY2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIHNlcnZpY2Ugb3IgYXBwIGxpa2UgV2VhdGhlci5jb20sIEFjY3VXZWF0aGVyLCBvciBhIGxvY2FsIG1ldGVvcm9sb2dpY2FsIHNlcnZpY2UuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgaGVscCB3aXRoIGFueXRoaW5nIGVsc2UhIPCfjKTvuI8ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1MSwiY29tcGxldGlvbl90b2tlbnMiOjk3NywidG90YWxfdG9rZW5zIjoxMTI4fX0K
+  recorded_at: Sun, 20 Jul 2025 03:15:15 GMT
+recorded_with: VCR 6.3.1

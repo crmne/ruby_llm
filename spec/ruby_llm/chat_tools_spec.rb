@@ -105,6 +105,29 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      it "#{provider}/#{model} can remove tools in multi-turn conversations" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+
+        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        expect(response.content).to include('15')
+        expect(response.content).to include('10')
+
+        chat.without_tool(Weather)
+
+        response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
+        expect(response.content).not_to include('15')
+        expect(response.content).not_to include('10')
+      end
+    end
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
@@ -338,6 +361,77 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|
         expect(error.message).to include('This tool is broken')
+      end
+    end
+  end
+
+  describe 'tool management' do
+    let(:chat) { RubyLLM.chat }
+    let(:weather_tool) { Weather.new }
+    let(:best_language_tool) { BestLanguageToLearn.new }
+
+    before do
+      chat.with_tool(Weather)
+      chat.with_tool(BestLanguageToLearn)
+    end
+
+    describe '#without_tool' do
+      it 'removes a tool by class' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+
+        chat.without_tool(Weather)
+
+        expect(chat.tools.keys).not_to include(:weather)
+        expect(chat.tools.keys).to include(:best_language_to_learn)
+      end
+
+      it 'removes a tool by instance' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+
+        chat.without_tool(weather_tool)
+
+        expect(chat.tools.keys).not_to include(:weather)
+        expect(chat.tools.keys).to include(:best_language_to_learn)
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.without_tool(weather_tool)).to be(chat)
+      end
+    end
+
+    describe '#without_tools' do
+      it 'removes multiple tools by class' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+
+        chat.without_tools(Weather, BestLanguageToLearn)
+
+        expect(chat.tools).to be_empty
+      end
+
+      it 'removes multiple tools by instance' do
+        expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
+
+        chat.without_tools(weather_tool, best_language_tool)
+
+        expect(chat.tools).to be_empty
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.without_tools(weather_tool, best_language_tool)).to be(chat)
+      end
+    end
+
+    describe '#clear_tools' do
+      it 'removes all tools' do
+        expect(chat.tools).not_to be_empty
+
+        chat.clear_tools
+
+        expect(chat.tools).to be_empty
+      end
+
+      it 'returns self for method chaining' do
+        expect(chat.clear_tools).to be(chat)
       end
     end
   end
