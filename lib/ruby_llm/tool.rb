@@ -32,6 +32,19 @@ module RubyLLM
   #       end
   #    end
   class Tool
+    # Stops conversation continuation after tool execution
+    class Halt
+      attr_reader :content
+
+      def initialize(content)
+        @content = content
+      end
+
+      def to_s
+        @content.to_s
+      end
+    end
+
     class << self
       def description(text = nil)
         return @description unless text
@@ -76,6 +89,12 @@ module RubyLLM
 
     def execute(...)
       raise NotImplementedError, 'Subclasses must implement #execute'
+    end
+
+    protected
+
+    def halt(message)
+      Halt.new(message)
     end
   end
 end

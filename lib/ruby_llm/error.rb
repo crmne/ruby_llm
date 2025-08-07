@@ -40,9 +40,9 @@ module RubyLLM
   # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
   # Uses provider's parse_error method to extract meaningful error messages.
   class ErrorMiddleware < Faraday::Middleware
-    def initialize(app, provider:)
+    def initialize(app, options = {})
       super(app)
-      @provider = provider
+      @provider = options[:provider]
     end
 
     def call(env)

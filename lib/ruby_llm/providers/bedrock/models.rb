@@ -2,15 +2,14 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       # Models methods for the AWS Bedrock API implementation
       module Models
-        def list_models(connection:)
-          config = connection.config
-          mgmt_api_base = "https://bedrock.#{config.bedrock_region}.amazonaws.com"
+        def list_models
+          mgmt_api_base = "https://bedrock.#{@config.bedrock_region}.amazonaws.com"
           full_models_url = "#{mgmt_api_base}/#{models_url}"
-          signature = sign_request(full_models_url, config: config, method: :get)
-          response = connection.get(full_models_url) do |req|
+          signature = sign_request(full_models_url, method: :get)
+          response = @connection.get(full_models_url) do |req|
             req.headers.merge! signature.headers
           end
 

@@ -3,34 +3,29 @@
 module RubyLLM
   module Providers
     # Mistral API integration.
-    module Mistral
-      extend OpenAI
-      extend Mistral::Chat
-      extend Mistral::Models
-      extend Mistral::Embeddings
+    class Mistral < OpenAI
+      include Mistral::Chat
+      include Mistral::Models
+      include Mistral::Embeddings
 
-      module_function
-
-      def api_base(_config)
+      def api_base
         'https://api.mistral.ai/v1'
       end
 
-      def headers(config)
+      def headers
         {
-          'Authorization' => "Bearer #{config.mistral_api_key}"
+          'Authorization' => "Bearer #{@config.mistral_api_key}"
         }
       end
 
-      def capabilities
-        Mistral::Capabilities
-      end
+      class << self
+        def capabilities
+          Mistral::Capabilities
+        end
 
-      def slug
-        'mistral'
-      end
-
-      def configuration_requirements
-        %i[mistral_api_key]
+        def configuration_requirements
+          %i[mistral_api_key]
+        end
       end
     end
   end

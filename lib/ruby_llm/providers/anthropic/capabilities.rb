@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Anthropic
+    class Anthropic
       # Determines capabilities and pricing for Anthropic models
       module Capabilities
         module_function
@@ -133,7 +133,6 @@ module RubyLLM
           # Function calling for Claude 3+
           if model_id.match?(/claude-3/)
             capabilities << 'function_calling'
-            capabilities << 'structured_output'
             capabilities << 'batch'
           end
 

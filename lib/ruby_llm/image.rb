@@ -46,12 +46,11 @@ module RubyLLM
                    params: {})
       config = context&.config || RubyLLM.config
       model ||= config.default_image_model
-      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists)
+      model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
+                                                       config: config)
       model_id = model.id
 
-      provider = Provider.for(model_id) if provider.nil?
-      connection = context ? context.connection_for(provider) : provider.connection(config)
-      provider.paint(prompt, model: model_id, size:, connection:, with:, params:)
+      provider_instance.paint(prompt, model: model_id, size:, with:, params:)
     end
 
     def total_cost

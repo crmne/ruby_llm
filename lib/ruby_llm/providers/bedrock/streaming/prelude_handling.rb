@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Streaming
         # Module for handling message preludes in AWS Bedrock streaming responses.
         # Manages the parsing and validation of message headers and prelude data.

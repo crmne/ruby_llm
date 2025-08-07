@@ -1,96 +1,94 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Base interface for LLM providers like OpenAI and Anthropic.
+  # Base class for LLM providers like OpenAI and Anthropic.
   # Handles the complexities of API communication, streaming responses,
   # and error handling so individual providers can focus on their unique features.
-  module Provider
-    # Common functionality for all LLM providers. Implements the core provider
-    # interface so specific providers only need to implement a few key methods.
-    module Methods
-      extend Streaming
+  # Encapsulates configuration and connection to eliminate parameter threading.
+  class Provider
+    include Streaming
 
-      def complete(messages, tools:, temperature:, model:, connection:, params: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
-        normalized_temperature = maybe_normalize_temperature(temperature, model)
+    attr_reader :config, :connection
 
-        payload = Utils.deep_merge(
-          params,
-          render_payload(
-            messages,
-            tools: tools,
-            temperature: normalized_temperature,
-            model: model,
-            stream: block_given?,
-            schema: schema
-          )
+    def initialize(config)
+      @config = config
+      ensure_configured!
+      @connection = Connection.new(self, @config)
+    end
+
+    def api_base
+      raise NotImplementedError
+    end
+
+    def headers
+      {}
+    end
+
+    def slug
+      self.class.slug
+    end
+
+    def name
+      self.class.name
+    end
+
+    def capabilities
+      self.class.capabilities
+    end
+
+    def configuration_requirements
+      self.class.configuration_requirements
+    end
+
+    def complete(messages, tools:, temperature:, model:, params: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+      normalized_temperature = maybe_normalize_temperature(temperature, model)
+
+      payload = Utils.deep_merge(
+        params,
+        render_payload(
+          messages,
+          tools: tools,
+          temperature: normalized_temperature,
+          model: model,
+          stream: block_given?,
+          schema: schema
         )
+      )
 
-        if block_given?
-          stream_response connection, payload, &
-        else
-          sync_response connection, payload
-        end
-      end
-
-      def list_models(connection:)
-        response = connection.get models_url
-        parse_list_models_response response, slug, capabilities
-      end
-
-      def embed(text, model:, connection:, dimensions:)
-        payload = render_embedding_payload(text, model:, dimensions:)
-        response = connection.post(embedding_url(model:), payload)
-        parse_embedding_response(response, model:, text:)
-      end
-
-      def paint(prompt, model:, size:, connection:, with:, params:) # rubocop:disable Metrics/ParameterLists
-        payload = render_image_payload(prompt, model:, size:, with:, params:)
-        response = connection.post images_url, payload
-        parse_image_response(response, model:)
-      end
-
-      def configured?(config = nil)
-        config ||= RubyLLM.config
-        missing_configs(config).empty?
-      end
-
-      def missing_configs(config)
-        configuration_requirements.select do |key|
-          value = config.send(key)
-          value.nil? || value.empty?
-        end
-      end
-
-      def local?
-        false
-      end
-
-      def remote?
-        !local?
-      end
-
-      private
-
-      def maybe_normalize_temperature(temperature, model)
-        if capabilities.respond_to?(:normalize_temperature)
-          capabilities.normalize_temperature(temperature, model)
-        else
-          temperature
-        end
-      end
-
-      def sync_response(connection, payload)
-        response = connection.post completion_url, payload
-        parse_completion_response response
+      if block_given?
+        stream_response @connection, payload, &
+      else
+        sync_response @connection, payload
       end
     end
 
-    def try_parse_json(maybe_json)
-      return maybe_json unless maybe_json.is_a?(String)
+    def list_models
+      response = @connection.get models_url
+      parse_list_models_response response, slug, capabilities
+    end
 
-      JSON.parse(maybe_json)
-    rescue JSON::ParserError
-      maybe_json
+    def embed(text, model:, dimensions:)
+      payload = render_embedding_payload(text, model:, dimensions:)
+      response = @connection.post(embedding_url(model:), payload)
+      parse_embedding_response(response, model:, text:)
+    end
+
+    def paint(prompt, model:, size:, with:, params:) # rubocop:disable Metrics/ParameterLists
+      payload = render_image_payload(prompt, model:, size:, with:, params:)
+      response = @connection.post images_url, payload
+      parse_image_response(response, model:)
+    end
+
+    def configured?
+      configuration_requirements.all? { |req| @config.send(req) }
+    end
+
+    def local?
+      self.class.local?
+    end
+
+    def remote?
+      self.class.remote?
     end
 
     def parse_error(response)
@@ -109,18 +107,21 @@ module RubyLLM
       end
     end
 
-    def parse_data_uri(uri)
-      if uri&.start_with?('data:')
-        match = uri.match(/\Adata:([^;]+);base64,(.+)\z/)
-        return { mime_type: match[1], data: match[2] } if match
+    def format_messages(messages)
+      messages.map do |msg|
+        {
+          role: msg.role.to_s,
+          content: msg.content
+        }
       end
+    end
 
-      # If it's not a data URI, return nil
+    def format_tool_calls(_tool_calls)
       nil
     end
 
-    def connection(config)
-      @connection ||= Connection.new(self, config)
+    def parse_tool_calls(_tool_calls)
+      nil
     end
 
     def connection_multipart(config)
@@ -128,13 +129,36 @@ module RubyLLM
     end
 
     class << self
-      def extended(base)
-        base.extend(Methods)
-        base.extend(Streaming)
+      def name
+        to_s.split('::').last
       end
 
-      def register(name, provider_module)
-        providers[name.to_sym] = provider_module
+      def slug
+        name.downcase
+      end
+
+      def capabilities
+        raise NotImplementedError
+      end
+
+      def configuration_requirements
+        []
+      end
+
+      def local?
+        false
+      end
+
+      def remote?
+        !local?
+      end
+
+      def configured?(config)
+        configuration_requirements.all? { |req| config.send(req) }
+      end
+
+      def register(name, provider_class)
+        providers[name.to_sym] = provider_class
       end
 
       def for(model)
@@ -147,16 +171,50 @@ module RubyLLM
       end
 
       def local_providers
-        providers.select { |_slug, provider| provider.local? }
+        providers.select { |_slug, provider_class| provider_class.local? }
       end
 
       def remote_providers
-        providers.select { |_slug, provider| provider.remote? }
+        providers.select { |_slug, provider_class| provider_class.remote? }
       end
 
-      def configured_providers(config = nil)
-        providers.select { |_slug, provider| provider.configured?(config) }.values
+      def configured_providers(config)
+        providers.select do |_slug, provider_class|
+          provider_class.configured?(config)
+        end.values
       end
+
+      def configured_remote_providers(config)
+        providers.select do |_slug, provider_class|
+          provider_class.remote? && provider_class.configured?(config)
+        end.values
+      end
+    end
+
+    private
+
+    def try_parse_json(maybe_json)
+      return maybe_json unless maybe_json.is_a?(String)
+
+      JSON.parse(maybe_json)
+    rescue JSON::ParserError
+      maybe_json
+    end
+
+    def ensure_configured!
+      missing = configuration_requirements.reject { |req| @config.send(req) }
+      return if missing.empty?
+
+      raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
+    end
+
+    def maybe_normalize_temperature(temperature, _model_id)
+      temperature
+    end
+
+    def sync_response(connection, payload)
+      response = connection.post completion_url, payload
+      parse_completion_response response
     end
   end
 end

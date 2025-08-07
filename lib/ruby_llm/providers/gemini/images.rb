@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Image generation methods for the Gemini API implementation
       module Images
         def images_url
