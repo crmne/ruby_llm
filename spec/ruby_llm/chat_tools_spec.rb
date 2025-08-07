@@ -105,7 +105,11 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can remove tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can remove tools in multi-turn conversations" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
 
@@ -372,7 +376,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#without_tool' do
-      it 'removes a tool by class' do # rubocop:disable RSpec/MultipleExpectations
+      it 'removes a tool by class' do
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
 
         chat.without_tool(Weather)
@@ -381,7 +385,7 @@ RSpec.describe RubyLLM::Chat do
         expect(chat.tools.keys).to include(:best_language_to_learn)
       end
 
-      it 'removes a tool by instance' do # rubocop:disable RSpec/MultipleExpectations
+      it 'removes a tool by instance' do
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
 
         chat.without_tool(weather_tool)
@@ -396,7 +400,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#without_tools' do
-      it 'removes multiple tools by class' do # rubocop:disable RSpec/MultipleExpectations
+      it 'removes multiple tools by class' do
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
 
         chat.without_tools(Weather, BestLanguageToLearn)
@@ -404,7 +408,7 @@ RSpec.describe RubyLLM::Chat do
         expect(chat.tools).to be_empty
       end
 
-      it 'removes multiple tools by instance' do # rubocop:disable RSpec/MultipleExpectations
+      it 'removes multiple tools by instance' do
         expect(chat.tools.keys).to include(:weather, :best_language_to_learn)
 
         chat.without_tools(weather_tool, best_language_tool)
@@ -418,7 +422,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe '#clear_tools' do
-      it 'removes all tools' do # rubocop:disable RSpec/MultipleExpectations
+      it 'removes all tools' do
         expect(chat.tools).not_to be_empty
 
         chat.clear_tools
