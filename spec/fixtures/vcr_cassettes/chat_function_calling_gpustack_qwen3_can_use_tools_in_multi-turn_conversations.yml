@@ -13,8 +13,6 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.13.4
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,8 +25,106 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 12:21:24 GMT
-      - Fri, 01 Aug 2025 12:21:25 GMT
+      - Wed, 06 Aug 2025 16:46:35 GMT
+      - Wed, 06 Aug 2025 16:46:35 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '833'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C","type":"function"}]}}],"created":1754498797,"id":"chatcmpl-0MFp9Slvbe65z63wBRAaeoxu5dSWYXIP","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":155,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":115,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":259},"prompt_tokens_per_second":22602.799269755713,"time_per_output_token_ms":8.665658064516128,"time_to_first_token_ms":11.503,"tokens_per_second":115.39804508266596,"total_tokens":415}}'
+  recorded_at: Wed, 06 Aug 2025 16:46:37 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 16:46:36 GMT
+      - Wed, 06 Aug 2025 16:46:37 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '737'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBzcGVlZHMgYXQgMTAga20vaC4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDQ5ODc5OCwiaWQiOiJjaGF0Y21wbC1qRldnNGI4bHRkYUxpSDJieHNrS0lLMUg3MUF6dDZZQSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTQxLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjo5OSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjMzMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjI1OX0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTI3MTIuODM1MDAwMzgxNzY5LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguODA1NDk2NDUzOTAwNzA5LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNi4xOTQsInRva2Vuc19wZXJfc2Vjb25kIjoxMTMuNTY1NDMxMDA0OTczNTIsInRvdGFsX3Rva2VucyI6NDc0fX0=
+  recorded_at: Wed, 06 Aug 2025 16:46:38 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C"},{"role":"assistant","content":"\n\nThe
+        current weather in Berlin (52.5200, 13.4050) is 15°C with wind speeds at 10
+        km/h."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
+        2.3514)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 16:46:38 GMT
+      - Wed, 06 Aug 2025 16:46:38 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -46,24 +142,26 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE","type":"function"}]}}],"created":1754050887,"id":"chatcmpl-7l3OWoNSzPiVyQyullP1suMvR7OPffmF","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":161,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":121,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":259},"prompt_tokens_per_second":24355.9718969555,"time_per_output_token_ms":8.99954658385093,"time_to_first_token_ms":10.675,"tokens_per_second":111.11670912337199,"total_tokens":421}}'
-  recorded_at: Fri, 01 Aug 2025 12:21:27 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-iOnrZp97FaJmiXy3eAhnSK0dVRqPHXZ8","type":"function"}]}}],"created":1754498800,"id":"chatcmpl-GWpNiOLEE3fVzMuDqpGIvYlkXlnzRFcC","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":139,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":106,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":405,"prompt_tokens_details":{"cached_tokens":331},"prompt_tokens_per_second":14558.39534131349,"time_per_output_token_ms":8.80861870503597,"time_to_first_token_ms":27.819,"tokens_per_second":113.52517727078941,"total_tokens":544}}'
+  recorded_at: Wed, 06 Aug 2025 16:46:40 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-RUhpaQv3LQd6XbfPU93bJwQwNXGD1p9C"},{"role":"assistant","content":"\n\nThe
+        current weather in Berlin (52.5200, 13.4050) is 15°C with wind speeds at 10
+        km/h."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
+        2.3514)"},{"role":"assistant","tool_calls":[{"id":"call-iOnrZp97FaJmiXy3eAhnSK0dVRqPHXZ8","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call-iOnrZp97FaJmiXy3eAhnSK0dVRqPHXZ8"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.13.4
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -76,15 +174,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 12:21:26 GMT
-      - Fri, 01 Aug 2025 12:21:26 GMT
+      - Wed, 06 Aug 2025 16:46:39 GMT
+      - Wed, 06 Aug 2025 16:46:39 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '744'
+      - '734'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -96,112 +194,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIHdpbmRzIGF0ICoqMTAga20vaCoqLiDwn4ys77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTQwNTA4ODgsImlkIjoiY2hhdGNtcGwtS0F0MUozcHFuY1o2b2laMHoxQUVxVVk3cm52clhsZm8iLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE2NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTIwLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMDkyNC40ODAwMjA5OTYsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS40OTI1NTY4ODYyMjc1NDUsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjMwLjQ4MiwidG9rZW5zX3Blcl9zZWNvbmQiOjEwNS4zNDU2OTQ3MzU5MzI0LCJ0b3RhbF90b2tlbnMiOjUwMH19
-  recorded_at: Fri, 01 Aug 2025 12:21:28 GMT
-- request:
-    method: post
-    uri: "<GPUSTACK_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"enable_thinking\":false,\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. \U0001F32C️\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
-        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
-        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"tool_choice\":\"auto\"}"
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 01 Aug 2025 12:21:27 GMT
-      - Fri, 01 Aug 2025 12:21:28 GMT
-      Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '832'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Access-Control-Allow-Origin:
-      - "*"
-    body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-ty3ZaBjwyTUtBOIgnyNTEHgqUjufTEl1","type":"function"}]}}],"created":1754050890,"id":"chatcmpl-qySjRyggwm8fSOUKeC6vwTbqPChS0dAn","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":152,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":119,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":410,"prompt_tokens_details":{"cached_tokens":331},"prompt_tokens_per_second":13679.890560875512,"time_per_output_token_ms":10.457427631578947,"time_to_first_token_ms":29.971,"tokens_per_second":95.62581116796234,"total_tokens":562}}'
-  recorded_at: Fri, 01 Aug 2025 12:21:30 GMT
-- request:
-    method: post
-    uri: "<GPUSTACK_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"enable_thinking\":false,\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-QXjsmgBDNKfUylAuP5ez7DSRB93g5xIE\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. \U0001F32C️\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-ty3ZaBjwyTUtBOIgnyNTEHgqUjufTEl1\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-ty3ZaBjwyTUtBOIgnyNTEHgqUjufTEl1\"}],\"stream\":false,\"temperature\":0.7,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
-        current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
-        (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"tool_choice\":\"auto\"}"
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 01 Aug 2025 12:21:29 GMT
-      - Fri, 01 Aug 2025 12:21:29 GMT
-      Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '745'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Access-Control-Allow-Origin:
-      - "*"
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4g8J+MrO+4jyIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU0MDUwODkyLCJpZCI6ImNoYXRjbXBsLUllVzc2Qmd0QzRIWFJTTlpmcGQwN2RGSFA0TUZOSnFQIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxOTksImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjE1MywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjQ4MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjQwOX0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTc5MzUuMDQ2MDQ5NDQyNTU3LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNzgxMjY2MzMxNjU4MjksInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjI2LjgxOSwidG9rZW5zX3Blcl9zZWNvbmQiOjExMy44Nzg3OTE3NjMxODcwNSwidG90YWxfdG9rZW5zIjo2ODB9fQ==
-  recorded_at: Fri, 01 Aug 2025 12:21:32 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAxNcKwQyB3aXRoIHdpbmQgc3BlZWRzIGF0IDEwIGttL2guIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTQ0OTg4MDEsImlkIjoiY2hhdGNtcGwtdlFLTUs3ZlpkWEJhS2NhSEg0b3NoNnlJd3I2M0tQZGUiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjIxOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTc4LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6NDc2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDA0fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxODMzMC45NTg1MjQyODA4MTcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC43MjEwMjI4MzEwNTAyMywidGltZV90b19maXJzdF90b2tlbl9tcyI6MjUuOTY3LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTE0LjY2NTQ0OTE1MzQ2NTMsInRvdGFsX3Rva2VucyI6Njk1fX0=
+  recorded_at: Wed, 06 Aug 2025 16:46:41 GMT
 recorded_with: VCR 6.3.1

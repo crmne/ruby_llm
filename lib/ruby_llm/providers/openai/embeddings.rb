@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Embeddings methods of the OpenAI API integration
       module Embeddings
         module_function

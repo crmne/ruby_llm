@@ -78,12 +78,12 @@ def generate_models_markdown
 end
 
 def generate_provider_sections
-  RubyLLM::Provider.providers.keys.map do |provider|
+  RubyLLM::Provider.providers.map do |provider, provider_class|
     models = RubyLLM.models.by_provider(provider)
     next if models.none?
 
     <<~PROVIDER
-      ### #{provider.to_s.capitalize} (#{models.count})
+      ### #{provider_class.name} (#{models.count})
 
       #{models_table(models)}
     PROVIDER

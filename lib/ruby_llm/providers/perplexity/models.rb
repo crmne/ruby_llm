@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Perplexity
+    class Perplexity
       # Models methods of the Perplexity API integration
       module Models
         def list_models(**)

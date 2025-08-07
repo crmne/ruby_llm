@@ -14,7 +14,7 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'llm' => 'LLM',
   'openai' => 'OpenAI',
-  'chat_completions' => 'ChatCompletions',
+  'openai_base' => 'OpenAIBase',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
   'perplexity' => 'Perplexity',

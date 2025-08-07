@@ -86,8 +86,8 @@ def display_model_stats
   puts "\nModel count:"
   provider_counts = @models.all.group_by(&:provider).transform_values(&:count)
 
-  RubyLLM::Provider.providers.each_key do |sym|
-    name = sym.to_s.capitalize
+  RubyLLM::Provider.providers.each do |sym, provider_class|
+    name = provider_class.name
     count = provider_counts[sym.to_s] || 0
     status = status(sym)
     puts "  #{name}: #{count} models #{status}"
@@ -97,9 +97,10 @@ def display_model_stats
 end
 
 def status(provider_sym)
-  if RubyLLM::Provider.providers[provider_sym].local?
+  provider_class = RubyLLM::Provider.providers[provider_sym]
+  if provider_class.local?
     ' (LOCAL - SKIP)'
-  elsif RubyLLM::Provider.providers[provider_sym].configured?
+  elsif provider_class.configured?(RubyLLM.config)
     ' (OK)'
   else
     ' (NOT CONFIGURED)'

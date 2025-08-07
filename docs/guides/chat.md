@@ -464,7 +464,7 @@ You can register blocks to be called when certain events occur during the chat l
 
 ### Available Event Handlers
 
-RubyLLM provides three event handlers that cover the complete chat lifecycle:
+RubyLLM provides four event handlers that cover the complete chat lifecycle:
 
 ```ruby
 chat = RubyLLM.chat
@@ -486,6 +486,11 @@ end
 # Called when the AI decides to use a tool
 chat.on_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
+end
+
+# Called after a tool returns its result (Available in > 1.5.1)
+chat.on_tool_result do |result|
+  puts "Tool returned: #{result}"
 end
 
 # These callbacks work for both streaming and non-streaming requests

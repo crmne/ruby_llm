@@ -8,7 +8,7 @@ require_relative 'streaming/prelude_handling'
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       # Streaming implementation for the AWS Bedrock API.
       # This module provides functionality for handling streaming responses from AWS Bedrock,
       # including message processing, content extraction, and error handling.

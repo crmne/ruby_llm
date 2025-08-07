@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Streaming methods of the OpenAI API integration
       module Streaming
         module_function

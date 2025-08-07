@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Tools methods of the OpenAI API integration
       module Tools
         module_function

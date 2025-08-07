@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Handles formatting of media content (images, audio) for OpenAI APIs
       module Media
         module_function

@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Streaming
         # Module for processing streaming messages from AWS Bedrock.
         # Handles the core message processing logic, including validation and chunking.

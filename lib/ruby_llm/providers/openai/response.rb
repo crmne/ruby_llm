@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Response methods of the OpenAI API integration
       module Response
         def responses_url
