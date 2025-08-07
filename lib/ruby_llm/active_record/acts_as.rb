@@ -234,7 +234,7 @@ module RubyLLM
       end
 
       def persist_new_message
-        @message = messages.create!(role: :assistant, content: String.new)
+        @message = messages.create!(role: :assistant, content: '')
       end
 
       def persist_message_completion(message)
