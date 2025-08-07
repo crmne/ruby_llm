@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Chat methods for the Gemini API implementation
       module Chat
         module_function

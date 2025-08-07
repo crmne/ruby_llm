@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Streaming methods for the Gemini API implementation
       module Streaming
         def stream_url

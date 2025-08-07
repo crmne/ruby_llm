@@ -389,4 +389,41 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
   end
+
+  describe 'event callbacks' do
+    it 'preserves user callbacks when using Rails integration' do
+      user_callback_called = false
+      end_callback_called = false
+
+      chat = Chat.create!(model_id: model)
+
+      # Set user callbacks before calling ask
+      chat.on_new_message { user_callback_called = true }
+      chat.on_end_message { end_callback_called = true }
+
+      # Call ask which triggers to_llm and sets up persistence callbacks
+      chat.ask('Hello')
+
+      # Both user callbacks and persistence should work
+      expect(user_callback_called).to be true
+      expect(end_callback_called).to be true
+      expect(chat.messages.count).to eq(2) # Persistence still works
+    end
+
+    it 'calls on_tool_call and on_tool_result callbacks' do
+      tool_call_received = nil
+      tool_result_received = nil
+
+      chat = Chat.create!(model_id: model)
+                 .with_tool(Calculator)
+                 .on_tool_call { |tc| tool_call_received = tc }
+                 .on_tool_result { |result| tool_result_received = result }
+
+      chat.ask('What is 2 + 2?')
+
+      expect(tool_call_received).not_to be_nil
+      expect(tool_call_received.name).to eq('calculator')
+      expect(tool_result_received).to eq('4')
+    end
+  end
 end

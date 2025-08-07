@@ -20,12 +20,11 @@ module RubyLLM
                    dimensions: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_embedding_model
-      model, provider = Models.resolve(model, provider: provider, assume_exists: assume_model_exists)
+      model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
+                                                       config: config)
       model_id = model.id
 
-      provider = Provider.for(model_id) if provider.nil?
-      connection = context ? context.connection_for(provider) : provider.connection(config)
-      provider.embed(text, model: model_id, connection:, dimensions:)
+      provider_instance.embed(text, model: model_id, dimensions:)
     end
   end
 end

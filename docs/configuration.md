@@ -70,11 +70,16 @@ RubyLLM.configure do |config|
   # Use this for Azure OpenAI, proxies, or self-hosted models via OpenAI-compatible APIs.
   config.openai_api_base = ENV.fetch('OPENAI_API_BASE', nil) # e.g., "https://your-azure.openai.azure.com"
 
+  # --- OpenAI System Role Behavior --- (Available in > v1.5.1)
+  # Some OpenAI-compatible APIs don't support the 'system' role.
+  # Set to false to convert system messages to user messages with "System: " prefix.
+  config.openai_use_system_role = false # Default: false (nil)
+
   # --- Default Models ---
   # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
   config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
   config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'dall-e-3'            # Default: 'dall-e-3'
+  config.default_image_model = 'gpt-image-1'            # Default: 'gpt-image-1'
 
   # --- Connection Settings ---
   config.request_timeout = 120  # Request timeout in seconds (default: 120)
@@ -95,6 +100,7 @@ RubyLLM.configure do |config|
   config.log_file = '/logs/ruby_llm.log'
   config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
   config.log_assume_model_exists = false # Silence "Assuming model exists for provider" warning
+  config.log_stream_debug = false # Show chunk-by-chunk streaming details (Available in > v1.5.1)
 end
 ```
 
@@ -154,7 +160,7 @@ These settings determine which models are used by the top-level helper methods (
 
 *   `config.default_model`: Used by `RubyLLM.chat`. Default: `'gpt-4.1-nano'`.
 *   `config.default_embedding_model`: Used by `RubyLLM.embed`. Default: `'text-embedding-3-small'`.
-*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'dall-e-3'`.
+*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'gpt-image-1'`.
 
 Choose defaults that match your most common use case and provider availability.
 
@@ -196,6 +202,15 @@ end
 * `:warn`: Warning messages for non-critical issues that may need attention
 
 You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
+
+### Stream Debug Logging
+{: .d-inline-block }
+
+Available in > v1.5.1
+{: .label .label-yellow }
+
+* `config.log_stream_debug`: When enabled, logs detailed chunk-by-chunk streaming information including intermediate accumulator states. This is useful for debugging streaming issues or understanding how responses are built up over time.
+* Can also be enabled via the `RUBYLLM_STREAM_DEBUG=true` environment variable.
 
 ### Custom Logger
 

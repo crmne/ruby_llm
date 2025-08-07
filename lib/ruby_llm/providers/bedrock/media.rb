@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       # Media handling methods for the Bedrock API integration
       # NOTE: Bedrock does not support url attachments
       module Media

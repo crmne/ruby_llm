@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Chat methods of the OpenAI API integration
       module Chat
         def completion_url
@@ -79,7 +79,7 @@ module RubyLLM
         def format_role(role)
           case role
           when :system
-            'developer'
+            @config.openai_use_system_role ? 'system' : 'developer'
           else
             role.to_s
           end

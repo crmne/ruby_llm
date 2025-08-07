@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Mistral
+    class Mistral
       # Determines capabilities for Mistral models
       module Capabilities
         module_function

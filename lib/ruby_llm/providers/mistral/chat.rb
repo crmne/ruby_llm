@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Mistral
+    class Mistral
       # Chat methods for Mistral API
       module Chat
         module_function

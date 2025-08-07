@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Anthropic
+    class Anthropic
       # Handles formatting of media content (images, PDFs, audio) for Anthropic
       module Media
         module_function

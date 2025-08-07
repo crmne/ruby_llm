@@ -399,6 +399,23 @@ analysis = chat_record.ask("What's interesting about this person?")
 puts chat_record.messages.count # => 4
 ```
 
+## Event Callbacks with Rails
+
+All RubyLLM event callbacks work seamlessly with Rails persistence. Your custom callbacks automatically chain with the internal persistence callbacks:
+
+```ruby
+chat_record = Chat.create!(model_id: 'gpt-4o')
+              .with_tool(Weather)
+              .on_new_message { Rails.logger.info "Thinking..." }
+              .on_end_message { |msg| Rails.logger.info "Done: #{msg.content}" }
+              .on_tool_call { |tc| Rails.logger.info "Calling: #{tc.name}" }
+              .on_tool_result { |r| Rails.logger.info "Result: #{r}" }
+
+response = chat_record.ask("What's the weather in Paris?")
+```
+
+For real-time UI updates, you'll typically use ActiveRecord callbacks on your Message model since those fire after database commits and work naturally with Turbo Streams.
+
 ## Handling Persistence Edge Cases
 
 ### Orphaned Empty Messages

@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Anthropic
+    class Anthropic
       # Streaming methods of the Anthropic API integration
       module Streaming
         private

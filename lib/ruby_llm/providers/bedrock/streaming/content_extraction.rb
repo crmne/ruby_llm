@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Streaming
         # Module for handling content extraction from AWS Bedrock streaming responses.
         # Provides methods to extract and process various types of content from the response data.

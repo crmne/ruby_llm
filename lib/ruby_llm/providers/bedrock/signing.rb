@@ -14,7 +14,7 @@ require 'pathname'
 
 module RubyLLM
   module Providers
-    module Bedrock
+    class Bedrock
       module Signing
         # Utility class for creating AWS signature version 4 signature. This class
         # provides a method for generating signatures:

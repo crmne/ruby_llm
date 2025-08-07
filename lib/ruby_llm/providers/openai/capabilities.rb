@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenAI
+    class OpenAI
       # Determines capabilities and pricing for OpenAI models
       module Capabilities
         module_function

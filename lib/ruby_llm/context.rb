@@ -22,9 +22,8 @@ module RubyLLM
       Image.paint(*args, **kwargs, context: self, &)
     end
 
-    def connection_for(provider_module)
-      slug = provider_module.slug.to_sym
-      @connections[slug] ||= Connection.new(provider_module, @config)
+    def connection_for(provider_instance)
+      provider_instance.connection
     end
   end
 end
