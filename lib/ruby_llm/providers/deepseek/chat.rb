@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module DeepSeek
+    class DeepSeek
       # Chat methods of the DeepSeek API integration
       module Chat
         module_function

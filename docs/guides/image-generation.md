@@ -66,10 +66,10 @@ The `paint` method abstracts the differences between provider APIs.
 
 ## Choosing Models
 
-By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `dall-e-3`), but you can specify a different one.
+By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `gpt-image-1`), but you can specify a different one.
 
 ```ruby
-# Explicitly use DALL-E 3
+# Use DALL-E 3
 image_dalle = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
   model: "dall-e-3"
@@ -94,7 +94,7 @@ You can configure the default model globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_image_model = "dall-e-3" # Or another available image model ID
+  config.default_image_model = "gpt-image-1" # Or another available image model ID
 end
 ```
 

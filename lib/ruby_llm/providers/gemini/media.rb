@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Media handling methods for the Gemini API integration
       module Media
         module_function

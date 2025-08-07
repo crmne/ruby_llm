@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module GPUStack
+    class GPUStack
       # Chat methods of the GPUStack API integration
       module Chat
         module_function

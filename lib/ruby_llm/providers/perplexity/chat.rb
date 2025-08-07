@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Perplexity
+    class Perplexity
       # Chat formatting for Perplexity provider
       module Chat
         module_function

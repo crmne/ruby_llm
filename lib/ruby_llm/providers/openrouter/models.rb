@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module OpenRouter
+    class OpenRouter
       # Models methods of the OpenRouter API integration
       module Models
         module_function

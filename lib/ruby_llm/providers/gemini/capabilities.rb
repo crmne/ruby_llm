@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Determines capabilities and pricing for Google Gemini models
       module Capabilities
         module_function
