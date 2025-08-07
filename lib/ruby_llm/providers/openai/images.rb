@@ -5,9 +5,9 @@ module RubyLLM
     class OpenAI
       # Image generation methods for the OpenAI API integration
       module Images
-        def paint(prompt, model:, size:, connection:, with:, params:) # rubocop:disable Metrics/ParameterLists
+        def paint(prompt, model:, size:, with:, params:) # rubocop:disable Metrics/ParameterLists
           @operation = with.nil? ? :generation : :editing
-          connection = connection_multipart(connection.config) if editing? && !multipart_middleware?(connection)
+          @connection = connection_multipart(@connection.config) if editing? && !multipart_middleware?(@connection)
           super
         end
 
