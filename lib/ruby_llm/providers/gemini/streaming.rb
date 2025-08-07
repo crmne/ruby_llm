@@ -34,7 +34,21 @@ module RubyLLM
           return nil unless parts
 
           text_parts = parts.select { |p| p['text'] }
-          text_parts.map { |p| p['text'] }.join if text_parts.any?
+          image_parts = parts.select { |p| p['inlineData'] }
+
+          content = RubyLLM::Content.new(text_parts.map { |p| p['text'] }.join)
+
+          image_parts.map do |p|
+            content.attach(
+              ImageAttachment.new(
+                data: p['inlineData']['data'],
+                mime_type: p['inlineData']['mimeType'],
+                model_id: data['modelVersion']
+              )
+            )
+          end
+
+          content
         end
 
         def extract_input_tokens(data)

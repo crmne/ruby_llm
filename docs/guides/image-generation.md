@@ -24,6 +24,8 @@ Turn your wildest imagination into reality! 🎨 Create professional artwork, pr
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to edit and modify existing images.
+*   How to refine images through multi-turn conversations.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
@@ -98,6 +100,75 @@ end
 
 Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link available-models.md %}) to find image models.
 
+## Image Editing & Modification
+
+Beyond generating images from text prompts, you can also edit and modify existing images using capable models like `gemini-2.0-flash-preview-image-generation`. This approach uses the chat interface rather than the `paint` method.
+
+### Basic Image Editing
+
+Use the chat interface with image generation models to edit existing images:
+
+```ruby
+# Start a chat with an image generation model
+chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
+
+# Edit an existing image
+response = chat.ask('put this in a ring', with: 'path/to/ruby.png')
+
+# Access the generated image from the response
+image = response.content.attachments.first.image
+
+# Check image properties
+puts "Generated image: #{image.mime_type}"
+puts "Base64 encoded: #{image.base64?}"
+puts "Data size: ~#{image.data.length} bytes" if image.base64?
+
+# Save the edited image
+saved_path = image.save('ruby_with_ring.png')
+puts "Saved to: #{saved_path}"
+```
+
+### Multi-turn Image Refinement
+
+One of the powerful features of using the chat interface is the ability to refine generated images through conversation:
+
+```ruby
+chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
+
+# First edit - add a ring to the ruby image
+chat.ask('put this in a ring', with: 'path/to/ruby.png')
+
+# Refine the result in the same conversation
+response = chat.ask('change the background to blue')
+
+# The model will modify the previously generated image
+refined_image = response.content.attachments.first.image
+refined_image.save('ruby_ring_blue_background.png')
+
+# Continue refining
+response = chat.ask('make the ring more ornate and golden')
+final_image = response.content.attachments.first.image
+final_image.save('ruby_ornate_golden_ring.png')
+```
+
+### Chat vs Paint Methods
+
+RubyLLM provides two approaches for image generation:
+
+- **`RubyLLM.paint`**: Best for simple text-to-image generation from scratch
+- **`RubyLLM.chat` with image models**: Best for image editing, refinement, and complex workflows
+
+Use the chat interface for:
+- Editing existing images
+- Multi-turn image refinement and iteration
+- Complex image generation workflows
+- When you need conversation context and memory
+
+Use the paint method for:
+- Simple text-to-image generation
+- One-off image creation
+- When you don't need conversation context
+
 ## Image Sizes
 
 Some models, like DALL-E 3, allow you to specify the desired image dimensions via the `size:` argument.
@@ -124,7 +195,7 @@ Not all models support size customization. If a size is specified for a model th
 
 ## Working with Generated Images
 
-The `RubyLLM::Image` object provides access to the generated image data and metadata.
+The `RubyLLM::Image` object provides access to the generated image data and metadata, whether the image was created using `RubyLLM.paint` or retrieved from a chat response.
 
 ### Accessing Image Data
 
@@ -138,10 +209,15 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 The `save` method works regardless of whether the image was delivered via URL or Base64. It fetches the data if necessary and writes it to the specified file path.
 
 ```ruby
-# Generate an image (works for DALL-E or Imagen)
+# Generate an image using paint method (works for DALL-E or Imagen)
 image = RubyLLM.paint("A steampunk mechanical owl")
 
-# Save the image to a local file
+# Or get an image from a chat response
+# chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
+# response = chat.ask("Create a steampunk mechanical owl")
+# image = response.content.attachments.first.image
+
+# Save the image to a local file (works the same for both methods)
 begin
   saved_path = image.save("steampunk_owl.png")
   puts "Image saved to #{saved_path}"
@@ -280,6 +356,6 @@ Image generation can take several seconds (typically 5-20 seconds depending on t
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %}): Learn about conversational AI.
+*   [Chatting with AI Models]({% link guides/chat.md %}): Learn about conversational AI and using chat for advanced image workflows.
 *   [Embeddings]({% link guides/embeddings.md %}): Explore text vector representations.
 *   [Error Handling]({% link guides/error-handling.md %}): Master handling API errors.
