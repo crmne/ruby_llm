@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RubyLLM
   module Providers
     # OpenAI API integration. Handles chat completion, function calling,

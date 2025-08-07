@@ -39,7 +39,6 @@ module RubyLLM
           super
         end
       end
-
     end
   end
 end
