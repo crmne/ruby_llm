@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Working with Models
-parent: Guides
-nav_order: 9
-permalink: /guides/models
-description: Access 100+ AI models from all major providers with one simple API
+title: Model Registry
+nav_order: 4
+description: Access hundreds of AI models from all major providers with one simple API
+redirect_from:
+  - /guides/models
 ---
 
-# Working with AI Models
+# {{ page.title }}
 {: .no_toc }
 
-One API, endless possibilities! 🌐 Connect to Claude, GPT-4, Gemini, and dozens more AI models from every major provider. Switch models with a single line of code.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -43,14 +43,14 @@ The registry stores crucial information about each model, including:
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
 *   **`max_tokens`**: Max output tokens (e.g., `16_384`).
 *   **`supports_vision`**: If it can process images.
-*   **`supports_functions`**: If it can use [Tools]({% link guides/tools.md %}).
+*   **`supports_functions`**: If it can use [Tools]({% link _core_features/tools.md %}).
 *   **`input_price_per_million`**: Cost in USD per 1 million input tokens.
 *   **`output_price_per_million`**: Cost in USD per 1 million output tokens.
 *   **`family`**: A broader classification (e.g., `gpt4o`).
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.
 
-You can see the full list of currently registered models in the [Available Models Guide]({% link available-models.md %}).
+You can see the full list of currently registered models in the [Available Models Guide]({% link _reference/available-models.md %}).
 
 ### Refreshing the Registry
 
@@ -241,7 +241,7 @@ end
 
 *   This setting **only** affects requests made with `provider: :openai`.
 *   It directs those requests to your specified URL instead of `https://api.openai.com/v1`.
-*   See [Installation Guide]({% link installation.md %}#configuration).
+*   See [Configuration Guide]({% link _getting_started/configuration.md %}).
 
 ### Assuming Model Existence (`assume_model_exists`)
 
@@ -294,4 +294,4 @@ image = RubyLLM.paint(
 *   **Your Responsibility:** Ensure the model ID is correct for the target endpoint.
 *   **Warning Log:** A warning is logged indicating validation was skipped.
 
-Use these features when the standard registry doesn't cover your specific model or endpoint needs. For standard models, rely on the registry for validation and capability awareness. See the [Chat Guide]({% link guides/chat.md %}) for more on using the `chat` object.
+Use these features when the standard registry doesn't cover your specific model or endpoint needs. For standard models, rely on the registry for validation and capability awareness. See the [Chat Guide]({% link _core_features/chat.md %}) for more on using the `chat` object.

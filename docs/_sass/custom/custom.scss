@@ -37,3 +37,25 @@
   flex-wrap: wrap;
   gap: 0.2em;
 }
+
+// Dark mode fixes
+[data-color-scheme="dark"] {
+  // Invert text versions and specific black/dark provider logos
+  .provider-logo img[src*="-text.svg"],
+  .provider-icons img[src*="-text.svg"],
+  .provider-logo img[src*="/ollama.svg"],
+  .provider-logo img[src*="/openai.svg"],
+  .provider-logo img[src*="/openrouter.svg"] {
+    filter: invert(1);
+  }
+
+  // Switch to dark mode logo in sidebar
+  .site-logo {
+    background-image: url('/assets/images/logotype_dark.svg');
+  }
+
+  // Switch to dark mode logo on index page
+  .logo-container img[src="/assets/images/logotype.svg"] {
+    content: url('/assets/images/logotype_dark.svg');
+  }
+}

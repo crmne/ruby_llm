@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Chatting with AI Models
-parent: Guides
-nav_order: 2
-permalink: /guides/chat
-description: Chat with any AI model using one simple API. Handle images, audio, PDFs, and streaming with ease.
+title: Chat
+nav_order: 1
+description: Learn how to have conversations with AI models, work with different providers, and handle multi-modal inputs
+redirect_from:
+  - /guides/chat
 ---
 
-# Chatting with AI Models
+# {{ page.title }}
 {: .no_toc }
 
-One API for all AI conversations. Just ask.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -23,18 +23,18 @@ One API for all AI conversations. Just ask.
 
 After reading this guide, you will know:
 
-*   How to start and continue conversations.
-*   How to use system prompts (instructions) to guide the AI.
-*   How to select specific models and providers.
-*   How to interact with models using images, audio, and PDFs.
-*   How to control response creativity using temperature.
-*   How to request structured output with JSON schemas.
-*   How to track token usage.
-*   How to use chat event handlers.
+* How to start and continue conversations with AI models
+* How to select and work with different models and providers
+* How to guide AI behavior with system prompts
+* How to work with images, audio, documents, and other file types
+* How to control response creativity and format
+* How to get structured output with JSON schemas
+* How to track token usage and costs
+* How to handle streaming responses and events
 
 ## Starting a Conversation
 
-The simplest way to begin is with `RubyLLM.chat`, which creates a `Chat` instance using the configured default model (often a capable OpenAI GPT model).
+When you want to interact with an AI model, you create a chat instance. The simplest approach uses `RubyLLM.chat`, which creates a new conversation with your configured default model.
 
 ```ruby
 chat = RubyLLM.chat
@@ -51,11 +51,13 @@ puts "Model Used: #{response.model_id}"
 puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
 ```
 
-The `ask` method (aliased as `say`) adds your message to the conversation history with the `:user` role and then triggers a request to the AI provider. The returned `RubyLLM::Message` object represents the assistant's reply.
+The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
+
+The `say` method is an alias for `ask`, so you can use whichever feels more natural in your code.
 
 ## Continuing the Conversation
 
-The `Chat` object maintains the conversation history. Subsequent calls to `ask` build upon the previous messages.
+One of the key features of chat-based AI models is their ability to maintain context across multiple exchanges. The `Chat` object automatically manages this conversation history for you.
 
 ```ruby
 # Continuing the previous chat...
@@ -73,11 +75,11 @@ end
 # => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-Each call to `ask` sends the *entire* current message history (up to the model's context limit) to the provider, allowing the AI to understand the context of your follow-up questions.
+Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue. The framework automatically manages context window limits, truncating older messages if necessary to stay within the model's constraints.
 
-## Guiding the AI with Instructions
+## Guiding AI Behavior with System Prompts
 
-You can provide instructions, also known as system prompts, to guide the AI's behavior, persona, or response format throughout the conversation. Use the `with_instructions` method.
+System prompts, also called instructions, allow you to set the overall behavior, personality, and constraints for the AI assistant. These instructions persist throughout the conversation and help ensure consistent responses.
 
 ```ruby
 chat = RubyLLM.chat
@@ -97,11 +99,14 @@ puts response.content
 # => "A loop is like singing your favorite song over and over again... Got it?"
 ```
 
-Instructions are prepended to the conversation history as messages with the `:system` role. They are particularly useful for setting a consistent tone or providing context the AI should always consider. If you are using the [Rails Integration]({% link guides/rails.md %}), these system messages are persisted along with user and assistant messages.
+System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
 
-## Selecting Models and Providers
+> When using the [Rails Integration]({% link _advanced/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
+{: .note }
 
-While `RubyLLM.chat` uses the default model, you can easily specify a different one.
+## Working with Different Models
+
+RubyLLM supports over 500 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
 
 ```ruby
 # Use a specific model via ID or alias
@@ -110,22 +115,21 @@ chat_gemini = RubyLLM.chat(model: 'gemini-1.5-pro-latest')
 
 # Change the model on an existing chat instance
 chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-response1 = chat.ask "Initial question for GPT..."
-puts response1.content
+response1 = chat.ask "Initial question..."
 
-response2 = chat.with_model('claude-3-opus-20240229').ask("Follow-up question for Claude...")
-puts response2.content
+chat.with_model('claude-3-opus-20240229')
+response2 = chat.ask "Follow-up question..."
 ```
 
-RubyLLM manages a registry of known models and their capabilities. For detailed information on finding models, using aliases, checking capabilities, and working with custom or unlisted models (using `assume_model_exists: true`), please refer to the **[Working with Models Guide]({% link guides/models.md %})**.
+For detailed information about model selection, capabilities, aliases, and working with custom models, see the [Working with Models Guide]({% link _advanced/models.md %}).
 
 ## Multi-modal Conversations
 
-Modern AI models can often process more than just text. RubyLLM provides a unified way to include images, audio, text files, and PDFs in your chat messages using the `with:` option in the `ask` method.
+Many modern AI models can process multiple types of input beyond just text. RubyLLM provides a unified interface for working with images, audio, documents, and other file types through the `with:` parameter.
 
 ### Working with Images
 
-Provide image paths or URLs to vision-capable models (like `gpt-4o`, `claude-3-opus`, `gemini-1.5-pro`).
+Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
 
 ```ruby
 # Ensure you select a vision-capable model
@@ -144,11 +148,11 @@ response = chat.ask "Compare the user interfaces in these two screenshots.", wit
 puts response.content
 ```
 
-RubyLLM handles converting the image source into the format required by the specific provider API.
+RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
 
 ### Working with Audio
 
-Provide audio file paths to audio-capable models (like `gpt-4o-audio-preview`).
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `gpt-4o-audio-preview` support audio input.
 
 ```ruby
 chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
@@ -164,7 +168,7 @@ puts response.content
 
 ### Working with Text Files
 
-Provide text file paths to models that support document analysis.
+You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
 
 ```ruby
 chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
@@ -180,7 +184,7 @@ puts response.content
 
 ### Working with PDFs
 
-Provide PDF paths or URLs to models that support document analysis (currently Claude 3+ and Gemini models).
+PDF support allows models to analyze complex documents including reports, manuals, and research papers. Currently, Claude 3+ and Gemini models offer the best PDF support.
 
 ```ruby
 # Use a model that supports PDFs
@@ -199,10 +203,10 @@ response = chat.ask "Based on section 3 of this document, what is the warranty p
 puts response.content
 ```
 
+> Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
 {: .note }
-**PDF Limitations:** Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
 
-### Simplified Attachment API
+### Automatic File Type Detection
 
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
@@ -230,9 +234,15 @@ response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 - **Documents:** .pdf, .txt, .md, .csv, .json, .xml
 - **Code:** .rb, .py, .js, .html, .css (and many others)
 
-## Controlling Creativity: Temperature
+## Controlling Response Behavior
 
-The `temperature` setting influences the randomness and creativity of the AI's responses. A higher value (e.g., 0.9) leads to more varied and potentially surprising outputs, while a lower value (e.g., 0.1) makes the responses more focused, deterministic, and predictable. The default is generally around 0.7.
+### Temperature and Creativity
+
+The temperature parameter controls the randomness of the model's responses. Understanding temperature helps you get the right balance between creativity and consistency for your use case.
+
+* **Low temperature (0.0 - 0.3)**: More deterministic and focused responses. Use for factual queries, technical explanations, or when consistency is important.
+* **Medium temperature (0.4 - 0.7)**: Balanced creativity and coherence. Good for general conversation and most applications.
+* **High temperature (0.8 - 1.0)**: More creative and varied responses. Use for brainstorming, creative writing, or when you want diverse outputs.
 
 ```ruby
 # Create a chat with low temperature for factual answers
@@ -246,13 +256,11 @@ response2 = creative_chat.ask "Write a short poem about the color blue."
 puts response2.content
 ```
 
-You can set the temperature using `with_temperature`, which returns the `Chat` instance for chaining.
+The `with_temperature` method returns the chat instance, allowing you to chain multiple configuration calls together.
 
-## Custom Request Parameters (`with_params`)
-{: .d-inline-block }
+### Provider-Specific Parameters
 
-
-You can configure additional provider-specific features by adding custom fields to each API request. Use the `with_params` method.
+Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface.
 
 ```ruby
 # response_format parameter is supported by :openai, :ollama, :deepseek
@@ -261,16 +269,15 @@ response = chat.ask "What is the square root of 64? Answer with a JSON object wi
 puts JSON.parse(response.content)
 ```
 
-Allowed parameters vary widely by provider and model. Please consult the provider's documentation.
-
-## Structured Output with JSON Schemas (`with_schema`)
-{: .d-inline-block }
-
-
-RubyLLM supports structured output, which guarantees that AI responses conform to your specified JSON schema. This is different from JSON mode – while JSON mode guarantees valid JSON syntax, structured output enforces the exact schema you define.
-
+> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors.
 {: .note }
-**Structured Output vs JSON Mode:** JSON mode (using `with_params(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
+
+## Getting Structured Output
+
+When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
+
+> JSON mode (using `with_params(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
+{: .note }
 
 ```ruby
 # JSON mode - guarantees valid JSON, but no specific structure
@@ -298,13 +305,17 @@ response = chat.ask("List 3 programming languages with their year created")
 The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) gem:
 
 ```ruby
-# First, install the gem: gem install ruby_llm-schema
+# First, add to your Gemfile:
+# gem 'ruby_llm-schema'
+#
+# Then in your code:
 require 'ruby_llm/schema'
 
 # Define your schema as a class
 class PersonSchema < RubyLLM::Schema
   string :name, description: "Person's full name"
   integer :age, description: "Person's age in years"
+  string :city, required: false, description: "City where they live"
 end
 
 # Use it with a chat
@@ -343,8 +354,8 @@ puts response.content
 # => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
 ```
 
+> **OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
 {: .warning }
-**OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
 
 ### Complex Nested Schemas
 
@@ -456,7 +467,7 @@ total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + 
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on accessing model-specific pricing.
+Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 
 ## Prompt Caching
 
@@ -536,8 +547,8 @@ The raw response is a `Faraday::Response` object, which you can use to access th
 
 This guide covered the core `Chat` interface. Now you might want to explore:
 
-*   [Working with Models]({% link guides/models.md %}): Learn how to choose the best model and handle custom endpoints.
-*   [Using Tools]({% link guides/tools.md %}): Enable the AI to call your Ruby code.
-*   [Streaming Responses]({% link guides/streaming.md %}): Get real-time feedback from the AI.
-*   [Rails Integration]({% link guides/rails.md %}): Persist your chat conversations easily.
-*   [Error Handling]({% link guides/error-handling.md %}): Build robust applications that handle API issues.
+*   [Working with Models]({% link _advanced/models.md %}): Learn how to choose the best model and handle custom endpoints.
+*   [Using Tools]({% link _core_features/tools.md %}): Enable the AI to call your Ruby code.
+*   [Streaming Responses]({% link _core_features/streaming.md %}): Get real-time feedback from the AI.
+*   [Rails Integration]({% link _advanced/rails.md %}): Persist your chat conversations easily.
+*   [Error Handling]({% link _advanced/error-handling.md %}): Build robust applications that handle API issues.

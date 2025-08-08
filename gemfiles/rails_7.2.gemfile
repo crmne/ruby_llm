@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 group :development do
   gem "appraisal"
+  gem "async", platform: :mri
   gem "bundler", ">= 2.0"
   gem "codecov"
   gem "dotenv"
@@ -16,7 +17,6 @@ group :development do
   gem "pry", ">= 0.14"
   gem "rails", "~> 7.2.0"
   gem "rake", ">= 13.0"
-  gem "rdoc"
   gem "reline"
   gem "rspec", "~> 3.12"
   gem "rubocop", ">= 1.0"
@@ -30,7 +30,6 @@ group :development do
   gem "sqlite3", platform: "mri"
   gem "vcr"
   gem "webmock", "~> 3.18"
-  gem "yard", ">= 0.9"
 end
 
 gemspec path: "../"

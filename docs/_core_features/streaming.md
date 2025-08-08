@@ -1,16 +1,16 @@
 ---
 layout: default
-title: Streaming Responses
-parent: Guides
-nav_order: 4
-permalink: /guides/streaming
-description: Build instant, engaging AI experiences with real-time streaming responses
+title: Stream Responses
+nav_order: 3
+description: Learn how to display AI responses in real-time as they're generated
+redirect_from:
+  - /guides/streaming
 ---
 
-# Streaming Responses
+# {{ page.title }}
 {: .no_toc }
 
-Build blazing fast AI interfaces that feel instant! 🚀 RubyLLM's streaming lets you display responses as they're generated, transforming long waits into engaging, real-time conversations.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -45,7 +45,7 @@ end
 # => (Output appears incrementally) Once upon a time, in the vast digital...
 ```
 
-RubyLLM handles the underlying complexities of different provider streaming formats (like Server-Sent Events) and yields standardized `Chunk` objects.
+RubyLLM normalizes different provider streaming formats (like Server-Sent Events) into standardized `Chunk` objects.
 
 ## Understanding Chunks
 
@@ -56,12 +56,12 @@ Key attributes of a `Chunk`:
 *   `chunk.content`: The text fragment received in this chunk (can be `nil` or empty for some chunks, especially those containing only metadata or tool calls).
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model_id`: The model generating the response (usually present).
-*   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link guides/tools.md %}). The arguments might be streamed incrementally.
+*   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
 *   `chunk.input_tokens`: Total input tokens for the request (often `nil` until the final chunk).
 *   `chunk.output_tokens`: Cumulative output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk).
 
+> Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
-Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 
 ## Accumulated Response
 
@@ -139,7 +139,7 @@ end
 # ChatStreamJob.perform_later(chat.id, params[:message], target_id)
 ```
 
-See the [Rails Integration Guide]({% link guides/rails.md %}#streaming-responses-with-hotwireturbo) for more detailed examples.
+See the [Rails Integration Guide]({% link _advanced/rails.md %}#streaming-responses-with-hotwireturbo) for more detailed examples.
 
 ### Sinatra with Server-Sent Events (SSE)
 
@@ -191,11 +191,11 @@ rescue RubyLLM::Error => e
 end
 ```
 
-Refer to the [Error Handling Guide]({% link guides/error-handling.md %}) for details on specific error types.
+Refer to the [Error Handling Guide]({% link _advanced/error-handling.md %}) for details on specific error types.
 
 ## Streaming with Tools
 
-When a chat interaction involves [Tools]({% link guides/tools.md %}), the streaming behavior has distinct phases:
+When a chat interaction involves [Tools]({% link _core_features/tools.md %}), the streaming behavior has distinct phases:
 
 1.  **Initial Response Stream:** Chunks are yielded as the model generates text *up to* the point where it decides to call a tool.
 2.  **Tool Call Chunk(s):** One or more chunks containing `chunk.tool_calls` information are yielded. The arguments might be streamed incrementally depending on the provider.
@@ -225,6 +225,6 @@ Your streaming block needs to be prepared to handle chunks that contain text con
 
 ## Next Steps
 
-*   [Using Tools]({% link guides/tools.md %})
-*   [Rails Integration]({% link guides/rails.md %})
-*   [Error Handling]({% link guides/error-handling.md %})
+*   [Using Tools]({% link _core_features/tools.md %})
+*   [Rails Integration]({% link _advanced/rails.md %})
+*   [Error Handling]({% link _advanced/error-handling.md %})

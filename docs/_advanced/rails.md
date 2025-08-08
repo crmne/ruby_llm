@@ -1,16 +1,16 @@
 ---
 layout: default
 title: Rails Integration
-parent: Guides
-nav_order: 5
-permalink: /guides/rails
+nav_order: 1
 description: Rails + AI made simple. Persist chats with ActiveRecord. Stream with Hotwire. Deploy with confidence.
+redirect_from:
+  - /guides/rails
 ---
 
-# Rails Integration
+# {{ page.title }}
 {: .no_toc }
 
-Rails ❤️ AI. Build production AI features with conventions you already know.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -153,8 +153,8 @@ end
 
 Run the migrations: `rails db:migrate`
 
+> **Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 {: .note }
-**Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 
 ### ActiveStorage Setup for Attachments (Optional)
 
@@ -182,7 +182,7 @@ This setup is completely optional - your RubyLLM Rails integration works fine wi
 
 ### Configure RubyLLM
 
-Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Installation Guide]({% link installation.md %}) for details.
+Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Configuration Guide]({% link _getting_started/configuration.md %}) for details.
 
 ```ruby
 # config/initializers/ruby_llm.rb
@@ -307,7 +307,7 @@ puts system_message.content # => "You are a concise Ruby expert."
 
 ### Tools Integration
 
-[Tools]({% link guides/tools.md %}) are automatically persisted too:
+[Tools]({% link _core_features/tools.md %}) are automatically persisted too:
 
 ```ruby
 # Define a tool
@@ -372,7 +372,7 @@ class PersonSchema < RubyLLM::Schema
 end
 
 # Use with your persisted chat
-chat_record = Chat.create!(model_id: 'gpt-4o')
+chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
 response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
 
 # The structured response is automatically parsed as a Hash
@@ -398,23 +398,6 @@ analysis = chat_record.ask("What's interesting about this person?")
 # All messages are persisted correctly
 puts chat_record.messages.count # => 4
 ```
-
-## Event Callbacks with Rails
-
-All RubyLLM event callbacks work seamlessly with Rails persistence. Your custom callbacks automatically chain with the internal persistence callbacks:
-
-```ruby
-chat_record = Chat.create!(model_id: 'gpt-4o')
-              .with_tool(Weather)
-              .on_new_message { Rails.logger.info "Thinking..." }
-              .on_end_message { |msg| Rails.logger.info "Done: #{msg.content}" }
-              .on_tool_call { |tc| Rails.logger.info "Calling: #{tc.name}" }
-              .on_tool_result { |r| Rails.logger.info "Result: #{r}" }
-
-response = chat_record.ask("What's the weather in Paris?")
-```
-
-For real-time UI updates, you'll typically use ActiveRecord callbacks on your Message model since those fire after database commits and work naturally with Turbo Streams.
 
 ## Handling Persistence Edge Cases
 
@@ -773,8 +756,8 @@ end
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %})
-*   [Using Tools]({% link guides/tools.md %})
-*   [Streaming Responses]({% link guides/streaming.md %})
-*   [Working with Models]({% link guides/models.md %})
-*   [Error Handling]({% link guides/error-handling.md %})
+*   [Chatting with AI Models]({% link _core_features/chat.md %})
+*   [Using Tools]({% link _core_features/tools.md %})
+*   [Streaming Responses]({% link _core_features/streaming.md %})
+*   [Working with Models]({% link _advanced/models.md %})
+*   [Error Handling]({% link _advanced/error-handling.md %})
