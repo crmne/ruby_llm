@@ -22,7 +22,7 @@ module RubyLLM
           payload[:temperature] = temperature unless temperature.nil?
 
           if tools.any?
-            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tools] = tools.map { |_, tool| chat_tool_for(tool) }
             payload[:tool_choice] = 'auto'
           end
 

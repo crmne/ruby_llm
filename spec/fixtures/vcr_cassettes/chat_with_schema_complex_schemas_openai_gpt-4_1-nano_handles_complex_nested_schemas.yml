@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named John who is 30 years old","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+        a response with 2 users and metadata with version 1","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"users":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"},"role":{"type":"string","enum":["admin","user","guest"]}},"required":["name","role"],"additionalProperties":false}},"metadata":{"type":"object","properties":{"created_at":{"type":"string"},"version":{"type":"integer"}},"required":["created_at","version"],"additionalProperties":false}},"required":["users","metadata"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 04:18:25 GMT
+      - Wed, 06 Aug 2025 05:07:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '149999932'
+      - '149999885'
       X-Ratelimit-Reset-Requests:
       - 2ms
       X-Ratelimit-Reset-Tokens:
@@ -52,9 +52,9 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '1248'
+      - '894'
       X-Envoy-Upstream-Service-Time:
-      - '1430'
+      - '904'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -74,9 +74,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_6892d790e46c81a2b56402f52bd03c280ea79e0ebdf6e752",
+          "id": "resp_6892e2ffd3d8819181008803a9c784f80251f77e9710ce40",
           "object": "response",
-          "created_at": 1754453905,
+          "created_at": 1754456831,
           "status": "completed",
           "background": false,
           "error": null,
@@ -87,7 +87,7 @@ http_interactions:
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
-              "id": "msg_6892d791c14881a28a75740b6814ca3a0ea79e0ebdf6e752",
+              "id": "msg_6892e30007bc81918f93e1e71af03f820251f77e9710ce40",
               "type": "message",
               "status": "completed",
               "content": [
@@ -95,7 +95,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "{\"name\":\"John\",\"age\":30}"
+                  "text": "{\"users\":[{\"name\":\"Alice\",\"role\":\"admin\"},{\"name\":\"Bob\",\"role\":\"user\"}],\"metadata\":{\"created_at\":\"2023-10-04T12:00:00Z\",\"version\":1}}"
                 }
               ],
               "role": "assistant"
@@ -120,16 +120,50 @@ http_interactions:
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string"
+                  "users": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "admin",
+                            "user",
+                            "guest"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "role"
+                      ],
+                      "additionalProperties": false
+                    }
                   },
-                  "age": {
-                    "type": "integer"
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "created_at",
+                      "version"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
-                  "name",
-                  "age"
+                  "users",
+                  "metadata"
                 ],
                 "additionalProperties": false
               },
@@ -142,18 +176,18 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 47,
+            "input_tokens": 97,
             "input_tokens_details": {
               "cached_tokens": 0
             },
-            "output_tokens": 10,
+            "output_tokens": 45,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 57
+            "total_tokens": 142
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 06 Aug 2025 04:18:25 GMT
+  recorded_at: Wed, 06 Aug 2025 05:07:12 GMT
 recorded_with: VCR 6.3.1
