@@ -1,16 +1,16 @@
 ---
 layout: default
 title: Error Handling
-parent: Guides
-nav_order: 8
-permalink: /guides/error-handling
-description: Build rock-solid AI apps with intelligent error handling and automatic retries
+nav_order: 3
+description: Learn how to handle errors gracefully when working with AI providers
+redirect_from:
+  - /guides/error-handling
 ---
 
-# Error Handling
+# {{ page.title }}
 {: .no_toc }
 
-Make your AI features bulletproof! 🛡️ RubyLLM's smart error handling and automatic retries keep your app running smoothly even when AI services hiccup, ensuring reliability your users can count on.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -152,7 +152,7 @@ Your block will execute for chunks received *before* the error. The final return
 
 ## Handling Errors Within Tools
 
-When building [Tools]({% link guides/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
+When building [Tools]({% link _core_features/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
 
 1.  **Return Error to LLM:** If the error is something the LLM might be able to recover from (e.g., invalid parameters provided by the LLM, temporary lookup failure), return a Hash containing an `:error` key. The LLM will see this error message as the tool's output and may try again or use a different approach.
 
@@ -191,7 +191,7 @@ Distinguishing between these helps the LLM work effectively with recoverable iss
 
 ## Automatic Retries
 
-RubyLLM's underlying HTTP client (Faraday with `faraday-retry`) automatically retries requests that fail due to certain transient network or server issues. This helps improve reliability without requiring manual retry logic in most cases.
+RubyLLM automatically retries requests that fail due to transient network or server issues using Faraday's retry middleware.
 
 Retries are attempted for:
 
@@ -232,6 +232,6 @@ This will cause RubyLLM to log detailed information about API requests and respo
 
 ## Next Steps
 
-*   [Using Tools]({% link guides/tools.md %})
-*   [Streaming Responses]({% link guides/streaming.md %})
-*   [Rails Integration]({% link guides/rails.md %})
+*   [Using Tools]({% link _core_features/tools.md %})
+*   [Streaming Responses]({% link _core_features/streaming.md %})
+*   [Rails Integration]({% link _advanced/rails.md %})

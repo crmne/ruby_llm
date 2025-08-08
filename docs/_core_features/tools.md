@@ -1,16 +1,16 @@
 ---
 layout: default
 title: Tools
-parent: Guides
-nav_order: 3
-permalink: /guides/tools
+nav_order: 2
 description: Let AI call your Ruby code. Connect to databases, APIs, or any external system with function calling.
+redirect_from:
+  - /guides/tools
 ---
 
-# Using Tools with RubyLLM
+# {{ page.title }}
 {: .no_toc }
 
-Give AI superpowers by letting it call your Ruby methods.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -75,8 +75,8 @@ end
     *   **`required:`:** (Optional, defaults to `true`) Whether the AI *must* provide this parameter when calling the tool. Set to `false` for optional parameters and provide a default value in your `execute` method signature.
 4.  **`execute` Method:** The instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
 
+> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
 {: .note }
-The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
 
 ## Custom Initialization
 
@@ -130,8 +130,8 @@ puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
+> Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
 {: .warning }
-Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 
@@ -212,8 +212,8 @@ end
 - **Sub-agent delegation:** When another agent fully handles the response
 - **Precise responses:** When you need exact output without LLM interpretation
 
+> The LLM's continuation is usually helpful - it provides context and natural language formatting. Only use `halt` when you specifically need to bypass this behavior.
 {: .warning }
-The LLM's continuation is usually helpful - it provides context and natural language formatting. Only use `halt` when you specifically need to bypass this behavior.
 
 ### Example with sub-agents
 
@@ -231,8 +231,8 @@ class DelegateTool < RubyLLM::Tool
 end
 ```
 
+> **Sub-agents work perfectly without halt!** You can create sub-agents and stream their responses without using `halt`. The router will simply summarize what the sub-agent said, which is often helpful. Use `halt` only when you specifically want to skip the router's summary.
 {: .note }
-**Sub-agents work perfectly without halt!** You can create sub-agents and stream their responses without using `halt`. The router will simply summarize what the sub-agent said, which is often helpful. Use `halt` only when you specifically want to skip the router's summary.
 
 ## Model Context Protocol (MCP) Support
 
@@ -253,44 +253,31 @@ You'll see log lines similar to:
 D, [timestamp] -- RubyLLM: Tool weather_lookup called with: {:latitude=>52.52, :longitude=>13.4}
 D, [timestamp] -- RubyLLM: Tool weather_lookup returned: "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
-See the [Error Handling Guide]({% link guides/error-handling.md %}#debugging) for more on debugging.
+See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging) for more on debugging.
 
 ## Error Handling in Tools
 
-Proper error handling within your `execute` method is crucial.
+Tools should handle errors based on whether they're recoverable:
 
-*   **Recoverable Errors (Return Hash):** If the tool fails in a way the LLM might fix (e.g., bad input from the LLM, temporary external API issue), `return` a Hash with an `:error` key. This informs the LLM about the problem.
+- **Recoverable errors** (invalid parameters, external API failures): Return `{ error: "description" }`
+- **Unrecoverable errors** (missing configuration, database down): Raise an exception
 
-    ```ruby
-    def execute(location:, unit: "celsius")
-      if location.length < 3
-        return { error: "Location name '#{location}' seems too short. Please provide a more specific location." }
-      end
-      # ... rest of the logic ...
-    rescue Faraday::ConnectionFailed
-      { error: "Could not connect to the weather service. Please try again later." }
-    end
-    ```
+```ruby
+def execute(location:)
+  return { error: "Location too short" } if location.length < 3
 
-*   **Unrecoverable Errors (Raise Exception):** If the error is internal to your application or tool (e.g., missing configuration, database down), `raise` an exception. This will stop the chat interaction and propagate the error to your application's main error handling.
+  # Fetch weather data...
+rescue Faraday::ConnectionFailed
+  { error: "Weather service unavailable" }
+end
+```
 
-    ```ruby
-    def execute(query:)
-      api_key = ENV['INTERNAL_DB_KEY']
-      raise "Configuration Error: INTERNAL_DB_KEY not set!" unless api_key
-      # ... query database ...
-    rescue ActiveRecord::StatementInvalid => e
-      # Let application handle critical DB errors
-      raise e
-    end
-    ```
-
-See the [Error Handling Guide]({% link guides/error-handling.md %}#handling-errors-within-tools) for more discussion.
+See the [Error Handling Guide]({% link _advanced/error-handling.md %}#handling-errors-within-tools) for more discussion.
 
 ## Security Considerations
 
+> Treat any arguments passed to your `execute` method as potentially untrusted user input, as the AI model generates them based on the conversation.
 {: .warning }
-Treat any arguments passed to your `execute` method as potentially untrusted user input, as the AI model generates them based on the conversation.
 
 *   **NEVER** use methods like `eval`, `system`, `send`, or direct SQL interpolation with raw arguments from the AI.
 *   **Validate and Sanitize:** Always validate parameter types, ranges, formats, and allowed values. Sanitize strings to prevent injection attacks if they are used in database queries or system commands (though ideally, avoid direct system commands).
@@ -298,7 +285,7 @@ Treat any arguments passed to your `execute` method as potentially untrusted use
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %})
-*   [Streaming Responses]({% link guides/streaming.md %}) (See how tools interact with streaming)
-*   [Rails Integration]({% link guides/rails.md %}) (Persisting tool calls and results)
-*   [Error Handling]({% link guides/error-handling.md %})
+*   [Chatting with AI Models]({% link _core_features/chat.md %})
+*   [Streaming Responses]({% link _core_features/streaming.md %}) (See how tools interact with streaming)
+*   [Rails Integration]({% link _advanced/rails.md %}) (Persisting tool calls and results)
+*   [Error Handling]({% link _advanced/error-handling.md %})

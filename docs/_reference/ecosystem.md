@@ -1,15 +1,14 @@
 ---
 layout: default
-title: Ecosystem
-nav_order: 4
-permalink: /ecosystem
+title: RubyLLM Ecosystem
+nav_order: 3
 description: Extend RubyLLM with MCP servers, structured schemas, and community-built tools for production AI apps.
 ---
 
-# Ecosystem
+# {{ page.title }}
 {: .no_toc }
 
-Power up your AI apps with MCP integration, structured outputs, and community tools.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -19,6 +18,12 @@ Power up your AI apps with MCP integration, structured outputs, and community to
 {:toc}
 
 ---
+
+After reading this guide, you will know:
+
+* What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
+* How RubyLLM::Schema simplifies structured data definition for AI applications
+* Where to find community projects and how to contribute your own
 
 ## RubyLLM::MCP
 

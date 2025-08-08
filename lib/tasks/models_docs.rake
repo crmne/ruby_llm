@@ -12,8 +12,8 @@ namespace :models do
     output = generate_models_markdown
 
     # Write the output
-    File.write('docs/available-models.md', output)
-    puts 'Generated docs/available-models.md'
+    File.write('docs/_reference/available-models.md', output)
+    puts 'Generated docs/_reference/available-models.md'
   end
 end
 
@@ -22,15 +22,16 @@ def generate_models_markdown
     ---
     layout: default
     title: Available Models
-    nav_order: 5
-    permalink: /available-models
+    nav_order: 1
     description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
+    redirect_from:
+      - /guides/available-models
     ---
 
-    # Available Models
+    # {{ page.title }}
     {: .no_toc }
 
-    Every model, every provider, always current. Your complete AI model reference.
+    {{ page.description }}
     {: .fs-6 .fw-300 }
 
     ## Table of contents
@@ -40,6 +41,13 @@ def generate_models_markdown
     {:toc}
 
     ---
+
+    After reading this guide, you will know:
+
+    * How RubyLLM's model registry works and where data comes from
+    * How to find models by provider, capability, or purpose
+    * What information is available for each model
+    * How to use model aliases for simpler configuration
 
     ## How Model Data Works
 
@@ -167,15 +175,14 @@ end
 def models_table(models)
   return '*No models found*' if models.none?
 
-  headers = ['Model', 'ID', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', ':--', '--:', '--:', ':--']
+  headers = ['Model', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
+  alignment = [':--', ':--', '--:', '--:', ':--']
 
   rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
     # Format pricing information
     pricing = standard_pricing_display(model)
 
     [
-      model.name,
       model.id,
       model.provider,
       model.context_window || '-',

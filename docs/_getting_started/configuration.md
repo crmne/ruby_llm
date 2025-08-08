@@ -2,14 +2,13 @@
 layout: default
 title: Configuration
 nav_order: 3
-permalink: /configuration
 description: Configure once, use everywhere. API keys, defaults, timeouts, and multi-tenant contexts made simple.
 ---
 
-# Configuring RubyLLM
+# {{ page.title }}
 {: .no_toc }
 
-Set it and forget it. Everything you need to configure RubyLLM in one place.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -104,8 +103,8 @@ RubyLLM.configure do |config|
 end
 ```
 
+> You only need to set configuration options you need and the API keys for the providers you actually plan to use. Attempting to use an unconfigured provider will result in a `RubyLLM::ConfigurationError`.
 {: .note }
-You only need to set configuration options you need and the API keys for the providers you actually plan to use. Attempting to use an unconfigured provider will result in a `RubyLLM::ConfigurationError`.
 
 ## Provider API Keys
 
@@ -143,7 +142,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link guides/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
+This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link _advanced/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
 
 ## Optional OpenAI Headers
 
@@ -175,6 +174,16 @@ Fine-tune how RubyLLM handles HTTP connections and retries.
 *   `config.retry_interval_randomness`: Factor to add jitter to retry delays, preventing thundering herd issues. Default: `0.5`.
 
 Adjust these based on network conditions and provider reliability.
+
+```ruby
+RubyLLM.configure do |config|
+  # For a high-latency connection
+  config.request_timeout = 300        # 5 minutes
+  config.max_retries = 5              # More retry attempts
+  config.retry_interval = 1.0         # Start with 1 second delay
+  config.retry_backoff_factor = 1.5   # Less aggressive backoff
+end
+```
 
 ## Logging Settings
 RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level, or set a custom logger.
@@ -216,9 +225,9 @@ Available in > v1.5.1
 
 * `config.logger`: Specifies a custom `Logger` for where logs should be written.
 
+> If you set a customer logger the `config.log_file` and `config.log_level`
+> settings are not used.
 {: .note }
-If you set a customer logger the `config.log_file` and `config.log_level`
-settings are not used.
 
 ## Scoped Configuration with Contexts
 

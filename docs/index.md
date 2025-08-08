@@ -2,19 +2,25 @@
 layout: default
 title: Home
 nav_order: 1
-description: RubyLLM is a delightful Ruby way to work with AI.
+description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
 permalink: /
 ---
 
-<div class="logo-container">
-  <img src="/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
-  <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
-</div>
+<h1>
+  <div class="logo-container">
+    <img src="/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
+    <div style="transform: scale(1.2); transform-origin: left center; display: inline-block; margin-left: 20px;">
+      <a class="github-button" href="https://github.com/crmne/ruby_llm" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star crmne/ruby_llm on GitHub">Star</a>
+    </div>
+  </div>
+</h1>
 
-One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
-<a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
+<a href="{% link _getting_started/getting-started.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
 <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
 ---
@@ -74,7 +80,7 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
 
 Every AI provider comes with its own client library, its own response format, its own conventions for streaming, and its own way of handling errors. Want to use multiple providers? Prepare to juggle incompatible APIs and bloated dependencies.
 
-RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies — just Faraday, Zeitwerk, and Marcel. Because working with AI should be a joy, not a chore.
+RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies - just Faraday, Zeitwerk, and Marcel. Because working with AI should be a joy, not a chore.
 
 ## What makes it great
 
@@ -199,4 +205,4 @@ chat = Chat.create!(model_id: "gpt-4.1-nano")
 chat.ask("What's in this file?", with: "report.pdf")
 ```
 
-See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for details.
+See the [Rails Integration Guide](https://rubyllm.com/rails) for details.

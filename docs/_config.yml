@@ -1,18 +1,70 @@
 title: RubyLLM
-description: A delightful Ruby way to work with AI
+description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
 url: https://rubyllm.com
 baseurl: /
 remote_theme: just-the-docs/just-the-docs
 
+# Collections for organizing content
+collections:
+  getting_started:
+    permalink: "/:name/"
+    output: true
+  core_features:
+    permalink: "/:name/"
+    output: true
+  advanced:
+    permalink: "/:name/"
+    output: true
+  reference:
+    permalink: "/:name/"
+    output: true
+
+# Configure Just the Docs collections
+just_the_docs:
+  collections:
+    getting_started:
+      name: Getting Started
+      nav_fold: false
+    core_features:
+      name: Core Features
+      nav_fold: false
+    advanced:
+      name: Advanced
+      nav_fold: false
+    reference:
+      name: Reference
+      nav_fold: false
+
+# Set default layout for collections
+defaults:
+  - scope:
+      path: ""
+      type: "getting_started"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "core_features"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "advanced"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "reference"
+    values:
+      layout: "default"
+
 logo: "/assets/images/logotype.svg"
 favicon_ico: "/assets/images/logo.svg"
 
-# Twitter username (without @)
 twitter:
   username: paolino
   card: summary_large_image
 
-# Enable search
 search_enabled: true
 search:
   heading_level: 2
@@ -23,7 +75,6 @@ search:
   rel_url: true
   button: false
 
-# Navigation structure
 nav_external_links:
   - title: GitHub
     url: https://github.com/crmne/ruby_llm
@@ -32,23 +83,16 @@ nav_external_links:
     url: https://paolino.me
     hide_icon: false
 
-# Footer content
 footer_content: "Copyright &copy; 2025 <a href='https://paolino.me'>Carmine Paolino</a>. Distributed under an <a href=\"https://github.com/crmne/ruby_llm/tree/main/LICENSE\">MIT license.</a>"
 
-# Enable copy button on code blocks
+last_edit_timestamp: true
+
 enable_copy_code_button: true
 
-# Make Anchor links show on hover
 heading_anchors: true
 
-# Color scheme
 color_scheme: light
 
-# Google Analytics
-ga_tracking:
-ga_tracking_anonymize_ip: true
-
-# Callouts
 callouts:
   new:
     title: New
@@ -60,19 +104,22 @@ callouts:
     title: Note
     color: blue
 
-# Custom plugins (GitHub Pages allows these)
 plugins:
   - jekyll-remote-theme
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-og-image
+  - jekyll-redirect-from
 
-# Jekyll OG Image configuration
 og_image:
   output_dir: "assets/images/og"
   force: true
   collections:
     - pages
+    - getting_started
+    - core_features
+    - advanced
+    - reference
   image:
     path: "assets/images/logotype.jpg"
     width: 290

@@ -1,16 +1,16 @@
 ---
 layout: default
 title: Embeddings
-parent: Guides
-nav_order: 7
-permalink: /guides/embeddings
-description: Power semantic search and recommendations with AI text embeddings
+nav_order: 4
+description: Transform text into numerical vectors for semantic search, recommendations, and content similarity
+redirect_from:
+  - /guides/embeddings
 ---
 
-# Embeddings
+# {{ page.title }}
 {: .no_toc }
 
-Unlock the semantic superpowers of AI! 🔮 Build intelligent search, recommendations, and content discovery features that understand meaning, not just keywords.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -62,8 +62,8 @@ puts "Model used: #{embeddings.model}"
 puts "Total input tokens: #{embeddings.input_tokens}"
 ```
 
+> Batching multiple texts is generally more performant and cost-effective than making individual requests for each text.
 {: .note }
-Batching multiple texts is generally more performant and cost-effective than making individual requests for each text.
 
 ## Choosing Models
 
@@ -99,7 +99,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) for details on finding available embedding models and their capabilities.
+Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on finding available embedding models and their capabilities.
 
 ## Choosing Dimensions
 
@@ -160,25 +160,19 @@ puts "Similarity: #{similarity.round(4)}" # => e.g., 0.9123
 
 ## Error Handling
 
-Wrap embedding generation calls in `begin/rescue` blocks to handle potential API issues.
+Embedding API calls can fail for various reasons. Handle errors gracefully:
 
 ```ruby
 begin
-  embedding = RubyLLM.embed("This might fail")
-  puts "Embedding generated successfully."
-rescue RubyLLM::UnauthorizedError
-  puts "Error: Invalid API key. Please check your configuration."
-rescue RubyLLM::RateLimitError
-  puts "Error: Rate limit exceeded. Please wait and try again."
-rescue RubyLLM::BadRequestError => e
-  puts "Error: Invalid request - #{e.message}"
+  embedding = RubyLLM.embed("Your text here")
+  # Process embedding...
 rescue RubyLLM::Error => e
-  # Catch other RubyLLM-specific errors
-  puts "RubyLLM Error: #{e.message}"
+  # Handle API errors
+  puts "Embedding failed: #{e.message}"
 end
 ```
 
-See the [Error Handling Guide]({% link guides/error-handling.md %}) for a complete overview of error types.
+For comprehensive error handling patterns and retry strategies, see the [Error Handling Guide]({% link _advanced/error-handling.md %}).
 
 ## Performance and Best Practices
 
@@ -230,13 +224,13 @@ end
 # results.each { |doc| puts "- #{doc.title}" }
 ```
 
+> This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
 {: .note }
-This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
 
 ## Next Steps
 
 Now that you understand embeddings, you might want to explore:
 
-*   [Chatting with AI Models]({% link guides/chat.md %}) for interactive conversations.
-*   [Using Tools]({% link guides/tools.md %}) to extend AI capabilities.
-*   [Error Handling]({% link guides/error-handling.md %}) for building robust applications.
+*   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
+*   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.
+*   [Error Handling]({% link _advanced/error-handling.md %}) for building robust applications.

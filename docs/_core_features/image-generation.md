@@ -1,16 +1,16 @@
 ---
 layout: default
 title: Image Generation
-parent: Guides
-nav_order: 6
-permalink: /guides/image-generation
-description: Transform ideas into stunning visuals with AI-powered image generation
+nav_order: 5
+description: Generate images from text descriptions using AI models like DALL-E 3 and Imagen
+redirect_from:
+  - /guides/image-generation
 ---
 
-# Image Generation
+# {{ page.title }}
 {: .no_toc }
 
-Turn your wildest imagination into reality! 🎨 Create professional artwork, product mockups, or creative visuals with simple text prompts using DALL-E 3, Imagen, and more.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 ## Table of contents
@@ -36,10 +36,10 @@ After reading this guide, you will know:
 The simplest way to generate an image is using the global `RubyLLM.paint` method:
 
 ```ruby
-# Generate an image using the default image model (usually DALL-E 3)
+# Generate an image using the default image model
 image = RubyLLM.paint("A photorealistic image of a red panda coding Ruby on a laptop")
 
-# For models returning a URL (like DALL-E):
+# For models returning a URL:
 if image.url
   puts "Image URL: #{image.url}"
   # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
@@ -51,7 +51,7 @@ if image.base64?
   puts "Data size: ~#{image.data.length} bytes"
 end
 
-# Some models revise the prompt for better results (DALL-E 3 does this)
+# Some models revise the prompt for better results
 if image.revised_prompt
   puts "Revised Prompt: #{image.revised_prompt}"
   # => "A photorealistic depiction of a red panda intently coding Ruby..."
@@ -64,13 +64,13 @@ The `paint` method abstracts the differences between provider APIs.
 
 ## Choosing Models
 
-By default, RubyLLM uses the model specified in `config.default_image_model` (defaults to `gpt-image-1`), but you can specify a different one.
+By default, RubyLLM uses the model specified in `config.default_image_model`, but you can specify a different one.
 
 ```ruby
-# Use DALL-E 3
+# Explicitly use GPT-Image-1
 image_dalle = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
-  model: "dall-e-3"
+  model: "gpt-image-1"
 )
 
 # Use Google's Imagen 3
@@ -96,7 +96,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link guides/models.md %}) and the [Available Models Guide]({% link available-models.md %}) to find image models.
+Refer to the [Working with Models Guide]({% link _advanced/models.md %}) and the [Available Models Guide]({% link _reference/available-models.md %}) to find image models.
 
 ## Image Sizes
 
@@ -119,8 +119,8 @@ image_portrait = RubyLLM.paint(
 )
 ```
 
+> Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for supported sizes.
 {: .note }
-Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link available-models.md %}) for supported sizes.
 
 ## Working with Generated Images
 
@@ -128,7 +128,7 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 
 ### Accessing Image Data
 
-*   `image.url`: Returns the URL for providers like OpenAI (DALL-E). `nil` otherwise.
+*   `image.url`: Returns the URL for providers like OpenAI. `nil` otherwise.
 *   `image.data`: Returns the Base64-encoded image data string for providers like Google (Imagen). `nil` otherwise.
 *   `image.mime_type`: Returns the MIME type (e.g., `"image/png"`, `"image/jpeg"`).
 *   `image.base64?`: Returns `true` if the image data is Base64-encoded, `false` otherwise.
@@ -138,7 +138,7 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 The `save` method works regardless of whether the image was delivered via URL or Base64. It fetches the data if necessary and writes it to the specified file path.
 
 ```ruby
-# Generate an image (works for DALL-E or Imagen)
+# Generate an image
 image = RubyLLM.paint("A steampunk mechanical owl")
 
 # Save the image to a local file
@@ -174,7 +174,7 @@ end
 
 def generate_and_attach_image(product, prompt)
   puts "Generating image for Product #{product.id}..."
-  image = RubyLLM.paint(prompt, model: 'dall-e-3') # Or another model
+  image = RubyLLM.paint(prompt) # Or another model
 
   filename = "#{product.slug}-#{Time.current.to_i}.png"
 
@@ -240,26 +240,21 @@ image3 = RubyLLM.paint(
 
 ## Error Handling
 
-Wrap `paint` calls in `begin/rescue` blocks.
+Image generation can fail due to content policy violations, rate limits, or API issues:
 
 ```ruby
 begin
-  image = RubyLLM.paint("A plausible prompt")
+  image = RubyLLM.paint("Your prompt here")
   puts "Image URL: #{image.url}"
-rescue RubyLLM::UnauthorizedError
-  puts "Error: Invalid API key."
 rescue RubyLLM::BadRequestError => e
   # Often indicates a content policy violation
-  puts "Error: Bad Request - #{e.message}"
-  puts "Check if your prompt violates content safety policies."
-rescue RubyLLM::RateLimitError
-  puts "Error: Rate limit exceeded."
+  puts "Generation failed: #{e.message}"
 rescue RubyLLM::Error => e
-  puts "Image generation failed: #{e.message}"
+  puts "Error: #{e.message}"
 end
 ```
 
-See the [Error Handling Guide]({% link guides/error-handling.md %}) for more details.
+See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for comprehensive error handling strategies.
 
 ## Content Safety
 
@@ -275,11 +270,11 @@ AI image generation services have content safety filters. Prompts requesting har
 Image generation can take several seconds (typically 5-20 seconds depending on the model and load).
 
 *   **Use Background Jobs:** In web applications, always perform image generation in a background job (like Sidekiq or GoodJob) to avoid blocking web requests.
-*   **Timeouts:** Configure appropriate network timeouts in RubyLLM (see [Installation Guide]({% link installation.md %})).
+*   **Timeouts:** Configure appropriate network timeouts in RubyLLM (see [Configuration Guide]({% link _getting_started/configuration.md %})).
 *   **Caching:** Store generated images (e.g., using Active Storage, cloud storage) rather than regenerating them frequently if the prompt is the same.
 
 ## Next Steps
 
-*   [Chatting with AI Models]({% link guides/chat.md %}): Learn about conversational AI.
-*   [Embeddings]({% link guides/embeddings.md %}): Explore text vector representations.
-*   [Error Handling]({% link guides/error-handling.md %}): Master handling API errors.
+*   [Chatting with AI Models]({% link _core_features/chat.md %}): Learn about conversational AI.
+*   [Embeddings]({% link _core_features/embeddings.md %}): Explore text vector representations.
+*   [Error Handling]({% link _advanced/error-handling.md %}): Master handling API errors.
