@@ -264,7 +264,7 @@ module RubyLLM
           capabilities << 'batch' if model_id.match?(/embedding|batch/)
 
           # Advanced capabilities
-          capabilities << 'reasoning' if model_id.match?(/o1/)
+          capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
 
           if model_id.match?(/gpt-4-turbo|gpt-4o/)
             capabilities << 'image_generation' if model_id.match?(/vision/)
