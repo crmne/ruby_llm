@@ -119,7 +119,7 @@ end
 class SearchTool < RubyLLM::Tool
   description "Search with advanced filters"
 
-  schema(
+  schema {
     type: 'object',
     additionalProperties: false,
     properties: {
@@ -139,7 +139,7 @@ class SearchTool < RubyLLM::Tool
       }
     },
     required: %w[query]
-  )
+  }
 
   def execute(query:, filters: [])
     # ... implement search ...
