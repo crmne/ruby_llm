@@ -9,16 +9,16 @@ module RubyLLM
 
         def tool_for(tool)
           parameters_schema = if tool.schema
-                                 tool.schema
-                               elsif !tool.parameters.empty?
-                                 {
-                                   type: 'object',
-                                   properties: clean_parameters(tool.parameters),
-                                   required: required_parameters(tool.parameters)
-                                 }
-                               else
-                                 {}
-                               end
+                                tool.schema
+                              elsif !tool.parameters.empty?
+                                {
+                                  type: 'object',
+                                  properties: clean_parameters(tool.parameters),
+                                  required: required_parameters(tool.parameters)
+                                }
+                              else
+                                {}
+                              end
 
           {
             type: 'function',

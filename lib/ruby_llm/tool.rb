@@ -68,7 +68,7 @@ module RubyLLM
                     schema_instance
                   end
       end
-  
+
       def parameters
         @parameters ||= {}
       end

@@ -67,6 +67,7 @@ RSpec.describe RubyLLM::Providers::OpenAI::Tools do
       expect(built[:function][:description]).to eq('OpenAI tool using RubyLLM::Schema')
       expect(built[:function][:parameters].stringify_keys).to eq(complex_schema.stringify_keys)
     end
+
     it 'passes through a complex JSON Schema when tool.schema is present' do
       tool_schema = complex_schema
       stub_const('ComplexSchemaTool', Class.new(RubyLLM::Tool) do

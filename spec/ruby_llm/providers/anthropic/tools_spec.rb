@@ -39,7 +39,6 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
     it 'accepts a RubyLLM::Schema class and matches an equivalent hand-built JSON schema' do
       require 'ruby_llm/schema'
 
-
       # Equivalent schema expressed via RubyLLM::Schema DSL
       class AnthropicNodeSchema < RubyLLM::Schema
         array :items, required: true do
@@ -70,6 +69,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(built[:description]).to eq('Anthropic tool using RubyLLM::Schema')
       expect(built[:input_schema].stringify_keys).to eq(complex_schema.stringify_keys)
     end
+
     it 'passes through a complex JSON Schema when tool.schema is present' do
       complex_schema = {
         type: 'object',

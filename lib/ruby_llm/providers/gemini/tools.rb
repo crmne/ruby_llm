@@ -45,11 +45,19 @@ module RubyLLM
 
         # Format a single tool for Gemini API
         def function_declaration_for(tool)
+          parameters = if tool.schema
+                         tool.schema
+                       elsif tool.parameters.any?
+                         format_parameters(tool.parameters)
+                       else
+                         {}
+                       end
+
           {
             name: tool.name,
             description: tool.description,
-            parameters: tool.parameters.any? ? format_parameters(tool.parameters) : nil
-          }.compact
+            parameters: parameters
+          }
         end
 
         # Format tool parameters for Gemini API

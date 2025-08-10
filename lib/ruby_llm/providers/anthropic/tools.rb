@@ -51,29 +51,17 @@ module RubyLLM
         end
 
         def function_for(tool)
-          {
-            name: tool.name,
-            description: tool.description,
-            input_schema: {
-              type: 'object',
-              properties: clean_parameters(tool.parameters),
-              required: required_parameters(tool.parameters)
-            }
-          }
-        end
-
-        def function_for(tool)
           input_schema = if tool.schema
-            tool.schema
-          elsif !tool.parameters.empty?
-            {
-              type: 'object',
-              properties: clean_parameters(tool.parameters),
-              required: required_parameters(tool.parameters)
-            }
-          else
-            {}
-          end
+                           tool.schema
+                         elsif !tool.parameters.empty?
+                           {
+                             type: 'object',
+                             properties: clean_parameters(tool.parameters),
+                             required: required_parameters(tool.parameters)
+                           }
+                         else
+                           {}
+                         end
           {
             name: tool.name,
             description: tool.description,
