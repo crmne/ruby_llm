@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   # Basic functionality tests using dummy app models
   describe 'basic chat functionality' do
-    it 'persists chat history' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'persists chat history' do
       chat = Chat.create!(model_id: model)
       chat.ask("What's your favorite Ruby feature?")
 
@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.updated_at).to eq(chat.messages.last.chat.updated_at)
     end
 
-    it 'tracks token usage' do # rubocop:disable RSpec/MultipleExpectations
+    it 'tracks token usage' do
       chat = Chat.create!(model_id: 'gpt-4.1-nano')
       chat.ask('Hello')
 
@@ -44,7 +44,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'system messages' do
-    it 'persists system messages' do # rubocop:disable RSpec/MultipleExpectations
+    it 'persists system messages' do
       chat = Chat.create!(model_id: model)
       chat.with_instructions('You are a Ruby expert')
 
@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.content).to eq('You are a Ruby expert')
     end
 
-    it 'replaces system messages when requested' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'replaces system messages when requested' do
       chat = Chat.create!(model_id: model)
 
       chat.with_instructions('Be helpful')
@@ -66,7 +66,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'tool usage' do
-    it 'persists tool calls' do # rubocop:disable RSpec/MultipleExpectations
+    it 'persists tool calls' do
       chat = Chat.create!(model_id: model)
       chat.with_tool(Calculator)
 
@@ -95,7 +95,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'structured output' do
-    it 'supports with_schema for structured responses' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'supports with_schema for structured responses' do
       chat = Chat.create!(model_id: model)
 
       schema = {
@@ -132,7 +132,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'error handling' do
-    it 'destroys empty assistant messages on API failure' do # rubocop:disable RSpec/MultipleExpectations
+    it 'destroys empty assistant messages on API failure' do
       chat = Chat.create!(model_id: model)
 
       # Stub the API to fail
@@ -210,7 +210,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     describe 'namespaced chat models' do
-      it 'works with namespaced classes and custom associations' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'works with namespaced classes and custom associations' do
         bot_chat = Assistants::BotChat.create!(model_id: model)
         bot_chat.ask("What's 2 + 2?")
 
@@ -221,7 +221,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(bot_chat.messages.last.content).to be_present
       end
 
-      it 'persists tool calls with custom classes' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'persists tool calls with custom classes' do
         bot_chat = Assistants::BotChat.create!(model_id: model)
         bot_chat.with_tool(Calculator)
 
@@ -233,7 +233,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(tool_call_message.tool_calls.first).to be_a(BotToolCall)
       end
 
-      it 'handles system messages correctly' do # rubocop:disable RSpec/MultipleExpectations
+      it 'handles system messages correctly' do
         bot_chat = Assistants::BotChat.create!(model_id: model)
         bot_chat.with_instructions('You are a helpful bot')
 
@@ -252,7 +252,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     describe 'to_llm conversion' do
-      it 'correctly converts custom messages to RubyLLM format' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model_id: model)
         bot_message = bot_chat.messages.create!(
           role: 'user',
@@ -269,7 +269,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_message.output_tokens).to eq(20)
       end
 
-      it 'correctly converts tool calls' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it 'correctly converts tool calls' do
         bot_chat = Assistants::BotChat.create!(model_id: model)
         bot_message = bot_chat.messages.create!(role: 'assistant', content: 'I need to calculate something')
 
@@ -317,7 +317,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
     end
 
-    it 'converts ActiveStorage attachments to RubyLLM Content' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model_id: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
@@ -332,7 +332,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
     end
 
-    it 'handles multiple attachments' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'handles multiple attachments' do
       chat = Chat.create!(model_id: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
@@ -345,7 +345,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(response.content).to be_present
     end
 
-    it 'handles attachments in ask method' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'handles attachments in ask method' do
       chat = Chat.create!(model_id: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
@@ -358,7 +358,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     describe 'attachment types' do
-      it 'handles images' do # rubocop:disable RSpec/ExampleLength
+      it 'handles images' do
         chat = Chat.create!(model_id: model)
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
@@ -373,7 +373,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(attachment.type).to eq(:image)
       end
 
-      it 'handles PDFs' do # rubocop:disable RSpec/ExampleLength
+      it 'handles PDFs' do
         chat = Chat.create!(model_id: model)
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
@@ -387,6 +387,43 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         attachment = llm_message.content.attachments.first
         expect(attachment.type).to eq(:pdf)
       end
+    end
+  end
+
+  describe 'event callbacks' do
+    it 'preserves user callbacks when using Rails integration' do
+      user_callback_called = false
+      end_callback_called = false
+
+      chat = Chat.create!(model_id: model)
+
+      # Set user callbacks before calling ask
+      chat.on_new_message { user_callback_called = true }
+      chat.on_end_message { end_callback_called = true }
+
+      # Call ask which triggers to_llm and sets up persistence callbacks
+      chat.ask('Hello')
+
+      # Both user callbacks and persistence should work
+      expect(user_callback_called).to be true
+      expect(end_callback_called).to be true
+      expect(chat.messages.count).to eq(2) # Persistence still works
+    end
+
+    it 'calls on_tool_call and on_tool_result callbacks' do
+      tool_call_received = nil
+      tool_result_received = nil
+
+      chat = Chat.create!(model_id: model)
+                 .with_tool(Calculator)
+                 .on_tool_call { |tc| tool_call_received = tc }
+                 .on_tool_result { |result| tool_result_received = result }
+
+      chat.ask('What is 2 + 2?')
+
+      expect(tool_call_received).not_to be_nil
+      expect(tool_call_received.name).to eq('calculator')
+      expect(tool_result_received).to eq('4')
     end
   end
 end

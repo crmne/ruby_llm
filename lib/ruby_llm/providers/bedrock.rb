@@ -7,19 +7,16 @@ module RubyLLM
   module Providers
     # AWS Bedrock API integration. Handles chat completion and streaming
     # for Claude models.
-    module Bedrock
-      extend Provider
-      extend Bedrock::Chat
-      extend Bedrock::Streaming
-      extend Bedrock::Models
-      extend Bedrock::Signing
-      extend Bedrock::Media
-      extend Anthropic::Tools
+    class Bedrock < Provider
+      include Bedrock::Chat
+      include Bedrock::Streaming
+      include Bedrock::Models
+      include Bedrock::Signing
+      include Bedrock::Media
+      include Anthropic::Tools
 
-      module_function
-
-      def api_base(config)
-        "https://bedrock-runtime.#{config.bedrock_region}.amazonaws.com"
+      def api_base
+        "https://bedrock-runtime.#{@config.bedrock_region}.amazonaws.com"
       end
 
       def parse_error(response)
@@ -38,25 +35,25 @@ module RubyLLM
         end
       end
 
-      def sign_request(url, config:, method: :post, payload: nil)
-        signer = create_signer(config)
-        request = build_request(url, config:, method:, payload:)
+      def sign_request(url, method: :post, payload: nil)
+        signer = create_signer
+        request = build_request(url, method:, payload:)
         signer.sign_request(request)
       end
 
-      def create_signer(config)
+      def create_signer
         Signing::Signer.new({
-                              access_key_id: config.bedrock_api_key,
-                              secret_access_key: config.bedrock_secret_key,
-                              session_token: config.bedrock_session_token,
-                              region: config.bedrock_region,
+                              access_key_id: @config.bedrock_api_key,
+                              secret_access_key: @config.bedrock_secret_key,
+                              session_token: @config.bedrock_session_token,
+                              region: @config.bedrock_region,
                               service: 'bedrock'
                             })
       end
 
-      def build_request(url, config:, method: :post, payload: nil)
+      def build_request(url, method: :post, payload: nil)
         {
-          connection: connection(config),
+          connection: @connection,
           http_method: method,
           url: url || completion_url,
           body: payload ? JSON.generate(payload, ascii_only: false) : nil
@@ -72,16 +69,14 @@ module RubyLLM
         )
       end
 
-      def capabilities
-        Bedrock::Capabilities
-      end
+      class << self
+        def capabilities
+          Bedrock::Capabilities
+        end
 
-      def slug
-        'bedrock'
-      end
-
-      def configuration_requirements
-        %i[bedrock_api_key bedrock_secret_key bedrock_region]
+        def configuration_requirements
+          %i[bedrock_api_key bedrock_secret_key bedrock_region]
+        end
       end
     end
   end

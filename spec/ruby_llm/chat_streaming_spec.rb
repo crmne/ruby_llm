@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} supports streaming responses" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} supports streaming responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
 
@@ -28,9 +28,13 @@ RSpec.describe RubyLLM::Chat do
         puts response.raw.env.request_body
       end
 
-      it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
         if provider == :deepseek
           skip 'DeepSeek API returns different content/tokens for stream vs sync with this prompt. ' \
+               'Skipping token consistency check.'
+        end
+        if provider == :perplexity
+          skip 'Perplexity API returns slightly different token counts for stream vs sync. ' \
                'Skipping token consistency check.'
         end
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
@@ -62,7 +66,7 @@ RSpec.describe RubyLLM::Chat do
             stub_const('Faraday::VERSION', '1.10.0')
           end
 
-          it "#{provider}/#{model} supports handling streaming error chunks" do # rubocop:disable RSpec/ExampleLength
+          it "#{provider}/#{model} supports handling streaming error chunks" do
             skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
             stub_error_response(provider, :chunk)
@@ -76,7 +80,7 @@ RSpec.describe RubyLLM::Chat do
             end.to raise_error(expected_error_for(provider))
           end
 
-          it "#{provider}/#{model} supports handling streaming error events" do # rubocop:disable RSpec/ExampleLength
+          it "#{provider}/#{model} supports handling streaming error events" do
             skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
             stub_error_response(provider, :event)
@@ -96,7 +100,7 @@ RSpec.describe RubyLLM::Chat do
             stub_const('Faraday::VERSION', '2.0.0')
           end
 
-          it "#{provider}/#{model} supports handling streaming error chunks" do # rubocop:disable RSpec/ExampleLength
+          it "#{provider}/#{model} supports handling streaming error chunks" do
             skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
             stub_error_response(provider, :chunk)
@@ -110,7 +114,7 @@ RSpec.describe RubyLLM::Chat do
             end.to raise_error(expected_error_for(provider))
           end
 
-          it "#{provider}/#{model} supports handling streaming error events" do # rubocop:disable RSpec/ExampleLength
+          it "#{provider}/#{model} supports handling streaming error events" do
             skip('Error handling not implemented yet') unless error_handling_supported?(provider)
 
             stub_error_response(provider, :event)

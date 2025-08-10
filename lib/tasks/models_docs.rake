@@ -6,14 +6,14 @@ require 'fileutils'
 namespace :models do
   desc 'Generate available models documentation'
   task :docs do
-    FileUtils.mkdir_p('docs/guides') # ensure output directory exists
+    FileUtils.mkdir_p('docs') # ensure output directory exists
 
     # Generate markdown content
     output = generate_models_markdown
 
     # Write the output
-    File.write('docs/guides/available-models.md', output)
-    puts 'Generated docs/guides/available-models.md'
+    File.write('docs/_reference/available-models.md', output)
+    puts 'Generated docs/_reference/available-models.md'
   end
 end
 
@@ -22,16 +22,16 @@ def generate_models_markdown
     ---
     layout: default
     title: Available Models
-    parent: Guides
-    nav_order: 11
-    permalink: /guides/available-models
+    nav_order: 1
     description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
+    redirect_from:
+      - /guides/available-models
     ---
 
-    # Available Models
+    # {{ page.title }}
     {: .no_toc }
 
-    Every model, every provider, always current. Your complete AI model reference.
+    {{ page.description }}
     {: .fs-6 .fw-300 }
 
     ## Table of contents
@@ -41,6 +41,13 @@ def generate_models_markdown
     {:toc}
 
     ---
+
+    After reading this guide, you will know:
+
+    * How RubyLLM's model registry works and where data comes from
+    * How to find models by provider, capability, or purpose
+    * What information is available for each model
+    * How to use model aliases for simpler configuration
 
     ## How Model Data Works
 
@@ -79,12 +86,12 @@ def generate_models_markdown
 end
 
 def generate_provider_sections
-  RubyLLM::Provider.providers.keys.map do |provider|
+  RubyLLM::Provider.providers.map do |provider, provider_class|
     models = RubyLLM.models.by_provider(provider)
     next if models.none?
 
     <<~PROVIDER
-      ### #{provider.to_s.capitalize} (#{models.count})
+      ### #{provider_class.name} (#{models.count})
 
       #{models_table(models)}
     PROVIDER
@@ -168,15 +175,14 @@ end
 def models_table(models)
   return '*No models found*' if models.none?
 
-  headers = ['Model', 'ID', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', ':--', '--:', '--:', ':--']
+  headers = ['Model', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
+  alignment = [':--', ':--', '--:', '--:', ':--']
 
   rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
     # Format pricing information
     pricing = standard_pricing_display(model)
 
     [
-      model.name,
       model.id,
       model.provider,
       model.context_window || '-',

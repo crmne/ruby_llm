@@ -96,8 +96,7 @@ module RubyLLM
           @chat.add_message(msg.to_llm)
         end
 
-        @chat.on_new_message { persist_new_message }
-             .on_end_message { |msg| persist_message_completion(msg) }
+        setup_persistence_callbacks
       end
 
       def with_instructions(instructions, replace: false)
@@ -144,13 +143,37 @@ module RubyLLM
         self
       end
 
-      def on_new_message(...)
-        to_llm.on_new_message(...)
+      def on_new_message(&block)
+        to_llm
+
+        existing_callback = @chat.instance_variable_get(:@on)[:new_message]
+
+        @chat.on_new_message do
+          existing_callback&.call
+          block&.call
+        end
         self
       end
 
-      def on_end_message(...)
-        to_llm.on_end_message(...)
+      def on_end_message(&block)
+        to_llm
+
+        existing_callback = @chat.instance_variable_get(:@on)[:end_message]
+
+        @chat.on_end_message do |msg|
+          existing_callback&.call(msg)
+          block&.call(msg)
+        end
+        self
+      end
+
+      def on_tool_call(...)
+        to_llm.on_tool_call(...)
+        self
+      end
+
+      def on_tool_result(...)
+        to_llm.on_tool_result(...)
         self
       end
 
@@ -178,6 +201,18 @@ module RubyLLM
       end
 
       private
+
+      def setup_persistence_callbacks
+        # Only set up once per chat instance
+        return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
+
+        # Set up persistence callbacks (user callbacks will be chained via on_new_message/on_end_message methods)
+        @chat.on_new_message { persist_new_message }
+        @chat.on_end_message { |msg| persist_message_completion(msg) }
+
+        @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
+        @chat
+      end
 
       def persist_new_message
         @message = messages.create!(role: :assistant, content: String.new)

@@ -202,6 +202,28 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     end
   end
 
+  describe 'migration order' do
+    let(:generator_content) { File.read(generator_file) }
+
+    it 'creates migrations in correct order' do
+      migration_section = generator_content[/def create_migration_files.*?end/m]
+
+      # Extract the order of migration creation
+      chats_position = migration_section.index('create_chats_migration.rb.tt')
+      messages_position = migration_section.index('create_messages_migration.rb.tt')
+      tool_calls_position = migration_section.index('create_tool_calls_migration.rb.tt')
+
+      expect(chats_position).to be < messages_position
+      expect(messages_position).to be < tool_calls_position
+    end
+
+    it 'has comments explaining the order' do
+      migration_section = generator_content[/def create_migration_files.*?end/m]
+      expect(migration_section).to include('must come before tool_calls due to foreign key')
+      expect(migration_section).to include('references messages')
+    end
+  end
+
   describe 'database detection' do
     let(:generator_content) { File.read(generator_file) }
 
@@ -209,16 +231,65 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       expect(generator_content).to include('def postgresql?')
     end
 
+    it 'uses global ActiveRecord constant' do
+      expect(generator_content).to include('::ActiveRecord::Base.connection.adapter_name')
+    end
+
     it 'detects PostgreSQL adapter' do
-      expect(generator_content).to include('ActiveRecord::Base.connection.adapter_name.downcase.include?')
+      expect(generator_content).to include('.downcase.include?(\'postgresql\')')
     end
 
     it 'includes rescue block for error handling' do
-      expect(generator_content).to include('rescue')
+      expect(generator_content).to include('rescue StandardError')
     end
 
     it 'returns false on error' do
-      expect(generator_content).to include('false')
+      postgresql_method = generator_content[/def postgresql\?.*?end/m]
+      expect(postgresql_method).to include('false')
+    end
+  end
+
+  describe '#postgresql?' do
+    subject(:generator) { described_class.new }
+
+    context 'when using PostgreSQL' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:adapter_name).and_return('PostgreSQL')
+      end
+
+      it 'returns true' do
+        expect(generator.postgresql?).to be true
+      end
+    end
+
+    context 'when using MySQL' do
+      before do
+        allow(ActiveRecord::Base.connection).to receive(:adapter_name).and_return('MySQL')
+      end
+
+      it 'returns false' do
+        expect(generator.postgresql?).to be false
+      end
+    end
+
+    context 'when ActiveRecord is not loaded' do
+      before do
+        allow(ActiveRecord::Base).to receive(:connection).and_raise(NameError)
+      end
+
+      it 'returns false' do
+        expect(generator.postgresql?).to be false
+      end
+    end
+
+    context 'when database connection fails' do
+      before do
+        allow(ActiveRecord::Base).to receive(:connection).and_raise(ActiveRecord::ConnectionNotEstablished)
+      end
+
+      it 'returns false' do
+        expect(generator.postgresql?).to be false
+      end
     end
   end
 end

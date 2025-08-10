@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Gemini
+    class Gemini
       # Embeddings methods for the Gemini API integration
       module Embeddings
         module_function

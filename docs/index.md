@@ -2,19 +2,25 @@
 layout: default
 title: Home
 nav_order: 1
-description: RubyLLM is a delightful Ruby way to work with AI.
+description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
 permalink: /
 ---
 
-<div class="logo-container">
-  <img src="/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
-  <iframe src="https://ghbtns.com/github-btn.html?user=crmne&repo=ruby_llm&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub" style="vertical-align: middle; display: inline-block;"></iframe>
-</div>
+<h1>
+  <div class="logo-container">
+    <img src="/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
+    <div style="transform: scale(1.2); transform-origin: left center; display: inline-block; margin-left: 20px;">
+      <a class="github-button" href="https://github.com/crmne/ruby_llm" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star crmne/ruby_llm on GitHub">Star</a>
+    </div>
+  </div>
+</h1>
 
-One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
-<a href="{% link installation.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
+<a href="{% link _getting_started/getting-started.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
 <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
 ---
@@ -38,6 +44,10 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
     <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
   </div>
   <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-color.svg" alt="Mistral" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-text.svg" alt="Mistral" class="logo-small">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
   </div>
@@ -48,6 +58,10 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
   </div>
 </div>
 
@@ -66,7 +80,7 @@ One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embedding
 
 Every AI provider comes with its own client library, its own response format, its own conventions for streaming, and its own way of handling errors. Want to use multiple providers? Prepare to juggle incompatible APIs and bloated dependencies.
 
-RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies — just Faraday, Zeitwerk, and Marcel. Because working with AI should be a joy, not a chore.
+RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies - just Faraday, Zeitwerk, and Marcel. Because working with AI should be a joy, not a chore.
 
 ## What makes it great
 
@@ -112,19 +126,36 @@ class Weather < RubyLLM::Tool
 end
 
 chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
+
+# Get structured output with JSON schemas
+class ProductSchema < RubyLLM::Schema
+  string :name, description: "Product name"
+  number :price, description: "Price in USD"
+  array :features, description: "Key features" do
+    string description: "Feature description"
+  end
+end
+
+response = chat.with_schema(ProductSchema)
+               .ask "Analyze this product description", with: "product.txt"
+# response.content => { "name" => "...", "price" => 99.99, "features" => [...] }
 ```
 
 ## Core Capabilities
 
-*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
+*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Mistral, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
 *   👁️ **Vision:** Analyze images within chats.
 *   🔊 **Audio:** Transcribe and understand audio content.
-*   📄 **Document Analysis:** Extract information from PDFs, text files, and other documents.
+*   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.
 *   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
 *   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
 *   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
+*   📋 **Structured Output:** Guarantee responses conform to JSON schemas with `RubyLLM::Schema`.
 *   🚂 **Rails Integration:** Easily persist chats, messages, and tool calls using `acts_as_chat` and `acts_as_message`.
 *   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
+*   ⚡ **Async Support:** Built-in fiber-based concurrency for high-performance operations.
+*   🎯 **Smart Configuration:** Global and scoped configs with automatic retries and proxy support.
+*   📚 **Model Registry:** Access 500+ models with capability detection and pricing info.
 
 ## Installation
 
@@ -151,7 +182,7 @@ See the [Installation Guide](https://rubyllm.com/installation) for full details.
 Add persistence to your chat models effortlessly:
 
 ```bash
-# Generate models and migrations (available in v1.4.0)
+# Generate models and migrations
 rails generate ruby_llm:install
 ```
 
@@ -174,4 +205,4 @@ chat = Chat.create!(model_id: "gpt-4.1-nano")
 chat.ask("What's in this file?", with: "report.pdf")
 ```
 
-See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for details.
+See the [Rails Integration Guide](https://rubyllm.com/rails) for details.

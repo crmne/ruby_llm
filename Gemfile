@@ -6,17 +6,19 @@ gemspec
 
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
+  gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
   gem 'ferrum'
+  gem 'flay'
   gem 'irb'
+  gem 'json-schema'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'
-  gem 'rdoc'
   gem 'reline'
   gem 'rspec', '~> 3.12'
   gem 'rubocop', '>= 1.0'
@@ -33,5 +35,4 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   gem 'vcr'
   gem 'webmock', '~> 3.18'
-  gem 'yard', '>= 0.9'
 end

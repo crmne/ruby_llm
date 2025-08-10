@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       RubyLLM.instance_variable_set(:@config, original_config)
     end
 
-    it 'works when using chat with a custom context' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'works when using chat with a custom context' do
       chat = Chat.create!(model_id: model)
 
       # Create a custom context with API key
@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   describe 'with global configuration present' do
     include_context 'with configured RubyLLM'
 
-    it 'works with custom context even when global config exists' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'works with custom context even when global config exists' do
       chat = Chat.create!(model_id: model)
 
       # Create a different API key in custom context

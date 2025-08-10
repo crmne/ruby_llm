@@ -9,7 +9,7 @@ http_interactions:
         was Ruby''s creator?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:31:35 GMT
+      - Fri, 01 Aug 2025 09:58:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - dac4e58b229e1d81ed22c1d0fde38b9d
+      - 0caada6c067fb54099161457f9dc22cc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,14 +51,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8ba52502-c3d7-4540-a540-02467c3415a4","object":"chat.completion","created":1753885895,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first
-        version of Ruby in **1995** with the goal of designing a language that balanced
-        functional and imperative programming while being intuitive and enjoyable
-        for developers. Matz has often said his philosophy was to prioritize \"developer
-        happiness\" in Ruby''s design.  \n\nWould you like details on Ruby''s design
-        influences (e.g., Perl, Smalltalk) or its evolution over time?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":97,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Wed, 30 Jul 2025 14:31:44 GMT
+      string: '{"id":"5332d216-9e8f-4bfe-ad54-a0797139f70c","object":"chat.completion","created":1754042298,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He first released
+        the language on **December 21, 1995**. \n\nMatz designed Ruby with a focus
+        on simplicity, productivity, and programmer happiness, blending elements from
+        his favorite languages (like Perl, Smalltalk, and Lisp) into a flexible, object-oriented
+        scripting language. \n\nFun fact: The name \"Ruby\" was inspired by the gemstone,
+        reflecting Perl''s jewel-themed naming (Perl = \"pearl\")."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":108,"total_tokens":117,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
+  recorded_at: Fri, 01 Aug 2025 09:58:28 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -66,16 +66,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
         was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first version of
-        Ruby in **1995** with the goal of designing a language that balanced functional
-        and imperative programming while being intuitive and enjoyable for developers.
-        Matz has often said his philosophy was to prioritize \"developer happiness\"
-        in Ruby''s design.  \n\nWould you like details on Ruby''s design influences
-        (e.g., Perl, Smalltalk) or its evolution over time?"},{"role":"user","content":"What
+        **Yukihiro \"Matz\" Matsumoto** in Japan. He first released the language on
+        **December 21, 1995**. \n\nMatz designed Ruby with a focus on simplicity,
+        productivity, and programmer happiness, blending elements from his favorite
+        languages (like Perl, Smalltalk, and Lisp) into a flexible, object-oriented
+        scripting language. \n\nFun fact: The name \"Ruby\" was inspired by the gemstone,
+        reflecting Perl''s jewel-themed naming (Perl = \"pearl\")."},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 30 Jul 2025 14:31:45 GMT
+      - Fri, 01 Aug 2025 09:58:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -102,7 +102,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - ec1d6cdb0eb1bfbe754a750ecfa2b011
+      - 16149fdaaaf04f454121f3d315be9aab
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -118,6 +118,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImMyMTkzNDc1LTExZWYtNDA4ZC1hZDFmLWYwYzE5NmZhMGQ0ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTM4ODU5MDQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqc3RhcnRlZCB3b3JraW5nIG9uIFJ1YnkgaW4gMTk5MyoqIGFuZCAqKnJlbGVhc2VkIHRoZSBmaXJzdCBwdWJsaWMgdmVyc2lvbiAoUnVieSAwLjk1KSBpbiBEZWNlbWJlciAxOTk0KiouIEhvd2V2ZXIsIHRoZSAqKnN0YWJsZSAxLjAgcmVsZWFzZSoqIGNhbWUgbGF0ZXIsIGluICoqRGVjZW1iZXIgMTk5NioqLiAgXG5cblNvLCB3aGlsZSBSdWJ54oCZcyBkZXZlbG9wbWVudCBiZWdhbiBpbiAxOTkz4oCTMTk5NCwgaXQgZ2FpbmVkIGJyb2FkZXIgcmVjb2duaXRpb24gYWZ0ZXIgMTk5Ni4gV291bGQgeW91IGxpa2UgdG8ga25vdyBhYm91dCBpdHMgZWFybHkgZGVzaWduIGdvYWxzIG9yIGhvdyBpdCBldm9sdmVkIGFmdGVyIHJlbGVhc2U/In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTE2LCJjb21wbGV0aW9uX3Rva2VucyI6MTA3LCJ0b3RhbF90b2tlbnMiOjIyMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjY0fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjY0LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjUyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDYyM19mcDhfa3ZjYWNoZSJ9
-  recorded_at: Wed, 30 Jul 2025 14:31:56 GMT
+        eyJpZCI6ImY1ZjllZDNiLWY3NzYtNGZlNi1iOGYwLWVmMmJlOWFhZWEyNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTQwNDIzMDgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqc3RhcnRlZCBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyoqIGFuZCAqKm9mZmljaWFsbHkgcmVsZWFzZWQgdmVyc2lvbiAwLjk1IG9uIERlY2VtYmVyIDIxLCAxOTk1KiogKG1ha2luZyAxOTk1IHRoZSBrZXkgeWVhciBmb3IgaXRzIHB1YmxpYyBkZWJ1dCkuICBcblxuVGhlIGZpcnN0IHN0YWJsZSByZWxlYXNlLCAqKlJ1YnkgMS4wKiosIGNhbWUgbGF0ZXIgaW4gKioxOTk2KiouICBcblxuU28sIHdoaWxlIHRoZSBkZXNpZ24gd29yayBiZWdhbiBpbiAxOTkzLCAqKjE5OTUgaXMgY29uc2lkZXJlZCBSdWJ54oCZcyBiaXJ0aCB5ZWFyKiouIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTI3LCJjb21wbGV0aW9uX3Rva2VucyI6OTgsInRvdGFsX3Rva2VucyI6MjI1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NjR9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NjQsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6NjN9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNjIzX2ZwOF9rdmNhY2hlIn0=
+  recorded_at: Fri, 01 Aug 2025 09:58:39 GMT
 recorded_with: VCR 6.3.1

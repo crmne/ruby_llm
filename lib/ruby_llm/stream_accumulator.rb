@@ -16,7 +16,7 @@ module RubyLLM
     end
 
     def add(chunk)
-      RubyLLM.logger.debug chunk.inspect
+      RubyLLM.logger.debug chunk.inspect if RubyLLM.config.log_stream_debug
       @model_id ||= chunk.model_id
 
       if chunk.tool_call?
@@ -26,7 +26,7 @@ module RubyLLM
       end
 
       count_tokens chunk
-      RubyLLM.logger.debug inspect
+      RubyLLM.logger.debug inspect if RubyLLM.config.log_stream_debug
     end
 
     def to_message(response)
@@ -62,7 +62,7 @@ module RubyLLM
     end
 
     def accumulate_tool_calls(new_tool_calls)
-      RubyLLM.logger.debug "Accumulating tool calls: #{new_tool_calls}"
+      RubyLLM.logger.debug "Accumulating tool calls: #{new_tool_calls}" if RubyLLM.config.log_stream_debug
       new_tool_calls.each_value do |tool_call|
         if tool_call.id
           tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id

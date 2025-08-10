@@ -3,28 +3,23 @@
 module RubyLLM
   module Providers
     # OpenRouter API integration.
-    module OpenRouter
-      extend OpenAI
-      extend OpenRouter::Models
+    class OpenRouter < OpenAI
+      include OpenRouter::Models
 
-      module_function
-
-      def api_base(_config)
+      def api_base
         'https://openrouter.ai/api/v1'
       end
 
-      def headers(config)
+      def headers
         {
-          'Authorization' => "Bearer #{config.openrouter_api_key}"
+          'Authorization' => "Bearer #{@config.openrouter_api_key}"
         }
       end
 
-      def slug
-        'openrouter'
-      end
-
-      def configuration_requirements
-        %i[openrouter_api_key]
+      class << self
+        def configuration_requirements
+          %i[openrouter_api_key]
+        end
       end
     end
   end

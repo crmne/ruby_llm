@@ -39,13 +39,38 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class HaltingTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'A tool that halts conversation continuation'
+
+    def execute
+      halt 'Task completed successfully'
+    end
+  end
+
+  class HandoffTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Delegates to a sub-agent and halts'
+    param :query, desc: 'Query to pass to sub-agent'
+
+    def execute(query:)
+      sub_result = "Sub-agent handled: #{query}"
+      halt sub_result
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools" do # rubocop:disable RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
@@ -56,9 +81,16 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools in multi-turn conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools in multi-turn conversations" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
@@ -74,8 +106,15 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
@@ -84,10 +123,17 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
         response = chat.ask("What's the best language to learn?") do |chunk|
@@ -111,9 +157,19 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+        if provider == :gpustack && model == 'qwen3'
+          skip 'Qwen3 on GPUStack has issues with function calling in multi-turn streaming conversations'
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)") do |chunk|
@@ -139,8 +195,13 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
-      it "#{provider}/#{model} can handle multiple tool calls in a single response" do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+      it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         skip 'Local providers do not reliably use tools' if RubyLLM::Provider.providers[provider]&.local?
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(DiceRoll)
                       .with_instructions(
@@ -151,7 +212,7 @@ RSpec.describe RubyLLM::Chat do
         tool_call_count = 0
 
         original_execute = DiceRoll.instance_method(:execute)
-        DiceRoll.define_method(:execute) do
+        DiceRoll.define_method(:execute) do |**|
           tool_call_count += 1
           # Return a fixed result for VCR consistency
           { roll: tool_call_count }
@@ -173,7 +234,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'tool call callbacks' do
-    it 'calls on_tool_call callback when tools are used' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'calls on_tool_call callback when tools are used' do
       tool_calls_received = []
 
       chat = RubyLLM.chat
@@ -189,10 +250,90 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to include('15')
       expect(response.content).to include('10')
     end
+
+    it 'calls on_tool_result callback when tools return results' do
+      tool_results_received = []
+
+      chat = RubyLLM.chat
+                    .with_tool(Weather)
+                    .on_tool_result { |result| tool_results_received << result }
+
+      response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+      expect(tool_results_received).not_to be_empty
+      expect(tool_results_received.first).to be_a(String)
+      expect(tool_results_received.first).to include('15°C')
+      expect(tool_results_received.first).to include('10 km/h')
+      expect(response.content).to include('15')
+      expect(response.content).to include('10')
+    end
+
+    it 'calls both on_tool_call and on_tool_result callbacks in order' do
+      call_order = []
+
+      chat = RubyLLM.chat
+                    .with_tool(DiceRoll)
+                    .on_tool_call { |_| call_order << :tool_call }
+                    .on_tool_result { |_| call_order << :tool_result }
+
+      chat.ask('Roll a die for me')
+
+      expect(call_order).to eq(%i[tool_call tool_result])
+    end
+  end
+
+  describe 'halt functionality' do
+    it 'returns Halt object when tool halts' do
+      chat = RubyLLM.chat.with_tool(HaltingTool)
+      response = chat.ask('Execute the halting tool')
+
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+      expect(response.content).to eq('Task completed successfully')
+    end
+
+    it 'does not continue conversation after halt' do
+      call_count = 0
+      original_complete = described_class.instance_method(:complete)
+
+      # Monkey-patch to count complete calls
+      described_class.define_method(:complete) do |&block|
+        call_count += 1
+        original_complete.bind(self).call(&block)
+      end
+
+      chat = RubyLLM.chat.with_tool(HaltingTool)
+      response = chat.ask('Execute the halting tool')
+
+      # Restore original method
+      described_class.define_method(:complete, original_complete)
+
+      # Should only call complete once (initial), not twice (no continuation)
+      expect(call_count).to eq(1)
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+    end
+
+    it 'returns sub-agent result through halt' do
+      chat = RubyLLM.chat.with_tool(HandoffTool)
+      response = chat.ask('Please handle this query: What is Ruby?')
+
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+      expect(response.content).to include('Sub-agent handled')
+      expect(response.content).to include('What is Ruby?')
+    end
+
+    it 'adds halt content to conversation history' do
+      chat = RubyLLM.chat.with_tool(HaltingTool)
+      chat.ask('Execute the halting tool')
+
+      # Check that the tool result was added to messages
+      tool_message = chat.messages.find { |m| m.role == :tool }
+      expect(tool_message).not_to be_nil
+      expect(tool_message.content).to eq('Task completed successfully')
+    end
   end
 
   describe 'error handling' do
-    it 'raises an error when tool execution fails' do # rubocop:disable RSpec/MultipleExpectations
+    it 'raises an error when tool execution fails' do
       chat = RubyLLM.chat.with_tool(BrokenTool)
 
       expect { chat.ask('What is the weather?') }.to raise_error(RuntimeError) do |error|

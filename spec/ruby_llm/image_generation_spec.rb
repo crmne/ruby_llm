@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::Image do
   include_context 'with configured RubyLLM'
 
   describe 'basic functionality' do
-    it 'openai/dall-e-3 can paint images' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+    it 'openai/dall-e-3 can paint images' do
       image = RubyLLM.paint('a siamese cat', model: 'dall-e-3')
 
       expect(image.base64?).to be(false)
@@ -38,7 +38,7 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_image image
     end
 
-    it 'openai/dall-e-3 supports custom sizes' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+    it 'openai/dall-e-3 supports custom sizes' do
       image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: 'dall-e-3')
 
       expect(image.base64?).to be(false)
@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_image image
     end
 
-    it 'gemini/imagen-3.0-generate-002 can paint images' do # rubocop:disable RSpec/MultipleExpectations
+    it 'gemini/imagen-3.0-generate-002 can paint images' do
       image = RubyLLM.paint('a siamese cat', model: 'imagen-3.0-generate-002')
 
       expect(image.base64?).to be(true)
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Image do
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
 
-    it 'openai/gpt-image-1 can paint images' do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+    it 'openai/gpt-image-1 can paint images' do
       image = RubyLLM.paint('a siamese cat', model: 'gpt-image-1')
 
       expect(image.base64?).to be(true)

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Thu, 24 Jul 2025 16:53:18 GMT
+      - Fri, 01 Aug 2025 01:17:08 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"688264fe-9c6"
+      - W/"688c1594-9c6"
       Expires:
-      - Wed, 30 Jul 2025 08:18:03 GMT
+      - Fri, 01 Aug 2025 05:20:19 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B9F5:398FA3:40DFB0B:414A685:6889D2E3
+      - B236:345B54:360B62E:3669196:688C4C3B
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 30 Jul 2025 14:21:04 GMT
+      - Fri, 01 Aug 2025 10:49:09 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '248'
+      - '13'
       X-Served-By:
-      - cache-fra-etou8220051-FRA
+      - cache-fra-etou8220153-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1753885264.149517,VS0,VE6
+      - S1754045350.854313,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 99fe4e4cfdf9578fb0c40ed31aa7f1788ba1a670
+      - ae4cc59ff616e926f12afc8dff08020458b0c2d8
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 30 Jul 2025 14:21:04 GMT
+  recorded_at: Fri, 01 Aug 2025 10:49:09 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -137,7 +139,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{"temperature":0.7}}'
     headers:
       User-Agent:
-      - Faraday v2.13.3
+      - Faraday v2.13.4
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -158,7 +160,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 30 Jul 2025 14:21:05 GMT
+      - Fri, 01 Aug 2025 10:49:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -168,7 +170,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1044
+      - gfet4t7; dur=1245
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -182,19 +184,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "This file, named `license.txt`, contains the licensing terms for the Ruby programming language. It states that Ruby is copyrighted free software by Yukihiro Matsumoto.  It outlines the conditions under which the software can be redistributed and modified, offering several options for compliance.  It also mentions that some files in the distribution have different licensing terms, which are detailed in the `LEGAL` file. Finally, it includes a disclaimer stating that the software is provided \"AS IS\" without any warranties. In essence, it's a license agreement.\n"
+                    "text": "The file `license.txt` contains the licensing terms for the Ruby programming language. It states that Ruby is copyrighted free software by Yukihiro Matsumoto.  It allows redistribution and modification under either the 2-clause BSDL license (mentioned in the file as \"BSDL\") or under the conditions outlined in the file. These conditions cover redistribution of source and binary forms, modification, and inclusion in other software. It also includes disclaimers of warranty. The file mentions a separate file, `LEGAL`, which lists files in the Ruby distribution not covered by this license and their respective copying conditions. Finally, it clarifies that scripts and library files used as input or output of Ruby are not automatically under the Ruby license.\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.26984027515758169
+              "avgLogprobs": -0.34873082902696395
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 564,
-            "candidatesTokenCount": 110,
-            "totalTokenCount": 674,
+            "candidatesTokenCount": 144,
+            "totalTokenCount": 708,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -204,12 +206,12 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 110
+                "tokenCount": 144
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "UCqKaPTGFs6P7dcPsuCYyAc"
+          "responseId": "ppuMaMXdA5_D1PIPrJSxmAI"
         }
-  recorded_at: Wed, 30 Jul 2025 14:21:05 GMT
+  recorded_at: Fri, 01 Aug 2025 10:49:11 GMT
 recorded_with: VCR 6.3.1

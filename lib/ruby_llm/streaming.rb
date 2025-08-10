@@ -27,7 +27,9 @@ module RubyLLM
         end
       end
 
-      accumulator.to_message(response)
+      message = accumulator.to_message(response)
+      RubyLLM.logger.debug "Stream completed: #{message.inspect}"
+      message
     end
 
     def handle_stream(&block)
@@ -56,7 +58,7 @@ module RubyLLM
     end
 
     def process_stream_chunk(chunk, parser, env, &)
-      RubyLLM.logger.debug "Received chunk: #{chunk}"
+      RubyLLM.logger.debug "Received chunk: #{chunk}" if RubyLLM.config.log_stream_debug
 
       if error_chunk?(chunk)
         handle_error_chunk(chunk, env)

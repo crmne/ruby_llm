@@ -25,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby for models guide generation (ruby_llm environment)
+      - name: Setup Ruby for models guide generation (root Gemfile)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
@@ -36,36 +36,49 @@ jobs:
 
       - name: Install libvips for jekyll-og-image
         run: |
+          echo "Installing libvips..."
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends libvips-dev
 
+      - name: Cache fonts
+        uses: actions/cache@v4
+        id: cache-fonts
+        with:
+          path: |
+            /usr/share/fonts/truetype/plus-jakarta-sans
+            ~/.cache/fontconfig
+          key: ${{ runner.os }}-fonts-v2
+          restore-keys: |
+            ${{ runner.os }}-fonts-
+
       - name: Install fonts for OG image generation
         run: |
-          # Install Inter font from apt
+          # Always install Inter from apt (fast)
           sudo apt-get install -y fonts-inter fonts-inter-variable
-
-          # Download and install Plus Jakarta Sans from official GitHub repository
-          wget -q https://github.com/tokotype/PlusJakartaSans/archive/refs/heads/master.zip -O PlusJakartaSans.zip
-          unzip -q PlusJakartaSans.zip
-          sudo mkdir -p /usr/share/fonts/truetype/plus-jakarta-sans
-          sudo cp PlusJakartaSans-master/fonts/ttf/*.ttf /usr/share/fonts/truetype/plus-jakarta-sans/
-          rm -rf PlusJakartaSans.zip PlusJakartaSans-master
-
-          # Update font cache
+          if [ "${{ steps.cache-fonts.outputs.cache-hit }}" != "true" ]; then
+            echo "Installing Plus Jakarta Sans..."
+            wget -q https://github.com/tokotype/PlusJakartaSans/archive/refs/heads/master.zip -O PlusJakartaSans.zip
+            unzip -q PlusJakartaSans.zip
+            sudo mkdir -p /usr/share/fonts/truetype/plus-jakarta-sans
+            sudo cp PlusJakartaSans-master/fonts/ttf/*.ttf /usr/share/fonts/truetype/plus-jakarta-sans/
+            rm -rf PlusJakartaSans.zip PlusJakartaSans-master
+          else
+            echo "Plus Jakarta Sans cached"
+          fi
+          # Always update font cache
           sudo fc-cache -fv
-
           # Verify fonts are installed
-          echo "Installed fonts:"
+          echo "Verifying fonts:"
           fc-list | grep -i inter || echo "Inter font not found"
           fc-list | grep -i jakarta || echo "Plus Jakarta Sans not found"
 
-      - name: Setup Ruby for Jekyll build (ruby_llm environment)
+      - name: Setup Ruby for Jekyll build (docs Gemfile)
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
           working-directory: docs
-
+          cache-version: 3
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

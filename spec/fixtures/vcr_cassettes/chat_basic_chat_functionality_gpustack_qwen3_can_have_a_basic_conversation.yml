@@ -9,9 +9,7 @@ http_interactions:
         2?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Faraday v2.13.4
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,26 +22,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Jul 2025 16:32:10 GMT
-      - Fri, 18 Jul 2025 16:32:11 GMT
+      - Wed, 06 Aug 2025 16:46:00 GMT
+      - Wed, 06 Aug 2025 16:46:00 GMT
       Server:
       - uvicorn
-      - uvicorn, llama-box/v0.0.154
+      - uvicorn
       Keep-Alive:
       - timeout=15, max=100
+      Content-Length:
+      - '768'
       Content-Type:
       - application/json
-      Content-Length:
-      - '669'
       X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
-        + 2 equals **4**.","role":"assistant"}}],"created":1752856339,"id":"chatcmpl-nmYRr4McYECKspTiCk9yzXjjiDB6WnVC","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":181,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":168,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":4},"prompt_tokens_per_second":36.919356587913065,"time_per_output_token_ms":41.89909944751381,"time_to_first_token_ms":433.377,"tokens_per_second":23.866861416739532,"total_tokens":197}}'
-  recorded_at: Fri, 18 Jul 2025 16:32:19 GMT
+        + 2 equals 4. This is a basic arithmetic operation where adding two numbers
+        (2 and 2) results in their sum, which is 4.","role":"assistant"}}],"created":1754498763,"id":"chatcmpl-h89nGLvjC6Evh0TmPBMIffl0EVJ6AaXS","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":292,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":254,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":4},"prompt_tokens_per_second":524.9171615104491,"time_per_output_token_ms":9.13772602739726,"time_to_first_token_ms":30.481,"tokens_per_second":109.43641744146652,"total_tokens":308}}'
+  recorded_at: Wed, 06 Aug 2025 16:46:03 GMT
 recorded_with: VCR 6.3.1

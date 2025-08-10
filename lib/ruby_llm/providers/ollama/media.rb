@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module Ollama
+    class Ollama
       # Handles formatting of media content (images, audio) for OpenAI APIs
       module Media
         extend OpenAI::Media

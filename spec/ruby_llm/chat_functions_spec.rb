@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
   describe '#with_tool unsupported functions' do
-    it "raises UnsupportedFunctionsError when model doesn't support functions" do # rubocop:disable RSpec/ExampleLength
+    it "raises UnsupportedFunctionsError when model doesn't support functions" do
       # Create a non-function-calling model by patching the supports_functions attribute
       model = RubyLLM.models.find('gpt-4.1-nano')
       allow(model).to receive(:supports_functions?).and_return(false)
@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe '#with_tools' do
-    it 'adds multiple tools at once' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'adds multiple tools at once' do
       chat = described_class.new
 
       tool1 = Class.new(RubyLLM::Tool) do
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe '#with_model' do
-    it 'changes the model and returns self' do # rubocop:disable RSpec/MultipleExpectations
+    it 'changes the model and returns self' do
       chat = described_class.new(model: 'gpt-4.1-nano')
       result = chat.with_model('claude-3-5-haiku-20241022')
 
@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe '#with_temperature' do
-    it 'sets the temperature and returns self' do # rubocop:disable RSpec/MultipleExpectations
+    it 'sets the temperature and returns self' do
       chat = described_class.new
       result = chat.with_temperature(0.8)
 
@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe '#each' do
-    it 'iterates through messages' do # rubocop:disable RSpec/ExampleLength,RSpec/MultipleExpectations
+    it 'iterates through messages' do
       chat = described_class.new
       chat.add_message(role: :user, content: 'Message 1')
       chat.add_message(role: :assistant, content: 'Message 2')

@@ -5,13 +5,11 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
-        2?"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is the
+        capital of France?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Faraday v2.13.4
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,26 +22,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 18 Jul 2025 16:32:10 GMT
-      - Fri, 18 Jul 2025 16:32:11 GMT
+      - Wed, 06 Aug 2025 16:46:03 GMT
+      - Wed, 06 Aug 2025 16:46:03 GMT
       Server:
       - uvicorn
-      - uvicorn, llama-box/v0.0.154
+      - uvicorn
       Keep-Alive:
       - timeout=15, max=100
+      Content-Length:
+      - '783'
       Content-Type:
       - application/json
-      Content-Length:
-      - '669'
       X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
       - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
       - "*"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
-        + 2 equals **4**.","role":"assistant"}}],"created":1752856339,"id":"chatcmpl-nmYRr4McYECKspTiCk9yzXjjiDB6WnVC","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":181,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":168,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":4},"prompt_tokens_per_second":36.919356587913065,"time_per_output_token_ms":41.89909944751381,"time_to_first_token_ms":433.377,"tokens_per_second":23.866861416739532,"total_tokens":197}}'
-  recorded_at: Fri, 18 Jul 2025 16:32:19 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        capital of France is **Paris**. It is the largest city in France and serves
+        as the country''s political, economic, and cultural hub.","role":"assistant"}}],"created":1754498765,"id":"chatcmpl-tem51opglOSnfIceMvU8HaeAJkcrqd1U","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":183,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":149,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":856.5065951007822,"time_per_output_token_ms":8.575524590163933,"time_to_first_token_ms":17.513,"tokens_per_second":116.61094192966259,"total_tokens":198}}'
+  recorded_at: Wed, 06 Aug 2025 16:46:05 GMT
 recorded_with: VCR 6.3.1
