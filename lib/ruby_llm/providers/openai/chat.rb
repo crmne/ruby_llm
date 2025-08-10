@@ -23,7 +23,6 @@ module RubyLLM
 
           if tools.any?
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-            payload[:tool_choice] = 'auto'
           end
 
           if schema
