@@ -166,7 +166,8 @@ module RubyLLM
           schema: @schema,
           &wrap_streaming_block(&)
         )
-      rescue RubyLLM::RateLimitError => e
+      rescue RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError,
+             RubyLLM::OverloadedError, RubyLLM::ServerError => e
         response = attempt_failover(original_provider, original_model, e, &)
       end
 
@@ -263,7 +264,7 @@ module RubyLLM
           &wrap_streaming_block(&)
         )
         break
-      rescue RateLimitError => e
+      rescue RateLimitError, ServiceUnavailableError, OverloadedError, ServerError => e
         raise e if failover_index == @failover_configurations.size - 1
 
         failover_index += 1

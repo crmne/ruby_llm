@@ -29,6 +29,7 @@ After reading this guide, you will know:
 *   How errors are handled during streaming.
 *   Best practices for handling errors within Tools.
 *   RubyLLM's automatic retry behavior.
+*   How to configure automatic failover to backup providers.
 *   How to enable debug logging.
 
 ## RubyLLM Error Hierarchy
@@ -222,12 +223,115 @@ export RUBYLLM_DEBUG=true
 
 This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.
 
+## Automatic Failover
+
+RubyLLM provides built-in failover capabilities that automatically switch to backup providers when rate limits or other errors occur. This is especially useful for ensuring reliability in production applications.
+
+### Basic Failover Configuration
+
+Configure failover providers using the `with_failover` method:
+
+```ruby
+chat = RubyLLM.chat(provider: :anthropic, model: 'claude-3-5-haiku-20241022')
+chat.with_failover(
+  { provider: :bedrock, model: 'claude-3-5-haiku-20241022' },
+  'gpt-4o-mini' # String shorthand for OpenAI models
+)
+
+# This will automatically failover if the primary provider hits rate limits
+response = chat.ask "What is the capital of France?"
+```
+
+### Failover Configuration Options
+
+The `with_failover` method accepts multiple configuration formats:
+
+#### Hash Configuration (Full Control)
+```ruby
+chat.with_failover(
+  { provider: :bedrock, model: 'claude-3-5-haiku-20241022' },
+  { provider: :openai, model: 'gpt-4o-mini' }
+)
+```
+
+#### String Configuration (Model Name Only)
+```ruby
+# Uses the default provider for the model
+chat.with_failover('gpt-4o-mini', 'gemini-2.0-flash')
+```
+
+#### Mixed Configuration
+```ruby
+chat.with_failover(
+  { provider: :bedrock, model: 'claude-3-5-haiku-20241022' },
+  'gpt-4o-mini', # String shorthand
+  { provider: :gemini, model: 'gemini-2.0-flash' }
+)
+```
+
+### Failover with Different Contexts
+
+You can use different API keys or configurations for failover providers:
+
+```ruby
+# Create a backup context with different credentials
+backup_context = RubyLLM.context do |config|
+  config.anthropic_api_key = 'backup-api-key'
+end
+
+chat = RubyLLM.chat(provider: :anthropic, model: 'claude-3-5-haiku-20241022')
+chat.with_failover(
+  { provider: :anthropic, model: 'claude-3-5-haiku-20241022', context: backup_context }
+)
+```
+
+### When Failover Occurs
+
+Failover is triggered by:
+
+*   **Rate Limit Errors (`RubyLLM::RateLimitError`)** - The primary use case
+*   **Service Unavailable Errors (`RubyLLM::ServiceUnavailableError`)** - When the provider is temporarily down
+*   **Overloaded Errors (`RubyLLM::OverloadedError`)** - When the provider is overloaded
+*   **Server Errors (`RubyLLM::ServerError`)** - When the provider returns 5xx errors
+
+**Note:** Failover does **not** occur for client errors like `BadRequestError` (400), `UnauthorizedError` (401), or `ForbiddenError` (403), as these typically indicate configuration issues that would affect all providers.
+
+### Failover Behavior
+
+1.  RubyLLM attempts the request with the primary provider/model
+2.  If a failover-eligible error occurs, it tries the first backup configuration
+3.  If that also fails with a failover-eligible error, it tries the next backup
+4.  This continues until either a request succeeds or all configurations are exhausted
+5.  If all configurations fail, the last error is raised
+
+### Example: Production-Ready Setup
+
+```ruby
+# Primary: Fast, cheap model
+# Backup: More reliable but expensive model  
+# Final: Different provider entirely
+chat = RubyLLM.chat(provider: :anthropic, model: 'claude-3-5-haiku-20241022')
+chat.with_failover(
+  { provider: :anthropic, model: 'claude-3-5-sonnet-20241022' }, # More capable model
+  { provider: :openai, model: 'gpt-4o' }, # Different provider
+  { provider: :bedrock, model: 'claude-3-5-haiku-20241022' } # AWS backup
+)
+
+begin
+  response = chat.ask "Analyze this data..."
+  puts response.content
+rescue RubyLLM::Error => e
+  # Only reached if all providers fail
+  puts "All providers failed: #{e.message}"
+end
+```
+
 ## Best Practices
 
 *   **Be Specific:** Rescue specific error classes whenever possible for tailored recovery logic.
 *   **Log Errors:** Always log errors, including relevant context (model used, input data if safe) for debugging. Consider using the `response` attribute on `RubyLLM::Error` for more details.
 *   **User Feedback:** Provide clear, user-friendly feedback when an AI operation fails. Avoid exposing raw API error messages directly.
-*   **Fallbacks:** Consider fallback mechanisms (e.g., trying a different model, using cached data, providing a default response) if the AI service is critical to your application's function.
+*   **Fallbacks:** Consider failover mechanisms (e.g., trying a different model, using cached data, providing a default response) if the AI service is critical to your application's function. Use `with_failover` for automatic provider-level failover.
 *   **Monitor:** Track the frequency of different error types in production to identify recurring issues with providers or your implementation.
 
 ## Next Steps
