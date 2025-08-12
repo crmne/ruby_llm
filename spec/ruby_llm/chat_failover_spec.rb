@@ -40,5 +40,53 @@ RSpec.describe RubyLLM::Chat do
 
       expect(RubyLLM::Models).to have_received(:resolve).once
     end
+
+    it 'can failover with an alternate context' do
+      response_message = RubyLLM::Message.new(content: 'Paris', role: :assistant)
+      model = RubyLLM::Model::Info.new(id: 'claude-3-7-sonnet', provider: :anthropic)
+
+      # Mock the primary provider (will fail with rate limit)
+      primary_provider = instance_double(RubyLLM::Providers::Anthropic)
+      primary_connection = instance_double(RubyLLM::Connection)
+      allow(primary_provider).to receive_messages(
+        connection: primary_connection,
+        complete: RubyLLM::RateLimitError.new,
+        slug: :anthropic
+      )
+      allow(primary_provider).to receive(:complete).and_raise(RubyLLM::RateLimitError)
+
+      # Mock the backup provider (will succeed)
+      backup_provider = instance_double(RubyLLM::Providers::Anthropic)
+      backup_connection = instance_double(RubyLLM::Connection)
+      allow(backup_provider).to receive_messages(
+        connection: backup_connection,
+        complete: response_message,
+        slug: :anthropic
+      )
+
+      # Configure Models.resolve to return different providers based on context
+      allow(RubyLLM::Models).to receive(:resolve) do |_model_id, provider:, assume_exists:, config:|
+        _ = provider
+        _ = assume_exists
+        if config.anthropic_api_key == 'backup-key'
+          [model, backup_provider]
+        else
+          [model, primary_provider]
+        end
+      end
+
+      chat = RubyLLM.chat(provider: :anthropic, model: 'claude-3-7-sonnet')
+      backup_context = RubyLLM.context do |config|
+        config.anthropic_api_key = 'backup-key'
+      end
+      chat.with_failover({ provider: :anthropic, model: 'claude-3-7-sonnet', context: backup_context })
+
+      response = chat.ask "#{MASSIVE_TEXT_FOR_RATE_LIMIT_TEST} What is the capital of France?"
+
+      expect(response.content).to include('Paris')
+
+      # Verify that the backup provider with the backup-key was actually called
+      expect(backup_provider).to have_received(:complete).once
+    end
   end
 end

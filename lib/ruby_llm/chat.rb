@@ -167,30 +167,7 @@ module RubyLLM
           &wrap_streaming_block(&)
         )
       rescue RubyLLM::RateLimitError => e
-        raise e unless @failover_configurations.any?
-
-        @failover_configurations.each do |config|
-          with_model(config[:model], provider: config[:provider])
-          response = @provider.complete(
-            messages,
-            tools: @tools,
-            temperature: @temperature,
-            model: @model.id,
-            params: @params,
-            headers: @headers,
-            schema: @schema,
-            &wrap_streaming_block(&)
-          )
-          break
-        rescue RubyLLM::Error
-          next
-        end
-
-        unless response
-          @provider = original_provider
-          @model = original_model
-          raise e
-        end
+        response = attempt_failover(original_provider, original_model, e, &)
       end
 
       @on[:new_message]&.call unless block_given?
@@ -264,6 +241,42 @@ module RubyLLM
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def attempt_failover(original_provider, original_model, original_error, &)
+      raise original_error unless @failover_configurations.any?
+
+      failover_index = 0
+      response = nil
+
+      @failover_configurations.each do |config|
+        with_context(config[:context]) if config[:context]
+        with_model(config[:model], provider: config[:provider])
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model.id,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          &wrap_streaming_block(&)
+        )
+        break
+      rescue RateLimitError => e
+        raise e if failover_index == @failover_configurations.size - 1
+
+        failover_index += 1
+        next
+      end
+
+      unless response
+        @provider = original_provider
+        @model = original_model
+        raise original_error
+      end
+
+      response
     end
 
     def instance_variables
