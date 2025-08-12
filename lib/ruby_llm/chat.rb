@@ -166,7 +166,7 @@ module RubyLLM
           schema: @schema,
           &wrap_streaming_block(&)
         )
-      rescue RubyLLM::Error => e
+      rescue RubyLLM::RateLimitError => e
         raise e unless @failover_configurations.any?
 
         @failover_configurations.each do |config|
