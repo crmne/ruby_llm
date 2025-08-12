@@ -44,6 +44,8 @@ require 'ruby_llm'
 require 'webmock/rspec'
 require_relative 'support/streaming_error_helpers'
 
+MASSIVE_TEXT_FOR_RATE_LIMIT_TEST = ('word ' * (200_000 - 64_000)).freeze
+
 # VCR Configuration
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
@@ -91,6 +93,7 @@ VCR.configure do |config|
 
   # Filter large strings used to test "context length exceeded" error handling
   config.filter_sensitive_data('<MASSIVE_TEXT>') { 'a' * 1_000_000 }
+  config.filter_sensitive_data('<MASSIVE_TEXT_FOR_RATE_LIMIT_TEST>') { MASSIVE_TEXT_FOR_RATE_LIMIT_TEST }
 
   # Filter cookies
   config.before_record do |interaction|
