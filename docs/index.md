@@ -2,7 +2,7 @@
 layout: default
 title: Home
 nav_order: 1
-description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
+description: One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, AI agents, RAG applications, and content generators.
 permalink: /
 ---
 
@@ -72,7 +72,7 @@ permalink: /
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
 
-🤺 Battle tested at [💬  Chat with Work](https://chatwithwork.com)
+Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com)
 
 ---
 
