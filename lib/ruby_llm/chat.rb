@@ -28,6 +28,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @batch_request = false
       @on = {
         new_message: nil,
         end_message: nil,
@@ -111,6 +112,11 @@ module RubyLLM
       self
     end
 
+    def for_batch_request
+      @batch_request = true
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -136,6 +142,20 @@ module RubyLLM
     end
 
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
+      # If batch_request mode is enabled, render and return the payload
+      if @batch_request
+        raise ArgumentError, 'Streaming is not supported for batch requests' if block_given?
+
+        return @provider.render_payload_for_batch_request(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model.id,
+          params: @params,
+          schema: @schema
+        )
+      end
+
       response = @provider.complete(
         messages,
         tools: @tools,
