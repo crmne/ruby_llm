@@ -25,25 +25,26 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:07:55 GMT
+      - Sun, 10 Aug 2025 13:27:25 GMT
       Content-Length:
-      - '1090'
+      - '1133'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-419","object":"chat.completion","created":1754046475,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-573","object":"chat.completion","created":1754832445,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user is asking what''s in the file named ruby.txt. Let me check the information
         provided. The file has a mime type of text/plain, which means it''s a plain
         text file. The content given is \"Ruby is the best.\" So, the file is a simple
         text file containing that exact sentence. I should confirm that there''s no
-        additional information or hidden content. Since the user just provided the
-        file details, the answer is straightforward. I''ll let them know the file
-        contains that sentence and mention the mime type for clarity.\n\u003c/think\u003e\n\nThe
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file ( MIME type: `text/plain` ), so there are no binary or
-        encoded data in it. The content is simply the sentence \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":173,"total_tokens":207}}
+        additional content beyond that. Since the user might be testing if I can parse
+        the file info correctly, I need to make sure I''m not missing any hidden details.
+        The answer should state the content clearly and mention the mime type for
+        context. Alright, that''s straightforward.\n\u003c/think\u003e\n\nThe file
+        `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe
+        file is identified as a `text/plain` MIME type, indicating it''s a simple
+        text file with no special formatting or encoding."},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":179,"total_tokens":213}}
 
         '
-  recorded_at: Fri, 01 Aug 2025 11:07:55 GMT
+  recorded_at: Sun, 10 Aug 2025 13:27:25 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -56,12 +57,13 @@ http_interactions:
         provided. The file has a mime type of text/plain, which means it''s a plain
         text file. The content given is \"Ruby is the best.\" So, the file is a simple
         text file containing that exact sentence. I should confirm that there''s no
-        additional information or hidden content. Since the user just provided the
-        file details, the answer is straightforward. I''ll let them know the file
-        contains that sentence and mention the mime type for clarity.\n</think>\n\nThe
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file ( MIME type: `text/plain` ), so there are no binary or
-        encoded data in it. The content is simply the sentence \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        additional content beyond that. Since the user might be testing if I can parse
+        the file info correctly, I need to make sure I''m not missing any hidden details.
+        The answer should state the content clearly and mention the mime type for
+        context. Alright, that''s straightforward.\n</think>\n\nThe file `ruby.txt`
+        contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe file
+        is identified as a `text/plain` MIME type, indicating it''s a simple text
+        file with no special formatting or encoding."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
     headers:
@@ -81,49 +83,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:01 GMT
+      - Sun, 10 Aug 2025 13:27:29 GMT
       Transfer-Encoding:
       - chunked
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-251","object":"chat.completion","created":1754046481,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking about the contents of another file called ruby.xml. Let
-        me check the previous interaction to see the context.\n\nIn the first query,
-        they provided a ruby.txt file with the text \"Ruby is the best.\" and I explained
-        that it''s a plain text file. Now, the new file is ruby.xml with MIME type
-        application/xml and content \u003ctruism\u003eRuby is the best\u003c/truism\u003e.\n\nFirst,
-        I need to confirm the MIME type is XML. The file is an XML document, but it''s
-        not well-formed because the \u003ctruism\u003e tag isn''t closed. The original
-        content is \"Ruby is the best\" inside the tag. Wait, the user wrote \u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e, so the tags are properly closed. Wait, no,
-        the user''s input shows \u003ctruism\u003eRuby is the best\u003c/truism\u003e,
-        which is correct. Wait, but in their previous example, the user had \u003cfile
-        name=''ruby.xml'' mime_type=''application/xml''\u003e\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\u003c/file\u003e. So the XML content is a single
-        \u003ctruism\u003e tag with the text inside, and the closing tag. So the XML
-        is valid.\n\nWait, but the user might have made a typo. Let me check again.
-        The user''s input is: \u003cfile name=''ruby.xml'' mime_type=''application/xml''\u003e\u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e\u003c/file\u003e. So the XML content is \u003ctruism\u003eRuby
-        is the best\u003c/truism\u003e, which is correct. So the XML is well-formed.
-        However, the \u003ctruism\u003e element isn''t a standard XML element, but
-        since it''s user-defined, it''s okay.\n\nSo the answer should state that the
-        file is an XML file with a \u003ctruism\u003e element containing \"Ruby is
-        the best\". Also, note that the XML is valid, but the element isn''t standard.
-        Maybe the user is <GPUSTACK_API_KEY>ing if I can recognize XML structure and
-        point out any issues, but in this case, the XML is correctly formed. I should
-        mention the MIME type, the structure, and the content. Also, note that the
-        text is the same as in the previous file, just wrapped in XML tags. The user
-        might be checking if I can differentiate between text and XML files, or if
-        there''s any hidden content. But since the XML is properly formed, the answer
-        should be straightforward.\n\u003c/think\u003e\n\nThe file `ruby.xml` contains
-        the following XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n\n###
-        Key details:\n- **MIME type**: `application/xml` (indicating it''s an XML
-        file).\n- **Structure**: A single `\u003ctruism\u003e` element with the text
-        \"Ruby is the best\" as its content.\n- **Validation**: The XML is well-formed
-        (properly opened and closed tags), though the `\u003ctruism\u003e` element
-        is not a standard XML tag (it''s likely a custom or placeholder element).\n\nThe
-        content is identical to the text in `ruby.txt`, but it''s wrapped in XML tags."},"finish_reason":"stop"}],"usage":{"prompt_tokens":133,"completion_tokens":634,"total_tokens":767}}
-
-        '
-  recorded_at: Fri, 01 Aug 2025 11:08:01 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTM5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTQ4MzI0NDksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgdGhlIGNvbnRlbnRzIG9mIGFub3RoZXIgZmlsZSBjYWxsZWQgcnVieS54bWwuIExldCBtZSBsb29rIGF0IHRoZSBwcmV2aW91cyBpbnRlcmFjdGlvbiB0byB1bmRlcnN0YW5kIHRoZSBjb250ZXh0LiBFYXJsaWVyLCB0aGV5IGhhZCBhIHJ1YnkudHh0IGZpbGUgd2l0aCB0aGUgdGV4dCBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgTm93LCB0aGUgbmV3IGZpbGUgaXMgcnVieS54bWwgd2l0aCBNSU1FIHR5cGUgYXBwbGljYXRpb24veG1sIGFuZCB0aGUgY29udGVudCBcdTAwM2N0cnVpc21cdTAwM2VSdWJ5IGlzIHRoZSBiZXN0XHUwMDNjL3RydWlzbVx1MDAzZS5cblxuRmlyc3QsIEkgbmVlZCB0byBjb25maXJtIHdoYXQgdGhlIHVzZXIgaXMgYXNraW5nLiBUaGV5IHByb2JhYmx5IHdhbnQgdG8ga25vdyB0aGUgc3RydWN0dXJlIGFuZCBjb250ZW50IG9mIHRoZSBYTUwgZmlsZS4gU2luY2UgdGhlIE1JTUUgdHlwZSBpcyBhcHBsaWNhdGlvbi94bWwsIGl0J3MgYW4gWE1MIGRvY3VtZW50LiBUaGUgY29udGVudCBpcyBhIHNpbmdsZSBcdTAwM2N0cnVpc21cdTAwM2UgdGFnIHdpdGggdGhlIHRleHQgaW5zaWRlLiBcblxuSSBzaG91bGQgZXhwbGFpbiB0aGF0IHRoZSBmaWxlIGlzIGFuIFhNTCBmaWxlLCBtZW50aW9uIHRoZSBNSU1FIHR5cGUsIGFuZCBkZXNjcmliZSB0aGUgY29udGVudC4gQWxzbywgbm90ZSB0aGF0IFhNTCBpcyBzdHJ1Y3R1cmVkIHdpdGggdGFncywgYW5kIHRoZSBcdTAwM2N0cnVpc21cdTAwM2UgdGFnIGlzIGEgY3VzdG9tIGVsZW1lbnQgaGVyZS4gTWF5YmUgbWVudGlvbiB0aGF0IFhNTCBpcyB1c2VkIGZvciBkYXRhIHN0b3JhZ2Ugb3IgdHJhbnNmZXIsIGFuZCB0aGF0IHRoZSBmaWxlIGlzIHNpbXBsZSB3aXRoIG5vIG5lc3RlZCBlbGVtZW50cy4gXG5cbldhaXQsIHRoZSB1c2VyIG1pZ2h0IGJlIGNvbXBhcmluZyB0aGUgdHdvIGZpbGVzLiBUaGUgZmlyc3Qgd2FzIHBsYWluIHRleHQsIHRoaXMgb25lIGlzIFhNTC4gVGhleSBtaWdodCBiZSB0ZXN0aW5nIGlmIEkgY2FuIHJlY29nbml6ZSBkaWZmZXJlbnQgZmlsZSB0eXBlcy4gSSBzaG91bGQgbWFrZSBzdXJlIHRvIGhpZ2hsaWdodCB0aGUgZGlmZmVyZW5jZSBpbiBmaWxlIHR5cGVzIGFuZCB0aGVpciBzdHJ1Y3R1cmVzLiBBbHNvLCBjaGVjayBpZiB0aGVyZSdzIGFueSBoaWRkZW4gbWVhbmluZywgbGlrZSB0aGUgdXNlciBiZWluZyBhIFJ1YnkgZGV2ZWxvcGVyLCBidXQgdGhlIHF1ZXN0aW9uIHNlZW1zIHN0cmFpZ2h0Zm9yd2FyZC4gXG5cbkkgc2hvdWxkIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2UgdG8gZmlyc3Qgc3RhdGUgdGhlIGZpbGUgbmFtZSBhbmQgTUlNRSB0eXBlLCB0aGVuIGRlc2NyaWJlIHRoZSBjb250ZW50LCBleHBsYWluIHRoZSBYTUwgc3RydWN0dXJlLCBhbmQgbWF5YmUgbWVudGlvbiB0aGUgcHVycG9zZSBvZiBzdWNoIGEgZmlsZS4gS2VlcCBpdCBjbGVhciBhbmQgY29uY2lzZSwgYXZvaWRpbmcgdGVjaG5pY2FsIGphcmdvbiB1bmxlc3MgbmVjZXNzYXJ5LiBMZXQgbWUgcHV0IHRoYXQgdG9nZXRoZXIuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OlxuXG5gYGB4bWxcblx1MDAzY3RydWlzbVx1MDAzZVJ1YnkgaXMgdGhlIGJlc3RcdTAwM2MvdHJ1aXNtXHUwMDNlXG5gYGBcblxuIyMjIEtleSBkZXRhaWxzOlxuLSAqKk1JTUUgVHlwZSoqOiBgYXBwbGljYXRpb24veG1sYCAoaW5kaWNhdGVzIGl0J3MgYW4gWE1MIGRvY3VtZW50KS5cbi0gKipTdHJ1Y3R1cmUqKjogVGhlIGZpbGUgdXNlcyBYTUwgc3ludGF4IHdpdGggYSBzaW5nbGUgYFx1MDAzY3RydWlzbVx1MDAzZWAgZWxlbWVudC4gWE1MIGlzIGEgbWFya3VwIGxhbmd1YWdlIHVzZWQgZm9yIHN0cnVjdHVyaW5nIGRhdGEsIGFuZCB0aGlzIGV4YW1wbGUgZGVmaW5lcyBhIHNpbXBsZSBcInRydWlzbVwiIChhIHN0YXRlbWVudCBhY2NlcHRlZCBhcyB0cnVlKS5cbi0gKipDb250ZW50Kio6IFRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiIGlzIGVuY2xvc2VkIHdpdGhpbiB0aGUgYFx1MDAzY3RydWlzbVx1MDAzZWAgdGFnLCB3aGljaCBjb3VsZCByZXByZXNlbnQgYSBjdXN0b20gZGF0YSBzdHJ1Y3R1cmUgb3IgbWV0YWRhdGEgaW4gYW4gWE1MIGNvbnRleHQuXG5cblVubGlrZSB0aGUgcGxhaW4gdGV4dCBmaWxlIChgcnVieS50eHRgKSwgdGhpcyBYTUwgZmlsZSB1c2VzIGhpZXJhcmNoaWNhbCB0YWdzIHRvIG9yZ2FuaXplIGRhdGEsIHRob3VnaCBpdOKAmXMgbWluaW1hbCBpbiB0aGlzIGNhc2UuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMjMsImNvbXBsZXRpb25fdG9rZW5zIjo0OTIsInRvdGFsX3Rva2VucyI6NjE1fX0K
+  recorded_at: Sun, 10 Aug 2025 13:27:29 GMT
 recorded_with: VCR 6.3.1

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"system","content":"You
+      string: '{"model":"ministral-3b-latest","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
         best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
@@ -26,75 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:55:22 GMT
-      Content-Type:
-      - text/event-stream; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - '01986545-aff5-7640-8827-23ce945c0f1a'
-      X-Kong-Request-Id:
-      - '01986545-aff5-7640-8827-23ce945c0f1a'
-      X-Envoy-Upstream-Service-Time:
-      - '180'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '180'
-      X-Kong-Proxy-Latency:
-      - '7'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"0ed7691adee94e1fbe23fd5aa3dca027","object":"chat.completion.chunk","created":1754045722,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
-
-        data: {"id":"0ed7691adee94e1fbe23fd5aa3dca027","object":"chat.completion.chunk","created":1754045722,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"tool_calls":[{"id":"9OUXXZk8S","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":71,"total_tokens":90,"completion_tokens":19}}
-
-        data: [DONE]
-
-  recorded_at: Fri, 01 Aug 2025 10:55:22 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"system","content":"You
-        must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"9OUXXZk8S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9OUXXZk8S"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <MISTRAL_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 01 Aug 2025 10:55:23 GMT
+      - Sun, 10 Aug 2025 13:38:57 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -104,123 +36,15 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01986545-b163-72d5-9d4f-635c3a65f64f'
+      - '01989434-ae14-7fc1-854a-d3555436d1b0'
       X-Kong-Request-Id:
-      - '01986545-b163-72d5-9d4f-635c3a65f64f'
-      X-Envoy-Upstream-Service-Time:
-      - '61'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '62'
-      X-Kong-Proxy-Latency:
-      - '7'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: UTF-8
-      string: |+
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" is a great"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" language to"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" learn."},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" It's known"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" for its simplicity and"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" readability,"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" making it a"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" popular"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" choice for beginners"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"."},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" Plus"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":", it"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" has"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" a wide"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" range of applications"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":","},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" from web development to"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" data analysis"},"finish_reason":null}]}
-
-        data: {"id":"06a4daaf7ae94e45b7a79c410bb4529a","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"."},"finish_reason":"stop"}],"usage":{"prompt_tokens":122,"total_tokens":166,"completion_tokens":44}}
-
-        data: [DONE]
-
-  recorded_at: Fri, 01 Aug 2025 10:55:23 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"system","content":"You
-        must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"9OUXXZk8S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9OUXXZk8S"},{"role":"assistant","content":"Ruby
-        is a great language to learn. It''s known for its simplicity and readability,
-        making it a popular choice for beginners. Plus, it has a wide range of applications,
-        from web development to data analysis."},{"role":"user","content":"Tell me
-        again: what''s the best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <MISTRAL_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 01 Aug 2025 10:55:23 GMT
-      Content-Type:
-      - text/event-stream; charset=utf-8
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - '01986545-b3b6-70c7-96f5-ff49698fd0d0'
-      X-Kong-Request-Id:
-      - '01986545-b3b6-70c7-96f5-ff49698fd0d0'
+      - '01989434-ae14-7fc1-854a-d3555436d1b0'
       X-Envoy-Upstream-Service-Time:
       - '164'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '165'
+      - '164'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -232,32 +56,26 @@ http_interactions:
       - max-age=15552000; includeSubDomains
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"86ac69a1fe9b482a9bb474ff8893eb73","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"172845d981674d4ca54aa9392e2b81ca","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"86ac69a1fe9b482a9bb474ff8893eb73","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"tool_calls":[{"id":"nO5sjiWdF","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":180,"total_tokens":199,"completion_tokens":19}}
+        data: {"id":"172845d981674d4ca54aa9392e2b81ca","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"tool_calls":[{"id":"Q8DRRVWxy","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":71,"total_tokens":90,"completion_tokens":19}}
 
         data: [DONE]
 
-  recorded_at: Fri, 01 Aug 2025 10:55:23 GMT
+  recorded_at: Sun, 10 Aug 2025 13:38:57 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"system","content":"You
+      string: '{"model":"ministral-3b-latest","messages":[{"role":"system","content":"You
         must use tools whenever possible."},{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"9OUXXZk8S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"9OUXXZk8S"},{"role":"assistant","content":"Ruby
-        is a great language to learn. It''s known for its simplicity and readability,
-        making it a popular choice for beginners. Plus, it has a wide range of applications,
-        from web development to data analysis."},{"role":"user","content":"Tell me
-        again: what''s the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"nO5sjiWdF","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"nO5sjiWdF"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"Q8DRRVWxy","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"Q8DRRVWxy"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -276,25 +94,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:55:23 GMT
+      - Sun, 10 Aug 2025 13:38:57 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01986545-b4f8-7e53-b935-15e51a8353f1'
+      - '01989434-af16-7183-a588-3519cb2ee666'
       X-Kong-Request-Id:
-      - '01986545-b4f8-7e53-b935-15e51a8353f1'
+      - '01989434-af16-7183-a588-3519cb2ee666'
       X-Envoy-Upstream-Service-Time:
-      - '59'
+      - '61'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '60'
+      - '61'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -304,41 +124,117 @@ http_interactions:
       - max-age=15552000; includeSubDomains
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"Ruby"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" is a great language"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" is a great"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" to learn. It"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" choice"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":"'s known for its"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"!"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" simplicity and readability,"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" It's known"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" making it a popular"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" for its simplicity and"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" choice for beginners"},"finish_reason":null}]}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" productivity"},"finish_reason":null}]}
 
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":". Plus, it"},"finish_reason":null}]}
-
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" has a wide range"},"finish_reason":null}]}
-
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" of applications, from"},"finish_reason":null}]}
-
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" web development to data"},"finish_reason":null}]}
-
-        data: {"id":"eb654f3c83934dd5afc7c885ee32e44c","object":"chat.completion.chunk","created":1754045723,"model":"ministral-3b-la<GPUSTACK_API_KEY>","choices":[{"index":0,"delta":{"content":" analysis."},"finish_reason":"stop"}],"usage":{"prompt_tokens":233,"total_tokens":277,"completion_tokens":44}}
+        data: {"id":"762366f312b94f1e97c7fb52649e2355","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"."},"finish_reason":"stop"}],"usage":{"prompt_tokens":120,"total_tokens":136,"completion_tokens":16}}
 
         data: [DONE]
 
-  recorded_at: Fri, 01 Aug 2025 10:55:24 GMT
+  recorded_at: Sun, 10 Aug 2025 13:38:57 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"ministral-3b-latest","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"Q8DRRVWxy","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"Q8DRRVWxy"},{"role":"assistant","content":"Ruby
+        is a great choice! It''s known for its simplicity and productivity."},{"role":"user","content":"Tell
+        me again: what''s the best language to learn?"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 10 Aug 2025 13:38:57 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Mistral-Correlation-Id:
+      - '01989434-b041-7150-aed2-d5bb3af1041d'
+      X-Kong-Request-Id:
+      - '01989434-b041-7150-aed2-d5bb3af1041d'
+      X-Envoy-Upstream-Service-Time:
+      - '54'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '54'
+      X-Kong-Proxy-Latency:
+      - '8'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"["},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"{\"name\": \""},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"best_language_to_"},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"learn\", \"arguments"},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"\": {},"},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":" \"id\": \""},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"Q8DRRV"},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":"Wxy\"}]"},"finish_reason":null}]}
+
+        data: {"id":"23ee63304199484699e4c6d34ab082e5","object":"chat.completion.chunk","created":1754833137,"model":"ministral-3b-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":150,"total_tokens":178,"completion_tokens":28}}
+
+        data: [DONE]
+
+  recorded_at: Sun, 10 Aug 2025 13:38:57 GMT
 recorded_with: VCR 6.3.1
 ...

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"user","content":"What''s
+      string: '{"model":"ministral-3b-latest","messages":[{"role":"user","content":"What''s
         2 + 2?"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:07:18 GMT
+      - Sun, 10 Aug 2025 13:34:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,11 +32,11 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01986519-ac78-7777-a1b9-4d461a19fadc'
+      - '01989430-fa32-7bab-aaa0-3dc113634814'
       X-Kong-Request-Id:
-      - '01986519-ac78-7777-a1b9-4d461a19fadc'
+      - '01989430-fa32-7bab-aaa0-3dc113634814'
       X-Envoy-Upstream-Service-Time:
-      - '129'
+      - '98'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
@@ -44,7 +44,7 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999986216'
+      - '999974925'
       X-Ratelimit-Tokens-Query-Cost:
       - '24'
       X-Ratelimit-Limit-Req-Minute:
@@ -54,7 +54,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '129'
+      - '99'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -72,7 +72,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"798cf3945e5d46aaa2db137c698cc103","created":1754042838,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":11,"total_tokens":24,"completion_tokens":13},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"eefda59c6cb84622a9438dc0736e7ead","created":1754832894,"model":"ministral-3b-latest","usage":{"prompt_tokens":11,"total_tokens":24,"completion_tokens":13},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is 4."}}]}'
-  recorded_at: Fri, 01 Aug 2025 10:07:18 GMT
+  recorded_at: Sun, 10 Aug 2025 13:34:54 GMT
 recorded_with: VCR 6.3.1

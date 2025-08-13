@@ -8,10 +8,12 @@ module RubyLLM
   module Streaming
     module_function
 
-    def stream_response(connection, payload, &block)
+    def stream_response(connection, payload, additional_headers = {}, &block)
       accumulator = StreamAccumulator.new
 
       response = connection.post stream_url, payload do |req|
+        # Merge additional headers, with existing headers taking precedence
+        req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
         if req.options.respond_to?(:on_data)
           # Handle Faraday 2.x streaming with on_data method
           req.options.on_data = handle_stream do |chunk|
@@ -41,7 +43,7 @@ module RubyLLM
     private
 
     def to_json_stream(&)
-      buffer = String.new
+      buffer = +''
       parser = EventStreamParser::Parser.new
 
       create_stream_processor(parser, buffer, &)
@@ -146,6 +148,15 @@ module RubyLLM
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error event: #{e.message}"
+    end
+
+    # Default implementation - providers should override this method
+    def parse_streaming_error(data)
+      error_data = JSON.parse(data)
+      [500, error_data['message'] || 'Unknown streaming error']
+    rescue JSON::ParserError => e
+      RubyLLM.logger.debug "Failed to parse streaming error: #{e.message}"
+      [500, "Failed to parse error: #{data}"]
     end
   end
 end

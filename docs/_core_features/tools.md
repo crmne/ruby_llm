@@ -124,14 +124,27 @@ weather_tool = Weather.new
 chat.with_tool(weather_tool)
 # Or add multiple: chat.with_tools(WeatherLookup, AnotherTool.new)
 
+# Replace all tools with new ones
+chat.with_tools(NewTool, AnotherTool, replace: true)
+
+# Clear all tools
+chat.with_tools(replace: true)
+
 # Ask a question that should trigger the tool
 response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Long: 13.40)"
 puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
-> Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
-{: .warning }
+### Model Compatibility
+{: .d-inline-block }
+
+Changed in v1.6.2+
+{: .label .label-green }
+
+RubyLLM v1.6.2+ will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
+
+Prior to v1.6.2, calling `with_tool` on an unsupported model would immediately raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 
@@ -160,7 +173,7 @@ chat = RubyLLM.chat(model: 'gpt-4o')
         puts "Calling tool: #{tool_call.name}"
         puts "Arguments: #{tool_call.arguments}"
       end
-      .on_tool_result do |result|  # Available in > 1.5.1
+      .on_tool_result do |result|  # v1.6.0+
         # Called after the tool returns its result
         puts "Tool returned: #{result}"
       end
@@ -178,11 +191,36 @@ These callbacks are useful for:
 - **Debugging:** Monitor tool inputs and outputs in production
 - **Auditing:** Record tool usage for compliance or billing
 
+### Example: Limiting Tool Calls
+
+To prevent excessive API usage or infinite loops, you can use callbacks to limit tool calls:
+
+```ruby
+# Limit total tool calls per conversation
+call_count = 0
+max_calls = 10
+
+chat = RubyLLM.chat(model: 'gpt-4o')
+      .with_tool(Weather)
+      .on_tool_call do |tool_call|
+        call_count += 1
+        if call_count > max_calls
+          raise "Tool call limit exceeded (#{max_calls} calls)"
+        end
+      end
+
+# The conversation will stop if it tries to use tools more than 10 times
+chat.ask("Check weather for every major city...")
+```
+
+> Raising an exception in `on_tool_call` breaks the conversation flow - the LLM expects a tool response after requesting a tool call. This can leave the chat in an inconsistent state. Consider using better models or clearer tool descriptions to prevent loops instead of hard limits.
+{: .warning }
+
 ## Advanced: Halting Tool Continuation
 {: .d-inline-block }
 
 Available in v1.6.0+
-{: .label .label-yellow }
+{: .label .label-green }
 
 After a tool executes, the LLM normally continues the conversation to explain what happened. In rare cases, you might want to skip this and return the tool result directly.
 

@@ -23,13 +23,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:56:50 GMT
+      - Sun, 10 Aug 2025 13:31:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
       Vary:
@@ -43,13 +45,11 @@ http_interactions:
       - nosniff
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This endpoint''s maximum context length is 200000
         tokens. However, you requested about 2500021 tokens (2500021 of text input).
         Please reduce the length of either one, or use the \"middle-out\" transform
         to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}'
-  recorded_at: Fri, 01 Aug 2025 09:56:50 GMT
+  recorded_at: Sun, 10 Aug 2025 13:31:02 GMT
 recorded_with: VCR 6.3.1

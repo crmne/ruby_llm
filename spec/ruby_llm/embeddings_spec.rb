@@ -22,7 +22,8 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle a single text with custom dimensions" do
-        skip("Mistral doesn't support custom dimensions") if provider == :mistral
+        skip 'Mistral does not support custom dimensions' if provider == :mistral
+
         embedding = RubyLLM.embed(test_text, model: model, dimensions: test_dimensions)
         expect(embedding.vectors).to be_an(Array)
         expect(embedding.vectors.length).to eq(test_dimensions)
@@ -38,7 +39,8 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do
-        skip("Mistral doesn't support custom dimensions") if provider == :mistral
+        skip 'Mistral does not support custom dimensions' if provider == :mistral
+
         embeddings = RubyLLM.embed(test_texts, model: model, dimensions: test_dimensions)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|

@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :schema
+    attr_reader :model, :messages, :tools, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -26,6 +26,7 @@ module RubyLLM
       @messages = []
       @tools = {}
       @params = {}
+      @headers = {}
       @schema = nil
       @on = {
         new_message: nil,
@@ -50,17 +51,14 @@ module RubyLLM
     end
 
     def with_tool(tool)
-      unless @model.supports_functions?
-        raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
-      end
-
       tool_instance = tool.is_a?(Class) ? tool.new : tool
       @tools[tool_instance.name.to_sym] = tool_instance
       self
     end
 
-    def with_tools(*tools)
-      tools.each { |tool| with_tool tool }
+    def with_tools(*tools, replace: false)
+      @tools.clear if replace
+      tools.compact.each { |tool| with_tool tool }
       self
     end
 
@@ -87,11 +85,12 @@ module RubyLLM
       self
     end
 
-    def with_schema(schema, force: false)
-      unless force || @model.structured_output?
-        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
-      end
+    def with_headers(**headers)
+      @headers = headers
+      self
+    end
 
+    def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
       # Accept both RubyLLM::Schema instances and plain JSON schemas
@@ -135,6 +134,7 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         params: @params,
+        headers: @headers,
         schema: @schema,
         &wrap_streaming_block(&)
       )

@@ -77,6 +77,56 @@ module StreamingErrorHelpers
       },
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
+    },
+    bedrock: {
+      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error'
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
+    gpustack: {
+      url: 'http://localhost:11444/v1/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
+    perplexity: {
+      url: 'https://api.perplexity.ai/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
+    mistral: {
+      url: 'https://api.mistral.ai/v1/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
     }
   }.freeze
 

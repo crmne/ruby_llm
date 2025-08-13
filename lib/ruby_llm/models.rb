@@ -64,7 +64,7 @@ module RubyLLM
 
           model = Model::Info.new(
             id: model_id,
-            name: model_id.gsub('-', ' ').capitalize,
+            name: model_id.tr('-', ' ').capitalize,
             provider: provider_instance.slug,
             capabilities: %w[function_calling streaming],
             modalities: { input: %w[text image], output: %w[text] },

@@ -73,36 +73,33 @@ When you provide tools to a chat, the AI model can decide when to use them based
 
 ### Providers
 
-Providers are the adapters that connect RubyLLM to specific AI services. Each provider module implements the same interface but handles the unique requirements of its service.
+Providers are the adapters that connect RubyLLM to specific AI services. Each provider implements the same interface but handles the unique requirements of its service - authentication, request formatting, response parsing, and streaming protocols.
 
-```ruby
-module RubyLLM::Providers::OpenAI
-  class Chat
-    def complete(messages:, model:, **options)
-      # Provider-specific implementation
-    end
-  end
-end
-```
-
-The provider system allows RubyLLM to support many different AI services while maintaining a consistent interface. New providers can be added without changing the core framework.
+The provider system allows RubyLLM to support many different AI services while maintaining a consistent interface. Whether you're using OpenAI, Anthropic, or a local model, your code stays the same. New providers can be added without changing the core framework.
 
 ### Configuration
 
-Configuration in RubyLLM works at multiple levels. Global configuration sets defaults for the entire application, while instance-level configuration allows fine-tuning for specific use cases.
+Configuration in RubyLLM works at three levels: global defaults, isolated contexts for multi-tenancy, and instance-specific settings.
 
 ```ruby
-# Global configuration
+# Global configuration - applies everywhere
 RubyLLM.configure do |config|
   config.openai_api_key = ENV["OPENAI_API_KEY"]
   config.default_model = "gpt-4.1-nano"
 end
 
-# Instance configuration
+# Context configuration - isolated scope
+context = RubyLLM.context do |config|
+  config.openai_api_key = tenant.api_key  # Different credentials
+  config.default_model = "gpt-4o"         # Different defaults
+end
+chat = context.chat  # Uses context configuration
+
+# Instance configuration - what you need right now
 chat = RubyLLM.chat(model: "claude-3-opus", temperature: 0.7)
 ```
 
-This layered approach provides flexibility while keeping simple use cases simple.
+This layered approach supports everything from simple scripts to complex multi-tenant applications.
 
 ## Design Principles
 

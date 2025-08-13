@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250801T095732Z
+      - 20250810T133141Z
       X-Amz-Content-Sha256:
       - 83e97bd59131448e628d97ac09291d554085a3c126feccc1e85e58a491e88936
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250801/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=aecdff521bb29dd10cd6c15bff4cd03fcd10df6ce1039391efdb41f27d11ef03
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0e484f457b81537e39b75e5ee589e610e3d31f86c57e24d9309f9d0954c41265
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:57:33 GMT
+      - Sun, 10 Aug 2025 13:31:42 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,16 +39,16 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 8173d757-4941-43f3-b23c-488dfb81ade9
+      - 46d7e314-f704-428c-bde6-899cf894446f
       X-Amzn-Bedrock-Invocation-Latency:
-      - '596'
+      - '993'
       X-Amzn-Bedrock-Output-Token-Count:
       - '10'
       X-Amzn-Bedrock-Input-Token-Count:
       - '14'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01UWRL2U9fLhyevjcfsARqL2","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
-        capital of France is Paris."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":14,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":10}}'
-  recorded_at: Fri, 01 Aug 2025 09:57:33 GMT
+      string: '{"id":"msg_bdrk_01XgxUmdqiWUUPr14cKZeRnX","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Paris
+        is the capital of France."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":14,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":10}}'
+  recorded_at: Sun, 10 Aug 2025 13:31:42 GMT
 recorded_with: VCR 6.3.1

@@ -272,6 +272,35 @@ puts JSON.parse(response.content)
 > Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors.
 {: .note }
 
+### Custom HTTP Headers
+{: .d-inline-block }
+
+Available in v1.6.0+
+{: .label .label-green }
+
+Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
+
+```ruby
+# Enable Anthropic's beta features
+chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+      .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
+
+response = chat.ask "Tell me about the weather"
+```
+
+Headers are merged with provider defaults, with provider headers taking precedence for security. This means you can't override authentication or critical headers, but you can add supplementary headers for optional features.
+
+```ruby
+# Chain with other configuration methods
+chat = RubyLLM.chat
+      .with_temperature(0.5)
+      .with_headers('X-Custom-Feature' => 'enabled')
+      .with_params(max_tokens: 1000)
+```
+
+> Use custom headers with caution. They may enable experimental features that could change or be removed without notice. Always refer to your provider's documentation for supported headers and their behavior.
+{: .warning }
+
 ## Getting Structured Output
 
 When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
@@ -395,17 +424,16 @@ Not all models support structured output. Currently supported:
 - **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
-Models that don't support structured output will raise an error:
+Models that don't support structured output:
 
 ```ruby
+# RubyLLM 1.6.2+ will attempt to use schemas with any model
 chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
-chat.with_schema(schema) # Raises UnsupportedStructuredOutputError
-```
+chat.with_schema(schema)
+response = chat.ask('Generate a person')
+# Provider will return an error if unsupported
 
-You can force schema usage even if the model registry says it's unsupported:
-
-```ruby
-chat.with_schema(schema, force: true)
+# Prior to 1.6.2, with_schema would raise UnsupportedStructuredOutputError
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -499,7 +527,7 @@ chat.on_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
-# Called after a tool returns its result (Available in > 1.5.1)
+# Called after a tool returns its result (v1.6.0+)
 chat.on_tool_result do |result|
   puts "Tool returned: #{result}"
 end

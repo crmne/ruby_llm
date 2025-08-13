@@ -8,7 +8,7 @@ module RubyLLM
     attr_reader :content, :model_id, :tool_calls
 
     def initialize
-      @content = String.new
+      @content = +''
       @tool_calls = {}
       @input_tokens = 0
       @output_tokens = 0
@@ -66,7 +66,7 @@ module RubyLLM
       new_tool_calls.each_value do |tool_call|
         if tool_call.id
           tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-          tool_call_arguments = tool_call.arguments.empty? ? String.new : tool_call.arguments
+          tool_call_arguments = tool_call.arguments.empty? ? +'' : tool_call.arguments
           @tool_calls[tool_call.id] = ToolCall.new(
             id: tool_call_id,
             name: tool_call.name,

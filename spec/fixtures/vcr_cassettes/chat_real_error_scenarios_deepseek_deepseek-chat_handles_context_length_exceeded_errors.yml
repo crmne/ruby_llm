@@ -23,19 +23,21 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:56:41 GMT
+      - Sun, 10 Aug 2025 13:30:44 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '293'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f2e4fc8999ba2232525b7bd062a0afcb
+      - 858cf3856a0184dda1eb83f119e9d958
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,12 +48,10 @@ http_interactions:
       - "<COOKIE>"
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This model''s maximum context length is 65536
         tokens. However, you requested 1250019 tokens (1250019 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Fri, 01 Aug 2025 09:56:41 GMT
+  recorded_at: Sun, 10 Aug 2025 13:30:44 GMT
 recorded_with: VCR 6.3.1

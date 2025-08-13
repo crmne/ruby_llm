@@ -198,11 +198,11 @@ module RubyLLM
             .gsub(/(\d{4}) (\d{2}) (\d{2})/, '\1\2\3')
             .gsub(/^(?:Gpt|Chatgpt|Tts|Dall E) /) { |m| special_prefix_format(m.strip) }
             .gsub(/^O([13]) /, 'O\1-')
-            .gsub(/^O[13] Mini/, '\0'.gsub(' ', '-'))
+            .gsub(/^O[13] Mini/, '\0'.tr(' ', '-'))
             .gsub(/\d\.\d /, '\0'.sub(' ', '-'))
             .gsub(/4o (?=Mini|Preview|Turbo|Audio|Realtime|Transcribe|Tts)/, '4o-')
             .gsub(/\bHd\b/, 'HD')
-            .gsub(/(?:Omni|Text) Moderation/, '\0'.gsub(' ', '-'))
+            .gsub(/(?:Omni|Text) Moderation/, '\0'.tr(' ', '-'))
             .gsub('Text Embedding', 'text-embedding-')
         end
 
@@ -216,7 +216,7 @@ module RubyLLM
         end
 
         def self.normalize_temperature(temperature, model_id)
-          if model_id.match?(/^o\d/)
+          if model_id.match?(/^(o\d|gpt-5)/)
             RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
             1.0
           elsif model_id.match?(/-search/)
@@ -264,7 +264,7 @@ module RubyLLM
           capabilities << 'batch' if model_id.match?(/embedding|batch/)
 
           # Advanced capabilities
-          capabilities << 'reasoning' if model_id.match?(/o1/)
+          capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
 
           if model_id.match?(/gpt-4-turbo|gpt-4o/)
             capabilities << 'image_generation' if model_id.match?(/vision/)

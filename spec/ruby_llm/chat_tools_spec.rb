@@ -124,11 +124,14 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
+        if provider == :gpustack && model == 'qwen3'
+          skip 'gpustack/qwen3 does not support streaming tool calls properly'
+        end
+
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
         end
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
@@ -158,14 +161,14 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
+        if provider == :gpustack && model == 'qwen3'
+          skip 'gpustack/qwen3 does not support streaming tool calls properly'
+        end
+
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
         end
-        if provider == :gpustack && model == 'qwen3'
-          skip 'Qwen3 on GPUStack has issues with function calling in multi-turn streaming conversations'
-        end
-
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
@@ -196,7 +199,6 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
-        skip 'Local providers do not reliably use tools' if RubyLLM::Provider.providers[provider]&.local?
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -298,7 +300,7 @@ RSpec.describe RubyLLM::Chat do
       # Monkey-patch to count complete calls
       described_class.define_method(:complete) do |&block|
         call_count += 1
-        original_complete.bind(self).call(&block)
+        original_complete.bind_call(self, &block)
       end
 
       chat = RubyLLM.chat.with_tool(HaltingTool)

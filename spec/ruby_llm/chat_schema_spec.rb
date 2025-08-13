@@ -40,19 +40,11 @@ RSpec.describe RubyLLM::Chat do
           expect(response.content['age']).to eq(30)
         end
 
-        it 'raises an error if model does not support structured output' do
+        it 'accepts schema regardless of model capabilities' do
           allow(chat.model).to receive(:structured_output?).and_return(false)
 
           expect do
             chat.with_schema(person_schema)
-          end.to raise_error(RubyLLM::UnsupportedStructuredOutputError)
-        end
-
-        it 'allows forcing schema even if model does not support structured output' do
-          allow(chat.model).to receive(:structured_output?).and_return(false)
-
-          expect do
-            chat.with_schema(person_schema, force: true)
           end.not_to raise_error
         end
 
