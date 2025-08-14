@@ -205,6 +205,21 @@ module RubyLLM
           else 'STRING'
           end
         end
+
+        def build_tool_config(tool_choice)
+          {
+            functionCallingConfig: {
+              mode: specific_tool_choice?(tool_choice) ? 'any' : tool_choice
+            }.tap do |config|
+              # Use allowedFunctionNames to simulate specific tool choice
+              config[:allowedFunctionNames] = [tool_choice] if specific_tool_choice?(tool_choice)
+            end
+          }
+        end
+
+        def specific_tool_choice?(tool_choice)
+          !%i[auto none any].include?(tool_choice)
+        end
       end
     end
   end

@@ -92,6 +92,22 @@ module RubyLLM
             ]
           end
         end
+
+        def build_tool_choice(tool_choice)
+          case tool_choice
+          when :auto, :none
+            tool_choice
+          when :any
+            :required
+          else
+            {
+              type: 'function',
+              function: {
+                name: tool_choice
+              }
+            }
+          end
+        end
       end
     end
   end

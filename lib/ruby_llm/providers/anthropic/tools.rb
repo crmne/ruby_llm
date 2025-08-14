@@ -103,6 +103,15 @@ module RubyLLM
             'strict' => true
           }
         end
+
+        def build_tool_choice(tool_choice, parallel_tool_calls)
+          {
+            type: %i[auto any none].include?(tool_choice) ? tool_choice : :tool
+          }.tap do |tc|
+            tc[:name] = tool_choice if tc[:type] == :tool
+            tc[:disable_parallel_tool_use] = !parallel_tool_calls unless tc[:type] == :none || parallel_tool_calls.nil?
+          end
+        end
       end
     end
   end
