@@ -47,7 +47,7 @@ module RubyLLM
           end
 
           def handle_stream(&block)
-            buffer = String.new
+            buffer = +''
             proc do |chunk, _bytes, env|
               if env && env.status != 200
                 handle_failed_response(chunk, buffer, env)

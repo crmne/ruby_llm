@@ -43,7 +43,7 @@ module RubyLLM
     private
 
     def to_json_stream(&)
-      buffer = String.new
+      buffer = +''
       parser = EventStreamParser::Parser.new
 
       create_stream_processor(parser, buffer, &)

@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 2+2? Think step
+        by step."}]}],"generationConfig":{"temperature":0.7}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Thu, 14 Aug 2025 09:25:15 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1821
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"To
+        calculate 2+2, we can think step by step:\\n\\n1.  **Start with the first
+        number:** You have 2.\\n2.  **Add the second number:** You are adding another
+        2 to it\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        13,\"candidatesTokenCount\": 48,\"totalTokenCount\": 304,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\": 243},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"equdaNCLIfelvdIP783l2Ac\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \".\\n3.  **Count
+        them together:** If you have two items, and you add two more items, you will
+        have a total of four items.\\n\\nSo, 2 + 2 = 4.\"}],\"role\": \"model\"},\"finishReason\":
+        \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        92,\"totalTokenCount\": 348,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 243},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"equdaNCLIfelvdIP783l2Ac\"}\r\n\r\n"
+  recorded_at: Thu, 14 Aug 2025 09:25:16 GMT
+recorded_with: VCR 6.3.1

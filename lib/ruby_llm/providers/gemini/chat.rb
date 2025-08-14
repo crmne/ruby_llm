@@ -80,7 +80,7 @@ module RubyLLM
             content: extract_content(data),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
-            output_tokens: data.dig('usageMetadata', 'candidatesTokenCount'),
+            output_tokens: calculate_output_tokens(data),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )
@@ -132,6 +132,12 @@ module RubyLLM
         def function_call?(candidate)
           parts = candidate.dig('content', 'parts')
           parts&.any? { |p| p['functionCall'] }
+        end
+
+        def calculate_output_tokens(data)
+          candidates = data.dig('usageMetadata', 'candidatesTokenCount') || 0
+          thoughts = data.dig('usageMetadata', 'thoughtsTokenCount') || 0
+          candidates + thoughts
         end
       end
     end

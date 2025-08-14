@@ -204,14 +204,27 @@ weather_tool = Weather.new
 chat.with_tool(weather_tool)
 # Or add multiple: chat.with_tools(WeatherLookup, AnotherTool.new)
 
+# Replace all tools with new ones
+chat.with_tools(NewTool, AnotherTool, replace: true)
+
+# Clear all tools
+chat.with_tools(replace: true)
+
 # Ask a question that should trigger the tool
 response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Long: 13.40)"
 puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
-> Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
-{: .warning }
+### Model Compatibility
+{: .d-inline-block }
+
+Changed in v1.6.2+
+{: .label .label-green }
+
+RubyLLM v1.6.2+ will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
+
+Prior to v1.6.2, calling `with_tool` on an unsupported model would immediately raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 

@@ -51,17 +51,14 @@ module RubyLLM
     end
 
     def with_tool(tool)
-      unless @model.supports_functions?
-        raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
-      end
-
       tool_instance = tool.is_a?(Class) ? tool.new : tool
       @tools[tool_instance.name.to_sym] = tool_instance
       self
     end
 
-    def with_tools(*tools)
-      tools.each { |tool| with_tool tool }
+    def with_tools(*tools, replace: false)
+      @tools.clear if replace
+      tools.compact.each { |tool| with_tool tool }
       self
     end
 
@@ -93,11 +90,7 @@ module RubyLLM
       self
     end
 
-    def with_schema(schema, force: false)
-      unless force || @model.structured_output?
-        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
-      end
-
+    def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
       # Accept both RubyLLM::Schema instances and plain JSON schemas

@@ -300,7 +300,7 @@ RSpec.describe RubyLLM::Chat do
       # Monkey-patch to count complete calls
       described_class.define_method(:complete) do |&block|
         call_count += 1
-        original_complete.bind(self).call(&block)
+        original_complete.bind_call(self, &block)
       end
 
       chat = RubyLLM.chat.with_tool(HaltingTool)

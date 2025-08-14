@@ -8,14 +8,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Carmine Paolino']
   spec.email         = ['carmine@paolino.me']
 
-  spec.summary       = 'A single delightful Ruby way to work with AI.'
-  spec.description   = 'A delightful Ruby way to work with AI. Tired of juggling different SDKs? ' \
-                       'RubyLLM provides one beautiful, Ruby-like interface for OpenAI, Anthropic, ' \
-                       'Gemini, Bedrock, OpenRouter, DeepSeek, Ollama, and any OpenAI-compatible API. ' \
-                       'Chat (with text, images, audio, PDFs), generate images, create embeddings, ' \
-                       'use tools (function calling), stream responses, and integrate with Rails ' \
-                       'effortlessly. Minimal dependencies, maximum developer happiness - just clean ' \
-                       'Ruby code that works.'
+  spec.summary       = 'One beautiful Ruby API for GPT, Claude, Gemini, and more.'
+  spec.description   = 'One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, ' \
+                       'AI agents, RAG applications, and content generators. Features chat (text, images, audio, ' \
+                       'PDFs), image generation, embeddings, tools (function calling), structured output, Rails ' \
+                       'integration, and streaming. Works with OpenAI, Anthropic, Google Gemini, AWS Bedrock, ' \
+                       'DeepSeek, Mistral, Ollama (local models), OpenRouter, Perplexity, GPUStack, and any ' \
+                       'OpenAI-compatible API. Minimal dependencies - just Faraday, Zeitwerk, and Marcel.'
 
   spec.homepage      = 'https://rubyllm.com'
   spec.license       = 'MIT'

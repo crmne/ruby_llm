@@ -260,7 +260,7 @@ puts response.content
 
 # You can also use it in .with_model
 chat.with_model(
-  model: 'gpt-5-alpha',
+  'gpt-5-alpha',
   provider: :openai,                # MUST specify provider
   assume_exists: true
 )

@@ -148,12 +148,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it 'supports with_tools for multiple tools' do
       chat = Chat.create!(model_id: model)
 
-      result = chat.with_tools(Calculator, BestLanguageToLearn)
+      # Define a second tool for testing
+      weather_tool = Class.new(RubyLLM::Tool) do
+        def self.name = 'weather'
+        def self.description = 'Get weather'
+        def execute = 'Sunny'
+      end
+
+      result = chat.with_tools(Calculator, weather_tool)
       expect(result).to eq(chat) # Should return self for chaining
 
       # Verify tools are registered
       llm_chat = chat.instance_variable_get(:@chat)
-      expect(llm_chat.tools.keys).to include(:calculator, :best_language_to_learn)
+      expect(llm_chat.tools.keys).to include(:calculator, :weather)
     end
 
     it 'handles halt mechanism in tools' do
@@ -504,6 +511,63 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(tool_call_received).not_to be_nil
       expect(tool_call_received.name).to eq('calculator')
       expect(tool_result_received).to eq('4')
+    end
+  end
+
+  describe 'error recovery' do
+    it 'cleans up orphaned tool result messages on error' do
+      chat = Chat.create!(model_id: model)
+      chat.with_tool(Calculator)
+
+      initial_response = chat.ask('What is 2 + 2?')
+      initial_message_count = chat.messages.count
+      expect(initial_response.content).to include('4')
+
+      provider_instance = chat.instance_variable_get(:@chat).instance_variable_get(:@provider)
+      original_complete = provider_instance.method(:complete)
+      call_count = 0
+
+      allow(provider_instance).to receive(:complete) do |*args, **kwargs, &block|
+        call_count += 1
+
+        if call_count == 2
+          mock_response = instance_double(Faraday::Response, body: 'Rate limit exceeded')
+          raise RubyLLM::RateLimitError, mock_response
+        else
+          original_complete.call(*args, **kwargs, &block)
+        end
+      end
+
+      expect { chat.ask('What is 5 + 5?') }.to raise_error(RubyLLM::RateLimitError)
+
+      expect(chat.messages.count).to be <= initial_message_count + 2
+
+      last_assistant = chat.messages.where(role: 'assistant').where.not(content: nil).last
+      orphaned_tools = chat.messages.where(role: 'tool').where('id > ?', last_assistant.id)
+      expect(orphaned_tools).to be_empty
+    end
+
+    it 'cleans up orphaned tool call messages on error' do
+      skip 'Flaky on JRuby due to association reload issues' if RUBY_PLATFORM == 'java'
+
+      chat = Chat.create!(model_id: model)
+      chat.with_tool(Calculator)
+
+      initial_response = chat.ask('What is 2 + 2?')
+      chat.messages.count
+      expect(initial_response.content).to include('4')
+
+      mock_response = instance_double(Faraday::Response, body: 'Tool execution failed')
+      allow_any_instance_of(Calculator).to receive(:execute).and_raise(RubyLLM::Error, mock_response) # rubocop:disable RSpec/AnyInstance
+
+      expect { chat.ask('What is 3 + 3?') }.to raise_error(RubyLLM::Error)
+
+      chat.messages.reload
+      last_user_message = chat.messages.where(role: 'user').last
+      expect(last_user_message.content).to eq('What is 3 + 3?')
+
+      messages_after_last_user = chat.messages.where('id > ?', last_user_message.id)
+      expect(messages_after_last_user).to be_empty
     end
   end
 end
