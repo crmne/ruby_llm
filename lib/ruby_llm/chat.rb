@@ -11,7 +11,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_choice, :parallel_tool_calls, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -23,6 +23,8 @@ module RubyLLM
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
       @temperature = 0.7
+      @tool_choice = nil
+      @parallel_tool_calls = nil
       @messages = []
       @tools = {}
       @params = {}
@@ -50,15 +52,19 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool)
-      tool_instance = tool.is_a?(Class) ? tool.new : tool
-      @tools[tool_instance.name.to_sym] = tool_instance
+    def with_tool(tool, choice: nil, parallel: nil)
+      unless tool.nil?
+        tool_instance = tool.is_a?(Class) ? tool.new : tool
+        @tools[tool_instance.name.to_sym] = tool_instance
+      end
+      update_tool_options(choice:, parallel:)
       self
     end
 
-    def with_tools(*tools, replace: false)
+    def with_tools(*tools, replace: false, choice: nil, parallel: nil)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
+      update_tool_options(choice:, parallel:)
       self
     end
 
@@ -136,6 +142,8 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        tool_choice: @tool_choice,
+        parallel_tool_calls: @parallel_tool_calls,
         &wrap_streaming_block(&)
       )
 
@@ -189,7 +197,7 @@ module RubyLLM
       end
     end
 
-    def handle_tool_calls(response, &)
+    def handle_tool_calls(response, &) # rubocop:disable Metrics/PerceivedComplexity
       halt_result = nil
 
       response.tool_calls.each_value do |tool_call|
@@ -203,13 +211,35 @@ module RubyLLM
         halt_result = result if result.is_a?(Tool::Halt)
       end
 
-      halt_result || complete(&)
+      return halt_result if halt_result
+
+      should_continue_after_tools? ? complete(&) : response
     end
 
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def update_tool_options(choice:, parallel:)
+      unless choice.nil?
+        valid_tool_choices = %i[auto none any] + tools.keys
+        unless valid_tool_choices.include?(choice.to_sym)
+          raise InvalidToolChoiceError,
+                "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
+        end
+
+        @tool_choice = choice.to_sym
+      end
+
+      @parallel_tool_calls = !!parallel unless parallel.nil?
+    end
+
+    def should_continue_after_tools?
+      # Continue conversation only with :auto tool choice to avoid infinite loops.
+      # With :any or specific tool choices, the model would keep calling tools repeatedly.
+      tool_choice.nil? || tool_choice == :auto
     end
 
     def instance_variables

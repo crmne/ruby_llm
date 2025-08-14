@@ -11,7 +11,9 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+        # rubocop:disable Metrics/ParameterLists
+        def render_payload(messages, tools:, tool_choice:, parallel_tool_calls:,
+                           temperature:, model:, stream: false, schema: nil)
           payload = {
             model: model,
             messages: format_messages(messages),
@@ -21,7 +23,11 @@ module RubyLLM
           # Only include temperature if it's not nil (some models don't accept it)
           payload[:temperature] = temperature unless temperature.nil?
 
-          payload[:tools] = tools.map { |_, tool| tool_for(tool) } if tools.any?
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| tool_for(tool) }
+            payload[:tool_choice] = build_tool_choice(tool_choice) unless tool_choice.nil?
+            payload[:parallel_tool_calls] = parallel_tool_calls unless parallel_tool_calls.nil?
+          end
 
           if schema
             # Use strict mode from schema if specified, default to true
@@ -40,6 +46,7 @@ module RubyLLM
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
+        # rubocop:enable Metrics/ParameterLists
 
         def parse_completion_response(response)
           data = response.body
