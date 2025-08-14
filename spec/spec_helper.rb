@@ -44,6 +44,10 @@ require 'ruby_llm'
 require 'webmock/rspec'
 require_relative 'support/streaming_error_helpers'
 
+MASSIVE_TEXT = 'a' * 1_000_000
+MASSIVE_TEXT_FOR_PROMPT_CACHING = 'a' * (2048 * 4)
+MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING = (MASSIVE_TEXT_FOR_PROMPT_CACHING * 2) + ('b' * 1024)
+
 # VCR Configuration
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
@@ -90,7 +94,11 @@ VCR.configure do |config|
   config.filter_sensitive_data('<CF_RAY>') { |interaction| interaction.response.headers['Cf-Ray']&.first }
 
   # Filter large strings used to test "context length exceeded" error handling
-  config.filter_sensitive_data('<MASSIVE_TEXT>') { 'a' * 1_000_000 }
+  config.filter_sensitive_data('<MASSIVE_TEXT>') { MASSIVE_TEXT }
+
+  # Filter large strings used to test prompt caching
+  config.filter_sensitive_data('<MASSIVE_TEXT_FOR_PROMPT_CACHING>') { MASSIVE_TEXT_FOR_PROMPT_CACHING }
+  config.filter_sensitive_data('<MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING>') { MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING }
 
   # Filter cookies
   config.before_record do |interaction|
