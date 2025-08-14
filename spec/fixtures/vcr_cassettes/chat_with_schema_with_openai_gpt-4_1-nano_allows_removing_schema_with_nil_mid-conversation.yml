@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:57:13 GMT
+      - Tue, 12 Aug 2025 14:46:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '400'
+      - '411'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '439'
+      - '429'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -57,8 +57,6 @@ http_interactions:
       - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -78,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Bzgngioek6ATqDcnxstgV0FWQrTLh",
+          "id": "chatcmpl-C3kYsFngB5uWuXxiUd4p6A9HWebld",
           "object": "chat.completion",
-          "created": 1754042232,
+          "created": 1755010002,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -113,7 +111,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Fri, 01 Aug 2025 09:57:13 GMT
+  recorded_at: Tue, 12 Aug 2025 14:46:43 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -139,7 +137,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:57:14 GMT
+      - Tue, 12 Aug 2025 14:46:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -151,17 +149,27 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1279'
+      - '2110'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1398'
+      - '2141'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199976'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -181,16 +189,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzgnhKtfPqHqMvEUyiwOR0NElKx4l",
+          "id": "chatcmpl-C3kYtnOZdDujc8fEzZpl3dDXlOPU7",
           "object": "chat.completion",
-          "created": 1754042233,
+          "created": 1755010003,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Certainly! Ruby is a dynamic, open-source programming language known for its simplicity and productivity. Created by Yukihiro Matsumoto in the mid-1990s, Ruby emphasizes clean and readable code, making it popular among developers for web development, scripting, and automation. It is particularly famous for its powerful web framework, Ruby on Rails, which has revolutionized web application development. Ruby features an elegant syntax that is easy to learn, supports object-oriented programming, and has a vibrant community that contributes to a rich ecosystem of libraries and tools.",
+                "content": "Certainly! Ruby is a dynamic, high-level programming language known for its simplicity and productivity. It was created by Yukihiro \"Matz\" Matsumoto and first released in 1995. Ruby emphasizes natural syntax that is easy to read and write, making it popular among developers for web development, automation, and more.\n\nSome key features of Ruby include:\n- Object-oriented programming: Everything in Ruby is an object.\n- Dynamic typing: You don't need to specify data types explicitly.\n- Built-in support for exception handling and garbage collection.\n- Rich standard library and a vibrant community with many open-source libraries and frameworks, most notably Ruby on Rails for web development.\n\nRuby is appreciated for its elegant syntax and ease of use, making it a favorite for beginners and experienced programmers alike.",
                 "refusal": null,
                 "annotations": []
               },
@@ -200,8 +208,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 35,
-            "completion_tokens": 109,
-            "total_tokens": 144,
+            "completion_tokens": 157,
+            "total_tokens": 192,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -214,7 +222,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Fri, 01 Aug 2025 09:57:14 GMT
+  recorded_at: Tue, 12 Aug 2025 14:46:45 GMT
 recorded_with: VCR 6.3.1

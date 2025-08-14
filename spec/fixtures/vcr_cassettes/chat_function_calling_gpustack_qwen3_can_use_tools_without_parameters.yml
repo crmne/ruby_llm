@@ -23,8 +23,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 16:46:41 GMT
-      - Wed, 06 Aug 2025 16:46:42 GMT
+      - Sun, 10 Aug 2025 13:37:50 GMT
+      - Sun, 10 Aug 2025 13:37:51 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -42,15 +42,15 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-GowZ0LteiHnMni0QVaGBoVrJfYt7GzWe","type":"function"}]}}],"created":1754498803,"id":"chatcmpl-0EnlrlNvtXSY3PbNaRT4tpW6hzWLHtXk","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":117,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":96,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4820.554845862759,"time_per_output_token_ms":8.502709401709401,"time_to_first_token_ms":41.489,"tokens_per_second":117.60957040340084,"total_tokens":317}}'
-  recorded_at: Wed, 06 Aug 2025 16:46:43 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G","type":"function"}]}}],"created":1754833072,"id":"chatcmpl-B76ZrhSsvZSWLErF9Ib8dYtNdbFZTby0","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":132,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":111,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3802.642836771556,"time_per_output_token_ms":9.198068181818181,"time_to_first_token_ms":52.595,"tokens_per_second":108.7184809063168,"total_tokens":332}}'
+  recorded_at: Sun, 10 Aug 2025 13:37:52 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-GowZ0LteiHnMni0QVaGBoVrJfYt7GzWe","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-GowZ0LteiHnMni0QVaGBoVrJfYt7GzWe"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -67,15 +67,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 16:46:42 GMT
-      - Wed, 06 Aug 2025 16:46:43 GMT
+      - Sun, 10 Aug 2025 13:37:51 GMT
+      - Sun, 10 Aug 2025 13:37:52 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1014'
+      - '1139'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -87,6 +87,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgUnVieS4gSXQgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCBwcm9kdWN0aXZpdHksIGFuZCBlbGVnYW50IHN5bnRheCwgbWFraW5nIGl0IGEgcG9wdWxhciBjaG9pY2UgZm9yIHdlYiBkZXZlbG9wbWVudCBhbmQgc2NyaXB0aW5nLiBIb3dldmVyLCB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgZGVwZW5kcyBvbiB5b3VyIGdvYWxz4oCUUnVieSBleGNlbHMgaW4gYXJlYXMgbGlrZSByYXBpZCBhcHBsaWNhdGlvbiBkZXZlbG9wbWVudCBhbmQgZGV2ZWxvcGVyIGhhcHBpbmVzcy4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBndWlkYW5jZSB0YWlsb3JlZCB0byB5b3VyIGludGVyZXN0cyEiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDQ5ODgwNSwiaWQiOiJjaGF0Y21wbC1UUjZ5YTMzMTVRQUNPckFLbHpCbDhaSHFETE9pOFdPWiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6Mjc1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMDEsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoyMjYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjEyNTU3LjY0ODQ5Njk3MTcxOCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjczNTcyNzI3MjcyNzI3MywidGltZV90b19maXJzdF90b2tlbl9tcyI6MTcuOTk3LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTE0LjQ3MjQzODE1ODg2Njk0LCJ0b3RhbF90b2tlbnMiOjUwMX19
-  recorded_at: Wed, 06 Aug 2025 16:46:45 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHByb2R1Y3Rpdml0eSwgZXNwZWNpYWxseSBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy4gSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2FsczogIFxuLSAqKldlYiBEZXZlbG9wbWVudCoqOiBSdWJ5IChvciBKYXZhU2NyaXB0L1B5dGhvbikgIFxuLSAqKkRhdGEgU2NpZW5jZSoqOiBQeXRob24gIFxuLSAqKk1vYmlsZSBBcHBzKio6IFN3aWZ0IChpT1MpIG9yIEtvdGxpbiAoQW5kcm9pZCkgIFxuLSAqKkdlbmVyYWwgUHVycG9zZSoqOiBQeXRob24gb3IgSmF2YSAgXG5cbkNvbnNpZGVyIHlvdXIgaW50ZXJlc3RzIGFuZCBjYXJlZXIgcGF0aCB0byBjaG9vc2UgdGhlIG1vc3Qgc3VpdGFibGUgbGFuZ3VhZ2UhIPCfjJ8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDgzMzA3NSwiaWQiOiJjaGF0Y21wbC1HUEh1RVhWd3p3RGIwNFJTU1NxTVduRVBucWV3Y0dDMSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzQ3LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMzcsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoyMjYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjExNTIzLjU1NzAwNTkxNDc0OSwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjE5ODg5NjI1MzYwMjMwNSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTkuNjEyLCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA4LjcwODY5NDIyMDYxMzUsInRvdGFsX3Rva2VucyI6NTczfX0=
+  recorded_at: Sun, 10 Aug 2025 13:37:55 GMT
 recorded_with: VCR 6.3.1

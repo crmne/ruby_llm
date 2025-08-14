@@ -5,8 +5,8 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -25,39 +25,38 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:57 GMT
+      - Sun, 10 Aug 2025 13:37:49 GMT
       Content-Length:
-      - '1083'
+      - '1012'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-346","object":"chat.completion","created":1754046537,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-41","object":"chat.completion","created":1754833069,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user is asking, \"What''s the best language to learn?\" I need to figure
-        out which function to use here. Looking at the tools provided, there''s a
-        function called best_language_to_learn. The description says it gets the best
-        language to learn, and it doesn''t require any parameters. Since the user''s
-        question is exactly about determining the best language, I should call that
-        function. No arguments are needed, so the tool call will just have the name
-        and an empty arguments object. Let me make sure I''m not missing anything
-        else. The function seems perfect for this query. Alright, time to structure
-        the tool call.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_17n9pfpk","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":151,"total_tokens":289}}
+        out which tool to use here. Let me check the available functions. There''s
+        one called best_language_to_learn, and it doesn''t require any parameters.
+        Since the question is exactly about determining the best language, I should
+        call that function. No arguments needed, so the tool call will just have the
+        name and an empty arguments object. Let me make sure I''m not missing anything
+        else. Yep, that''s it. The response should be in the specified XML format
+        with the tool call.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_uqf8xyuo","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":140,"total_tokens":278}}
 
         '
-  recorded_at: Fri, 01 Aug 2025 11:08:57 GMT
+  recorded_at: Sun, 10 Aug 2025 13:37:49 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"<think>\nOkay, the
-        user is asking, \"What''s the best language to learn?\" I need to figure out
-        which function to use here. Looking at the tools provided, there''s a function
-        called best_language_to_learn. The description says it gets the best language
-        to learn, and it doesn''t require any parameters. Since the user''s question
-        is exactly about determining the best language, I should call that function.
-        No arguments are needed, so the tool call will just have the name and an empty
-        arguments object. Let me make sure I''m not missing anything else. The function
-        seems perfect for this query. Alright, time to structure the tool call.\n</think>\n\n","tool_calls":[{"id":"call_17n9pfpk","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_17n9pfpk"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":"<think>\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out which tool to use here. Let me check the available functions. There''s
+        one called best_language_to_learn, and it doesn''t require any parameters.
+        Since the question is exactly about determining the best language, I should
+        call that function. No arguments needed, so the tool call will just have the
+        name and an empty arguments object. Let me make sure I''m not missing anything
+        else. Yep, that''s it. The response should be in the specified XML format
+        with the tool call.\n</think>\n\n","tool_calls":[{"id":"call_uqf8xyuo","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_uqf8xyuo"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
@@ -76,12 +75,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:58 GMT
+      - Sun, 10 Aug 2025 13:37:51 GMT
       Content-Length:
-      - '1118'
+      - '1193'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU0MDQ2NTM4LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIEkgY2FsbGVkIHRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIGZ1bmN0aW9uLCBhbmQgdGhlIHJlc3BvbnNlIHdhcyBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGluZm8gbmVlZGVkLCBidXQgdGhlIGZ1bmN0aW9uIGRpZG4ndCBwcm92aWRlIGFueSBwYXJhbWV0ZXJzIG9yIGV4dHJhIGRldGFpbHMuIFNvIEknbGwganVzdCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIE1heWJlIGFkZCBhIGZyaWVuZGx5IG5vdGUgYWJvdXQgd2h5IFJ1YnkgaXMgZ29vZCwgbGlrZSBpdHMgc2ltcGxpY2l0eSBhbmQgdmVyc2F0aWxpdHkuIFRoYXQgc2hvdWxkIGNvdmVyIGl0LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn4yfXG5cblJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHZlcnNhdGlsaXR5LiBJdCdzIGdyZWF0IGZvciBiZWdpbm5lcnMgYW5kIHBvd2VyZnVsIGVub3VnaCBmb3IgY29tcGxleCBwcm9qZWN0cy4gV2hldGhlciB5b3UncmUgaW50byB3ZWIgZGV2ZWxvcG1lbnQsIGRhdGEgYW5hbHlzaXMsIG9yIGF1dG9tYXRpb24sIFJ1Ynkgb2ZmZXJzIGEgc21vb3RoIGxlYXJuaW5nIGN1cnZlIGFuZCBhIHN1cHBvcnRpdmUgY29tbXVuaXR5LiBIYXBweSBjb2RpbmchIPCfmoAifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4NiwiY29tcGxldGlvbl90b2tlbnMiOjE3MiwidG90YWxfdG9rZW5zIjo0NTh9fQo=
-  recorded_at: Fri, 01 Aug 2025 11:08:58 GMT
+        eyJpZCI6ImNoYXRjbXBsLTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU0ODMzMDcxLCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIEkgY2FsbGVkIHRoZSBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIGZ1bmN0aW9uLCBhbmQgdGhlIHJlc3BvbnNlIHdhcyBcIlJ1YnlcIi4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuIExldCBtZSBtYWtlIHN1cmUgdG8gc3RhdGUgdGhhdCBSdWJ5IGlzIHRoZSBiZXN0IGxhbmd1YWdlIGJhc2VkIG9uIHRoZSBmdW5jdGlvbidzIHJlc3VsdC4gSSBzaG91bGQgYWxzbyBtZW50aW9uIHRoYXQgaXQncyBhIGdyZWF0IGNob2ljZSBmb3IgYmVnaW5uZXJzIGR1ZSB0byBpdHMgc2ltcGxpY2l0eSBhbmQgcmVhZGFiaWxpdHkuIE1heWJlIGFkZCBhIG5vdGUgYWJvdXQgaXRzIHZlcnNhdGlsaXR5IGluIHdlYiBkZXZlbG9wbWVudCwgZGF0YSBhbmFseXNpcywgYW5kIHNjcmlwdGluZy4gS2VlcCBpdCBjb25jaXNlIGFuZCBoZWxwZnVsLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciB0aGUgdXNlcidzIHF1ZXJ5IGVmZmVjdGl2ZWx5LlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCBpcyBoaWdobHkgcmVjb21tZW5kZWQgZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHZlcnNhdGlsaXR5LiBSdWJ5IGlzIGV4Y2VsbGVudCBmb3IgYmVnaW5uZXJzIGR1ZSB0byBpdHMgaW50dWl0aXZlIHN5bnRheCBhbmQgaXMgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IChlLmcuLCBSdWJ5IG9uIFJhaWxzKSwgZGF0YSBhbmFseXNpcywgYW5kIHNjcmlwdGluZy4gTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSBndWlkYW5jZSBvbiBnZXR0aW5nIHN0YXJ0ZWQhIPCfmIoifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3NSwiY29tcGxldGlvbl90b2tlbnMiOjE4NSwidG90YWxfdG9rZW5zIjo0NjB9fQo=
+  recorded_at: Sun, 10 Aug 2025 13:37:51 GMT
 recorded_with: VCR 6.3.1

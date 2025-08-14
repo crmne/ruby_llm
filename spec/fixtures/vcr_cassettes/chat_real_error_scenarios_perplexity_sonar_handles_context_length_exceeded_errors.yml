@@ -23,13 +23,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:56:55 GMT
+      - Sun, 10 Aug 2025 13:31:07 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '112'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -38,10 +40,8 @@ http_interactions:
       - max-age=15552000; includeSubDomains; preload
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"error":{"message":"The total length of all messages is too long.","type":"too_many_prompt_tokens","code":400}}'
-  recorded_at: Fri, 01 Aug 2025 09:56:55 GMT
+  recorded_at: Sun, 10 Aug 2025 13:31:07 GMT
 recorded_with: VCR 6.3.1

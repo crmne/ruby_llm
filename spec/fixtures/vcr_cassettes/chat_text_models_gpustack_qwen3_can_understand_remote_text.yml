@@ -26,6 +26,8 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
       - Fri, 01 Aug 2025 01:17:08 GMT
       Access-Control-Allow-Origin:
@@ -33,33 +35,33 @@ http_interactions:
       Etag:
       - W/"688c1594-9c6"
       Expires:
-      - Wed, 06 Aug 2025 06:00:25 GMT
+      - Sun, 10 Aug 2025 10:36:18 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 321D:33117:11D60CA:11F629E:6892ED21
+      - 2C76:369D3C:1F85837:1FBBB54:689873C9
       Accept-Ranges:
       - bytes
-      Age:
-      - '136'
       Date:
-      - Wed, 06 Aug 2025 16:45:44 GMT
+      - Sun, 10 Aug 2025 13:27:44 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '90'
       X-Served-By:
-      - cache-fra-etou8220039-FRA
+      - cache-fra-etou8220169-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1754498744.019635,VS0,VE2
+      - S1754832464.281294,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - b8be93848a9e60a255d0d3c756d24dc69788e3fb
+      - 82237fdff577347c571ade84f34e771681caed1b
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 06 Aug 2025 16:45:44 GMT
+  recorded_at: Sun, 10 Aug 2025 13:27:44 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -151,15 +153,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 16:45:43 GMT
-      - Wed, 06 Aug 2025 16:45:44 GMT
+      - Sun, 10 Aug 2025 13:27:43 GMT
+      - Sun, 10 Aug 2025 13:27:43 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '3527'
+      - '3124'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -169,8 +171,38 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGBsaWNlbnNlLnR4dGAgZmlsZSBjb250YWlucyB0aGUgbGljZW5zaW5nIHRlcm1zIGZvciAqKlJ1YnkqKiwgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSBkZXZlbG9wZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KS4gSGVyZSdzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4tLS1cblxuIyMjICoqTGljZW5zZSBTdW1tYXJ5Kipcbi0gKipUeXBlKio6IEEgbW9kaWZpZWQgKipCU0Qtc3R5bGUgbGljZW5zZSoqIHdpdGggYWRkaXRpb25hbCBjb25kaXRpb25zLlxuLSAqKkF1dGhvcioqOiBZdWtpaGlybyBNYXRzdW1vdG8gKGBtYXR6QG5ldGxhYi5qcGApLlxuLSAqKlBlcm1pc3Npb25zKio6IEFsbG93cyByZWRpc3RyaWJ1dGlvbiBhbmQgbW9kaWZpY2F0aW9uIHVuZGVyIHNwZWNpZmljIHRlcm1zLlxuXG4tLS1cblxuIyMjICoqS2V5IFByb3Zpc2lvbnMqKlxuXG4jIyMjICoqMS4gUmVkaXN0cmlidXRpb24gb2YgU291cmNlIENvZGUqKlxuLSBZb3UgY2FuIGZyZWVseSByZWRpc3RyaWJ1dGUgdGhlICoqc291cmNlIGNvZGUqKiBhcyBsb25nIGFzOlxuICAtIEFsbCAqKm9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzKiogYW5kICoqZGlzY2xhaW1lcnMqKiBhcmUgaW5jbHVkZWQuXG5cbiMjIyMgKioyLiBNb2RpZmljYXRpb24gUmVxdWlyZW1lbnRzKipcbklmIHlvdSBtb2RpZnkgdGhlIHNvZnR3YXJlLCB5b3UgbXVzdCBkbyAqKmF0IGxlYXN0IG9uZSoqIG9mIHRoZXNlOlxuICAtICoqYSkqKiBQbGFjZSB5b3VyIG1vZGlmaWNhdGlvbnMgaW4gdGhlICoqUHVibGljIERvbWFpbioqIG9yIG1ha2UgdGhlbSBmcmVlbHkgYXZhaWxhYmxlIChlLmcuLCBzaGFyZSBvbiBVc2VuZXQgb3IgaW5jbHVkZSB0aGVtIGluIHRoZSBzb2Z0d2FyZSkuXG4gIC0gKipiKSoqIFVzZSB0aGUgbW9kaWZpZWQgc29mdHdhcmUgKipvbmx5IHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvbioqLlxuICAtICoqYykqKiBSZW5hbWUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIGFuZCBwcm92aWRlIGluc3RydWN0aW9ucyB0byBnZXQgdGhlIG9yaWdpbmFsIHNvZnR3YXJlLlxuICAtICoqZCkqKiBNYWtlIG90aGVyIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IgKE1hdHopLlxuXG4jIyMjICoqMy4gQmluYXJ5IERpc3RyaWJ1dGlvbioqXG5JZiBkaXN0cmlidXRpbmcgKipiaW5hcnkvb2JqZWN0IGNvZGUqKiwgeW91IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZiB0aGVzZTpcbiAgLSAqKmEpKiogSW5jbHVkZSBpbnN0cnVjdGlvbnMgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb3VyY2UgY29kZS5cbiAgLSAqKmIpKiogUHJvdmlkZSB0aGUgbWFjaGluZS1yZWFkYWJsZSBzb3VyY2UgY29kZS5cbiAgLSAqKmMpKiogUmVuYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcyB3aXRoIGluc3RydWN0aW9ucyB0byBnZXQgdGhlIG9yaWdpbmFsLlxuICAtICoqZCkqKiBNYWtlIG90aGVyIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IuXG5cbiMjIyMgKio0LiBDb21iaW5pbmcgd2l0aCBPdGhlciBTb2Z0d2FyZSoqXG4tIFlvdSBjYW4gKiptb2RpZnkgYW5kIGluY2x1ZGUgcGFydHMgb2YgUnVieSoqIGluIG90aGVyIHNvZnR3YXJlIChldmVuIGNvbW1lcmNpYWwpLCAqKmV4Y2VwdCoqIGZvciBmaWxlcyBub3Qgd3JpdHRlbiBieSBNYXR6LlxuLSBDaGVjayB0aGUgYExFR0FMYCBmaWxlIGZvciBleGNlcHRpb25zIChzb21lIGZpbGVzIG1heSBoYXZlIGRpZmZlcmVudCBsaWNlbnNlcykuXG5cbiMjIyMgKio1LiBTY3JpcHRzIGFuZCBHZW5lcmF0ZWQgRmlsZXMqKlxuLSBTY3JpcHRzIG9yIGZpbGVzIGdlbmVyYXRlZCBhcyBpbnB1dC9vdXRwdXQgYnkgUnVieSAqKmRvIG5vdCoqIGluaGVyaXQgUnVieeKAmXMgbGljZW5zZS5cbi0gVGhleSBiZWxvbmcgdG8gdGhlIGNyZWF0b3Igb2YgdGhvc2UgZmlsZXMgYW5kIGNhbiBiZSBzb2xkIGNvbW1lcmNpYWxseS5cblxuIyMjIyAqKjYuIFdhcnJhbnR5IERpc2NsYWltZXIqKlxuLSBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgKipcImFzIGlzXCIqKiB3aXRoICoqbm8gd2FycmFudGllcyoqIChpbmNsdWRpbmcgaW1wbGllZCB3YXJyYW50aWVzIG9mIG1lcmNoYW50YWJpbGl0eSBvciBmaXRuZXNzIGZvciBhIHBhcnRpY3VsYXIgcHVycG9zZSkuXG5cbi0tLVxuXG4jIyMgKipJbXBvcnRhbnQgTm90ZXMqKlxuLSAqKk5vdCBhIEdQTCBMaWNlbnNlKio6IFRoaXMgaXMgKipub3QqKiB0aGUgR05VIEdQTC4gSXQgaXMgbW9yZSBwZXJtaXNzaXZlIHRoYW4gR1BMIGJ1dCBzdGlsbCBoYXMgc3BlY2lmaWMgY29uZGl0aW9ucy5cbi0gKipTb21lIEZpbGVzIEV4Y2x1ZGVkKio6IE5vdCBhbGwgUnVieSBmaWxlcyBhcmUgdW5kZXIgdGhpcyBsaWNlbnNlIChjaGVjayBgTEVHQUxgIGZvciBkZXRhaWxzKS5cbi0gKipQdWJsaWMgRG9tYWluKio6IE1vZGlmaWNhdGlvbnMgY2FuIGJlIHJlbGVhc2VkIGludG8gdGhlIFB1YmxpYyBEb21haW4sIHdoaWNoIGlzIGEga2V5IHBhcnQgb2YgdGhlIGxpY2Vuc2UuXG5cbi0tLVxuXG4jIyMgKipXaGVuIHRvIFVzZSBUaGlzKipcbi0gSWYgeW914oCZcmUgdXNpbmcgUnVieSBpbiB5b3VyIHByb2plY3QsIGVuc3VyZSB5b3UgY29tcGx5IHdpdGggdGhlc2UgdGVybXMgKGUuZy4sIGluY2x1ZGUgY29weXJpZ2h0IG5vdGljZXMsIGF2b2lkIHByb3ByaWV0YXJ5IG1vZGlmaWNhdGlvbnMgdW5sZXNzIHlvdSBtZWV0IHRoZSBjb25kaXRpb25zKS5cbi0gSWYgeW914oCZcmUgZGlzdHJpYnV0aW5nIFJ1YnksIHByb3ZpZGUgY2xlYXIgaW5zdHJ1Y3Rpb25zIG9uIGhvdyB0byBvYnRhaW4gdGhlIG9yaWdpbmFsIHNvdXJjZS5cblxuTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgaGVscCBpbnRlcnByZXRpbmcgc3BlY2lmaWMgY2xhdXNlcyEg8J+QjSIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU0NDk4NzU1LCJpZCI6ImNoYXRjbXBsLTZNNGUxSllMQjRFUURSWnV5aTFSRU1uQXdqWTNPMERDIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMTE0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjo0OTcsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjo1NDQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMn0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MzMzMi45MjQ4ODY2NTYwNDcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6MTAuMDI0NTMzMjEzNjQ0NTI0LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoxNjMuMjIsInRva2Vuc19wZXJfc2Vjb25kIjo5OS43NTUyNjgyNjkxMzg2NCwidG90YWxfdG9rZW5zIjoxNjU4fX0=
-  recorded_at: Wed, 06 Aug 2025 16:45:55 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        `license.txt` file contains the **license terms** for **Ruby**, a programming
+        language created by Yukihiro Matsumoto (Matz). Here''s a breakdown of its
+        contents:\n\n---\n\n### **Key Points of the License**\n1. **Copyright & Redistribution**  \n   -
+        Ruby is free software, and you can redistribute it **verbatim** (unchanged)
+        **without restriction**, provided you retain all original copyright notices
+        and disclaimers.\n\n2. **Modification Rights**  \n   If you modify the software,
+        you must do **at least one** of the following:  \n   - **a)** Share your modifications
+        freely (e.g., via Usenet, public repositories, or include them in the software).  \n   -
+        **b)** Use the modified software only within your organization.  \n   - **c)**
+        Label non-standard binaries with instructions to get the original source.  \n   -
+        **d)** Make other arrangements with the author (Matz).\n\n3. **Binary Distribution**  \n   If
+        distributing compiled binaries or object code, you must do **at least one**
+        of:  \n   - **a)** Include instructions to get the original source.  \n   -
+        **b)** Provide machine-readable source code with the distribution.  \n   -
+        **c)** Label non-standard binaries with instructions to get the original source.  \n   -
+        **d)** Arrange other terms with the author.\n\n4. **Integration with Other
+        Software**  \n   You can modify and integrate Ruby into other software (even
+        commercial), **except** for certain files not written by Matz. Check the `LEGAL`
+        file for details on those files.\n\n5. **Scripts & Library Files**  \n   Scripts
+        or files generated as input/output by Ruby (e.g., generated code) are **not
+        automatically copyrighted** by Ruby. They belong to their creators and can
+        be used commercially.\n\n6. **Disclaimer**  \n   The software is provided
+        **\"as is\"** with **no warranties** (explicit or implied), including fitness
+        for a particular purpose.\n\n---\n\n### **Additional Notes**\n- The license
+        is based on the **2-clause BSDL** (Berkeley Software Distribution License),
+        which is similar to the BSD license.  \n- Refer to the `BSDL` file for the
+        full text of the 2-clause license.  \n- For details on files not under these
+        terms, consult the `LEGAL` file in the distribution.\n\n---\n\n### **Summary**\nThis
+        license allows **free use, modification, and distribution** of Ruby under
+        specific conditions, with clear disclaimers and requirements for redistribution.
+        It emphasizes freedom for users while reserving rights for the original author.","role":"assistant"}}],"created":1754832473,"id":"chatcmpl-AAJBV9WaJu4WVGWtxdlHCWhbNykE4jlB","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":866,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":330,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":544,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3807.151005325812,"time_per_output_token_ms":10.007784064665127,"time_to_first_token_ms":142.889,"tokens_per_second":99.92221989788318,"total_tokens":1410}}'
+  recorded_at: Sun, 10 Aug 2025 13:27:53 GMT
 recorded_with: VCR 6.3.1

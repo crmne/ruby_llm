@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:47:04 GMT
+      - Sun, 10 Aug 2025 13:25:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '509'
+      - '532'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '644'
+      - '705'
       X-Ratelimit-Limit-Input-Images:
       - '50000'
       X-Ratelimit-Limit-Requests:
@@ -63,8 +63,6 @@ http_interactions:
       - 231ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -84,16 +82,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzgdsvGbHVusHgFI3BO6i0spQTgVf",
+          "id": "chatcmpl-C30LajEMCck86FohIkE2upCv5ODNU",
           "object": "chat.completion",
-          "created": 1754041624,
+          "created": 1754832354,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I see an image of a red gemstone, likely a ruby, with a faceted cut that reflects light.",
+                "content": "I see an image of a red gemstone or ruby with a faceted cut.",
                 "refusal": null,
                 "annotations": []
               },
@@ -103,8 +101,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 53,
-            "completion_tokens": 22,
-            "total_tokens": 75,
+            "completion_tokens": 16,
+            "total_tokens": 69,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -119,5 +117,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Fri, 01 Aug 2025 09:47:04 GMT
+  recorded_at: Sun, 10 Aug 2025 13:25:54 GMT
 recorded_with: VCR 6.3.1

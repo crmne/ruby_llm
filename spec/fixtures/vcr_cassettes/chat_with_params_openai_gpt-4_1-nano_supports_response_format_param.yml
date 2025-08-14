@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:57:05 GMT
+      - Tue, 12 Aug 2025 14:46:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,11 +42,21 @@ http_interactions:
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '487'
+      - '4770'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199978'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 6ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -66,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzgnZ4YYMwsZx5rFUbR4dO9kECuLj",
+          "id": "chatcmpl-C3kYrE6S6XSVuGwe8VzqYUL7x8HgW",
           "object": "chat.completion",
-          "created": 1754042225,
+          "created": 1755010001,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -101,5 +111,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Fri, 01 Aug 2025 09:57:05 GMT
+  recorded_at: Tue, 12 Aug 2025 14:46:41 GMT
 recorded_with: VCR 6.3.1

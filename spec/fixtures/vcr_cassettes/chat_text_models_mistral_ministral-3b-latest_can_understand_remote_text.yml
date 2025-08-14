@@ -35,33 +35,33 @@ http_interactions:
       Etag:
       - W/"688c1594-9c6"
       Expires:
-      - Fri, 01 Aug 2025 05:20:19 GMT
+      - Sun, 10 Aug 2025 10:36:18 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B236:345B54:360B62E:3669196:688C4C3B
+      - 2C76:369D3C:1F85837:1FBBB54:689873C9
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 01 Aug 2025 10:50:17 GMT
+      - Sun, 10 Aug 2025 13:28:07 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '81'
+      - '113'
       X-Served-By:
-      - cache-fra-etou8220096-FRA
+      - cache-fra-etou8220095-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1754045417.487749,VS0,VE3
+      - S1754832488.648537,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 31395da28a7ffe25256514057dc94ef1ecfab5de
+      - b576ae8824cf332731dbfa516cc24ba391f1d32f
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,13 +97,13 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 01 Aug 2025 10:50:17 GMT
+  recorded_at: Sun, 10 Aug 2025 13:28:07 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"ministral-3b-la<GPUSTACK_API_KEY>","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"ministral-3b-latest","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:50:19 GMT
+      - Sun, 10 Aug 2025 13:28:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,21 +163,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01986541-088e-76f7-88ba-964baad57df3'
+      - '0198942a-c552-73cf-a4e0-6a288e136055'
       X-Kong-Request-Id:
-      - '01986541-088e-76f7-88ba-964baad57df3'
+      - '0198942a-c552-73cf-a4e0-6a288e136055'
       X-Envoy-Upstream-Service-Time:
-      - '1364'
+      - '1725'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498846'
+      - '498698'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999981183'
+      - '999975385'
       X-Ratelimit-Tokens-Query-Cost:
-      - '892'
+      - '1086'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -185,9 +185,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1365'
+      - '1726'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -203,26 +203,40 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c3a469869a254062a186eb66edb5037b","created":1754045417,"model":"ministral-3b-la<GPUSTACK_API_KEY>","usage":{"prompt_tokens":577,"total_tokens":892,"completion_tokens":315},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"964f8295708840278dd9b14ef482d3aa","created":1754832487,"model":"ministral-3b-latest","usage":{"prompt_tokens":577,"total_tokens":1086,"completion_tokens":509},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `license.txt` contains the license agreement for Ruby, a programming
-        language created by Yukihiro Matsumoto (matz@netlab.jp). Here''s a breakdown
-        of the key points in the license:\n\n1. **Redistribution and Modification**:\n   -
-        You can redistribute the source code of Ruby without restriction, provided
-        you include all original copyright notices and disclaimers.\n   - You can
-        modify the software, but you must either make your modifications freely available,
-        use them within your corporation, give non-standard binaries non-standard
-        names, or make other distribution arrangements with the author.\n\n2. **Distribution
-        of Object Code**:\n   - You can distribute the software in object code or
-        binary form, but you must include the original distribution instructions or
-        give non-standard binaries non-standard names.\n\n3. **Inclusion in Other
-        Software**:\n   - You can include Ruby in other software, but some files in
-        the distribution are not under the same license terms. For details, see the
-        `LEGAL` file.\n\n4. **Generated Scripts and Libraries**:\n   - Scripts and
-        library files generated by or produced by the software do not automatically
-        fall under the software''s copyright and can be sold commercially.\n\n5. **Warranty
-        Disclaimer**:\n   - The software is provided \"as is\" with no express or
-        implied warranties, including merchantability and fitness for a particular
-        purpose.\n\nThis license is a 2-clause BSD-style license, which is known for
-        its permissive nature, allowing for broad use and modification of the software."}}]}'
-  recorded_at: Fri, 01 Aug 2025 10:50:19 GMT
+        language created by Yukihiro Matsumoto. Here''s a breakdown of the key points:\n\n1.
+        **Copyright Notice**: Ruby is copyrighted free software by Yukihiro Matsumoto.\n2.
+        **Redistribution and Modification**:\n   - You can redistribute and/or modify
+        the software under the terms of the 2-clause BSDL or the conditions specified
+        below.\n   - You can make and give away verbatim copies of the source form
+        of the software without restriction, provided that you duplicate all of the
+        original copyright notices and associated disclaimers.\n   - You can modify
+        your copy of the software in any way, provided that you do at least one of
+        the following:\n     - Place your modifications in the Public Domain or make
+        them Freely Available.\n     - Use the modified software only within your
+        corporation or organization.\n     - Give non-standard binaries non-standard
+        names, with instructions on where to get the original software distribution.\n     -
+        Make other distribution arrangements with the author.\n3. **Distribution of
+        Object Code or Binary Form**:\n   - You can distribute the software in object
+        code or binary form, provided that you do at least one of the following:\n     -
+        Distribute the binaries and library files of the software, together with instructions
+        on where to get the original distribution.\n     - Accompany the distribution
+        with the machine-readable source of the software.\n     - Give non-standard
+        binaries non-standard names, with instructions on where to get the original
+        software distribution.\n     - Make other distribution arrangements with the
+        author.\n4. **Modification and Inclusion in Other Software**:\n   - You can
+        modify and include the part of the software into any other software (possibly
+        commercial), but some files in the distribution are not under these terms.
+        For the list of those files and their copying conditions, see the file `LEGAL`.\n5.
+        **Scripts and Library Files**:\n   - The scripts and library files supplied
+        as input to or produced as output from the software do not automatically fall
+        under the copyright of the software. They belong to whomever generated them
+        and can be sold commercially.\n6. **Warranty**:\n   - The software is provided
+        \"as is\" and without any express or implied warranties, including the implied
+        warranties of merchantability and fitness for a particular purpose.\n\nThis
+        license allows for the free use, modification, and distribution of Ruby under
+        certain conditions, ensuring that the original copyright notices and terms
+        are maintained."}}]}'
+  recorded_at: Sun, 10 Aug 2025 13:28:09 GMT
 recorded_with: VCR 6.3.1

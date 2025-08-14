@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:31:47 GMT
+      - Tue, 12 Aug 2025 14:47:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '673'
+      - '1075'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '729'
+      - '4456'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -59,8 +59,6 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -80,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzhL8p85MQ4ynWwZiUEIkGQj1rfxy",
+          "id": "chatcmpl-C3kZSy75Tg1PVaRCzbgfkN9JhPQLr",
           "object": "chat.completion",
-          "created": 1754044306,
+          "created": 1755010038,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -92,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_LTrHzw0t63XNVKsAzd9y7ilZ",
+                    "id": "call_wXMoeCrFEaysI1qTy5WnDHww",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -100,7 +98,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_PSPAqXwc2gpgEtHCURMTchLk",
+                    "id": "call_lw9cI09mCOMJ2aQhVbHHETdw",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -108,7 +106,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_5vs1C67BAsRAB5slcuaI6OMb",
+                    "id": "call_Fdiaxc3MB4bmR0sUccF56NKv",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -141,7 +139,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Fri, 01 Aug 2025 10:31:47 GMT
+  recorded_at: Tue, 12 Aug 2025 14:47:19 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -149,11 +147,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_LTrHzw0t63XNVKsAzd9y7ilZ","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_PSPAqXwc2gpgEtHCURMTchLk","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5vs1C67BAsRAB5slcuaI6OMb","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_LTrHzw0t63XNVKsAzd9y7ilZ"},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_PSPAqXwc2gpgEtHCURMTchLk"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_5vs1C67BAsRAB5slcuaI6OMb"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_wXMoeCrFEaysI1qTy5WnDHww","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_lw9cI09mCOMJ2aQhVbHHETdw","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_Fdiaxc3MB4bmR0sUccF56NKv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_wXMoeCrFEaysI1qTy5WnDHww"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_lw9cI09mCOMJ2aQhVbHHETdw"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_Fdiaxc3MB4bmR0sUccF56NKv"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -171,7 +169,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:31:47 GMT
+      - Tue, 12 Aug 2025 14:47:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -183,13 +181,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '320'
+      - '708'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '333'
+      - '752'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -204,15 +202,13 @@ http_interactions:
       - 12ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -225,9 +221,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzhL9WgeRze5PIjy7gul3xOtXk8WT",
+          "id": "chatcmpl-C3kZTj2uwLs6qG5P1G8xTZZApqhIb",
           "object": "chat.completion",
-          "created": 1754044307,
+          "created": 1755010039,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -260,5 +256,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Fri, 01 Aug 2025 10:31:47 GMT
+  recorded_at: Tue, 12 Aug 2025 14:47:20 GMT
 recorded_with: VCR 6.3.1

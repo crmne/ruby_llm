@@ -25,13 +25,15 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:55:50 GMT
+      - Sun, 10 Aug 2025 13:30:01 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '86'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       X-Should-Retry:
       - 'false'
       Request-Id:
@@ -46,11 +48,9 @@ http_interactions:
       - none
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
         x-api-key"}}'
-  recorded_at: Fri, 01 Aug 2025 09:55:50 GMT
+  recorded_at: Sun, 10 Aug 2025 13:30:01 GMT
 recorded_with: VCR 6.3.1

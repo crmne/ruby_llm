@@ -25,13 +25,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:55:56 GMT
+      - Sun, 10 Aug 2025 13:30:07 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '115'
+      - '120'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       X-Should-Retry:
       - 'false'
       Request-Id:
@@ -48,11 +50,9 @@ http_interactions:
       - none
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"type":"error","error":{"type":"invalid_request_error","message":"too
-        many total text bytes: 10000002 > 9000000"}}'
-  recorded_at: Fri, 01 Aug 2025 09:55:56 GMT
+      string: '{"type":"error","error":{"type":"invalid_request_error","message":"prompt
+        is too long: 200016 tokens > 200000 maximum"}}'
+  recorded_at: Sun, 10 Aug 2025 13:30:07 GMT
 recorded_with: VCR 6.3.1

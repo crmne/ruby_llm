@@ -7,10 +7,12 @@ module RubyLLM
       module Chat
         module_function
 
-        def sync_response(connection, payload)
+        def sync_response(connection, payload, additional_headers = {})
           signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", payload:)
           response = connection.post completion_url, payload do |req|
             req.headers.merge! build_headers(signature.headers, streaming: block_given?)
+            # Merge additional headers, with existing headers taking precedence
+            req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
           end
           Anthropic::Chat.parse_completion_response response
         end

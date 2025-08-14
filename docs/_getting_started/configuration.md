@@ -21,253 +21,350 @@ description: Configure once, use everywhere. API keys, defaults, timeouts, and m
 
 After reading this guide, you will know:
 
-*   How to set up global configuration using `RubyLLM.configure`.
-*   How to configure API keys for different providers.
-*   How to set default models for chat, embeddings, and image generation.
-*   How to customize connection timeouts and retries.
-*   How to connect to custom endpoints (like Azure OpenAI).
-*   How to use temporary, scoped configurations with `RubyLLM.context`.
-*   How to configure the logging location.
+* How to configure API keys for different providers
+* How to set default models for chat, embeddings, and images
+* How to customize connection settings and timeouts
+* How to use custom endpoints and proxies
+* How to create isolated configurations with contexts
+* How to configure logging and debugging
 
-## Global Configuration (`RubyLLM.configure`)
+## Quick Start
 
-The primary way to configure RubyLLM is using the `RubyLLM.configure` block. This typically runs once when your application starts (e.g., in `config/initializers/ruby_llm.rb` for Rails apps, or at the top of a script).
-
-RubyLLM provides sensible defaults, so you only need to configure what you really need.
-
-Here's a reference of all the configuration options RubyLLM provides:
+The simplest configuration just sets your API keys:
 
 ```ruby
-require 'ruby_llm'
-
 RubyLLM.configure do |config|
-  # --- Provider API Keys ---
-  # Provide keys ONLY for the providers you intend to use.
-  # Using environment variables (ENV.fetch) is highly recommended.
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-  config.openai_organization_id = ENV.fetch('OPENAI_ORGANIZATION_ID', nil)
-  config.openai_project_id = ENV.fetch('OPENAI_PROJECT_ID', nil)
-  config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
-  config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-  config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
-  config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil) # Available in v1.5.0
-  config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil) # Available in v1.5.0
-  config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', nil)
-  config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', nil)
-  config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
-
-  # --- AWS Bedrock Credentials ---
-  # Uses standard AWS credential chain (environment, shared config, IAM role)
-  # if these specific keys aren't set. Region is required if using Bedrock.
-  config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
-  config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)
-  config.bedrock_region = ENV.fetch('AWS_REGION', nil) # e.g., 'us-west-2'
-  config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil) # For temporary credentials
-
-  # --- Custom OpenAI Endpoint ---
-  # Use this for Azure OpenAI, proxies, or self-hosted models via OpenAI-compatible APIs.
-  config.openai_api_base = ENV.fetch('OPENAI_API_BASE', nil) # e.g., "https://your-azure.openai.azure.com"
-
-  # --- OpenAI System Role Behavior --- (Available in > v1.5.1)
-  # Some OpenAI-compatible APIs don't support the 'system' role.
-  # Set to false to convert system messages to user messages with "System: " prefix.
-  config.openai_use_system_role = false # Default: false (nil)
-
-  # --- Default Models ---
-  # Used by RubyLLM.chat, RubyLLM.embed, RubyLLM.paint if no model is specified.
-  config.default_model = 'gpt-4.1-nano'               # Default: 'gpt-4.1-nano'
-  config.default_embedding_model = 'text-embedding-3-small'  # Default: 'text-embedding-3-small'
-  config.default_image_model = 'gpt-image-1'            # Default: 'gpt-image-1'
-
-  # --- Connection Settings ---
-  config.request_timeout = 120  # Request timeout in seconds (default: 120)
-  config.max_retries = 3        # Max retries on transient network errors (default: 3)
-  config.retry_interval = 0.1 # Initial delay in seconds (default: 0.1)
-  config.retry_backoff_factor = 2 # Multiplier for subsequent retries (default: 2)
-  config.retry_interval_randomness = 0.5 # Jitter factor (default: 0.5)
-
-  # --- HTTP Proxy Support ---
-  config.http_proxy = ENV.fetch('HTTP_PROXY', nil) # Optional HTTP proxy
-  # Examples:
-  # config.http_proxy = "http://proxy.company.com:8080"           # Basic proxy
-  # config.http_proxy = "http://user:pass@proxy.company.com:8080" # Authenticated proxy
-  # config.http_proxy = "socks5://proxy.company.com:1080"        # SOCKS5 proxy
-
-  # --- Logging Settings ---
-  # config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
-  config.log_file = '/logs/ruby_llm.log'
-  config.log_level = :debug # debug level can also be set to debug by setting RUBYLLM_DEBUG envar to true
-  config.log_assume_model_exists = false # Silence "Assuming model exists for provider" warning
-  config.log_stream_debug = false # Show chunk-by-chunk streaming details (Available in > v1.5.1)
+  config.openai_api_key = ENV['OPENAI_API_KEY']
+  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
 end
 ```
 
-> You only need to set configuration options you need and the API keys for the providers you actually plan to use. Attempting to use an unconfigured provider will result in a `RubyLLM::ConfigurationError`.
+That's it. RubyLLM uses sensible defaults for everything else.
+
+## Provider Configuration
+
+### API Keys
+
+Configure API keys only for the providers you use. RubyLLM won't complain about missing keys for providers you never touch.
+
+```ruby
+RubyLLM.configure do |config|
+  # Remote providers
+  config.openai_api_key = ENV['OPENAI_API_KEY']
+  config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
+  config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.mistral_api_key = ENV['MISTRAL_API_KEY']
+  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
+  config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+
+  # Local providers
+  config.ollama_api_base = 'http://localhost:11434/v1'
+  config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
+  config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
+
+  # AWS Bedrock (uses standard AWS credential chain if not set)
+  config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
+  config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
+  config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
+  config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+end
+```
+
+> Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
 
-## Provider API Keys
+### OpenAI Organization & Project Headers
 
-Set the corresponding `*_api_key` attribute for each provider you want to enable. Using environment variables (`ENV.fetch('PROVIDER_API_KEY', nil)`) is the recommended approach for managing sensitive keys.
-
-*   `openai_api_key`
-*   `anthropic_api_key`
-*   `gemini_api_key`
-*   `deepseek_api_key`
-*   `openrouter_api_key`
-*   `gpustack_api_key`
-*   `perplexity_api_key` (Available in v1.5.0)
-*   `mistral_api_key` (Available in v1.5.0)
-*   `bedrock_api_key`, `bedrock_secret_key`, `bedrock_region`, `bedrock_session_token` (See AWS documentation for standard credential methods if not set explicitly).
-
-## Ollama API Base (`ollama_api_base`)
-
-When using a local model running via Ollama, set the `ollama_api_base` to the URL of your Ollama server, e.g. `http://localhost:11434/v1`
-
-
-## Custom OpenAI API Base (`openai_api_base`)
-{: .d-inline-block }
-
-If you are using Azure OpenAI Service, an API proxy (like LiteLLM or Fastly AI Accelerator), or a self-hosted model exposing an OpenAI-compatible API, set the `openai_api_base` configuration to your custom endpoint URL.
+For OpenAI users with multiple organizations or projects:
 
 ```ruby
 RubyLLM.configure do |config|
-  # Example for Azure
-  config.openai_api_key = ENV['AZURE_OPENAI_KEY']
-  config.openai_api_base = "https://YOUR-RESOURCE-NAME.openai.azure.com"
-
-  # Example for a local proxy
-  # config.openai_api_key = "dummy-key" # Or whatever your proxy expects
-  # config.openai_api_base = "http://localhost:8000/v1"
+  config.openai_api_key = ENV['OPENAI_API_KEY']
+  config.openai_organization_id = ENV['OPENAI_ORG_ID']  # Billing organization
+  config.openai_project_id = ENV['OPENAI_PROJECT_ID']    # Usage tracking
 end
 ```
 
-This setting redirects requests made with `provider: :openai` to your specified base URL. See the [Working with Models Guide]({% link _advanced/models.md %}#connecting-to-custom-endpoints--using-unlisted-models) for more details on using custom models with this setting.
+These headers are optional and only needed for organization-specific billing or project tracking.
 
-## Optional OpenAI Headers
+## Custom Endpoints
 
-OpenAI supports additional headers for organization and project management:
+### OpenAI-Compatible APIs
 
-*   `openai_organization_id`: Specifies the billing organization for API usage when multiple organizations are accessible.
-*   `openai_project_id`: Tracks API usage for a project.
+Connect to any OpenAI-compatible API endpoint, including local models, proxies, and custom servers:
 
-These headers are optional and only need to be set if you want to use organization or project-specific billing.
+```ruby
+RubyLLM.configure do |config|
+  # API key - use what your server expects
+  config.openai_api_key = ENV['CUSTOM_API_KEY']  # Or 'dummy-key' if not required
+  
+  # Your custom endpoint
+  config.openai_api_base = "http://localhost:8080/v1"  # vLLM, LiteLLM, etc.
+end
+
+# Use your custom model name
+chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_exists: true)
+```
+
+#### System Role Compatibility
+{: .d-inline-block }
+
+Available in v1.6.0+
+{: .label .label-green }
+
+OpenAI's API now uses 'developer' role for system messages, but some OpenAI-compatible servers still require the traditional 'system' role:
+
+```ruby
+RubyLLM.configure do |config|
+  # For servers that require 'system' role (e.g., older vLLM, some local models)
+  config.openai_use_system_role = true  # Use 'system' role instead of 'developer'
+  
+  # Your OpenAI-compatible endpoint
+  config.openai_api_base = "http://localhost:11434/v1"  # Ollama, vLLM, etc.
+  config.openai_api_key = "dummy-key"  # If required by your server
+end
+```
+
+By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
 
 ## Default Models
 
-These settings determine which models are used by the top-level helper methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`) when no specific `model:` argument is provided.
-
-*   `config.default_model`: Used by `RubyLLM.chat`. Default: `'gpt-4.1-nano'`.
-*   `config.default_embedding_model`: Used by `RubyLLM.embed`. Default: `'text-embedding-3-small'`.
-*   `config.default_image_model`: Used by `RubyLLM.paint`. Default: `'gpt-image-1'`.
-
-Choose defaults that match your most common use case and provider availability.
-
-## Connection Settings
-
-Fine-tune how RubyLLM handles HTTP connections and retries.
-
-*   `config.request_timeout`: How long (in seconds) to wait for a response before timing out. Default: `120`.
-*   `config.max_retries`: Number of times to retry failed requests due to transient errors (network issues, rate limits, server errors). Default: `3`.
-*   `config.retry_interval`: Initial delay (in seconds) before the first retry. Default: `0.1`.
-*   `config.retry_backoff_factor`: Multiplier for the delay between subsequent retries (exponential backoff). Default: `2`.
-*   `config.retry_interval_randomness`: Factor to add jitter to retry delays, preventing thundering herd issues. Default: `0.5`.
-
-Adjust these based on network conditions and provider reliability.
+Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`):
 
 ```ruby
 RubyLLM.configure do |config|
-  # For a high-latency connection
-  config.request_timeout = 300        # 5 minutes
+  config.default_model = 'claude-3-5-sonnet'           # For RubyLLM.chat
+  config.default_embedding_model = 'text-embedding-3-large'  # For RubyLLM.embed
+  config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
+end
+```
+
+Defaults if not configured:
+- Chat: `gpt-4.1-nano`
+- Embeddings: `text-embedding-3-small`
+- Images: `gpt-image-1`
+
+## Connection Settings
+
+### Timeouts & Retries
+
+Fine-tune how RubyLLM handles network connections:
+
+```ruby
+RubyLLM.configure do |config|
+  # Basic settings
+  config.request_timeout = 120        # Seconds to wait for response (default: 120)
+  config.max_retries = 3              # Retry attempts on failure (default: 3)
+
+  # Advanced retry behavior
+  config.retry_interval = 0.1         # Initial retry delay in seconds (default: 0.1)
+  config.retry_backoff_factor = 2     # Exponential backoff multiplier (default: 2)
+  config.retry_interval_randomness = 0.5  # Jitter to prevent thundering herd (default: 0.5)
+end
+```
+
+Example for high-latency connections:
+
+```ruby
+RubyLLM.configure do |config|
+  config.request_timeout = 300        # 5 minutes for complex tasks
   config.max_retries = 5              # More retry attempts
   config.retry_interval = 1.0         # Start with 1 second delay
   config.retry_backoff_factor = 1.5   # Less aggressive backoff
 end
 ```
 
-## Logging Settings
-RubyLLM provides flexible logging configuration to help you monitor and debug API interactions. You can configure both the log file location and the logging level, or set a custom logger.
+### HTTP Proxy Support
+
+Route requests through a proxy:
 
 ```ruby
 RubyLLM.configure do |config|
-  # --- Logging Settings ---
-  config.log_file = '/logs/ruby_llm.log'  # Path to log file (default: nil, logs to STDOUT)
-  config.log_level = :debug  # Log level (:debug, :info, :warn)
+  # Basic proxy
+  config.http_proxy = "http://proxy.company.com:8080"
 
-  # --- OR Custom Logger ---
-  config.logger = Rails.logger # NOTE: When set the log_file and log_level settings are not used.
+  # Authenticated proxy
+  config.http_proxy = "http://user:pass@proxy.company.com:8080"
+
+  # SOCKS5 proxy
+  config.http_proxy = "socks5://proxy.company.com:1080"
 end
 ```
 
-### Log File Configuration
+## Logging & Debugging
 
-* `config.log_file`: Specifies the path where logs should be written. If not set, logs will be written to STDOUT.
-* The log file will be created if it doesn't exist, and logs will be appended to it.
-
-### Log Levels
-
-* `:debug`: Most verbose level, includes detailed request/response information as provided by the faraday client
-* `:info`: General operational information
-* `:warn`: Warning messages for non-critical issues that may need attention
-
-You can also set the debug level by setting the `RUBYLLM_DEBUG` environment variable to `true`.
-
-### Stream Debug Logging
-{: .d-inline-block }
-
-Available in > v1.5.1
-{: .label .label-yellow }
-
-* `config.log_stream_debug`: When enabled, logs detailed chunk-by-chunk streaming information including intermediate accumulator states. This is useful for debugging streaming issues or understanding how responses are built up over time.
-* Can also be enabled via the `RUBYLLM_STREAM_DEBUG=true` environment variable.
-
-### Custom Logger
-
-* `config.logger`: Specifies a custom `Logger` for where logs should be written.
-
-> If you set a customer logger the `config.log_file` and `config.log_level`
-> settings are not used.
-{: .note }
-
-## Scoped Configuration with Contexts
-
-While `RubyLLM.configure` sets global defaults, `RubyLLM.context` allows you to create temporary, isolated configuration scopes for specific API calls. This is ideal for situations requiring different keys, endpoints, or timeouts temporarily without affecting the rest of the application.
-
-### Why Use Contexts?
-
-*   **Multi-Tenancy:** Use different API keys per tenant.
-*   **Environment Targeting:** Switch between production/staging/local endpoints.
-*   **Specific Task Needs:** Use longer timeouts for complex generations.
-*   **Testing:** Isolate test configurations.
-
-### How to Use Contexts
-
-Pass a block to `RubyLLM.context` to modify a *copy* of the global configuration. The method returns a `Context` object mirroring the top-level `RubyLLM` API.
+### Basic Logging
 
 ```ruby
-# Assume global config is set for OpenAI production
+RubyLLM.configure do |config|
+  # Log to file
+  config.log_file = '/var/log/ruby_llm.log'
+  config.log_level = :info  # :debug, :info, :warn
 
-# Create a context targeting Azure
-azure_context = RubyLLM.context do |config|
-  config.openai_api_key = ENV['AZURE_TENANT_KEY']
-  config.openai_api_base = "https://your-azure.openai.azure.com"
-  config.request_timeout = 180 # Longer timeout
+  # Or use Rails logger
+  config.logger = Rails.logger  # Overrides log_file and log_level
+end
+```
+
+Log levels:
+- `:debug` - Detailed request/response information
+- `:info` - General operational information
+- `:warn` - Non-critical issues
+
+> Setting `config.logger` overrides `log_file` and `log_level` settings.
+{: .note }
+
+### Debug Options
+
+```ruby
+RubyLLM.configure do |config|
+  # Enable debug logging via environment variable
+  config.log_level = :debug if ENV['RUBYLLM_DEBUG'] == 'true'
+
+  # Silence "Assuming model exists" warnings
+  config.log_assume_model_exists = false
+
+  # Show detailed streaming chunks (v1.6.0+)
+  config.log_stream_debug = true  # Or set RUBYLLM_STREAM_DEBUG=true
+end
+```
+
+Stream debug logging shows every chunk, accumulator state, and parsing decision - invaluable for debugging streaming issues.
+
+## Contexts: Isolated Configurations
+
+Create temporary configuration scopes without affecting global settings. Perfect for multi-tenancy, testing, or specific task requirements.
+
+### Basic Context Usage
+
+```ruby
+# Global config uses production OpenAI
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV['OPENAI_PROD_KEY']
 end
 
-# Calls via azure_context use the overridden settings
-chat = azure_context.chat(model: 'my-azure-gpt4o', provider: :openai, assume_model_exists: true)
-response = chat.ask("Query using Azure...")
+# Create isolated context for Azure
+azure_context = RubyLLM.context do |config|
+  config.openai_api_key = ENV['AZURE_KEY']
+  config.openai_api_base = "https://azure.openai.azure.com"
+  config.request_timeout = 180
+end
 
-# Global calls remain unaffected
-default_chat = RubyLLM.chat
-default_response = default_chat.ask("Query using global production settings...")
+# Use Azure for this specific task
+azure_chat = azure_context.chat(model: 'gpt-4')
+response = azure_chat.ask("Process this with Azure...")
+
+# Global config unchanged
+regular_chat = RubyLLM.chat  # Still uses production OpenAI
+```
+
+### Multi-Tenant Applications
+
+```ruby
+class TenantService
+  def initialize(tenant)
+    @context = RubyLLM.context do |config|
+      config.openai_api_key = tenant.openai_key
+      config.default_model = tenant.preferred_model
+      config.request_timeout = tenant.timeout_seconds
+    end
+  end
+
+  def chat
+    @context.chat
+  end
+end
+
+# Each tenant gets isolated configuration
+tenant_a_service = TenantService.new(tenant_a)
+tenant_b_service = TenantService.new(tenant_b)
 ```
 
 ### Key Context Behaviors
 
-*   **Inheritance:** Contexts start with a copy of the global configuration. Unspecified settings retain their global values within the context.
-*   **Isolation:** Modifying configuration within a context block does **not** affect the global `RubyLLM.config`.
-*   **Thread Safety:** Each context is independent, making them safe for use across different threads.
+- **Inheritance**: Contexts start with a copy of global configuration
+- **Isolation**: Changes don't affect global `RubyLLM.config`
+- **Thread Safety**: Each context is independent and thread-safe
 
-Contexts provide a clean and safe mechanism for managing diverse configuration needs within a single application.
+## Rails Integration
 
+For Rails applications, create an initializer:
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  # Use Rails credentials
+  config.openai_api_key = Rails.application.credentials.openai_api_key
+  config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
+
+  # Use Rails logger
+  config.logger = Rails.logger
+
+  # Environment-specific settings
+  config.request_timeout = Rails.env.production? ? 120 : 30
+  config.log_level = Rails.env.production? ? :info : :debug
+end
+```
+
+## Configuration Reference
+
+Here's a complete reference of all configuration options:
+
+```ruby
+RubyLLM.configure do |config|
+  # Provider API Keys
+  config.openai_api_key = String
+  config.anthropic_api_key = String
+  config.gemini_api_key = String
+  config.deepseek_api_key = String
+  config.mistral_api_key = String
+  config.perplexity_api_key = String
+  config.openrouter_api_key = String
+  config.gpustack_api_key = String
+
+  # Provider Endpoints
+  config.openai_api_base = String
+  config.ollama_api_base = String
+  config.gpustack_api_base = String
+
+  # OpenAI Options
+  config.openai_organization_id = String
+  config.openai_project_id = String
+  config.openai_use_system_role = Boolean  # v1.6.0+
+
+  # AWS Bedrock
+  config.bedrock_api_key = String
+  config.bedrock_secret_key = String
+  config.bedrock_region = String
+  config.bedrock_session_token = String
+
+  # Default Models
+  config.default_model = String
+  config.default_embedding_model = String
+  config.default_image_model = String
+
+  # Connection Settings
+  config.request_timeout = Integer
+  config.max_retries = Integer
+  config.retry_interval = Float
+  config.retry_backoff_factor = Integer
+  config.retry_interval_randomness = Float
+  config.http_proxy = String
+
+  # Logging
+  config.logger = Logger
+  config.log_file = String
+  config.log_level = Symbol
+  config.log_assume_model_exists = Boolean
+  config.log_stream_debug = Boolean  # v1.6.0+
+end
+```
+
+## Next Steps
+
+Now that you've configured RubyLLM, you're ready to:
+
+- [Start chatting with AI models]({% link _core_features/chat.md %})
+- [Work with different providers and models]({% link _advanced/models.md %})
+- [Set up Rails integration]({% link _advanced/rails.md %})

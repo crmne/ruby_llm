@@ -65,7 +65,7 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
 
       base_name = Regexp.last_match(1)
       # Normalize to Anthropic naming convention
-      anthropic_name = base_name.gsub('.', '-')
+      anthropic_name = base_name.tr('.', '-')
 
       # Skip if we already have an alias for this
       next if aliases[anthropic_name]
@@ -91,7 +91,7 @@ namespace :aliases do # rubocop:disable Metrics/BlockLength
       # OpenRouter uses "google/" prefix and sometimes different naming
       openrouter_variants = [
         "google/#{model}",
-        "google/#{model.gsub('gemini-', 'gemini-').gsub('.', '-')}",
+        "google/#{model.gsub('gemini-', 'gemini-').tr('.', '-')}",
         "google/#{model.gsub('gemini-', 'gemini-')}"
       ]
 

@@ -138,6 +138,11 @@ module RubyLLM
         self
       end
 
+      def with_headers(...)
+        to_llm.with_headers(...)
+        self
+      end
+
       def with_schema(...)
         to_llm.with_schema(...)
         self
@@ -193,14 +198,28 @@ module RubyLLM
       def complete(...)
         to_llm.complete(...)
       rescue RubyLLM::Error => e
-        if @message&.persisted? && @message.content.blank?
-          RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
-          @message.destroy
-        end
+        cleanup_failed_messages if @message&.persisted? && @message.content.blank?
+        cleanup_orphaned_tool_results
         raise e
       end
 
       private
+
+      def cleanup_failed_messages
+        RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
+        @message.destroy
+      end
+
+      def cleanup_orphaned_tool_results
+        loop do
+          messages.reload
+          last = messages.order(:id).last
+
+          break unless last&.tool_call? || last&.tool_result?
+
+          last.destroy
+        end
+      end
 
       def setup_persistence_callbacks
         # Only set up once per chat instance
@@ -215,7 +234,7 @@ module RubyLLM
       end
 
       def persist_new_message
-        @message = messages.create!(role: :assistant, content: String.new)
+        @message = messages.create!(role: :assistant, content: '')
       end
 
       def persist_message_completion(message)

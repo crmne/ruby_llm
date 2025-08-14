@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.13.4
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>-context-key
+      - Bearer test-context-key
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:31:59 GMT
+      - Sun, 10 Aug 2025 13:44:41 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -35,16 +35,14 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '18'
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      - '21'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -58,11 +56,11 @@ http_interactions:
       string: |
         {
             "error": {
-                "message": "Incorrect API key provided: <GPUSTACK_API_KEY>-con****-key. You can find your API key at https://platform.openai.com/account/api-keys.",
+                "message": "Incorrect API key provided: test-con****-key. You can find your API key at https://platform.openai.com/account/api-keys.",
                 "type": "invalid_request_error",
                 "param": null,
                 "code": "invalid_api_key"
             }
         }
-  recorded_at: Fri, 01 Aug 2025 10:31:59 GMT
+  recorded_at: Sun, 10 Aug 2025 13:44:41 GMT
 recorded_with: VCR 6.3.1
