@@ -101,9 +101,9 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
       let(:chat_second) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
 
       it 'reports cached tokens' do
-        response_first = chat_first.ask("#{MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING}\n\nBased on the above, tell me about Ruby")
-
-        response_second = chat_second.ask("#{MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING}\n\nBased on the above, tell me about Ruby")
+        question = "#{MASSIVE_TEXT_FOR_PROMPT_CACHE_REPORTING}\n\nBased on the above, tell me about Ruby"
+        response_first = chat_first.ask question
+        response_second = chat_second.ask question
 
         expect(response_first.cached_tokens).to be_zero
         expect(response_second.cached_tokens).to be_positive
