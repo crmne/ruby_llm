@@ -66,7 +66,7 @@ module RubyLLM
             id: model_id,
             name: model_id.tr('-', ' ').capitalize,
             provider: provider_instance.slug,
-            capabilities: %w[function_calling streaming],
+            capabilities: provider_class.capabilities.capabilities_for(model_id),
             modalities: { input: %w[text image], output: %w[text] },
             metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
           )
