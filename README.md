@@ -113,7 +113,7 @@ RubyLLM.configure do |config|
   # ... see Configuration guide for all options ...
 end
 ```
-See the [Installation Guide](https://rubyllm.com/installation) for full details.
+See the [Installation Guide](https://rubyllm.com/getting-started/#installation) for full details.
 
 ## Rails Integration
 
@@ -149,7 +149,7 @@ See the [Rails Integration Guide](https://rubyllm.com/guides/rails) for details.
 
 Dive deeper with the official documentation:
 
--   [Installation](https://rubyllm.com/installation)
+-   [Installation](https://rubyllm.com/getting-started/#installation)
 -   [Configuration](https://rubyllm.com/configuration)
 -   **Guides:**
     -   [Getting Started](https://rubyllm.com/guides/getting-started)
