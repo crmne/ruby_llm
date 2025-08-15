@@ -25,6 +25,7 @@ module RubyLLM
       @temperature = 0.7
       @messages = []
       @tools = {}
+      @cache_prompts = { system: false, user: false, tools: false }
       @params = {}
       @headers = {}
       @schema = nil
@@ -127,12 +128,18 @@ module RubyLLM
       messages.each(&)
     end
 
+    def cache_prompts(system: false, user: false, tools: false)
+      @cache_prompts = { system: system, user: user, tools: tools }
+      self
+    end
+
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
         messages,
         tools: @tools,
         temperature: @temperature,
         model: @model.id,
+        cache_prompts: @cache_prompts.dup,
         params: @params,
         headers: @headers,
         schema: @schema,

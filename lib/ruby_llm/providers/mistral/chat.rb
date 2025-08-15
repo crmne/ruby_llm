@@ -13,7 +13,7 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, cache_prompts: {}) # rubocop:disable Metrics/ParameterLists
           payload = super
           # Mistral doesn't support stream_options
           payload.delete(:stream_options)

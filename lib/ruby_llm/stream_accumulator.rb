@@ -12,6 +12,8 @@ module RubyLLM
       @tool_calls = {}
       @input_tokens = 0
       @output_tokens = 0
+      @cached_tokens = 0
+      @cache_creation_tokens = 0
       @latest_tool_call_id = nil
     end
 
@@ -37,6 +39,8 @@ module RubyLLM
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
         output_tokens: @output_tokens.positive? ? @output_tokens : nil,
+        cached_tokens: @cached_tokens.positive? ? @cached_tokens : nil,
+        cache_creation_tokens: @cache_creation_tokens.positive? ? @cache_creation_tokens : nil,
         raw: response
       )
     end
@@ -92,6 +96,8 @@ module RubyLLM
     def count_tokens(chunk)
       @input_tokens = chunk.input_tokens if chunk.input_tokens
       @output_tokens = chunk.output_tokens if chunk.output_tokens
+      @cached_tokens = chunk.cached_tokens if chunk.cached_tokens
+      @cache_creation_tokens = chunk.cache_creation_tokens if chunk.cache_creation_tokens
     end
   end
 end
