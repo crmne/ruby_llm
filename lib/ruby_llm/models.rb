@@ -22,7 +22,7 @@ module RubyLLM
       end
 
       def models_file
-        File.expand_path('models.json', __dir__)
+        RubyLLM.config.model_file_path
       end
 
       def refresh!

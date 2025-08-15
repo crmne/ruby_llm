@@ -11,6 +11,22 @@ RSpec.describe RubyLLM::Models do
     described_class.instance_variable_set(:@instance, nil)
   end
 
+  describe 'models file' do
+    it 'uses the bundled model file by default' do
+      expect(described_class.models_file).to eq(
+        File.expand_path(File.join(__dir__, '..', '..', 'lib', 'ruby_llm', 'models.json'))
+      )
+    end
+
+    it 'supports customization' do
+      RubyLLM.config.model_file_path = File.join(Dir.tmpdir, 'foobar.json')
+
+      expect(described_class.models_file).to eq(
+        File.join(Dir.tmpdir, 'foobar.json')
+      )
+    end
+  end
+
   describe 'filtering and chaining' do
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')

@@ -29,6 +29,8 @@ module RubyLLM
                   :gpustack_api_base,
                   :gpustack_api_key,
                   :mistral_api_key,
+                  # Model configuration
+                  :model_file_path,
                   # Default models
                   :default_model,
                   :default_embedding_model,
@@ -54,6 +56,8 @@ module RubyLLM
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
       @http_proxy = nil
+
+      @model_file_path = File.expand_path('models.json', __dir__)
 
       # Default models
       @default_model = 'gpt-4.1-nano'
