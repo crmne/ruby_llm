@@ -56,6 +56,19 @@ module RubyLLM
         parameters[name] = Parameter.new(name, **options)
       end
 
+      def schema(schema = nil)
+        return @schema if schema.nil?
+
+        schema_instance = schema.is_a?(Class) ? schema.new : schema
+
+        # Accept both RubyLLM::Schema instances and plain JSON schemas
+        @schema = if schema_instance.respond_to?(:to_json_schema)
+                    schema_instance.to_json_schema[:schema]
+                  else
+                    schema_instance
+                  end
+      end
+
       def parameters
         @parameters ||= {}
       end
@@ -78,6 +91,10 @@ module RubyLLM
 
     def parameters
       self.class.parameters
+    end
+
+    def schema
+      self.class.schema
     end
 
     def call(args)

@@ -8,16 +8,24 @@ module RubyLLM
         module_function
 
         def tool_for(tool)
+          parameters_schema = if tool.schema
+                                tool.schema
+                              elsif !tool.parameters.empty?
+                                {
+                                  type: 'object',
+                                  properties: clean_parameters(tool.parameters),
+                                  required: required_parameters(tool.parameters)
+                                }
+                              else
+                                {}
+                              end
+
           {
             type: 'function',
             function: {
               name: tool.name,
               description: tool.description,
-              parameters: {
-                type: 'object',
-                properties: tool.parameters.transform_values { |param| param_schema(param) },
-                required: tool.parameters.select { |_, p| p.required }.keys
-              }
+              parameters: parameters_schema
             }
           }
         end
@@ -27,6 +35,14 @@ module RubyLLM
             type: param.type,
             description: param.description
           }.compact
+        end
+
+        def clean_parameters(parameters)
+          parameters.transform_values { |param| param_schema(param) }
+        end
+
+        def required_parameters(parameters)
+          parameters.select { |_, p| p.required }.keys
         end
 
         def format_tool_calls(tool_calls)
