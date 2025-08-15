@@ -23,7 +23,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:35 GMT
+      - Fri, 01 Aug 2025 09:56:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -39,7 +39,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '199'
       X-Ratelimit-Remaining-Tokens:
-      - '399999'
+      - '400000'
       X-Ratelimit-Reset-Requests:
       - 300ms
       X-Ratelimit-Reset-Tokens:
@@ -47,14 +47,16 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '391'
+      - '467'
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -74,5 +76,76 @@ http_interactions:
                 "code": "rate_limit_exceeded"
             }
         }
-  recorded_at: Tue, 12 Aug 2025 14:46:35 GMT
+  recorded_at: Fri, 01 Aug 2025 09:56:46 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"Hi","status":"completed"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 500
+      message: Internal Server Error
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:04:44 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '353'
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '6894'
+      X-Envoy-Upstream-Service-Time:
+      - '6899'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "error": {
+            "message": "An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID req_630c2c7cf0cdc55830bd88fee6ac4495 in your message.",
+            "type": "server_error",
+            "param": null,
+            "code": "server_error"
+          }
+        }
+  recorded_at: Tue, 05 Aug 2025 05:04:44 GMT
 recorded_with: VCR 6.3.1

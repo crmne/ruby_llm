@@ -26,6 +26,8 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
       - Fri, 01 Aug 2025 01:17:08 GMT
       Access-Control-Allow-Origin:
@@ -33,33 +35,33 @@ http_interactions:
       Etag:
       - W/"688c1594-9c6"
       Expires:
-      - Tue, 12 Aug 2025 06:28:16 GMT
+      - Fri, 01 Aug 2025 05:20:19 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 0F79:2DD3B1:116E95A:118D26A:689ADCA8
+      - B236:345B54:360B62E:3669196:688C4C3B
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Tue, 12 Aug 2025 14:45:49 GMT
+      - Fri, 01 Aug 2025 10:49:50 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '54'
       X-Served-By:
-      - cache-fra-etou8220121-FRA
+      - cache-fra-etou8220179-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1755009950.735969,VS0,VE102
+      - S1754045390.012972,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - d9f0123d3e877340bbc2d391d41a018d26bd359c
+      - 753740b46b2f38d261d72c275cfc756ac037b586
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 12 Aug 2025 14:45:49 GMT
+  recorded_at: Fri, 01 Aug 2025 10:49:50 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:45:51 GMT
+      - Fri, 01 Aug 2025 10:49:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,13 +167,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1689'
+      - '1874'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1705'
+      - '1966'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -186,6 +188,8 @@ http_interactions:
       - 194ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -205,16 +209,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C3kY26ClREEj9BvHjaWsCePN49dov",
+          "id": "chatcmpl-Bzhcc4Zax3beaEa9OK4BHZADkWs6O",
           "object": "chat.completion",
-          "created": 1755009950,
+          "created": 1754045390,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file 'license.txt' contains the licensing and copyright information for the Ruby programming language. It states that Ruby is free software created by Yukihiro Matsumoto and can be redistributed or modified under certain conditions. \n\nThe license offers two options:\n- The 2-clause Berkeley Software Distribution License (BSDL), which is referenced in the file.\n- Or specific conditions outlined in the text, which include permissions for copying, modification, distribution (both source and binary forms), and inclusion in other software, with certain restrictions and requirements.\n\nAdditionally, it clarifies that scripts and library files used as input or output are not automatically covered by the license, and disclaims warranties, emphasizing that the software is provided \"as is.\"",
+                "content": "The file 'license.txt' contains the licensing information for Ruby, which is copyrighted free software created by Yukihiro Matsumoto. It outlines the terms under which the software can be redistributed, modified, and used. \n\nKey points include:\n- You can freely copy and distribute the source code, provided all copyright notices and disclaimers are maintained.\n- You can modify the software under certain conditions, such as placing modifications in the public domain, using them only within your organization, or giving binaries non-standard names with instructions for obtaining the original.\n- Distribution of object code or binaries is permitted if certain conditions are met, like providing instructions or source code.\n- You can incorporate parts of the software into other software, but some files may have different terms.\n- Input/output scripts and libraries are not automatically covered by the license.\n- The software is provided \"as is\" without warranties.\n\nThis license offers a flexible framework for using, modifying, and sharing Ruby while maintaining certain protections for the original author.",
                 "refusal": null,
                 "annotations": []
               },
@@ -224,8 +228,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 146,
-            "total_tokens": 686,
+            "completion_tokens": 200,
+            "total_tokens": 740,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -240,5 +244,177 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_479cfdfab2"
         }
-  recorded_at: Tue, 12 Aug 2025 14:45:51 GMT
+  recorded_at: Fri, 01 Aug 2025 10:49:52 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":[{"type":"input_text","text":"What''s
+        in this file?"},{"type":"input_text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n  3.
+        You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n       b)
+        accompany the distribution with the machine-readable source of\n\t  the software.\n\n       c)
+        give non-standard binaries non-standard names, with\n          instructions
+        on where to get the original software distribution.\n\n       d) make other
+        distribution arrangements with the author.\n\n  4. You may modify and include
+        the part of the software into any other\n     software (possibly commercial).  But
+        some files in the distribution\n     are not written by the author, so that
+        they are not under these terms.\n\n     For the list of those files and their
+        copying conditions, see the\n     file LEGAL.\n\n  5. The scripts and library
+        files supplied as input to or produced as\n     output from the software do
+        not automatically fall under the\n     copyright of the software, but belong
+        to whomever generated them,\n     and may be sold commercially, and may be
+        aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
+        IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
+        LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        A PARTICULAR\n     PURPOSE.\n</file>"}],"status":"completed"}],"stream":false,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:26:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999442'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '3172'
+      X-Envoy-Upstream-Service-Time:
+      - '3178'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_6891960b3ee08192a54b1a3b1cde8c9202963210610baacf",
+          "object": "response",
+          "created_at": 1754371595,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_6891960bbbbc8192a96956b6f73a30b602963210610baacf",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The file `license.txt` contains the licensing information for the Ruby programming language. It states that Ruby is copyrighted free software created by Yukihiro Matsumoto. \n\nThe license allows you to:\n- Reproduce and distribute verbatim copies of Ruby's source code.\n- Modify the source code under certain conditions, such as placing modifications in the public domain, using the modified version within your organization, giving non-standard binaries unique names with instructions, or making other arrangements with the author.\n- Distribute Ruby in binary form with specific instructions or accompanying source code.\n- Incorporate parts of Ruby into other software, including commercial ones, with some files possibly not being under these terms.\n\nThe license also emphasizes that the software is provided \"as is\" without warranties and clarifies the ownership of scripts and generated files.\n\nIn summary, it is a permissive license with specific conditions for redistribution and modification, typical of open-source software."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 540,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 186,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 726
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:26:38 GMT
 recorded_with: VCR 6.3.1

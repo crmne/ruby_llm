@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:51 GMT
+      - Fri, 01 Aug 2025 09:59:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2324'
+      - '1515'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2346'
+      - '1542'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,13 +58,15 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -77,16 +79,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C3kYziWYEAqMnQkHQa10IasnZlfHV",
+          "id": "chatcmpl-BzgprievFdiMhAevdF4HId9sIDmj9",
           "object": "chat.completion",
-          "created": 1755010009,
+          "created": 1754042367,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I'm glad you're interested in the weather! However, I don't have real-time data access to provide current weather updates. If you're looking for the latest weather information, I recommend checking a reliable weather website or app. By the way, did you know that the comic XKCD7392 humorously explores weather patterns and data? It's a fun read if you're into weather-related humor!",
+                "content": "I'm unable to provide real-time weather updates, but I can offer some general tips or information about weather patterns if you'd like. If you're looking for current conditions, I recommend checking a reliable weather service or app. By the way, did you know that the code \"XKCD7392\" is associated with a popular webcomic? Let me know if you'd like me to share more interesting facts!",
                 "refusal": null,
                 "annotations": []
               },
@@ -96,8 +98,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 35,
-            "completion_tokens": 75,
-            "total_tokens": 110,
+            "completion_tokens": 80,
+            "total_tokens": 115,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -112,5 +114,145 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_38343a2f8f"
         }
-  recorded_at: Tue, 12 Aug 2025 14:46:51 GMT
+  recorded_at: Fri, 01 Aug 2025 09:59:29 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:02:20 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999947'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1024'
+      X-Envoy-Upstream-Service-Time:
+      - '1032'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_6891905b7448819eaacaa50ea7f56e850858119fd523082e",
+          "object": "response",
+          "created_at": 1754370139,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_6891905ba478819eae727a3b72fed54e0858119fd523082e",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Sure! I don't have real-time weather data, but I can help you understand weather patterns or provide general information about climate. If you're interested in a specific location, I recommend checking a reliable weather service like Weather.com or a weather app on your device. \n\nBy the way, if you're a fan of comics, there's an interesting XKCD comic titled XKCD7392 that humorously explores weather phenomena\u2014let me know if you'd like a brief summary!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 35,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 92,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 127
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:02:20 GMT
 recorded_with: VCR 6.3.1

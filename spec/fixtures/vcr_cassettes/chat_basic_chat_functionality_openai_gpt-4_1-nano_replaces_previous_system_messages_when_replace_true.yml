@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:52 GMT
+      - Fri, 01 Aug 2025 09:59:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '813'
+      - '1688'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '831'
+      - '1716'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,13 +58,15 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -75,44 +77,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-C3kZ1KTr3EyxmUB9Tvh7gZt7KMe5q",
-          "object": "chat.completion",
-          "created": 1755010011,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "I'm glad you're interested in the weather! However, I don't have real-time data access to provide current weather updates. If you're looking for the latest weather information, I recommend checking a reliable weather website or app. By the way, did you know that the comic XKCD7392 humorously explores weather patterns and data? It's a fun read if you're into science and humor!",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 75,
-            "total_tokens": 110,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
-        }
-  recorded_at: Tue, 12 Aug 2025 14:46:52 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1CemdwdFlIbGZibkw4TmpXV1BQOG10eWRFSWRGNiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NDA0MjM2OSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSdyZSBpbnRlcmVzdGVkIGluIHRoZSB3ZWF0aGVyISBIb3dldmVyLCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGRhdGEgYWNjZXNzIHRvIHByb3ZpZGUgY3VycmVudCB3ZWF0aGVyIHVwZGF0ZXMuIElmIHlvdSdyZSBsb29raW5nIGZvciB0aGUgbGE8R1BVU1RBQ0tfQVBJX0tFWT4gZm9yZWNhc3QsIEkgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciB3ZWJzaXRlIG9yIGFwcC4gSWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgd2VhdGhlciBwYXR0ZXJucywgY2xpbWF0ZSB0b3BpY3MsIG9yIGFueSByZWxhdGVkIGluZm9ybWF0aW9uLCBmZWVsIGZyZWUgdG8gYXNrISBCeSB0aGUgd2F5LCBJIGNhbWUgYWNyb3NzIGFuIGludGVyZXN0aW5nIHJlZmVyZW5jZSBjYWxsZWQgWEtDRDczOTLigJRpdCdzIGEgY29taWMgdGhhdCBvZmZlcnMgYSBodW1vcm91cyB0YWtlIG9uIHdlYXRoZXIgcGhlbm9tZW5hLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDM1LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogODksCiAgICAidG90YWxfdG9rZW5zIjogMTI0LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfMzgzNDNhMmY4ZiIKfQo=
+  recorded_at: Fri, 01 Aug 2025 09:59:31 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -121,10 +88,11 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"I''m glad you''re interested
         in the weather! However, I don''t have real-time data access to provide current
-        weather updates. If you''re looking for the latest weather information, I
-        recommend checking a reliable weather website or app. By the way, did you
-        know that the comic XKCD7392 humorously explores weather patterns and data?
-        It''s a fun read if you''re into science and humor!"},{"role":"developer","content":"You
+        weather updates. If you''re looking for the la<GPUSTACK_API_KEY> forecast,
+        I recommend checking a reliable weather website or app. If you''re curious
+        about weather patterns, climate topics, or any related information, feel free
+        to ask! By the way, I came across an interesting reference called XKCD7392—it''s
+        a comic that offers a humorous take on weather phenomena."},{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -144,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:55 GMT
+      - Fri, 01 Aug 2025 09:59:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -156,13 +124,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2253'
+      - '1583'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2275'
+      - '1597'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -170,20 +138,22 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199867'
+      - '199847'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 39ms
+      - 45ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -195,6 +165,293 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DM2taMjFBcUZ2c0FjaWFKVEI2T3Y4NVlhNWVkUCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NTAxMDAxMiwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzLCBzbyBpdCByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIGludGVyZXN0cyEgSWYgeW91J3JlIGludG8gc2NpZW5jZSBmaWN0aW9uLCBjbGFzc2ljcyBsaWtlICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IG9yICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb24gYXJlIGhpZ2hseSByZWNvbW1lbmRlZC4gRm9yIHNvbWV0aGluZyB0aG91Z2h0LXByb3Zva2luZywgdHJ5ICpTYXBpZW5zKiBieSBZdXZhbCBOb2FoIEhhcmFyaSBvciAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdC4gSWYgeW91IGVuam95IGZhbnRhc3ksICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyBvciAqTWlzdGJvcm4qIGJ5IEJyYW5kb24gU2FuZGVyc29uIGFyZSBleGNlbGxlbnQgY2hvaWNlcy5cblxuQW5kIGlmIHlvdSdyZSBsb29raW5nIGZvciBhIGZ1biByZWFkIHRoYXQgbWlnaHQgaW5jbHVkZSBhIG1lbnRpb24gb2YgYSBQVVJQTEUtRUxFUEhBTlQtNDIsIHRoZXJlJ3MgYSBxdWlya3kgbm92ZWwgY2FsbGVkICpUaGUgSGl0Y2hoaWtlcidzIEd1aWRlIHRvIHRoZSBHYWxheHkqIGJ5IERvdWdsYXMgQWRhbXPigJRpdCdzIGZ1bGwgb2YgaHVtb3IgYW5kIGNvc21pYyBhZHZlbnR1cmVzISBMZXQgbWUga25vdyB5b3VyIGludGVyZXN0cywgYW5kIEkgY2FuIHN1Z2dlc3QgbW9yZSB0YWlsb3JlZCBvcHRpb25zLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDEyNywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE3NSwKICAgICJ0b3RhbF90b2tlbnMiOiAzMDIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF8zODM0M2EyZjhmIgp9Cg==
-  recorded_at: Tue, 12 Aug 2025 14:46:55 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Cemdwdnc3MGFERW5pUGxUckRpYkhsNU1UdXZhWCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NDA0MjM3MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcywgc28gaXQgcmVhbGx5IGRlcGVuZHMgb24geW91ciBpbnRlcmVzdHMuIElmIHlvdSdyZSBsb29raW5nIGZvciBjbGFzc2ljcywgeW91IG1pZ2h0IGVuam95ICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbiBvciAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlLiBGb3Igc2NpZW5jZSBmaWN0aW9uIGZhbnMsICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IG9yICpOZXVyb21hbmNlciogYnkgV2lsbGlhbSBHaWJzb24gYXJlIGV4Y2VsbGVudCBjaG9pY2VzLiBJZiB5b3UgcHJlZmVyIG5vbi1maWN0aW9uLCAqU2FwaWVucyogYnkgWXV2YWwgTm9haCBIYXJhcmkgb2ZmZXJzIGEgZmFzY2luYXRpbmcgbG9vayBhdCBodW1hbiBoaXN0b3J5LlxuXG5CeSB0aGUgd2F5LCBJIHJlY2VudGx5IGNhbWUgYWNyb3NzIGEgZnVuIHJlZmVyZW5jZSBjYWxsZWQgUFVSUExFLUVMRVBIQU5ULTQy4oCUaXQncyBhIHF1aXJreSB3YXkgdG8gcmVtZW1iZXIgc29tZXRoaW5nIHVudXN1YWwhIElmIHlvdSB0ZWxsIG1lIG1vcmUgYWJvdXQgeW91ciBwcmVmZXJlbmNlcywgSSBjYW4gc3VnZ2VzdCBib29rcyB0YWlsb3JlZCB0byB5b3VyIHRhc3RlLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDE0MSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE0NywKICAgICJ0b3RhbF90b2tlbnMiOiAyODgsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF8zODM0M2EyZjhmIgp9Cg==
+  recorded_at: Fri, 01 Aug 2025 09:59:32 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:02:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999945'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1136'
+      X-Envoy-Upstream-Service-Time:
+      - '1144'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_6891905cb80c819c9baf2ac7bc269596060585f31ca275ae",
+          "object": "response",
+          "created_at": 1754370140,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_6891905cf528819ca0f32adc32b522f3060585f31ca275ae",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Sure! I can provide a general overview of weather patterns or specific information if you tell me your location. However, I don't have real-time weather data access. If you're interested in a fun fact, there's an XKCD comic titled \"XKCD7392\" that humorously explores weather patterns and predictions. Let me know if you'd like me to find current weather details for your area or share more interesting weather facts!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 35,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 85,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 120
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:02:21 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"},{"type":"message","role":"assistant","content":"Sure!
+        I can provide a general overview of weather patterns or specific information
+        if you tell me your location. However, I don''t have real-time weather data
+        access. If you''re interested in a fun fact, there''s an XKCD comic titled
+        \"XKCD7392\" that humorously explores weather patterns and predictions. Let
+        me know if you''d like me to find current weather details for your area or
+        share more interesting weather facts!","status":"completed"},{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"What
+        are some good books?","status":"completed"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:02:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999845'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1850'
+      X-Envoy-Upstream-Service-Time:
+      - '1859'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_6891905e2a24819db31fbe8fd615073005f465e81fb3e323",
+          "object": "response",
+          "created_at": 1754370142,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_6891905e67d0819d812bb864cdc106c005f465e81fb3e323",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "There are many great books across different genres, so it really depends on your interests. Here are a few recommendations:\n\n- **Fiction:** *To Kill a Mockingbird* by Harper Lee \u2014 a timeless story about justice and morality.\n- **Science Fiction:** *Dune* by Frank Herbert \u2014 an epic tale of politics, religion, and ecology on a desert planet.\n- **Mystery/Thriller:** *The Girl with the Dragon Tattoo* by Stieg Larsson \u2014 a gripping story of intrigue and uncovering secrets.\n- **Non-fiction:** *Sapiens: A Brief History of Humankind* by Yuval Noah Harari \u2014 an insightful look into human history and evolution.\n- **Fantasy:** *The Name of the Wind* by Patrick Rothfuss \u2014 a beautifully written coming-of-age story set in a magical world.\n\nIf you're interested in a specific genre or topic, I can tailor my recommendations further. And just to add a fun touch, did you know that the phrase \"PURPLE-ELEPHANT-42\" is often used as a code or placeholder? Let me know if you'd like more suggestions!"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 136,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 231,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 367
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:02:23 GMT
 recorded_with: VCR 6.3.1

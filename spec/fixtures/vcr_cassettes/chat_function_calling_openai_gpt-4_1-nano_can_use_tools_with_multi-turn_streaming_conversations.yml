@@ -9,7 +9,7 @@ http_interactions:
         the weather in Berlin? (52.5200, 13.4050)"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"stream_options":{"include_usage":true}}'
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:11 GMT
+      - Fri, 01 Aug 2025 10:56:02 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '390'
+      - '204'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '412'
+      - '221'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -60,13 +60,15 @@ http_interactions:
       - 4ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -78,56 +80,56 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l","type":"function","function":{"name":"weather","arguments":""}}],"refusal":null},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"6H1Czkw"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_rf7Z2GzrXGPubgnN2tGSGaxB","type":"function","function":{"name":"weather","arguments":""}}],"refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\""}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"1SHztBV365zPs"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"latitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"ygbTCGeQ"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"latitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"LYHTk7OLdbX"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"52"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"5FFH1IeqDBnECa"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"52"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"9dLJbQ509vErL72"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"520"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"3yXCG94ezC4i9"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"520"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"0"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"VB0qnfle8VhJdiG"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"0"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\",\""}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"kqMtSEKnICi"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\",\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"longitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"cHyHn5K"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"longitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"zg4MVvvI7Bn"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"13"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"dQwpWYQ3JR71OZ"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"13"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"iqZzAlz95ESmMMq"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"405"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"wsI4uUGM4kbN9"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"405"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"0"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"3OT4W4LybKQekuq"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"0"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"logprobs":null,"finish_reason":null}],"usage":null,"obfuscation":"WKpQPcczdUfmJ"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null,"obfuscation":"gqPEHJssOpPRS9"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZKgj8cRjQ6xwtWq7SbZJIFbfKW","object":"chat.completion.chunk","created":1755010030,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[],"usage":{"prompt_tokens":88,"completion_tokens":23,"total_tokens":111,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"obfuscation":"UvXnayVi"}
+        data: {"id":"chatcmpl-Bzhibnf3OQqPrcDvB9AdHLyssORTX","object":"chat.completion.chunk","created":1754045761,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[],"usage":{"prompt_tokens":88,"completion_tokens":23,"total_tokens":111,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Tue, 12 Aug 2025 14:47:11 GMT
+  recorded_at: Fri, 01 Aug 2025 10:56:02 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_rf7Z2GzrXGPubgnN2tGSGaxB","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_rf7Z2GzrXGPubgnN2tGSGaxB"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"stream_options":{"include_usage":true}}'
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -145,7 +147,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:11 GMT
+      - Fri, 01 Aug 2025 10:56:02 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -157,13 +159,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '359'
+      - '212'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '404'
+      - '243'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -178,13 +180,15 @@ http_interactions:
       - 9ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -196,21 +200,21 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwicmVmdXNhbCI6bnVsbH0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Im01amJzdjNmIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiVGhlIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Ilk5N0R4MUsifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJwciJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3ZWF0aGVyIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IktCIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IlJraGJMS2sifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgQmVybGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6ImkxUiJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpcyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJyOTFNSHRNIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiICJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiIxOGVBdEI3NWkifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxNSJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJpNm0yRk90UyJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IsKwQyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJUZTEwRWVYQyJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3aXRoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Im93dGExIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGEifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoiWGpwVW42bzQifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2luZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJmY3ZiTCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzcGVlZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJ0R1RFIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIG9mIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IjhORXdLUm8ifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IjFnRzJIU1o5diJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjEwIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Ik5CZnJKMlRNIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGttIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IlVzbDlvRUkifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pMa2N3cWxpM0I0Sms2SkNYRVA5bDR3ZmxPIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIvaCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJpRUhCdkRxRSJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoiRlNJREtTSWR5In0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTGtjd3FsaTNCNEprNkpDWEVQOWw0d2ZsTyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzEsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6e30sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoiNkVDWSJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWkxrY3dxbGkzQjRKazZKQ1hFUDlsNHdmbE8iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMxLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbXSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQzLCJjb21wbGV0aW9uX3Rva2VucyI6MjAsInRvdGFsX3Rva2VucyI6MTYzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH19LCJvYmZ1c2NhdGlvbiI6IkJjZzdnNngifQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Tue, 12 Aug 2025 14:47:12 GMT
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwicmVmdXNhbCI6bnVsbH0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBjdXJyZW50In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2VhdGhlciJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgQmVybGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgaXMifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjE1In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiLCsEMifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3aXRoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgYSJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdpbmQifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzcGVlZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIG9mIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxMCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGttIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGljV2ZLdk50SUZiT21GVkVKcjRjVE9XaE14Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2MiwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIvaCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpY1dmS3ZOdElGYk9tRlZFSnI0Y1RPV2hNeCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjIsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6e30sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWNXZkt2TnRJRmJPbUZWRUpyNGNUT1doTXgiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzYyLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbXSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQzLCJjb21wbGV0aW9uX3Rva2VucyI6MjAsInRvdGFsX3Rva2VucyI6MTYzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH19fQoKZGF0YTogW0RPTkVdCgo=
+  recorded_at: Fri, 01 Aug 2025 10:56:03 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_rf7Z2GzrXGPubgnN2tGSGaxB","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_rf7Z2GzrXGPubgnN2tGSGaxB"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"stream_options":{"include_usage":true}}'
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -228,7 +232,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:13 GMT
+      - Fri, 01 Aug 2025 10:56:03 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -240,13 +244,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '662'
+      - '342'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '734'
+      - '397'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -261,6 +265,8 @@ http_interactions:
       - 18ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -279,51 +285,59 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"role":"assistant","content":null},"logprobs":null,"finish_reason":null}],"obfuscation":"Co2pL"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"role":"assistant","content":null,"tool_calls":[{"index":0,"id":"call_VWgMNrar1ZsOulyXw85j3RZ1","type":"function","function":{"name":"weather","arguments":""}}],"refusal":null},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"id":"call_8MwrMQm4pxCA1sH9wGM5Rx6L","type":"function","function":{"name":"weather","arguments":""}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"3R9yH2Oq"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"{\"la"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"jmjW1QRekRo"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"latitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"titud"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"O5F6D1nJslA"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"e\": \"4"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"m3VVA26v"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"48"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"8.85"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"oETyRKYPEdlI"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"75\", "}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"EfrkgJf9Zh"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"857"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"longi"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"XLtRHJJcz"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"5"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"tude"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"QL6l5rmzkMWh"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\",\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\": \"2"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"2JsY4rtR7"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"longitude"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":".3514\""}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"ovAOZbI1w"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\":\""}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","usage":null,"choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"}"}}]},"logprobs":null,"finish_reason":null}],"obfuscation":"NhQe6GTdO41NkxI"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"2"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null,"obfuscation":"HGVnTsrkpQYfRy"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"."}}]},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"chatcmpl-C3kZMJ6sANxhSk4LIhsN2rkTwSFVs","object":"chat.completion.chunk","created":1755010032,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[],"usage":{"prompt_tokens":188,"completion_tokens":39,"total_tokens":227,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}},"obfuscation":"R0qumvm"}
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"351"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"4"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"\"}"}}]},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[{"index":0,"delta":{},"logprobs":null,"finish_reason":"tool_calls"}],"usage":null}
+
+        data: {"id":"chatcmpl-BzhidJV5hNnnYhvGlBE3HmYBKckQW","object":"chat.completion.chunk","created":1754045763,"model":"gpt-4.1-nano-2025-04-14","service_tier":"default","system_fingerprint":"fp_38343a2f8f","choices":[],"usage":{"prompt_tokens":188,"completion_tokens":23,"total_tokens":211,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0}}}
 
         data: [DONE]
 
-  recorded_at: Tue, 12 Aug 2025 14:47:13 GMT
+  recorded_at: Fri, 01 Aug 2025 10:56:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1XLXRmBFkdzHYYl6Iu0dKI9l"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_rf7Z2GzrXGPubgnN2tGSGaxB","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_rf7Z2GzrXGPubgnN2tGSGaxB"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_8MwrMQm4pxCA1sH9wGM5Rx6L","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_8MwrMQm4pxCA1sH9wGM5Rx6L"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_VWgMNrar1ZsOulyXw85j3RZ1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_VWgMNrar1ZsOulyXw85j3RZ1"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"stream_options":{"include_usage":true}}'
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto","stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -341,7 +355,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:14 GMT
+      - Fri, 01 Aug 2025 10:56:06 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -353,13 +367,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '278'
+      - '583'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '332'
+      - '1797'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -374,6 +388,8 @@ http_interactions:
       - 23ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -392,6 +408,563 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwicmVmdXNhbCI6bnVsbH0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Ikkza2tFOVZ2In0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiVGhlIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6Ik5OaHlDSjAifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgY3VycmVudCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJRRCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3ZWF0aGVyIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IkQ3In0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6ImhqWVB3em4ifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgUGFyaXMifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoia1ZWYSJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpcyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJnYnFkdW9hIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiICJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJXSnhaTTRaVUUifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIxNSJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJOYmMxVDZBTCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IsKwQyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJUaTZKU3RoVCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiB3aXRoIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6ImU2cG5rIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGEifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoiT3dSRmlYeXoifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2luZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJRNUdlbSJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBzcGVlZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiJ4VzVpIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIG9mIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IlI3R3RqTlYifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IkJEOWxOaFhscCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjEwIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IlR3YWVpMlMwIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGttIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsLCJvYmZ1c2NhdGlvbiI6IjI0QVAwemkifQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUMza1pOMG9xTGZ0cThoY3BCOEF5TUREbGJqVzVuIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NTAxMDAzMywibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIvaCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbCwib2JmdXNjYXRpb24iOiI4Y29KUHRERCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoicDVZTXdPaWcwIn0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1DM2taTjBvcUxmdHE4aGNwQjhBeU1ERGxialc1biIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTUwMTAwMzMsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6e30sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOm51bGwsIm9iZnVzY2F0aW9uIjoid1JObCJ9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQzNrWk4wb3FMZnRxOGhjcEI4QXlNRERsYmpXNW4iLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU1MDEwMDMzLCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbXSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjQzLCJjb21wbGV0aW9uX3Rva2VucyI6MjAsInRvdGFsX3Rva2VucyI6MjYzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH19LCJvYmZ1c2NhdGlvbiI6IllTT21OVFkifQoKZGF0YTogW0RPTkVdCgo=
-  recorded_at: Tue, 12 Aug 2025 14:47:14 GMT
+        ZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIiwicmVmdXNhbCI6bnVsbH0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiJUaGUifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBjdXJyZW50In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2VhdGhlciJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIGluIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgUGFyaXMifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBpcyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiICJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiMTUifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IsKwQyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHdpdGgifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiBhIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgd2luZCJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6bnVsbH1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJkZWx0YSI6eyJjb250ZW50IjoiIHNwZWVkIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIgb2YifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IiAifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6IjEwIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIga20ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOm51bGx9XSwidXNhZ2UiOm51bGx9CgpkYXRhOiB7ImlkIjoiY2hhdGNtcGwtQnpoaWZNak5wWGNDanBxV1BlWHVvOHZ3WHlHYTUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24uY2h1bmsiLCJjcmVhdGVkIjoxNzU0MDQ1NzY1LCJtb2RlbCI6ImdwdC00LjEtbmFuby0yMDI1LTA0LTE0Iiwic2VydmljZV90aWVyIjoiZGVmYXVsdCIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzM4MzQzYTJmOGYiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZGVsdGEiOnsiY29udGVudCI6Ii9oIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7ImNvbnRlbnQiOiIuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjpudWxsfV0sInVzYWdlIjpudWxsfQoKZGF0YTogeyJpZCI6ImNoYXRjbXBsLUJ6aGlmTWpOcFhjQ2pwcVdQZVh1bzh2d1h5R2E1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uLmNodW5rIiwiY3JlYXRlZCI6MTc1NDA0NTc2NSwibW9kZWwiOiJncHQtNC4xLW5hbm8tMjAyNS0wNC0xNCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8zODM0M2EyZjhmIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImRlbHRhIjp7fSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6bnVsbH0KCmRhdGE6IHsiaWQiOiJjaGF0Y21wbC1CemhpZk1qTnBYY0NqcHFXUGVYdW84dndYeUdhNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbi5jaHVuayIsImNyZWF0ZWQiOjE3NTQwNDU3NjUsIm1vZGVsIjoiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0Iiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMzgzNDNhMmY4ZiIsImNob2ljZXMiOltdLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNDMsImNvbXBsZXRpb25fdG9rZW5zIjoyMCwidG90YWxfdG9rZW5zIjoyNjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfX19CgpkYXRhOiBbRE9ORV0KCg==
+  recorded_at: Fri, 01 Aug 2025 10:56:06 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)","status":"completed"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 04:48:08 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '53'
+      X-Envoy-Upstream-Service-Time:
+      - '56'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_6892de882e9c81a099298b297213ea3d0175291c25f20381","object":"response","created_at":1754455688,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"id":"resp_6892de882e9c81a099298b297213ea3d0175291c25f20381","object":"response","created_at":1754455688,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","type":"function_call","status":"in_progress","arguments":"","call_id":"call_e7erFBLodAOeMIeKd6h0HpwJ","name":"weather"}}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":3,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"{","obfuscation":"YaVV0BorRE5oHiX"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":4,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\"latitude","obfuscation":"Geh3BJg"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":5,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\":","obfuscation":"Bc0ymQXyT8DWEH"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":6,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\"52","obfuscation":"BtMS1VbmC5YxW"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":7,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":".","obfuscation":"Edz6odAuxNpwtPL"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":8,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"520","obfuscation":"d5BAWThNiYGNn"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":9,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"0","obfuscation":"zHGtjUsTJ8Qj3SX"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":10,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\",","obfuscation":"tsRjjX7cmNBkqo"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":11,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\"longitude","obfuscation":"k4tvgQ"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":12,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\":","obfuscation":"DI9VAPXZ2uwDXL"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":13,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\"13","obfuscation":"nCtHb7VHNCbpq"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":14,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":".","obfuscation":"J0kFGvj4p3j7cSV"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":15,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"405","obfuscation":"xfFZxZalH5Q9a"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":16,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"0","obfuscation":"Tk1zwsOJD837fMw"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":17,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"delta":"\"}","obfuscation":"50cZgFYqqzF6Ki"}
+
+        event: response.function_call_arguments.done
+        data: {"type":"response.function_call_arguments.done","sequence_number":18,"item_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output_index":0,"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","sequence_number":19,"output_index":0,"item":{"id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","type":"function_call","status":"completed","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_e7erFBLodAOeMIeKd6h0HpwJ","name":"weather"}}
+
+        event: response.completed
+        data: {"type":"response.completed","sequence_number":20,"response":{"id":"resp_6892de882e9c81a099298b297213ea3d0175291c25f20381","object":"response","created_at":1754455688,"status":"completed","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[{"id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","type":"function_call","status":"completed","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","call_id":"call_e7erFBLodAOeMIeKd6h0HpwJ","name":"weather"}],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":82,"input_tokens_details":{"cached_tokens":0},"output_tokens":40,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":122},"user":null,"metadata":{}}}
+
+  recorded_at: Wed, 06 Aug 2025 04:48:09 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)","status":"completed"},{"type":"function_call","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","status":"completed"},{"type":"function_call_output","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","status":"completed"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 05:03:15 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '686'
+      X-Envoy-Upstream-Service-Time:
+      - '758'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_6892e2135160819fa0cb843ac1cb6e4a0d8f8183ade38c24","object":"response","created_at":1754456595,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"id":"resp_6892e2135160819fa0cb843ac1cb6e4a0d8f8183ade38c24","object":"response","created_at":1754456595,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","type":"message","status":"in_progress","content":[],"role":"assistant"}}
+
+        event: response.content_part.added
+        data: {"type":"response.content_part.added","sequence_number":3,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""}}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":4,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":"The","logprobs":[],"obfuscation":"ibpFBxAQleln1"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":5,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" current","logprobs":[],"obfuscation":"Ohjsf0uO"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":6,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" weather","logprobs":[],"obfuscation":"kqLkwy16"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":7,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" in","logprobs":[],"obfuscation":"MbS9O0ejb1xFU"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":8,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" Berlin","logprobs":[],"obfuscation":"jeoGuzkfD"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":9,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" is","logprobs":[],"obfuscation":"z47TEzvV93xBQ"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":10,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" ","logprobs":[],"obfuscation":"6jImZhc9XAoFX3c"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":11,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":"15","logprobs":[],"obfuscation":"H3cwmXtTF7TeLp"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":12,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":"°C","logprobs":[],"obfuscation":"acilnRe8FcqWSY"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":13,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" with","logprobs":[],"obfuscation":"cRJtGs0nAFG"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":14,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" a","logprobs":[],"obfuscation":"wUA5ExCsdYtbDc"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":15,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" wind","logprobs":[],"obfuscation":"8dAFKBTr6If"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":16,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" speed","logprobs":[],"obfuscation":"QyqmunAz5E"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":17,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" of","logprobs":[],"obfuscation":"CwzqpsQzpHSyD"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":18,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" ","logprobs":[],"obfuscation":"UFz9dhlqKZtbK0Q"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":19,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":"10","logprobs":[],"obfuscation":"KzfUzypB5QV1DE"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":20,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":" km","logprobs":[],"obfuscation":"zk5E69q3fprQv"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":21,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":"/h","logprobs":[],"obfuscation":"64bkjS9Ef2v9fm"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":22,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"delta":".","logprobs":[],"obfuscation":"O7p9IOWOEN7v4f9"}
+
+        event: response.output_text.done
+        data: {"type":"response.output_text.done","sequence_number":23,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"text":"The current weather in Berlin is 15°C with a wind speed of 10 km/h.","logprobs":[]}
+
+        event: response.content_part.done
+        data: {"type":"response.content_part.done","sequence_number":24,"item_id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","output_index":0,"content_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Berlin is 15°C with a wind speed of 10 km/h."}}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","sequence_number":25,"output_index":0,"item":{"id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Berlin is 15°C with a wind speed of 10 km/h."}],"role":"assistant"}}
+
+        event: response.completed
+        data: {"type":"response.completed","sequence_number":26,"response":{"id":"resp_6892e2135160819fa0cb843ac1cb6e4a0d8f8183ade38c24","object":"response","created_at":1754456595,"status":"completed","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[{"id":"msg_6892e2154ff0819f998fa892fdec71af0d8f8183ade38c24","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Berlin is 15°C with a wind speed of 10 km/h."}],"role":"assistant"}],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":135,"input_tokens_details":{"cached_tokens":0},"output_tokens":21,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":156},"user":null,"metadata":{}}}
+
+  recorded_at: Wed, 06 Aug 2025 05:03:17 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)","status":"completed"},{"type":"function_call","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","status":"completed"},{"type":"function_call_output","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","status":"completed"},{"type":"message","role":"assistant","content":"The
+        current weather in Berlin is 15°C with a wind speed of 10 km/h.","status":"completed"},{"type":"message","role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)","status":"completed"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 05:03:56 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '120'
+      X-Envoy-Upstream-Service-Time:
+      - '130'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_6892e23cd00c819caf99bed75381d65d0913884e263aa147","object":"response","created_at":1754456636,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"id":"resp_6892e23cd00c819caf99bed75381d65d0913884e263aa147","object":"response","created_at":1754456636,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","type":"function_call","status":"in_progress","arguments":"","call_id":"call_yQDWqIjycn01jm2QDH0tVuRC","name":"weather"}}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":3,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"{\"","obfuscation":"H6p7Tsx6U4CDMb"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":4,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"latitude","obfuscation":"GrKsIXSg"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":5,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"\":\"","obfuscation":"2MU4Cj8qn7f6r"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":6,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"48","obfuscation":"nsj6A4tQiDegCO"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":7,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":".","obfuscation":"98tbbIWjDrEcW7U"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":8,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"857","obfuscation":"TB21g6RYeRtIN"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":9,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"5","obfuscation":"LJr4ciYsUTz27uz"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":10,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"\",\"","obfuscation":"9Kf0hbrAnbJPK"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":11,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"longitude","obfuscation":"HXs01N4"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":12,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"\":\"","obfuscation":"BPTyr70X7uWLm"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":13,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"2","obfuscation":"pIocor7TOtJg1lI"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":14,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":".","obfuscation":"6w8TG16Gh2xP1mZ"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":15,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"351","obfuscation":"ph6buwyv9hdHO"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":16,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"4","obfuscation":"0uSQ2a1TirbeAPF"}
+
+        event: response.function_call_arguments.delta
+        data: {"type":"response.function_call_arguments.delta","sequence_number":17,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"delta":"\"}","obfuscation":"RUk0su4kvacjRw"}
+
+        event: response.function_call_arguments.done
+        data: {"type":"response.function_call_arguments.done","sequence_number":18,"item_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output_index":0,"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","sequence_number":19,"output_index":0,"item":{"id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","type":"function_call","status":"completed","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","call_id":"call_yQDWqIjycn01jm2QDH0tVuRC","name":"weather"}}
+
+        event: response.completed
+        data: {"type":"response.completed","sequence_number":20,"response":{"id":"resp_6892e23cd00c819caf99bed75381d65d0913884e263aa147","object":"response","created_at":1754456636,"status":"completed","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[{"id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","type":"function_call","status":"completed","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","call_id":"call_yQDWqIjycn01jm2QDH0tVuRC","name":"weather"}],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":180,"input_tokens_details":{"cached_tokens":0},"output_tokens":24,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":204},"user":null,"metadata":{}}}
+
+  recorded_at: Wed, 06 Aug 2025 05:03:57 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)","status":"completed"},{"type":"function_call","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","status":"completed"},{"type":"function_call_output","call_id":"fc_6892de88a52081a0a155618e248085a00175291c25f20381","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","status":"completed"},{"type":"message","role":"assistant","content":"The
+        current weather in Berlin is 15°C with a wind speed of 10 km/h.","status":"completed"},{"type":"message","role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)","status":"completed"},{"type":"function_call","call_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","status":"completed"},{"type":"function_call_output","call_id":"fc_6892e23d35e4819cba5487948d2196830913884e263aa147","output":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","status":"completed"}],"stream":true,"temperature":0.7,"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 06 Aug 2025 05:03:58 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '55'
+      X-Envoy-Upstream-Service-Time:
+      - '59'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","sequence_number":0,"response":{"id":"resp_6892e23e4ae0819c863f1436e00ed3f1034d7c8a463b2321","object":"response","created_at":1754456638,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","sequence_number":1,"response":{"id":"resp_6892e23e4ae0819c863f1436e00ed3f1034d7c8a463b2321","object":"response","created_at":1754456638,"status":"in_progress","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"auto","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}}}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","sequence_number":2,"output_index":0,"item":{"id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","type":"message","status":"in_progress","content":[],"role":"assistant"}}
+
+        event: response.content_part.added
+        data: {"type":"response.content_part.added","sequence_number":3,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""}}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":4,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":"The","logprobs":[],"obfuscation":"aBXAJfvoFjyoY"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":5,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" current","logprobs":[],"obfuscation":"2NBN8xiz"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":6,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" weather","logprobs":[],"obfuscation":"3sdqUTYi"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":7,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" in","logprobs":[],"obfuscation":"8rFcLhrc7f9C7"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":8,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" Paris","logprobs":[],"obfuscation":"Ua8XRNTzuc"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":9,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" is","logprobs":[],"obfuscation":"stD9ZQ983hpLZ"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":10,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" ","logprobs":[],"obfuscation":"GBcMUJCBHGbm8T5"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":11,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":"15","logprobs":[],"obfuscation":"VPFnqdZGTLUCs8"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":12,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":"°C","logprobs":[],"obfuscation":"zzUDsrZdlrWJ19"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":13,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" with","logprobs":[],"obfuscation":"wYrKhcjOUly"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":14,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" a","logprobs":[],"obfuscation":"CnMtbpOTRuHfzg"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":15,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" wind","logprobs":[],"obfuscation":"ZFndkwQsWDZ"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":16,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" speed","logprobs":[],"obfuscation":"x04KYxSQAt"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":17,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" of","logprobs":[],"obfuscation":"4HUPO7j5YBfF3"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":18,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" ","logprobs":[],"obfuscation":"hEvb8mT88XVnx5v"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":19,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":"10","logprobs":[],"obfuscation":"59T2zDNLZjvexM"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":20,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":" km","logprobs":[],"obfuscation":"Mi8gIMu7585IK"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":21,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":"/h","logprobs":[],"obfuscation":"o5O1zyndWDknej"}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","sequence_number":22,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"delta":".","logprobs":[],"obfuscation":"1MaT2HxFwDMB5Fu"}
+
+        event: response.output_text.done
+        data: {"type":"response.output_text.done","sequence_number":23,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"text":"The current weather in Paris is 15°C with a wind speed of 10 km/h.","logprobs":[]}
+
+        event: response.content_part.done
+        data: {"type":"response.content_part.done","sequence_number":24,"item_id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","output_index":0,"content_index":0,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Paris is 15°C with a wind speed of 10 km/h."}}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","sequence_number":25,"output_index":0,"item":{"id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Paris is 15°C with a wind speed of 10 km/h."}],"role":"assistant"}}
+
+        event: response.completed
+        data: {"type":"response.completed","sequence_number":26,"response":{"id":"resp_6892e23e4ae0819c863f1436e00ed3f1034d7c8a463b2321","object":"response","created_at":1754456638,"status":"completed","background":false,"error":null,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-4.1-nano-2025-04-14","output":[{"id":"msg_6892e23e8f54819cb1cd8f338810bae4034d7c8a463b2321","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"The current weather in Paris is 15°C with a wind speed of 10 km/h."}],"role":"assistant"}],"parallel_tool_calls":true,"previous_response_id":null,"prompt_cache_key":null,"reasoning":{"effort":null,"summary":null},"safety_identifier":null,"service_tier":"default","store":true,"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Gets current weather for a location","name":"weather","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g., 13.4050)"}},"required":["latitude","longitude"]},"strict":true}],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":233,"input_tokens_details":{"cached_tokens":0},"output_tokens":21,"output_tokens_details":{"reasoning_tokens":0},"total_tokens":254},"user":null,"metadata":{}}}
+
+  recorded_at: Wed, 06 Aug 2025 05:03:58 GMT
 recorded_with: VCR 6.3.1
+...

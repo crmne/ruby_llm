@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:19 GMT
+      - Fri, 01 Aug 2025 10:31:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1075'
+      - '673'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '4456'
+      - '729'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -59,6 +59,8 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -78,9 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C3kZSy75Tg1PVaRCzbgfkN9JhPQLr",
+          "id": "chatcmpl-BzhL8p85MQ4ynWwZiUEIkGQj1rfxy",
           "object": "chat.completion",
-          "created": 1755010038,
+          "created": 1754044306,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -90,7 +92,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_wXMoeCrFEaysI1qTy5WnDHww",
+                    "id": "call_LTrHzw0t63XNVKsAzd9y7ilZ",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -98,7 +100,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_lw9cI09mCOMJ2aQhVbHHETdw",
+                    "id": "call_PSPAqXwc2gpgEtHCURMTchLk",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -106,7 +108,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_Fdiaxc3MB4bmR0sUccF56NKv",
+                    "id": "call_5vs1C67BAsRAB5slcuaI6OMb",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -139,7 +141,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Tue, 12 Aug 2025 14:47:19 GMT
+  recorded_at: Fri, 01 Aug 2025 10:31:47 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -147,11 +149,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_wXMoeCrFEaysI1qTy5WnDHww","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_lw9cI09mCOMJ2aQhVbHHETdw","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_Fdiaxc3MB4bmR0sUccF56NKv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_wXMoeCrFEaysI1qTy5WnDHww"},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_lw9cI09mCOMJ2aQhVbHHETdw"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_Fdiaxc3MB4bmR0sUccF56NKv"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_LTrHzw0t63XNVKsAzd9y7ilZ","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_PSPAqXwc2gpgEtHCURMTchLk","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5vs1C67BAsRAB5slcuaI6OMb","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_LTrHzw0t63XNVKsAzd9y7ilZ"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_PSPAqXwc2gpgEtHCURMTchLk"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_5vs1C67BAsRAB5slcuaI6OMb"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -169,7 +171,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:47:20 GMT
+      - Fri, 01 Aug 2025 10:31:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -181,13 +183,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '708'
+      - '320'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '752'
+      - '333'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -202,13 +204,15 @@ http_interactions:
       - 12ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -221,9 +225,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C3kZTj2uwLs6qG5P1G8xTZZApqhIb",
+          "id": "chatcmpl-BzhL9WgeRze5PIjy7gul3xOtXk8WT",
           "object": "chat.completion",
-          "created": 1755010039,
+          "created": 1754044307,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -256,5 +260,321 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_f12167b370"
         }
-  recorded_at: Tue, 12 Aug 2025 14:47:20 GMT
+  recorded_at: Fri, 01 Aug 2025 10:31:47 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","status":"completed"},{"type":"message","role":"user","content":"Roll
+        the dice 3 times","status":"completed"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:04:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999717'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1312'
+      X-Envoy-Upstream-Service-Time:
+      - '1319'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_689190f9797481a2bdcc554024f770ff0dc77fb2373c8627",
+          "object": "response",
+          "created_at": 1754370297,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "fc_689190f9fee081a2835c9a99334091450dc77fb2373c8627",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_1d2yhsAV5juMsQVITOE3aMKQ",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_689190fa256c81a28ccd2210c2e5701d0dc77fb2373c8627",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_0WvwAmT3iGEXXrF0L6MN2G8t",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_689190fa62f481a2a2de79606e25d3aa0dc77fb2373c8627",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_bF9EEMLbvuWa4wz8DBSY5mVT",
+              "name": "dice_roll"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 66,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 54,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 120
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:04:58 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.","status":"completed"},{"type":"message","role":"user","content":"Roll
+        the dice 3 times","status":"completed"},{"type":"function_call","call_id":"call_1d2yhsAV5juMsQVITOE3aMKQ","name":"dice_roll","arguments":"{}","status":"completed"},{"type":"function_call","call_id":"call_0WvwAmT3iGEXXrF0L6MN2G8t","name":"dice_roll","arguments":"{}","status":"completed"},{"type":"function_call","call_id":"call_bF9EEMLbvuWa4wz8DBSY5mVT","name":"dice_roll","arguments":"{}","status":"completed"},{"type":"function_call_output","call_id":"call_1d2yhsAV5juMsQVITOE3aMKQ","output":"{:roll=>1}","status":"completed"},{"type":"function_call_output","call_id":"call_0WvwAmT3iGEXXrF0L6MN2G8t","output":"{:roll=>2}","status":"completed"},{"type":"function_call_output","call_id":"call_bF9EEMLbvuWa4wz8DBSY5mVT","output":"{:roll=>3}","status":"completed"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 05 Aug 2025 05:05:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999647'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1160'
+      X-Envoy-Upstream-Service-Time:
+      - '1166'
+      X-Envoy-Decorator-Operation:
+      - tasksapi.openai.svc.cluster.local:8081/*
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_689190fb308881a2b6fc0c5cdb5685d60a9ff8f877f39857",
+          "object": "response",
+          "created_at": 1754370299,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_689190fc168481a29c39583498ac84690a9ff8f877f39857",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The results of the three rolls are 1, 2, and 3."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 135,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 19,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 154
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 05 Aug 2025 05:05:00 GMT
 recorded_with: VCR 6.3.1

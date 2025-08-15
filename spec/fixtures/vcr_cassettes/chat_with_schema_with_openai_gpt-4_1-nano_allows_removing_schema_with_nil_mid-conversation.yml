@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"}],"stream":false,"temperature":0.7,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
+        a person named Bob","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,46 +24,44 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:43 GMT
+      - Wed, 06 Aug 2025 04:18:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '411'
-      Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999940'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '429'
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199991'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 2ms
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '522'
+      X-Envoy-Upstream-Service-Time:
+      - '530'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -74,55 +72,101 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-C3kYsFngB5uWuXxiUd4p6A9HWebld",
-          "object": "chat.completion",
-          "created": 1755010002,
+          "id": "resp_6892d7923340819285e2d49bc48b0e550b9d53e1a1247b55",
+          "object": "response",
+          "created_at": 1754453906,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"name\":\"Bob\",\"age\":30}",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
+              "id": "msg_6892d7927ccc8192864353f37e6aed9e0b9d53e1a1247b55",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"name\":\"Bob\",\"age\":30}"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 47,
-            "completion_tokens": 9,
-            "total_tokens": 56,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "age"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
             }
           },
-          "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 41,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 10,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 51
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Tue, 12 Aug 2025 14:46:43 GMT
+  recorded_at: Wed, 06 Aug 2025 04:18:26 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
+        a person named Bob","status":"completed"},{"type":"message","role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","status":"completed"},{"type":"message","role":"user","content":"Now
+        just tell me about Ruby","status":"completed"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -137,46 +181,44 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 12 Aug 2025 14:46:45 GMT
+      - Wed, 06 Aug 2025 04:18:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2110'
-      Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999945'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2141'
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199976'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 7ms
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '2466'
+      X-Envoy-Upstream-Service-Time:
+      - '2475'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -187,42 +229,69 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-C3kYtnOZdDujc8fEzZpl3dDXlOPU7",
-          "object": "chat.completion",
-          "created": 1755010003,
+          "id": "resp_6892d793310481a29768052e613a842004fe68ea18936eb5",
+          "object": "response",
+          "created_at": 1754453907,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Certainly! Ruby is a dynamic, high-level programming language known for its simplicity and productivity. It was created by Yukihiro \"Matz\" Matsumoto and first released in 1995. Ruby emphasizes natural syntax that is easy to read and write, making it popular among developers for web development, automation, and more.\n\nSome key features of Ruby include:\n- Object-oriented programming: Everything in Ruby is an object.\n- Dynamic typing: You don't need to specify data types explicitly.\n- Built-in support for exception handling and garbage collection.\n- Rich standard library and a vibrant community with many open-source libraries and frameworks, most notably Ruby on Rails for web development.\n\nRuby is appreciated for its elegant syntax and ease of use, making it a favorite for beginners and experienced programmers alike.",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
+              "id": "msg_6892d793725081a2873dbfbcd1275aeb04fe68ea18936eb5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Certainly! Here's some general information about Ruby:\n\nRuby is a dynamic, open-source programming language known for its simplicity and productivity. It was created by Yukihiro Matsumoto (often called Matz) in the mid-1990s with the goal of making programming more enjoyable and natural. Ruby emphasizes human-friendly syntax, making it easy to read and write.\n\nRuby is widely used for web development, especially with the Ruby on Rails framework, which has contributed to its popularity. Besides web development, Ruby is also used for scripting, automation, and data processing.\n\nIf you were referring to a person named Ruby, please let me know, and I can provide more specific information!"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 157,
-            "total_tokens": 192,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.7,
+          "text": {
+            "format": {
+              "type": "text"
             }
           },
-          "service_tier": "default",
-          "system_fingerprint": "fp_f12167b370"
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 35,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 137,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 172
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Tue, 12 Aug 2025 14:46:45 GMT
+  recorded_at: Wed, 06 Aug 2025 04:18:29 GMT
 recorded_with: VCR 6.3.1

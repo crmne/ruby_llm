@@ -21,7 +21,7 @@ module RubyLLM
           # Only include temperature if it's not nil (some models don't accept it)
           payload[:temperature] = temperature unless temperature.nil?
 
-          payload[:tools] = tools.map { |_, tool| tool_for(tool) } if tools.any?
+          payload[:tools] = tools.map { |_, tool| chat_tool_for(tool) } if tools.any?
 
           if schema
             # Use strict mode from schema if specified, default to true

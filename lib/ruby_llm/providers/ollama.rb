@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # Ollama API integration.
-    class Ollama < OpenAI
+    class Ollama < OpenAIBase
       include Ollama::Chat
       include Ollama::Media
 
