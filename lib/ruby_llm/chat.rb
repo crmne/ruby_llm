@@ -28,6 +28,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @failover_configurations = []
       @on = {
         new_message: nil,
         end_message: nil,
@@ -103,6 +104,21 @@ module RubyLLM
       self
     end
 
+    def with_failover(*configurations)
+      @failover_configurations = configurations.map do |config|
+        case config
+        when Hash
+          config
+        when String
+          model_info = Models.find(config)
+          { model: config, provider: model_info.provider.to_sym }
+        else
+          raise ArgumentError, "Invalid failover configuration: #{config}"
+        end
+      end
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -128,16 +144,24 @@ module RubyLLM
     end
 
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model.id,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        &wrap_streaming_block(&)
-      )
+      original_provider = @provider
+      original_model = @model
+
+      begin
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model.id,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          &wrap_streaming_block(&)
+        )
+      rescue RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError,
+             RubyLLM::OverloadedError, RubyLLM::ServerError => e
+        response = attempt_failover(original_provider, original_model, e, &)
+      end
 
       @on[:new_message]&.call unless block_given?
 
@@ -212,8 +236,44 @@ module RubyLLM
       tool.call(args)
     end
 
+    def attempt_failover(original_provider, original_model, original_error, &)
+      raise original_error unless @failover_configurations.any?
+
+      failover_index = 0
+      response = nil
+
+      @failover_configurations.each do |config|
+        with_context(config[:context]) if config[:context]
+        with_model(config[:model], provider: config[:provider])
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model.id,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          &wrap_streaming_block(&)
+        )
+        break
+      rescue RateLimitError, ServiceUnavailableError, OverloadedError, ServerError => e
+        raise e if failover_index == @failover_configurations.size - 1
+
+        failover_index += 1
+        next
+      end
+
+      unless response
+        @provider = original_provider
+        @model = original_model
+        raise original_error
+      end
+
+      response
+    end
+
     def instance_variables
-      super - %i[@connection @config]
+      super - %i[@connection @config @failover_configurations]
     end
   end
 end
