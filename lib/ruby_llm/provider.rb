@@ -62,6 +62,11 @@ module RubyLLM
       end
     end
 
+    def render_payload_for_batch_request(_messages, tools:, temperature:, model:, params: {}, schema: nil) # rubocop:disable Metrics/ParameterLists
+      raise NotImplementedError, "#{self.class.name} does not support batch requests. " \
+                                 'Provider must implement render_payload_for_batch_request to enable batch request generation.'
+    end
+
     def list_models
       response = @connection.get models_url
       parse_list_models_response response, slug, capabilities
