@@ -89,29 +89,44 @@ module RubyLLM
         def convert_schema_to_gemini(schema) # rubocop:disable Metrics/PerceivedComplexity
           return nil unless schema
 
+          result = case schema[:type]
+                   when 'object'
+                     properties = schema[:properties]&.transform_values { |prop| convert_schema_to_gemini(prop) } || {}
+                     {
+                       type: 'OBJECT',
+                       properties: properties,
+                       required: schema[:required] || []
+                     }
+                   when 'array'
+                     {
+                       type: 'ARRAY',
+                       items: schema[:items] ? convert_schema_to_gemini(schema[:items]) : { type: 'STRING' }
+                     }
+                   when 'number'
+                     { type: 'NUMBER' }
+                   when 'integer'
+                     { type: 'INTEGER' }
+                   when 'boolean'
+                     { type: 'BOOLEAN' }
+                   else
+                     { type: 'STRING' }
+                   end
+
+          result[:description] = schema[:description] if schema[:description]
+
           case schema[:type]
-          when 'object'
-            {
-              type: 'OBJECT',
-              properties: schema[:properties]&.transform_values { |prop| convert_schema_to_gemini(prop) } || {},
-              required: schema[:required] || []
-            }
-          when 'array'
-            {
-              type: 'ARRAY',
-              items: schema[:items] ? convert_schema_to_gemini(schema[:items]) : { type: 'STRING' }
-            }
           when 'string'
-            result = { type: 'STRING' }
             result[:enum] = schema[:enum] if schema[:enum]
-            result
+            result[:format] = schema[:format] if schema[:format]
+            result[:nullable] = schema[:nullable] if schema.key?(:nullable)
           when 'number', 'integer'
-            { type: 'NUMBER' }
+            result[:format] = schema[:format] if schema[:format]
+            result[:nullable] = schema[:nullable] if schema.key?(:nullable)
           when 'boolean'
-            { type: 'BOOLEAN' }
-          else
-            { type: 'STRING' }
+            result[:nullable] = schema[:nullable] if schema.key?(:nullable)
           end
+
+          result
         end
 
         def extract_content(data)
