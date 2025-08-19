@@ -121,6 +121,13 @@ module RubyLLM
             result[:nullable] = schema[:nullable] if schema.key?(:nullable)
           when 'number', 'integer'
             result[:format] = schema[:format] if schema[:format]
+            result[:minimum] = schema[:minimum] if schema[:minimum]
+            result[:maximum] = schema[:maximum] if schema[:maximum]
+            result[:enum] = schema[:enum] if schema[:enum]
+            result[:nullable] = schema[:nullable] if schema.key?(:nullable)
+          when 'array'
+            result[:minItems] = schema[:minItems] if schema[:minItems]
+            result[:maxItems] = schema[:maxItems] if schema[:maxItems]
             result[:nullable] = schema[:nullable] if schema.key?(:nullable)
           when 'boolean'
             result[:nullable] = schema[:nullable] if schema.key?(:nullable)
