@@ -92,11 +92,14 @@ module RubyLLM
           result = case schema[:type]
                    when 'object'
                      properties = schema[:properties]&.transform_values { |prop| convert_schema_to_gemini(prop) } || {}
-                     {
+                     object_result = {
                        type: 'OBJECT',
                        properties: properties,
                        required: schema[:required] || []
                      }
+                     object_result[:propertyOrdering] = schema[:propertyOrdering] if schema[:propertyOrdering]
+                     object_result[:nullable] = schema[:nullable] if schema.key?(:nullable)
+                     object_result
                    when 'array'
                      {
                        type: 'ARRAY',
