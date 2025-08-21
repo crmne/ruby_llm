@@ -53,10 +53,15 @@ module RubyLLM
           {
             type: 'OBJECT',
             properties: parameters.transform_values do |param|
-              {
+              property = {
                 type: param_type_for_gemini(param.type),
                 description: param.description
               }.compact
+
+              # Add items field for array types
+              property[:items] = { type: 'STRING' } if param.type.to_s.downcase == 'array'
+
+              property
             end,
             required: parameters.select { |_, p| p.required }.keys.map(&:to_s)
           }
