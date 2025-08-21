@@ -23,10 +23,15 @@ module RubyLLM
         end
 
         def param_schema(param)
-          {
+          schema = {
             type: param.type,
             description: param.description
           }.compact
+
+          # Add items field for array types
+          schema[:items] = { type: 'string' } if param.type.to_s.downcase == 'array'
+
+          schema
         end
 
         def format_tool_calls(tool_calls)
