@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
         result = instance.send(:format_parameters, parameters)
 
         expect(result[:type]).to eq('OBJECT')
-        expect(result[:properties][:fields]).to include(
+        expect(result[:properties][:fields]).to eq(
           type: 'ARRAY',
           description: 'List of fields to return',
           items: { type: 'STRING' }
@@ -31,10 +31,10 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
     end
 
     context 'with mixed parameter types' do
-      it 'correctly formats all parameter types' do
+      it 'correctly formats all parameter types including arrays with items field' do
         parameters = {
           name: RubyLLM::Parameter.new('name', type: 'string', desc: 'Name field'),
-          age: RubyLLM::Parameter.new('age', type: 'integer', desc: 'Age field'),
+          count: RubyLLM::Parameter.new('count', type: 'integer', desc: 'Count field'),
           active: RubyLLM::Parameter.new('active', type: 'boolean', desc: 'Active status'),
           tags: RubyLLM::Parameter.new('tags', type: 'array', desc: 'List of tags'),
           metadata: RubyLLM::Parameter.new('metadata', type: 'object', desc: 'Additional metadata')
@@ -44,32 +44,32 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
 
         expect(result[:type]).to eq('OBJECT')
 
-        # Check string parameter
+        # String parameter - no items field
         expect(result[:properties][:name]).to eq(
           type: 'STRING',
           description: 'Name field'
         )
 
-        # Check integer parameter
-        expect(result[:properties][:age]).to eq(
+        # Integer parameter - no items field
+        expect(result[:properties][:count]).to eq(
           type: 'NUMBER',
-          description: 'Age field'
+          description: 'Count field'
         )
 
-        # Check boolean parameter
+        # Boolean parameter - no items field
         expect(result[:properties][:active]).to eq(
           type: 'BOOLEAN',
           description: 'Active status'
         )
 
-        # Check array parameter with items field
+        # Array parameter - MUST have items field
         expect(result[:properties][:tags]).to eq(
           type: 'ARRAY',
           description: 'List of tags',
           items: { type: 'STRING' }
         )
 
-        # Check object parameter
+        # Object parameter - no items field
         expect(result[:properties][:metadata]).to eq(
           type: 'OBJECT',
           description: 'Additional metadata'
@@ -81,43 +81,65 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
       it 'correctly identifies required parameters' do
         parameters = {
           required_field: RubyLLM::Parameter.new('required_field', type: 'string', desc: 'Required', required: true),
-          optional_field: RubyLLM::Parameter.new('optional_field', type: 'string', desc: 'Optional', required: false)
+          optional_field: RubyLLM::Parameter.new('optional_field', type: 'string', desc: 'Optional', required: false),
+          required_array: RubyLLM::Parameter.new('required_array', type: 'array', desc: 'Required array',
+                                                                   required: true)
         }
 
         result = instance.send(:format_parameters, parameters)
 
-        expect(result[:required]).to contain_exactly('required_field')
+        expect(result[:required]).to contain_exactly('required_field', 'required_array')
+
+        # Also verify array parameter has items field
+        expect(result[:properties][:required_array]).to include(
+          type: 'ARRAY',
+          items: { type: 'STRING' }
+        )
       end
     end
   end
 
   describe '#format_tools' do
-    it 'formats tools with array parameters correctly' do
+    it 'formats tools with array parameters correctly for Gemini API' do
       tool_class = Class.new(RubyLLM::Tool) do
         def self.name
-          'ProcessFieldsTool'
+          'DataProcessor'
         end
 
-        description 'Process multiple fields'
-        param :fields, type: 'array', desc: 'Fields to process'
+        description 'Process data with specific fields'
+        param :fields, type: 'array', desc: 'Fields to process', required: true
+        param :format, type: 'string', desc: 'Output format', required: false
 
-        def execute(fields:)
-          "Processed #{fields.length} fields"
+        def execute(fields:, format: 'json')
+          "Processed #{fields.length} fields in #{format} format"
         end
       end
 
-      tools = { process_fields: tool_class.new }
+      tools = { data_processor: tool_class.new }
       result = instance.send(:format_tools, tools)
 
       expect(result).to be_an(Array)
       expect(result.first[:functionDeclarations]).to be_an(Array)
 
       function_decl = result.first[:functionDeclarations].first
-      expect(function_decl[:name]).to eq('process_fields')
-      expect(function_decl[:parameters][:properties][:fields]).to include(
+      expect(function_decl[:name]).to eq('data_processor')
+      expect(function_decl[:description]).to eq('Process data with specific fields')
+
+      # Verify array parameter has items field (this is the critical fix)
+      expect(function_decl[:parameters][:properties][:fields]).to eq(
         type: 'ARRAY',
+        description: 'Fields to process',
         items: { type: 'STRING' }
       )
+
+      # Verify string parameter doesn't have items field
+      expect(function_decl[:parameters][:properties][:format]).to eq(
+        type: 'STRING',
+        description: 'Output format'
+      )
+
+      # Verify only required parameters are marked as required
+      expect(function_decl[:parameters][:required]).to contain_exactly('fields')
     end
   end
 end
