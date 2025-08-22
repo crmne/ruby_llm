@@ -39,7 +39,7 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          data = try_parse_json(response.body)
           return if data.empty?
 
           raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
