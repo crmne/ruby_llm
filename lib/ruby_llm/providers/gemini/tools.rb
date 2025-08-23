@@ -42,10 +42,15 @@ module RubyLLM
         private
 
         def function_declaration_for(tool)
+          parameters = if tool.schema
+                         tool.schema
+                       elsif tool.parameters.any?
+                         format_parameters(tool.parameters)
+                       end
           {
             name: tool.name,
             description: tool.description,
-            parameters: tool.parameters.any? ? format_parameters(tool.parameters) : nil
+            parameters: parameters
           }.compact
         end
 

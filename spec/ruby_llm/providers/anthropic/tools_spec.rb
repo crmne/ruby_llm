@@ -4,6 +4,141 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Anthropic::Tools do
   let(:tools) { described_class }
+  let(:complex_schema) do
+    {
+      '$defs': {},
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        items: {
+          type: 'array',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            properties: {
+              id: { type: 'string' },
+              meta: {
+                type: 'object',
+                additionalProperties: false,
+                properties: {
+                  tags: { type: 'array', items: { type: 'string' } }
+                },
+                required: %i[tags]
+              }
+            },
+            required: %i[id meta]
+          }
+        }
+      },
+      required: %i[items],
+      strict: true
+    }
+  end
+
+  describe '.function_for' do
+    it 'accepts a RubyLLM::Schema class and matches an equivalent hand-built JSON schema' do
+      require 'ruby_llm/schema'
+
+      # Equivalent schema expressed via RubyLLM::Schema DSL
+      class AnthropicNodeSchema < RubyLLM::Schema
+        array :items, required: true do
+          object do
+            string :id, required: true
+            object :meta do
+              array :tags, of: :string, required: true
+            end
+          end
+        end
+      end
+
+      # Validate the schema class renders the expected JSON schema
+      dsl_schema = AnthropicNodeSchema.new.to_json_schema[:schema]
+      expect(dsl_schema.stringify_keys).to eq(complex_schema.stringify_keys)
+
+      # Now use it through a Tool
+      stub_const('AnthropicSchemaBackedTool', Class.new(RubyLLM::Tool) do
+        description 'Anthropic tool using RubyLLM::Schema'
+        schema AnthropicNodeSchema
+        def execute(...); end
+      end)
+
+      tool = AnthropicSchemaBackedTool.new
+      built = tools.function_for(tool)
+
+      expect(built[:name]).to eq(tool.name)
+      expect(built[:description]).to eq('Anthropic tool using RubyLLM::Schema')
+      expect(built[:input_schema].stringify_keys).to eq(complex_schema.stringify_keys)
+    end
+
+    it 'passes through a complex JSON Schema when tool.schema is present' do
+      complex_schema = {
+        type: 'object',
+        properties: {
+          node: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              children: {
+                type: 'array',
+                items: { type: 'string' }
+              }
+            },
+            required: %w[id]
+          }
+        },
+        required: %w[node]
+      }
+
+      stub_const('AnthropicComplexSchemaTool', Class.new(RubyLLM::Tool) do
+        description 'Anthropic complex schema tool'
+        schema complex_schema
+        def execute(...); end
+      end)
+
+      tool = AnthropicComplexSchemaTool.new
+      built = tools.function_for(tool)
+
+      expect(built[:name]).to eq(tool.name)
+      expect(built[:description]).to eq(tool.description)
+      expect(built[:input_schema]).to eq(complex_schema)
+    end
+
+    it 'builds a parameter-based schema when no schema is provided' do
+      stub_const('AnthropicParamOnlyTool', Class.new(RubyLLM::Tool) do
+        description 'Anthropic param-only tool'
+        param :query, type: 'string', desc: 'The query', required: true
+        param :limit, type: 'integer', desc: 'Max results', required: false
+        def execute(...); end
+      end)
+
+      tool = AnthropicParamOnlyTool.new
+      built = tools.function_for(tool)
+
+      expect(built[:name]).to eq(tool.name)
+      expect(built[:description]).to eq('Anthropic param-only tool')
+      expect(built[:input_schema]).to eq(
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'The query' },
+          limit: { type: 'integer', description: 'Max results' }
+        },
+        required: [:query]
+      )
+    end
+
+    it 'allows nil input_schema when neither schema nor parameters are provided' do
+      stub_const('AnthropicEmptyTool', Class.new(RubyLLM::Tool) do
+        description 'Anthropic empty tool'
+        def execute(...); end
+      end)
+
+      tool = AnthropicEmptyTool.new
+      built = tools.function_for(tool)
+      expect(built[:name]).to eq(tool.name)
+      expect(built[:description]).to eq('Anthropic empty tool')
+      expect(built[:input_schema]).to eq(nil)
+    end
+  end
 
   describe '.format_tool_call' do
     let(:msg) do

@@ -126,6 +126,87 @@ This is particularly useful for:
 - **Image generation:** Return generated or processed images
 - **Multi-modal workflows:** Combine text results with visual elements
 
+## Defining Complex Input Schemas for Tools
+
+Available in v1.6.0+
+{: .label .label-green }
+
+You can define complex, nested input schemas for a tool using either a plain JSON Schema or the `RubyLLM::Schema` DSL. When a schema is present, it takes precedence over simple `param` definitions. If no schema is provided, RubyLLM falls back to the parameters you define with `param`. If neither is provided, an empty schema `{}` is sent.
+
+### Using RubyLLM::Schema (Recommended)
+
+```ruby
+require 'ruby_llm/schema'
+
+class SearchInput < RubyLLM::Schema
+  string :query, required: true, description: "Search query"
+
+  array :filters do
+    object do
+      string :field, required: true
+      string :op,    required: true, enum: %w[eq ne gt lt]
+      # Accept any JSON type for value
+      any :value, required: true
+    end
+  end
+end
+
+class SearchTool < RubyLLM::Tool
+  description "Search with advanced filters"
+  schema SearchInput
+
+  def execute(query:, filters: [])
+    # ... implement search ...
+  end
+end
+```
+
+### Using a Manual JSON Schema
+
+```ruby
+class SearchTool < RubyLLM::Tool
+  description "Search with advanced filters"
+
+  schema {
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      query:   { type: 'string', description: 'Search query' },
+      filters: {
+        type: 'array',
+        items: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            field: { type: 'string' },
+            op:    { type: 'string', enum: %w[eq ne gt lt] },
+            value: {}
+          },
+          required: %w[field op value]
+        }
+      }
+    },
+    required: %w[query]
+  }
+
+  def execute(query:, filters: [])
+    # ... implement search ...
+  end
+end
+```
+
+### Provider behavior
+
+- **OpenAI**: Schema is sent under `function.parameters` as JSON Schema.
+- **Anthropic**: Schema is sent under `input_schema`.
+- **Gemini**: Schema is sent under `parameters`. If you use `param` instead of a schema, RubyLLM maps types to Gemini’s enum types (`STRING`, `NUMBER`, `BOOLEAN`, `ARRAY`, `OBJECT`).
+
+Notes:
+- When both `schema` and `param` definitions exist, the schema is used.
+- When neither exists, an empty schema `{}` is sent.
+- If you hand-write JSON Schema for OpenAI, include `additionalProperties: false` on objects for strict validation. The `RubyLLM::Schema` DSL sets this for you.
+
+
 ## Custom Initialization
 
 Tools can have custom initialization:
