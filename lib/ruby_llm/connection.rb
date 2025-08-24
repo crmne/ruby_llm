@@ -62,8 +62,8 @@ module RubyLLM
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        logger.filter(%r{[A-Za-z0-9+/=]{100,}}, 'data":"[BASE64 DATA]"')
-        logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
+        logger.filter(Regexp.new('[A-Za-z0-9+/=]{100,}', timeout: @config.log_regexp_timeout), 'data":"[BASE64 DATA]"')
+        logger.filter(Regexp.new('[-\\d.e,\\s]{100,}', timeout: @config.log_regexp_timeout), '[EMBEDDINGS ARRAY]')
       end
     end
 

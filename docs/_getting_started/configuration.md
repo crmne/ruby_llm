@@ -204,6 +204,10 @@ RubyLLM.configure do |config|
 
   # Or use Rails logger
   config.logger = Rails.logger  # Overrides log_file and log_level
+
+  # Set custom timeout for log filtering
+  # which is useful when working with large payloads
+  config.log_regexp_timeout = 4 # seconds
 end
 ```
 
@@ -354,6 +358,7 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean  # v1.6.0+
+  config.log_regexp_timeout = Integer # v1.6.5+
 end
 ```
 
