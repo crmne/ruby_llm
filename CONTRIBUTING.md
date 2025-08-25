@@ -20,7 +20,6 @@ RubyLLM does one thing well: **LLM communication in Ruby**.
 - **RAG support** → Use dedicated libraries
 - **Prompt templates** → Use ERB/Mustache in your app
 - **Model data fixes** → File with [Parsera](https://github.com/parsera-labs/api-llm-specs/issues)
-- **Auto-failover** → Use `.with_model()` (works mid-conversation, even across providers)
 - **Tool interface changes** → Handle in your tool's initializer
 - **Testing helpers** → Use dependency injection
 
