@@ -34,17 +34,13 @@ module RubyLLM
 
         # If response is HTML (Perplexity returns HTML for auth errors)
         if body.include?('<html>') && body.include?('<title>')
-          # Extract title content
           title_match = body.match(%r{<title>(.+?)</title>})
           if title_match
-            # Clean up the title - remove status code if present
             message = title_match[1]
-            message = message.sub(/^\d+\s+/, '') # Remove leading digits and space
+            message = message.sub(/^\d+\s+/, '')
             return message
           end
         end
-
-        # Fall back to parent's implementation
         super
       end
     end

@@ -13,7 +13,6 @@ module RubyLLM
 
         def parse_list_models_response(response, slug, capabilities)
           Array(response.body['models']).map do |model_data|
-            # Extract model ID without "models/" prefix
             model_id = model_data['name'].gsub('models/', '')
 
             Model::Info.new(
@@ -21,7 +20,7 @@ module RubyLLM
               name: model_data['displayName'],
               provider: slug,
               family: capabilities.model_family(model_id),
-              created_at: nil, # Gemini API doesn't provide creation date
+              created_at: nil,
               context_window: model_data['inputTokenLimit'] || capabilities.context_window_for(model_id),
               max_output_tokens: model_data['outputTokenLimit'] || capabilities.max_tokens_for(model_id),
               modalities: capabilities.modalities_for(model_id),

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Sun, 10 Aug 2025 14:11:41 GMT
+      - Wed, 20 Aug 2025 17:06:24 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -33,13 +33,13 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01989452-a8fd-7ae1-a46b-3bd1a77f0588'
+      - '0198c872-3496-7e13-b1d0-bec887ffac6c'
       X-Kong-Request-Id:
-      - '01989452-a8fd-7ae1-a46b-3bd1a77f0588'
+      - '0198c872-3496-7e13-b1d0-bec887ffac6c'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Response-Latency:
-      - '6'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -54,5 +54,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"detail":"Unauthorized"}'
-  recorded_at: Sun, 10 Aug 2025 14:11:41 GMT
+  recorded_at: Wed, 20 Aug 2025 17:06:24 GMT
 recorded_with: VCR 6.3.1

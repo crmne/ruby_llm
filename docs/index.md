@@ -72,90 +72,100 @@ permalink: /
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
 
+<a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+
 Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
 
 ---
 
-## The problem with AI libraries
+## Why RubyLLM?
 
-Every AI provider comes with its own client library, its own response format, its own conventions for streaming, and its own way of handling errors. Want to use multiple providers? Prepare to juggle incompatible APIs and bloated dependencies.
+Every AI provider ships their own bloated client. Different APIs. Different response formats. Different conventions. It's exhausting.
 
-RubyLLM fixes all that. One beautiful API for everything. One consistent format. Minimal dependencies - just Faraday, Zeitwerk, and Marcel. Because working with AI should be a joy, not a chore.
+RubyLLM gives you one beautiful API for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
 
-## What makes it great
+## Show me the code
 
 ```ruby
 # Just ask questions
 chat = RubyLLM.chat
 chat.ask "What's the best way to learn Ruby?"
+```
 
-# Analyze images, audio, documents, and text files
+```ruby
+# Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
+```
 
-# Multiple files at once - types automatically detected
+```ruby
+# Multiple files at once
 chat.ask "Analyze these files", with: ["diagram.png", "report.pdf", "notes.txt"]
+```
 
-# Stream responses in real-time
-chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+```ruby
+# Stream responses
+chat.ask "Tell me a story about Ruby" do |chunk|
   print chunk.content
 end
+```
 
+```ruby
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
+```
 
-# Create vector embeddings
+```ruby
+# Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+```
 
+```ruby
 # Let AI use your code
 class Weather < RubyLLM::Tool
-  description "Gets current weather for a location"
-  param :latitude, desc: "Latitude (e.g., 52.5200)"
-  param :longitude, desc: "Longitude (e.g., 13.4050)"
+  description "Get current weather"
+  param :latitude
+  param :longitude
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
-
-    response = Faraday.get(url)
-    data = JSON.parse(response.body)
-  rescue => e
-    { error: e.message }
+    JSON.parse(Faraday.get(url).body)
   end
 end
 
-chat.with_tool(Weather).ask "What's the weather in Berlin? (52.5200, 13.4050)"
-
-# Get structured output with JSON schemas
-class ProductSchema < RubyLLM::Schema
-  string :name, description: "Product name"
-  number :price, description: "Price in USD"
-  array :features, description: "Key features" do
-    string description: "Feature description"
-  end
-end
-
-response = chat.with_schema(ProductSchema)
-               .ask "Analyze this product description", with: "product.txt"
-# response.content => { "name" => "...", "price" => 99.99, "features" => [...] }
+chat.with_tool(Weather).ask "What's the weather in Berlin?"
 ```
 
-## Core Capabilities
+```ruby
+# Get structured output
+class ProductSchema < RubyLLM::Schema
+  string :name
+  number :price
+  array :features do
+    string
+  end
+end
 
-*   💬 **Unified Chat:** Converse with models from OpenAI, Anthropic, Gemini, Bedrock, OpenRouter, DeepSeek, Perplexity, Mistral, Ollama, or any OpenAI-compatible API using `RubyLLM.chat`.
-*   👁️ **Vision:** Analyze images within chats.
-*   🔊 **Audio:** Transcribe and understand audio content.
-*   📄 **Document Analysis:** Extract information from PDFs, text files, CSV, JSON, XML, Markdown, and code files.
-*   🖼️ **Image Generation:** Create images with `RubyLLM.paint`.
-*   📊 **Embeddings:** Generate text embeddings for vector search with `RubyLLM.embed`.
-*   🔧 **Tools (Function Calling):** Let AI models call your Ruby code using `RubyLLM::Tool`.
-*   📋 **Structured Output:** Guarantee responses conform to JSON schemas with `RubyLLM::Schema`.
-*   🚂 **Rails Integration:** Easily persist chats, messages, and tool calls using `acts_as_chat` and `acts_as_message`.
-*   🌊 **Streaming:** Process responses in real-time with idiomatic Ruby blocks.
-*   ⚡ **Async Support:** Built-in fiber-based concurrency for high-performance operations.
-*   🎯 **Smart Configuration:** Global and scoped configs with automatic retries and proxy support.
-*   📚 **Model Registry:** Access 500+ models with capability detection and pricing info.
+response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "product.txt"
+```
+
+## Features
+
+* **Chat:** Conversational AI with `RubyLLM.chat`
+* **Vision:** Analyze images and screenshots
+* **Audio:** Transcribe and understand speech
+* **Documents:** Extract from PDFs, CSVs, JSON, any file type
+* **Image generation:** Create images with `RubyLLM.paint`
+* **Embeddings:** Vector search with `RubyLLM.embed`
+* **Tools:** Let AI call your Ruby methods
+* **Structured output:** JSON schemas that just work
+* **Streaming:** Real-time responses with blocks
+* **Rails:** ActiveRecord integration with `acts_as_chat`
+* **Async:** Fiber-based concurrency
+* **Model registry:** 500+ models with capability detection and pricing
+* **Providers:** OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
@@ -165,44 +175,26 @@ gem 'ruby_llm'
 ```
 Then `bundle install`.
 
-Configure your API keys (using environment variables is recommended):
+Configure your API keys:
 ```ruby
-# config/initializers/ruby_llm.rb or similar
+# config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
-  # Add keys ONLY for providers you intend to use
-  # config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-  # ... see Configuration guide for all options ...
+  config.openai_api_key = ENV['OPENAI_API_KEY']
 end
 ```
-See the [Installation Guide](https://rubyllm.com/installation) for full details.
 
-## Rails Integration
-
-Add persistence to your chat models effortlessly:
+## Rails
 
 ```bash
-# Generate models and migrations
 rails generate ruby_llm:install
 ```
 
 ```ruby
-# Or add to existing models
 class Chat < ApplicationRecord
-  acts_as_chat # Automatically saves messages & tool calls
+  acts_as_chat
 end
 
-class Message < ApplicationRecord
-  acts_as_message
-end
-
-class ToolCall < ApplicationRecord
-  acts_as_tool_call
-end
-
-# Now chats persist automatically
-chat = Chat.create!(model_id: "gpt-4.1-nano")
-chat.ask("What's in this file?", with: "report.pdf")
+chat = Chat.create! model_id: "claude-sonnet-4"
+chat.ask "What's in this file?", with: "report.pdf"
 ```
 
-See the [Rails Integration Guide](https://rubyllm.com/rails) for details.

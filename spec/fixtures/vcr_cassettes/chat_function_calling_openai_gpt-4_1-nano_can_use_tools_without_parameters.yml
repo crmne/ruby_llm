@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:54:13 GMT
+      - Wed, 20 Aug 2025 15:50:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '470'
+      - '480'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '481'
+      - '501'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -79,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-BzhgqsVyfZPfej2LwR5RTyVcj7Dat",
+          "id": "chatcmpl-C6fNSEtjnzrzMQMmL8jKmU37jkaPN",
           "object": "chat.completion",
-          "created": 1754045652,
+          "created": 1755705058,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -91,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_4SHB2gIfsTQOkEA0ZX6q2hVi",
+                    "id": "call_VWtuWiR4SC53G2jHUmMRBee7",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -122,17 +122,17 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Fri, 01 Aug 2025 10:54:13 GMT
+  recorded_at: Wed, 20 Aug 2025 15:50:59 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_4SHB2gIfsTQOkEA0ZX6q2hVi","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_4SHB2gIfsTQOkEA0ZX6q2hVi"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_VWtuWiR4SC53G2jHUmMRBee7","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_VWtuWiR4SC53G2jHUmMRBee7"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -150,7 +150,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:54:13 GMT
+      - Wed, 20 Aug 2025 15:51:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -162,13 +162,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '416'
+      - '933'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '430'
+      - '954'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -204,9 +204,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Bzhgr2Uvk1MYxIFpMqDuCvX0Mz1fG",
+          "id": "chatcmpl-C6fNT2fYnSWINVrdOi5Ic027bqMVe",
           "object": "chat.completion",
-          "created": 1754045653,
+          "created": 1755705059,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -237,305 +237,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Fri, 01 Aug 2025 10:54:13 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/responses
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
-        the best language to learn?","status":"completed"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <OPENAI_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 05 Aug 2025 05:04:56 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999742'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '497'
-      X-Envoy-Upstream-Service-Time:
-      - '509'
-      X-Envoy-Decorator-Operation:
-      - tasksapi.openai.svc.cluster.local:8081/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_689190f78fd881a09f1d33a49fc522e601318d1d5768f261",
-          "object": "response",
-          "created_at": 1754370295,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "output": [
-            {
-              "id": "fc_689190f7e85881a0823ca168a49442e801318d1d5768f261",
-              "type": "function_call",
-              "status": "completed",
-              "arguments": "{}",
-              "call_id": "call_VOXosmYeldcRlCgpUDo2170p",
-              "name": "best_language_to_learn"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "reasoning": {
-            "effort": null,
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": true,
-          "temperature": 0.7,
-          "text": {
-            "format": {
-              "type": "text"
-            }
-          },
-          "tool_choice": "auto",
-          "tools": [
-            {
-              "type": "function",
-              "description": "Gets the best language to learn",
-              "name": "best_language_to_learn",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-              },
-              "strict": true
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 42,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 14,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 56
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Tue, 05 Aug 2025 05:04:56 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/responses
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
-        the best language to learn?","status":"completed"},{"type":"function_call","call_id":"call_VOXosmYeldcRlCgpUDo2170p","name":"best_language_to_learn","arguments":"{}","status":"completed"},{"type":"function_call_output","call_id":"call_VOXosmYeldcRlCgpUDo2170p","output":"Ruby","status":"completed"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <OPENAI_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 05 Aug 2025 05:04:56 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999717'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '509'
-      X-Envoy-Upstream-Service-Time:
-      - '515'
-      X-Envoy-Decorator-Operation:
-      - tasksapi.openai.svc.cluster.local:8081/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_689190f8567481a18f7cae43101556520696729ffc5bbc44",
-          "object": "response",
-          "created_at": 1754370296,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "output": [
-            {
-              "id": "msg_689190f8935881a1a9244e8d16ac7cbe0696729ffc5bbc44",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "output_text",
-                  "annotations": [],
-                  "logprobs": [],
-                  "text": "The best language to learn, according to the information I received, is Ruby."
-                }
-              ],
-              "role": "assistant"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "reasoning": {
-            "effort": null,
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": true,
-          "temperature": 0.7,
-          "text": {
-            "format": {
-              "type": "text"
-            }
-          },
-          "tool_choice": "auto",
-          "tools": [
-            {
-              "type": "function",
-              "description": "Gets the best language to learn",
-              "name": "best_language_to_learn",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-              },
-              "strict": true
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 65,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 18,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 83
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Tue, 05 Aug 2025 05:04:56 GMT
+  recorded_at: Wed, 20 Aug 2025 15:51:00 GMT
 recorded_with: VCR 6.3.1

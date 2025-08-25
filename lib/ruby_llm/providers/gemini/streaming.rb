@@ -42,7 +42,10 @@ module RubyLLM
         end
 
         def extract_output_tokens(data)
-          data.dig('usageMetadata', 'candidatesTokenCount')
+          candidates = data.dig('usageMetadata', 'candidatesTokenCount') || 0
+          thoughts = data.dig('usageMetadata', 'thoughtsTokenCount') || 0
+          total = candidates + thoughts
+          total.positive? ? total : nil
         end
 
         def parse_streaming_error(data)

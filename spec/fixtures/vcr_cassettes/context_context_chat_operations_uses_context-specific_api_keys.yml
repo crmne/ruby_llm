@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:31:59 GMT
+      - Wed, 20 Aug 2025 17:12:58 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -35,11 +35,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '18'
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      - '27'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -64,74 +60,5 @@ http_interactions:
                 "code": "invalid_api_key"
             }
         }
-  recorded_at: Fri, 01 Aug 2025 10:31:59 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/responses
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Hello","status":"completed"}],"stream":false,"temperature":0.7}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <GPUSTACK_API_KEY>-context-key
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 401
-      message: Unauthorized
-    headers:
-      Date:
-      - Tue, 05 Aug 2025 05:05:04 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '245'
-      Connection:
-      - keep-alive
-      Www-Authenticate:
-      - Bearer realm="OpenAI API"
-      Openai-Version:
-      - '2020-10-01'
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '73'
-      X-Envoy-Upstream-Service-Time:
-      - '86'
-      X-Envoy-Decorator-Operation:
-      - tasksapi.openai.svc.cluster.local:8081/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-          "error": {
-            "message": "Incorrect API key provided: <GPUSTACK_API_KEY>-con****-key. You can find your API key at https://platform.openai.com/account/api-keys.",
-            "type": "invalid_request_error",
-            "param": null,
-            "code": "invalid_api_key"
-          }
-        }
-  recorded_at: Tue, 05 Aug 2025 05:05:03 GMT
+  recorded_at: Wed, 20 Aug 2025 17:12:58 GMT
 recorded_with: VCR 6.3.1

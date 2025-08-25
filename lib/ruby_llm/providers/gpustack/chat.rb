@@ -8,7 +8,6 @@ module RubyLLM
         module_function
 
         def format_role(role)
-          # GPUStack doesn't use the new OpenAI convention for system prompts
           role.to_s
         end
       end

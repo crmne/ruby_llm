@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,7 +23,7 @@ http_interactions:
       message: Internal Server Error
     headers:
       Date:
-      - Sun, 10 Aug 2025 14:11:49 GMT
+      - Wed, 20 Aug 2025 17:08:11 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -33,17 +33,17 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01989452-c0b4-7157-9652-64fb4913bda5'
+      - '0198c873-d1cd-757b-9d4d-5671c80034ca'
       X-Kong-Request-Id:
-      - '01989452-c0b4-7157-9652-64fb4913bda5'
+      - '0198c873-d1cd-757b-9d4d-5671c80034ca'
       X-Envoy-Upstream-Service-Time:
-      - '840'
+      - '876'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '850'
+      - '887'
       X-Kong-Proxy-Latency:
-      - '123'
+      - '420'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -58,5 +58,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"object":"error","message":"Service unavailable.","type":"internal_server_error","param":null,"code":"1000"}'
-  recorded_at: Sun, 10 Aug 2025 14:11:49 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:11 GMT
 recorded_with: VCR 6.3.1

@@ -2,9 +2,7 @@
 
 module RubyLLM
   module Providers
-    # OpenAI API integration using the new Responses API. Handles response generation,
-    # function calling, and OpenAI's unique streaming format. Supports GPT-4, GPT-3.5,
-    # and other OpenAI models.
+    # OpenAI API integration.
     class OpenAI < OpenAIBase
       include OpenAI::Response
       include OpenAI::ResponseMedia

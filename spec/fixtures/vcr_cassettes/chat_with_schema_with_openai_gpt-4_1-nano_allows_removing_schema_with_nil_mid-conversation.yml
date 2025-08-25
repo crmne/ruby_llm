@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named Bob","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -24,31 +24,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 04:18:26 GMT
+      - Wed, 20 Aug 2025 17:08:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999940'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
+      Access-Control-Expose-Headers:
+      - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '406'
       Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '431'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199991'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
@@ -74,16 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_6892d7923340819285e2d49bc48b0e550b9d53e1a1247b55",
-          "object": "response",
-          "created_at": 1754453906,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
+          "id": "chatcmpl-C6gaNqBbnsGWEaDKfSoiv81UKbDlJ",
+          "object": "chat.completion",
+          "created": 1755709703,
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
@@ -136,34 +135,18 @@ http_interactions:
               "strict": true
             }
           },
-          "tool_choice": "auto",
-          "tools": [],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 41,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 10,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 51
-          },
-          "user": null,
-          "metadata": {}
+          "service_tier": "default",
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Wed, 06 Aug 2025 04:18:26 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:24 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named Bob","status":"completed"},{"type":"message","role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","status":"completed"},{"type":"message","role":"user","content":"Now
-        just tell me about Ruby","status":"completed"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -181,31 +164,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 04:18:29 GMT
+      - Wed, 20 Aug 2025 17:08:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999945'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
+      Access-Control-Expose-Headers:
+      - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '1923'
       Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '1947'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199976'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
@@ -229,69 +218,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_6892d793310481a29768052e613a842004fe68ea18936eb5",
-          "object": "response",
-          "created_at": 1754453907,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "output": [
-            {
-              "id": "msg_6892d793725081a2873dbfbcd1275aeb04fe68ea18936eb5",
-              "type": "message",
-              "status": "completed",
-              "content": [
-                {
-                  "type": "output_text",
-                  "annotations": [],
-                  "logprobs": [],
-                  "text": "Certainly! Here's some general information about Ruby:\n\nRuby is a dynamic, open-source programming language known for its simplicity and productivity. It was created by Yukihiro Matsumoto (often called Matz) in the mid-1990s with the goal of making programming more enjoyable and natural. Ruby emphasizes human-friendly syntax, making it easy to read and write.\n\nRuby is widely used for web development, especially with the Ruby on Rails framework, which has contributed to its popularity. Besides web development, Ruby is also used for scripting, automation, and data processing.\n\nIf you were referring to a person named Ruby, please let me know, and I can provide more specific information!"
-                }
-              ],
-              "role": "assistant"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "reasoning": {
-            "effort": null,
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": true,
-          "temperature": 0.7,
-          "text": {
-            "format": {
-              "type": "text"
-            }
-          },
-          "tool_choice": "auto",
-          "tools": [],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 35,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 137,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 172
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Wed, 06 Aug 2025 04:18:29 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DNmdhT3Z0aVFLc3VBNmMzMkF6dG5XZWlOOU9lYSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NTcwOTcwNCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkNlcnRhaW5seSEgUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LiBDcmVhdGVkIGJ5IFl1a2loaXJvIOKAnE1hdHrigJ0gTWF0c3Vtb3RvIGFuZCByZWxlYXNlZCBpbiB0aGUgbWlkLTE5OTBzLCBSdWJ5IGVtcGhhc2l6ZXMgaHVtYW4tZnJpZW5kbHkgc3ludGF4IHRoYXQgaXMgZWFzeSB0byByZWFkIGFuZCB3cml0ZS4gSXQgc3VwcG9ydHMgbXVsdGlwbGUgcHJvZ3JhbW1pbmcgcGFyYWRpZ21zLCBpbmNsdWRpbmcgb2JqZWN0LW9yaWVudGVkLCBmdW5jdGlvbmFsLCBhbmQgaW1wZXJhdGl2ZSBwcm9ncmFtbWluZy5cblxuUnVieSBpcyBiZXN0IGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXggdGhhdCByZXNlbWJsZXMgbmF0dXJhbCBsYW5ndWFnZSwgbWFraW5nIGl0IGFjY2Vzc2libGUgdG8gYmVnaW5uZXJzIHdoaWxlIHBvd2VyZnVsIGVub3VnaCBmb3IgY29tcGxleCBhcHBsaWNhdGlvbnMuIE9uZSBvZiBpdHMgbW9zdCBwb3B1bGFyIGZyYW1ld29ya3MgaXMgUnVieSBvbiBSYWlscywgYSB3ZWIgYXBwbGljYXRpb24gZnJhbWV3b3JrIHRoYXQgaGFzIHNpZ25pZmljYW50bHkgY29udHJpYnV0ZWQgdG8gUnVieSdzIHBvcHVsYXJpdHkgaW4gd2ViIGRldmVsb3BtZW50LlxuXG5SdWJ5IGlzIHVzZWQgaW4gdmFyaW91cyBkb21haW5zLCBpbmNsdWRpbmcgd2ViIGRldmVsb3BtZW50LCBhdXRvbWF0aW9uLCBkYXRhIHByb2Nlc3NpbmcsIGFuZCBtb3JlLiBJdCBib2FzdHMgYSB2aWJyYW50IGNvbW11bml0eSwgZXh0ZW5zaXZlIGxpYnJhcmllcyAoZ2VtcyksIGFuZCBjb250aW51ZXMgdG8gYmUgYSBwb3B1bGFyIGNob2ljZSBmb3IgZGV2ZWxvcGVycyBzZWVraW5nIGFuIGV4cHJlc3NpdmUgYW5kIHByb2R1Y3RpdmUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMzUsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxNzAsCiAgICAidG90YWxfdG9rZW5zIjogMjA1LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfYzRjMTU1OTUxZSIKfQo=
+  recorded_at: Wed, 20 Aug 2025 17:08:26 GMT
 recorded_with: VCR 6.3.1

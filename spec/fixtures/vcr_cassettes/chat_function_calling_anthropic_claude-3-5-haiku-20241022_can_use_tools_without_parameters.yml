@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the best language to learn?"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}],"temperature":0.7}'
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:16 GMT
+      - Wed, 20 Aug 2025 15:50:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,31 +39,33 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-08-10T13:37:15Z'
+      - '2025-08-20T15:50:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-08-10T13:37:16Z'
+      - '2025-08-20T15:50:31Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-08-10T13:37:15Z'
+      - '2025-08-20T15:50:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-08-10T13:37:15Z'
+      - '2025-08-20T15:50:30Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1361'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -76,9 +78,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01JNo2ek5oxW3H7Nvei7CRF4","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01DQ1aySKdR8ScUfkM3rXxCe","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":58,"service_tier":"standard"}}'
-  recorded_at: Sun, 10 Aug 2025 13:37:16 GMT
+      string: '{"id":"msg_014PdZoATaxwgJnBVdY6UoVQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_013d5cCRAJ5oB6zaDL2VwLJC","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":327,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":58,"service_tier":"standard"}}'
+  recorded_at: Wed, 20 Aug 2025 15:50:31 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -86,8 +88,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_01DQ1aySKdR8ScUfkM3rXxCe","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01DQ1aySKdR8ScUfkM3rXxCe","content":"Ruby"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}],"temperature":0.7}'
+        help you find out the best language to learn by using the available tool."},{"type":"tool_use","id":"toolu_013d5cCRAJ5oB6zaDL2VwLJC","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_013d5cCRAJ5oB6zaDL2VwLJC","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -107,7 +109,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:20 GMT
+      - Wed, 20 Aug 2025 15:50:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -119,31 +121,33 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-08-10T13:37:16Z'
+      - '2025-08-20T15:50:31Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-08-10T13:37:20Z'
+      - '2025-08-20T15:50:35Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-08-10T13:37:16Z'
+      - '2025-08-20T15:50:31Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-08-10T13:37:16Z'
+      - '2025-08-20T15:50:31Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '3734'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -156,17 +160,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01AhcUUoxZffPywDvAgeQQAa","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
-        to the tool, Ruby is the best language to learn! \n\nRuby is a dynamic, object-oriented
+      string: '{"id":"msg_01ApnKPodCe2t59yGigX186N","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"According
+        to the tool, Ruby is the best language to learn! Ruby is a dynamic, object-oriented
         programming language known for its simplicity and readability. It''s particularly
         popular for web development, especially with the Ruby on Rails framework.
-        Some key advantages of learning Ruby include:\n\n1. Easy to read and write
-        syntax\n2. Strong community support\n3. Versatile for web development, scripting,
-        and automation\n4. Used in many startups and tech companies\n5. Good for beginners
-        due to its intuitive nature\n\nHowever, the \"best\" language can depend on
-        your specific goals:\n- Web development\n- Data science\n- Mobile app development\n-
-        Game development\n- Automation\n\nWould you like to know more about why Ruby
-        might be a good choice for you, or are you interested in learning about other
-        programming languages?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":181,"service_tier":"standard"}}'
-  recorded_at: Sun, 10 Aug 2025 13:37:20 GMT
+        \n\nSome reasons why Ruby might be a great language to learn:\n1. Beginner-friendly
+        syntax that''s easy to read and write\n2. Strong community support\n3. Versatile
+        - used in web development, scripting, and more\n4. Elegant and expressive
+        programming style\n\nHowever, the \"best\" language can depend on your specific
+        goals, such as:\n- Web development\n- Data science\n- Mobile app development\n-
+        Game development\n- Career opportunities\n\nIf you have a specific area of
+        interest, I''d be happy to provide more targeted advice about programming
+        languages that might suit your needs."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":397,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":182,"service_tier":"standard"}}'
+  recorded_at: Wed, 20 Aug 2025 15:50:35 GMT
 recorded_with: VCR 6.3.1

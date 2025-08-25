@@ -13,13 +13,11 @@ module RubyLLM
 
         def parse_list_models_response(response, slug, _capabilities)
           Array(response.body['data']).map do |model_data| # rubocop:disable Metrics/BlockLength
-            # Extract modalities directly from architecture
             modalities = {
               input: Array(model_data.dig('architecture', 'input_modalities')),
               output: Array(model_data.dig('architecture', 'output_modalities'))
             }
 
-            # Construct pricing from API data, only adding non-zero values
             pricing = { text_tokens: { standard: {} } }
 
             pricing_types = {
@@ -34,7 +32,6 @@ module RubyLLM
               pricing[:text_tokens][:standard][target_key] = value * 1_000_000 if value.positive?
             end
 
-            # Convert OpenRouter's supported parameters to our capability format
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters'])
 
             Model::Info.new(
@@ -63,23 +60,11 @@ module RubyLLM
           return [] unless params
 
           capabilities = []
-
-          # Standard capabilities mapping
-          capabilities << 'streaming' # Assume all OpenRouter models support streaming
-
-          # Function calling capability
+          capabilities << 'streaming'
           capabilities << 'function_calling' if params.include?('tools') || params.include?('tool_choice')
-
-          # Structured output capability
           capabilities << 'structured_output' if params.include?('response_format')
-
-          # Batch capability
           capabilities << 'batch' if params.include?('batch')
-
-          # Additional mappings based on params
-          # Handles advanced model capabilities that might be inferred from supported params
           capabilities << 'predicted_outputs' if params.include?('logit_bias') && params.include?('top_k')
-
           capabilities
         end
       end

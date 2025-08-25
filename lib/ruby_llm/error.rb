@@ -3,13 +3,6 @@
 module RubyLLM
   # Custom error class that wraps API errors from different providers
   # into a consistent format with helpful error messages.
-  #
-  # Example:
-  #   begin
-  #     chat.ask "What's 2+2?"
-  #   rescue RubyLLM::Error => e
-  #     puts "Couldn't chat with AI: #{e.message}"
-  #   end
   class Error < StandardError
     attr_reader :response
 
@@ -36,7 +29,6 @@ module RubyLLM
   class UnauthorizedError < Error; end
 
   # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
-  # Uses provider's parse_error method to extract meaningful error messages.
   class ErrorMiddleware < Faraday::Middleware
     def initialize(app, options = {})
       super(app)

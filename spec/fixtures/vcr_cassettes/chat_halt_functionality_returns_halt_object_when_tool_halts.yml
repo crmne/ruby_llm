@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Execute
-        the halting tool"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"halting","description":"A
-        tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the halting tool"}],"stream":false,"tools":[{"type":"function","function":{"name":"halting","description":"A
+        tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 22:40:27 GMT
+      - Wed, 20 Aug 2025 15:53:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '236'
+      - '800'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '310'
+      - '1034'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -77,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C1h630MXMTaaUm9QX7zodWqerLa36",
+          "id": "chatcmpl-C6fQN9BYMVh9Ux6OpGb0L5Hst7ois",
           "object": "chat.completion",
-          "created": 1754520027,
+          "created": 1755705239,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +89,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_1EpFvLpqcKeW5sZ2laObW7RR",
+                    "id": "call_dAv7aifxa70Nicnarvlq0WYD",
                     "type": "function",
                     "function": {
                       "name": "halting",
@@ -120,152 +120,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Wed, 06 Aug 2025 22:40:27 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/responses
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Execute
-        the halting tool","status":"completed"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","name":"halting","description":"A
-        tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[]}}],"tool_choice":"auto"}'
-    headers:
-      User-Agent:
-      - Faraday v2.12.2
-      Authorization:
-      - Bearer <OPENAI_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 07 Aug 2025 03:35:13 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999745'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Openai-Processing-Ms:
-      - '498'
-      X-Envoy-Upstream-Service-Time:
-      - '504'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "id": "resp_68941ef137fc81a2a8e24efe9ae0ecae0c6822e4e7c9a79a",
-          "object": "response",
-          "created_at": 1754537713,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "output": [
-            {
-              "id": "fc_68941ef1925c81a2925f84a13637af3b0c6822e4e7c9a79a",
-              "type": "function_call",
-              "status": "completed",
-              "arguments": "{}",
-              "call_id": "call_ZUuO7r8yvhtXIxy9DY6CaUd2",
-              "name": "halting"
-            }
-          ],
-          "parallel_tool_calls": true,
-          "previous_response_id": null,
-          "prompt_cache_key": null,
-          "reasoning": {
-            "effort": null,
-            "summary": null
-          },
-          "safety_identifier": null,
-          "service_tier": "default",
-          "store": true,
-          "temperature": 0.7,
-          "text": {
-            "format": {
-              "type": "text"
-            }
-          },
-          "tool_choice": "auto",
-          "tools": [
-            {
-              "type": "function",
-              "description": "A tool that halts conversation continuation",
-              "name": "halting",
-              "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": [],
-                "additionalProperties": false
-              },
-              "strict": true
-            }
-          ],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 38,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 12,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 50
-          },
-          "user": null,
-          "metadata": {}
-        }
-  recorded_at: Thu, 07 Aug 2025 03:35:13 GMT
+  recorded_at: Wed, 20 Aug 2025 15:53:59 GMT
 recorded_with: VCR 6.3.1

@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named John who is 30 years old","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Generate
+        a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.12.2
@@ -24,31 +24,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 Aug 2025 04:18:25 GMT
+      - Wed, 20 Aug 2025 17:08:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999932'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
+      Access-Control-Expose-Headers:
+      - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '414'
       Openai-Project:
-      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
+      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '435'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199986'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 4ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
@@ -74,16 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_6892d790e46c81a2b56402f52bd03c280ea79e0ebdf6e752",
-          "object": "response",
-          "created_at": 1754453905,
-          "status": "completed",
-          "background": false,
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
+          "id": "chatcmpl-C6gaN6dcApL0OhgqhfaIWaJMDiRam",
+          "object": "chat.completion",
+          "created": 1755709703,
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
@@ -136,24 +135,8 @@ http_interactions:
               "strict": true
             }
           },
-          "tool_choice": "auto",
-          "tools": [],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 47,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 10,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 57
-          },
-          "user": null,
-          "metadata": {}
+          "service_tier": "default",
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Wed, 06 Aug 2025 04:18:25 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:23 GMT
 recorded_with: VCR 6.3.1
