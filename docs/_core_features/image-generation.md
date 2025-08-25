@@ -24,12 +24,13 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to edit existing images with AI (local files and remote URLs).
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
 *   How to integrate image generation with Rails Active Storage.
 *   Tips for writing effective image prompts.
-*   How to handle errors during image generation.
+*   How to handle errors during image generation and editing.
 
 ## Basic Image Generation
 
@@ -61,6 +62,86 @@ puts "Model Used: #{image.model_id}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Image Editing
+
+RubyLLM supports editing existing images using AI models like OpenAI's `gpt-image-1`. You can provide either local image files or remote URLs as the source image to edit.
+
+### Editing Local Images
+
+To edit a local image file, use the `with:` parameter to specify the path to your image:
+
+```ruby
+# Edit a local PNG file
+image = RubyLLM.paint(
+  "turn the logo to green", 
+  with: "path/to/your/image.png",
+  model: "gpt-image-1"
+)
+
+puts "Edited image generated!"
+puts "MIME Type: #{image.mime_type}"
+```
+
+**Important Requirements for Local Images:**
+- Only PNG, WEBP, or JPG files are supported for editing with gpt-image-1
+- The file must exist and be readable
+
+### Editing Remote Images
+
+You can also edit images from remote URLs:
+
+```ruby
+# Edit an image from a remote URL
+image = RubyLLM.paint(
+  "make the background more vibrant",
+  with: "https://example.com/image.png",
+  model: "gpt-image-1"
+)
+```
+
+**Requirements for Remote URLs:**
+- The URL must return a PNG, WEBP, or JPG image
+- The server must respond with a valid content type
+- 404 errors will raise a `Faraday::ResourceNotFound` error
+- Invalid content types will raise a `RubyLLM::BadRequestError`
+
+### Editing Multiple Images
+
+You can edit multiple images at once by providing an array of file paths or URLs:
+
+```ruby
+# Edit multiple images simultaneously
+image = RubyLLM.paint(
+  "apply a vintage filter to all images",
+  with: [
+    "path/to/first_image.png",
+    "path/to/second_image.png"
+  ],
+  model: "gpt-image-1"
+)
+```
+
+### Customizing Edit Parameters
+
+The `params:` option allows you to customize the editing process:
+
+```ruby
+# Customize the editing output
+image = RubyLLM.paint(
+  "enhance the colors and add dramatic lighting",
+  with: "path/to/image.png",
+  model: "gpt-image-1",
+  params: {
+    size: "1024x1024",    # Output image size
+    quality: "low"        # Quality setting (low, standard, hd)
+  }
+)
+
+# Check usage information
+puts "Output tokens: #{image.usage['output_tokens']}"
+puts "Total cost: $#{image.total_cost}"
+```
 
 ## Choosing Models
 
@@ -258,20 +339,25 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for compr
 
 ## Content Safety
 
-AI image generation services have content safety filters. Prompts requesting harmful, explicit, or otherwise prohibited content will usually result in a `BadRequestError`. Avoid generating:
+AI image generation and editing services have content safety filters. Prompts requesting harmful, explicit, or otherwise prohibited content will usually result in a `BadRequestError`. Avoid generating or editing:
 
 *   Violent or hateful imagery.
 *   Sexually explicit content.
 *   Images of real people (especially public figures without consent, though policies vary).
 *   Direct copies of copyrighted characters or artwork.
 
+**Additional considerations for image editing:**
+*   Be mindful of editing copyrighted images without permission.
+*   Some providers may have stricter policies for editing existing images versus generating new ones.
+
 ## Performance Considerations
 
-Image generation can take several seconds (typically 5-20 seconds depending on the model and load).
+Image generation and editing can take several seconds (typically 5-20 seconds depending on the model and load).
 
-*   **Use Background Jobs:** In web applications, always perform image generation in a background job (like Sidekiq or GoodJob) to avoid blocking web requests.
+*   **Use Background Jobs:** In web applications, always perform image generation and editing in a background job (like Sidekiq or GoodJob) to avoid blocking web requests.
 *   **Timeouts:** Configure appropriate network timeouts in RubyLLM (see [Configuration Guide]({% link _getting_started/configuration.md %})).
-*   **Caching:** Store generated images (e.g., using Active Storage, cloud storage) rather than regenerating them frequently if the prompt is the same.
+*   **Caching:** Store generated and edited images (e.g., using Active Storage, cloud storage) rather than regenerating them frequently if the prompt is the same.
+*   **Image Editing Considerations:** When editing remote images, factor in additional time for downloading the source image before processing begins.
 
 ## Next Steps
 
