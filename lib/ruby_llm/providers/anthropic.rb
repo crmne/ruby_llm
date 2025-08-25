@@ -2,8 +2,7 @@
 
 module RubyLLM
   module Providers
-    # Anthropic Claude API integration. Handles the complexities of
-    # Claude's unique message format and tool calling conventions.
+    # Anthropic Claude API integration.
     class Anthropic < Provider
       include Anthropic::Chat
       include Anthropic::Embeddings

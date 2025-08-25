@@ -131,6 +131,93 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'parameter passing' do
+    it 'supports with_params for provider-specific parameters' do
+      chat = Chat.create!(model_id: model)
+
+      result = chat.with_params(max_tokens: 100, temperature: 0.5)
+      expect(result).to eq(chat) # Should return self for chaining
+
+      # Verify params are passed through
+      llm_chat = chat.instance_variable_get(:@chat)
+      expect(llm_chat.params).to eq(max_tokens: 100, temperature: 0.5)
+    end
+  end
+
+  describe 'tool functionality' do
+    it 'supports with_tools for multiple tools' do
+      chat = Chat.create!(model_id: model)
+
+      # Define a second tool for testing
+      weather_tool = Class.new(RubyLLM::Tool) do
+        def self.name = 'weather'
+        def self.description = 'Get weather'
+        def execute = 'Sunny'
+      end
+
+      result = chat.with_tools(Calculator, weather_tool)
+      expect(result).to eq(chat) # Should return self for chaining
+
+      # Verify tools are registered
+      llm_chat = chat.instance_variable_get(:@chat)
+      expect(llm_chat.tools.keys).to include(:calculator, :weather)
+    end
+
+    it 'handles halt mechanism in tools' do
+      # Define a tool that uses halt
+      stub_const('HaltingTool', Class.new(RubyLLM::Tool) do
+        description 'A tool that halts'
+        param :input, desc: 'Input text'
+
+        def execute(input:)
+          halt("Halted with: #{input}")
+        end
+      end)
+
+      chat = Chat.create!(model_id: model)
+      chat.with_tool(HaltingTool)
+
+      # Mock the tool execution to test halt behavior
+      allow_any_instance_of(HaltingTool).to receive(:execute).and_return( # rubocop:disable RSpec/AnyInstance
+        RubyLLM::Tool::Halt.new('Halted response')
+      )
+
+      # When a tool returns halt, the conversation should stop
+      response = chat.ask("Use the halting tool with 'test'")
+
+      # The response should be the halt result, not additional AI commentary
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+      expect(response.content).to eq('Halted response')
+    end
+  end
+
+  describe 'custom headers' do
+    it 'supports with_headers for custom HTTP headers' do
+      chat = Chat.create!(model_id: model)
+
+      result = chat.with_headers('X-Custom-Header' => 'test-value')
+      expect(result).to eq(chat) # Should return self for chaining
+
+      # Verify the headers are passed through to the underlying chat
+      llm_chat = chat.instance_variable_get(:@chat)
+      expect(llm_chat.headers).to eq('X-Custom-Header' => 'test-value')
+    end
+
+    it 'allows chaining with_headers with other methods' do
+      chat = Chat.create!(model_id: model)
+
+      result = chat
+               .with_temperature(0.5)
+               .with_headers('X-Test' => 'value')
+               .with_tool(Calculator)
+
+      expect(result).to eq(chat)
+
+      llm_chat = chat.instance_variable_get(:@chat)
+      expect(llm_chat.headers).to eq('X-Test' => 'value')
+    end
+  end
+
   describe 'error handling' do
     it 'destroys empty assistant messages on API failure' do
       chat = Chat.create!(model_id: model)
@@ -424,6 +511,77 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(tool_call_received).not_to be_nil
       expect(tool_call_received.name).to eq('calculator')
       expect(tool_result_received).to eq('4')
+    end
+  end
+
+  describe 'error recovery' do
+    it 'does not clean up complete tool interactions when error occurs after tool execution' do
+      chat = Chat.create!(model_id: model)
+      chat.messages.create!(role: 'user', content: 'What is 5 + 5?')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_123',
+        name: 'calculator',
+        arguments: { expression: '5 + 5' }.to_json
+      )
+
+      chat.messages.create!(
+        role: 'tool',
+        content: '10',
+        parent_tool_call: tool_call
+      )
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.not_to(change { chat.messages.count })
+    end
+
+    it 'cleans up incomplete tool interactions with missing tool results' do
+      chat = Chat.create!(model_id: model)
+
+      chat.messages.create!(role: 'user', content: 'Do multiple calculations')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call1 = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_1',
+        name: 'calculator',
+        arguments: { expression: '2 + 2' }.to_json
+      )
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_2',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      chat.messages.create!(
+        role: 'tool',
+        content: '4',
+        parent_tool_call: tool_call1
+      )
+
+      chat.messages.count
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-2)
+    end
+
+    it 'cleans up orphaned tool call messages with no results' do
+      chat = Chat.create!(model_id: model)
+
+      chat.messages.create!(role: 'user', content: 'What is 3 + 3?')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_456',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-1)
     end
   end
 end

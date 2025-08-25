@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 17:12:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '0198c877-52f3-74eb-bc4f-d9c83bee5ea1'
+      X-Kong-Request-Id:
+      - '0198c877-52f3-74eb-bc4f-d9c83bee5ea1'
+      X-Envoy-Upstream-Service-Time:
+      - '434'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '500000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '499887'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '1000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '999547946'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '67'
+      X-Ratelimit-Limit-Req-Minute:
+      - '60'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '58'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '435'
+      X-Kong-Proxy-Latency:
+      - '8'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"c9afa587ee2f426ca0c53c36113d70e3","created":1755709920,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":67,"completion_tokens":57},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**.\n\nParis is known for its iconic landmarks
+        such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum, as
+        well as its rich history, culture, and cuisine. It is one of the most visited
+        cities in the world."}}]}'
+  recorded_at: Wed, 20 Aug 2025 17:12:00 GMT
+recorded_with: VCR 6.3.1

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Core embedding interface. Provides a clean way to generate embeddings
-  # from text using various provider models.
+  # Core embedding interface.
   class Embedding
     attr_reader :vectors, :model, :input_tokens
 

@@ -1,0 +1,198 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 16:28:52 GMT
+      - Wed, 20 Aug 2025 16:28:53 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '925'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":"\n<tool_call>\n{\"name\":
+        \"dice_roll\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"dice_roll\",
+        \"arguments\": {}}\n</tool_call>","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ","type":"function"}]}}],"created":1755707334,"id":"chatcmpl-67ytfDjWxBvFQElyFtrQHFa4aZRdFBTn","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":143,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":92,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":215,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":4026.669663258044,"time_per_output_token_ms":8.611265734265734,"time_to_first_token_ms":53.394,"tokens_per_second":116.12694705504498,"total_tokens":358}}'
+  recorded_at: Wed, 20 Aug 2025 16:28:54 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"\n<tool_call>\n{\"name\":
+        \"dice_roll\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"dice_roll\",
+        \"arguments\": {}}\n</tool_call>","tool_calls":[{"id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 16:28:53 GMT
+      - Wed, 20 Aug 2025 16:28:54 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '785'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call-6Z3w8rfCtFjdDq4giwmIePMpaXm6MMyP","type":"function"}]}}],"created":1755707335,"id":"chatcmpl-AV8yLF8dMS21HAzTfBus3LTPA6Jqf2cC","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":142,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":123,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":262,"prompt_tokens_details":{"cached_tokens":213},"prompt_tokens_per_second":11611.931037539334,"time_per_output_token_ms":8.679352112676057,"time_to_first_token_ms":22.563,"tokens_per_second":115.21597315305549,"total_tokens":404}}'
+  recorded_at: Wed, 20 Aug 2025 16:28:55 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"\n<tool_call>\n{\"name\":
+        \"dice_roll\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"dice_roll\",
+        \"arguments\": {}}\n</tool_call>","tool_calls":[{"id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ"},{"role":"assistant","tool_calls":[{"id":"call-6Z3w8rfCtFjdDq4giwmIePMpaXm6MMyP","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call-6Z3w8rfCtFjdDq4giwmIePMpaXm6MMyP"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 16:28:54 GMT
+      - Wed, 20 Aug 2025 16:28:55 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '785'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call-FGO37qXkTUAniklJbDNK2OcFP6rPFWLi","type":"function"}]}}],"created":1755707337,"id":"chatcmpl-TrQQRQyrHhUp1qziwniioVmYMTVDMxnI","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":143,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":124,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":291,"prompt_tokens_details":{"cached_tokens":261},"prompt_tokens_per_second":16078.236366650091,"time_per_output_token_ms":8.730874125874127,"time_to_first_token_ms":18.099,"tokens_per_second":114.53606884979355,"total_tokens":434}}'
+  recorded_at: Wed, 20 Aug 2025 16:28:57 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"\n<tool_call>\n{\"name\":
+        \"dice_roll\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"dice_roll\",
+        \"arguments\": {}}\n</tool_call>","tool_calls":[{"id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call-stmlVP5pxujQQK1pp5I1DoUucefEqTQQ"},{"role":"assistant","tool_calls":[{"id":"call-6Z3w8rfCtFjdDq4giwmIePMpaXm6MMyP","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call-6Z3w8rfCtFjdDq4giwmIePMpaXm6MMyP"},{"role":"assistant","tool_calls":[{"id":"call-FGO37qXkTUAniklJbDNK2OcFP6rPFWLi","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call-FGO37qXkTUAniklJbDNK2OcFP6rPFWLi"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 16:28:56 GMT
+      - Wed, 20 Aug 2025 16:28:57 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '835'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGRpY2Ugd2FzIHJvbGxlZCB0aHJlZSB0aW1lcywgcmVzdWx0aW5nIGluIHRoZSBmb2xsb3dpbmcgb3V0Y29tZXM6XG5cbjEuICoqUm9sbCAxOioqIPCfjrIgMSAgXG4yLiAqKlJvbGwgMjoqKiDwn46yIDIgIFxuMy4gKipSb2xsIDM6Kiog8J+OsiAzICBcblxuKipUb3RhbDoqKiAxICsgMiArIDMgPSAqKjYqKiDwn46yIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTU3MDczMzksImlkIjoiY2hhdGNtcGwtd1d4SkhlcjBkdk9JcHBDWXZRWWN3RFBaUnlUakIxTzYiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjIxNCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTQwLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzIwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjkwfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxODYyNy4zOTM5MTExNzA2MTcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC44NjA4ODMxNzc1NzAwOTMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjE3LjE3OSwidG9rZW5zX3Blcl9zZWNvbmQiOjExMi44NTU1Njc1NTAxMjE4NiwidG90YWxfdG9rZW5zIjo1MzR9fQ==
+  recorded_at: Wed, 20 Aug 2025 16:28:59 GMT
+recorded_with: VCR 6.3.1
