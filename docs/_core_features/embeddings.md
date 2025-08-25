@@ -138,6 +138,7 @@ puts embedding.vectors.first.length # => 1536
 
 # The model used
 puts embedding.model  # => "text-embedding-3-small"
+```
 
 ## Using Embedding Results
 
