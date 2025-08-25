@@ -37,7 +37,9 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil,
+                 tool_choice: nil, parallel_tool_calls: nil, &)
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
@@ -45,6 +47,8 @@ module RubyLLM
         render_payload(
           messages,
           tools: tools,
+          tool_choice: tool_choice,
+          parallel_tool_calls: parallel_tool_calls,
           temperature: normalized_temperature,
           model: model,
           stream: block_given?,
@@ -58,6 +62,7 @@ module RubyLLM
         sync_response @connection, payload, headers
       end
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def list_models
       response = @connection.get models_url

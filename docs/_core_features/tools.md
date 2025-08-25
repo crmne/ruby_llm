@@ -184,6 +184,27 @@ puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
+### Tool Choice Control
+
+Control when and how tools are called using `choice` and `parallel` options:
+
+```ruby
+chat = RubyLLM.chat(model: 'gpt-4o')
+
+# Choice options
+chat.with_tool(Weather, choice: :auto)    # Model decides whether to call any provided tools or not (default)
+chat.with_tool(Weather, choice: :any)     # Model must use one of the provided tools
+chat.with_tool(Weather, choice: :none)    # No tools
+chat.with_tool(Weather, choice: :weather) # Force specific tool
+
+# Parallel tool calls
+chat.with_tools(Weather, Calculator, parallel: true)  # Model can output multiple tool calls at once (default)
+chat.with_tools(Weather, Calculator, parallel: false) # At most one tool call
+```
+
+> With `:any` or specific tool choices, tool results are not automatically sent back to the AI model (see The Tool Execution Flow section below) to prevent infinite loops.
+{: .note }
+
 ### Model Compatibility
 {: .d-inline-block }
 
