@@ -3,8 +3,6 @@
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
-    # Provides a clean interface for storing chat history, message metadata,
-    # and attachments in your database.
     module ActsAs
       extend ActiveSupport::Concern
 
@@ -53,7 +51,12 @@ module RubyLLM
                      optional: true,
                      inverse_of: :result
 
-          delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
+          has_many :tool_results,
+                   through: :tool_calls,
+                   source: :result,
+                   class_name: @message_class
+
+          delegate :tool_call?, :tool_result?, to: :to_llm
         end
 
         def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
@@ -75,8 +78,7 @@ module RubyLLM
       end
     end
 
-    # Methods mixed into chat models to handle message persistence and
-    # provide a conversation interface.
+    # Methods mixed into chat models.
     module ChatMethods
       extend ActiveSupport::Concern
 
@@ -211,26 +213,33 @@ module RubyLLM
       private
 
       def cleanup_failed_messages
-        RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
+        RubyLLM.logger.warn "RubyLLM: API call failed, destroying message: #{@message.id}"
         @message.destroy
       end
 
-      def cleanup_orphaned_tool_results
-        loop do
-          messages.reload
-          last = messages.order(:id).last
+      def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
+        messages.reload
+        last = messages.order(:id).last
 
-          break unless last&.tool_call? || last&.tool_result?
+        return unless last&.tool_call? || last&.tool_result?
 
+        if last.tool_call?
           last.destroy
+        elsif last.tool_result?
+          tool_call_message = last.parent_tool_call.message
+          expected_results = tool_call_message.tool_calls.pluck(:id)
+          actual_results = tool_call_message.tool_results.pluck(:tool_call_id)
+
+          if expected_results.sort != actual_results.sort
+            tool_call_message.tool_results.each(&:destroy)
+            tool_call_message.destroy
+          end
         end
       end
 
       def setup_persistence_callbacks
-        # Only set up once per chat instance
         return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
 
-        # Set up persistence callbacks (user callbacks will be chained via on_new_message/on_end_message methods)
         @chat.on_new_message { persist_new_message }
         @chat.on_end_message { |msg| persist_message_completion(msg) }
 
@@ -242,15 +251,21 @@ module RubyLLM
         @message = messages.create!(role: :assistant, content: '')
       end
 
-      def persist_message_completion(message)
+      def persist_message_completion(message) # rubocop:disable Metrics/PerceivedComplexity
         return unless message
 
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
-          # Convert parsed JSON back to JSON string for storage
           content = message.content
-          content = content.to_json if content.is_a?(Hash) || content.is_a?(Array)
+          attachments_to_persist = nil
+
+          if content.is_a?(RubyLLM::Content)
+            attachments_to_persist = content.attachments if content.attachments.any?
+            content = content.text
+          elsif content.is_a?(Hash) || content.is_a?(Array)
+            content = content.to_json
+          end
 
           @message.update!(
             role: message.role,
@@ -261,6 +276,8 @@ module RubyLLM
           )
           @message.write_attribute(@message.class.tool_call_foreign_key, tool_call_id) if tool_call_id
           @message.save!
+
+          persist_content(@message, attachments_to_persist) if attachments_to_persist
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
         end
       end
@@ -302,8 +319,7 @@ module RubyLLM
       def convert_to_active_storage_format(source)
         return if source.blank?
 
-        # Let RubyLLM::Attachment handle the heavy lifting
-        attachment = RubyLLM::Attachment.new(source)
+        attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
 
         {
           io: StringIO.new(attachment.content),
@@ -316,8 +332,7 @@ module RubyLLM
       end
     end
 
-    # Methods mixed into message models to handle serialization and
-    # provide a clean interface to the underlying message data.
+    # Methods mixed into message models.
     module MessageMethods
       extend ActiveSupport::Concern
 

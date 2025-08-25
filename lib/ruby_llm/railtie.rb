@@ -9,7 +9,6 @@ module RubyLLM
       end
     end
 
-    # Register generators
     generators do
       require 'generators/ruby_llm/install_generator'
     end

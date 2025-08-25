@@ -2,8 +2,6 @@
 
 module RubyLLM
   # Assembles streaming responses from LLMs into complete messages.
-  # Handles the complexities of accumulating content and tool calls
-  # from partial chunks while tracking token usage.
   class StreamAccumulator
     attr_reader :content, :model_id, :tool_calls
 
@@ -52,7 +50,7 @@ module RubyLLM
         arguments = if tc.arguments.is_a?(String) && !tc.arguments.empty?
                       JSON.parse(tc.arguments)
                     elsif tc.arguments.is_a?(String)
-                      {} # Return empty hash for empty string arguments
+                      {}
                     else
                       tc.arguments
                     end

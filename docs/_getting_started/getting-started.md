@@ -5,6 +5,7 @@ nav_order: 1
 description: Start building AI apps in Ruby in 5 minutes. Chat, generate images, create embeddings - all with one gem.
 redirect_from:
   - /guides/getting-started
+  - /installation
 ---
 
 # {{ page.title }}

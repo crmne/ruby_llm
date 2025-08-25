@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"max_tokens":4096,"temperature":0.7}'
+        2 + 2?"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133140Z
+      - 20250820T170843Z
       X-Amz-Content-Sha256:
-      - d951ede456507c6d5c0982a4895746cff9f9fff37194cca0b3be2f48a4403fa0
+      - 01ab27c7d96d3a8fdf4610e6a4bc3a862f94de194536525920292dfaa9df20f2
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=357c92a4572c7a0237f76fb4bf1fa99ee8356f9c63f81a071183b7e8a0dd0f17
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e10f9953735b75ac1de696dd179f6c5dad4c073c62a2463a2ec6c09e74c4245e
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:31:41 GMT
+      - Wed, 20 Aug 2025 17:08:44 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,15 +39,15 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '09bd401c-4cf5-4a33-bd86-300a72c90dd1'
+      - 9b5fc203-4692-4fd1-a0ab-681797560f5e
       X-Amzn-Bedrock-Invocation-Latency:
-      - '396'
+      - '461'
       X-Amzn-Bedrock-Output-Token-Count:
       - '6'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01N6VTmGvMGf2oPWn6hdSQwP","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":6}}'
-  recorded_at: Sun, 10 Aug 2025 13:31:41 GMT
+      string: '{"id":"msg_bdrk_015K9qedGtmRqPS8GjYhBjZU","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":6}}'
+  recorded_at: Wed, 20 Aug 2025 17:08:44 GMT
 recorded_with: VCR 6.3.1

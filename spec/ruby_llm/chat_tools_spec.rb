@@ -57,6 +57,18 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ContentReturningTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Returns a Content object with text and attachments'
+    param :query, desc: 'Query to process'
+
+    def execute(query:)
+      RubyLLM::Content.new(
+        "Processed: #{query}",
+        File.join(__dir__, '..', 'fixtures', 'ruby.png')
+      )
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -127,6 +139,8 @@ RSpec.describe RubyLLM::Chat do
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
+
+        skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
@@ -281,6 +295,35 @@ RSpec.describe RubyLLM::Chat do
       chat.ask('Roll a die for me')
 
       expect(call_order).to eq(%i[tool_call tool_result])
+    end
+  end
+
+  describe 'content object support' do
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} preserves Content objects returned from tools" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        # Skip providers that don't support images in tool results
+        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(ContentReturningTool)
+
+        chat.ask('Process this query: test data')
+
+        tool_message = chat.messages.find { |m| m.role == :tool }
+        expect(tool_message).not_to be_nil
+        expect(tool_message.content).to be_a(RubyLLM::Content)
+        expect(tool_message.content.text).to eq('Processed: test data')
+        expect(tool_message.content.attachments).not_to be_empty
+        expect(tool_message.content.attachments.first).to be_a(RubyLLM::Attachment)
+        expect(tool_message.content.attachments.first.filename).to eq('ruby.png')
+      end
     end
   end
 

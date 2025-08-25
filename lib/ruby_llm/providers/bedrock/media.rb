@@ -11,7 +11,6 @@ module RubyLLM
         module_function
 
         def format_content(content, cache: false)
-          # Convert Hash/Array back to JSON string for API
           return [Anthropic::Media.format_text(content.to_json, cache:)] if content.is_a?(Hash) || content.is_a?(Array)
           return [Anthropic::Media.format_text(content, cache:)] unless content.is_a?(Content)
 

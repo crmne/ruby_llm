@@ -8,14 +8,12 @@ module RubyLLM
         module_function
 
         def format_role(role)
-          # Mistral doesn't use the new OpenAI convention for system prompts
           role.to_s
         end
 
         # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, cache_prompts: {}) # rubocop:disable Metrics/ParameterLists
           payload = super
-          # Mistral doesn't support stream_options
           payload.delete(:stream_options)
           payload
         end

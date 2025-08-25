@@ -8,22 +8,18 @@ module RubyLLM
         module_function
 
         def supports_streaming?(model_id)
-          # All chat models support streaming, but not embedding/moderation/OCR/transcription
           !model_id.match?(/embed|moderation|ocr|transcriptions/)
         end
 
         def supports_tools?(model_id)
-          # Most chat models support tools except embedding/moderation/OCR/voxtral/transcription
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions|mistral-(tiny|small)-(2312|2402)/)
         end
 
         def supports_vision?(model_id)
-          # Models with vision capabilities
           model_id.match?(/pixtral|mistral-small-(2503|2506)|mistral-medium/)
         end
 
         def supports_json_mode?(model_id)
-          # Most chat models support JSON mode (structured output)
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions/) && supports_tools?(model_id)
         end
 
@@ -58,11 +54,11 @@ module RubyLLM
         end
 
         def context_window_for(_model_id)
-          32_768 # Default for most Mistral models
+          32_768
         end
 
         def max_tokens_for(_model_id)
-          8192 # Default for most Mistral models
+          8192
         end
 
         def modalities_for(model_id)
@@ -97,7 +93,6 @@ module RubyLLM
             capabilities << 'structured_output' if supports_json_mode?(model_id)
             capabilities << 'vision' if supports_vision?(model_id)
 
-            # Model-specific capabilities
             capabilities << 'reasoning' if model_id.match?(/magistral/)
             capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
             capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
@@ -117,12 +112,10 @@ module RubyLLM
 
         def release_date_for(model_id)
           case model_id
-          # 2023 releases
           when 'open-mistral-7b', 'mistral-tiny' then '2023-09-27'
           when 'mistral-medium-2312', 'mistral-small-2312', 'mistral-small',
                'open-mixtral-8x7b', 'mistral-tiny-2312' then '2023-12-11'
 
-          # 2024 releases
           when 'mistral-embed' then '2024-01-11'
           when 'mistral-large-2402', 'mistral-small-2402' then '2024-02-26'
           when 'open-mixtral-8x22b', 'open-mixtral-8x22b-2404' then '2024-04-17'
@@ -140,7 +133,6 @@ module RubyLLM
           when 'codestral-2411-rc5', 'mistral-moderation-2411', 'mistral-moderation-latest' then '2024-11-26'
           when 'codestral-2412' then '2024-12-17'
 
-          # 2025 releases
           when 'mistral-small-2501' then '2025-01-13'
           when 'codestral-2501' then '2025-01-14'
           when 'mistral-saba-2502', 'mistral-saba-latest' then '2025-02-18'

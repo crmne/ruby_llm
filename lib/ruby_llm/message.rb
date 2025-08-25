@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A single message in a chat conversation. Can represent user input,
-  # AI responses, or tool interactions. Tracks token usage and handles
-  # the complexities of tool calls and responses.
+  # A single message in a chat conversation.
   class Message
     ROLES = %i[system user assistant tool].freeze
 
@@ -70,7 +68,7 @@ module RubyLLM
       case content
       when String then Content.new(content)
       when Hash then Content.new(content[:text], content)
-      else content # Pass through nil, Content, or other types
+      else content
       end
     end
 

@@ -5,7 +5,6 @@ module RubyLLM
     class Gemini
       # Tools methods for the Gemini API implementation
       module Tools
-        # Format tools for Gemini API
         def format_tools(tools)
           return [] if tools.empty?
 
@@ -14,7 +13,6 @@ module RubyLLM
           }]
         end
 
-        # Extract tool calls from response data
         def extract_tool_calls(data)
           return nil unless data
 
@@ -43,7 +41,6 @@ module RubyLLM
 
         private
 
-        # Format a single tool for Gemini API
         def function_declaration_for(tool)
           {
             name: tool.name,
@@ -52,7 +49,6 @@ module RubyLLM
           }.compact
         end
 
-        # Format tool parameters for Gemini API
         def format_parameters(parameters)
           {
             type: 'OBJECT',
@@ -66,7 +62,6 @@ module RubyLLM
           }
         end
 
-        # Convert RubyLLM param types to Gemini API types
         def param_type_for_gemini(type)
           case type.to_s.downcase
           when 'integer', 'number', 'float' then 'NUMBER'

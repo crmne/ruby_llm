@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"stream":false,"temperature":0.7}'
+        was Ruby''s creator?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:32:19 GMT
+      - Wed, 20 Aug 2025 17:09:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,80 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7afeefb809a4b0ec1d30163d50239aa8
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"d50c0372-d1ac-47b0-8a51-719b33a4c74a","object":"chat.completion","created":1754832739,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first
-        version of Ruby in **1995**. Matz designed Ruby with a focus on simplicity,
-        productivity, and programmer happiness, blending elements from Perl, Smalltalk,
-        Eiffel, Ada, and Lisp. \n\n### Key Facts About Matz:\n- Born on **April 14,
-        1965** in Osaka Prefecture, Japan.\n- Still actively involved in Ruby''s development
-        as the **chief designer**.\n- His philosophy: *\"Ruby is designed to make
-        programmers happy.\"*\n\nRuby later gained global popularity, especially with
-        the rise of the **Ruby on Rails** web framework (created by David Heinemeier
-        Hansson in 2004). \n\nWould you like details on Ruby''s design principles
-        or its evolution?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":9,"completion_tokens":170,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":9},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Sun, 10 Aug 2025 13:32:31 GMT
-- request:
-    method: post
-    uri: https://api.deepseek.com/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        **Yukihiro \"Matz\" Matsumoto** in Japan. He released the first version of
-        Ruby in **1995**. Matz designed Ruby with a focus on simplicity, productivity,
-        and programmer happiness, blending elements from Perl, Smalltalk, Eiffel,
-        Ada, and Lisp. \n\n### Key Facts About Matz:\n- Born on **April 14, 1965**
-        in Osaka Prefecture, Japan.\n- Still actively involved in Ruby''s development
-        as the **chief designer**.\n- His philosophy: *\"Ruby is designed to make
-        programmers happy.\"*\n\nRuby later gained global popularity, especially with
-        the rise of the **Ruby on Rails** web framework (created by David Heinemeier
-        Hansson in 2004). \n\nWould you like details on Ruby''s design principles
-        or its evolution?"},{"role":"user","content":"What year did he create Ruby?"}],"stream":false,"temperature":0.7}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 10 Aug 2025 13:32:31 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Vary:
-      - origin, access-control-request-method, access-control-request-headers
-      Access-Control-Allow-Credentials:
-      - 'true'
-      X-Ds-Trace-Id:
-      - 06e51f47b240d6cff585b6dabd3822fc
+      - efa51e0fc172e37e24e1c42baebd086a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -125,6 +52,84 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijc3ZmQyMDAyLWQ2ZGYtNDU4Yi1hNGI3LTg0OTc5ZGViNmM3MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTQ4MzI3NTEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqY3JlYXRlZCBSdWJ5IGluIDE5OTMqKiBhbmQgcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uICgqKlJ1YnkgMC45NSoqKSBpbiAqKkRlY2VtYmVyIDE5OTQqKi4gVGhlIGxhbmd1YWdlIHN0YWJpbGl6ZWQgd2l0aCAqKlJ1YnkgMS4wKiogaW4gKioxOTk2KiouICBcblxuIyMjIFRpbWVsaW5lIFN1bW1hcnk6ICBcbi0gKioxOTkzKio6IE1hdHogc3RhcnRlZCBkZXNpZ25pbmcgUnVieS4gIFxuLSAqKkRlYyAxOTk0Kio6IEZpcnN0IHB1YmxpYyByZWxlYXNlICh2MC45NSkuICBcbi0gKioxOTk1Kio6IFJ1YnkgZ2FpbmVkIGVhcmx5IGFkb3B0ZXJzIGluIEphcGFuLiAgXG4tICoqMTk5NioqOiBPZmZpY2lhbCBSdWJ5IDEuMCBsYXVuY2guICBcblxuRnVuIGZhY3Q6IE1hdHogbmFtZWQgdGhlIGxhbmd1YWdlIGFmdGVyIHRoZSBnZW1zdG9uZSAoKlJ1YnkqKSwgYXMgYSBwbGF5ZnVsIG5vZCB0byBQZXJsIChhbm90aGVyIGdlbS1pbnNwaXJlZCBsYW5ndWFnZSkuICBcblxuV291bGQgeW91IGxpa2UgZGV0YWlscyBvbiBSdWJ54oCZcyBlYXJseSBpbmZsdWVuY2VzIG9yIGl0cyBncm93dGggcG9zdC0xOTk2PyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE4OSwiY29tcGxldGlvbl90b2tlbnMiOjE2NSwidG90YWxfdG9rZW5zIjozNTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMjh9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTI4LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjYxfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfODgwMjM2OWVhYV9wcm9kMDYyM19mcDhfa3ZjYWNoZSJ9
-  recorded_at: Sun, 10 Aug 2025 13:32:43 GMT
+        eyJpZCI6IjY4OTA4ZmUxLWYwMDYtNDQyMC05N2RiLWQ5ODkxM2RlMWZiZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDk3NjMsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGUgY3JlYXRvciBvZiB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSBpcyAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGZyb20gSmFwYW4uXG5cbkhlcmUgYXJlIHNvbWUga2V5IGRldGFpbHMgYWJvdXQgaGltIGFuZCB0aGUgY3JlYXRpb24gb2YgUnVieTpcblxuKiAgICoqTmFtZToqKiBZdWtpaGlybyBNYXRzdW1vdG8gKOadvuacrOihjOW8mCksIGFsbW9zdCB1bml2ZXJzYWxseSBrbm93biBieSBoaXMgbmlja25hbWUgXCJNYXR6XCIuXG4qICAgKipJbml0aWFsIFJlbGVhc2U6KiogSGUgYmVnYW4gd29ya2luZyBvbiBSdWJ5IGluIDE5OTMgYW5kIHJlbGVhc2VkIHRoZSBmaXJzdCBwdWJsaWMgdmVyc2lvbiAoMC45NSkgaW4gMTk5NS5cbiogICAqKlBoaWxvc29waHk6KiogSGlzIHByaW1hcnkgZ29hbCB3YXMgdG8gY3JlYXRlIGEgbGFuZ3VhZ2UgdGhhdCBwcmlvcml0aXplZCAqKnByb2dyYW1tZXIgaGFwcGluZXNzIGFuZCBwcm9kdWN0aXZpdHkqKi4gSGUgZGVzaWduZWQgUnVieSB0byBiZSBuYXR1cmFsLCBpbnR1aXRpdmUsIGFuZCBmdW4gdG8gdXNlLCBmb2xsb3dpbmcgdGhlICoqUHJpbmNpcGxlIG9mIExlYXN0IEFzdG9uaXNobWVudCAoUE9MQSkqKuKAlG1lYW5pbmcgdGhlIGxhbmd1YWdlIHNob3VsZCBiZWhhdmUgaW4gYSB3YXkgdGhhdCBtaW5pbWl6ZXMgY29uZnVzaW9uIGZvciBleHBlcmllbmNlZCB1c2Vycy5cbiogICAqKkluc3BpcmF0aW9uOioqIFJ1YnkgaXMgYW4gb2JqZWN0LW9yaWVudGVkIGxhbmd1YWdlIHRoYXQgd2FzIGluc3BpcmVkIGJ5IHNldmVyYWwgb3RoZXJzLCBpbmNsdWRpbmc6XG4gICAgKiAgICoqUGVybCoqIChmb3IgaXRzIHByYWN0aWNhbCB0ZXh0IHByb2Nlc3NpbmcgcG93ZXIpXG4gICAgKiAgICoqU21hbGx0YWxrKiogKGZvciBpdHMgcHVyZSBvYmplY3Qtb3JpZW50ZWQgbmF0dXJlKVxuICAgICogICAqKkVpZmZlbCoqIChmb3IgaXRzIGVsZWdhbmNlIGFuZCBkZXNpZ24gYnkgY29udHJhY3QpXG4gICAgKiAgICoqTGlzcCoqIChmb3IgaXRzIGZ1bmN0aW9uYWwgcHJvZ3JhbW1pbmcgaWRlYXMpXG4gICAgKiAgICoqQWRhKiogKGZvciBpdHMgZXhjZXB0aW9uIGhhbmRsaW5nKVxuXG5NYXR6IGlzIHN0aWxsIHZlcnkgYWN0aXZlIGluIHRoZSBSdWJ5IGNvbW11bml0eSBhbmQgaXMgdGhlIGJlbmV2b2xlbnQgZGljdGF0b3IgZm9yIGxpZmUgKEJERkwpIG9mIHRoZSBsYW5ndWFnZSdzIGRldmVsb3BtZW50LiBIZSBjdXJyZW50bHkgd29ya3MgYXQgdGhlIGNsb3VkIGNvbXB1dGluZyBjb21wYW55ICoqSGVyb2t1KiogKGEgU2FsZXNmb3JjZSBjb21wYW55KS5cblxuQSBmYW1vdXMgcXVvdGUgZnJvbSBoaW0gcGVyZmVjdGx5IGNhcHR1cmVzIGhpcyBwaGlsb3NvcGh5OlxuXG4+IFwiSSBob3BlIHRvIHNlZSBSdWJ5IGhlbHAgZXZlcnkgcHJvZ3JhbW1lciBpbiB0aGUgd29ybGQgdG8gYmUgcHJvZHVjdGl2ZSwgYW5kIHRvIGVuam95IHByb2dyYW1taW5nLCBhbmQgdG8gYmUgaGFwcHkuIFRoYXQgaXMgdGhlIHByaW1hcnkgcHVycG9zZSBvZiB0aGUgUnVieSBsYW5ndWFnZS5cIiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJjb21wbGV0aW9uX3Rva2VucyI6MzUwLCJ0b3RhbF90b2tlbnMiOjM2MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2JhZWFjNWFhYTNfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Wed, 20 Aug 2025 17:09:43 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
+        was Ruby''s creator?"},{"role":"assistant","content":"Of course! The creator
+        of the Ruby programming language is **Yukihiro \"Matz\" Matsumoto** from Japan.\n\nHere
+        are some key details about him and the creation of Ruby:\n\n*   **Name:**
+        Yukihiro Matsumoto (松本行弘), almost universally known by his nickname \"Matz\".\n*   **Initial
+        Release:** He began working on Ruby in 1993 and released the first public
+        version (0.95) in 1995.\n*   **Philosophy:** His primary goal was to create
+        a language that prioritized **programmer happiness and productivity**. He
+        designed Ruby to be natural, intuitive, and fun to use, following the **Principle
+        of Least Astonishment (POLA)**—meaning the language should behave in a way
+        that minimizes confusion for experienced users.\n*   **Inspiration:** Ruby
+        is an object-oriented language that was inspired by several others, including:\n    *   **Perl**
+        (for its practical text processing power)\n    *   **Smalltalk** (for its
+        pure object-oriented nature)\n    *   **Eiffel** (for its elegance and design
+        by contract)\n    *   **Lisp** (for its functional programming ideas)\n    *   **Ada**
+        (for its exception handling)\n\nMatz is still very active in the Ruby community
+        and is the benevolent dictator for life (BDFL) of the language''s development.
+        He currently works at the cloud computing company **Heroku** (a Salesforce
+        company).\n\nA famous quote from him perfectly captures his philosophy:\n\n>
+        \"I hope to see Ruby help every programmer in the world to be productive,
+        and to enjoy programming, and to be happy. That is the primary purpose of
+        the Ruby language.\""},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 20 Aug 2025 17:09:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - ed298752e25eb5f9d84e62a43e201a2b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2a9766e7-375c-4588-a91e-552b90d4fd9a","object":"chat.completion","created":1755709784,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Excellent
+        question. While the first public release was in 1995, the creation started
+        earlier.\n\nYukihiro \"Matz\" Matsumoto **started working on Ruby in 1993**
+        and **released the first public version (0.95) in 1995**.\n\nSo, you''ll often
+        see both dates:\n*   **1993** for the year he began its creation.\n*   **1995**
+        for the year it was first officially released to the world."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":371,"completion_tokens":100,"total_tokens":471,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":243},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 20 Aug 2025 17:09:51 GMT
 recorded_with: VCR 6.3.1

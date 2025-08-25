@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Registry of available AI models and their capabilities. Provides a clean interface
-  # to discover and work with models from different providers.
-  #
-  # Example:
-  #   RubyLLM.models.all                                  # All available models
-  #   RubyLLM.models.chat_models                          # Models that support chat
-  #   RubyLLM.models.by_provider('openai').chat_models    # OpenAI chat models
-  #   RubyLLM.models.find('claude-3')                     # Get info about a specific model
+  # Registry of available AI models and their capabilities.
   class Models
     include Enumerable
 
@@ -25,14 +18,14 @@ module RubyLLM
         File.expand_path('models.json', __dir__)
       end
 
+      def schema_file
+        File.expand_path('models_schema.json', __dir__)
+      end
+
       def refresh!
-        # Collect models from both sources
         provider_models = fetch_from_providers
         parsera_models = fetch_from_parsera
-
-        # Merge with parsera data taking precedence
         merged_models = merge_models(provider_models, parsera_models)
-
         @instance = new(merged_models)
       end
 
@@ -50,7 +43,6 @@ module RubyLLM
         config ||= RubyLLM.config
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
 
-        # Check if provider is local
         if provider_class
           temp_instance = provider_class.new(config)
           assume_exists = true if temp_instance.local?

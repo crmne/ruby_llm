@@ -7,8 +7,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -26,20 +26,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 10 Aug 2025 14:22:54 GMT
+      - Wed, 20 Aug 2025 15:53:50 GMT
       Content-Length:
-      - '1044'
+      - '1075'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-160","object":"chat.completion","created":1754835774,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-410","object":"chat.completion","created":1755705230,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user wants me to roll the dice three times. Let me check the tools available.
         There''s a function called dice_roll that rolls a six-sided die. The user
-        said exactly three times, so I need to call that function three separate times.
-        Each call doesn''t need any parameters, so I''ll just make three individual
-        tool calls. Let me make sure I don''t miss any and that each is properly formatted.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_1eaoxwfx","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_7r1carm8","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_z5rtvbwp","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":138,"total_tokens":297}}
+        specified exactly three times, so I need to call that function three separate
+        times. Each call doesn''t require any parameters, so I''ll just make three
+        individual tool calls. I''ll make sure to format each one correctly within
+        the XML tags. Let me start the first roll.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_r512ca36","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_xsazjph6","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kqc8ymee","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":143,"total_tokens":302}}
 
         '
-  recorded_at: Sun, 10 Aug 2025 14:22:54 GMT
+  recorded_at: Wed, 20 Aug 2025 15:53:50 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -49,13 +50,14 @@ http_interactions:
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"<think>\nOkay, the user
         wants me to roll the dice three times. Let me check the tools available. There''s
-        a function called dice_roll that rolls a six-sided die. The user said exactly
-        three times, so I need to call that function three separate times. Each call
-        doesn''t need any parameters, so I''ll just make three individual tool calls.
-        Let me make sure I don''t miss any and that each is properly formatted.\n</think>\n\n","tool_calls":[{"id":"call_1eaoxwfx","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_7r1carm8","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_z5rtvbwp","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_1eaoxwfx"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_7r1carm8"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_z5rtvbwp"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        a function called dice_roll that rolls a six-sided die. The user specified
+        exactly three times, so I need to call that function three separate times.
+        Each call doesn''t require any parameters, so I''ll just make three individual
+        tool calls. I''ll make sure to format each one correctly within the XML tags.
+        Let me start the first roll.\n</think>\n\n","tool_calls":[{"id":"call_r512ca36","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_xsazjph6","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kqc8ymee","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_r512ca36"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_xsazjph6"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_kqc8ymee"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -73,12 +75,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 10 Aug 2025 14:22:56 GMT
+      - Wed, 20 Aug 2025 15:53:51 GMT
       Content-Length:
-      - '1081'
+      - '1079'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTQzIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc1NDgzNTc3NiwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiXHUwMDNjdGhpbmtcdTAwM2Vcbk9rYXksIHRoZSB1c2VyIGFza2VkIHRvIHJvbGwgdGhlIGRpY2UgdGhyZWUgdGltZXMsIGFuZCBJIGNhbGxlZCB0aGUgZGljZV9yb2xsIGZ1bmN0aW9uIHRocmVlIHRpbWVzLiBFYWNoIHJlc3BvbnNlIGZyb20gdGhlIHRvb2wgZ2F2ZSBhIHJvbGwgcmVzdWx0OiAxLCAyLCBhbmQgMy4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoZXNlIHJlc3VsdHMgdG8gdGhlIHVzZXIgaW4gYSBjbGVhciB3YXkuIExldCBtZSBsaXN0IGVhY2ggcm9sbCBzZXF1ZW50aWFsbHkgdG8gc2hvdyB0aGUgdGhyZWUgb3V0Y29tZXMuIEkgc2hvdWxkIG1lbnRpb24gZWFjaCByb2xsIG51bWJlciBhbmQgdGhlIHJlc3VsdC4gVGhlbiwgbWF5YmUgYWRkIGEgZnJpZW5kbHkgbWVzc2FnZSB0byBzdW1tYXJpemUgdGhlIHRvdGFsIG9yIGNvbmZpcm0gdGhlIGNvbXBsZXRpb24uIExldCBtZSBjaGVjayBpZiB0aGUgdXNlciBuZWVkcyBhbnl0aGluZyBlbHNlLCBsaWtlIHRoZSBzdW0gb3IganVzdCB0aGUgaW5kaXZpZHVhbCByb2xscy4gU2luY2UgdGhleSBkaWRuJ3Qgc3BlY2lmeSwgSSdsbCBwcm92aWRlIGFsbCB0aHJlZSByZXN1bHRzIGFuZCBvZmZlciBmdXJ0aGVyIGhlbHAuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuSGVyZSBhcmUgeW91ciB0aHJlZSBkaWNlIHJvbGxzOlxuXG4xLiAqKlJvbGwgMToqKiDwn46yIDEgIFxuMi4gKipSb2xsIDI6Kiog8J+OsiAyICBcbjMuICoqUm9sbCAzOioqIPCfjrIgMyAgXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgdG8gZG8gYW55dGhpbmcgZWxzZSEg8J+YiiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mjk2LCJjb21wbGV0aW9uX3Rva2VucyI6MTk2LCJ0b3RhbF90b2tlbnMiOjQ5Mn19Cg==
-  recorded_at: Sun, 10 Aug 2025 14:22:56 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-631","object":"chat.completion","created":1755705231,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked to roll the dice three times, and I called the dice_roll function
+        three times. Each response from the tool gave a roll result: 1, 2, and 3.
+        Now I need to compile these results into a final answer. Let me check if all
+        three rolls were successful. The first roll was 1, the second 2, and the third
+        3. All three are valid numbers for a six-sided die. The user probably wants
+        the sequence of rolls or the total? Wait, the original request was just to
+        roll three times, so maybe they want each individual result listed. I should
+        present each roll in order. Let me format that clearly. Also, make sure there''s
+        no markdown, just plain text. Alright, the final answer should show each roll''s
+        outcome.\n\u003c/think\u003e\n\nThe dice rolls resulted in: 1, 2, and 3."},"finish_reason":"stop"}],"usage":{"prompt_tokens":301,"completion_tokens":186,"total_tokens":487}}
+
+        '
+  recorded_at: Wed, 20 Aug 2025 15:53:51 GMT
 recorded_with: VCR 6.3.1

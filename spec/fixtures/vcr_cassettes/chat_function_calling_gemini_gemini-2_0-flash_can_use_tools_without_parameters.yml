@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:37:26 GMT
+      - Wed, 20 Aug 2025 15:50:42 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=420
+      - gfet4t7; dur=409
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -85,16 +85,16 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "lqCYaO_2Jr3I1PIPoa-8oQw"
+          "responseId": "0u6laMz0DeX9vdIP38CtmAE"
         }
-  recorded_at: Sun, 10 Aug 2025 13:37:27 GMT
+  recorded_at: Wed, 20 Aug 2025 15:50:42 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"3aef56e7-e18b-4aae-bed8-ed569cbe3fc6","response":{"name":"3aef56e7-e18b-4aae-bed8-ed569cbe3fc6","content":"Ruby"}}}]}],"generationConfig":{"temperature":0.7},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"d5282611-36b5-4f31-bef0-1d609b7511c1","response":{"name":"d5282611-36b5-4f31-bef0-1d609b7511c1","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -119,7 +119,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:37:27 GMT
+      - Wed, 20 Aug 2025 15:50:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -129,7 +129,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=338
+      - gfet4t7; dur=422
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -149,17 +149,17 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0034842540820439658
+              "avgLogprobs": -0.003093155100941658
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 88,
+            "promptTokenCount": 101,
             "candidatesTokenCount": 9,
-            "totalTokenCount": 97,
+            "totalTokenCount": 110,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 88
+                "tokenCount": 101
               }
             ],
             "candidatesTokensDetails": [
@@ -170,7 +170,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "l6CYaOvLFL3I1PIPoa-8oQw"
+          "responseId": "0u6laLmmLdjqkdUP9umK2As"
         }
-  recorded_at: Sun, 10 Aug 2025 13:37:27 GMT
+  recorded_at: Wed, 20 Aug 2025 15:50:43 GMT
 recorded_with: VCR 6.3.1

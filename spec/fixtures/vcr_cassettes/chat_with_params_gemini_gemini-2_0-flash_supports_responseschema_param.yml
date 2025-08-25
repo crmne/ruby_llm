@@ -5,7 +5,7 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"generationConfig":{"responseMimeType":"application/json","responseSchema":{"type":"OBJECT","properties":{"result":{"type":"NUMBER"}}},"temperature":0.7},"contents":[{"role":"user","parts":[{"text":"What
+      string: '{"generationConfig":{"responseMimeType":"application/json","responseSchema":{"type":"OBJECT","properties":{"result":{"type":"NUMBER"}}}},"contents":[{"role":"user","parts":[{"text":"What
         is the square root of 64? Answer with a JSON object with the key `result`."}]}]}'
     headers:
       User-Agent:
@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:31:19 GMT
+      - Wed, 20 Aug 2025 17:08:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=755
+      - gfet4t7; dur=514
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,19 +54,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "{\n  \"result\": 8\n}"
+                    "text": "{\n\"result\": 8\n}"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.071400159597396845
+              "avgLogprobs": -0.064584308200412333
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 24,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 34,
+            "candidatesTokenCount": 9,
+            "totalTokenCount": 33,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -76,12 +76,12 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 10
+                "tokenCount": 9
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "Jp-YaNO_KrednvgPlKGr8Ag"
+          "responseId": "AgGmaOH2JZfPnsEPibWsgQw"
         }
-  recorded_at: Sun, 10 Aug 2025 13:31:19 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:19 GMT
 recorded_with: VCR 6.3.1

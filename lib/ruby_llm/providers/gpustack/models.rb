@@ -30,13 +30,12 @@ module RubyLLM
                 categories: model['categories']
               },
               context_window: model.dig('meta', 'n_ctx'),
-              # Using context window as max tokens since it's not explicitly provided
               max_tokens: model.dig('meta', 'n_ctx'),
               supports_vision: model.dig('meta', 'support_vision') || false,
               supports_functions: model.dig('meta', 'support_tool_calls') || false,
-              supports_json_mode: true, # Assuming all models support JSON mode
-              input_price_per_million: 0.0,  # Price information not available in new format
-              output_price_per_million: 0.0  # Price information not available in new format
+              supports_json_mode: true,
+              input_price_per_million: 0.0,
+              output_price_per_million: 0.0
             )
           end
         end
