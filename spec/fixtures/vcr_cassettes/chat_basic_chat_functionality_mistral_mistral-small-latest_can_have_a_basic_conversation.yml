@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"stream":false,"temperature":0.7}'
+        2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 14:07:57 GMT
+      - Wed, 20 Aug 2025 17:11:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198944f-394c-739e-a3bf-daa7c49020ad'
+      - '0198c877-5124-7699-be56-93c3eb8d53ff'
       X-Kong-Request-Id:
-      - '0198944f-394c-739e-a3bf-daa7c49020ad'
+      - '0198c877-5124-7699-be56-93c3eb8d53ff'
       X-Envoy-Upstream-Service-Time:
-      - '327'
+      - '279'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499539'
+      - '499954'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999565492'
+      - '999548013'
       X-Ratelimit-Tokens-Query-Cost:
-      - '52'
+      - '46'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '57'
+      - '59'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '328'
+      - '280'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,8 +72,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5af460b26f4d411fb3dca6bedadc4418","created":1754834876,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":52,"completion_tokens":41},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"dbbde2e8122741efac19267abdb2db9a","created":1755709919,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":46,"completion_tokens":35},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic operation where you add
-        two numbers together. Here''s the calculation:\n\n\\[ 2 + 2 = 4 \\]"}}]}'
-  recorded_at: Sun, 10 Aug 2025 14:07:57 GMT
+        the two numbers together:\n\n2\n+2\n----\n4"}}]}'
+  recorded_at: Wed, 20 Aug 2025 17:11:59 GMT
 recorded_with: VCR 6.3.1

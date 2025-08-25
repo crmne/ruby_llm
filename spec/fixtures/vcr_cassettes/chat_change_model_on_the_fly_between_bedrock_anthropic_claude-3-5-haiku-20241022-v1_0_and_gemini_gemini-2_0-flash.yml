@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"max_tokens":4096,"temperature":0.7}'
+        2 + 2?"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133458Z
+      - 20250820T171206Z
       X-Amz-Content-Sha256:
-      - d951ede456507c6d5c0982a4895746cff9f9fff37194cca0b3be2f48a4403fa0
+      - 01ab27c7d96d3a8fdf4610e6a4bc3a862f94de194536525920292dfaa9df20f2
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e45592d57597050a5dc24c525c4f092f71f7d44af86b4a3dd0de85af57da4396
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=940db43b5b84f8a05bee2cc3d9c6bf07a904f7ccd058e2af756889ef516eefb4
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:34:59 GMT
+      - Wed, 20 Aug 2025 17:12:07 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,24 +39,24 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 3123f96d-cb7d-45e1-939b-ecd25cd0d236
+      - f375991a-9d75-412a-96aa-a2c54382fc41
       X-Amzn-Bedrock-Invocation-Latency:
-      - '442'
+      - '536'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01RUVpYFFfxgWxC8k5ywnX8G","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Sun, 10 Aug 2025 13:34:59 GMT
+      string: '{"id":"msg_bdrk_019iz6mHCr9EVDM6TS883WnW","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Wed, 20 Aug 2025 17:12:07 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]},{"role":"model","parts":[{"text":"4"}]},{"role":"user","parts":[{"text":"and
-        4 + 4?"}]}],"generationConfig":{"temperature":0.7}}'
+        4 + 4?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -80,7 +80,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:34:59 GMT
+      - Wed, 20 Aug 2025 17:12:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -90,7 +90,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=328
+      - gfet4t7; dur=375
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -110,7 +110,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.005124908871948719
+              "avgLogprobs": -0.0044045289978384972
             }
           ],
           "usageMetadata": {
@@ -131,7 +131,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "A6CYaKXwHtnN1PIPiMWK0Ao"
+          "responseId": "5wGmaOK1GreXvdIP44Ov2Ak"
         }
-  recorded_at: Sun, 10 Aug 2025 13:34:59 GMT
+  recorded_at: Wed, 20 Aug 2025 17:12:07 GMT
 recorded_with: VCR 6.3.1

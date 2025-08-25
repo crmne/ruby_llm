@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
+        2 + 2?"}]}],"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:34:57 GMT
+      - Wed, 20 Aug 2025 17:12:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,31 +38,33 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-08-10T13:34:57Z'
+      - '2025-08-20T17:12:05Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-08-10T13:34:57Z'
+      - '2025-08-20T17:12:05Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-08-10T13:34:57Z'
+      - '2025-08-20T17:12:05Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-08-10T13:34:57Z'
+      - '2025-08-20T17:12:05Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '471'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -75,15 +77,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_013rBdQ7T1Gx2Y2kSMgWs6rZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5,"service_tier":"standard"}}'
-  recorded_at: Sun, 10 Aug 2025 13:34:57 GMT
+      string: '{"id":"msg_01EQfazLqxP1Yiy2ndL3iVNR","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":6,"service_tier":"standard"}}'
+  recorded_at: Wed, 20 Aug 2025 17:12:05 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]},{"role":"model","parts":[{"text":"4"}]},{"role":"user","parts":[{"text":"and
-        4 + 4?"}]}],"generationConfig":{"temperature":0.7}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]},{"role":"model","parts":[{"text":"4."}]},{"role":"user","parts":[{"text":"and
+        4 + 4?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -107,7 +109,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:34:58 GMT
+      - Wed, 20 Aug 2025 17:12:06 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,7 +119,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=399
+      - gfet4t7; dur=253
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -137,17 +139,17 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.005124908871948719
+              "avgLogprobs": -0.051602981984615326
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 17,
+            "promptTokenCount": 18,
             "candidatesTokenCount": 2,
-            "totalTokenCount": 19,
+            "totalTokenCount": 20,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 18
               }
             ],
             "candidatesTokensDetails": [
@@ -158,7 +160,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "AqCYaOORCafI1PIP7NP1iQU"
+          "responseId": "5QGmaI7UPPPPnsEPq9fJgAc"
         }
-  recorded_at: Sun, 10 Aug 2025 13:34:58 GMT
+  recorded_at: Wed, 20 Aug 2025 17:12:06 GMT
 recorded_with: VCR 6.3.1

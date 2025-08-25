@@ -5,7 +5,7 @@ http_interactions:
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Hello"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:30:02 GMT
+      - Wed, 20 Aug 2025 17:06:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,5 +48,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"No auth credentials found","code":401}}'
-  recorded_at: Sun, 10 Aug 2025 13:30:02 GMT
+  recorded_at: Wed, 20 Aug 2025 17:06:24 GMT
 recorded_with: VCR 6.3.1

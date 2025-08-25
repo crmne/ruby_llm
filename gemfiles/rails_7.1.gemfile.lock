@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    ruby_llm (1.6.2)
+    ruby_llm (1.6.4)
       base64
       event_stream_parser (~> 1)
       faraday (>= 1.10.0)
@@ -98,7 +98,7 @@ GEM
       rake
       thor (>= 0.14.0)
     ast (2.4.3)
-    async (2.27.2)
+    async (2.27.4)
       console (~> 1.29)
       fiber-annotation
       io-event (~> 1.11)
@@ -148,6 +148,7 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
+    ffi (1.17.2-x86_64-linux-gnu)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
       fiber-storage
@@ -162,6 +163,9 @@ GEM
     hashdiff (1.2.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
+    image_processing (1.14.0)
+      mini_magick (>= 4.9.5, < 6)
+      ruby-vips (>= 2.0.17, < 3)
     iniparse (1.5.0)
     io-console (0.8.1)
     io-event (1.12.1)
@@ -187,6 +191,8 @@ GEM
     marcel (1.0.4)
     method_source (1.1.0)
     metrics (0.13.0)
+    mini_magick (5.3.1)
+      logger
     mini_mime (1.1.5)
     minitest (5.25.5)
     multipart-post (2.4.1)
@@ -284,8 +290,8 @@ GEM
     rspec-mocks (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.4)
-    rubocop (1.79.2)
+    rspec-support (3.13.5)
+    rubocop (1.80.0)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -310,7 +316,10 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
-    ruby_llm-schema (0.1.6)
+    ruby-vips (2.2.5)
+      ffi (~> 1.12)
+      logger
+    ruby_llm-schema (0.1.9)
     ruby_parser (3.21.1)
       racc (~> 1.5)
       sexp_processor (~> 4.16)
@@ -329,10 +338,10 @@ GEM
     stringio (3.1.7)
     thor (1.4.0)
     timeout (0.4.3)
-    traces (0.16.2)
+    traces (0.17.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (3.1.4)
+    unicode-display_width (3.1.5)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
     uri (1.0.3)
@@ -361,6 +370,7 @@ DEPENDENCIES
   dotenv
   ferrum
   flay
+  image_processing (~> 1.2)
   irb
   jdbc-sqlite3
   json-schema

@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"stream":false,"temperature":0.7}'
+        was Ruby''s creator?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:33:35 GMT
+      - Wed, 20 Aug 2025 17:10:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,13 +49,12 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1754832814-O1jYNEva7KFnFhlmISvw\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1754832814,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Ruby
+        \        \n{\"id\":\"gen-1755709839-7m2k4Lt9Eq2YFcnclW4V\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755709839,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Ruby
         was created by Yukihiro Matsumoto (often called \\\"Matz\\\") in Japan. He
-        first developed Ruby in the mid-1990s, with the first public release in 1995.
-        Matz designed Ruby with the goal of creating a programming language that was
-        more enjoyable and productive for programmers, emphasizing human-oriented
-        design and the principle of least surprise.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":13,\"completion_tokens\":85,\"total_tokens\":98}}"
-  recorded_at: Sun, 10 Aug 2025 13:33:37 GMT
+        first released Ruby in 1995, designing it to be a programming language that
+        prioritizes human happiness and programmer productivity, with a focus on simplicity
+        and readability.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":13,\"completion_tokens\":61,\"total_tokens\":74}}"
+  recorded_at: Wed, 20 Aug 2025 17:10:42 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -63,11 +62,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Who
         was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        Yukihiro Matsumoto (often called \"Matz\") in Japan. He first developed Ruby
-        in the mid-1990s, with the first public release in 1995. Matz designed Ruby
-        with the goal of creating a programming language that was more enjoyable and
-        productive for programmers, emphasizing human-oriented design and the principle
-        of least surprise."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false,"temperature":0.7}'
+        Yukihiro Matsumoto (often called \"Matz\") in Japan. He first released Ruby
+        in 1995, designing it to be a programming language that prioritizes human
+        happiness and programmer productivity, with a focus on simplicity and readability."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -85,7 +83,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:33:38 GMT
+      - Wed, 20 Aug 2025 17:10:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,11 +107,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1754832817-civTVgDJ0hJqi4SQSklB\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1754832817,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Yukihiro
-        Matsumoto created Ruby in 1995. Specifically, he first released Ruby version
-        0.95 in December of that year. The language was designed to be an object-oriented
-        scripting language that was more powerful and flexible than Perl and Python,
-        with a focus on programmer happiness and productivity.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":108,\"completion_tokens\":71,\"total_tokens\":179}}"
-  recorded_at: Sun, 10 Aug 2025 13:33:40 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1755709842-TKqNTLUhrNa6ELMkSFfC\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755709842,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Yukihiro
+        Matsumoto first released Ruby in 1995. The first public release of Ruby (version
+        0.95) was in 1995, with the goal of creating a more flexible and object-oriented
+        scripting language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":84,\"completion_tokens\":54,\"total_tokens\":138}}"
+  recorded_at: Wed, 20 Aug 2025 17:10:44 GMT
 recorded_with: VCR 6.3.1

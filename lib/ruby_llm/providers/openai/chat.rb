@@ -20,7 +20,6 @@ module RubyLLM
             stream: stream
           }
 
-          # Only include temperature if it's not nil (some models don't accept it)
           payload[:temperature] = temperature unless temperature.nil?
 
           if tools.any?
@@ -30,7 +29,6 @@ module RubyLLM
           end
 
           if schema
-            # Use strict mode from schema if specified, default to true
             strict = schema[:strict] != false
 
             payload[:response_format] = {

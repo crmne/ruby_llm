@@ -10,7 +10,7 @@ module RubyLLM
         def context_window_for(model_id)
           case model_id
           when /deepseek-(?:chat|reasoner)/ then 64_000
-          else 32_768 # Sensible default
+          else 32_768
           end
         end
 
@@ -67,7 +67,6 @@ module RubyLLM
           end
         end
 
-        # Pricing information for DeepSeek models (USD per 1M tokens)
         PRICES = {
           chat: {
             input_hit: 0.07,

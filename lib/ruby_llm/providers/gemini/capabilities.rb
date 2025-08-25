@@ -7,9 +7,6 @@ module RubyLLM
       module Capabilities
         module_function
 
-        # Returns the context window size (input token limit) for the given model
-        # @param model_id [String] the model identifier
-        # @return [Integer] the context window size in tokens
         def context_window_for(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/, /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/ # rubocop:disable Layout/LineLength
@@ -18,70 +15,49 @@ module RubyLLM
           when /gemini-embedding-exp/ then 8_192
           when /text-embedding-004/, /embedding-001/ then 2_048
           when /aqa/ then 7_168
-          when /imagen-3/ then nil # No token limit for image generation
-          else 32_768 # Sensible default for unknown models
+          when /imagen-3/ then nil
+          else 32_768
           end
         end
 
-        # Returns the maximum output tokens for the given model
-        # @param model_id [String] the model identifier
-        # @return [Integer] the maximum output tokens
         def max_tokens_for(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/ then 64_000
           when /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/, /gemini-1\.5-flash-8b/, /gemini-1\.5-pro/ # rubocop:disable Layout/LineLength
             8_192
-          when /gemini-embedding-exp/ then nil # Elastic, supports 3072, 1536, or 768
-          when /text-embedding-004/, /embedding-001/ then 768 # Output dimension size for embeddings
-          when /aqa/ then 1_024
-          when /imagen-3/ then 4 # Output images
-          else 4_096 # Sensible default
+          when /gemini-embedding-exp/ then nil
+          when /text-embedding-004/, /embedding-001/ then 768
+          when /imagen-3/ then 4
+          else 4_096
           end
         end
 
-        # Returns the input price per million tokens for the given model
-        # @param model_id [String] the model identifier
-        # @return [Float] the price per million tokens in USD
         def input_price_for(model_id)
           base_price = PRICES.dig(pricing_family(model_id), :input) || default_input_price
           return base_price unless long_context_model?(model_id)
 
-          # Apply different pricing for prompts longer than 128k tokens
           context_window_for(model_id) > 128_000 ? base_price * 2 : base_price
         end
 
-        # Returns the output price per million tokens for the given model
-        # @param model_id [String] the model identifier
-        # @return [Float] the price per million tokens in USD
         def output_price_for(model_id)
           base_price = PRICES.dig(pricing_family(model_id), :output) || default_output_price
           return base_price unless long_context_model?(model_id)
 
-          # Apply different pricing for prompts longer than 128k tokens
           context_window_for(model_id) > 128_000 ? base_price * 2 : base_price
         end
 
-        # Determines if the model supports vision (image/video) inputs
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports vision inputs
         def supports_vision?(model_id)
           return false if model_id.match?(/text-embedding|embedding-001|aqa/)
 
           model_id.match?(/gemini|flash|pro|imagen/)
         end
 
-        # Determines if the model supports function calling
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports function calling
         def supports_functions?(model_id)
           return false if model_id.match?(/text-embedding|embedding-001|aqa|flash-lite|imagen|gemini-2\.0-flash-lite/)
 
           model_id.match?(/gemini|pro|flash/)
         end
 
-        # Determines if the model supports JSON mode
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports JSON mode
         def supports_json_mode?(model_id)
           if model_id.match?(/text-embedding|embedding-001|aqa|imagen|gemini-2\.0-flash-lite|gemini-2\.5-pro-exp-03-25/)
             return false
@@ -90,24 +66,18 @@ module RubyLLM
           model_id.match?(/gemini|pro|flash/)
         end
 
-        # Formats the model ID into a human-readable display name
-        # @param model_id [String] the model identifier
-        # @return [String] the formatted display name
         def format_display_name(model_id)
           model_id
             .delete_prefix('models/')
             .split('-')
             .map(&:capitalize)
             .join(' ')
-            .gsub(/(\d+\.\d+)/, ' \1') # Add space before version numbers
-            .gsub(/\s+/, ' ')          # Clean up multiple spaces
-            .gsub('Aqa', 'AQA')        # Special case for AQA
+            .gsub(/(\d+\.\d+)/, ' \1')
+            .gsub(/\s+/, ' ')
+            .gsub('Aqa', 'AQA')
             .strip
         end
 
-        # Determines if the model supports context caching
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports caching
         def supports_caching?(model_id)
           if model_id.match?(/flash-lite|gemini-2\.5-pro-exp-03-25|aqa|imagen|text-embedding|embedding-001/)
             return false
@@ -116,23 +86,14 @@ module RubyLLM
           model_id.match?(/gemini|pro|flash/)
         end
 
-        # Determines if the model supports tuning
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports tuning
         def supports_tuning?(model_id)
           model_id.match?(/gemini-1\.5-flash|gemini-1\.5-flash-8b/)
         end
 
-        # Determines if the model supports audio inputs
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports audio inputs
         def supports_audio?(model_id)
           model_id.match?(/gemini|pro|flash/)
         end
 
-        # Returns the type of model (chat, embedding, image)
-        # @param model_id [String] the model identifier
-        # @return [String] the model type
         def model_type(model_id)
           case model_id
           when /text-embedding|embedding|gemini-embedding/ then 'embedding'
@@ -141,9 +102,6 @@ module RubyLLM
           end
         end
 
-        # Returns the model family identifier
-        # @param model_id [String] the model identifier
-        # @return [String] the model family identifier
         def model_family(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/ then 'gemini25_pro_exp'
@@ -161,9 +119,6 @@ module RubyLLM
           end
         end
 
-        # Returns the pricing family identifier for the model
-        # @param model_id [String] the model identifier
-        # @return [Symbol] the pricing family identifier
         def pricing_family(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/ then :pro_2_5 # rubocop:disable Naming/VariableNumber
@@ -180,86 +135,75 @@ module RubyLLM
           end
         end
 
-        # Determines if the model supports long context
-        # @param model_id [String] the model identifier
-        # @return [Boolean] true if the model supports long context
         def long_context_model?(model_id)
           model_id.match?(/gemini-1\.5-(?:pro|flash)|gemini-1\.5-flash-8b/)
         end
 
-        # Returns the context length for the model
-        # @param model_id [String] the model identifier
-        # @return [Integer] the context length in tokens
         def context_length(model_id)
           context_window_for(model_id)
         end
 
-        # Pricing information for Gemini models (per 1M tokens in USD)
         PRICES = {
-          flash_2: { # Gemini 2.0 Flash # rubocop:disable Naming/VariableNumber
+          flash_2: { # rubocop:disable Naming/VariableNumber
             input: 0.10,
             output: 0.40,
             audio_input: 0.70,
             cache: 0.025,
             cache_storage: 1.00,
-            grounding_search: 35.00 # per 1K requests after 1.5K free
+            grounding_search: 35.00
           },
-          flash_lite_2: { # Gemini 2.0 Flash Lite # rubocop:disable Naming/VariableNumber
+          flash_lite_2: { # rubocop:disable Naming/VariableNumber
             input: 0.075,
             output: 0.30
           },
-          flash: { # Gemini 1.5 Flash
+          flash: {
             input: 0.075,
             output: 0.30,
             cache: 0.01875,
             cache_storage: 1.00,
-            grounding_search: 35.00 # per 1K requests up to 5K per day
+            grounding_search: 35.00
           },
-          flash_8b: { # Gemini 1.5 Flash 8B
+          flash_8b: {
             input: 0.0375,
             output: 0.15,
             cache: 0.01,
             cache_storage: 0.25,
-            grounding_search: 35.00 # per 1K requests up to 5K per day
+            grounding_search: 35.00
           },
-          pro: { # Gemini 1.5 Pro
+          pro: {
             input: 1.25,
             output: 5.0,
             cache: 0.3125,
             cache_storage: 4.50,
-            grounding_search: 35.00 # per 1K requests up to 5K per day
+            grounding_search: 35.00
           },
-          pro_2_5: { # Gemini 2.5 Pro Experimental # rubocop:disable Naming/VariableNumber
+          pro_2_5: { # rubocop:disable Naming/VariableNumber
             input: 0.12,
             output: 0.50
           },
-          gemini_embedding: { # Gemini Embedding Experimental
+          gemini_embedding: {
             input: 0.002,
             output: 0.004
           },
-          embedding: { # Text Embedding models
+          embedding: {
             input: 0.00,
             output: 0.00
           },
-          imagen: { # Imagen 3
-            price: 0.03 # per image
+          imagen: {
+            price: 0.03
           },
-          aqa: { # AQA model
+          aqa: {
             input: 0.00,
             output: 0.00
           }
         }.freeze
 
-        # Default input price for unknown models
-        # @return [Float] the default input price per million tokens
         def default_input_price
-          0.075 # Default to Flash pricing
+          0.075
         end
 
-        # Default output price for unknown models
-        # @return [Float] the default output price per million tokens
         def default_output_price
-          0.30 # Default to Flash pricing
+          0.30
         end
 
         def modalities_for(model_id)
@@ -268,19 +212,13 @@ module RubyLLM
             output: ['text']
           }
 
-          # Vision support
           if supports_vision?(model_id)
             modalities[:input] << 'image'
             modalities[:input] << 'pdf'
           end
 
-          # Audio support
           modalities[:input] << 'audio' if model_id.match?(/audio/)
-
-          # Embedding output
           modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
-
-          # Image output for imagen models
           modalities[:output] = ['image'] if model_id.match?(/imagen/)
 
           modalities
@@ -289,21 +227,11 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          # Function calling
           capabilities << 'function_calling' if supports_functions?(model_id)
-
-          # JSON mode
           capabilities << 'structured_output' if supports_json_mode?(model_id)
-
-          # Batch processing
           capabilities << 'batch' if model_id.match?(/embedding|flash/)
-
-          # Caching
           capabilities << 'caching' if supports_caching?(model_id)
-
-          # Tuning
           capabilities << 'fine_tuning' if supports_tuning?(model_id)
-
           capabilities
         end
 
@@ -316,10 +244,8 @@ module RubyLLM
             output_per_million: prices[:output]
           }
 
-          # Add cached pricing if available
           standard_pricing[:cached_input_per_million] = prices[:input_hit] if prices[:input_hit]
 
-          # Batch pricing (typically 50% discount)
           batch_pricing = {
             input_per_million: (standard_pricing[:input_per_million] || 0) * 0.5,
             output_per_million: (standard_pricing[:output_per_million] || 0) * 0.5
@@ -336,7 +262,6 @@ module RubyLLM
             }
           }
 
-          # Add embedding pricing if applicable
           if model_id.match?(/embedding|gemini-embedding/)
             pricing[:embeddings] = {
               standard: { input_per_million: prices[:price] || 0.002 }

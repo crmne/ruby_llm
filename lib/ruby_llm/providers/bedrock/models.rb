@@ -25,7 +25,6 @@ module RubyLLM
         def parse_list_models_response(response, slug, capabilities)
           models = Array(response.body['modelSummaries'])
 
-          # Filter to include only models we care about
           models.select { |m| m['modelId'].include?('claude') }.map do |model_data|
             model_id = model_data['modelId']
 
@@ -51,7 +50,6 @@ module RubyLLM
           end
         end
 
-        # Simple test-friendly method that only sets the ID
         def create_model_info(model_data, slug, _capabilities)
           model_id = model_data['modelId']
 

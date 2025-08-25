@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"stream":false,"temperature":0.7}'
+        is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:27:57 GMT
+      - Wed, 20 Aug 2025 17:03:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,33 +44,34 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "ac2ab23a-ab8b-4c07-af4c-3cfc8d073294", "model": "sonar", "created":
-        1754832477, "usage": {"prompt_tokens": 25, "completion_tokens": 110, "total_tokens":
-        135, "search_context_size": "low", "cost": {"input_tokens_cost": 2.5e-05,
-        "output_tokens_cost": 0.00011, "request_cost": 0.005, "total_cost": 0.005135}},
-        "citations": ["https://www.tutorialspoint.com/ruby/ruby_overview.htm", "https://www.rubyguides.com/2015/05/working-with-files-ruby/",
-        "https://en.wikipedia.org/wiki/Ruby_(programming_language)", "https://github.com/mime-types/ruby-mime-types",
-        "https://www.geeksforgeeks.org/ruby/ruby-programming-language-introduction/"],
-        "search_results": [{"title": "Ruby Overview - Tutorialspoint", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
-        "date": "2025-03-25", "last_updated": "2025-04-13"}, {"title": "How To Read
-        & Write Files in Ruby (With Examples)", "url": "https://www.rubyguides.com/2015/05/working-with-files-ruby/",
+      string: '{"id": "fccf0374-f738-4bae-bbe6-2924d2de84c6", "model": "sonar", "created":
+        1755709424, "usage": {"prompt_tokens": 25, "completion_tokens": 133, "total_tokens":
+        158, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.tutorialspoint.com/ruby/ruby_overview.htm",
+        "https://www.rubyguides.com/2015/05/working-with-files-ruby/", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "https://github.com/mime-types/ruby-mime-types", "https://www.oracle.com/developer/what-is-ruby-for-developers/"],
+        "search_results": [{"title": "Ruby - Overview - Tutorialspoint", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
+        "date": "2019-03-01", "last_updated": "2025-08-19"}, {"title": "How To Read
+        & Write Files in Ruby (With Examples) - RubyGuides", "url": "https://www.rubyguides.com/2015/05/working-with-files-ruby/",
         "date": null, "last_updated": "2025-07-30"}, {"title": "Ruby (programming
         language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-07-13"}, {"title": "Ruby MIME
-        type registry library", "url": "https://github.com/mime-types/ruby-mime-types",
-        "date": "2019-11-03", "last_updated": "2025-06-03"}, {"title": "Ruby Programming
-        Language (Introduction) - GeeksforGeeks", "url": "https://www.geeksforgeeks.org/ruby/ruby-programming-language-introduction/",
-        "date": "2019-09-25", "last_updated": "2025-07-24"}], "object": "chat.completion",
+        "date": "2001-10-17", "last_updated": "2025-08-20"}, {"title": "Ruby MIME
+        type registry library - GitHub", "url": "https://github.com/mime-types/ruby-mime-types",
+        "date": "2019-11-03", "last_updated": "2025-06-03"}, {"title": "What is Ruby?
+        - Oracle", "url": "https://www.oracle.com/developer/what-is-ruby-for-developers/",
+        "date": "2024-06-10", "last_updated": "2025-06-15"}], "object": "chat.completion",
         "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
         "content": "The file named \"ruby.txt\" contains the simple text: **\"Ruby
-        is the best.\"**\n\nThis is a plain text statement expressing a positive opinion
-        about the Ruby programming language. It does not contain any code or detailed
-        information beyond that phrase.\n\nFor context, Ruby is a general-purpose,
-        object-oriented programming language created by Yukihiro Matsumoto in the
-        mid-1990s, known for its clean syntax and ease of use[1][3][5]. However, the
-        content of your specific file is just the short sentence praising Ruby."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Sun, 10 Aug 2025 13:27:57 GMT
+        is the best.\"**\n\nThis is a short statement expressing a positive opinion
+        about the Ruby programming language.\n\nFor context, Ruby is a general-purpose,
+        open-source, interpreted, object-oriented programming language created by
+        Yukihiro Matsumoto in the mid-1990s. It has a clean and easy syntax, is dynamically
+        typed, and supports multiple programming paradigms like procedural, object-oriented,
+        and functional programming. It is widely used in web development, notably
+        with the Ruby on Rails framework, and is also effective in automation, scripting,
+        and data processing[1][3][5]."}, "delta": {"role": "assistant", "content":
+        ""}}]}'
+  recorded_at: Wed, 20 Aug 2025 17:03:44 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -79,15 +80,16 @@ http_interactions:
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file named \"ruby.txt\"
-        contains the simple text: **\"Ruby is the best.\"**\n\nThis is a plain text
-        statement expressing a positive opinion about the Ruby programming language.
-        It does not contain any code or detailed information beyond that phrase.\n\nFor
-        context, Ruby is a general-purpose, object-oriented programming language created
-        by Yukihiro Matsumoto in the mid-1990s, known for its clean syntax and ease
-        of use[1][3][5]. However, the content of your specific file is just the short
-        sentence praising Ruby."},{"role":"user","content":[{"type":"text","text":"and
+        contains the simple text: **\"Ruby is the best.\"**\n\nThis is a short statement
+        expressing a positive opinion about the Ruby programming language.\n\nFor
+        context, Ruby is a general-purpose, open-source, interpreted, object-oriented
+        programming language created by Yukihiro Matsumoto in the mid-1990s. It has
+        a clean and easy syntax, is dynamically typed, and supports multiple programming
+        paradigms like procedural, object-oriented, and functional programming. It
+        is widely used in web development, notably with the Ruby on Rails framework,
+        and is also effective in automation, scripting, and data processing[1][3][5]."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"stream":false,"temperature":0.7}'
+        is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -105,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:28:01 GMT
+      - Wed, 20 Aug 2025 17:03:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,34 +126,34 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "d3f152f1-8361-45d6-bdc2-88804c3158a8", "model": "sonar", "created":
-        1754832481, "usage": {"prompt_tokens": 165, "completion_tokens": 142, "total_tokens":
-        307, "search_context_size": "low", "cost": {"input_tokens_cost": 0.000165,
-        "output_tokens_cost": 0.000142, "request_cost": 0.005, "total_cost": 0.005307}},
-        "citations": ["https://tei-c.org/release/doc/tei-p5-doc/en/html/SG.html",
-        "https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
+      string: '{"id": "12b36140-3ab6-47b0-8270-97d6d56cdac2", "model": "sonar", "created":
+        1755709428, "usage": {"prompt_tokens": 188, "completion_tokens": 163, "total_tokens":
+        351, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
         "https://learn.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms256118(v=vs.100)",
-        "https://www.w3.org/TR/xmlschema-2/", "https://help.1e.com/SDK/en/instruction-definition-xml-elements.html"],
-        "search_results": [{"title": "v. A Gentle Introduction to XML - The TEI Guidelines",
-        "url": "https://tei-c.org/release/doc/tei-p5-doc/en/html/SG.html", "date":
-        "2025-01-24", "last_updated": "2025-01-28"}, {"title": "XML Schema Tutorial
-        - Defining Elements and Attributes", "url": "https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
+        "https://www.w3.org/TR/xmlschema-2/", "https://help.1e.com/SDK/en/instruction-definition-xml-elements.html",
+        "https://cs.gmu.edu/~aabduraz/classes/642/Resources/XML-types.html"], "search_results":
+        [{"title": "XML Schema Tutorial - Defining Elements and Attributes", "url":
+        "https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
         "date": "2000-01-12", "last_updated": "2025-04-10"}, {"title": "<xsd:element>
         Element", "url": "https://learn.microsoft.com/en-us/previous-versions/dotnet/netframework-4.0/ms256118(v=vs.100)",
-        "date": "2011-02-21", "last_updated": "2025-08-07"}, {"title": "XML Schema
+        "date": "2011-02-20", "last_updated": "2025-08-14"}, {"title": "XML Schema
         Part 2: Datatypes Second Edition", "url": "https://www.w3.org/TR/xmlschema-2/",
         "date": "2004-10-28", "last_updated": "2025-06-16"}, {"title": "Instruction
         Definition XML elements", "url": "https://help.1e.com/SDK/en/instruction-definition-xml-elements.html",
-        "date": null, "last_updated": "2025-08-07"}], "object": "chat.completion",
+        "date": null, "last_updated": "2025-08-07"}, {"title": "Defining XML Elements
+        and Their Types in XML Schema", "url": "https://cs.gmu.edu/~aabduraz/classes/642/Resources/XML-types.html",
+        "date": null, "last_updated": "2025-08-16"}], "object": "chat.completion",
         "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "The file named \"ruby.xml\" contains an XML element `<truism>`
-        with the text content **\"Ruby is the best\"** inside it.\n\nIn XML, an element
-        like `<truism>` is a structural unit that encloses content\u2014in this case,
-        a simple textual statement. The element name \"truism\" acts as a tag to semantically
-        label the content, but XML itself does not define the meaning of this tag;
-        it depends on the application or schema using it[1][2].\n\nSo this XML file
-        structurally represents the phrase \"Ruby is the best\" as the content of
-        a `<truism>` element, which is a standard XML element containing simple text
-        data[1][2]."}, "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Sun, 10 Aug 2025 13:28:01 GMT
+        "content": "The file named \"ruby.xml\" contains XML content with a single
+        element `<truism>` whose value is **\"Ruby is the best\"**. This structure
+        looks like this:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis
+        means the file stores the statement \"Ruby is the best\" inside an XML element
+        named `<truism>`.\n\nIn XML, elements like `<truism>` are the primary building
+        blocks, which can contain text data, other elements, or attributes. Here,
+        `<truism>` is a simple element containing simple text content[1]. The text
+        \"Ruby is the best\" is the content of this element, just like the plain text
+        file but wrapped in XML tags, which can be used for data structuring and processing
+        purposes[1][5]."}, "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Wed, 20 Aug 2025 17:03:48 GMT
 recorded_with: VCR 6.3.1

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false,"temperature":0.7}'
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,11 +23,11 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:30:44 GMT
+      - Wed, 20 Aug 2025 17:07:32 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '293'
+      - '294'
       Connection:
       - keep-alive
       Cf-Ray:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 858cf3856a0184dda1eb83f119e9d958
+      - b498c113a83d3813979433f6f9c0c103
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -50,8 +50,8 @@ http_interactions:
       - cloudflare
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"This model''s maximum context length is 65536
-        tokens. However, you requested 1250019 tokens (1250019 in the messages, 0
+      string: '{"error":{"message":"This model''s maximum context length is 131072
+        tokens. However, you requested 1250025 tokens (1250025 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Sun, 10 Aug 2025 13:30:44 GMT
+  recorded_at: Wed, 20 Aug 2025 17:07:32 GMT
 recorded_with: VCR 6.3.1

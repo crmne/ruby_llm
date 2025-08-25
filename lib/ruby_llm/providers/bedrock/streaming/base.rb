@@ -5,18 +5,6 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Base module for AWS Bedrock streaming functionality.
-        # Serves as the core module that includes all other streaming-related modules
-        # and provides fundamental streaming operations.
-        #
-        # Responsibilities:
-        # - Stream URL management
-        # - Stream handling and error processing
-        # - Coordinating the functionality of other streaming modules
-        #
-        # @example
-        #   module MyStreamingImplementation
-        #     include RubyLLM::Providers::Bedrock::Streaming::Base
-        #   end
         module Base
           def self.included(base)
             base.include ContentExtraction

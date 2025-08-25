@@ -2,8 +2,6 @@
 
 module RubyLLM
   # Represents a generated image from an AI model.
-  # Provides an interface to image generation capabilities
-  # from providers like DALL-E and Gemini's Imagen.
   class Image
     attr_reader :url, :data, :mime_type, :revised_prompt, :model_id
 
@@ -19,7 +17,6 @@ module RubyLLM
       !@data.nil?
     end
 
-    # Returns the raw binary image data regardless of source
     def to_blob
       if base64?
         Base64.decode64 @data
@@ -29,7 +26,6 @@ module RubyLLM
       end
     end
 
-    # Saves the image to a file path
     def save(path)
       File.binwrite(File.expand_path(path), to_blob)
       path

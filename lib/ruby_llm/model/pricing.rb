@@ -3,12 +3,10 @@
 module RubyLLM
   module Model
     # A collection that manages and provides access to different categories of pricing information
-    # (text tokens, images, audio tokens, embeddings)
     class Pricing
       def initialize(data)
         @data = {}
 
-        # Initialize pricing categories
         %i[text_tokens images audio_tokens embeddings].each do |category|
           @data[category] = PricingCategory.new(data[category]) if data[category] && !empty_pricing?(data[category])
         end
@@ -33,7 +31,6 @@ module RubyLLM
       private
 
       def empty_pricing?(data)
-        # Check if all pricing values in this category are zero or nil
         return true unless data
 
         %i[standard batch].each do |tier|

@@ -2,9 +2,7 @@
 
 require 'dotenv/load'
 
-# Helper functions at the top level
 def record_all_cassettes(cassette_dir)
-  # Re-record all cassettes
   FileUtils.rm_rf(cassette_dir)
   FileUtils.mkdir_p(cassette_dir)
 
@@ -14,10 +12,8 @@ def record_all_cassettes(cassette_dir)
 end
 
 def record_for_providers(providers, cassette_dir)
-  # Get the list of available providers from RubyLLM itself
   all_providers = RubyLLM::Provider.providers.keys.map(&:to_s)
 
-  # Check for valid providers
   if providers.empty?
     puts "Please specify providers or 'all'. Example: rake vcr:record[openai,anthropic]"
     puts "Available providers: #{all_providers.join(', ')}"
@@ -31,7 +27,6 @@ def record_for_providers(providers, cassette_dir)
     return
   end
 
-  # Find and delete matching cassettes
   cassettes_to_delete = find_matching_cassettes(cassette_dir, providers)
 
   if cassettes_to_delete.empty?
@@ -54,9 +49,7 @@ def find_matching_cassettes(dir, providers)
   Dir.glob("#{dir}/**/*.yml").each do |file|
     basename = File.basename(file)
 
-    # Precise matching to avoid cross-provider confusion
     providers.each do |provider|
-      # Match only exact provider prefixes
       next unless basename =~ /^[^_]*_#{provider}_/ || # For first section like "chat_openai_"
                   basename =~ /_#{provider}_[^_]+_/    # For middle sections like "_openai_gpt4_"
 

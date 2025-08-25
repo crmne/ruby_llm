@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What
-        is the capital of France?"}],"stream":false,"temperature":0.7}'
+        is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:32:12 GMT
+      - Wed, 20 Aug 2025 17:09:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7db45a2a150212fbd1e2560185b2e5c9
+      - 522c8e7e0c1e59a36a7958d48a702b15
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,7 +51,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImQyYTU4ZmFiLTYzNmUtNDI3YS04OTQzLWQxZmNkMTc0ODUwZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTQ4MzI3MzIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi4gSXQgaXMgb25lIG9mIHRoZSBtb3N0IGZhbW91cyBjaXRpZXMgaW4gdGhlIHdvcmxkLCBrbm93biBmb3IgaXRzIHJpY2ggaGlzdG9yeSwgY3VsdHVyZSwgYW5kIGxhbmRtYXJrcyBsaWtlIHRoZSBFaWZmZWwgVG93ZXIsIHRoZSBMb3V2cmUgTXVzZXVtLCBhbmQgTm90cmUtRGFtZSBDYXRoZWRyYWwuICBcblxuV291bGQgeW91IGxpa2UgbW9yZSBkZXRhaWxzIGFib3V0IFBhcmlzIG9yIEZyYW5jZT8g8J+YiiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJjb21wbGV0aW9uX3Rva2VucyI6NjAsInRvdGFsX3Rva2VucyI6NzAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF84ODAyMzY5ZWFhX3Byb2QwNjIzX2ZwOF9rdmNhY2hlIn0=
-  recorded_at: Sun, 10 Aug 2025 13:32:19 GMT
+      string: '{"id":"916312eb-3c93-4d07-bf46-fcdb96966d4a","object":"chat.completion","created":1755709759,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":8,"total_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 20 Aug 2025 17:09:22 GMT
 recorded_with: VCR 6.3.1

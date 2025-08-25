@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
-        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"generationConfig":{"temperature":0.7}}'
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:26:27 GMT
+      - Wed, 20 Aug 2025 17:02:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=538
+      - gfet4t7; dur=439
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,19 +54,19 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.txt` contains the single line of text: \"Ruby is the best.\"\n"
+                    "text": "The file \"ruby.txt\" contains the text: \"Ruby is the best.\"\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.18085518337431408
+              "avgLogprobs": -0.22653214136759439
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 51,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 48,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -76,14 +76,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 21
+                "tokenCount": 18
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "A56YaITZCqfI1PIP7NP1iQU"
+          "responseId": "j_-laKOwAoiXkdUPkr2-gA0"
         }
-  recorded_at: Sun, 10 Aug 2025 13:26:27 GMT
+  recorded_at: Wed, 20 Aug 2025 17:02:07 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent
@@ -91,9 +91,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file `ruby.txt` contains the single line of text: \"Ruby is the best.\"\n"}]},{"role":"user","parts":[{"text":"and
+        file \"ruby.txt\" contains the text: \"Ruby is the best.\"\n"}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"generationConfig":{"temperature":0.7}}'
+        is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -117,7 +117,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:26:28 GMT
+      - Wed, 20 Aug 2025 17:02:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -127,7 +127,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=556
+      - gfet4t7; dur=527
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -141,34 +141,34 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains the following XML data:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n\nIt's a simple XML document with a root element named `truism` that contains the text \"Ruby is the best\".\n"
+                    "text": "The file \"ruby.xml\" contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.088244753368830281
+              "avgLogprobs": -0.085586488246917725
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 85,
-            "candidatesTokenCount": 59,
-            "totalTokenCount": 144,
+            "promptTokenCount": 82,
+            "candidatesTokenCount": 32,
+            "totalTokenCount": 114,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 85
+                "tokenCount": 82
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 59
+                "tokenCount": 32
               }
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "A56YaPCYJ-qxmNAPnb6L6AM"
+          "responseId": "j_-laOL0ILW0kdUPrtO00QI"
         }
-  recorded_at: Sun, 10 Aug 2025 13:26:28 GMT
+  recorded_at: Wed, 20 Aug 2025 17:02:08 GMT
 recorded_with: VCR 6.3.1

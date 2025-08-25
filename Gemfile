@@ -12,6 +12,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'dotenv'
   gem 'ferrum'
   gem 'flay'
+  gem 'image_processing', '~> 1.2'
   gem 'irb'
   gem 'json-schema'
   gem 'nokogiri'

@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Handles streaming responses from AI providers. Provides a unified way to process
-  # chunked responses, accumulate content, and handle provider-specific streaming formats.
-  # Each provider implements provider-specific parsing while sharing common stream handling
-  # patterns.
+  # Handles streaming responses from AI providers.
   module Streaming
     module_function
 
@@ -12,17 +9,14 @@ module RubyLLM
       accumulator = StreamAccumulator.new
 
       response = connection.post stream_url, payload do |req|
-        # Merge additional headers, with existing headers taking precedence
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
-        if req.options.respond_to?(:on_data)
-          # Handle Faraday 2.x streaming with on_data method
-          req.options.on_data = handle_stream do |chunk|
+        if faraday_1?
+          req.options[:on_data] = handle_stream do |chunk|
             accumulator.add chunk
             block.call chunk
           end
         else
-          # Handle Faraday 1.x streaming with :on_data key
-          req.options[:on_data] = handle_stream do |chunk|
+          req.options.on_data = handle_stream do |chunk|
             accumulator.add chunk
             block.call chunk
           end
@@ -42,6 +36,10 @@ module RubyLLM
 
     private
 
+    def faraday_1?
+      Faraday::VERSION.start_with?('1')
+    end
+
     def to_json_stream(&)
       buffer = +''
       parser = EventStreamParser::Parser.new
@@ -50,11 +48,9 @@ module RubyLLM
     end
 
     def create_stream_processor(parser, buffer, &)
-      if Faraday::VERSION.start_with?('1')
-        # Faraday 1.x: on_data receives (chunk, size)
+      if faraday_1?
         legacy_stream_processor(parser, &)
       else
-        # Faraday 2.x: on_data receives (chunk, bytes, env)
         stream_processor(parser, buffer, &)
       end
     end
@@ -94,12 +90,10 @@ module RubyLLM
       status, _message = parse_streaming_error(error_data)
       parsed_data = JSON.parse(error_data)
 
-      # Create a response-like object that works for both Faraday v1 and v2
-      error_response = if env
-                         env.merge(body: parsed_data, status: status)
-                       else
-                         # For Faraday v1, create a simple object that responds to .status and .body
+      error_response = if faraday_1?
                          Struct.new(:body, :status).new(parsed_data, status)
+                       else
+                         env.merge(body: parsed_data, status: status)
                        end
 
       ErrorMiddleware.parse_error(provider: self, response: error_response)
@@ -137,12 +131,10 @@ module RubyLLM
       status, _message = parse_streaming_error(data)
       parsed_data = JSON.parse(data)
 
-      # Create a response-like object that works for both Faraday v1 and v2
-      error_response = if env
-                         env.merge(body: parsed_data, status: status)
-                       else
-                         # For Faraday v1, create a simple object that responds to .status and .body
+      error_response = if faraday_1?
                          Struct.new(:body, :status).new(parsed_data, status)
+                       else
+                         env.merge(body: parsed_data, status: status)
                        end
 
       ErrorMiddleware.parse_error(provider: self, response: error_response)
@@ -150,7 +142,6 @@ module RubyLLM
       RubyLLM.logger.debug "Failed to parse error event: #{e.message}"
     end
 
-    # Default implementation - providers should override this method
     def parse_streaming_error(data)
       error_data = JSON.parse(data)
       [500, error_data['message'] || 'Unknown streaming error']

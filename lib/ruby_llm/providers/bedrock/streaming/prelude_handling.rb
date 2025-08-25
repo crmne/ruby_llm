@@ -5,19 +5,6 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Module for handling message preludes in AWS Bedrock streaming responses.
-        # Manages the parsing and validation of message headers and prelude data.
-        #
-        # Responsibilities:
-        # - Reading and validating message preludes
-        # - Calculating message positions and boundaries
-        # - Finding and validating prelude positions in chunks
-        # - Ensuring message integrity through length validation
-        #
-        # @example Reading a prelude
-        #   if can_read_prelude?(chunk, offset)
-        #     total_length, headers_length = read_prelude(chunk, offset)
-        #     process_message_with_lengths(total_length, headers_length)
-        #   end
         module PreludeHandling
           def can_read_prelude?(chunk, offset)
             chunk.bytesize - offset >= 12

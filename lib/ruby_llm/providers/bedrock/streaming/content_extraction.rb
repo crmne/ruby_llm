@@ -5,13 +5,6 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Module for handling content extraction from AWS Bedrock streaming responses.
-        # Provides methods to extract and process various types of content from the response data.
-        #
-        # Responsibilities:
-        # - Extracting content from different response formats
-        # - Processing JSON deltas and content blocks
-        # - Extracting metadata (tokens, model IDs, tool calls)
-        # - Handling different content structures (arrays, blocks, completions)
         module ContentExtraction
           def json_delta?(data)
             data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'input_json_delta'

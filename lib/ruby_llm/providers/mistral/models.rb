@@ -21,7 +21,6 @@ module RubyLLM
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
-            # Use fixed release date for Mistral models
             release_date = capabilities.release_date_for(model_id)
             created_at = release_date ? Time.parse(release_date) : nil
 

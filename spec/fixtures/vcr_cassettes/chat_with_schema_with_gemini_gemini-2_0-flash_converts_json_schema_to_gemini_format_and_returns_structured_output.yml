@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
-        Jane who is 25 years old"}]}],"generationConfig":{"temperature":0.7,"responseMimeType":"application/json","responseSchema":{"type":"OBJECT","properties":{"name":{"type":"STRING"},"age":{"type":"NUMBER"}},"required":["name","age"]}}}'
+        Jane who is 25 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseSchema":{"type":"OBJECT","properties":{"name":{"type":"STRING"},"age":{"type":"INTEGER"}},"required":["name","age"]}}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 10 Aug 2025 13:31:24 GMT
+      - Wed, 20 Aug 2025 17:08:27 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=653
+      - gfet4t7; dur=688
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -60,7 +60,7 @@ http_interactions:
                 "role": "model"
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0019847914576530457
+              "avgLogprobs": -0.00246821790933609
             }
           ],
           "usageMetadata": {
@@ -81,7 +81,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.0-flash",
-          "responseId": "LJ-YaKyeD9ernvgPyJy0yA0"
+          "responseId": "CgGmaNHIINGevdIPrvPKKA"
         }
-  recorded_at: Sun, 10 Aug 2025 13:31:24 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:27 GMT
 recorded_with: VCR 6.3.1

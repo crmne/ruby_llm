@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:27 GMT
+      - Wed, 20 Aug 2025 15:50:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - bbe4d59024ee5d5be6ac569856d6907b
+      - 7c94da71cf2b0fbb5a1dabdb5f159a6c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,16 +52,19 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a5a40ad7-4c0b-4d27-bd1c-33df9302d8e0","object":"chat.completion","created":1754833047,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_0_e0fc0e44-ba21-4a87-9d6b-d30d0fec3c04","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":95,"completion_tokens":18,"total_tokens":113,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":95},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Sun, 10 Aug 2025 13:37:32 GMT
+      string: '{"id":"0517d194-87e4-4c70-af5d-63e4adc13126","object":"chat.completion","created":1755705043,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        help you find out what the best language to learn is! Let me check that for
+        you.","tool_calls":[{"index":0,"id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":146,"completion_tokens":33,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":146},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 20 Aug 2025 15:50:48 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_0_e0fc0e44-ba21-4a87-9d6b-d30d0fec3c04","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_0_e0fc0e44-ba21-4a87-9d6b-d30d0fec3c04"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","content":"I''ll help you
+        find out what the best language to learn is! Let me check that for you.","tool_calls":[{"id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -79,7 +82,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:32 GMT
+      - Wed, 20 Aug 2025 15:50:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -91,7 +94,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 2e7e6f839d0cbfd2078cf910af360006
+      - 99c70733c963415ab74c5bc53ee22556
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -106,10 +109,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"21e769f6-0485-444b-b043-823f4441265d","object":"chat.completion","created":1754833052,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        best language to learn is **Ruby**! It''s a versatile and beginner-friendly
-        language known for its readability and elegant syntax. Whether you''re interested
-        in web development, scripting, or automation, Ruby is a great choice. Would
-        you like more details or resources to get started with Ruby?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":119,"completion_tokens":58,"total_tokens":177,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Sun, 10 Aug 2025 13:37:39 GMT
+      string: '{"id":"54029d8e-22c4-4c64-8ae2-5639be792f70","object":"chat.completion","created":1755705048,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
+        on the information available, **Ruby** is considered the best language to
+        learn right now!\n\nRuby is a dynamic, open-source programming language that
+        focuses on simplicity and productivity. It has an elegant syntax that is natural
+        to read and easy to write. Ruby is particularly well-known for the Ruby on
+        Rails web framework, which has been used to build many popular websites and
+        applications.\n\nSome great things about learning Ruby:\n- Excellent for web
+        development (especially with Rails)\n- Very readable and beginner-friendly
+        syntax\n- Strong community support and extensive documentation\n- Great for
+        rapid application development\n- Used by many startups and established companies\n\nWould
+        you like to know more about why Ruby might be a good choice or have any specific
+        questions about learning it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":183,"completion_tokens":147,"total_tokens":330,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 20 Aug 2025 15:50:58 GMT
 recorded_with: VCR 6.3.1

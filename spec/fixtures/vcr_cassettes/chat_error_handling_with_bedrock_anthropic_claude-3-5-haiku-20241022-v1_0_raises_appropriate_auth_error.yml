@@ -5,19 +5,19 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"max_tokens":4096,"temperature":0.7}'
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133001Z
+      - 20250820T170622Z
       X-Amz-Content-Sha256:
-      - 349b43718cd08bc284605462e7991f3e2a723be9013b9e6ceee2c724a9903314
+      - d0e2b91788bc7649f3c9126d7ecaa5bf9f37fd75270d80e3b43638d8ab271d4c
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=invalid-key/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e72b06d725d3e6e0b601fb46f2bb16dda4fd8499e7942040d3892b1955828a5e
+      - AWS4-HMAC-SHA256 Credential=invalid-key/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d1f81e5e0bc6b23a514df5f62d14d0575ddd6daffa4ba3fc90824bbd2fbb6bc9
       Content-Type:
       - application/json
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: Forbidden
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:30:01 GMT
+      - Wed, 20 Aug 2025 17:06:23 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,11 +38,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f3aa2259-5725-420e-ac07-35a77a2b15a2
+      - 23eb3629-5a94-4902-8706-dfddb4fe2e02
       X-Amzn-Errortype:
       - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
     body:
       encoding: UTF-8
       string: '{"message":"The security token included in the request is invalid."}'
-  recorded_at: Sun, 10 Aug 2025 13:30:01 GMT
+  recorded_at: Wed, 20 Aug 2025 17:06:23 GMT
 recorded_with: VCR 6.3.1

@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:36:03 GMT
-      - Sun, 10 Aug 2025 13:36:04 GMT
+      - Wed, 20 Aug 2025 16:28:40 GMT
+      - Wed, 20 Aug 2025 16:28:41 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '831'
+      - '832'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,19 +44,19 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-alPzngYREyGben0GqqK1ZMX1fARewPxT","type":"function"}]}}],"created":1754832966,"id":"chatcmpl-3QFraBkfrbhBYsjlehZBe1Auc6ns1uAT","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":154,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":114,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3838.8849515709903,"time_per_output_token_ms":9.173344155844156,"time_to_first_token_ms":67.728,"tokens_per_second":109.01149929744213,"total_tokens":414}}'
-  recorded_at: Sun, 10 Aug 2025 13:36:06 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-dcYWJJS34RtcyFjtDhMmE9m21qrL4rNE","type":"function"}]}}],"created":1755707323,"id":"chatcmpl-s53nwsei7eaDyzQOKL4vLbWuNVqNEB4C","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":150,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":110,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1218.6319450303251,"time_per_output_token_ms":8.732766666666667,"time_to_first_token_ms":213.354,"tokens_per_second":114.51124691296764,"total_tokens":410}}'
+  recorded_at: Wed, 20 Aug 2025 16:28:43 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-alPzngYREyGben0GqqK1ZMX1fARewPxT","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-alPzngYREyGben0GqqK1ZMX1fARewPxT"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-dcYWJJS34RtcyFjtDhMmE9m21qrL4rNE","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-dcYWJJS34RtcyFjtDhMmE9m21qrL4rNE"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -72,15 +72,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:36:05 GMT
-      - Sun, 10 Aug 2025 13:36:05 GMT
+      - Wed, 20 Aug 2025 16:28:42 GMT
+      - Wed, 20 Aug 2025 16:28:43 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '720'
+      - '780'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,6 +92,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDgzMjk2NywiaWQiOiJjaGF0Y21wbC1yd3h3d25RUmhjRXpON3JCeDRHREM4REJRZ1VhTEhHNiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTQ5LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxMjQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozMzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjExNDEyLjMxNzA3NzM1MDE0OCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjQ0MzE0NzY1MTAwNjcxMSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjkuMTc5LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA1Ljg5Njg5MzM4MzE0OTg5LCJ0b3RhbF90b2tlbnMiOjQ4Mn19
-  recorded_at: Sun, 10 Aug 2025 13:36:07 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTU3MDczMjQsImlkIjoiY2hhdGNtcGwtTkhjY2VRbzFTV1B2NlJHOHdVOTBlZm9VQ05jenRxY2ciLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE2MiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTA2LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMTkwNi4wMzg4Mjg3MDMyMDcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC44MzE3NDA3NDA3NDA3NCwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjcuOTY5LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTEzLjIyNzk2MTQzNTM5NTA2LCJ0b3RhbF90b2tlbnMiOjQ5NX19
+  recorded_at: Wed, 20 Aug 2025 16:28:44 GMT
 recorded_with: VCR 6.3.1

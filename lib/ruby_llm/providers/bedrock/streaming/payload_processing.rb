@@ -7,18 +7,6 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Module for processing payloads from AWS Bedrock streaming responses.
-        # Handles JSON payload extraction, decoding, and chunk creation.
-        #
-        # Responsibilities:
-        # - Extracting and validating JSON payloads
-        # - Decoding Base64-encoded response data
-        # - Creating response chunks from processed data
-        # - Error handling for JSON parsing and processing
-        #
-        # @example Processing a payload
-        #   process_payload(raw_payload) do |chunk|
-        #     yield_chunk_to_client(chunk)
-        #   end
         module PayloadProcessing
           def process_payload(payload, &)
             json_payload = extract_json_payload(payload)

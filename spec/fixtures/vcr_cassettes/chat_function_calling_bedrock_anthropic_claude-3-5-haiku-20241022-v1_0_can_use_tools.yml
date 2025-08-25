@@ -9,19 +9,19 @@ http_interactions:
         the weather in Berlin? (52.5200, 13.4050)"}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}],"temperature":0.7}'
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133539Z
+      - 20250820T154857Z
       X-Amz-Content-Sha256:
-      - aed108c475b1cf6bebe7010a536a6258fb81bf18b3526b25751d277f98469ac0
+      - 0c6ff05d9b497a8cf595170068ac27035e503492fc37392588f29326167651df
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=da2bae6686654777cc01f3d73f515f8b03a6c2176e883413601bb6b05d6de19c
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2906202978482cd7c3f99c2a2eda7bebb286f5bacbd093bdb91a41155c7a9c3a
       Content-Type:
       - application/json
       Accept:
@@ -34,7 +34,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:35:41 GMT
+      - Wed, 20 Aug 2025 15:49:00 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -42,18 +42,18 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - bfd5a2e0-bca9-41ec-b893-5d68dcdd9394
+      - 04a0ffa7-3495-4f68-9e2e-d1308cefcef7
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1312'
+      - '1703'
       X-Amzn-Bedrock-Output-Token-Count:
       - '88'
       X-Amzn-Bedrock-Input-Token-Count:
       - '389'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01Bwyn7qaeB9gUKedngmUyD9","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_013jdUTthxzAzbVMWd2t5bHq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":88}}'
-  recorded_at: Sun, 10 Aug 2025 13:35:41 GMT
+      string: '{"id":"msg_bdrk_01YLF9bSsfuUZgC5ArkxoMyB","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_0181kz6w4UvTpdj1mmp2Xa4p","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":389,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":88}}'
+  recorded_at: Wed, 20 Aug 2025 15:49:00 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -61,23 +61,23 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_013jdUTthxzAzbVMWd2t5bHq","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_013jdUTthxzAzbVMWd2t5bHq","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_0181kz6w4UvTpdj1mmp2Xa4p","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_0181kz6w4UvTpdj1mmp2Xa4p","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}],"temperature":0.7}'
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133541Z
+      - 20250820T154900Z
       X-Amz-Content-Sha256:
-      - f428e11d7a8ccfa4e66e23e026590d5f07b8fe73e2f3b06c82289bebbcec89f8
+      - cb0a84ac4e28c7b8bbf8b61087ee78b2df1657a185b1d0aa4eccb494ccc78cd5
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=6f453816438e6ae0baf2fd803e9af3d6b5d727deca5f8806f6fa8937c02fe436
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b18bef4219098f8f4ed7b0c4652b9428be0d02bdb1b90749de0cc0f3c424ca4b
       Content-Type:
       - application/json
       Accept:
@@ -90,24 +90,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:35:43 GMT
+      - Wed, 20 Aug 2025 15:49:02 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '478'
+      - '580'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ca7ff493-4ac9-46a4-9e7b-15bc58c21caa
+      - beccb041-ce37-438c-9464-fb5695fbe589
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1194'
+      - '2034'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '48'
+      - '75'
       X-Amzn-Bedrock-Input-Token-Count:
       - '516'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Im1zZ19iZHJrXzAxRmdqbTQ0Wjl0cExvaVVpQnVZRWFORiIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIEl0IHNlZW1zIGxpa2UgYSBtaWxkIGRheSBpbiB0aGUgR2VybWFuIGNhcGl0YWwuIFdvdWxkIHlvdSBsaWtlIHRvIGtub3cgYW55dGhpbmcgZWxzZSBhYm91dCB0aGUgd2VhdGhlcj8ifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUxNiwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6NDh9fQ==
-  recorded_at: Sun, 10 Aug 2025 13:35:43 GMT
+        eyJpZCI6Im1zZ19iZHJrXzAxVU5janl5MWlOZnR4TUZaOWhjUVdDZyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsIm1vZGVsIjoiY2xhdWRlLTMtNS1oYWlrdS0yMDI0MTAyMiIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkJhc2VkIG9uIHRoZSBjdXJyZW50IHdlYXRoZXIgZGF0YSwgaW4gQmVybGluOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKDU5wrBGKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oXG5cbkl0IHNlZW1zIGxpa2UgYSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBhIG1vZGVyYXRlIGJyZWV6ZS4gVGhlIHRlbXBlcmF0dXJlIGlzIGNvbWZvcnRhYmxlLCBuZWl0aGVyIHRvbyBjb2xkIG5vciB0b28gd2FybSwgd2hpY2ggaXMgdHlwaWNhbCBvZiBtaWxkIHNwcmluZyBvciBhdXR1bW4gd2VhdGhlci4ifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUxNiwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6NzV9fQ==
+  recorded_at: Wed, 20 Aug 2025 15:49:02 GMT
 recorded_with: VCR 6.3.1

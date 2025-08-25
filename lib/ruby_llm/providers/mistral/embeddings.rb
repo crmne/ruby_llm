@@ -12,7 +12,6 @@ module RubyLLM
         end
 
         def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument
-          # Mistral doesn't support dimensions parameter
           {
             model: model,
             input: text
@@ -24,8 +23,6 @@ module RubyLLM
           input_tokens = data.dig('usage', 'prompt_tokens') || 0
           vectors = data['data'].map { |d| d['embedding'] }
 
-          # If we only got one embedding AND the input was a single string (not an array),
-          # return it as a single vector
           vectors = vectors.first if vectors.length == 1 && !text.is_a?(Array)
 
           Embedding.new(vectors:, model:, input_tokens:)
