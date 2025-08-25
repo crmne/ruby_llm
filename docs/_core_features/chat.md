@@ -129,7 +129,7 @@ Many modern AI models can process multiple types of input beyond just text. Ruby
 
 ### Working with Images
 
-Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
+Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Some specialized models can also generate and edit images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
 
 ```ruby
 # Ensure you select a vision-capable model
@@ -149,6 +149,34 @@ puts response.content
 ```
 
 RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
+
+### Image Generation with Chat
+
+While most vision models analyze images, some specialized models can generate and edit images through the chat interface. This approach is ideal for image editing workflows and iterative refinement:
+
+```ruby
+# Use a model capable of image generation
+chat = RubyLLM.chat(model: 'gemini-2.0-flash-preview-image-generation')
+
+# Edit an existing image
+response = chat.ask('make this look more futuristic', with: 'current_design.png')
+
+# Access generated images from attachments
+if response.content.attachments.any?
+  generated_image = response.content.attachments.first.image
+  puts "Generated image: #{generated_image.mime_type}"
+  
+  # Save the generated image
+  generated_image.save('futuristic_design.png')
+end
+
+# Continue refining in the same conversation
+response = chat.ask('add some neon lighting effects')
+refined_image = response.content.attachments.first.image
+refined_image.save('futuristic_with_neon.png')
+```
+
+For simple text-to-image generation without existing images, see the [Image Generation Guide]({% link guides/image-generation.md %}).
 
 ### Working with Audio
 
