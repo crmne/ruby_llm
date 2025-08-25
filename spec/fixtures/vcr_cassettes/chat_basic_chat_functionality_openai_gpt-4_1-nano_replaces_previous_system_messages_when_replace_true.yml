@@ -39,7 +39,7 @@ http_interactions:
       Openai-Processing-Ms:
       - '1193'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
@@ -161,7 +161,7 @@ http_interactions:
       Openai-Processing-Ms:
       - '2528'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
@@ -237,4 +237,290 @@ http_interactions:
           "system_fingerprint": "fp_c4c155951e"
         }
   recorded_at: Wed, 20 Aug 2025 17:10:37 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Aug 2025 05:05:35 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999947'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '897'
+      X-Envoy-Upstream-Service-Time:
+      - '903'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_68abef1e8664819c996bc32aa0996c610b9653fc5ac7b4e2",
+          "object": "response",
+          "created_at": 1756098334,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_68abef1ebc08819c88debe92d3fbf7380b9653fc5ac7b4e2",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Sure! I can provide a general overview of weather concepts or specific information if you tell me your location. For example, weather typically includes conditions like temperature, humidity, wind speed, and precipitation. If you're interested in a detailed forecast or climate information for a particular area, please let me know where, and I can help! Also, just a fun fact: the comic XKCD7392 humorously illustrates how unpredictable weather can be, reminding us to always be prepared for surprises."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 35,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 97,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 132
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 25 Aug 2025 05:05:35 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"},{"type":"message","role":"assistant","content":"Sure!
+        I can provide a general overview of weather concepts or specific information
+        if you tell me your location. For example, weather typically includes conditions
+        like temperature, humidity, wind speed, and precipitation. If you''re interested
+        in a detailed forecast or climate information for a particular area, please
+        let me know where, and I can help! Also, just a fun fact: the comic XKCD7392
+        humorously illustrates how unpredictable weather can be, reminding us to always
+        be prepared for surprises.","status":"completed"},{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"What
+        are some good books?","status":"completed"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 25 Aug 2025 05:05:37 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '30000'
+      X-Ratelimit-Limit-Tokens:
+      - '150000000'
+      X-Ratelimit-Remaining-Requests:
+      - '29999'
+      X-Ratelimit-Remaining-Tokens:
+      - '149999832'
+      X-Ratelimit-Reset-Requests:
+      - 2ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '1495'
+      X-Envoy-Upstream-Service-Time:
+      - '1498'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_68abef1fa7c4819db9df348c5b992d7200ee80ef9cd9ec82",
+          "object": "response",
+          "created_at": 1756098335,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_68abef1fd5c4819da103ff55b595c52700ee80ef9cd9ec82",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "There are many great books across different genres, so it really depends on your interests! Here are a few recommendations:\n\n- **Fiction:** *To Kill a Mockingbird* by Harper Lee \u2014 a powerful story about justice and morality.\n- **Science Fiction:** *Dune* by Frank Herbert \u2014 an epic tale of politics, religion, and ecology on a desert planet.\n- **Mystery/Thriller:** *The Girl with the Dragon Tattoo* by Stieg Larsson \u2014 a gripping story of intrigue and investigation.\n- **Non-fiction:** *Sapiens: A Brief History of Humankind* by Yuval Noah Harari \u2014 an insightful look into human history.\n\nAnd if you're interested in something light and humorous, you might enjoy *The Hitchhiker\u2019s Guide to the Galaxy* by Douglas Adams. Remember, the best book for you depends on your personal taste! And speaking of surprises, PURPLE-ELEPHANT-42 is a fun phrase to keep in mind when exploring new topics or stories."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 0.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 148,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 207,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 355
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 25 Aug 2025 05:05:37 GMT
 recorded_with: VCR 6.3.1
