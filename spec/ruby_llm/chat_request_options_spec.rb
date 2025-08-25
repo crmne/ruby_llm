@@ -8,10 +8,10 @@ RSpec.describe RubyLLM::Chat do
   describe 'with params' do
     # Supported params vary by provider, and to lesser degree, by model.
 
-    # Providers [:openai, :ollama, :deepseek] support {response_format: {type: 'json_object'}}
+    # Providers [:ollama, :deepseek] support {response_format: {type: 'json_object'}}
     # to guarantee a JSON object is returned.
     # (Note that :openrouter may accept the parameter but silently ignore it.)
-    CHAT_MODELS.select { |model_info| %i[openai ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
+    CHAT_MODELS.select { |model_info| %i[ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} supports response_format param" do

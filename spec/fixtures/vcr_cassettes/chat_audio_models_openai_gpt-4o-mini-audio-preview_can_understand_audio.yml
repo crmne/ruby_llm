@@ -57,6 +57,8 @@ http_interactions:
       - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Decorator-Operation:
+      - router.openai.svc.cluster.local:5004/*
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -111,7 +113,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_31865376ac"
+          "system_fingerprint": "fp_1dfa95e5cb"
         }
   recorded_at: Wed, 20 Aug 2025 17:05:15 GMT
 recorded_with: VCR 6.3.1

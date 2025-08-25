@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # DeepSeek API integration.
-    class DeepSeek < OpenAI
+    class DeepSeek < OpenAIBase
       include DeepSeek::Chat
 
       def api_base
