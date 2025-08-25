@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about Ruby"}]}],"max_tokens":4096,"tools":[{"name":"describe_ruby_dev","description":"<MASSIVE_TEXT_FOR_PROMPT_CACHING>","input_schema":{"type":"object","properties":{},"required":[]},"cache_control":{"type":"ephemeral"}}],"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250814T163025Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 66d69cc12e95a1abcd338456d7ede496a815bdd198660e9d21b3e9606fa4db5a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250814/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=6182b63f783094de2554de58a126beee0dd8f6e2f2acfa858895b4643308c085
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Aug 2025 16:30:26 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '480'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 712b2d45-e506-4968-aa87-965bc58983a5
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1565'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '2902'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '55'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '145'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01Unm4o5kEo9PyDRXtnwzYQe","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        use the describe_ruby_dev function to get information about Ruby."},{"type":"tool_use","id":"toolu_bdrk_01HogbJT5garLoQbRin6Yi71","name":"describe_ruby_dev","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":145,"cache_creation_input_tokens":2902,"cache_read_input_tokens":0,"output_tokens":55}}'
+  recorded_at: Thu, 14 Aug 2025 16:30:27 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about Ruby"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        use the describe_ruby_dev function to get information about Ruby."},{"type":"tool_use","id":"toolu_bdrk_01HogbJT5garLoQbRin6Yi71","name":"describe_ruby_dev","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01HogbJT5garLoQbRin6Yi71","content":"Ruby
+        is a great language for building web applications."}]}],"max_tokens":4096,"tools":[{"name":"describe_ruby_dev","description":"<MASSIVE_TEXT_FOR_PROMPT_CACHING>","input_schema":{"type":"object","properties":{},"required":[]},"cache_control":{"type":"ephemeral"}}],"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250814T163027Z
+      X-Amz-Security-Token:
+      - "<AWS_SESSION_TOKEN>"
+      X-Amz-Content-Sha256:
+      - 5fac1dda31038ff29ab45910ff27f5b62d41efd66a9ecc55c1c16dba749ed7de
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250814/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date;x-amz-security-token, Signature=62a82c52f27e503a4ccb759ca4e591cd43babf12ad9e5b8ffdbb3807abc42fc5
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Aug 2025 16:30:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1618'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 007070a2-fa7c-41a0-9fad-58ed8723f848
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '6420'
+      X-Amzn-Bedrock-Cache-Write-Input-Token-Count:
+      - '0'
+      X-Amzn-Bedrock-Cache-Read-Input-Token-Count:
+      - '2902'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '302'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '220'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_015ca9q3c8ZiNZSBdQu3bbYD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Let
+        me provide you with more comprehensive information about Ruby:\n\nRuby is
+        a dynamic, object-oriented programming language created by Yukihiro Matsumoto
+        (often called \"Matz\") in Japan during the mid-1990s. Here are some key characteristics:\n\n1.
+        Design Philosophy:\n- Designed to be programmer-friendly and productive\n-
+        Follows the principle of \"developer happiness\" and \"least surprise\"\n-
+        Emphasizes natural, readable syntax\n\n2. Key Features:\n- Fully object-oriented:
+        Everything in Ruby is an object\n- Dynamic typing\n- Supports functional programming
+        paradigms\n- Automatic memory management (garbage collection)\n- Strong metaprogramming
+        capabilities\n\n3. Popular Use Cases:\n- Web development (especially with
+        Ruby on Rails framework)\n- Scripting and automation\n- DevOps tools\n- Prototyping\n-
+        Data processing\n\n4. Strengths:\n- Elegant and concise syntax\n- Highly productive\n-
+        Extensive libraries and gems\n- Strong community support\n- Cross-platform
+        compatibility\n\n5. Notable Frameworks and Tools:\n- Ruby on Rails (web application
+        framework)\n- Sinatra (lightweight web framework)\n- RSpec (testing framework)\n-
+        Bundler (dependency management)\n\nRuby continues to be a popular language,
+        particularly in web development and among developers who value clean, expressive
+        code."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":220,"cache_creation_input_tokens":0,"cache_read_input_tokens":2902,"output_tokens":302}}'
+  recorded_at: Thu, 14 Aug 2025 16:30:33 GMT
+recorded_with: VCR 6.3.1

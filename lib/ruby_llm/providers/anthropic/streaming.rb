@@ -18,6 +18,8 @@ module RubyLLM
             content: data.dig('delta', 'text'),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            cached_tokens: extract_cached_tokens(data),
+            cache_creation_tokens: extract_cache_creation_tokens(data),
             tool_calls: extract_tool_calls(data)
           )
         end

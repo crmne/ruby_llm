@@ -584,4 +584,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end.to change { chat.messages.count }.by(-1)
     end
   end
+
+  describe 'prompt caching' do
+    let(:model) { 'claude-3-5-haiku-20241022' }
+
+    it 'allows prompt caching' do
+      chat = Chat.create!(model_id: model)
+      chat.cache_prompts(system: true, tools: true, user: true)
+
+      response = chat.ask('Hello')
+      expect(response.raw.env.request_body).to include('"cache_control":{"type":"ephemeral"}')
+    end
+  end
 end

@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat do
           Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)
 
           # Create a huge conversation (matching <MASSIVE_TEXT> in spec_helper)
-          massive_text = 'a' * 1_000_000
+          massive_text = MASSIVE_TEXT
 
           # Create a few copies in the conversation
           5.times do

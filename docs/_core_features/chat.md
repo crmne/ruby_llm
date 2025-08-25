@@ -497,6 +497,30 @@ puts "Total Conversation Tokens: #{total_conversation_tokens}"
 
 Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 
+## Prompt Caching
+
+### Enabling
+For Anthropic models, you can opt-in to prompt caching which is documented more fully in the [Anthropic API docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching).
+
+Enable prompt caching using the `cache_prompts` method on your chat instance:
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022')
+
+# Enable caching for different types of content
+chat.cache_prompts(
+  system: true,  # Cache system instructions
+  user: true,    # Cache user messages
+  tools: true    # Cache tool definitions
+)
+```
+
+### Checking cached token counts
+For Anthropic, OpenAI, and Gemini, you can see the number of tokens read from cache by looking at the `cached_tokens` property on the output messages. 
+
+For Anthropic, you can see the tokens written to cache by looking at the `cache_creation_tokens` property.
+
+
 ## Chat Event Handlers
 
 You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
