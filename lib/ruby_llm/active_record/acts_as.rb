@@ -51,7 +51,12 @@ module RubyLLM
                      optional: true,
                      inverse_of: :result
 
-          delegate :tool_call?, :tool_result?, :tool_results, to: :to_llm
+          has_many :tool_results,
+                   through: :tool_calls,
+                   source: :result,
+                   class_name: @message_class
+
+          delegate :tool_call?, :tool_result?, to: :to_llm
         end
 
         def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
@@ -203,18 +208,27 @@ module RubyLLM
       private
 
       def cleanup_failed_messages
-        RubyLLM.logger.debug "RubyLLM: API call failed, destroying message: #{@message.id}"
+        RubyLLM.logger.warn "RubyLLM: API call failed, destroying message: #{@message.id}"
         @message.destroy
       end
 
-      def cleanup_orphaned_tool_results
-        loop do
-          messages.reload
-          last = messages.order(:id).last
+      def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
+        messages.reload
+        last = messages.order(:id).last
 
-          break unless last&.tool_call? || last&.tool_result?
+        return unless last&.tool_call? || last&.tool_result?
 
+        if last.tool_call?
           last.destroy
+        elsif last.tool_result?
+          tool_call_message = last.parent_tool_call.message
+          expected_results = tool_call_message.tool_calls.pluck(:id)
+          actual_results = tool_call_message.tool_results.pluck(:tool_call_id)
+
+          if expected_results.sort != actual_results.sort
+            tool_call_message.tool_results.each(&:destroy)
+            tool_call_message.destroy
+          end
         end
       end
 
