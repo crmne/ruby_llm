@@ -11,7 +11,6 @@ module RubyLLM
         @batch = PricingTier.new(data[:batch] || {}) unless empty_tier?(data[:batch])
       end
 
-      # Shorthand methods that default to standard tier
       def input
         standard&.input_per_million
       end
@@ -24,7 +23,6 @@ module RubyLLM
         standard&.cached_input_per_million
       end
 
-      # Get value for a specific tier
       def [](key)
         key == :batch ? batch : standard
       end

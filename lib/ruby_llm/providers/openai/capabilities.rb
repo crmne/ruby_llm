@@ -200,11 +200,11 @@ module RubyLLM
             .gsub(/(\d{4}) (\d{2}) (\d{2})/, '\1\2\3')
             .gsub(/^(?:Gpt|Chatgpt|Tts|Dall E) /) { |m| special_prefix_format(m.strip) }
             .gsub(/^O([13]) /, 'O\1-')
-            .gsub(/^O[13] Mini/, '\0'.gsub(' ', '-'))
+            .gsub(/^O[13] Mini/, '\0'.tr(' ', '-'))
             .gsub(/\d\.\d /, '\0'.sub(' ', '-'))
             .gsub(/4o (?=Mini|Preview|Turbo|Audio|Realtime|Transcribe|Tts)/, '4o-')
             .gsub(/\bHd\b/, 'HD')
-            .gsub(/(?:Omni|Text) Moderation/, '\0'.gsub(' ', '-'))
+            .gsub(/(?:Omni|Text) Moderation/, '\0'.tr(' ', '-'))
             .gsub('Text Embedding', 'text-embedding-')
         end
 
@@ -218,7 +218,7 @@ module RubyLLM
         end
 
         def self.normalize_temperature(temperature, model_id)
-          if model_id.match?(/^o\d/)
+          if model_id.match?(/^(o\d|gpt-5)/)
             RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, ignoring provided value"
             1.0
           elsif model_id.match?(/-search/)
@@ -237,20 +237,11 @@ module RubyLLM
 
           # Vision support
           modalities[:input] << 'image' if supports_vision?(model_id)
-
-          # Audio support
           modalities[:input] << 'audio' if model_id.match?(/whisper|audio|tts|transcribe/)
-
-          # PDF support
           modalities[:input] << 'pdf' if supports_vision?(model_id)
-
-          # Output modalities
           modalities[:output] << 'audio' if model_id.match?(/tts|audio/)
-
           modalities[:output] << 'image' if model_id.match?(/dall-e|image/)
-
           modalities[:output] << 'embeddings' if model_id.match?(/embedding/)
-
           modalities[:output] << 'moderation' if model_id.match?(/moderation/)
 
           modalities
@@ -259,14 +250,11 @@ module RubyLLM
         def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
           capabilities = []
 
-          # Common capabilities
           capabilities << 'streaming' unless model_id.match?(/moderation|embedding/)
           capabilities << 'function_calling' if supports_functions?(model_id)
           capabilities << 'structured_output' if supports_json_mode?(model_id)
           capabilities << 'batch' if model_id.match?(/embedding|batch/)
-
-          # Advanced capabilities
-          capabilities << 'reasoning' if model_id.match?(/o1/)
+          capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
 
           if model_id.match?(/gpt-4-turbo|gpt-4o/)
             capabilities << 'image_generation' if model_id.match?(/vision/)
@@ -283,16 +271,13 @@ module RubyLLM
             output_per_million: output_price_for(model_id)
           }
 
-          # Add cached pricing if available
           if respond_to?(:cached_input_price_for)
             cached_price = cached_input_price_for(model_id)
             standard_pricing[:cached_input_per_million] = cached_price if cached_price
           end
 
-          # Pricing structure
           pricing = { text_tokens: { standard: standard_pricing } }
 
-          # Add batch pricing if applicable
           if model_id.match?(/embedding|batch/)
             pricing[:text_tokens][:batch] = {
               input_per_million: standard_pricing[:input_per_million] * 0.5,

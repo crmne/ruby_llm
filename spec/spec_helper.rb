@@ -158,7 +158,7 @@ CHAT_MODELS = [
   { provider: :ollama, model: 'qwen3' },
   { provider: :gpustack, model: 'qwen3' },
   { provider: :perplexity, model: 'sonar' },
-  { provider: :mistral, model: 'ministral-3b-latest' }
+  { provider: :mistral, model: 'mistral-small-latest' }
 ].freeze
 
 PDF_MODELS = [

@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":"What is the
-        capital of France?"}],"stream":false,"temperature":0.7}'
+        capital of France?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 01 Aug 2025 10:07:04 GMT
+      - Wed, 20 Aug 2025 17:11:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,35 +43,30 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "9b4f2a23-0a1f-4913-aaf0-9c05756d8bec", "model": "sonar", "created":
-        1754042824, "usage": {"prompt_tokens": 7, "completion_tokens": 189, "total_tokens":
-        196, "search_context_size": "low", "cost": {"input_tokens_cost": 7e-06, "output_tokens_cost":
-        0.000189, "request_cost": 0.005, "total_cost": 0.005196}}, "citations": ["https://home.adelphi.edu/~ca19535/page%204.html",
-        "https://www.britannica.com/place/France", "https://en.wikipedia.org/wiki/Paris",
-        "https://www.coe.int/en/web/interculturalcities/paris", "https://www.instagram.com/reel/DEVmGsIMGRM/"],
+      string: '{"id": "e1438503-ce46-4ec2-84bf-678623542f04", "model": "sonar", "created":
+        1755709907, "usage": {"prompt_tokens": 7, "completion_tokens": 125, "total_tokens":
+        132, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://home.adelphi.edu/~ca19535/page%204.html",
+        "https://www.welcometofrance.com/en/fiche/overview-of-france", "https://www.britannica.com/place/France",
+        "https://www.instagram.com/reel/DEVmGsIMGRM/?hl=en", "https://en.wikipedia.org/wiki/Paris"],
         "search_results": [{"title": "Paris facts: the capital of France in history",
         "url": "https://home.adelphi.edu/~ca19535/page%204.html", "date": "2000-01-01",
-        "last_updated": "2025-07-19"}, {"title": "France | History, Maps, Flag, Population,
-        Cities, Capital, & Facts", "url": "https://www.britannica.com/place/France",
-        "date": "2025-08-01", "last_updated": "2025-08-01"}, {"title": "Paris - Wikipedia",
+        "last_updated": "2025-07-19"}, {"title": "Overview of France", "url": "https://www.welcometofrance.com/en/fiche/overview-of-france",
+        "date": "2019-12-17", "last_updated": "2025-06-18"}, {"title": "France | History,
+        Maps, Flag, Population, Cities, Capital, & Facts", "url": "https://www.britannica.com/place/France",
+        "date": "2025-08-20", "last_updated": "2025-08-20"}, {"title": "Paris, the
+        capital of France, is often referred to as the \"City ...", "url": "https://www.instagram.com/reel/DEVmGsIMGRM/?hl=en",
+        "date": "2025-01-22", "last_updated": null}, {"title": "Paris - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Paris", "date": "2001-11-06", "last_updated":
-        "2025-07-30"}, {"title": "Paris, France - Intercultural Cities Programme -
-        The Council of Europe", "url": "https://www.coe.int/en/web/interculturalcities/paris",
-        "date": "2024-10-15", "last_updated": "2025-07-19"}, {"title": "Paris, the
-        capital of France, is often referred to as the \"City of Light ...", "url":
-        "https://www.instagram.com/reel/DEVmGsIMGRM/", "date": "2025-01-02", "last_updated":
-        null}], "object": "chat.completion", "choices": [{"index": 0, "finish_reason":
-        "stop", "message": {"role": "assistant", "content": "The **capital of France
-        is Paris**. It is the largest city in France and serves as the political,
-        cultural, and economic center of the country[1][2][3][4].\n\nParis is located
-        in the north of France, situated on the Seine River, and is the core of the
-        \u00cele-de-France region with a population of around 2.2 million in the city
-        proper and over 12 million in the metropolitan area[1][3][4]. The city has
-        a rich history dating back over 2,000 years and has been the capital since
-        508 AD, with a brief interruption during World War II when Vichy served as
-        the capital under German occupation[1]. Known as the \"City of Light,\" Paris
-        is renowned worldwide for its culture, fashion, gastronomy, and historical
-        landmarks such as Notre Dame, the Louvre, and the Palace of Versailles[1][2][3]."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Fri, 01 Aug 2025 10:07:04 GMT
+        "2025-08-17"}], "object": "chat.completion", "choices": [{"index": 0, "finish_reason":
+        "stop", "message": {"role": "assistant", "content": "The capital of France
+        is **Paris**. \n\nParis is the largest city in France and is known as a major
+        cultural, commercial, and political center. It has a rich history dating back
+        over 2,000 years and has been the capital city since the early 6th century
+        under King Clovis, with a brief interruption during World War II when the
+        capital was temporarily moved to Vichy. Today, Paris is famous as the \"City
+        of Light\" and remains the heart of France''s \u00cele-de-France region, with
+        a metropolitan population exceeding 12 million people[1][2][3][5]."}, "delta":
+        {"role": "assistant", "content": ""}}]}'
+  recorded_at: Wed, 20 Aug 2025 17:11:47 GMT
 recorded_with: VCR 6.3.1

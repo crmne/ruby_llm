@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s 2 +
-        2?"}],"stream":false,"temperature":0.7}'
+        2?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,25 +24,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:22 GMT
+      - Wed, 20 Aug 2025 17:11:00 GMT
       Content-Length:
-      - '1202'
+      - '1329'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-802","object":"chat.completion","created":1754046502,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking \"What''s 2 + 2?\" That''s a basic arithmetic question.
-        Let me think. 2 plus 2 is straightforward. In elementary math, addition is
-        taught as combining quantities. So, adding 2 and 2 would result in 4. Wait,
-        is there any chance they might be asking about something else, like a trick
-        question or a different context? Maybe they''re <GPUSTACK_API_KEY>ing if I
-        know the basics. But the question seems simple. Let me double-check. 2 + 2
-        equals 4 in standard arithmetic. There''s no need to complicate it. Unless
-        they''re referring to a different base or some other mathematical context,
-        but the question doesn''t specify that. I should confirm that the answer is
-        4. Yeah, that''s it. No confusion here. Just a simple addition.\n\u003c/think\u003e\n\nThe
-        result of 2 + 2 is **4**. \n\nThis is a basic arithmetic operation where two
-        quantities (2 and 2) are combined to give their total sum, which is 4."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":218,"total_tokens":234}}
-
-        '
-  recorded_at: Fri, 01 Aug 2025 11:08:22 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTMzOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDk4NjAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgMiArIDI/XCIgSSBuZWVkIHRvIGZpZ3VyZSBvdXQgdGhlIGNvcnJlY3QgYW5zd2VyLiBMZXQgbWUgcmVjYWxsIGJhc2ljIGFyaXRobWV0aWMuIFR3byBwbHVzIHR3byBpcyBhIGZ1bmRhbWVudGFsIG1hdGggcHJvYmxlbS4gSWYgSSBhZGQgdHdvIG51bWJlcnMsIDIgYW5kIDIsIHRoZSByZXN1bHQgc2hvdWxkIGJlIDQuIFdhaXQsIGlzIHRoZXJlIGFueSBjaGFuY2UgaXQgY291bGQgYmUgc29tZXRoaW5nIGVsc2U/IE1heWJlIGluIHNvbWUgY29udGV4dHMsIGxpa2UgbW9kdWxvIGFyaXRobWV0aWMgb3IgZGlmZmVyZW50IG51bWJlciBiYXNlcz8gTGV0IG1lIGNoZWNrLiBJZiBpdCdzIGluIGJhc2UgMTAsIHdoaWNoIGlzIHN0YW5kYXJkLCB0aGVuIDIgKyAyID0gNC4gSWYgaXQncyBpbiBhbm90aGVyIGJhc2UsIHNheSBiYXNlIDMsIGNvbnZlcnRpbmcgdG8gZGVjaW1hbCB3b3VsZCBiZSBkaWZmZXJlbnQsIGJ1dCB0aGUgcXVlc3Rpb24gZG9lc24ndCBzcGVjaWZ5LiBTbyB0aGUgZGVmYXVsdCBhc3N1bXB0aW9uIGlzIGJhc2UgMTAuIEFsc28sIGFyZSB0aGVyZSBhbnkgdHJpY2tzIG9yIHdvcmRwbGF5IGhlcmU/IFRoZSBxdWVzdGlvbiBzZWVtcyBzdHJhaWdodGZvcndhcmQuIFRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBrbm93IHRoZSBiYXNpYyBhbnN3ZXIuIE1heWJlIHRoZXkncmUganVzdCBjb25maXJtaW5nIG15IHVuZGVyc3RhbmRpbmcuIEkgc2hvdWxkIG1ha2Ugc3VyZSB0aGVyZSdzIG5vIGhpZGRlbiBtZWFuaW5nLiBUaGUgYW5zd2VyIGlzIGRlZmluaXRlbHkgNC4gSSBzaG91bGQgcHJlc2VudCB0aGF0IGNsZWFybHkgYW5kIG1heWJlIG9mZmVyIGZ1cnRoZXIgaGVscCBpZiBuZWVkZWQuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGFuc3dlciB0byAyICsgMiBpcyAqKjQqKi4gXG5cbklmIHlvdSBoYXZlIGFueSBtb3JlIHF1ZXN0aW9ucyBvciBuZWVkIGZ1cnRoZXIgY2xhcmlmaWNhdGlvbiwgZmVlbCBmcmVlIHRvIGFzayEg8J+YiiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTYsImNvbXBsZXRpb25fdG9rZW5zIjoyNDksInRvdGFsX3Rva2VucyI6MjY1fX0K
+  recorded_at: Wed, 20 Aug 2025 17:11:00 GMT
 recorded_with: VCR 6.3.1

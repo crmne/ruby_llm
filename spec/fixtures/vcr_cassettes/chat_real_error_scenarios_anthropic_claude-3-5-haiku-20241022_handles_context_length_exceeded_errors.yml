@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"assistant","content":[{"type":"text","text":"<MASSIVE_TEXT>"}]},{"role":"user","content":[{"type":"text","text":"Hi"}]}],"stream":false,"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,13 +25,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 01 Aug 2025 09:55:56 GMT
+      - Wed, 20 Aug 2025 17:06:46 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '115'
+      - '164'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
       X-Should-Retry:
       - 'false'
       Request-Id:
@@ -40,6 +42,8 @@ http_interactions:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '153'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -48,11 +52,9 @@ http_interactions:
       - none
       Server:
       - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"type":"error","error":{"type":"invalid_request_error","message":"too
-        many total text bytes: 10000002 > 9000000"}}'
-  recorded_at: Fri, 01 Aug 2025 09:55:56 GMT
+      string: '{"type":"error","error":{"type":"invalid_request_error","message":"prompt
+        is too long: 200016 tokens > 200000 maximum"},"request_id":"req_011CSKKwK7rLiAVQMWoWcGML"}'
+  recorded_at: Wed, 20 Aug 2025 17:06:46 GMT
 recorded_with: VCR 6.3.1

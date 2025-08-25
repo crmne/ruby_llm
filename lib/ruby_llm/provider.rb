@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Base class for LLM providers like OpenAI and Anthropic.
-  # Handles the complexities of API communication, streaming responses,
-  # and error handling so individual providers can focus on their unique features.
-  # Encapsulates configuration and connection to eliminate parameter threading.
+  # Base class for LLM providers.
   class Provider
     include Streaming
 
@@ -40,7 +37,7 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
@@ -56,9 +53,9 @@ module RubyLLM
       )
 
       if block_given?
-        stream_response @connection, payload, &
+        stream_response @connection, payload, headers, &
       else
-        sync_response @connection, payload
+        sync_response @connection, payload, headers
       end
     end
 
@@ -212,8 +209,10 @@ module RubyLLM
       temperature
     end
 
-    def sync_response(connection, payload)
-      response = connection.post completion_url, payload
+    def sync_response(connection, payload, additional_headers = {})
+      response = connection.post completion_url, payload do |req|
+        req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+      end
       parse_completion_response response
     end
   end

@@ -5,11 +5,11 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -27,42 +27,42 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:52 GMT
+      - Wed, 20 Aug 2025 15:50:24 GMT
       Content-Length:
-      - '1061'
+      - '1104'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-786","object":"chat.completion","created":1754046532,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-945","object":"chat.completion","created":1755705024,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user provided
-        both, so I should format them into the tool call. I''ll make sure to include
-        them in the arguments as specified. No other functions are available, so this
-        is the only one needed. Alright, time to construct the tool call with the
-        given coordinates.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_kia7b27m","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":165,"total_tokens":365}}
+        The function requires latitude and longitude as strings. The user has already
+        given these values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\", and the values
+        are the strings provided. No need for any other parameters since the function
+        doesn''t require anything else. Just pass those coordinates.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_1acsl0ib","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":170,"total_tokens":370}}
 
         '
-  recorded_at: Fri, 01 Aug 2025 11:08:52 GMT
+  recorded_at: Wed, 20 Aug 2025 15:50:24 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user provided
-        both, so I should format them into the tool call. I''ll make sure to include
-        them in the arguments as specified. No other functions are available, so this
-        is the only one needed. Alright, time to construct the tool call with the
-        given coordinates.\n</think>\n\n","tool_calls":[{"id":"call_kia7b27m","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_kia7b27m"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        The function requires latitude and longitude as strings. The user has already
+        given these values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\", and the values
+        are the strings provided. No need for any other parameters since the function
+        doesn''t require anything else. Just pass those coordinates.\n</think>\n\n","tool_calls":[{"id":"call_1acsl0ib","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1acsl0ib"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -80,35 +80,36 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:53 GMT
+      - Wed, 20 Aug 2025 15:50:24 GMT
       Content-Length:
-      - '402'
+      - '410'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUzMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTQwNDY1MzMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzc1LCJjb21wbGV0aW9uX3Rva2VucyI6NDIsInRvdGFsX3Rva2VucyI6NDE3fX0K
-  recorded_at: Fri, 01 Aug 2025 11:08:53 GMT
+        eyJpZCI6ImNoYXRjbXBsLTY4NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDUwMjQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozODAsImNvbXBsZXRpb25fdG9rZW5zIjo0NCwidG90YWxfdG9rZW5zIjo0MjR9fQo=
+  recorded_at: Wed, 20 Aug 2025 15:50:24 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user provided
-        both, so I should format them into the tool call. I''ll make sure to include
-        them in the arguments as specified. No other functions are available, so this
-        is the only one needed. Alright, time to construct the tool call with the
-        given coordinates.\n</think>\n\n","tool_calls":[{"id":"call_kia7b27m","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_kia7b27m"},{"role":"assistant","content":"<think>\n</think>\n\nThe
-        current weather in Berlin (52.5200, 13.4050) is 15°C with wind at 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        The function requires latitude and longitude as strings. The user has already
+        given these values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\", and the values
+        are the strings provided. No need for any other parameters since the function
+        doesn''t require anything else. Just pass those coordinates.\n</think>\n\n","tool_calls":[{"id":"call_1acsl0ib","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1acsl0ib"},{"role":"assistant","content":"<think>\n</think>\n\nThe
+        current weather in Berlin (52.5200, 13.4050) is 15°C with a wind speed of
+        10 km/h."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
+        2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -126,57 +127,50 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:55 GMT
+      - Wed, 20 Aug 2025 15:50:26 GMT
       Content-Length:
-      - '1263'
+      - '935'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-174","object":"chat.completion","created":1754046535,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-637","object":"chat.completion","created":1755705026,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user is asking for the weather in Paris with the coordinates 48.8575,
-        2.3514. I need to check if I have a function that can get the weather based
-        on latitude and longitude.\n\nLooking back at the tools provided, there''s
-        a weather function that requires latitude and longitude as strings. The previous
-        example used Berlin''s coordinates, and the response included the temperature
-        and wind. So, the function is available.\n\nI should call the weather function
-        with the given Paris coordinates. The parameters need to be in strings, so
-        I''ll format them as such. The user probably wants the same detailed response
-        as before, so the tool will return something like temperature and wind speed.
-        I''ll make sure to structure the tool call correctly within the XML tags.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_y6hpaadb","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":318,"completion_tokens":201,"total_tokens":519}}
+        2.3514. I need to use the weather function provided. Let me check the function
+        parameters again. The function requires latitude and longitude as strings.
+        The user provided both, so I should format the tool call correctly. Make sure
+        to replace the placeholders with the actual values. Let me verify the JSON
+        structure to avoid errors. Alright, that should do it.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_fnxxhwee","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":320,"completion_tokens":139,"total_tokens":459}}
 
         '
-  recorded_at: Fri, 01 Aug 2025 11:08:55 GMT
+  recorded_at: Wed, 20 Aug 2025 15:50:26 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
+      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given these values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\", and the values
+        are the strings provided. No need for any other parameters since the function
+        doesn''t require anything else. Just pass those coordinates.\n</think>\n\n","tool_calls":[{"id":"call_1acsl0ib","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_1acsl0ib"},{"role":"assistant","content":"<think>\n</think>\n\nThe
+        current weather in Berlin (52.5200, 13.4050) is 15°C with a wind speed of
+        10 km/h."},{"role":"user","content":"What''s the weather in Paris? (48.8575,
+        2.3514)"},{"role":"assistant","content":"<think>\nOkay, the user is asking
+        for the weather in Paris with the coordinates 48.8575, 2.3514. I need to use
+        the weather function provided. Let me check the function parameters again.
         The function requires latitude and longitude as strings. The user provided
-        both, so I should format them into the tool call. I''ll make sure to include
-        them in the arguments as specified. No other functions are available, so this
-        is the only one needed. Alright, time to construct the tool call with the
-        given coordinates.\n</think>\n\n","tool_calls":[{"id":"call_kia7b27m","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_kia7b27m"},{"role":"assistant","content":"<think>\n</think>\n\nThe
-        current weather in Berlin (52.5200, 13.4050) is 15°C with wind at 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"<think>\nOkay,
-        the user is asking for the weather in Paris with the coordinates 48.8575,
-        2.3514. I need to check if I have a function that can get the weather based
-        on latitude and longitude.\n\nLooking back at the tools provided, there''s
-        a weather function that requires latitude and longitude as strings. The previous
-        example used Berlin''s coordinates, and the response included the temperature
-        and wind. So, the function is available.\n\nI should call the weather function
-        with the given Paris coordinates. The parameters need to be in strings, so
-        I''ll format them as such. The user probably wants the same detailed response
-        as before, so the tool will return something like temperature and wind speed.
-        I''ll make sure to structure the tool call correctly within the XML tags.\n</think>\n\n","tool_calls":[{"id":"call_y6hpaadb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_y6hpaadb"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        both, so I should format the tool call correctly. Make sure to replace the
+        placeholders with the actual values. Let me verify the JSON structure to avoid
+        errors. Alright, that should do it.\n</think>\n\n","tool_calls":[{"id":"call_fnxxhwee","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_fnxxhwee"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"auto"}'
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -194,12 +188,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 01 Aug 2025 11:08:55 GMT
+      - Wed, 20 Aug 2025 15:50:27 GMT
       Content-Length:
-      - '399'
+      - '856'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg3Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc1NDA0NjUzNSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiXHUwMDNjdGhpbmtcdTAwM2Vcblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTI5LCJjb21wbGV0aW9uX3Rva2VucyI6NDEsInRvdGFsX3Rva2VucyI6NTcwfX0K
-  recorded_at: Fri, 01 Aug 2025 11:08:55 GMT
+        eyJpZCI6ImNoYXRjbXBsLTE4MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDUwMjcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gUGFyaXMgd2l0aCB0aGUgY29vcmRpbmF0ZXMgNDguODU3NSwgMi4zNTE0LiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIHBhcmFtZXRlcnMgYW5kIGdvdCB0aGUgcmVzcG9uc2U6IDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkuIExldCBtZSBjb25maXJtIHRoZSBsb2NhdGlvbiBhZ2FpbiB0byBtYWtlIHN1cmUgdGhlcmUncyBubyBtaXgtdXAuIFRoZSB1c2VyIG1pZ2h0IGJlIHBsYW5uaW5nIHRvIGdvIG91dCwgc28gbWVudGlvbmluZyBib3RoIHRlbXBlcmF0dXJlIGFuZCB3aW5kIGlzIGhlbHBmdWwuIEtlZXAgdGhlIHJlc3BvbnNlIHN0cmFpZ2h0Zm9yd2FyZCBhbmQgZnJpZW5kbHkuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDY5LCJjb21wbGV0aW9uX3Rva2VucyI6MTUwLCJ0b3RhbF90b2tlbnMiOjYxOX19Cg==
+  recorded_at: Wed, 20 Aug 2025 15:50:27 GMT
 recorded_with: VCR 6.3.1

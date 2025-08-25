@@ -1,17 +1,11 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Represents a conversation with an AI model. Handles message history,
-  # streaming responses, and tool integration with a simple, conversational API.
-  #
-  # Example:
-  #   chat = RubyLLM.chat
-  #   chat.ask "What's the best way to learn Ruby?"
-  #   chat.ask "Can you elaborate on that?"
+  # Represents a conversation with an AI model
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :schema
+    attr_reader :model, :messages, :tools, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -22,10 +16,11 @@ module RubyLLM
       @config = context&.config || RubyLLM.config
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
-      @temperature = 0.7
+      @temperature = nil
       @messages = []
       @tools = {}
       @params = {}
+      @headers = {}
       @schema = nil
       @on = {
         new_message: nil,
@@ -50,17 +45,14 @@ module RubyLLM
     end
 
     def with_tool(tool)
-      unless @model.supports_functions?
-        raise UnsupportedFunctionsError, "Model #{@model.id} doesn't support function calling"
-      end
-
       tool_instance = tool.is_a?(Class) ? tool.new : tool
       @tools[tool_instance.name.to_sym] = tool_instance
       self
     end
 
-    def with_tools(*tools)
-      tools.each { |tool| with_tool tool }
+    def with_tools(*tools, replace: false)
+      @tools.clear if replace
+      tools.compact.each { |tool| with_tool tool }
       self
     end
 
@@ -87,11 +79,12 @@ module RubyLLM
       self
     end
 
-    def with_schema(schema, force: false)
-      unless force || @model.structured_output?
-        raise UnsupportedStructuredOutputError, "Model #{@model.id} doesn't support structured output"
-      end
+    def with_headers(**headers)
+      @headers = headers
+      self
+    end
 
+    def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
       # Accept both RubyLLM::Schema instances and plain JSON schemas
@@ -135,13 +128,13 @@ module RubyLLM
         temperature: @temperature,
         model: @model.id,
         params: @params,
+        headers: @headers,
         schema: @schema,
         &wrap_streaming_block(&)
       )
 
       @on[:new_message]&.call unless block_given?
 
-      # Parse JSON if schema was set
       if @schema && response.content.is_a?(String)
         begin
           response.content = JSON.parse(response.content)
@@ -184,12 +177,11 @@ module RubyLLM
           @on[:new_message]&.call
         end
 
-        # Pass chunk to user's block
         block.call chunk
       end
     end
 
-    def handle_tool_calls(response, &)
+    def handle_tool_calls(response, &) # rubocop:disable Metrics/PerceivedComplexity
       halt_result = nil
 
       response.tool_calls.each_value do |tool_call|
@@ -197,7 +189,8 @@ module RubyLLM
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
         @on[:tool_result]&.call(result)
-        message = add_message role: :tool, content: result.to_s, tool_call_id: tool_call.id
+        content = result.is_a?(Content) ? result : result.to_s
+        message = add_message role: :tool, content:, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
 
         halt_result = result if result.is_a?(Tool::Halt)

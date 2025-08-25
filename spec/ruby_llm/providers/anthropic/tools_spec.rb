@@ -140,7 +140,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
 
   describe '.format_tool_result' do
     let(:msg) do
-      instance_double(Message,
+      instance_double(RubyLLM::Message,
                       tool_call_id: 'tool_123',
                       content: 'Tool result')
     end
@@ -154,7 +154,12 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                                {
                                  type: 'tool_result',
                                  tool_use_id: 'tool_123',
-                                 content: 'Tool result'
+                                 content: [
+                                   {
+                                     type: 'text',
+                                     text: 'Tool result'
+                                   }
+                                 ]
                                }
                              ]
                            })
