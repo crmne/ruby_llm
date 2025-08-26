@@ -47,6 +47,7 @@ def configure_from_env
     config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
+    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     configure_bedrock(config)
     # Requests
     config.request_timeout = 30
