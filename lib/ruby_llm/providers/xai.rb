@@ -4,6 +4,7 @@ module RubyLLM
   module Providers
     # xAI API integration
     class XAI < OpenAI
+      include XAI::Capabilities
       include XAI::Chat
 
       def api_base
@@ -31,6 +32,10 @@ module RubyLLM
       end
 
       class << self
+        def capabilities
+          XAI::Capabilities
+        end
+
         def configuration_requirements
           %i[xai_api_key]
         end
