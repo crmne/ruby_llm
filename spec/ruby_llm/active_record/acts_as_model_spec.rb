@@ -48,13 +48,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.timestamps
         end
       end
+
+      allow(RubyLLM.models).to receive(:all).and_return([model_info])
+      allow(RubyLLM.models).to receive(:refresh!)
     end
 
     describe 'model persistence' do
       it 'syncs models from RubyLLM registry' do
-        allow(RubyLLM.models).to receive(:refresh!)
-        allow(RubyLLM.models).to receive(:all).and_return([model_info])
-
         expect { model_class.refresh! }.to change(model_class, :count).from(0).to(1)
 
         model = model_class.last
@@ -69,9 +69,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           name: 'Old Name',
           provider: 'openai'
         )
-
-        allow(RubyLLM.models).to receive(:refresh!)
-        allow(RubyLLM.models).to receive(:all).and_return([model_info])
 
         expect { model_class.refresh! }.not_to(change(model_class, :count))
 
