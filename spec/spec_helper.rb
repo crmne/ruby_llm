@@ -67,6 +67,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
   config.filter_sensitive_data('<PERPLEXITY_API_KEY>') { ENV.fetch('PERPLEXITY_API_KEY', nil) }
+  config.filter_sensitive_data('<XAI_API_KEY>') { ENV.fetch('XAI_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
   config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
@@ -129,6 +130,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
+      config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
@@ -158,7 +160,8 @@ CHAT_MODELS = [
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :perplexity, model: 'sonar' }
+  { provider: :perplexity, model: 'sonar' },
+  { provider: :xai, model: 'grok-3-mini' }
 ].freeze
 
 PDF_MODELS = [
