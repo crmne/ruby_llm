@@ -60,8 +60,15 @@ module RubyLLM
     end
 
     def list_models
-      response = @connection.get models_url
-      parse_list_models_response response, slug, capabilities
+      if models_url.is_a?(Array)
+        models_url.map do |url|
+          response = @connection.get(url)
+          parse_list_models_response response, slug, capabilities
+        end.flatten
+      else
+        response = @connection.get models_url
+        parse_list_models_response response, slug, capabilities
+      end
     end
 
     def embed(text, model:, dimensions:)
