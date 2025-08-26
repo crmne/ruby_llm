@@ -419,6 +419,27 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     }
   end
 
+  models['xai'].each do |model|
+    # xAI aliases
+    m = RubyLLM.models.find(model)
+    next unless m.metadata&.dig(:aliases)
+
+    m.metadata[:aliases].each do |alias_name|
+      aliases[alias_name] = { 'xai' => m.id }
+    end
+
+    # OpenRouter aliases.
+    # NOTE: OpenRouter uses "x-ai" as the provider slug
+    openrouter_model = "x-ai/#{model}"
+    next unless models['openrouter'].include?(openrouter_model)
+
+    alias_key = model.gsub('-latest', '').gsub(/-\d{4}/, '-4')
+    aliases[alias_key] = {
+      'xai' => alias_key,
+      'openrouter' => openrouter_model
+    }
+  end
+
   sorted_aliases = aliases.sort.to_h
   File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
