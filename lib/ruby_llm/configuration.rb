@@ -25,6 +25,8 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
+                  # Model registry
+                  :model_registry_class,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,

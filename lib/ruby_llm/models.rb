@@ -22,16 +22,20 @@ module RubyLLM
         File.expand_path('models_schema.json', __dir__)
       end
 
-      def refresh!
-        provider_models = fetch_from_providers
+      def refresh!(remote_only: false)
+        provider_models = fetch_from_providers(remote_only: remote_only)
         parsera_models = fetch_from_parsera
         merged_models = merge_models(provider_models, parsera_models)
         @instance = new(merged_models)
       end
 
-      def fetch_from_providers
+      def fetch_from_providers(remote_only: true)
         config = RubyLLM.config
-        configured_classes = Provider.configured_remote_providers(config)
+        configured_classes = if remote_only
+                               Provider.configured_remote_providers(config)
+                             else
+                               Provider.configured_providers(config)
+                             end
         configured = configured_classes.map { |klass| klass.new(config) }
 
         RubyLLM.logger.info "Fetching models from providers: #{configured.map(&:name).join(', ')}"
@@ -54,11 +58,19 @@ module RubyLLM
           provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
           provider_instance = provider_class.new(config)
 
-          model = Model::Info.new(
+          model = if provider_instance.local?
+                    begin
+                      Models.find(model_id, provider)
+                    rescue ModelNotFoundError
+                      nil
+                    end
+                  end
+
+          model ||= Model::Info.new(
             id: model_id,
             name: model_id.tr('-', ' ').capitalize,
             provider: provider_instance.slug,
-            capabilities: %w[function_calling streaming],
+            capabilities: %w[function_calling streaming vision structured_output],
             modalities: { input: %w[text image], output: %w[text] },
             metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
           )
@@ -134,6 +146,24 @@ module RubyLLM
     end
 
     def load_models
+      # Try to load from database first if configured
+      if RubyLLM.config.model_registry_class
+        load_from_database
+      else
+        load_from_json
+      end
+    rescue StandardError => e
+      RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
+      load_from_json
+    end
+
+    def load_from_database
+      model_class = RubyLLM.config.model_registry_class
+      model_class = model_class.constantize if model_class.is_a?(String)
+      model_class.all.map(&:to_llm)
+    end
+
+    def load_from_json
       data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
       JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
     rescue JSON::ParserError
@@ -184,8 +214,8 @@ module RubyLLM
       self.class.new(all.select { |m| m.provider == provider.to_s })
     end
 
-    def refresh!
-      self.class.refresh!
+    def refresh!(remote_only: false)
+      self.class.refresh!(remote_only: remote_only)
     end
 
     private

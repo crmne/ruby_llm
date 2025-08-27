@@ -154,18 +154,19 @@ end
 CHAT_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
-  { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :gpustack, model: 'qwen3' },
+  { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' },
-  { provider: :gpustack, model: 'qwen3' },
-  { provider: :perplexity, model: 'sonar' },
-  { provider: :mistral, model: 'mistral-small-latest' }
+  { provider: :perplexity, model: 'sonar' }
 ].freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
+  { provider: :bedrock, model: 'us.anthropic.claude-3-7-sonnet-20250219-v1:0' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'google/gemini-2.5-flash' }
@@ -175,10 +176,10 @@ VISION_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-sonnet-20241022-v2:0' },
   { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :mistral, model: 'pixtral-12b-latest' },
+  { provider: :ollama, model: 'granite3.2-vision' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' },
-  { provider: :mistral, model: 'pixtral-12b-latest' }
+  { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' }
 ].freeze
 
 AUDIO_MODELS = [

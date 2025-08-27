@@ -2,8 +2,8 @@
 
 module RubyLLM
   module Providers
-    class Ollama
-      # Handles formatting of media content (images, audio) for Ollama APIs
+    class GPUStack
+      # Handles formatting of media content (images, audio) for GPUStack APIs
       module Media
         extend OpenAI::Media
 
@@ -19,7 +19,7 @@ module RubyLLM
           content.attachments.each do |attachment|
             case attachment.type
             when :image
-              parts << Ollama::Media.format_image(attachment)
+              parts << GPUStack::Media.format_image(attachment)
             when :text
               parts << format_text_file(attachment)
             else
