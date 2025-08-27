@@ -204,9 +204,8 @@ module RubyLLM
         halt_result = result if result.is_a?(Tool::Halt)
       end
 
-      return halt_result if halt_result
-
-      should_continue_after_tools? ? complete(&) : response
+      reset_tool_choice if forced_tool_choice?
+      halt_result || complete(&)
     end
 
     def execute_tool(tool_call)
@@ -229,10 +228,12 @@ module RubyLLM
       @parallel_tool_calls = !!parallel unless parallel.nil?
     end
 
-    def should_continue_after_tools?
-      # Continue conversation only with :auto tool choice to avoid infinite loops.
-      # With :any or specific tool choices, the model would keep calling tools repeatedly.
-      tool_choice.nil? || tool_choice == :auto
+    def forced_tool_choice?
+      @tool_choice && !%i[auto none].include?(@tool_choice)
+    end
+
+    def reset_tool_choice
+      @tool_choice = nil
     end
 
     def instance_variables
