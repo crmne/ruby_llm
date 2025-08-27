@@ -278,23 +278,36 @@ puts response.content
 
 ### Tool Choice Control
 
-Control when and how tools are called using `choice` and `parallel` options:
+Control when and how tools are called using `choice` and `parallel` options.
+
+**Parameter Values:**
+- **`choice`**: Controls tool choice behavior
+  - `:auto` Model decides whether to use any tools
+  - `:required` - Model must use one of the provided tools
+  - `:none` - Disable all tools
+  - `"tool_name"` - Force a specific tool (e.g., `:weather` for `Weather` tool)
+- **`parallel`**: Controls parallel tool calls
+  - `true` Allow multiple tool calls simultaneously
+  - `false` - One at a time
+
+If not provided, RubyLLM will use the provider's default behavior for tool choice and parallel tool calls.
+
+**Examples:**
 
 ```ruby
 chat = RubyLLM.chat(model: 'gpt-4o')
 
-# Choice options
-chat.with_tool(Weather, choice: :auto)    # Model decides whether to call any provided tools or not (default)
-chat.with_tool(Weather, choice: :any)     # Model must use one of the provided tools
-chat.with_tool(Weather, choice: :none)    # No tools
-chat.with_tool(Weather, choice: :weather) # Force specific tool
+# Basic usage with defaults
+chat.with_tools(Weather, Calculator)  # uses provider defaults
 
-# Parallel tool calls
-chat.with_tools(Weather, Calculator, parallel: true)  # Model can output multiple tool calls at once (default)
-chat.with_tools(Weather, Calculator, parallel: false) # At most one tool call
+# Force tool usage, one at a time
+chat.with_tools(Weather, Calculator, choice: :required, parallel: false)
+
+# Force specific tool
+chat.with_tool(Weather, choice: :weather, parallel: true)
 ```
 
-> With `:any` or specific tool choices, tool results are not automatically sent back to the AI model (see The Tool Execution Flow section below) to prevent infinite loops.
+> With `:required` or specific tool choices, the tool_choice is automatically reset to `nil` after tool execution to prevent infinite loops.
 {: .note }
 
 ### Model Compatibility
