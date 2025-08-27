@@ -12,8 +12,7 @@ module RubyLLM
         module_function
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, tool_choice:, parallel_tool_calls:,
-                           temperature:, model:, stream: false, schema: nil)
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil)
           payload = {
             model: model,
             messages: format_messages(messages),
@@ -24,8 +23,8 @@ module RubyLLM
 
           if tools.any?
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
-            payload[:tool_choice] = build_tool_choice(tool_choice) unless tool_choice.nil?
-            payload[:parallel_tool_calls] = parallel_tool_calls unless parallel_tool_calls.nil?
+            payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+            payload[:parallel_tool_calls] = tool_prefs[:parallel] unless tool_prefs[:parallel].nil?
           end
 
           if schema

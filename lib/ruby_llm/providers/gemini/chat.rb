@@ -12,8 +12,7 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
-        def render_payload(messages, tools:, tool_choice:, parallel_tool_calls:,
-                           temperature:, model:, stream: false, schema: nil)
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil)
           @model = model
           payload = {
             contents: format_messages(messages),
@@ -30,7 +29,7 @@ module RubyLLM
           if tools.any?
             payload[:tools] = format_tools(tools)
             # Gemini doesn't support controlling parallel tool calls
-            payload[:toolConfig] = build_tool_config(tool_choice) unless tool_choice.nil?
+            payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
           end
 
           payload
