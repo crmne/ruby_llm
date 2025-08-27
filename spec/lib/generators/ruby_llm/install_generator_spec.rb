@@ -14,7 +14,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       [
         'create_chats_migration.rb.tt',
         'create_messages_migration.rb.tt',
-        'create_tool_calls_migration.rb.tt'
+        'create_tool_calls_migration.rb.tt',
+        'create_models_migration.rb.tt'
       ]
     end
 
@@ -88,7 +89,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       [
         'chat_model.rb.tt',
         'message_model.rb.tt',
-        'tool_call_model.rb.tt'
+        'tool_call_model.rb.tt',
+        'model_model.rb.tt'
       ]
     end
 
@@ -112,6 +114,40 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       tool_call_content = File.read(File.join(template_dir, 'tool_call_model.rb.tt'))
       expect(tool_call_content).to include('acts_as_tool_call')
     end
+
+    it 'declares acts_as_model in model model' do
+      model_content = File.read(File.join(template_dir, 'model_model.rb.tt'))
+      expect(model_content).to include('acts_as_model')
+    end
+  end
+
+  describe 'models migration' do
+    let(:models_migration) { File.read(File.join(template_dir, 'create_models_migration.rb.tt')) }
+
+    it 'defines models table' do
+      expect(models_migration).to include('create_table :<%= options[:model_model_name].tableize %>')
+    end
+
+    it 'includes model_id field' do
+      expect(models_migration).to include('t.string :model_id')
+    end
+
+    it 'includes provider field' do
+      expect(models_migration).to include('t.string :provider')
+    end
+
+    it 'includes unique index on provider and model_id' do
+      expect(models_migration).to include('t.index [:provider, :model_id], unique: true')
+    end
+
+    it 'supports jsonb for PostgreSQL' do
+      expect(models_migration).to include('t.jsonb :modalities')
+      expect(models_migration).to include('t.jsonb :capabilities')
+      expect(models_migration).to include('t.jsonb :pricing')
+      expect(models_migration).to include('t.json :modalities')
+      expect(models_migration).to include('t.json :capabilities')
+      expect(models_migration).to include('t.json :pricing')
+    end
   end
 
   describe 'initializer template' do
@@ -131,6 +167,10 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
     it 'configures Anthropic API key' do
       expect(initializer_content).to include('config.anthropic_api_key')
+    end
+
+    it 'configures model registry class' do
+      expect(initializer_content).to include('config.model_registry_class')
     end
   end
 

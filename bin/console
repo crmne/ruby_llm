@@ -23,6 +23,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
   config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
   config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
+  config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
+  config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
 end
 
 IRB.start(__FILE__)

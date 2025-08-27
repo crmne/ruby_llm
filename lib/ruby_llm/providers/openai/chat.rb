@@ -14,7 +14,7 @@ module RubyLLM
         # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil)
           payload = {
-            model: model,
+            model: model.id,
             messages: format_messages(messages),
             stream: stream
           }

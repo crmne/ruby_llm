@@ -1,0 +1,241 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 26 Aug 2025 19:10:47 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=783
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"functionCall\":
+        {\"name\": \"weather\",\"args\": {\"longitude\": \"13.4050\",\"latitude\":
+        \"52.5200\"}},\"thoughtSignature\": \"CiQBVKhc7uhBq7Z/8WiR+ZcJIcUnCvapoBCpXeI9KDxTJEtZjEIKfAFUqFzuddpGsExnsCUR4GyW2PVyTYesNp5hzX7aLZIeD3+HqHQQKF+WP0GT09mF93+vTu7DkaClIqv3gnNlZs8lzf5aWB0ukRXIRp8qhGCIhzQ0rOCwOGlFKNBf+A7MR36veL7eY2A57ND06PZ0CCvYHg1H6R9AnoHZTF8KlwIBVKhc7ot23AaiLw9RdGycq3wg5aUST6aHR8aVZrhzeaVj+AfAHr8NTwarFGHVKUUtnVmCoPp9c58MeQYn5pzjgm37hJohz6UqANHLXnRnq3vhjyBESOzRj/qltDRD8Iu5yw+EW4oLcIAThgvxKiW5uvchhMJMFe3KACIAiGlfBZmadQSHI8h6qlv8kYMPlfVuQioVuYZ7dSB2iEbVFpGRcNErsGRek1VmnFxmBcyN7Tp+AJElj9xyy2FsNntiMLbz2fGtXbmyGgLW9Er295lLu9ZDxqv5Df2kYXpP9JQJYzvdPIp8UfuSIEjc4mTLDM56oygnQZZekC8rhWG4Ia3ZoFCjkEGuZzCid70KlNQK5QhHlGOf7f4KtQEBVKhc7uaFQZDr4KEs+I8o0MFCJL5B37AwNt4SB5xOXaEpA+nHLOV66C3RssD9xzTtF7Xr1aC+VEEiSX3iWnBRxTzNvN68VbGHIl/wAYuuvW+eVmPn62G1fEoRZDx6z+fG0pjmq0V7s/RnJyyFhLIrmf5iH/ve7Hr4dxjDJlfMQqZmWKTc1MlUBO95P7n/CJVsMYgNDLtIO4O5HKkWgeCtpj+2HPK7rlDgWHcIwusXZnDFlOKD\"}],\"role\":
+        \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        103,\"candidatesTokenCount\": 30,\"totalTokenCount\": 231,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 103}],\"thoughtsTokenCount\": 98},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"tgauaNveG8aFvdIPgOm62Q0\"}\r\n\r\n"
+  recorded_at: Tue, 26 Aug 2025 19:10:47 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","response":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 26 Aug 2025 19:10:47 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=194
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJjYW5kaWRhdGVzIjogW3siY29udGVudCI6IHsicGFydHMiOiBbeyJ0ZXh0IjogIlRoZSJ9XSwicm9sZSI6ICJtb2RlbCJ9LCJpbmRleCI6IDB9XSwidXNhZ2VNZXRhZGF0YSI6IHsicHJvbXB0VG9rZW5Db3VudCI6IDI1NiwiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAxLCJ0b3RhbFRva2VuQ291bnQiOiAyNTcsInByb21wdFRva2Vuc0RldGFpbHMiOiBbeyJtb2RhbGl0eSI6ICJURVhUIiwidG9rZW5Db3VudCI6IDI1Nn1dfSwibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLCJyZXNwb25zZUlkIjogInR3YXVhS0cyRVlqaWtkVVB2WjJnMkE4In0NCg0KZGF0YTogeyJjYW5kaWRhdGVzIjogW3siY29udGVudCI6IHsicGFydHMiOiBbeyJ0ZXh0IjogIiB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaC4ifV0sInJvbGUiOiAibW9kZWwifSwiaW5kZXgiOiAwfV0sInVzYWdlTWV0YWRhdGEiOiB7InByb21wdFRva2VuQ291bnQiOiAyNTYsImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjAsInRvdGFsVG9rZW5Db3VudCI6IDI3NiwicHJvbXB0VG9rZW5zRGV0YWlscyI6IFt7Im1vZGFsaXR5IjogIlRFWFQiLCJ0b2tlbkNvdW50IjogMjU2fV19LCJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsInJlc3BvbnNlSWQiOiAidHdhdWFLRzJFWWppa2RVUHZaMmcyQTgifQ0KDQpkYXRhOiB7ImNhbmRpZGF0ZXMiOiBbeyJjb250ZW50IjogeyJyb2xlIjogIm1vZGVsIn0sImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwiaW5kZXgiOiAwfV0sInVzYWdlTWV0YWRhdGEiOiB7InByb21wdFRva2VuQ291bnQiOiAyNTYsImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjAsInRvdGFsVG9rZW5Db3VudCI6IDI3NiwicHJvbXB0VG9rZW5zRGV0YWlscyI6IFt7Im1vZGFsaXR5IjogIlRFWFQiLCJ0b2tlbkNvdW50IjogMjU2fV19LCJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsInJlc3BvbnNlSWQiOiAidHdhdWFLRzJFWWppa2RVUHZaMmcyQTgifQ0KDQo=
+  recorded_at: Tue, 26 Aug 2025 19:10:47 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","response":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]},{"role":"model","parts":[{"text":"The
+        weather in Berlin is 15°C with wind at 10 km/h."}]},{"role":"user","parts":[{"text":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 26 Aug 2025 19:10:48 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=799
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"functionCall\":
+        {\"name\": \"weather\",\"args\": {\"latitude\": \"48.8575\",\"longitude\":
+        \"2.3514\"}},\"thoughtSignature\": \"CikBVKhc7m7DXfb0p6sVxIhJHqfxBUQCANO7r5xKbxn5ygtD68/MdZmxOQqKAQFUqFzu9wG5lEbfj60Vzc01JFfQTEq6nNOeolLXvZ3t8uo/zgK34PPpaRRwfWyMqdziD6CWAObPL4Fu8t49glahZ5gf1IBxwf7K7T/kh1ZWJmaEBj79TJovGy4KxJuG0UZ88jJYGKRDfeaCIbTN77kftMqO5fnoB2lJXTmrxl7YcOxvqpVmcerE/ArcAQFUqFzuj3PGhintFS/RQNJVdGgGENfbKfmWjQekqQUn62n8SejDGtRT/duCegd9KewfK2xpsM/wm5pJNbPCQlhueLopeyOq7c1vQanIqtsPR1cvdcEenMofMZGebHIQAt+RKn9VdACU8vfo+OgiihiUnbQX7V/FDRnAaQA2SpGLjq+BI61fQZuFeMnNrqWGdnne0fGFtlJi1T5EWTBbCqx2r+yerMvdPgfwj6wJ74XAd2RRX6fS5F2ay5maWz+wfjJs/pyblgEffQYrhFgw7tbS70KuNAESqgp2YHg=\"}],\"role\":
+        \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        303,\"candidatesTokenCount\": 29,\"totalTokenCount\": 406,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 303}],\"thoughtsTokenCount\": 74},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"twauaLv1M7ytxN8P_uvJ4A0\"}\r\n\r\n"
+  recorded_at: Tue, 26 Aug 2025 19:10:48 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","response":{"name":"db0e4a8d-fd69-4358-86e8-2f4c378647e1","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]},{"role":"model","parts":[{"text":"The
+        weather in Berlin is 15°C with wind at 10 km/h."}]},{"role":"user","parts":[{"text":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"8498ebbc-d12d-4962-bfca-5942ee66aa51","response":{"name":"8498ebbc-d12d-4962-bfca-5942ee66aa51","content":[{"text":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Tue, 26 Aug 2025 19:10:49 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=896
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJjYW5kaWRhdGVzIjogW3siY29udGVudCI6IHsicGFydHMiOiBbeyJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIFBhcmlzIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiIsInRob3VnaHRTaWduYXR1cmUiOiAiQ2lrQlZLaGM3cWZtUnRIK2xieXZCMlhZcVZOVFQwd2M3ajh1TGQzRjJuMEVDamlYak5TZVNxeHFTZ3BqQVZTb1hPNXhwaklvRzNlMHcrM3JWU3IxR0NqRHRPaW5VZlIwcTdEVlFxeVYxRnJVS1hRSzh2UHVXeDZVODJQeG5zdFZVdk8zODYveVNyazkvdmJKSEV1RmdObFFMUlFZa0YvZUpyc2lOenQxblpLRVF0dTFMVDBLN0NrVTJsMTJ2OTVUQ3RJQkFWU29YTzdsMWJlWnY2MG9jTjhKU2RGaExiRExsSmordkZEWE53VzlYWnljb0JNVTM5Y0ZqR3NSTmhzbkQ1c0ZuVTFwWFk0SXhxVStoM1cwNU5iZUw1YlozVlFybWRmUVJSczE1M29ydUg2S3V5RGlhUHJDZE03d2dRL293ZE5lbWFocjFnZWxuTmNkdGl2VDNjSGdKQVVPL3cyQWJicHI0ckdHTUdSUzFtOXBodVZHRlVOcFgzbzFPUkp5aE9BckJtdHBGRmE2UXdTR05lYmlkb1B1T08wRWlTQmhSNTFyaGFPQzlIalNiUXpnT0tNRmdRbmxkTjUvcE01ak1sQkFWd3phQVR1V0hKWUNoeWNXNnMzSDhSMm9Da2dCVktoYzdxS2tJVkhqWU5DTWMvTXNkbTM5S3RQc1ZmVEp3YXdYOHRRL1JoSjd1TFZBVG9vdHpXTk05NWw2ZlNWcUU2SE4vakJvSTM1a3BCc0ZRbzNVMUUvZ3EwZEJPcVU9In1dLCJyb2xlIjogIm1vZGVsIn0sImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwiaW5kZXgiOiAwfV0sInVzYWdlTWV0YWRhdGEiOiB7InByb21wdFRva2VuQ291bnQiOiA0NDYsImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjAsInRvdGFsVG9rZW5Db3VudCI6IDU0NSwicHJvbXB0VG9rZW5zRGV0YWlscyI6IFt7Im1vZGFsaXR5IjogIlRFWFQiLCJ0b2tlbkNvdW50IjogNDQ2fV0sInRob3VnaHRzVG9rZW5Db3VudCI6IDc5fSwibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLCJyZXNwb25zZUlkIjogInVBYXVhSnFPTHZ2bm5zRVBnNlhoaUFRIn0NCg0K
+  recorded_at: Tue, 26 Aug 2025 19:10:49 GMT
+recorded_with: VCR 6.3.1

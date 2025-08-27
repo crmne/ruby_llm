@@ -1,0 +1,278 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 27 Aug 2025 14:38:06 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:06 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 27 Aug 2025 14:38:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by complex interactions within Earth's atmosphere. When we talk about \"the weather,\" we're generally referring to the state of the atmosphere at a particular place and time, encompassing several key elements:\n\n*   **Temperature:** How hot or cold it is, usually measured in Celsius or Fahrenheit. This is influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail. This depends on moisture in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water vapor in the air. High humidity can make it feel muggier, while low humidity can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky is covered by clouds. Clouds play a crucial role in regulating temperature and producing precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with stormy conditions.\n\nWeather is constantly evolving due to the movement of air masses, fronts (boundaries between different air masses), and large-scale atmospheric patterns. Meteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors (like the hypothetical **XKCD7392** weather station, which might be collecting data on temperature and wind speed), to gather data. This data is then fed into sophisticated computer models to predict future weather conditions.\n\nTo get the most accurate and up-to-date weather information for your specific location, you'd typically check a local weather forecast from a reliable source like a national meteorological service, a weather app, or a local news outlet."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.24875946044921876
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 395,
+            "totalTokenCount": 615,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 395
+              }
+            ],
+            "thoughtsTokenCount": 195
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-08-27T14:38:06.977299Z",
+          "responseId": "ThivaJPTO-jEmLAPgfzegQU"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 27 Aug 2025 14:38:10 GMT
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is a fascinating and ever-changing phenomenon, driven by complex interactions
+        within Earth''s atmosphere. When we talk about \"the weather,\" we''re generally
+        referring to the state of the atmosphere at a particular place and time, encompassing
+        several key elements:\n\n*   **Temperature:** How hot or cold it is, usually
+        measured in Celsius or Fahrenheit. This is influenced by solar radiation,
+        cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling
+        from the sky, such as rain, snow, sleet, or hail. This depends on moisture
+        in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement
+        of air, described by its speed and direction. Wind is caused by differences
+        in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water
+        vapor in the air. High humidity can make it feel muggier, while low humidity
+        can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky
+        is covered by clouds. Clouds play a crucial role in regulating temperature
+        and producing precipitation.\n*   **Atmospheric Pressure:** The weight of
+        the air above a given point. High pressure generally brings clear, stable
+        weather, while low pressure is often associated with stormy conditions.\n\nWeather
+        is constantly evolving due to the movement of air masses, fronts (boundaries
+        between different air masses), and large-scale atmospheric patterns. Meteorologists
+        use a variety of tools, including satellites, radar, weather balloons, and
+        ground-based sensors (like the hypothetical **XKCD7392** weather station,
+        which might be collecting data on temperature and wind speed), to gather data.
+        This data is then fed into sophisticated computer models to predict future
+        weather conditions.\n\nTo get the most accurate and up-to-date weather information
+        for your specific location, you''d typically check a local weather forecast
+        from a reliable source like a national meteorological service, a weather app,
+        or a local news outlet."}]},{"role":"user","parts":[{"text":"You must include
+        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 27 Aug 2025 14:38:15 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDaG9vc2luZyBcImdvb2RcIiBib29rcyBpcyB3b25kZXJmdWxseSBzdWJqZWN0aXZlLCBhcyB3aGF0IHJlc29uYXRlcyB3aXRoIG9uZSBwZXJzb24gbWlnaHQgbm90IHdpdGggYW5vdGhlciEgSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIHRpdGxlcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCBjb21wZWxsaW5nLlxuXG5IZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbiogICAqKkZvciBhIHRob3VnaHQtcHJvdm9raW5nIHNjaS1maSBhZHZlbnR1cmU6KiogKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIuIEl0J3MgaW5jcmVkaWJseSBjbGV2ZXIsIGZ1bm55LCBhbmQgc2NpZW50aWZpY2FsbHkgZW5nYWdpbmcsIHdpdGggYSBwcm90YWdvbmlzdCB5b3UgY2FuJ3QgaGVscCBidXQgcm9vdCBmb3IuIEl0J3MgYSByZWFsIHBhZ2UtdHVybmVyLlxuKiAgICoqRm9yIGEgZGVlcCBkaXZlIGludG8gaHVtYW4gaGlzdG9yeSBhbmQgcGhpbG9zb3BoeToqKiAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIFRoaXMgbm9uLWZpY3Rpb24gYm9vayBvZmZlcnMgYSBzd2VlcGluZyBwZXJzcGVjdGl2ZSBvbiBob3cgaHVtYW5pdHkgZ290IHRvIHdoZXJlIGl0IGlzIHRvZGF5LCBjaGFsbGVuZ2luZyBtYW55IGNvbnZlbnRpb25hbCBpZGVhcy5cbiogICAqKkZvciBhIGhlYXJ0d2FybWluZyBhbmQgaW50cm9zcGVjdGl2ZSBqb3VybmV5OioqICpUaGUgTWlkbmlnaHQgTGlicmFyeSogYnkgTWF0dCBIYWlnLiBJdCBleHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2VzLCBhbmQgdGhlIG1lYW5pbmcgb2YgbGlmZSBpbiBhIHZlcnkgYWNjZXNzaWJsZSBhbmQgaG9wZWZ1bCB3YXkuXG4qICAgKipGb3IgYSBjbGFzc2ljIHRoYXQgc3RpbGwgcmVzb25hdGVzOioqICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEEgdGltZWxlc3Mgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGgsIHdpdGggdW5mb3JnZXR0YWJsZSBjaGFyYWN0ZXJzLlxuKiAgICoqRm9yIGEgZ3JpcHBpbmcgZmFudGFzeSBlcGljOioqICpNaXN0Ym9ybjogVGhlIEZpbmFsIEVtcGlyZSogYnkgQnJhbmRvbiBTYW5kZXJzb24uIElmIHlvdSdyZSBsb29raW5nIHRvIGdldCBpbnRvIG1vZGVybiBmYW50YXN5LCBTYW5kZXJzb24ncyBpbnRyaWNhdGUgbWFnaWMgc3lzdGVtcyBhbmQgY29tcGVsbGluZyBjaGFyYWN0ZXJzIG1ha2UgdGhpcyBhIGZhbnRhc3RpYyBzdGFydGluZyBwb2ludC5cblxuQW5kIGZvciB0aG9zZSBsb29raW5nIGZvciBzb21ldGhpbmcgdHJ1bHkgdW5pcXVlLCBwZXJoYXBzIGEgYm9vayB0aGF0IGRlZmllcyBlYXN5IGNhdGVnb3JpemF0aW9uIGFuZCBsZWF2ZXMgYSBsYXN0aW5nLCB2aXZpZCBpbXByZXNzaW9uLCB5b3UgbWlnaHQgc2VlayBvdXQgdGl0bGVzIHRoYXQgZXZva2UgdGhlIHNwaXJpdCBvZiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIOKAkyBzb21ldGhpbmcgbWVtb3JhYmxlLCBwZXJoYXBzIGEgYml0IHF1aXJreSwgYW5kIGRlZmluaXRlbHkgaW1wYWN0ZnVsLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjQ5MzU2MjAzMDUyNTEwMDY3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDI5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzU3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE2ODksCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNTcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA5MDMKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNS0wOC0yN1QxNDozODoxMC4zMzcyMjBaIiwKICAicmVzcG9uc2VJZCI6ICJVaGl2YU1US0ZKWFd0X2dQLW91aG9BMCIKfQo=
+  recorded_at: Wed, 27 Aug 2025 14:38:15 GMT
+recorded_with: VCR 6.3.1

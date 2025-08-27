@@ -18,8 +18,12 @@ module RubyLLM
                                       desc: 'Name of the Message model class'
     class_option :tool_call_model_name, type: :string, default: 'ToolCall',
                                         desc: 'Name of the ToolCall model class'
+    class_option :model_model_name, type: :string, default: 'Model',
+                                    desc: 'Name of the Model model class (for model registry)'
+    class_option :skip_model, type: :boolean, default: false,
+                              desc: 'Skip creating Model model for model registry persistence'
 
-    desc 'Creates model files for Chat, Message, and ToolCall, and creates migrations for RubyLLM Rails integration'
+    desc 'Creates models and migrations for RubyLLM Rails integration'
 
     def self.next_migration_number(dirname)
       ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -75,6 +79,10 @@ module RubyLLM
       end
     end
 
+    def acts_as_model_declaration
+      'acts_as_model'
+    end
+
     def create_migration_files
       # Create migrations with timestamps to ensure proper order
       # First create chats table
@@ -86,16 +94,27 @@ module RubyLLM
       migration_template 'create_messages_migration.rb.tt',
                          "db/migrate/create_#{options[:message_model_name].tableize}.rb"
 
-      # Finally create tool_calls table (references messages)
+      # Then create tool_calls table (references messages)
       sleep 1 # Ensure different timestamp
       migration_template 'create_tool_calls_migration.rb.tt',
                          "db/migrate/create_#{options[:tool_call_model_name].tableize}.rb"
+
+      # Finally create models table (for model registry)
+      return if options[:skip_model]
+
+      sleep 1 # Ensure different timestamp
+      migration_template 'create_models_migration.rb.tt',
+                         "db/migrate/create_#{options[:model_model_name].tableize}.rb"
     end
 
     def create_model_files
       template 'chat_model.rb.tt', "app/models/#{options[:chat_model_name].underscore}.rb"
       template 'message_model.rb.tt', "app/models/#{options[:message_model_name].underscore}.rb"
       template 'tool_call_model.rb.tt', "app/models/#{options[:tool_call_model_name].underscore}.rb"
+
+      return if options[:skip_model]
+
+      template 'model_model.rb.tt', "app/models/#{options[:model_model_name].underscore}.rb"
     end
 
     def create_initializer
@@ -109,6 +128,12 @@ module RubyLLM
       say '     1. Run: rails db:migrate'
       say '     2. Set your API keys in config/initializers/ruby_llm.rb'
       say "     3. Start chatting: #{options[:chat_model_name]}.create!(model_id: 'gpt-4.1-nano').ask('Hello!')"
+
+      unless options[:skip_model]
+        say "     4. Sync models: #{options[:model_model_name]}.sync!"
+        say "\n  🚀 Model registry is database-backed!", :cyan
+        say '     Models will automatically load from the database'
+      end
 
       say "\n  📚 Full docs: https://rubyllm.com", :cyan
 

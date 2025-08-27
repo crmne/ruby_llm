@@ -26,6 +26,7 @@ After reading this guide, you will know:
 *   How to set up ActiveRecord models for persisting chats and messages.
 *   How the RubyLLM persistence flow works with Rails applications.
 *   How to use `acts_as_chat` and `acts_as_message` with your models.
+*   How to persist AI model metadata in your database with `acts_as_model`.
 *   How to integrate streaming responses with Hotwire/Turbo Streams.
 *   How to customize the persistence behavior for validation-focused scenarios.
 
@@ -60,8 +61,6 @@ This approach has one important consequence: **you cannot use `validates :conten
 ## Setting Up Your Rails Application
 
 ### Quick Setup with Generator
-{: .d-inline-block }
-
 
 The easiest way to get started is using the provided Rails generator:
 
@@ -70,9 +69,9 @@ rails generate ruby_llm:install
 ```
 
 This generator automatically creates:
-- All required migrations (Chat, Message, ToolCall tables)
-- Model files with `acts_as_chat`, `acts_as_message`, and `acts_as_tool_call` configured
-- A RubyLLM initializer in `config/initializers/ruby_llm.rb`
+- All required migrations (Chat, Message, ToolCall, Model tables)
+- Model files with `acts_as_chat`, `acts_as_message`, `acts_as_tool_call`, and `acts_as_model` configured
+- A RubyLLM initializer in `config/initializers/ruby_llm.rb` with database model registry enabled
 
 After running the generator:
 
@@ -89,6 +88,9 @@ The generator supports custom model names if needed:
 ```bash
 # Use custom model names
 rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+
+# Skip the Model registry (opt-out)
+rails generate ruby_llm:install --skip-model
 ```
 
 This is useful if you already have models with these names or prefer different naming conventions.
@@ -99,12 +101,13 @@ If you prefer to set up manually or need custom table/model names, you can creat
 
 ```bash
 # Generate basic models and migrations
-rails g model Chat model_id:string user:references # Example user association
+rails g model Chat model_id:string
 rails g model Message chat:references role:string content:text model_id:string input_tokens:integer output_tokens:integer tool_call:references
 rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
+rails g model Model model_id:string name:string provider:string family:string model_created_at:datetime context_window:integer max_output_tokens:integer knowledge_cutoff:date modalities:jsonb capabilities:jsonb pricing:jsonb metadata:jsonb
 ```
 
-Then adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
+Then adjust the migrations to match what the generator creates:
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
@@ -112,7 +115,6 @@ class CreateChats < ActiveRecord::Migration[7.1]
   def change
     create_table :chats do |t|
       t.string :model_id
-      t.references :user # Optional: Example association
       t.timestamps
     end
   end
@@ -128,7 +130,7 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.string :model_id
       t.integer :input_tokens
       t.integer :output_tokens
-      t.references :tool_call # Links tool result message to the initiating call
+      t.references :tool_call
       t.timestamps
     end
   end
@@ -138,15 +140,41 @@ end
 class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
-      t.references :message, null: false, foreign_key: true # Assistant message making the call
-      t.string :tool_call_id, null: false # Provider's ID for the call
+      t.references :message, null: false, foreign_key: true
+      t.string :tool_call_id, null: false
       t.string :name, null: false
       # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :arguments, default: {} # Change to t.json for non-PostgreSQL databases
+      t.jsonb :arguments, default: {}
       t.timestamps
     end
 
-    add_index :tool_calls, :tool_call_id, unique: true
+    add_index :tool_calls, :tool_call_id
+  end
+end
+
+# db/migrate/YYYYMMDDHHMMSS_create_models.rb
+class CreateModels < ActiveRecord::Migration[7.1]
+  def change
+    create_table :models do |t|
+      t.string :model_id, null: false
+      t.string :name, null: false
+      t.string :provider, null: false
+      t.string :family
+      t.datetime :model_created_at
+      t.integer :context_window
+      t.integer :max_output_tokens
+      t.date :knowledge_cutoff
+      # Use jsonb for PostgreSQL, json for MySQL/SQLite
+      t.jsonb :modalities, default: {}
+      t.jsonb :capabilities, default: []
+      t.jsonb :pricing, default: {}
+      t.jsonb :metadata, default: {}
+      t.timestamps
+
+      t.index [:provider, :model_id], unique: true
+      t.index :provider
+      t.index :family
+    end
   end
 end
 ```
@@ -225,10 +253,18 @@ class Message < ApplicationRecord
   validates :chat, presence: true
 end
 
-# app/models/tool_call.rb (Only if using tools)
+# app/models/tool_call.rb
 class ToolCall < ApplicationRecord
   # Sets up associations to the calling message and the result message.
   acts_as_tool_call # Defaults to Message model name
+
+  # --- Add your standard Rails model logic below ---
+end
+
+# app/models/model.rb (Stores AI model metadata) - v1.7.0+
+class Model < ApplicationRecord
+  # Provides model registry functionality and metadata access
+  acts_as_model # Defaults to Chat association
 
   # --- Add your standard Rails model logic below ---
 end
@@ -287,6 +323,33 @@ chat_record.ask "Tell me more about that city"
 # Verify persistence
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
+
+### Database Model Registry
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
+When using the Model registry (created by default by the generator), your chats and messages get associations to model records:
+
+```ruby
+chat = Chat.create! model_id: 'gpt-4.1-nano'
+chat.model # => #<Model model_id: "gpt-4.1-nano", provider: "openai">
+chat.model.context_window # => 1047576
+chat.model.supports? 'structured_output' # => true
+
+# Populate your database with all available models
+Model.refresh!
+
+# Query based on model attributes
+Chat.joins(:model).where(models: { provider: 'anthropic' })
+Model.left_joins(:chats).group(:id).order('COUNT(chats.id) DESC')
+
+# Extend with custom attributes via migration
+Model.where('monthly_limit > ?', 1000)
+```
+
+The registry automatically falls back to JSON if the database is unavailable, ensuring resilience.
 
 ### System Instructions
 
@@ -693,31 +756,32 @@ If your application uses different model names, you can configure the `acts_as` 
 ```ruby
 # app/models/conversation.rb (instead of Chat)
 class Conversation < ApplicationRecord
-  # Specify custom model names if needed (not required if your models
-  # are called Message and ToolCall)
-  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AIToolCall'
+  acts_as_chat message_class: 'ChatMessage',
+               tool_call_class: 'AIToolCall',
+               model_class: 'AiModel',
+               model_foreign_key: 'ai_model_id'
 
   belongs_to :user, optional: true
-  # ... your custom logic
 end
 
 # app/models/chat_message.rb (instead of Message)
 class ChatMessage < ApplicationRecord
-  # Let RubyLLM know to use your Conversation model instead of the default Chat
-  acts_as_message chat_class: 'Conversation', tool_call_class: 'AIToolCall'
-  # You can also customize foreign keys if needed:
-  # chat_foreign_key: 'conversation_id'
-
-  # ... your custom logic
+  acts_as_message chat_class: 'Conversation',
+                  chat_foreign_key: 'conversation_id',
+                  tool_call_class: 'AIToolCall',
+                  model_class: 'AiModel',
+                  model_foreign_key: 'ai_model_id'
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
 class AIToolCall < ApplicationRecord
-  acts_as_tool_call message_class: 'ChatMessage'
-  # Optionally customize foreign keys:
-  # message_foreign_key: 'chat_message_id'
+  acts_as_tool_call message_class: 'ChatMessage',
+                    message_foreign_key: 'chat_message_id'
+end
 
-  # ... your custom logic
+# app/models/ai_model.rb (instead of Model)
+class AiModel < ApplicationRecord
+  acts_as_model chat_class: 'Conversation'
 end
 ```
 

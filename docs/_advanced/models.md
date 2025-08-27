@@ -66,6 +66,17 @@ puts "Refreshed in-memory model list."
 
 This refreshes the in-memory model registry and is what you want 99% of the time. This method is safe to call from Rails applications, background jobs, or any running Ruby process.
 
+**Local Provider Models:**
+
+By default, `refresh!` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs (available in v1.6.5+):
+
+```ruby
+# Only fetch from remote providers (Anthropic, OpenAI, etc.)
+RubyLLM.models.refresh!(remote_only: true)
+```
+
+This is useful when you want to refresh only cloud-based models without querying local model servers.
+
 **For Gem Development:**
 
 The `rake models:update` task is designed for gem maintainers and updates the `models.json` file shipped with the gem:

@@ -1,0 +1,297 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 27 Aug 2025 14:37:55 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:37:55 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 27 Aug 2025 14:38:00 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The most famous \"Ruby\" with a distinct creator is the **Ruby programming language**. It was created by **Yukihiro \"Matz\" Matsumoto** (often just referred to as \"Matz\"). He began developing Ruby in the mid-1990s in Japan.\n\nHowever, \"Ruby\" is a common name, and there are many fictional characters or other entities named Ruby. If you were thinking of a different \"Ruby,\" please let me know! For example:\n\n*   **Ruby from *RWBY***: Created by Monty Oum (with Rooster Teeth).\n*   **Ruby from *Steven Universe***: Created by Rebecca Sugar.\n*   **Ruby from *Max & Ruby***: Created by Rosemary Wells (children's book series).\n*   **Ruby Gloom**: Originated from Mighty Fine, Inc., adapted into an animated series by Nelvana.\n\nPlease specify which Ruby you're interested in if it's not the programming language!"
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -1.1487749393899642
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 7,
+            "candidatesTokenCount": 201,
+            "totalTokenCount": 1062,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 201
+              }
+            ],
+            "thoughtsTokenCount": 854
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-08-27T14:37:55.443831Z",
+          "responseId": "QxivaLeLG-jEmLAPgfzegQU"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:00 GMT
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 27 Aug 2025 14:38:00 GMT
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:00 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"The
+        most famous \"Ruby\" with a distinct creator is the **Ruby programming language**.
+        It was created by **Yukihiro \"Matz\" Matsumoto** (often just referred to
+        as \"Matz\"). He began developing Ruby in the mid-1990s in Japan.\n\nHowever,
+        \"Ruby\" is a common name, and there are many fictional characters or other
+        entities named Ruby. If you were thinking of a different \"Ruby,\" please
+        let me know! For example:\n\n*   **Ruby from *RWBY***: Created by Monty Oum
+        (with Rooster Teeth).\n*   **Ruby from *Steven Universe***: Created by Rebecca
+        Sugar.\n*   **Ruby from *Max & Ruby***: Created by Rosemary Wells (children''s
+        book series).\n*   **Ruby Gloom**: Originated from Mighty Fine, Inc., adapted
+        into an animated series by Nelvana.\n\nPlease specify which Ruby you''re interested
+        in if it''s not the programming language!"}]},{"role":"user","parts":[{"text":"What
+        year did he create Ruby?"}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 27 Aug 2025 14:38:01 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "Yukihiro \"Matz\" Matsumoto began creating the Ruby programming language in **1993**.\n\nThe first public release of Ruby was in **1995**."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -1.0189987182617188
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 215,
+            "candidatesTokenCount": 35,
+            "totalTokenCount": 424,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 215
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 35
+              }
+            ],
+            "thoughtsTokenCount": 174
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-08-27T14:38:00.608979Z",
+          "responseId": "SBivaNOVJf_ohcIP5ezWgQ8"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:01 GMT
+recorded_with: VCR 6.3.1

@@ -42,7 +42,7 @@ module RubyLLM
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false,
                            schema: nil)
-          @model_id = model
+          @model_id = model.id
 
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
           system_content = Anthropic::Chat.build_system_content(system_messages)
@@ -58,7 +58,7 @@ module RubyLLM
           {
             anthropic_version: 'bedrock-2023-05-31',
             messages: chat_messages.map { |msg| format_message(msg) },
-            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
+            max_tokens: model.max_tokens || 4096
           }
         end
       end

@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 27 Aug 2025 14:38:02 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:02 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 27 Aug 2025 14:38:06 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by complex interactions within Earth's atmosphere. When we talk about \"the weather,\" we're generally referring to the state of the atmosphere at a particular place and time, encompassing several key elements:\n\n*   **Temperature:** How hot or cold it is, usually measured in Celsius or Fahrenheit. This is influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail. This depends on moisture in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water vapor in the air. High humidity can make it feel muggier, while low humidity can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky is covered by clouds. Clouds play a crucial role in regulating temperature and producing precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with stormy conditions.\n\nWeather is constantly evolving due to the movement of air masses, fronts (boundaries between different air masses), and large-scale atmospheric patterns. Meteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors (like the hypothetical **XKCD7392** weather station, which might be collecting data on temperature and wind speed), to gather data. This data is then fed into sophisticated computer models to predict future weather conditions.\n\nTo get the most accurate and up-to-date weather information for your specific location, you'd typically check a local weather forecast from a reliable source like a national meteorological service, a weather app, or a local news outlet."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.24875946044921876
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 395,
+            "totalTokenCount": 615,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 395
+              }
+            ],
+            "thoughtsTokenCount": 195
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-08-27T14:38:02.728145Z",
+          "responseId": "ShivaNG4LNbihcIP6bO0mQ0"
+        }
+  recorded_at: Wed, 27 Aug 2025 14:38:06 GMT
+recorded_with: VCR 6.3.1

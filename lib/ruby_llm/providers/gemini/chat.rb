@@ -13,7 +13,7 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil)
-          @model = model
+          @model = model.id
           payload = {
             contents: format_messages(messages),
             generationConfig: {}

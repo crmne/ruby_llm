@@ -131,7 +131,7 @@ module RubyLLM
         messages,
         tools: @tools,
         temperature: @temperature,
-        model: @model.id,
+        model: @model,
         params: @params,
         headers: @headers,
         schema: @schema,

@@ -39,12 +39,16 @@ RSpec.describe RubyLLM::Chat do
         before do
           # Sabotage the API key after initialization
           RubyLLM::Provider.remote_providers.each_key do |slug|
+            # Skip vertexai as it uses OAuth, not API keys
+            next if slug == :vertexai
+
             RubyLLM.config.public_send("#{slug}_api_key=", 'invalid-key')
           end
         end
 
         it 'raises appropriate auth error' do
           skip('Only valid for remote providers') if RubyLLM::Provider.providers[provider].local?
+          skip('Vertex AI uses OAuth, not API keys') if provider == :vertexai
           expect { chat.ask('Hello') }.to raise_error do |error|
             expect(error).to be_a(RubyLLM::Error)
             expect(error.class.ancestors).to include(RubyLLM::Error)

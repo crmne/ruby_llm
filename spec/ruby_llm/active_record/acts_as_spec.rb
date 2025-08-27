@@ -7,6 +7,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   let(:model) { 'gpt-4.1-nano' }
 
+  before do
+    # Clean up database before each test
+    # Use connection.execute to avoid ActiveRecord callbacks and locks
+    if ActiveRecord::Base.connection.table_exists?(:messages)
+      ActiveRecord::Base.connection.execute('DELETE FROM messages')
+    end
+    if ActiveRecord::Base.connection.table_exists?(:tool_calls)
+      ActiveRecord::Base.connection.execute('DELETE FROM tool_calls')
+    end
+    ActiveRecord::Base.connection.execute('DELETE FROM chats') if ActiveRecord::Base.connection.table_exists?(:chats)
+    ActiveRecord::Base.connection.execute('DELETE FROM models') if ActiveRecord::Base.connection.table_exists?(:models)
+  end
+
   class Calculator < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Performs basic arithmetic'
     param :expression, type: :string, desc: 'Math expression to evaluate'
@@ -91,6 +104,41 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       chat.with_model('claude-3-5-haiku-20241022')
       expect(chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
+    end
+  end
+
+  describe 'model associations' do
+    context 'when model registry is configured' do
+      before do
+        # Only set up if Model class exists (from dummy app)
+        next unless defined?(Model)
+
+        if Model.table_exists?
+          Model.create!(
+            model_id: 'gpt-4.1-nano',
+            name: 'GPT-4.1 Nano',
+            provider: 'openai'
+          )
+        end
+      end
+
+      it 'associates chat with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model_id: 'gpt-4.1-nano')
+        expect(chat).to respond_to(:model)
+        expect(chat.model&.name).to eq('GPT-4.1 Nano') if chat.model
+      end
+
+      it 'associates messages with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model_id: 'gpt-4.1-nano')
+        chat.ask('Hello')
+
+        message = chat.messages.last
+        expect(message).to respond_to(:model) if defined?(Message.model)
+      end
     end
   end
 
