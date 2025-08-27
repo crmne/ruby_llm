@@ -5,7 +5,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :tool_choice, :parallel_tool_calls, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -17,8 +17,7 @@ module RubyLLM
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
       @temperature = nil
-      @tool_choice = nil
-      @parallel_tool_calls = nil
+      @tool_prefs = { choice: nil, parallel: nil }
       @messages = []
       @tools = {}
       @params = {}
@@ -145,8 +144,7 @@ module RubyLLM
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
-        tool_choice: @tool_choice,
-        parallel_tool_calls: @parallel_tool_calls,
+        tool_prefs: @tool_prefs,
         &wrap_streaming_block(&)
       )
 
@@ -230,18 +228,18 @@ module RubyLLM
                 "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
         end
 
-        @tool_choice = choice.to_sym
+        @tool_prefs[:choice] = choice.to_sym
       end
 
-      @parallel_tool_calls = !!parallel unless parallel.nil?
+      @tool_prefs[:parallel] = !!parallel unless parallel.nil?
     end
 
     def forced_tool_choice?
-      @tool_choice && !%i[auto none].include?(@tool_choice)
+      @tool_prefs[:choice] && !%i[auto none].include?(@tool_prefs[:choice])
     end
 
     def reset_tool_choice
-      @tool_choice = nil
+      @tool_prefs[:choice] = nil
     end
 
     def build_content(message, attachments)

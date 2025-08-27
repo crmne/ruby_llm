@@ -23,7 +23,7 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, tool_choice:, parallel_tool_calls:, temperature:, model:, stream: false,
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false,
                            schema: nil, thinking: nil)
           payload = super
           payload.delete(:stream_options)

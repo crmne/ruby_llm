@@ -104,7 +104,10 @@ module RubyLLM
           }
         end
 
-        def build_tool_choice(tool_choice, parallel_tool_calls)
+        def build_tool_choice(tool_prefs)
+          tool_choice = tool_prefs[:choice]
+          parallel_tool_calls = tool_prefs[:parallel]
+
           {
             type: case tool_choice
                   when :auto, :none

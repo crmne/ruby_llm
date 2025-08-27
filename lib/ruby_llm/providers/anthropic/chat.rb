@@ -12,13 +12,13 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
-        def render_payload(messages, tools:, tool_choice:, parallel_tool_calls:,
+        def render_payload(messages, tools:, tool_prefs:,
                            temperature:, model:, stream: false, schema: nil, thinking: nil)
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, model, stream, thinking).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, tool_choice:, parallel_tool_calls:, temperature:)
+            add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:)
           end
         end
         # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
@@ -62,10 +62,10 @@ module RubyLLM
           payload
         end
 
-        def add_optional_fields(payload, system_content:, tools:, tool_choice:, parallel_tool_calls:, temperature:) # rubocop:disable Metrics/ParameterLists
+        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:)
           if tools.any?
             payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
-            payload[:tool_choice] = build_tool_choice(tool_choice, parallel_tool_calls) unless tool_choice.nil?
+            payload[:tool_choice] = build_tool_choice(tool_prefs) unless tool_prefs[:choice].nil?
           end
 
           payload[:system] = system_content unless system_content.empty?
