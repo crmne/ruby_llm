@@ -106,7 +106,14 @@ module RubyLLM
 
         def build_tool_choice(tool_choice, parallel_tool_calls)
           {
-            type: %i[auto any none].include?(tool_choice) ? tool_choice : :tool
+            type: case tool_choice
+                  when :auto, :none
+                    tool_choice
+                  when :required
+                    :any
+                  else
+                    :tool
+                  end
           }.tap do |tc|
             tc[:name] = tool_choice if tc[:type] == :tool
             tc[:disable_parallel_tool_use] = !parallel_tool_calls unless tc[:type] == :none || parallel_tool_calls.nil?

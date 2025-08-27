@@ -95,10 +95,8 @@ module RubyLLM
 
         def build_tool_choice(tool_choice)
           case tool_choice
-          when :auto, :none
+          when :auto, :none, :required
             tool_choice
-          when :any
-            :required
           else
             {
               type: 'function',

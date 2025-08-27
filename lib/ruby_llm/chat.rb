@@ -224,7 +224,7 @@ module RubyLLM
 
     def update_tool_options(choice:, parallel:)
       unless choice.nil?
-        valid_tool_choices = %i[auto none any] + tools.keys
+        valid_tool_choices = %i[auto none required] + tools.keys
         unless valid_tool_choices.include?(choice.to_sym)
           raise InvalidToolChoiceError,
                 "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
