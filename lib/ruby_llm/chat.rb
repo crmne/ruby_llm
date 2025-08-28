@@ -137,9 +137,22 @@ module RubyLLM
       messages.each(&)
     end
 
+    def save_original_context
+      @original_provider = @provider
+      @original_model = @model
+      @original_context = @context
+      @original_config = @config
+    end
+
+    def restore_original_context
+      @provider = @original_provider
+      @model = @original_model
+      @context = @original_context
+      @config = @original_config
+    end
+
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      original_provider = @provider
-      original_model = @model
+      save_original_context
 
       begin
         response = @provider.complete(
@@ -154,7 +167,7 @@ module RubyLLM
         )
       rescue RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError,
              RubyLLM::OverloadedError, RubyLLM::ServerError => e
-        response = attempt_failover(original_provider, original_model, e, &)
+        response = attempt_failover(e, &)
       end
 
       @on[:new_message]&.call unless block_given?
@@ -229,7 +242,7 @@ module RubyLLM
       tool.call(args)
     end
 
-    def attempt_failover(original_provider, original_model, original_error, &)
+    def attempt_failover(original_error, &)
       raise original_error unless @failover_configurations.any?
 
       failover_index = 0
@@ -250,15 +263,17 @@ module RubyLLM
         )
         break
       rescue RateLimitError, ServiceUnavailableError, OverloadedError, ServerError => e
-        raise e if failover_index == @failover_configurations.size - 1
+        if failover_index == @failover_configurations.size - 1
+          restore_original_context
+          raise e
+        end
 
         failover_index += 1
         next
       end
 
       unless response
-        @provider = original_provider
-        @model = original_model
+        restore_original_context
         raise original_error
       end
 
