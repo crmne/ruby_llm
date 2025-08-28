@@ -203,7 +203,7 @@ module RubyLLM
       raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
     end
 
-    def maybe_normalize_temperature(temperature, _model_id)
+    def maybe_normalize_temperature(temperature, _model)
       temperature
     end
 

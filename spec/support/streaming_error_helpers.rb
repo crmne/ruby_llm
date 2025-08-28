@@ -28,7 +28,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     gemini: {
-      url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse',
+      url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse',
       error_response: {
         error: {
           code: 529,
@@ -127,6 +127,22 @@ module StreamingErrorHelpers
       },
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
+    },
+    vertexai: {
+      url: lambda {
+        project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
+        location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
+        "https://#{location}-aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/#{location}/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
+      }.call,
+      error_response: {
+        error: {
+          code: 529,
+          message: 'Service overloaded - please try again later',
+          status: 'RESOURCE_EXHAUSTED'
+        }
+      },
+      chunk_status: 529,
+      expected_error: RubyLLM::OverloadedError
     }
   }.freeze
 

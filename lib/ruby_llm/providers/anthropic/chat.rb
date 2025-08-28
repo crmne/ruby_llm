@@ -40,10 +40,10 @@ module RubyLLM
           end
 
           {
-            model: model,
+            model: model.id,
             messages:,
             stream: stream,
-            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
+            max_tokens: model.max_tokens || 4096
           }
         end
 

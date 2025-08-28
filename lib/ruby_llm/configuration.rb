@@ -10,6 +10,8 @@ module RubyLLM
                   :openai_use_system_role,
                   :anthropic_api_key,
                   :gemini_api_key,
+                  :vertexai_project_id,
+                  :vertexai_location,
                   :deepseek_api_key,
                   :perplexity_api_key,
                   :bedrock_api_key,
@@ -25,6 +27,8 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
+                  # Model registry
+                  :model_registry_class,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,

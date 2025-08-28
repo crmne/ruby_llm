@@ -532,9 +532,9 @@ RubyLLM provides four event handlers that cover the complete chat lifecycle:
 ```ruby
 chat = RubyLLM.chat
 
-# Called just before the API request for an assistant message starts
+# Called at first chunk received from the assistant
 chat.on_new_message do
-  puts "Assistant is typing..."
+  print "Assistant > "
 end
 
 # Called after the complete assistant message (including tool calls/results) is received

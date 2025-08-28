@@ -3,4 +3,9 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV["ANTHROPIC_API_KEY"]
 
   # config.default_model = "gpt-4.1-nano"
+<% unless options[:skip_model] %>
+
+  # Model registry persistence
+  config.model_registry_class = "<%= options[:model_model_name] %>"
+<% end %>
 end

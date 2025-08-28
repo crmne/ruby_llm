@@ -132,7 +132,7 @@ module RubyLLM
         messages,
         tools: @tools,
         temperature: @temperature,
-        model: @model.id,
+        model: @model,
         cache_prompts: @cache_prompts.dup,
         params: @params,
         headers: @headers,
