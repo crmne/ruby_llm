@@ -48,6 +48,10 @@ module RubyLLM
       end
     end
 
+    def instance_variables
+      super - %i[@config @connection]
+    end
+
     private
 
     def setup_timeout(faraday)
@@ -117,10 +121,6 @@ module RubyLLM
 
       raise ConfigurationError,
             "#{@provider.name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
-    end
-
-    def instance_variables
-      super - %i[@config @connection]
     end
   end
 end
