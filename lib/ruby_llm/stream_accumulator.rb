@@ -6,12 +6,10 @@ module RubyLLM
     attr_reader :content, :model_id, :tool_calls
 
     def initialize
-      @content = +''
+      @content = nil
       @tool_calls = {}
       @input_tokens = 0
       @output_tokens = 0
-      @cached_tokens = 0
-      @cache_creation_tokens = 0
       @latest_tool_call_id = nil
     end
 
@@ -22,7 +20,7 @@ module RubyLLM
       if chunk.tool_call?
         accumulate_tool_calls chunk.tool_calls
       else
-        @content << (chunk.content || '')
+        accumulate_content(chunk.content)
       end
 
       count_tokens chunk
@@ -32,18 +30,63 @@ module RubyLLM
     def to_message(response)
       Message.new(
         role: :assistant,
-        content: content.empty? ? nil : content,
+        content: final_content,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
         output_tokens: @output_tokens.positive? ? @output_tokens : nil,
-        cached_tokens: @cached_tokens.positive? ? @cached_tokens : nil,
-        cache_creation_tokens: @cache_creation_tokens.positive? ? @cache_creation_tokens : nil,
         raw: response
       )
     end
 
     private
+
+    def accumulate_content(new_content)
+      return unless new_content
+
+      if @content.nil?
+        @content = new_content.is_a?(String) ? +new_content : new_content
+      else
+        case [@content.class, new_content.class]
+        when [String, String]
+          @content << new_content
+        when [String, Content]
+          # Convert accumulated string to Content and merge
+          @content = Content.new(@content)
+          merge_content(new_content)
+        when [Content, String]
+          # Append string to existing Content's text
+          @content.instance_variable_set(:@text, (@content.text || '') + new_content)
+        when [Content, Content]
+          merge_content(new_content)
+        end
+      end
+    end
+
+    def merge_content(new_content)
+      # Merge text
+      current_text = @content.text || ''
+      new_text = new_content.text || ''
+      @content.instance_variable_set(:@text, current_text + new_text)
+
+      # Merge attachments
+      new_content.attachments.each do |attachment|
+        @content.attach(attachment)
+      end
+    end
+
+    def final_content
+      case @content
+      when nil
+        nil
+      when String
+        @content.empty? ? nil : @content
+      when Content
+        @content.text.nil? && @content.attachments.empty? ? nil : @content
+      else
+        @content
+      end
+    end
 
     def tool_calls_from_stream
       tool_calls.transform_values do |tc|
@@ -94,8 +137,6 @@ module RubyLLM
     def count_tokens(chunk)
       @input_tokens = chunk.input_tokens if chunk.input_tokens
       @output_tokens = chunk.output_tokens if chunk.output_tokens
-      @cached_tokens = chunk.cached_tokens if chunk.cached_tokens
-      @cache_creation_tokens = chunk.cache_creation_tokens if chunk.cache_creation_tokens
     end
   end
 end
