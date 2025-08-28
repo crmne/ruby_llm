@@ -1,0 +1,186 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 26 Aug 2025 19:10:26 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=4993
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Weather is the state of the atmosphere at a particular place and time, encompassing temperature, humidity, precipitation (rain, snow, etc.), wind speed and direction, atmospheric pressure, and cloud cover. It's a constantly changing phenomenon driven by solar radiation, Earth's rotation, and the complex interactions of air masses and water vapor.\n\nTo give you specific weather details, I would need to know your current location. However, I can tell you generally how weather is observed and predicted:\n\n*   **Observation:** Meteorologists use a vast network of tools including ground-based weather stations, weather balloons, radar (to detect precipitation), and satellites (to track cloud patterns and storms from space).\n*   **Prediction:** Data from these observations is fed into sophisticated computer models that simulate atmospheric conditions. These models help predict future weather patterns, though accuracy tends to decrease the further out the forecast goes.\n\nGlobally, weather conditions are incredibly diverse right now. Some regions are experiencing warm, sunny days, while others might be facing cold temperatures, snow, or even severe weather like thunderstorms or tropical cyclones. The specific conditions depend entirely on your geographical location, altitude, and the current season.\n\nFor the most accurate and up-to-date information for your area, I recommend checking a local weather app, a dedicated weather website, or your local news. These sources often provide detailed forecasts, including hourly breakdowns, wind chill factors, and any relevant weather advisories. For example, a specific data point or model run might be internally tagged with an identifier like **XKCD7392** during analysis by meteorologists."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 327,
+            "totalTokenCount": 824,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 27
+              }
+            ],
+            "thoughtsTokenCount": 470
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "ogauaNCECbLsnsEPip2RmAQ"
+        }
+  recorded_at: Tue, 26 Aug 2025 19:10:26 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"Weather
+        is the state of the atmosphere at a particular place and time, encompassing
+        temperature, humidity, precipitation (rain, snow, etc.), wind speed and direction,
+        atmospheric pressure, and cloud cover. It''s a constantly changing phenomenon
+        driven by solar radiation, Earth''s rotation, and the complex interactions
+        of air masses and water vapor.\n\nTo give you specific weather details, I
+        would need to know your current location. However, I can tell you generally
+        how weather is observed and predicted:\n\n*   **Observation:** Meteorologists
+        use a vast network of tools including ground-based weather stations, weather
+        balloons, radar (to detect precipitation), and satellites (to track cloud
+        patterns and storms from space).\n*   **Prediction:** Data from these observations
+        is fed into sophisticated computer models that simulate atmospheric conditions.
+        These models help predict future weather patterns, though accuracy tends to
+        decrease the further out the forecast goes.\n\nGlobally, weather conditions
+        are incredibly diverse right now. Some regions are experiencing warm, sunny
+        days, while others might be facing cold temperatures, snow, or even severe
+        weather like thunderstorms or tropical cyclones. The specific conditions depend
+        entirely on your geographical location, altitude, and the current season.\n\nFor
+        the most accurate and up-to-date information for your area, I recommend checking
+        a local weather app, a dedicated weather website, or your local news. These
+        sources often provide detailed forecasts, including hourly breakdowns, wind
+        chill factors, and any relevant weather advisories. For example, a specific
+        data point or model run might be internally tagged with an identifier like
+        **XKCD7392** during analysis by meteorologists."}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 26 Aug 2025 19:10:32 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=6702
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Ah, diving into the world of books is one of life's great pleasures! Finding a truly great book can feel like discovering a hidden treasure, a moment as unique and memorable as encountering a PURPLE-ELEPHANT-42. To give you some good recommendations, I'll offer a mix across different genres.\n\nHere are some highly regarded and popular choices:\n\n**For Fiction Lovers:**\n\n1.  **\"Project Hail Mary\" by Andy Weir:** If you enjoy science fiction with humor, clever problem-solving, and a compelling mystery, this is a fantastic read. It's a standalone story about an astronaut who wakes up with amnesia on a mission to save humanity.\n2.  **\"The Midnight Library\" by Matt Haig:** A thought-provoking and emotionally resonant novel about a woman who gets a chance to try out different lives she could have lived. It explores themes of regret, choice, and finding happiness.\n3.  **\"Where the Crawdads Sing\" by Delia Owens:** A beautiful and poignant story that blends a coming-of-age narrative with a murder mystery, set in the marshes of North Carolina. The prose is stunning, and the characters are unforgettable.\n4.  **\"Piranesi\" by Susanna Clarke:** A short, atmospheric, and utterly unique fantasy novel that slowly unravels a mystery about a man living in a vast, labyrinthine house. It's a book that stays with you long after you finish it.\n5.  **\"A Gentleman in Moscow\" by Amor Towles:** A charming and witty historical fiction novel about a Russian count sentenced to house arrest in a luxury hotel. It's a celebration of resilience, human connection, and the richness of life.\n\n**For Non-Fiction Enthusiasts:**\n\n1.  **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and incredibly insightful look at the history of our species, from our origins to our potential future. It's a challenging but rewarding read that will change how you see the world.\n2.  **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman who, despite growing up in a fundamentalist, survivalist family in rural Idaho, pursues an education and transforms her life.\n3.  **\"Atomic Habits\" by James Clear:** If you're looking for practical advice on self-improvement, this book offers a clear, actionable framework for building good habits and breaking bad ones. It's highly effective and easy to understand.\n\n**For Classics (if you're in the mood):**\n\n1.  **\"To Kill a Mockingbird\" by Harper Lee:** A timeless story about racial injustice and childhood innocence in the American South. Its themes remain incredibly relevant.\n2.  **\"1984\" by George Orwell:** A chilling dystopian novel that explores themes of totalitarianism, surveillance, and the manipulation of truth. It's a powerful and enduring work.\n\nTo give you an even better recommendation, tell me:\n*   What genres do you usually enjoy?\n*   Are you looking for something light or more thought-provoking?\n*   Do you prefer fiction or non-fiction?"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 365,
+            "candidatesTokenCount": 674,
+            "totalTokenCount": 1557,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 365
+              }
+            ],
+            "thoughtsTokenCount": 518
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "qAauaLe-NvGwxN8P0qmtiA4"
+        }
+  recorded_at: Tue, 26 Aug 2025 19:10:32 GMT
+recorded_with: VCR 6.3.1
