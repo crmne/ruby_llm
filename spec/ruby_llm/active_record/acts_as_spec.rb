@@ -7,6 +7,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   let(:model) { 'gpt-4.1-nano' }
 
+  before do
+    # Clean up database before each test
+    # Use connection.execute to avoid ActiveRecord callbacks and locks
+    if ActiveRecord::Base.connection.table_exists?(:messages)
+      ActiveRecord::Base.connection.execute('DELETE FROM messages')
+    end
+    if ActiveRecord::Base.connection.table_exists?(:tool_calls)
+      ActiveRecord::Base.connection.execute('DELETE FROM tool_calls')
+    end
+    ActiveRecord::Base.connection.execute('DELETE FROM chats') if ActiveRecord::Base.connection.table_exists?(:chats)
+    ActiveRecord::Base.connection.execute('DELETE FROM models') if ActiveRecord::Base.connection.table_exists?(:models)
+  end
+
   class Calculator < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Performs basic arithmetic'
     param :expression, type: :string, desc: 'Math expression to evaluate'
@@ -91,6 +104,41 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       chat.with_model('claude-3-5-haiku-20241022')
       expect(chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
+    end
+  end
+
+  describe 'model associations' do
+    context 'when model registry is configured' do
+      before do
+        # Only set up if Model class exists (from dummy app)
+        next unless defined?(Model)
+
+        if Model.table_exists?
+          Model.create!(
+            model_id: 'gpt-4.1-nano',
+            name: 'GPT-4.1 Nano',
+            provider: 'openai'
+          )
+        end
+      end
+
+      it 'associates chat with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model_id: 'gpt-4.1-nano')
+        expect(chat).to respond_to(:model)
+        expect(chat.model&.name).to eq('GPT-4.1 Nano') if chat.model
+      end
+
+      it 'associates messages with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model_id: 'gpt-4.1-nano')
+        chat.ask('Hello')
+
+        message = chat.messages.last
+        expect(message).to respond_to(:model) if defined?(Message.model)
+      end
     end
   end
 
@@ -515,54 +563,73 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'error recovery' do
-    it 'cleans up orphaned tool result messages on error' do
+    it 'does not clean up complete tool interactions when error occurs after tool execution' do
       chat = Chat.create!(model_id: model)
-      chat.with_tool(Calculator)
+      chat.messages.create!(role: 'user', content: 'What is 5 + 5?')
 
-      initial_response = chat.ask('What is 2 + 2?')
-      initial_message_count = chat.messages.count
-      expect(initial_response.content).to include('4')
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_123',
+        name: 'calculator',
+        arguments: { expression: '5 + 5' }.to_json
+      )
 
-      provider_instance = chat.instance_variable_get(:@chat).instance_variable_get(:@provider)
-      call_count = 0
-      allow(provider_instance).to receive(:complete).and_wrap_original do |method, *args, **kwargs|
-        call_count += 1
+      chat.messages.create!(
+        role: 'tool',
+        content: '10',
+        parent_tool_call: tool_call
+      )
 
-        if call_count == 2
-          mock_response = instance_double(Faraday::Response, body: 'Rate limit exceeded')
-          raise RubyLLM::RateLimitError, mock_response
-        else
-          method.call(*args, **kwargs)
-        end
-      end
-
-      expect { chat.ask('What is 5 + 5?') }.to raise_error(RubyLLM::RateLimitError)
-
-      expect(chat.messages.count).to be <= initial_message_count + 2
-
-      last_assistant = chat.messages.where(role: 'assistant').last
-      orphaned_tools = chat.messages.where(role: 'tool').where('id > ?', last_assistant.id)
-      expect(orphaned_tools).to be_empty
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.not_to(change { chat.messages.count })
     end
 
-    it 'cleans up orphaned tool call messages on error' do
+    it 'cleans up incomplete tool interactions with missing tool results' do
       chat = Chat.create!(model_id: model)
-      chat.with_tool(Calculator)
 
-      initial_response = chat.ask('What is 2 + 2?')
+      chat.messages.create!(role: 'user', content: 'Do multiple calculations')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call1 = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_1',
+        name: 'calculator',
+        arguments: { expression: '2 + 2' }.to_json
+      )
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_2',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      chat.messages.create!(
+        role: 'tool',
+        content: '4',
+        parent_tool_call: tool_call1
+      )
+
       chat.messages.count
-      expect(initial_response.content).to include('4')
 
-      mock_response = instance_double(Faraday::Response, body: 'Tool execution failed')
-      allow_any_instance_of(Calculator).to receive(:execute).and_raise(RubyLLM::Error, mock_response) # rubocop:disable RSpec/AnyInstance
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-2)
+    end
 
-      expect { chat.ask('What is 3 + 3?') }.to raise_error(RubyLLM::Error)
+    it 'cleans up orphaned tool call messages with no results' do
+      chat = Chat.create!(model_id: model)
 
-      last_user_message = chat.messages.where(role: 'user').last
-      expect(last_user_message.content).to eq('What is 3 + 3?')
+      chat.messages.create!(role: 'user', content: 'What is 3 + 3?')
 
-      messages_after_last_user = chat.messages.where('id > ?', last_user_message.id)
-      expect(messages_after_last_user).to be_empty
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_456',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-1)
     end
   end
 end

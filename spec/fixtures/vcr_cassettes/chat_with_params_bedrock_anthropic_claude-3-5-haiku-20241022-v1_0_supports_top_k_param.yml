@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"top_k":5,"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"max_tokens":4096,"temperature":0.7}'
+        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T133119Z
+      - 20250820T170819Z
       X-Amz-Content-Sha256:
-      - 7e999f2733ca4de066ad5a5819c191575fb7eab22936974db6ad8a6afdc3f9d6
+      - 6b81e86a9839d77ce4bb4d939bc56d3595579196f5589b65b5ac7338cfd91b6a
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a7a577b6a5b2d2ded5b6cf4c1f73539551e0db8e8ceeaf3ed51f108b884f3399
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d397b5bb363a8d00f0abab3348ad37d381e59c9b1c4704b761cbd3cc8b7cf787
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:31:20 GMT
+      - Wed, 20 Aug 2025 17:08:21 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,16 +39,16 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d6a3ff26-af2b-4b59-ac94-75420e78649e
+      - 00d95f8e-e3e2-499d-a6b3-ab1817d92a7f
       X-Amzn-Bedrock-Invocation-Latency:
-      - '507'
+      - '1027'
       X-Amzn-Bedrock-Output-Token-Count:
       - '12'
       X-Amzn-Bedrock-Input-Token-Count:
       - '28'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01PU1b5Q3pZ9BByPv9nXJbMZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"\n    \"result\":
+      string: '{"id":"msg_bdrk_01RTU4gnHNFteMNCdyLHrdo2","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"\n    \"result\":
         8\n}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":12}}'
-  recorded_at: Sun, 10 Aug 2025 13:31:20 GMT
+  recorded_at: Wed, 20 Aug 2025 17:08:21 GMT
 recorded_with: VCR 6.3.1

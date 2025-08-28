@@ -1,16 +1,8 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Global configuration for RubyLLM. Manages API keys, default models,
-  # and provider-specific settings.
-  #
-  # Configure via:
-  #   RubyLLM.configure do |config|
-  #     config.openai_api_key = ENV['OPENAI_API_KEY']
-  #     config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  #   end
+  # Global configuration for RubyLLM
   class Configuration
-    # Provider-specific configuration
     attr_accessor :openai_api_key,
                   :openai_api_base,
                   :openai_organization_id,
@@ -18,6 +10,8 @@ module RubyLLM
                   :openai_use_system_role,
                   :anthropic_api_key,
                   :gemini_api_key,
+                  :vertexai_project_id,
+                  :vertexai_location,
                   :deepseek_api_key,
                   :perplexity_api_key,
                   :bedrock_api_key,
@@ -33,6 +27,8 @@ module RubyLLM
                   :default_model,
                   :default_embedding_model,
                   :default_image_model,
+                  # Model registry
+                  :model_registry_class,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,
@@ -44,11 +40,9 @@ module RubyLLM
                   :logger,
                   :log_file,
                   :log_level,
-                  :log_assume_model_exists,
                   :log_stream_debug
 
     def initialize
-      # Connection configuration
       @request_timeout = 120
       @max_retries = 3
       @retry_interval = 0.1
@@ -56,15 +50,12 @@ module RubyLLM
       @retry_interval_randomness = 0.5
       @http_proxy = nil
 
-      # Default models
       @default_model = 'gpt-4.1-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_image_model = 'gpt-image-1'
 
-      # Logging configuration
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
-      @log_assume_model_exists = true
       @log_stream_debug = ENV['RUBYLLM_STREAM_DEBUG'] == 'true'
     end
 

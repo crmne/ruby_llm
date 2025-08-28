@@ -2,9 +2,7 @@
 
 module RubyLLM
   module Providers
-    # OpenAI API integration. Handles chat completion, function calling,
-    # and OpenAI's unique streaming format. Supports GPT-4, GPT-3.5,
-    # and other OpenAI models.
+    # OpenAI API integration.
     class OpenAI < Provider
       include OpenAI::Chat
       include OpenAI::Embeddings
@@ -26,8 +24,8 @@ module RubyLLM
         }.compact
       end
 
-      def maybe_normalize_temperature(temperature, model_id)
-        OpenAI::Capabilities.normalize_temperature(temperature, model_id)
+      def maybe_normalize_temperature(temperature, model)
+        OpenAI::Capabilities.normalize_temperature(temperature, model.id)
       end
 
       class << self

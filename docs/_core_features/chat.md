@@ -424,17 +424,16 @@ Not all models support structured output. Currently supported:
 - **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
-Models that don't support structured output will raise an error:
+Models that don't support structured output:
 
 ```ruby
+# RubyLLM 1.6.2+ will attempt to use schemas with any model
 chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
-chat.with_schema(schema) # Raises UnsupportedStructuredOutputError
-```
+chat.with_schema(schema)
+response = chat.ask('Generate a person')
+# Provider will return an error if unsupported
 
-You can force schema usage even if the model registry says it's unsupported:
-
-```ruby
-chat.with_schema(schema, force: true)
+# Prior to 1.6.2, with_schema would raise UnsupportedStructuredOutputError
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -509,9 +508,9 @@ RubyLLM provides four event handlers that cover the complete chat lifecycle:
 ```ruby
 chat = RubyLLM.chat
 
-# Called just before the API request for an assistant message starts
+# Called at first chunk received from the assistant
 chat.on_new_message do
-  puts "Assistant is typing..."
+  print "Assistant > "
 end
 
 # Called after the complete assistant message (including tool calls/results) is received

@@ -51,7 +51,6 @@ RubyLLM::Error                    # Base error class for API/network issues
 RubyLLM::ConfigurationError   # Missing required configuration (e.g., API key)
 RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
 RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
-RubyLLM::UnsupportedFunctionsError # Tried to use tools with an unsupported model
 ```
 
 ## Basic Error Handling

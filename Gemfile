@@ -12,6 +12,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'dotenv'
   gem 'ferrum'
   gem 'flay'
+  gem 'image_processing', '~> 1.2'
   gem 'irb'
   gem 'json-schema'
   gem 'nokogiri'
@@ -22,6 +23,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'reline'
   gem 'rspec', '~> 3.12'
   gem 'rubocop', '>= 1.0'
+  gem 'rubocop-performance'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
   gem 'ruby_llm-schema', '~> 0.1.0'
@@ -35,4 +37,7 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   gem 'vcr'
   gem 'webmock', '~> 3.18'
+
+  # Optional dependency for Vertex AI
+  gem 'googleauth'
 end

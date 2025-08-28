@@ -5,18 +5,6 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Module for processing streaming messages from AWS Bedrock.
-        # Handles the core message processing logic, including validation and chunking.
-        #
-        # Responsibilities:
-        # - Processing incoming message chunks
-        # - Validating message structure and content
-        # - Managing message offsets and boundaries
-        # - Error handling during message processing
-        #
-        # @example Processing a message chunk
-        #   offset = process_message(chunk, current_offset) do |processed_chunk|
-        #     handle_processed_chunk(processed_chunk)
-        #   end
         module MessageProcessing
           def process_chunk(chunk, &)
             offset = 0

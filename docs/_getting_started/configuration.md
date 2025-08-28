@@ -53,6 +53,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
+  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
@@ -98,7 +100,7 @@ Connect to any OpenAI-compatible API endpoint, including local models, proxies, 
 RubyLLM.configure do |config|
   # API key - use what your server expects
   config.openai_api_key = ENV['CUSTOM_API_KEY']  # Or 'dummy-key' if not required
-  
+
   # Your custom endpoint
   config.openai_api_base = "http://localhost:8080/v1"  # vLLM, LiteLLM, etc.
 end
@@ -119,7 +121,7 @@ OpenAI's API now uses 'developer' role for system messages, but some OpenAI-comp
 RubyLLM.configure do |config|
   # For servers that require 'system' role (e.g., older vLLM, some local models)
   config.openai_use_system_role = true  # Use 'system' role instead of 'developer'
-  
+
   # Your OpenAI-compatible endpoint
   config.openai_api_base = "http://localhost:11434/v1"  # Ollama, vLLM, etc.
   config.openai_api_key = "dummy-key"  # If required by your server
@@ -222,9 +224,6 @@ RubyLLM.configure do |config|
   # Enable debug logging via environment variable
   config.log_level = :debug if ENV['RUBYLLM_DEBUG'] == 'true'
 
-  # Silence "Assuming model exists" warnings
-  config.log_assume_model_exists = false
-
   # Show detailed streaming chunks (v1.6.0+)
   config.log_stream_debug = true  # Or set RUBYLLM_STREAM_DEBUG=true
 end
@@ -317,6 +316,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = String
   config.anthropic_api_key = String
   config.gemini_api_key = String
+  config.vertexai_project_id = String  # GCP project ID
+  config.vertexai_location = String     # e.g., 'us-central1'
   config.deepseek_api_key = String
   config.mistral_api_key = String
   config.perplexity_api_key = String
@@ -356,7 +357,6 @@ RubyLLM.configure do |config|
   config.logger = Logger
   config.log_file = String
   config.log_level = Symbol
-  config.log_assume_model_exists = Boolean
   config.log_stream_debug = Boolean  # v1.6.0+
 end
 ```

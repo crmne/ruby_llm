@@ -218,12 +218,14 @@ insights = analyzer.analyze("Your text here...")
 ### Supervisor Pattern
 
 ```ruby
+require 'async'
+
 class CodeReviewSystem
   def review_code(code)
+    reviews = {}
+
     Async do |task|
       # Run reviews in parallel
-      reviews = {}
-
       task.async do
         reviews[:security] = RubyLLM.chat(model: 'claude-3-5-sonnet')
           .ask("Security review:\n#{code}")
@@ -241,17 +243,20 @@ class CodeReviewSystem
           .ask("Style review (Ruby conventions):\n#{code}")
           .content
       end
+    end.wait # Block automatically waits for all child tasks
 
-      task.wait # Wait for all reviews
-
-      # Synthesize findings
-      RubyLLM.chat.ask(
-        "Summarize these code reviews:\n" +
-        reviews.map { |type, review| "#{type}: #{review}" }.join("\n\n")
-      ).content
-    end
+    # Synthesize findings after all reviews complete
+    RubyLLM.chat.ask(
+      "Summarize these code reviews:\n" +
+      reviews.map { |type, review| "#{type}: #{review}" }.join("\n\n")
+    ).content
   end
 end
+
+# Usage
+reviewer = CodeReviewSystem.new
+summary = reviewer.review_code("def calculate(x); x * 2; end")
+# All three reviews run concurrently, then synthesized
 ```
 
 ## Error Handling

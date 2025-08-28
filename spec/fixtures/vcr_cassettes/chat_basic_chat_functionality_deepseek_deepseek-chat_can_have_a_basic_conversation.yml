@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"stream":false,"temperature":0.7}'
+        2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:32:07 GMT
+      - Wed, 20 Aug 2025 17:09:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f3955093c669682de04e3bfc78a7c1e3
+      - 0c0dfccdcccf1472a99c4c0435b30563
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,8 +51,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3ea02b91-2e65-405b-b283-e126c7d539b2","object":"chat.completion","created":1754832727,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        sum of 2 + 2 is **4**.  \n\nLet me know if you''d like help with anything
-        else!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":25,"total_tokens":36,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Sun, 10 Aug 2025 13:32:12 GMT
+      string: '{"id":"be05b5ff-a407-4aba-85b9-5683d6dfe186","object":"chat.completion","created":1755709752,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a fundamental math question! **2 + 2 equals 4.**\n\nIt''s often used as a
+        simple test or even a joke in pop culture (like in the movie *Animal House*
+        or the TV show *The IT Crowd*), implying something is so obvious it shouldn''t
+        need to be asked."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":64,"total_tokens":76,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 20 Aug 2025 17:09:19 GMT
 recorded_with: VCR 6.3.1

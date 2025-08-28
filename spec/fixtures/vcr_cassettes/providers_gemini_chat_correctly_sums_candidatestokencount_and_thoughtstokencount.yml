@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 2+2? Think step
+        by step."}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 20 Aug 2025 17:14:21 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=2918
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkxldCdzIGJyZWFrIGRvd24gMisyIHN0ZXAgYnkgc3RlcDpcblxuMS4gICoqU3RhcnQgd2l0aCB0aGUgZmlyc3QgbnVtYmVyOioqIFlvdSBoYXZlIDIgb2Ygc29tZXRoaW5nIChpbWFnaW5lIHR3byBhcHBsZXM6IPCfjY4g8J+NjikuXG4yLiAgKipBZGQgdGhlIHNlY29uZCBudW1iZXI6KiogWW91IGFyZSBhZGRpbmcgYW5vdGhlciAyIG9mIHNvbWV0aGluZyAodHdvIG1vcmUgYXBwbGVzOiDwn42OIPCfjY4pLlxuMy4gICoqQ29tYmluZSB0aGVtOioqIFB1dCBhbGwgdGhlIGFwcGxlcyB0b2dldGhlci4gWW91IGhhZCB0d28sIGFuZCB5b3UgYWRkZWQgdHdvIG1vcmUuXG4gICAgKPCfjY4g8J+NjikgKyAo8J+NjiDwn42OKSA9IPCfjY4g8J+NjiDwn42OIPCfjY5cbjQuICAqKkNvdW50IHRoZSB0b3RhbDoqKiBJZiB5b3UgY291bnQgYWxsIHRoZSBhcHBsZXMsIHlvdSB3aWxsIGZpbmQgdGhlcmUgYXJlIGZvdXIuXG5cblNvLCAyICsgMiA9ICoqNCoqLiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTMsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAxNDksCiAgICAidG90YWxUb2tlbkNvdW50IjogNDIwLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDI1OAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJiUUttYU1Ydk1iZWdrZFVQN0pMQTRBcyIKfQo=
+  recorded_at: Wed, 20 Aug 2025 17:14:21 GMT
+recorded_with: VCR 6.3.1

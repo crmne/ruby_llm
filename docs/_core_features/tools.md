@@ -78,6 +78,54 @@ end
 > The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
 {: .note }
 
+## Returning Rich Content from Tools
+{: .d-inline-block }
+
+Available in v1.6.4+
+{: .label .label-green }
+
+Tools can return `RubyLLM::Content` objects with file attachments, allowing you to pass images, documents, or other files from your tools to the AI model:
+
+```ruby
+class AnalyzeTool < RubyLLM::Tool
+  description "Analyzes data and returns results with visualizations"
+  param :query, desc: "Analysis query"
+
+  def execute(query:)
+    # Generate analysis and create visualization
+    chart_path = generate_chart(query)
+
+    # Return Content with text and attachments
+    RubyLLM::Content.new(
+      "Analysis complete for: #{query}",
+      [chart_path]  # Attach the generated chart (array of paths/blobs)
+    )
+  end
+
+  private
+
+  def generate_chart(query)
+    # Your chart generation logic
+    "/tmp/chart_#{Time.now.to_i}.png"
+  end
+end
+
+chat = RubyLLM.chat.with_tool(AnalyzeTool)
+response = chat.ask("Analyze sales trends for Q4")
+# The AI receives both the text and the chart image
+```
+
+When a tool returns a `Content` object:
+- The text and attachments are preserved in the conversation history
+- Vision-capable models can see and analyze attached images
+- The AI can reference the attachments in its response
+
+This is particularly useful for:
+- **Data visualization:** Return charts, graphs, or diagrams
+- **Document processing:** Pass PDFs or documents for the AI to analyze
+- **Image generation:** Return generated or processed images
+- **Multi-modal workflows:** Combine text results with visual elements
+
 ## Custom Initialization
 
 Tools can have custom initialization:
@@ -136,8 +184,15 @@ puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
-> Ensure the model you select supports function calling/tools. Check model capabilities using `RubyLLM.models.find('your-model-id').supports_functions?`. Attempting to use `with_tool` on an unsupported model will raise `RubyLLM::UnsupportedFunctionsError`.
-{: .warning }
+### Model Compatibility
+{: .d-inline-block }
+
+Changed in v1.6.2+
+{: .label .label-green }
+
+RubyLLM v1.6.2+ will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
+
+Prior to v1.6.2, calling `with_tool` on an unsupported model would immediately raise `RubyLLM::UnsupportedFunctionsError`.
 
 ## The Tool Execution Flow
 
