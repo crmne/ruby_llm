@@ -16,7 +16,7 @@ module RubyLLM
           payload = {
             contents: format_messages(messages),
             generationConfig: {
-              responseModalities: capabilities.modalities_for(model)[:output]
+              responseModalities: capabilities.modalities_for(model.id)[:output]
             }
           }
 
