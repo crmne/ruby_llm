@@ -51,11 +51,9 @@ module RubyLLM
         when [String, String]
           @content << new_content
         when [String, Content]
-          # Convert accumulated string to Content and merge
           @content = Content.new(@content)
           merge_content(new_content)
         when [Content, String]
-          # Append string to existing Content's text
           @content.instance_variable_set(:@text, (@content.text || '') + new_content)
         when [Content, Content]
           merge_content(new_content)
@@ -64,14 +62,13 @@ module RubyLLM
     end
 
     def merge_content(new_content)
-      # Merge text
       current_text = @content.text || ''
       new_text = new_content.text || ''
       @content.instance_variable_set(:@text, current_text + new_text)
 
-      # Merge attachments
+      existing_encoded = @content.attachments.map(&:encoded)
       new_content.attachments.each do |attachment|
-        @content.attach(attachment)
+        @content.attach(attachment) unless existing_encoded.include?(attachment.encoded)
       end
     end
 
