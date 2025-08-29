@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:33:28 GMT
+      - Wed, 20 Aug 2025 17:10:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '915'
+      - '1193'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '929'
+      - '1207'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -77,16 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C30Su1vpkkc72OfIlVKCW1Odg2hef",
+          "id": "chatcmpl-C6gcT7MGxUTMxSXqMRfECde38AGQr",
           "object": "chat.completion",
-          "created": 1754832808,
+          "created": 1755709833,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "I'm glad you're interested in the weather! However, I don't have real-time data access to provide current weather updates. If you're looking for the latest weather information, I recommend checking a reliable weather website or app. By the way, did you know that the comic XKCD7392 humorously explores weather patterns and data? It's a fun read if you're into weather-related humor!",
+                "content": "I'm glad you're interested in the weather! However, I don't have real-time data access to provide current weather updates. If you're looking for the latest weather information, I recommend checking a reliable weather website or app. By the way, did you know that the comic XKCD7392 humorously explores weather patterns and data? It's a fun read if you're into science and humor!",
                 "refusal": null,
                 "annotations": []
               },
@@ -110,9 +110,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_38343a2f8f"
+          "system_fingerprint": "fp_e91a518ddb"
         }
-  recorded_at: Sun, 10 Aug 2025 13:33:28 GMT
+  recorded_at: Wed, 20 Aug 2025 17:10:34 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -124,7 +124,7 @@ http_interactions:
         weather updates. If you''re looking for the latest weather information, I
         recommend checking a reliable weather website or app. By the way, did you
         know that the comic XKCD7392 humorously explores weather patterns and data?
-        It''s a fun read if you''re into weather-related humor!"},{"role":"developer","content":"You
+        It''s a fun read if you''re into science and humor!"},{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -144,7 +144,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:33:30 GMT
+      - Wed, 20 Aug 2025 17:10:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -156,13 +156,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1120'
+      - '2528'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1145'
+      - '2548'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -170,11 +170,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199866'
+      - '199867'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 40ms
+      - 39ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Cf-Cache-Status:
@@ -194,7 +194,42 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DMzBTdklObEVabVRmNEQ1NkdPblZiejBBSnB6ZSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NDgzMjgwOSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzLCBzbyBpdCByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIGludGVyZXN0cy4gSWYgeW91J3JlIGludG8gY2xhc3NpYyBsaXRlcmF0dXJlLCB5b3UgbWlnaHQgZW5qb3kgKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuIG9yICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEZvciBzY2llbmNlIGZpY3Rpb24gZmFucywgKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQgb3IgKk5ldXJvbWFuY2VyKiBieSBXaWxsaWFtIEdpYnNvbiBhcmUgZXhjZWxsZW50IGNob2ljZXMuIElmIHlvdSdyZSBsb29raW5nIGZvciBzb21ldGhpbmcgZnVuIGFuZCB0aG91Z2h0LXByb3Zva2luZywgKlRoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgdG8gdGhlIEdhbGF4eSogYnkgRG91Z2xhcyBBZGFtcyBpcyBhIGhpbGFyaW91cyByZWFk4oCUanVzdCBsaWtlIGhvdyBzb21lIHBlb3BsZSBtaWdodCBpbWFnaW5lIGEgUFVSUExFLUVMRVBIQU5ULTQyIHdhbmRlcmluZyB0aHJvdWdoIGEgd2hpbXNpY2FsIGxhbmRzY2FwZSEgTGV0IG1lIGtub3cgeW91ciBwcmVmZXJlbmNlcywgYW5kIEkgY2FuIHN1Z2dlc3QgbW9yZSB0YWlsb3JlZCBvcHRpb25zLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDEyNywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDEzOSwKICAgICJ0b3RhbF90b2tlbnMiOiAyNjYsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF8zODM0M2EyZjhmIgp9Cg==
-  recorded_at: Sun, 10 Aug 2025 13:33:30 GMT
+      string: |
+        {
+          "id": "chatcmpl-C6gcUyuKB91Eii9mb4G4pOhL8JmNM",
+          "object": "chat.completion",
+          "created": 1755709834,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "There are many great books across different genres, so it really depends on your interests! If you're into science fiction, classics like *Dune* by Frank Herbert or *Neuromancer* by William Gibson are highly recommended. For something more contemporary, *The Night Circus* by Erin Morgenstern offers a magical and enchanting story. If you enjoy non-fiction, *Sapiens* by Yuval Noah Harari provides fascinating insights into human history.\n\nAnd if you're curious about a quirky recommendation, you might enjoy *PURPLE-ELEPHANT-42*, a fun and imaginative novel that blends humor with thought-provoking themes. Let me know what genres you like, and I can tailor some suggestions just for you!",
+                "refusal": null,
+                "annotations": []
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 127,
+            "completion_tokens": 143,
+            "total_tokens": 270,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": "fp_c4c155951e"
+        }
+  recorded_at: Wed, 20 Aug 2025 17:10:37 GMT
 recorded_with: VCR 6.3.1

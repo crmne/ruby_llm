@@ -5,6 +5,7 @@ nav_order: 1
 description: Start building AI apps in Ruby in 5 minutes. Chat, generate images, create embeddings - all with one gem.
 redirect_from:
   - /guides/getting-started
+  - /installation
 ---
 
 # {{ page.title }}
@@ -34,17 +35,15 @@ After reading this guide, you will know:
 Add RubyLLM to your Gemfile:
 
 ```ruby
-gem 'ruby_llm'
+bundle add ruby_llm
 ```
-
-Then run `bundle install`.
 
 ### Rails Quick Setup
 
 For Rails applications, you can use the generator to set up database-backed conversations:
 
 ```bash
-$ rails generate ruby_llm:install
+rails generate ruby_llm:install
 ```
 
 This creates Chat and Message models with ActiveRecord persistence. Your conversations will be automatically saved to the database. See the [Rails Integration Guide]({% link _advanced/rails.md %}) for full details.

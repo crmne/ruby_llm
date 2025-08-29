@@ -35,13 +35,13 @@ rescue ActiveRecord::DatabaseAlreadyExists
   # Database already exists, that's fine
 end
 
-# Explicitly run the dummy app migrations
-dummy_migrations_path = File.expand_path('dummy/db/migrate', __dir__)
-ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
+# Load schema instead of running migrations (faster and more reliable for tests)
+ActiveRecord::Tasks::DatabaseTasks.load_schema_current
 
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'
+require_relative 'support/database_setup'
 require_relative 'support/streaming_error_helpers'
 
 # VCR Configuration
@@ -78,6 +78,48 @@ VCR.configure do |config|
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
   config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }
   config.filter_sensitive_data('<AWS_SESSION_TOKEN>') { ENV.fetch('AWS_SESSION_TOKEN', nil) }
+
+  config.filter_sensitive_data('<GOOGLE_CLOUD_PROJECT>') { ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project') }
+  config.filter_sensitive_data('<GOOGLE_CLOUD_LOCATION>') { ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1') }
+
+  # Filter Google OAuth tokens and credentials
+  config.filter_sensitive_data('<GOOGLE_REFRESH_TOKEN>') do |interaction|
+    interaction.request.body[/refresh_token=([^&]+)/, 1] if interaction.request.body&.include?('refresh_token')
+  end
+
+  config.filter_sensitive_data('<GOOGLE_CLIENT_ID>') do |interaction|
+    interaction.request.body[/client_id=([^&]+)/, 1] if interaction.request.body&.include?('client_id')
+  end
+
+  config.filter_sensitive_data('<GOOGLE_CLIENT_SECRET>') do |interaction|
+    interaction.request.body[/client_secret=([^&]+)/, 1] if interaction.request.body&.include?('client_secret')
+  end
+
+  config.filter_sensitive_data('<GOOGLE_ACCESS_TOKEN>') do |interaction|
+    if interaction.response.body&.include?('"access_token"')
+      begin
+        JSON.parse(interaction.response.body)['access_token']
+      rescue JSON::ParserError
+        nil
+      end
+    end
+  end
+
+  config.filter_sensitive_data('<GOOGLE_ID_TOKEN>') do |interaction|
+    if interaction.response.body&.include?('"id_token"')
+      begin
+        JSON.parse(interaction.response.body)['id_token']
+      rescue JSON::ParserError
+        nil
+      end
+    end
+  end
+
+  # Filter Bearer tokens in Authorization headers for Vertex AI
+  config.filter_sensitive_data('Bearer <GOOGLE_BEARER_TOKEN>') do |interaction|
+    auth_header = interaction.request.headers['Authorization']&.first
+    auth_header if auth_header&.start_with?('Bearer ya29.')
+  end
 
   config.filter_sensitive_data('<OPENAI_ORGANIZATION>') do |interaction|
     interaction.response.headers['Openai-Organization']&.first
@@ -139,6 +181,9 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
+      config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
+      config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
+
       config.request_timeout = 240
       config.max_retries = 10
       config.retry_interval = 1
@@ -151,31 +196,35 @@ end
 CHAT_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
-  { provider: :gemini, model: 'gemini-2.0-flash' },
   { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :gpustack, model: 'qwen3' },
+  { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' },
-  { provider: :gpustack, model: 'qwen3' },
   { provider: :perplexity, model: 'sonar' },
-  { provider: :mistral, model: 'mistral-small-latest' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
-  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :bedrock, model: 'us.anthropic.claude-3-7-sonnet-20250219-v1:0' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :openai, model: 'gpt-4.1-nano' },
-  { provider: :openrouter, model: 'google/gemini-2.5-flash' }
+  { provider: :openrouter, model: 'google/gemini-2.5-flash' },
+  { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
 VISION_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-sonnet-20241022-v2:0' },
-  { provider: :gemini, model: 'gemini-2.0-flash' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'pixtral-12b-latest' },
+  { provider: :ollama, model: 'granite3.2-vision' },
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
-  { provider: :ollama, model: 'qwen3' },
-  { provider: :mistral, model: 'pixtral-12b-latest' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
 AUDIO_MODELS = [
@@ -185,5 +234,6 @@ AUDIO_MODELS = [
 EMBEDDING_MODELS = [
   { provider: :gemini, model: 'text-embedding-004' },
   { provider: :openai, model: 'text-embedding-3-small' },
-  { provider: :mistral, model: 'mistral-embed' }
+  { provider: :mistral, model: 'mistral-embed' },
+  { provider: :vertexai, model: 'text-embedding-004' }
 ].freeze

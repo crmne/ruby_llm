@@ -3,17 +3,21 @@
 module RubyLLM
   module Model
     # Information about an AI model's capabilities, pricing, and metadata.
-    # Used by the Models registry to help developers choose the right model
-    # for their needs.
-    #
-    # Example:
-    #   model = RubyLLM.models.find('gpt-4')
-    #   model.supports_vision?          # => true
-    #   model.supports_functions?       # => true
-    #   model.input_price_per_million   # => 30.0
     class Info
       attr_reader :id, :name, :provider, :family, :created_at, :context_window, :max_output_tokens, :knowledge_cutoff,
                   :modalities, :capabilities, :pricing, :metadata
+
+      # Create a default model with assumed capabilities
+      def self.default(model_id, provider)
+        new(
+          id: model_id,
+          name: model_id.tr('-', ' ').capitalize,
+          provider: provider,
+          capabilities: %w[function_calling streaming vision structured_output],
+          modalities: { input: %w[text image], output: %w[text] },
+          metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
+        )
+      end
 
       def initialize(data)
         @id = data[:id]
@@ -30,7 +34,6 @@ module RubyLLM
         @metadata = data[:metadata] || {}
       end
 
-      # Capability methods
       def supports?(capability)
         capabilities.include?(capability.to_s)
       end
@@ -41,7 +44,6 @@ module RubyLLM
         end
       end
 
-      # Backward compatibility methods
       def display_name
         name
       end

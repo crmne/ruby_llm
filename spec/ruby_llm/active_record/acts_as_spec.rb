@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
+  include_context 'with database setup'
 
   let(:model) { 'gpt-4.1-nano' }
 
@@ -21,7 +22,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   # Basic functionality tests using dummy app models
   describe 'basic chat functionality' do
     it 'persists chat history' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       chat.ask("What's your favorite Ruby feature?")
 
       expect(chat.messages.count).to eq(2)
@@ -34,7 +35,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'tracks token usage' do
-      chat = Chat.create!(model_id: 'gpt-4.1-nano')
+      chat = Chat.create!(model: 'gpt-4.1-nano')
       chat.ask('Hello')
 
       message = chat.messages.last
@@ -45,7 +46,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'system messages' do
     it 'persists system messages' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       chat.with_instructions('You are a Ruby expert')
 
       expect(chat.messages.first.role).to eq('system')
@@ -53,7 +54,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'replaces system messages when requested' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       chat.with_instructions('Be helpful')
       chat.with_instructions('Be concise')
@@ -67,7 +68,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'tool usage' do
     it 'persists tool calls' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       chat.with_tool(Calculator)
 
       chat.ask("What's 123 * 456?")
@@ -77,7 +78,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'returns the chat instance for chaining' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       result = chat.with_tool(Calculator)
       expect(result).to eq(chat)
@@ -86,7 +87,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'model switching' do
     it 'allows changing models mid-conversation' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       chat.ask('Hello')
 
       chat.with_model('claude-3-5-haiku-20241022')
@@ -94,9 +95,38 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'model associations' do
+    context 'when model registry is configured' do
+      before do
+        # Only set up if Model class exists (from dummy app)
+        next unless defined?(Model)
+
+        # Model should already exist from before(:all) which loaded from JSON
+      end
+
+      it 'associates chat with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model: 'gpt-4.1-nano')
+        expect(chat).to respond_to(:model)
+        expect(chat.model&.name).to eq('GPT-4.1 nano') if chat.model
+      end
+
+      it 'associates messages with model' do
+        skip 'Model not available' unless defined?(Model) && Model.table_exists?
+
+        chat = Chat.create!(model: 'gpt-4.1-nano')
+        chat.ask('Hello')
+
+        message = chat.messages.last
+        expect(message).to respond_to(:model) if defined?(Message.model)
+      end
+    end
+  end
+
   describe 'structured output' do
     it 'supports with_schema for structured responses' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       schema = {
         type: 'object',
@@ -133,7 +163,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'parameter passing' do
     it 'supports with_params for provider-specific parameters' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       result = chat.with_params(max_tokens: 100, temperature: 0.5)
       expect(result).to eq(chat) # Should return self for chaining
@@ -146,14 +176,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'tool functionality' do
     it 'supports with_tools for multiple tools' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
-      result = chat.with_tools(Calculator, BestLanguageToLearn)
+      # Define a second tool for testing
+      weather_tool = Class.new(RubyLLM::Tool) do
+        def self.name = 'weather'
+        def self.description = 'Get weather'
+        def execute = 'Sunny'
+      end
+
+      result = chat.with_tools(Calculator, weather_tool)
       expect(result).to eq(chat) # Should return self for chaining
 
       # Verify tools are registered
       llm_chat = chat.instance_variable_get(:@chat)
-      expect(llm_chat.tools.keys).to include(:calculator, :best_language_to_learn)
+      expect(llm_chat.tools.keys).to include(:calculator, :weather)
     end
 
     it 'handles halt mechanism in tools' do
@@ -167,7 +204,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         end
       end)
 
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       chat.with_tool(HaltingTool)
 
       # Mock the tool execution to test halt behavior
@@ -186,7 +223,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'custom headers' do
     it 'supports with_headers for custom HTTP headers' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       result = chat.with_headers('X-Custom-Header' => 'test-value')
       expect(result).to eq(chat) # Should return self for chaining
@@ -197,7 +234,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'allows chaining with_headers with other methods' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       result = chat
                .with_temperature(0.5)
@@ -213,7 +250,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'error handling' do
     it 'destroys empty assistant messages on API failure' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       # Stub the API to fail
       allow_any_instance_of(RubyLLM::Chat).to receive(:complete).and_raise(RubyLLM::Error) # rubocop:disable RSpec/AnyInstance
@@ -291,7 +328,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     describe 'namespaced chat models' do
       it 'works with namespaced classes and custom associations' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.ask("What's 2 + 2?")
 
         expect(bot_chat.messages.count).to eq(2)
@@ -302,7 +339,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
 
       it 'persists tool calls with custom classes' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.with_tool(Calculator)
 
         bot_chat.ask("What's 123 * 456?")
@@ -314,7 +351,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
 
       it 'handles system messages correctly' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.with_instructions('You are a helpful bot')
 
         expect(bot_chat.messages.first.role).to eq('system')
@@ -323,7 +360,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
 
       it 'allows model switching' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.ask('Hello')
 
         bot_chat.with_model('claude-3-5-haiku-20241022')
@@ -333,7 +370,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_message = bot_chat.messages.create!(
           role: 'user',
           content: 'Test message',
@@ -350,7 +387,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
 
       it 'correctly converts tool calls' do
-        bot_chat = Assistants::BotChat.create!(model_id: model)
+        bot_chat = Assistants::BotChat.create!(model: model)
         bot_message = bot_chat.messages.create!(role: 'assistant', content: 'I need to calculate something')
 
         bot_message.tool_calls.create!(
@@ -398,7 +435,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'converts ActiveStorage attachments to RubyLLM Content' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
@@ -413,7 +450,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'handles multiple attachments' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
       pdf_upload = uploaded_file(pdf_path, 'application/pdf')
@@ -426,7 +463,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'handles attachments in ask method' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
 
@@ -439,7 +476,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     describe 'attachment types' do
       it 'handles images' do
-        chat = Chat.create!(model_id: model)
+        chat = Chat.create!(model: model)
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
         message.attachments.attach(
@@ -454,7 +491,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
 
       it 'handles PDFs' do
-        chat = Chat.create!(model_id: model)
+        chat = Chat.create!(model: model)
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
         message.attachments.attach(
@@ -475,7 +512,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       user_callback_called = false
       end_callback_called = false
 
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       # Set user callbacks before calling ask
       chat.on_new_message { user_callback_called = true }
@@ -494,7 +531,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       tool_call_received = nil
       tool_result_received = nil
 
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
                  .with_tool(Calculator)
                  .on_tool_call { |tc| tool_call_received = tc }
                  .on_tool_result { |result| tool_result_received = result }
@@ -504,6 +541,132 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(tool_call_received).not_to be_nil
       expect(tool_call_received.name).to eq('calculator')
       expect(tool_result_received).to eq('4')
+    end
+  end
+
+  describe 'error recovery' do
+    it 'does not clean up complete tool interactions when error occurs after tool execution' do
+      chat = Chat.create!(model: model)
+      chat.messages.create!(role: 'user', content: 'What is 5 + 5?')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_123',
+        name: 'calculator',
+        arguments: { expression: '5 + 5' }.to_json
+      )
+
+      chat.messages.create!(
+        role: 'tool',
+        content: '10',
+        parent_tool_call: tool_call
+      )
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.not_to(change { chat.messages.count })
+    end
+
+    it 'cleans up incomplete tool interactions with missing tool results' do
+      chat = Chat.create!(model: model)
+
+      chat.messages.create!(role: 'user', content: 'Do multiple calculations')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call1 = tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_1',
+        name: 'calculator',
+        arguments: { expression: '2 + 2' }.to_json
+      )
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_2',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      chat.messages.create!(
+        role: 'tool',
+        content: '4',
+        parent_tool_call: tool_call1
+      )
+
+      chat.messages.count
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-2)
+    end
+
+    it 'cleans up orphaned tool call messages with no results' do
+      chat = Chat.create!(model: model)
+
+      chat.messages.create!(role: 'user', content: 'What is 3 + 3?')
+
+      tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call_msg.tool_calls.create!(
+        tool_call_id: 'call_456',
+        name: 'calculator',
+        arguments: { expression: '3 + 3' }.to_json
+      )
+
+      expect do
+        chat.send(:cleanup_orphaned_tool_results)
+      end.to change { chat.messages.count }.by(-1)
+    end
+  end
+
+  describe 'assume_model_exists' do
+    it 'creates a Model record when assume_model_exists is true' do
+      chat = Chat.new
+      chat.assume_model_exists = true
+      chat.model = 'my-custom-model'
+      chat.provider = 'openrouter'
+      chat.save!
+
+      model = Model.find_by(model_id: 'my-custom-model', provider: 'openrouter')
+      expect(model).not_to be_nil
+      expect(model.model_id).to eq('my-custom-model')
+      expect(model.provider).to eq('openrouter')
+      expect(chat.model_id).to eq('my-custom-model')
+      expect(chat.provider).to eq('openrouter')
+    end
+
+    it 'works with Chat.create! and assume_model_exists' do
+      chat = Chat.create!(
+        model: 'another-custom-model',
+        provider: 'bedrock',
+        assume_model_exists: true
+      )
+
+      model = Model.find_by(model_id: 'another-custom-model', provider: 'bedrock')
+      expect(model).not_to be_nil
+      expect(model.model_id).to eq('another-custom-model')
+      expect(model.provider).to eq('bedrock')
+      expect(chat.model_id).to eq('another-custom-model')
+      expect(chat.provider).to eq('bedrock')
+    end
+
+    it 'uses existing models when available' do
+      initial_count = Model.count
+
+      # Create a known model first
+      chat1 = Chat.create!(model: 'gpt-4.1-nano')
+
+      # Should use existing model
+      chat2 = Chat.create!(model: 'gpt-4.1-nano')
+
+      # Count should not increase since model already exists
+      expect(Model.count).to eq(initial_count)
+      expect(chat1.model_id).to eq('gpt-4.1-nano')
+      expect(chat2.model_id).to eq('gpt-4.1-nano')
+      expect(chat1.model).to eq(chat2.model)
+    end
+
+    it 'respects aliases' do
+      chat = Chat.create!(model: 'claude-3-5-sonnet', provider: 'bedrock')
+
+      expect(chat.model_id).to eq('anthropic.claude-3-5-sonnet-20240620-v1:0:200k')
+      expect(chat.provider).to eq('bedrock')
     end
   end
 end

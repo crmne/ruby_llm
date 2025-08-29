@@ -32,7 +32,6 @@ module RubyLLM
             raise Error, 'Unexpected response format from Gemini image generation API'
           end
 
-          # Extract mime type and base64 data
           mime_type = image_data['mimeType'] || 'image/png'
           base64_data = image_data['bytesBase64Encoded']
 

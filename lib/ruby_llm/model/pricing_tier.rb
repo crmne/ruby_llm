@@ -7,7 +7,6 @@ module RubyLLM
       def initialize(data = {})
         @values = {}
 
-        # Only store non-zero values
         data.each do |key, value|
           @values[key.to_sym] = value if value && value != 0.0
         end

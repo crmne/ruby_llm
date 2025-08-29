@@ -18,16 +18,11 @@ PreCommit:
     exclude:
      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
 
-  RakeTarget:
-    enabled: true
-    command: ['bundle', 'exec', 'rake']
-    targets: ['models:update', 'models:docs', 'aliases:generate']
-    on_warn: fail
 
-  AppraisalGenerate:
+  AppraisalUpdate:
     enabled: true
-    description: 'Generate appraisal gemfiles'
-    command: ['bundle', 'exec', 'appraisal', 'generate']
+    description: 'Update appraisal gemfiles'
+    command: ['bundle', 'exec', 'appraisal', 'update']
 
 PostCheckout:
   ALL: # Special hook name that customizes all hooks of this type

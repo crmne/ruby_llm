@@ -9,6 +9,7 @@ class Create<%= options[:tool_call_model_name].pluralize %> < ActiveRecord::Migr
       t.timestamps
     end
 
-    add_index :<%= options[:tool_call_model_name].tableize %>, :tool_call_id
+    add_index :<%= options[:tool_call_model_name].tableize %>, :tool_call_id, unique: true
+    add_index :<%= options[:tool_call_model_name].tableize %>, :name
   end
 end

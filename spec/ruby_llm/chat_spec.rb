@@ -55,6 +55,10 @@ RSpec.describe RubyLLM::Chat do
           skip 'Provider API does not allow system messages after user/assistant messages'
         end
 
+        if provider == :ollama && model == 'qwen3'
+          skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         # Disable thinking mode for qwen models to avoid <think> tags in output
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'

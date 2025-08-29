@@ -106,7 +106,6 @@ module RubyLLM
           }
         end
 
-        # Pricing information for Perplexity models (USD per 1M tokens)
         PRICES = {
           sonar: {
             input: 1.0,

@@ -6,4 +6,8 @@ require 'rake/clean'
 
 Dir.glob('lib/tasks/**/*.rake').each { |r| load r }
 
-task default: %w[build]
+desc 'Run overcommit hooks and update models'
+task :default do
+  sh 'overcommit --run'
+  Rake::Task['models'].invoke
+end
