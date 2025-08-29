@@ -16,6 +16,11 @@ RSpec.describe RubyLLM::Image do
 
         response = chat.ask('put this in a ring', with: 'spec/fixtures/ruby.png')
 
+        messages_hash = chat.messages.map(&:to_h)
+        serialized_messages = messages_hash.to_json
+        expect(messages_hash.count).to eq(2)
+        expect(serialized_messages).to include('put this in a ring')
+
         expect(response.content.text).to be_present
         expect(response.content.attachments).to be_an(Array)
         expect(response.content.attachments).not_to be_empty
