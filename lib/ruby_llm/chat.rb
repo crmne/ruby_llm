@@ -170,6 +170,10 @@ module RubyLLM
       @messages.clear
     end
 
+    def instance_variables
+      super - %i[@connection @config]
+    end
+
     private
 
     def wrap_streaming_block(&block)
@@ -210,10 +214,6 @@ module RubyLLM
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
-    end
-
-    def instance_variables
-      super - %i[@connection @config]
     end
   end
 end

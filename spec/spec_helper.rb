@@ -35,13 +35,13 @@ rescue ActiveRecord::DatabaseAlreadyExists
   # Database already exists, that's fine
 end
 
-# Explicitly run the dummy app migrations
-dummy_migrations_path = File.expand_path('dummy/db/migrate', __dir__)
-ActiveRecord::MigrationContext.new(dummy_migrations_path).migrate
+# Load schema instead of running migrations (faster and more reliable for tests)
+ActiveRecord::Tasks::DatabaseTasks.load_schema_current
 
 require 'fileutils'
 require 'ruby_llm'
 require 'webmock/rspec'
+require_relative 'support/database_setup'
 require_relative 'support/streaming_error_helpers'
 
 MASSIVE_TEXT = 'a' * 1_000_000

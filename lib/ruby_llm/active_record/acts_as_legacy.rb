@@ -7,14 +7,11 @@ module RubyLLM
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall',
-                         model_class: 'Model', model_foreign_key: nil)
+        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
           include ChatMethods
 
           @message_class = message_class.to_s
           @tool_call_class = tool_call_class.to_s
-          @model_class = model_class.to_s
-          @model_foreign_key = model_foreign_key || ActiveSupport::Inflector.foreign_key(@model_class)
 
           has_many :messages,
                    -> { order(created_at: :asc) },
@@ -22,34 +19,13 @@ module RubyLLM
                    inverse_of: :chat,
                    dependent: :destroy
 
-          belongs_to :model,
-                     class_name: @model_class,
-                     foreign_key: @model_foreign_key,
-                     optional: true
-
           delegate :add_message, to: :to_llm
         end
 
-        def acts_as_model(chat_class: 'Chat')
-          include ModelMethods
-
-          @chat_class = chat_class.to_s
-
-          validates :model_id, presence: true, uniqueness: { scope: :provider }
-          validates :provider, presence: true
-          validates :name, presence: true
-
-          has_many :chats,
-                   class_name: @chat_class,
-                   foreign_key: ActiveSupport::Inflector.foreign_key(name)
-        end
-
-        def acts_as_message(chat_class: 'Chat', # rubocop:disable Metrics/ParameterLists
+        def acts_as_message(chat_class: 'Chat',
                             chat_foreign_key: nil,
                             tool_call_class: 'ToolCall',
                             tool_call_foreign_key: nil,
-                            model_class: 'Model',
-                            model_foreign_key: nil,
                             touch_chat: false)
           include MessageMethods
 
@@ -58,9 +34,6 @@ module RubyLLM
 
           @tool_call_class = tool_call_class.to_s
           @tool_call_foreign_key = tool_call_foreign_key || ActiveSupport::Inflector.foreign_key(@tool_call_class)
-
-          @model_class = model_class.to_s
-          @model_foreign_key = model_foreign_key || ActiveSupport::Inflector.foreign_key(@model_class)
 
           belongs_to :chat,
                      class_name: @chat_class,
@@ -82,11 +55,6 @@ module RubyLLM
                    through: :tool_calls,
                    source: :result,
                    class_name: @message_class
-
-          belongs_to :model,
-                     class_name: @model_class,
-                     foreign_key: @model_foreign_key,
-                     optional: true
 
           delegate :tool_call?, :tool_result?, to: :to_llm
         end
@@ -114,78 +82,17 @@ module RubyLLM
     module ChatMethods
       extend ActiveSupport::Concern
 
-      included do
-        before_save :resolve_model_from_strings
-      end
-
       class_methods do
-        attr_reader :tool_call_class, :model_class
+        attr_reader :tool_call_class
       end
 
-      attr_accessor :assume_model_exists, :context
-
-      def model=(value)
-        @model_string = value if value.is_a?(String)
-        super unless value.is_a?(String)
-      end
-
-      def model_id=(value)
-        @model_string = value
-      end
-
-      def model_id
-        model&.model_id
-      end
-
-      def provider=(value)
-        @provider_string = value
-      end
-
-      def provider
-        model&.provider
-      end
-
-      private
-
-      def resolve_model_from_strings # rubocop:disable Metrics/PerceivedComplexity
-        return unless @model_string
-
-        model_info, _provider = Models.resolve(
-          @model_string,
-          provider: @provider_string,
-          assume_exists: assume_model_exists || false,
-          config: context&.config || RubyLLM.config
-        )
-
-        model_class = self.class.model_class.constantize
-        model_record = model_class.find_or_create_by!(
-          model_id: model_info.id,
-          provider: model_info.provider
-        ) do |m|
-          m.name = model_info.name || model_info.id
-          m.family = model_info.family
-          m.context_window = model_info.context_window
-          m.max_output_tokens = model_info.max_output_tokens
-          m.capabilities = model_info.capabilities || []
-          m.modalities = model_info.modalities || {}
-          m.pricing = model_info.pricing || {}
-          m.metadata = model_info.metadata || {}
-        end
-
-        self.model = model_record
-        @model_string = nil
-        @provider_string = nil
-      end
-
-      public
-
-      def to_llm
-        raise 'No model specified' unless model
-
-        @chat ||= (context || RubyLLM).chat(
-          model: model.model_id,
-          provider: model.provider.to_sym
-        )
+      def to_llm(context: nil)
+        # model_id is a string that RubyLLM can resolve
+        @chat ||= if context
+                    context.chat(model: model_id)
+                  else
+                    RubyLLM.chat(model: model_id)
+                  end
         @chat.reset_messages!
 
         messages.each do |msg|
@@ -214,17 +121,18 @@ module RubyLLM
         self
       end
 
-      def with_model(model_name, provider: nil)
-        self.provider = provider if provider
-        self.model = model_name
-        resolve_model_from_strings
-        save!
-        to_llm.with_model(model.model_id, provider: model.provider.to_sym)
+      def with_model(...)
+        update(model_id: to_llm.with_model(...).model.id)
         self
       end
 
       def with_temperature(...)
         to_llm.with_temperature(...)
+        self
+      end
+
+      def with_context(context)
+        to_llm(context: context)
         self
       end
 
@@ -240,11 +148,6 @@ module RubyLLM
 
       def with_schema(...)
         to_llm.with_schema(...)
-        self
-      end
-
-      def cache_prompts(...)
-        to_llm.cache_prompts(...)
         self
       end
 
@@ -363,7 +266,7 @@ module RubyLLM
           @message.update!(
             role: message.role,
             content: content,
-            model: model,
+            model_id: message.model_id,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens
           )
@@ -490,85 +393,6 @@ module RubyLLM
         @_tempfiles << tempfile
         tempfile
       end
-    end
-
-    # Methods mixed into model registry models.
-    module ModelMethods
-      extend ActiveSupport::Concern
-
-      class_methods do # rubocop:disable Metrics/BlockLength
-        def refresh!
-          RubyLLM.models.refresh!
-
-          transaction do
-            RubyLLM.models.all.each do |model_info|
-              model = find_or_initialize_by(
-                model_id: model_info.id,
-                provider: model_info.provider
-              )
-              model.update!(from_llm_attributes(model_info))
-            end
-          end
-        end
-
-        def save_to_database
-          transaction do
-            RubyLLM.models.all.each do |model_info|
-              model = find_or_initialize_by(
-                model_id: model_info.id,
-                provider: model_info.provider
-              )
-              model.update!(from_llm_attributes(model_info))
-            end
-          end
-        end
-
-        def from_llm(model_info)
-          new(from_llm_attributes(model_info))
-        end
-
-        private
-
-        def from_llm_attributes(model_info)
-          {
-            model_id: model_info.id,
-            name: model_info.name,
-            provider: model_info.provider,
-            family: model_info.family,
-            model_created_at: model_info.created_at,
-            context_window: model_info.context_window,
-            max_output_tokens: model_info.max_output_tokens,
-            knowledge_cutoff: model_info.knowledge_cutoff,
-            modalities: model_info.modalities.to_h,
-            capabilities: model_info.capabilities,
-            pricing: model_info.pricing.to_h,
-            metadata: model_info.metadata
-          }
-        end
-      end
-
-      def to_llm
-        RubyLLM::Model::Info.new(
-          id: model_id,
-          name: name,
-          provider: provider,
-          family: family,
-          created_at: model_created_at,
-          context_window: context_window,
-          max_output_tokens: max_output_tokens,
-          knowledge_cutoff: knowledge_cutoff,
-          modalities: modalities&.deep_symbolize_keys || {},
-          capabilities: capabilities,
-          pricing: pricing&.deep_symbolize_keys || {},
-          metadata: metadata&.deep_symbolize_keys || {}
-        )
-      end
-
-      delegate :supports?, :supports_vision?, :supports_functions?, :type,
-               :input_price_per_million, :output_price_per_million,
-               :function_calling?, :structured_output?, :batch?,
-               :reasoning?, :citations?, :streaming?,
-               to: :to_llm
     end
   end
 end
