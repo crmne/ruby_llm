@@ -57,7 +57,11 @@ module RubyLLM
               if RubyLLM.config.log_stream_debug
                 RubyLLM.logger.debug "Bedrock accumulated tool calls: #{get_accumulated_tool_calls}"
               end
-              final_message.instance_variable_set(:@tool_calls, get_accumulated_tool_calls)
+              # Convert array of tool calls to hash format for consistency with other providers
+              tool_calls_hash = get_accumulated_tool_calls.each_with_object({}) do |tool_call, hash|
+                hash[tool_call.id] = tool_call
+              end
+              final_message.instance_variable_set(:@tool_calls, tool_calls_hash)
             end
 
             # Add token usage from metadata event

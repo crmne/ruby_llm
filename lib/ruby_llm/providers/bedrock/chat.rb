@@ -23,9 +23,17 @@ module RubyLLM
 
         def format_message(msg)
           if msg.tool_call?
-            format_tool_call(msg)
+            result = format_tool_call(msg)
+            # If format_tool_call returns nil (due to missing tool_call), skip this message
+            return nil if result.nil?
+
+            result
           elsif msg.tool_result?
-            format_tool_result(msg)
+            result = format_tool_result(msg)
+            # If format_tool_result returns nil (due to missing tool_call_id), skip this message
+            return nil if result.nil?
+
+            result
           else
             format_basic_message(msg)
           end
@@ -133,37 +141,82 @@ module RubyLLM
         end
 
         def format_tool_call(msg)
-          {
+          # Get the first tool call from the hash
+          tool_call = msg.tool_calls.values.first
+
+          if tool_call.nil?
+            RubyLLM.logger.warn 'Bedrock: tool_call is nil for tool call message'
+            return nil
+          end
+
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug "Formatting tool call message: #{msg.inspect}"
+            RubyLLM.logger.debug "Tool call: #{tool_call.inspect}"
+            RubyLLM.logger.debug "Tool call ID: #{tool_call.id}"
+          end
+
+          # Ensure we have a valid tool call ID
+          if tool_call.id.nil? || tool_call.id.empty?
+            RubyLLM.logger.warn 'Bedrock: tool_call.id is null or empty for tool call message'
+            return nil
+          end
+
+          result = {
             role: convert_role(msg.role),
             content: [
               {
                 'toolUse' => {
-                  'id' => msg.tool_calls.first.id,
-                  'name' => msg.tool_calls.first.name,
-                  'input' => msg.tool_calls.first.arguments
+                  'toolUseId' => tool_call.id,
+                  'name' => tool_call.name,
+                  'input' => tool_call.arguments
                 }
               }
             ]
           }
+
+          RubyLLM.logger.debug "Formatted tool call: #{result}" if RubyLLM.config.log_stream_debug
+
+          result
         end
 
         def format_tool_result(msg)
-          {
+          # Debug logging to understand the issue
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug "Formatting tool result message: #{msg.inspect}"
+            RubyLLM.logger.debug "Tool call ID: #{msg.tool_call_id}"
+            RubyLLM.logger.debug "Message role: #{msg.role}"
+            RubyLLM.logger.debug "Message content: #{msg.content}"
+          end
+
+          # Ensure we have a valid tool_call_id
+          tool_call_id = msg.tool_call_id
+          if tool_call_id.nil? || tool_call_id.empty?
+            RubyLLM.logger.warn 'Bedrock: tool_call_id is null or empty for tool result message'
+            # Try to extract from the message content or other sources
+            # For now, we'll skip this message to avoid the validation error
+            return nil
+          end
+
+          result = {
             role: convert_role(msg.role),
             content: [
               {
                 'toolResult' => {
-                  'toolUseId' => msg.tool_call_id,
+                  'toolUseId' => tool_call_id,
                   'content' => [{ 'text' => msg.content }]
                 }
               }
             ]
           }
+
+          RubyLLM.logger.debug "Formatted tool result: #{result}" if RubyLLM.config.log_stream_debug
+
+          result
         end
 
         def convert_role(role)
           case role
-          when :system, :user then 'user'
+          when :system, :user, :tool then 'user'
           else 'assistant'
           end
         end
@@ -269,7 +322,10 @@ module RubyLLM
             add_optional_fields(p, system_content:, tools:, temperature:)
           end
 
-          RubyLLM.logger.debug "Bedrock payload: #{payload}" if RubyLLM.config.log_stream_debug
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug 'Final Bedrock payload:'
+            RubyLLM.logger.debug JSON.pretty_generate(payload)
+          end
 
           payload
         end
@@ -290,8 +346,47 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model)
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug "Building base payload with #{chat_messages.length} messages"
+            chat_messages.each_with_index do |msg, index|
+              RubyLLM.logger.debug "Message #{index}: role=#{msg.role}, tool_call?=#{msg.tool_call?}, tool_result?=#{msg.tool_result?}, tool_call_id=#{msg.tool_call_id}"
+            end
+          end
+
+          formatted_messages = chat_messages.map { |msg| format_message(msg) }
+
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug "Formatted messages: #{formatted_messages.length} messages"
+            formatted_messages.each_with_index do |msg, index|
+              RubyLLM.logger.debug "Formatted message #{index}: #{msg.inspect}"
+            end
+          end
+
+          compacted_messages = formatted_messages.compact
+
+          if RubyLLM.config.log_stream_debug
+            RubyLLM.logger.debug "Compacted messages: #{compacted_messages.length} messages"
+            compacted_messages.each_with_index do |msg, index|
+              RubyLLM.logger.debug "Compacted message #{index}: #{msg.inspect}"
+            end
+          end
+
+          # Validate that no message contains both toolUse and toolResult
+          compacted_messages.each_with_index do |message, index|
+            next unless message && message[:content]
+
+            has_tool_use = message[:content].any? { |content| content['toolUse'] }
+            has_tool_result = message[:content].any? { |content| content['toolResult'] }
+
+            next unless has_tool_use && has_tool_result
+
+            RubyLLM.logger.error "Bedrock validation error: Message #{index} contains both toolUse and toolResult"
+            RubyLLM.logger.error "Message content: #{message[:content]}"
+            raise 'Bedrock validation error: Message cannot contain both toolUse and toolResult'
+          end
+
           {
-            messages: chat_messages.map { |msg| format_message(msg) },
+            messages: compacted_messages,
             inferenceConfig: {
               maxTokens: model.max_tokens || 4096
             }
@@ -311,17 +406,33 @@ module RubyLLM
 
           return unless tools.any?
 
-          payload[:additionalModelRequestFields] = {
-            tools: tools.values.map { |t| function_for(t) }
+          payload[:toolConfig] = {
+            tools: tools.values.map { |t| function_for(t) },
+            toolChoice: { auto: {} }
           }
         end
 
         def function_for(tool)
           {
-            name: tool.name,
-            description: tool.description,
-            inputSchema: tool.schema
+            toolSpec: {
+              name: tool.name,
+              description: tool.description,
+              inputSchema: {
+                json: {
+                  type: 'object',
+                  properties: tool.parameters.transform_values { |param| param_schema(param) },
+                  required: tool.parameters.select { |_, p| p.required }.keys
+                }
+              }
+            }
           }
+        end
+
+        def param_schema(param)
+          {
+            type: param.type,
+            description: param.description
+          }.compact
         end
       end
     end
