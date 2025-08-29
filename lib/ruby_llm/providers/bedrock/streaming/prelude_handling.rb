@@ -7,31 +7,45 @@ module RubyLLM
         # Module for handling message preludes in AWS Bedrock streaming responses.
         module PreludeHandling
           def can_read_prelude?(chunk, offset)
-            chunk.bytesize - offset >= 12
+            can_read = chunk.bytesize - offset >= 12
+            if RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug "Can read prelude: #{can_read} (chunk_size=#{chunk.bytesize}, offset=#{offset})"
+            end
+            can_read
           end
 
           def read_prelude(chunk, offset)
             total_length = chunk[offset...(offset + 4)].unpack1('N')
             headers_length = chunk[(offset + 4)...(offset + 8)].unpack1('N')
+            if RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug "Read prelude: total_length=#{total_length}, headers_length=#{headers_length}"
+            end
             [total_length, headers_length]
           end
 
           def valid_lengths?(total_length, headers_length)
-            valid_length_constraints?(total_length, headers_length)
+            valid = valid_length_constraints?(total_length, headers_length)
+            if RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug "Valid lengths: #{valid} (total_length=#{total_length}, headers_length=#{headers_length})"
+            end
+            valid
           end
 
           def calculate_positions(offset, total_length, headers_length)
             headers_end = offset + 12 + headers_length
             payload_end = offset + total_length - 4 # Subtract 4 bytes for message CRC
+            if RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug "Calculated positions: headers_end=#{headers_end}, payload_end=#{payload_end}"
+            end
             [headers_end, payload_end]
           end
 
           def valid_positions?(headers_end, payload_end, chunk_size)
-            return false if headers_end >= payload_end
-            return false if headers_end >= chunk_size
-            return false if payload_end > chunk_size
-
-            true
+            valid = headers_end < payload_end && headers_end < chunk_size && payload_end <= chunk_size
+            if RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug "Valid positions: #{valid} (headers_end=#{headers_end}, payload_end=#{payload_end}, chunk_size=#{chunk_size})"
+            end
+            valid
           end
 
           def find_next_message(chunk, offset)
