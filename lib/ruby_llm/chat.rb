@@ -17,9 +17,9 @@ module RubyLLM
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
       @temperature = nil
-      @tool_prefs = { choice: nil, parallel: nil }
       @messages = []
       @tools = {}
+      @tool_prefs = { choice: nil, parallel: nil }
       @params = {}
       @headers = {}
       @schema = nil
@@ -138,13 +138,13 @@ module RubyLLM
       response = @provider.complete(
         messages,
         tools: @tools,
+        tool_prefs: @tool_prefs,
         temperature: @temperature,
         model: @model,
         params: @params,
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
-        tool_prefs: @tool_prefs,
         &wrap_streaming_block(&)
       )
 
