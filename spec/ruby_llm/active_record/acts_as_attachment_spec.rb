@@ -4,6 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
+  include_context 'with database setup'
 
   let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
   let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
@@ -33,7 +34,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'attachment handling' do
     it 'converts ActiveStorage attachments to RubyLLM Content' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
@@ -48,7 +49,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'handles multiple attachments' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
       pdf_upload = uploaded_file(pdf_path, 'application/pdf')
@@ -61,7 +62,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'handles attachments in ask method' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
 
@@ -75,7 +76,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'attachment types' do
     it 'handles images' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       message = chat.messages.create!(role: 'user', content: 'Image test')
 
       message.attachments.attach(
@@ -90,7 +91,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'handles PDFs' do
-      chat = Chat.create!(model_id: model)
+      chat = Chat.create!(model: model)
       message = chat.messages.create!(role: 'user', content: 'PDF test')
 
       message.attachments.attach(

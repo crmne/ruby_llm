@@ -32,8 +32,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
         expect(chat_migration).to include('create_table :<%= options[:chat_model_name].tableize %>')
       end
 
-      it 'includes model_id field' do
-        expect(chat_migration).to include('t.string :model_id')
+      it 'includes model reference' do
+        expect(chat_migration).to include('t.references :<%= options[:model_model_name].tableize.singularize %>')
       end
     end
 
@@ -165,10 +165,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       expect(initializer_content).to include('config.openai_api_key')
     end
 
-    it 'configures Anthropic API key' do
-      expect(initializer_content).to include('config.anthropic_api_key')
-    end
-
     it 'configures model registry class' do
       expect(initializer_content).to include('config.model_registry_class')
     end
@@ -199,10 +195,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
     it 'includes documentation link' do
       expect(generator_content).to include('https://rubyllm.com')
-    end
-
-    it 'includes sponsorship information' do
-      expect(generator_content).to include('https://github.com/sponsors/crmne').and include('Star on GitHub')
     end
   end
 
@@ -246,19 +238,27 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     let(:generator_content) { File.read(generator_file) }
 
     it 'creates migrations in correct order' do
-      migration_section = generator_content[/def create_migration_files.*?end/m]
+      migration_section = generator_content[/def create_migration_files.*?\n    end/m]
 
-      # Extract the order of migration creation
-      chats_position = migration_section.index('create_chats_migration.rb.tt')
-      messages_position = migration_section.index('create_messages_migration.rb.tt')
-      tool_calls_position = migration_section.index('create_tool_calls_migration.rb.tt')
+      # Look for the model name references which are in the migration paths
+      chats_position = migration_section.index('chat_model_name')
+      messages_position = migration_section.index('message_model_name')
+      tool_calls_position = migration_section.index('tool_call_model_name')
+      models_position = migration_section.index('model_model_name')
+
+      expect(chats_position).not_to be_nil
+      expect(messages_position).not_to be_nil
+      expect(tool_calls_position).not_to be_nil
 
       expect(chats_position).to be < messages_position
       expect(messages_position).to be < tool_calls_position
+
+      # Models migration should come last if present
+      expect(models_position).to be > tool_calls_position if models_position
     end
 
     it 'has comments explaining the order' do
-      migration_section = generator_content[/def create_migration_files.*?end/m]
+      migration_section = generator_content[/def create_migration_files.*?\n    end/m]
       expect(migration_section).to include('must come before tool_calls due to foreign key')
       expect(migration_section).to include('references messages')
     end

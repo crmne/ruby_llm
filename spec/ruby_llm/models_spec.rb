@@ -143,13 +143,13 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#save_models' do
+  describe '#save_to_json' do
     it 'saves models to the models.json file' do
       temp_file = Tempfile.new(['models', '.json'])
       allow(described_class).to receive(:models_file).and_return(temp_file.path)
 
       models = RubyLLM.models
-      models.save_models
+      models.save_to_json
 
       # Verify file was written with valid JSON
       saved_content = File.read(temp_file.path)

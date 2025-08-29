@@ -76,7 +76,7 @@ def refresh_models
     validate_models!(models)
 
     puts "Saving models.json (#{models.all.size} models)"
-    models.save_models
+    models.save_to_json
   end
 
   @models = models

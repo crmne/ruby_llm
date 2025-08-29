@@ -23,12 +23,13 @@ redirect_from:
 
 After reading this guide, you will know:
 
-*   How to set up ActiveRecord models for persisting chats and messages.
-*   How the RubyLLM persistence flow works with Rails applications.
-*   How to use `acts_as_chat` and `acts_as_message` with your models.
-*   How to persist AI model metadata in your database with `acts_as_model`.
-*   How to integrate streaming responses with Hotwire/Turbo Streams.
-*   How to customize the persistence behavior for validation-focused scenarios.
+*   How to set up ActiveRecord models for persisting chats and messages
+*   How the RubyLLM persistence flow works with Rails applications
+*   How to use `acts_as_chat` and `acts_as_message` with your models
+*   How to persist AI model metadata in your database with `acts_as_model`
+*   How to send file attachments to AI models with ActiveStorage
+*   How to integrate streaming responses with Hotwire/Turbo Streams
+*   How to customize the persistence behavior for validation-focused scenarios
 
 ## Understanding the Persistence Flow
 
@@ -68,18 +69,21 @@ The easiest way to get started is using the provided Rails generator:
 rails generate ruby_llm:install
 ```
 
-This generator automatically creates:
-- All required migrations (Chat, Message, ToolCall, Model tables)
-- Model files with `acts_as_chat`, `acts_as_message`, `acts_as_tool_call`, and `acts_as_model` configured
-- A RubyLLM initializer in `config/initializers/ruby_llm.rb` with database model registry enabled
+This generator automatically:
+- Creates all required migrations (Chat, Message, ToolCall, Model tables)
+- Sets up model files with `acts_as_chat`, `acts_as_message`, `acts_as_tool_call`, and `acts_as_model`
+- Installs ActiveStorage for file attachments
+- Adds `has_many_attached :attachments` to your Message model
+- Creates a RubyLLM initializer with database model registry enabled
 
 After running the generator:
 
 ```bash
 rails db:migrate
+rails ruby_llm:load_models  # Populates the models table from models.json
 ```
 
-You're ready to go! The generator handles all the setup complexity for you.
+You're ready to go! The generator handles all the setup complexity for you, including configuring the DB-backed model registry.
 
 #### Generator Options
 
@@ -89,8 +93,11 @@ The generator supports custom model names if needed:
 # Use custom model names
 rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
 
-# Skip the Model registry (opt-out)
-rails generate ruby_llm:install --skip-model
+# Skip the Model registry (uses string fields instead)
+rails generate ruby_llm:install --skip-model-registry
+
+# Skip ActiveStorage installation (no file attachment support)
+rails generate ruby_llm:install --skip-active-storage
 ```
 
 This is useful if you already have models with these names or prefer different naming conventions.
@@ -184,29 +191,26 @@ Run the migrations: `rails db:migrate`
 > **Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 {: .note }
 
-### ActiveStorage Setup for Attachments (Optional)
+### ActiveStorage for Attachments
 
-If you want to use attachments (images, audio, PDFs) with your AI chats, you need to set up ActiveStorage:
+The generator automatically sets up ActiveStorage and adds `has_many_attached :attachments` to your Message model. This enables file attachments out of the box.
+
+If you skipped ActiveStorage during generation (`--skip-active-storage`), you can add it later:
 
 ```bash
-# Only needed if you plan to use attachments
 rails active_storage:install
 rails db:migrate
 ```
 
-Then add the attachments association to your Message model:
+Then add to your Message model:
 
 ```ruby
 # app/models/message.rb
 class Message < ApplicationRecord
-  acts_as_message # Basic RubyLLM integration
-
-  # Optional: Add this line to enable attachment support
-  has_many_attached :attachments
+  acts_as_message
+  has_many_attached :attachments  # Required for file attachments
 end
 ```
-
-This setup is completely optional - your RubyLLM Rails integration works fine without it if you don't need attachment support.
 
 ### Configure RubyLLM
 
@@ -236,7 +240,6 @@ class Chat < ApplicationRecord
 
   # --- Add your standard Rails model logic below ---
   belongs_to :user, optional: true # Example
-  validates :model_id, presence: true # Example
 end
 
 # app/models/message.rb
@@ -270,28 +273,105 @@ class Model < ApplicationRecord
 end
 ```
 
-### Setup RubyLLM.chat yourself
+### Using Provider Overrides
 
-In some scenarios, you need to tap into the power and arguments of `RubyLLM.chat`. For example, if want to use model aliases with alternate providers. Here is a working example:
+With the DB-backed model registry (v1.7.0+), you can specify alternate providers:
 
 ```ruby
- class Chat < ApplicationRecord
-    acts_as_chat
+# Use a model through a different provider
+chat = Chat.create!(
+  model: 'claude-3-5-sonnet',
+  provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
+)
 
-    validates :model_id, presence: true
-    validates :provider, presence: true
-
-    after_initialize :set_chat
-
-    def set_chat
-      @chat = RubyLLM.chat(model: model_id, provider:)
-    end
-  end
-
-  # Then in your controller or background job:
-  Chat.new(model_id: 'alias', provider: 'provider_name')
+# The model registry handles the routing automatically
+chat.ask("Hello!")
 ```
 
+### Custom Contexts and Dynamic Models
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
+#### Using Custom Contexts
+
+For multi-tenant applications or when you need different API keys per chat:
+
+**With DB-backed model registry (default in v1.7.0+):**
+
+```ruby
+# Create a custom context
+custom_context = RubyLLM.context do |config|
+  config.openai_api_key = 'sk-customer-specific-key'
+end
+
+# Pass context when creating the chat
+chat = Chat.create!(
+  model: 'gpt-4',
+  context: custom_context
+)
+```
+
+**Legacy mode (when using `--skip-model-registry`):**
+
+```ruby
+# In legacy mode, you can set context after creation
+chat = Chat.create!(model_id: 'gpt-4')
+chat.with_context(custom_context)  # This method only exists in legacy mode
+```
+
+> The `context` is NOT persisted to the database. You must set it again when reloading chats:
+{: .warning }
+
+```ruby
+# Later, in a different request or after restart
+chat = Chat.find(chat_id)
+chat.context = custom_context  # Must set this!
+chat.ask("Continue our conversation")
+```
+
+For multi-tenant apps, consider using an `after_find` callback:
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+  belongs_to :tenant
+
+  after_find :set_tenant_context
+
+  private
+
+  def set_tenant_context
+    self.context = RubyLLM.context do |config|
+      config.openai_api_key = tenant.openai_api_key
+    end
+  end
+end
+```
+
+#### Dynamic Model Creation
+
+When using models not in the registry (e.g., new OpenRouter models):
+
+```ruby
+# Create chat with a dynamic model
+chat = Chat.create!(
+  model: 'experimental-llm-v2',
+  provider: 'openrouter',
+  assume_model_exists: true  # Creates Model record automatically
+)
+```
+
+> Like `context`, `assume_model_exists` is NOT persisted. Set it when needed for model changes:
+{: .note }
+
+```ruby
+# When switching to another dynamic model later
+chat = Chat.find(chat_id)
+chat.assume_model_exists = true
+chat.with_model('another-experimental-model', provider: 'openrouter')
+```
 
 ## Basic Usage
 
@@ -333,23 +413,24 @@ Available in v1.7.0+
 When using the Model registry (created by default by the generator), your chats and messages get associations to model records:
 
 ```ruby
-chat = Chat.create! model_id: 'gpt-4.1-nano'
-chat.model # => #<Model model_id: "gpt-4.1-nano", provider: "openai">
-chat.model.context_window # => 1047576
-chat.model.supports? 'structured_output' # => true
+# String automatically resolves to Model record
+chat = Chat.create!(model: 'gpt-4')
+chat.model # => #<Model model_id: "gpt-4o", provider: "openai">
+chat.model.name # => "GPT-4"
+chat.model.context_window # => 128000
+chat.model.supports_vision # => true
 
-# Populate your database with all available models
-Model.refresh!
+# Populate/refresh models from models.json
+rails ruby_llm:load_models
 
 # Query based on model attributes
 Chat.joins(:model).where(models: { provider: 'anthropic' })
 Model.left_joins(:chats).group(:id).order('COUNT(chats.id) DESC')
 
-# Extend with custom attributes via migration
-Model.where('monthly_limit > ?', 1000)
+# Find models with specific capabilities
+Model.where(supports_functions: true)
+Model.where(supports_vision: true)
 ```
-
-The registry automatically falls back to JSON if the database is unavailable, ensuring resilience.
 
 ### System Instructions
 
@@ -394,7 +475,7 @@ puts chat_record.messages.count # => 3 (user, assistant's tool call, tool result
 
 ### Working with Attachments
 
-If you've set up ActiveStorage as described above, you can easily send attachments to AI models with automatic type detection:
+With [ActiveStorage configured](#activestorage-setup-optional), send files to AI models:
 
 ```ruby
 # Create a chat

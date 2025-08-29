@@ -124,7 +124,7 @@ RSpec.describe RubyLLM::Models do
       temp_file = Tempfile.new(['test_models', '.json'])
       allow(described_class).to receive(:models_file).and_return(temp_file.path)
 
-      models.save_models
+      models.save_to_json
 
       saved_data = JSON.parse(File.read(temp_file.path))
       expect(saved_data).to be_an(Array)

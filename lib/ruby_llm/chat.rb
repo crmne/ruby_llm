@@ -169,6 +169,10 @@ module RubyLLM
       @messages.clear
     end
 
+    def instance_variables
+      super - %i[@connection @config]
+    end
+
     private
 
     def wrap_streaming_block(&block)
@@ -232,10 +236,6 @@ module RubyLLM
 
     def reset_tool_choice
       @tool_prefs[:choice] = nil
-    end
-
-    def instance_variables
-      super - %i[@connection @config]
     end
   end
 end
