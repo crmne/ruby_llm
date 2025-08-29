@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # OpenRouter API integration.
-    class OpenRouter < OpenAI
+    class OpenRouter < OpenAIBase
       include OpenRouter::Models
 
       def api_base

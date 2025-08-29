@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named John who is 30 years old","status":"completed"}],"stream":false,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"This
+        will fail","status":"completed"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 25 Aug 2025 05:06:49 GMT
+      - Wed, 06 Aug 2025 03:58:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,7 +38,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '149999932'
+      - '149999970'
       X-Ratelimit-Reset-Requests:
       - 2ms
       X-Ratelimit-Reset-Tokens:
@@ -48,13 +48,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Project:
-      - "<OPENAI_PROJECT>"
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '318'
+      - '873'
       X-Envoy-Upstream-Service-Time:
-      - '320'
+      - '895'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
@@ -74,9 +74,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_68abef69028881a38d1a014252ed597c07459232ff9bee71",
+          "id": "resp_6892d2fb7a10819c90b8d7604bcd32b802ae8a124918aafd",
           "object": "response",
-          "created_at": 1756098409,
+          "created_at": 1754452731,
           "status": "completed",
           "background": false,
           "error": null,
@@ -87,7 +87,7 @@ http_interactions:
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
-              "id": "msg_68abef69332081a3a96032c9e8e8c39907459232ff9bee71",
+              "id": "msg_6892d2fbd45c819cabab9458607d8fba02ae8a124918aafd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -95,7 +95,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "{\"name\":\"John\",\"age\":30}"
+                  "text": "It looks like you might be referring to a specific situation or statement. Could you please provide more context or clarify what you're referring to? I'm here to help!"
                 }
               ],
               "role": "assistant"
@@ -111,31 +111,11 @@ http_interactions:
           "safety_identifier": null,
           "service_tier": "default",
           "store": true,
-          "temperature": 1.0,
+          "temperature": 0.7,
           "text": {
             "format": {
-              "type": "json_schema",
-              "description": null,
-              "name": "response",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "age": {
-                    "type": "integer"
-                  }
-                },
-                "required": [
-                  "name",
-                  "age"
-                ],
-                "additionalProperties": false
-              },
-              "strict": true
-            },
-            "verbosity": "medium"
+              "type": "text"
+            }
           },
           "tool_choice": "auto",
           "tools": [],
@@ -143,18 +123,18 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 47,
+            "input_tokens": 10,
             "input_tokens_details": {
               "cached_tokens": 0
             },
-            "output_tokens": 10,
+            "output_tokens": 33,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 57
+            "total_tokens": 43
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Mon, 25 Aug 2025 05:06:49 GMT
+  recorded_at: Wed, 06 Aug 2025 03:58:52 GMT
 recorded_with: VCR 6.3.1
