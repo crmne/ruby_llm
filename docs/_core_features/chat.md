@@ -77,6 +77,24 @@ end
 
 Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue. The framework automatically manages context window limits, truncating older messages if necessary to stay within the model's constraints.
 
+### Providing Conversation History
+
+You can also preload an existing conversation history using the `with_messages` method. It accepts an array of attributes hashes or `RubyLLM::Message` objects. This is useful when restoring a previous conversation:
+
+```ruby
+# Load a previous conversation
+chat = RubyLLM.chat.with_messages([
+  { role: :user, content: "What is Ruby?" },
+  { role: :assistant, content: "Ruby is a dynamic programming language..." },
+  { role: :user, content: "Who created it?" },
+  { role: :assistant, content: "Ruby was created by Yukihiro Matsumoto..." }
+])
+
+# Continue the conversation
+response = chat.ask "What year was it released?"
+# => "Ruby was first released in 1995..."
+```
+
 ## Guiding AI Behavior with System Prompts
 
 System prompts, also called instructions, allow you to set the overall behavior, personality, and constraints for the AI assistant. These instructions persist throughout the conversation and help ensure consistent responses.

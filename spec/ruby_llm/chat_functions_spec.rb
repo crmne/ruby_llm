@@ -121,6 +121,111 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe '#with_messages' do
+    it 'adds multiple messages at once' do
+      chat = described_class.new
+
+      messages = [
+        { role: :user, content: 'First message' },
+        { role: :assistant, content: 'Second message' },
+        { role: :user, content: 'Third message' }
+      ]
+
+      chat.with_messages(messages)
+
+      expect(chat.messages.size).to eq(3)
+      expect(chat.messages[0].role).to eq(:user)
+      expect(chat.messages[0].content.to_s).to eq('First message')
+      expect(chat.messages[1].role).to eq(:assistant)
+      expect(chat.messages[1].content.to_s).to eq('Second message')
+      expect(chat.messages[2].role).to eq(:user)
+      expect(chat.messages[2].content.to_s).to eq('Third message')
+    end
+
+    it 'accepts Message objects' do
+      chat = described_class.new
+
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Hello'),
+        RubyLLM::Message.new(role: :assistant, content: 'Hi there')
+      ]
+
+      chat.with_messages(messages)
+
+      expect(chat.messages).to match_array(messages)
+    end
+
+    it 'accepts a mix of Message objects and hashes' do
+      chat = described_class.new
+
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'You are helpful'),
+        { role: :user, content: 'What is 2+2?' },
+        RubyLLM::Message.new(role: :assistant, content: '4')
+      ]
+
+      chat.with_messages(messages)
+
+      expect(chat.messages.size).to eq(3)
+      expect(chat.messages[0].role).to eq(:system)
+      expect(chat.messages[1].role).to eq(:user)
+      expect(chat.messages[2].role).to eq(:assistant)
+    end
+
+    it 'returns self for method chaining' do
+      chat = described_class.new
+
+      result = chat.with_messages([{ role: :user, content: 'Test' }])
+
+      expect(result).to eq(chat)
+    end
+
+    it 'preserves message order' do
+      chat = described_class.new
+
+      messages = (1..5).map { |i| { role: :user, content: "Message #{i}" } }
+
+      chat.with_messages(messages)
+
+      chat.messages.each_with_index do |msg, i|
+        expect(msg.content.to_s).to eq("Message #{i + 1}")
+      end
+    end
+
+    it 'handles empty array' do
+      chat = described_class.new
+
+      chat.with_messages([])
+
+      expect(chat.messages).to be_empty
+    end
+
+    it 'adds to existing messages' do
+      chat = described_class.new
+      chat.add_message(role: :system, content: 'Initial message')
+
+      chat.with_messages([
+                           { role: :user, content: 'New message 1' },
+                           { role: :assistant, content: 'New message 2' }
+                         ])
+
+      expect(chat.messages.size).to eq(3)
+      expect(chat.messages[0].content.to_s).to eq('Initial message')
+      expect(chat.messages[1].content.to_s).to eq('New message 1')
+      expect(chat.messages[2].content.to_s).to eq('New message 2')
+    end
+
+    it 'works with method chaining' do
+      chat = described_class.new
+                            .with_messages([{ role: :system, content: 'System prompt' }])
+                            .with_temperature(0.7)
+                            .with_messages([{ role: :user, content: 'User message' }])
+
+      expect(chat.messages.size).to eq(2)
+      expect(chat.instance_variable_get(:@temperature)).to eq(0.7)
+    end
+  end
+
   describe '#each' do
     it 'iterates through messages' do
       chat = described_class.new

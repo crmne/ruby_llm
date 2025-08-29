@@ -159,6 +159,13 @@ module RubyLLM
       message
     end
 
+    alias with_message add_message
+
+    def with_messages(messages_or_attributes)
+      messages_or_attributes.each { with_message _1 }
+      self
+    end
+
     def reset_messages!
       @messages.clear
     end
