@@ -379,25 +379,53 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'Action Text content support' do
-    it 'converts Action Text content to plain text' do
-      chat = Chat.create!(model_id: model)
-      action_text_content = instance_double(ActionText::RichText)
-      allow(action_text_content).to receive(:to_plain_text).and_return('This is rich text content')
+    let(:chat) { Chat.create!(model_id: model) }
 
+    def mock_action_text(plain_text)
+      instance_double(ActionText::RichText).tap do |mock|
+        allow(mock).to receive(:to_plain_text).and_return(plain_text)
+      end
+    end
+
+    it 'converts Action Text content to plain text' do
+      action_text_content = mock_action_text('This is rich text content')
       message = chat.messages.create!(role: 'user')
       allow(message).to receive(:content).and_return(action_text_content)
 
       llm_message = message.to_llm
 
+      expect(message.content).not_to be_a(String)
       expect(action_text_content).to have_received(:to_plain_text)
       expect(llm_message.content).to eq('This is rich text content')
     end
 
     it 'handles regular string content when to_plain_text is not available' do
-      chat = Chat.create!(model_id: model)
       message = chat.messages.create!(role: 'user', content: 'Regular text content')
+
       llm_message = message.to_llm
+
+      expect(message.content).to be_a(String)
       expect(llm_message.content).to eq('Regular text content')
+    end
+
+    it 'handles Action Text content with attachments' do
+      action_text_content = mock_action_text('Rich text with attachment reference')
+      message = chat.messages.create!(role: 'user')
+      allow(message).to receive(:content).and_return(action_text_content)
+
+      message.attachments.attach(
+        io: StringIO.new('test data'),
+        filename: 'test.txt',
+        content_type: 'text/plain'
+      )
+
+      llm_message = message.to_llm
+
+      expect(action_text_content).to have_received(:to_plain_text)
+      expect(llm_message.content).to be_a(RubyLLM::Content)
+      expect(llm_message.content.text).to eq('Rich text with attachment reference')
+      expect(llm_message.content.attachments).not_to be_empty
+      expect(llm_message.content.attachments.first.mime_type).to eq('text/plain')
     end
   end
 
