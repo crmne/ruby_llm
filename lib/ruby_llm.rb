@@ -25,8 +25,6 @@ loader.inflector.inflect(
   'pdf' => 'PDF'
 )
 loader.ignore("#{__dir__}/tasks")
-loader.ignore("#{__dir__}/ruby_llm/railtie")
-loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/generators")
 loader.setup
 

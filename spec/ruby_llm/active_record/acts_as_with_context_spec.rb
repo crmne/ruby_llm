@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  include_context 'with database setup'
-
   let(:model) { 'gpt-4.1-nano' }
 
   describe 'when global configuration is missing' do

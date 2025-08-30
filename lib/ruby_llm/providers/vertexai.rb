@@ -33,7 +33,7 @@ module RubyLLM
       private
 
       def access_token
-        return 'test-token' if defined?(VCR) && VCR.current_cassette
+        return 'test-token' if defined?(VCR) && !VCR.current_cassette.recording?
 
         initialize_authorizer unless @authorizer
         @authorizer.fetch_access_token!['access_token']

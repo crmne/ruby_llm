@@ -75,7 +75,15 @@ end
     *   **`required:`:** (Optional, defaults to `true`) Whether the AI *must* provide this parameter when calling the tool. Set to `false` for optional parameters and provide a default value in your `execute` method signature.
 4.  **`execute` Method:** The instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
 
-> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
+> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining a `name` method in your tool class:
+>
+> ```ruby
+> class WeatherLookup < RubyLLM::Tool
+>   def name
+>     "Weather"
+>   end
+> end
+> ```
 {: .note }
 
 ## Returning Rich Content from Tools
