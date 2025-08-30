@@ -135,6 +135,11 @@ module RubyLLM
         self
       end
 
+      def cache_prompts(...)
+        to_llm.cache_prompts(...)
+        self
+      end
+
       def on_new_message(&block)
         to_llm
 

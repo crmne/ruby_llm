@@ -16,6 +16,7 @@ module RubyLLM
             content: extract_content(data),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            cached_tokens: extract_cached_tokens(data),
             tool_calls: extract_tool_calls(data)
           )
         end
@@ -46,6 +47,10 @@ module RubyLLM
           thoughts = data.dig('usageMetadata', 'thoughtsTokenCount') || 0
           total = candidates + thoughts
           total.positive? ? total : nil
+        end
+
+        def extract_cached_tokens(data)
+          data.dig('usageMetadata', 'cachedContentTokenCount')
         end
 
         def parse_streaming_error(data)
