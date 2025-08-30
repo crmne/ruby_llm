@@ -288,7 +288,7 @@ The `with_temperature` method returns the chat instance, allowing you to chain m
 
 ### Provider-Specific Parameters
 
-Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface.
+Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface. Parameters passed via `with_params` will override any defaults set by RubyLLM, giving you full control over the API request payload.
 
 ```ruby
 # response_format parameter is supported by :openai, :ollama, :deepseek
@@ -297,8 +297,11 @@ response = chat.ask "What is the square root of 64? Answer with a JSON object wi
 puts JSON.parse(response.content)
 ```
 
-> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors.
-{: .note }
+> **With great power comes great responsibility:** The `with_params` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
+{: .warning }
+
+> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
+{: .warning }
 
 ### Custom HTTP Headers
 {: .d-inline-block }
