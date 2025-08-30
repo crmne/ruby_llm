@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
-  include_context 'with database setup'
 
   describe 'acts_as_model' do
     let(:model_class) do
@@ -32,26 +31,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     before do
-      # Drop tables in correct order due to foreign key constraints
-      ActiveRecord::Base.connection.drop_table(:chats) if ActiveRecord::Base.connection.table_exists?(:chats)
-      ActiveRecord::Base.connection.drop_table(:models) if ActiveRecord::Base.connection.table_exists?(:models)
-      ActiveRecord::Schema.define do
-        create_table :models do |t|
-          t.string :model_id, null: false
-          t.string :name, null: false
-          t.string :provider, null: false
-          t.string :family
-          t.datetime :model_created_at
-          t.integer :context_window
-          t.integer :max_output_tokens
-          t.date :knowledge_cutoff
-          t.json :modalities, default: {}
-          t.json :capabilities, default: []
-          t.json :pricing, default: {}
-          t.json :metadata, default: {}
-          t.timestamps
-        end
-      end
+      ActiveRecord::Tasks::DatabaseTasks.drop_current
+      ActiveRecord::Tasks::DatabaseTasks.load_schema_current
+    end
+
+    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      ActiveRecord::Tasks::DatabaseTasks.drop_current
+      ActiveRecord::Tasks::DatabaseTasks.load_schema_current
+      RubyLLM.models.load_from_json!
+      Model.save_to_database
     end
 
     describe 'model persistence' do
@@ -173,7 +161,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       after do
         RubyLLM.configure do |config|
-          config.model_registry_class = nil
+          config.model_registry_class = 'Model'
         end
       end
 
@@ -248,7 +236,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       after do
         RubyLLM.configure do |config|
-          config.model_registry_class = nil
+          config.model_registry_class = 'Model'
         end
       end
 
