@@ -5,7 +5,11 @@ class Create<%= options[:tool_call_model_name].pluralize %> < ActiveRecord::Migr
       t.references :<%= options[:message_model_name].tableize.singularize %>, null: false, foreign_key: true
       t.string :tool_call_id, null: false
       t.string :name, null: false
-      t.<%= postgresql? ? 'jsonb' : 'json' %> :arguments, default: {}
+      <% if postgresql? %>
+      t.jsonb :arguments, default: {}
+      <% else %>
+      t.json :arguments, null: false
+      <% end %>
       t.timestamps
     end
 

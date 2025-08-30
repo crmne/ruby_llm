@@ -1,3 +1,4 @@
 class <%= options[:tool_call_model_name] %> < ApplicationRecord
+  after_initialize { self.arguments ||= {} }
   <%= acts_as_tool_call_declaration %>
 end
