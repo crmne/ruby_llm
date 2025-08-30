@@ -378,6 +378,29 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'Action Text content support' do
+    it 'converts Action Text content to plain text' do
+      chat = Chat.create!(model_id: model)
+      action_text_content = instance_double(ActionText::RichText)
+      allow(action_text_content).to receive(:to_plain_text).and_return('This is rich text content')
+
+      message = chat.messages.create!(role: 'user')
+      allow(message).to receive(:content).and_return(action_text_content)
+
+      llm_message = message.to_llm
+
+      expect(action_text_content).to have_received(:to_plain_text)
+      expect(llm_message.content).to eq('This is rich text content')
+    end
+
+    it 'handles regular string content when to_plain_text is not available' do
+      chat = Chat.create!(model_id: model)
+      message = chat.messages.create!(role: 'user', content: 'Regular text content')
+      llm_message = message.to_llm
+      expect(llm_message.content).to eq('Regular text content')
+    end
+  end
+
   describe 'attachment handling' do
     let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
     let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
