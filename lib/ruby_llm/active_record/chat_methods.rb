@@ -286,7 +286,9 @@ module RubyLLM
           case attachment
           when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
             attachment
-          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many
+          when ActiveStorage::Attached::One
+            attachment.blob
+          when ActiveStorage::Attached::Many
             attachment.blobs
           when Hash
             attachment.values.map { |v| prepare_for_active_storage(v) }
