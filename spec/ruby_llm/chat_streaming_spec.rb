@@ -25,7 +25,6 @@ RSpec.describe RubyLLM::Chat do
         expect(response.raw.status).to be_present
         expect(response.raw.status).to eq(200)
         expect(response.raw.env.request_body).to be_present
-        puts response.raw.env.request_body
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do

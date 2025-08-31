@@ -37,10 +37,10 @@ module RubyLLM
 
         def build_base_payload(chat_messages, model, stream)
           {
-            model: model,
+            model: model.id,
             messages: chat_messages.map { |msg| format_message(msg) },
             stream: stream,
-            max_tokens: RubyLLM.models.find(model)&.max_tokens || 4096
+            max_tokens: model.max_tokens || 4096
           }
         end
 

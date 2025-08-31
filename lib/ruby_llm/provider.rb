@@ -41,7 +41,6 @@ module RubyLLM
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
-        params,
         render_payload(
           messages,
           tools: tools,
@@ -49,7 +48,8 @@ module RubyLLM
           model: model,
           stream: block_given?,
           schema: schema
-        )
+        ),
+        params
       )
 
       if block_given?
@@ -201,7 +201,7 @@ module RubyLLM
       raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
     end
 
-    def maybe_normalize_temperature(temperature, _model_id)
+    def maybe_normalize_temperature(temperature, _model)
       temperature
     end
 
