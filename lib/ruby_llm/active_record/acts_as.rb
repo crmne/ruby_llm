@@ -353,15 +353,9 @@ module RubyLLM
       end
 
       def extract_content
-        text_content = if content.respond_to?(:to_plain_text)
-                         content.to_plain_text
-                       else
-                         content.to_s
-                       end
+        return content unless respond_to?(:attachments) && attachments.attached?
 
-        return text_content unless respond_to?(:attachments) && attachments.attached?
-
-        RubyLLM::Content.new(text_content).tap do |content_obj|
+        RubyLLM::Content.new(content).tap do |content_obj|
           @_tempfiles = []
 
           attachments.each do |attachment|
