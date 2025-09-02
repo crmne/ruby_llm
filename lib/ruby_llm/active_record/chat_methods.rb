@@ -2,97 +2,82 @@
 
 module RubyLLM
   module ActiveRecord
-    # Adds chat and message persistence capabilities to ActiveRecord models.
-    module ActsAsLegacy
-      extend ActiveSupport::Concern
-
-      class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
-          include ChatLegacyMethods
-
-          @message_class = message_class.to_s
-          @tool_call_class = tool_call_class.to_s
-
-          has_many :messages,
-                   -> { order(created_at: :asc) },
-                   class_name: @message_class,
-                   inverse_of: :chat,
-                   dependent: :destroy
-
-          delegate :add_message, to: :to_llm
-        end
-
-        def acts_as_message(chat_class: 'Chat',
-                            chat_foreign_key: nil,
-                            tool_call_class: 'ToolCall',
-                            tool_call_foreign_key: nil,
-                            touch_chat: false)
-          include MessageLegacyMethods
-
-          @chat_class = chat_class.to_s
-          @chat_foreign_key = chat_foreign_key || ActiveSupport::Inflector.foreign_key(@chat_class)
-
-          @tool_call_class = tool_call_class.to_s
-          @tool_call_foreign_key = tool_call_foreign_key || ActiveSupport::Inflector.foreign_key(@tool_call_class)
-
-          belongs_to :chat,
-                     class_name: @chat_class,
-                     foreign_key: @chat_foreign_key,
-                     inverse_of: :messages,
-                     touch: touch_chat
-
-          has_many :tool_calls,
-                   class_name: @tool_call_class,
-                   dependent: :destroy
-
-          belongs_to :parent_tool_call,
-                     class_name: @tool_call_class,
-                     foreign_key: @tool_call_foreign_key,
-                     optional: true,
-                     inverse_of: :result
-
-          has_many :tool_results,
-                   through: :tool_calls,
-                   source: :result,
-                   class_name: @message_class
-
-          delegate :tool_call?, :tool_result?, to: :to_llm
-        end
-
-        def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
-          @message_class = message_class.to_s
-          @message_foreign_key = message_foreign_key || ActiveSupport::Inflector.foreign_key(@message_class)
-          @result_foreign_key = result_foreign_key || ActiveSupport::Inflector.foreign_key(name)
-
-          belongs_to :message,
-                     class_name: @message_class,
-                     foreign_key: @message_foreign_key,
-                     inverse_of: :tool_calls
-
-          has_one :result,
-                  class_name: @message_class,
-                  foreign_key: @result_foreign_key,
-                  inverse_of: :parent_tool_call,
-                  dependent: :nullify
-        end
-      end
-    end
-
     # Methods mixed into chat models.
-    module ChatLegacyMethods
+    module ChatMethods
       extend ActiveSupport::Concern
+
+      included do
+        before_save :resolve_model_from_strings
+      end
 
       class_methods do
-        attr_reader :tool_call_class
+        attr_reader :tool_call_class, :model_class
       end
 
-      def to_llm(context: nil)
-        # model_id is a string that RubyLLM can resolve
-        @chat ||= if context
-                    context.chat(model: model_id)
-                  else
-                    RubyLLM.chat(model: model_id)
-                  end
+      attr_accessor :assume_model_exists, :context
+
+      def model=(value)
+        @model_string = value if value.is_a?(String)
+        super unless value.is_a?(String)
+      end
+
+      def model_id=(value)
+        @model_string = value
+      end
+
+      def model_id
+        model&.model_id
+      end
+
+      def provider=(value)
+        @provider_string = value
+      end
+
+      def provider
+        model&.provider
+      end
+
+      private
+
+      def resolve_model_from_strings # rubocop:disable Metrics/PerceivedComplexity
+        return unless @model_string
+
+        model_info, _provider = Models.resolve(
+          @model_string,
+          provider: @provider_string,
+          assume_exists: assume_model_exists || false,
+          config: context&.config || RubyLLM.config
+        )
+
+        model_class = self.class.model_class.constantize
+        model_record = model_class.find_or_create_by!(
+          model_id: model_info.id,
+          provider: model_info.provider
+        ) do |m|
+          m.name = model_info.name || model_info.id
+          m.family = model_info.family
+          m.context_window = model_info.context_window
+          m.max_output_tokens = model_info.max_output_tokens
+          m.capabilities = model_info.capabilities || []
+          m.modalities = model_info.modalities || {}
+          m.pricing = model_info.pricing || {}
+          m.metadata = model_info.metadata || {}
+        end
+
+        self.model = model_record
+        @model_string = nil
+        @provider_string = nil
+      end
+
+      public
+
+      def to_llm
+        raise 'No model specified' unless model
+
+        @chat ||= (context || RubyLLM).chat(
+          model: model.model_id,
+          provider: model.provider.to_sym
+        )
         @chat.reset_messages!
 
         messages.each do |msg|
@@ -121,18 +106,17 @@ module RubyLLM
         self
       end
 
-      def with_model(...)
-        update(model_id: to_llm.with_model(...).model.id)
+      def with_model(model_name, provider: nil)
+        self.provider = provider if provider
+        self.model = model_name
+        resolve_model_from_strings
+        save!
+        to_llm.with_model(model.model_id, provider: model.provider.to_sym)
         self
       end
 
       def with_temperature(...)
         to_llm.with_temperature(...)
-        self
-      end
-
-      def with_context(context)
-        to_llm(context: context)
         self
       end
 
@@ -266,7 +250,7 @@ module RubyLLM
           @message.update!(
             role: message.role,
             content: content,
-            model_id: message.model_id,
+            model: model,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens
           )
@@ -325,73 +309,6 @@ module RubyLLM
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
-      end
-    end
-
-    # Methods mixed into message models.
-    module MessageLegacyMethods
-      extend ActiveSupport::Concern
-
-      class_methods do
-        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
-      end
-
-      def to_llm
-        RubyLLM::Message.new(
-          role: role.to_sym,
-          content: extract_content,
-          tool_calls: extract_tool_calls,
-          tool_call_id: extract_tool_call_id,
-          input_tokens: input_tokens,
-          output_tokens: output_tokens,
-          model_id: model_id
-        )
-      end
-
-      private
-
-      def extract_tool_calls
-        tool_calls.to_h do |tool_call|
-          [
-            tool_call.tool_call_id,
-            RubyLLM::ToolCall.new(
-              id: tool_call.tool_call_id,
-              name: tool_call.name,
-              arguments: tool_call.arguments
-            )
-          ]
-        end
-      end
-
-      def extract_tool_call_id
-        parent_tool_call&.tool_call_id
-      end
-
-      def extract_content
-        return content unless respond_to?(:attachments) && attachments.attached?
-
-        RubyLLM::Content.new(content).tap do |content_obj|
-          @_tempfiles = []
-
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
-          end
-        end
-      end
-
-      def download_attachment(attachment)
-        ext = File.extname(attachment.filename.to_s)
-        basename = File.basename(attachment.filename.to_s, ext)
-        tempfile = Tempfile.new([basename, ext])
-        tempfile.binmode
-
-        attachment.download { |chunk| tempfile.write(chunk) }
-
-        tempfile.flush
-        tempfile.rewind
-        @_tempfiles << tempfile
-        tempfile
       end
     end
   end

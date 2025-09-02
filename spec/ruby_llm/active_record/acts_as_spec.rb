@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
-  include_context 'with database setup'
 
   let(:model) { 'gpt-4.1-nano' }
 
@@ -308,21 +307,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     module Assistants # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       class BotChat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
         self.table_name = 'bot_chats'
-        include RubyLLM::ActiveRecord::ActsAs
-
         acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
       end
     end
 
     class BotMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      include RubyLLM::ActiveRecord::ActsAs
-
       acts_as_message chat_class: 'Assistants::BotChat', tool_call_class: 'BotToolCall'
     end
 
     class BotToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      include RubyLLM::ActiveRecord::ActsAs
-
       acts_as_tool_call message_class: 'BotMessage'
     end
 

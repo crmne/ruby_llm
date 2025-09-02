@@ -155,28 +155,11 @@ module RubyLLM
     end
 
     def load_models
-      if RubyLLM.config.model_registry_class
-        read_from_database
-      else
-        read_from_json
-      end
-    rescue StandardError => e
-      RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
       read_from_json
-    end
-
-    def load_from_database!
-      @models = read_from_database
     end
 
     def load_from_json!
       @models = read_from_json
-    end
-
-    def read_from_database
-      model_class = RubyLLM.config.model_registry_class
-      model_class = model_class.constantize if model_class.is_a?(String)
-      model_class.all.map(&:to_llm)
     end
 
     def read_from_json
