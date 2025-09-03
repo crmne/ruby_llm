@@ -143,6 +143,19 @@ module StreamingErrorHelpers
       },
       chunk_status: 529,
       expected_error: RubyLLM::OverloadedError
+    },
+    xai: {
+      url: 'https://api.x.ai/v1/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
     }
   }.freeze
 
