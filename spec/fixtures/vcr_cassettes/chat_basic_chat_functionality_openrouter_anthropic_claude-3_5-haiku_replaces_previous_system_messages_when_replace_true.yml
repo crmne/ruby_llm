@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:49 GMT
+      - Tue, 02 Sep 2025 22:51:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,15 +50,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n{\"id\":\"gen-1755709848-qNc5nMYH6WiZEZL6oIpW\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755709848,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
+        \        \n\n         \n{\"id\":\"gen-1756853501-1glOngVCdP5wf6tmLUNK\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853501,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"The
         weather can vary widely depending on your specific location and current atmospheric
-        conditions. Today, temperatures might range from cool to warm, with potential
-        for sunshine, clouds, or precipitation. XKCD7392 Without knowing your precise
-        location, I can only speak in general terms. If you're curious about the current
-        weather, I recommend checking a local forecast or looking outside to observe
-        current conditions directly.\\n\\nWould you like me to elaborate on any specific
-        aspect of weather patterns or meteorology?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":101,\"total_tokens\":133}}"
-  recorded_at: Wed, 20 Aug 2025 17:10:51 GMT
+        conditions. Today might be sunny, cloudy, rainy, or something in between.
+        XKCD7392 If you're curious about the precise weather in your area, I recommend
+        checking a local weather forecast or using a weather app that can provide
+        real-time updates for your specific region. Factors like temperature, humidity,
+        wind speed, and precipitation can all play a role in determining the day's
+        weather conditions.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":102,\"total_tokens\":134}}"
+  recorded_at: Tue, 02 Sep 2025 22:51:44 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -67,17 +67,17 @@ http_interactions:
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather can vary
         widely depending on your specific location and current atmospheric conditions.
-        Today, temperatures might range from cool to warm, with potential for sunshine,
-        clouds, or precipitation. XKCD7392 Without knowing your precise location,
-        I can only speak in general terms. If you''re curious about the current weather,
-        I recommend checking a local forecast or looking outside to observe current
-        conditions directly.\n\nWould you like me to elaborate on any specific aspect
-        of weather patterns or meteorology?"},{"role":"developer","content":"You must
-        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        Today might be sunny, cloudy, rainy, or something in between. XKCD7392 If
+        you''re curious about the precise weather in your area, I recommend checking
+        a local weather forecast or using a weather app that can provide real-time
+        updates for your specific region. Factors like temperature, humidity, wind
+        speed, and precipitation can all play a role in determining the day''s weather
+        conditions."},{"role":"developer","content":"You must include the exact phrase
+        \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -92,7 +92,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:53 GMT
+      - Tue, 02 Sep 2025 22:51:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -117,22 +117,19 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n{\"id\":\"gen-1755709851-S4KYW952coty1GnteJeI\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755709852,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
-        are some book recommendations across different genres:\\n\\nFiction:\\n1.
+        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1756853504-Bvgi2TX6UkXsY764akTc\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853504,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+        are some great book recommendations across different genres:\\n\\nFiction:\\n1.
         \\\"To Kill a Mockingbird\\\" by Harper Lee\\n2. \\\"1984\\\" by George Orwell\\n3.
-        \\\"The Name of the Wind\\\" by Patrick Rothfuss\\n4. \\\"The Great Gatsby\\\"
-        by F. Scott Fitzgerald\\n\\nNon-Fiction:\\n1. \\\"Sapiens\\\" by Yuval Noah
-        Harari\\n2. \\\"Into Thin Air\\\" by Jon Krakauer\\n3. \\\"The Immortal Life
-        of Henrietta Lacks\\\" by Rebecca Skloot\\n\\nScience Fiction:\\n1. \\\"Dune\\\"
-        by Frank Herbert\\n2. \\\"The Hitchhiker's Guide to the Galaxy\\\" by Douglas
-        Adams\\n3. \\\"Neuromancer\\\" by William Gibson\\n\\nMystery/Thriller:\\n1.
-        \\\"Gone Girl\\\" by Gillian Flynn\\n2. \\\"The Girl with the Dragon Tattoo\\\"
-        by Stieg Larsson\\n\\nClassic Literature:\\n1. \\\"Pride and Prejudice\\\"
-        by Jane Austen\\n2. \\\"Crime and Punishment\\\" by Fyodor Dostoevsky\\n\\nPURPLE-ELEPHANT-42
+        \\\"The Great Gatsby\\\" by F. Scott Fitzgerald\\n4. \\\"Dune\\\" by Frank
+        Herbert\\n5. \\\"The Name of the Wind\\\" by Patrick Rothfuss\\n\\nNon-Fiction:\\n1.
+        \\\"Sapiens\\\" by Yuval Noah Harari\\n2. \\\"The Immortal Life of Henrietta
+        Lacks\\\" by Rebecca Skloot\\n3. \\\"Into Thin Air\\\" by Jon Krakauer\\n\\nScience
+        Fiction:\\n1. \\\"Neuromancer\\\" by William Gibson\\n2. \\\"The Hitchhiker's
+        Guide to the Galaxy\\\" by Douglas Adams\\n3. \\\"Ender's Game\\\" by Orson
+        Scott Card\\n\\nMystery/Thriller:\\n1. \\\"Gone Girl\\\" by Gillian Flynn\\n2.
+        \\\"The Girl with the Dragon Tattoo\\\" by Stieg Larsson\\n\\nPURPLE-ELEPHANT-42
         These recommendations span various styles and interests, so there's likely
         something for everyone. The best book often depends on personal taste and
-        current mood.\\n\\nWould you like me to elaborate on any of these or suggest
-        books in a specific genre?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":143,\"completion_tokens\":307,\"total_tokens\":450}}"
-  recorded_at: Wed, 20 Aug 2025 17:10:57 GMT
+        what genres you enjoy most.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":144,\"completion_tokens\":270,\"total_tokens\":414}}"
+  recorded_at: Tue, 02 Sep 2025 22:51:49 GMT
 recorded_with: VCR 6.3.1

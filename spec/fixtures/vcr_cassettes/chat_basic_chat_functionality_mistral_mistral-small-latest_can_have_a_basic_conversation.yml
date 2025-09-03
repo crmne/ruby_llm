@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:59 GMT
+      - Wed, 03 Sep 2025 14:58:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c877-5124-7699-be56-93c3eb8d53ff'
+      - '01991015-dbbc-70a5-932c-d776d5600ae4'
       X-Kong-Request-Id:
-      - '0198c877-5124-7699-be56-93c3eb8d53ff'
+      - '01991015-dbbc-70a5-932c-d776d5600ae4'
       X-Envoy-Upstream-Service-Time:
-      - '279'
+      - '515'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499954'
+      - '499927'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999548013'
+      - '999996473'
       X-Ratelimit-Tokens-Query-Cost:
-      - '46'
+      - '73'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '58'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '280'
+      - '516'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -72,8 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"dbbde2e8122741efac19267abdb2db9a","created":1755709919,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":46,"completion_tokens":35},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"48c15df0dcb6409fb4589a9ad401c002","created":1756911492,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":73,"completion_tokens":62},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic operation where you add
-        the two numbers together:\n\n2\n+2\n----\n4"}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:11:59 GMT
+        two numbers together. Here''s the breakdown:\n\n- 2 (first number)\n+ 2 (second
+        number)\n= 4 (result)\n\nSo, 2 + 2 = 4."}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:58:12 GMT
 recorded_with: VCR 6.3.1

@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:45 GMT
+      - Tue, 02 Sep 2025 22:52:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,9 +50,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1755705225-hAr5uo4lAbhcriOicmWC\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755705225,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        roll the six-sided die 3 times for you right now.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01GLAsfqhh9z3QPcLwxLkFFS\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_vrtx_01NBcgjojaitqdpj2Db8Ht9n\",\"index\":1,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_vrtx_014X47WauhRtuauxC3rUDLig\",\"index\":2,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":352,\"completion_tokens\":92,\"total_tokens\":444}}"
-  recorded_at: Wed, 20 Aug 2025 15:53:46 GMT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1756853556-2RI6DyUurj5B98kU17pO\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853556,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        roll the dice three times for you right now.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01Na5BnN3dpfVPuJB9da36T1\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_016uU6a42sGjRdsZMBCr2J9R\",\"index\":1,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_01ALnrLdEGLeE9tveajQP97A\",\"index\":2,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":352,\"completion_tokens\":87,\"total_tokens\":439}}"
+  recorded_at: Tue, 02 Sep 2025 22:52:38 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -60,15 +60,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"I''ll roll the six-sided
-        die 3 times for you right now.","tool_calls":[{"id":"toolu_vrtx_01GLAsfqhh9z3QPcLwxLkFFS","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_vrtx_01NBcgjojaitqdpj2Db8Ht9n","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_vrtx_014X47WauhRtuauxC3rUDLig","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"toolu_vrtx_01GLAsfqhh9z3QPcLwxLkFFS"},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"toolu_vrtx_01NBcgjojaitqdpj2Db8Ht9n"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"toolu_vrtx_014X47WauhRtuauxC3rUDLig"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice three
+        times for you right now.","tool_calls":[{"id":"toolu_01Na5BnN3dpfVPuJB9da36T1","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_016uU6a42sGjRdsZMBCr2J9R","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_01ALnrLdEGLeE9tveajQP97A","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{:roll=>1}","tool_call_id":"toolu_01Na5BnN3dpfVPuJB9da36T1"},{"role":"tool","content":"{:roll=>2}","tool_call_id":"toolu_016uU6a42sGjRdsZMBCr2J9R"},{"role":"tool","content":"{:roll=>3}","tool_call_id":"toolu_01ALnrLdEGLeE9tveajQP97A"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -83,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:47 GMT
+      - Tue, 02 Sep 2025 22:52:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -107,8 +104,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1755705227-XxxUUguFIShDIr2vLRhp\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755705227,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1756853558-XF1cPdoxrHm2S4MUoamT\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853558,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
         are the results of the three dice rolls:\\n1st roll: 1\\n2nd roll: 2\\n3rd
-        roll: 3\\n\\nWould you like me to roll the dice again?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":543,\"completion_tokens\":46,\"total_tokens\":589}}"
-  recorded_at: Wed, 20 Aug 2025 15:53:48 GMT
+        roll: 3\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":538,\"completion_tokens\":35,\"total_tokens\":573}}"
+  recorded_at: Tue, 02 Sep 2025 22:52:39 GMT
 recorded_with: VCR 6.3.1

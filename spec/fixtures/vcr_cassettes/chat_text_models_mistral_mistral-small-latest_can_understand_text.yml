@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:59 GMT
+      - Wed, 03 Sep 2025 14:53:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,21 +33,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c86f-fb64-7e99-a766-a062139448fd'
+      - '01991011-fbef-7427-b9f4-f0249e1fddd4'
       X-Kong-Request-Id:
-      - '0198c86f-fb64-7e99-a766-a062139448fd'
+      - '01991011-fbef-7427-b9f4-f0249e1fddd4'
       X-Envoy-Upstream-Service-Time:
-      - '1022'
+      - '431'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499925'
+      - '499919'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999549815'
+      - '999998254'
       X-Ratelimit-Tokens-Query-Cost:
-      - '75'
+      - '81'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -55,7 +55,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1023'
+      - '432'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -73,11 +73,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"599a9e249833434e86737e68469037c0","created":1755709438,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":75,"completion_tokens":46},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nThe
-        file is a plain text file (`mime_type=''text/plain''`) with the content stating
-        that \"Ruby is the best.\""}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:03:59 GMT
+      string: '{"id":"fb9576847aba49f09d5ab03dba886ef6","created":1756911238,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":81,"completion_tokens":52},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        file named `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nThe
+        file is a plain text file (`mime_type=''text/plain''`), and its content is
+        a simple statement expressing a preference for the Ruby programming language."}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:53:58 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -85,10 +85,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        is the best.</file>"}]},{"role":"assistant","content":"The file named `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nThe file is
-        a plain text file (`mime_type=''text/plain''`) with the content stating that
-        \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        a plain text file (`mime_type=''text/plain''`), and its content is a simple
+        statement expressing a preference for the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -108,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:04:00 GMT
+      - Wed, 03 Sep 2025 14:53:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,21 +116,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c86f-ffb2-73e6-8c80-0f678785a6c5'
+      - '01991011-fe21-7e2f-adae-1b6d76773f54'
       X-Kong-Request-Id:
-      - '0198c86f-ffb2-73e6-8c80-0f678785a6c5'
+      - '01991011-fe21-7e2f-adae-1b6d76773f54'
       X-Envoy-Upstream-Service-Time:
-      - '796'
+      - '1050'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499710'
+      - '499679'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999549600'
+      - '999998014'
       X-Ratelimit-Tokens-Query-Cost:
-      - '215'
+      - '240'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -138,7 +138,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '797'
+      - '1051'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -156,12 +156,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a59347a0178c4463bec0680df8590616","created":1755709439,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":215,"completion_tokens":107},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key Details:\n- **File Name:** `ruby.xml`\n-
-        **MIME Type:** `application/xml` (indicating it''s an XML file)\n- **Content:**
-        A simple XML structure with a `<truism>` element stating that \"Ruby is the
-        best.\"\n\nThis is a well-formed XML file with a single root element (`<truism>`)
-        and its text content."}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:04:00 GMT
+      string: '{"id":"ffd5fdfb5ee94830928c1dabcd7e1961","created":1756911238,"model":"mistral-small-latest","usage":{"prompt_tokens":114,"total_tokens":240,"completion_tokens":126},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        file named **`ruby.xml`** contains the following XML content:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```\n\n### Key Details:\n- **File Type:** XML (`mime_type=''application/xml''`)\n-
+        **Structure:** A single XML element (`<truism>`) with the text \"Ruby is the
+        best\" as its content.\n- **Purpose:** Likely a structured way to store or
+        transmit the statement in a machine-readable format.\n\nThis is similar to
+        the previous `ruby.txt` file but wrapped in XML syntax, which is useful for
+        data interchange or configuration."}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:53:59 GMT
 recorded_with: VCR 6.3.1

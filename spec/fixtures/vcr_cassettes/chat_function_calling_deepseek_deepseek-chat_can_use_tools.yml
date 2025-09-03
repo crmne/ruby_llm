@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:04 GMT
+      - Wed, 03 Sep 2025 14:45:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e672d5195c8bcf85b59812a2285305c2
+      - 63a06680f31cc97a103c77d67896dc01
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -54,10 +54,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f671c743-34e8-4f33-be09-4b0ef256ad59","object":"chat.completion","created":1755704944,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        get the current weather for Berlin using the coordinates you provided.","tool_calls":[{"index":0,"id":"call_0_8d0ba018-c65c-4203-87ea-9e53bc207a29","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":210,"completion_tokens":39,"total_tokens":249,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":210},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 15:49:09 GMT
+      string: '{"id":"db310e5e-8333-493a-b86c-1865647f4038","object":"chat.completion","created":1756910727,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        get the current weather for Berlin using the coordinates you provided.","tool_calls":[{"index":0,"id":"call_00_cjh9k5XQRyHWM3WikC5C0v69","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":210,"completion_tokens":39,"total_tokens":249,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":210},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 03 Sep 2025 14:45:32 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -65,8 +65,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        get the current weather for Berlin using the coordinates you provided.","tool_calls":[{"id":"call_0_8d0ba018-c65c-4203-87ea-9e53bc207a29","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_0_8d0ba018-c65c-4203-87ea-9e53bc207a29"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        get the current weather for Berlin using the coordinates you provided.","tool_calls":[{"id":"call_00_cjh9k5XQRyHWM3WikC5C0v69","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_cjh9k5XQRyHWM3WikC5C0v69"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
@@ -87,7 +87,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:09 GMT
+      - Wed, 03 Sep 2025 14:45:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -99,7 +99,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 1d52a6d05fa04bc5411fe31fbc92594f
+      - b0e4b76e7e9aeb5fee6449a4548562a2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,6 +115,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImRlZTkzNWRlLTMwNjAtNGI3YS1hYzA4LTVlOThmMDU0ZGNjOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDQ5NDksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kIHNwZWVkcyBvZiAxMCBrbS9oLiBJdCdzIGEgcmVsYXRpdmVseSBtaWxkIGRheSB0aGVyZSEifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNzUsImNvbXBsZXRpb25fdG9rZW5zIjoyNywidG90YWxfdG9rZW5zIjozMDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTkyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjgzfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfYmFlYWM1YWFhM19wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Wed, 20 Aug 2025 15:49:13 GMT
+        eyJpZCI6ImMwNDA2MWNmLTg2M2UtNGIxYi1hMjI3LTBmNmI5ODlkODhkZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTY5MTA3MzIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgKDU5wrBGKSB3aXRoIHdpbmRzIGF0IDEwIGttL2guIEl0J3MgYSByZWxhdGl2ZWx5IG1pbGQgZGF5IHRoZXJlISJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3NSwiY29tcGxldGlvbl90b2tlbnMiOjMxLCJ0b3RhbF90b2tlbnMiOjMwNiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjE5Mn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoxOTIsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6ODN9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9mZWI2MzNkMWY1X3Byb2QwODIwX2ZwOF9rdmNhY2hlIn0=
+  recorded_at: Wed, 03 Sep 2025 14:45:37 GMT
 recorded_with: VCR 6.3.1
