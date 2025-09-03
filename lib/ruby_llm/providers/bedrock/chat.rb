@@ -266,7 +266,9 @@ module RubyLLM
         end
 
         def build_message(data, content, tool_use_blocks, response)
-          usage = data['usage'] || {}
+          # Extract token usage from the response
+          # For the converse endpoint, token usage should be in data['usage'] similar to streaming metadata events
+          usage = extract_token_usage(data)
           RubyLLM.logger.debug "Building message with usage: #{usage}" if RubyLLM.config.log_stream_debug
 
           # Validate required fields
@@ -293,8 +295,8 @@ module RubyLLM
             role: :assistant,
             content: content,
             tool_calls: tool_calls,
-            input_tokens: usage['inputTokens'],
-            output_tokens: usage['outputTokens'],
+            input_tokens: usage[:input_tokens],
+            output_tokens: usage[:output_tokens],
             model_id: @model_id,
             raw: response
           )
@@ -304,6 +306,27 @@ module RubyLLM
           end
 
           message
+        end
+
+        def extract_token_usage(data)
+          # Extract token usage from the response data
+          # The converse endpoint should return token usage in the same format as streaming metadata events
+          if data['usage']
+            input_tokens = data['usage']['inputTokens']
+            output_tokens = data['usage']['outputTokens']
+
+            if input_tokens && output_tokens
+              if RubyLLM.config.log_stream_debug
+                RubyLLM.logger.debug "Found token usage in response: input=#{input_tokens}, output=#{output_tokens}"
+              end
+              return { input_tokens: input_tokens, output_tokens: output_tokens }
+            end
+          end
+
+          # No token usage found
+          RubyLLM.logger.warn 'Bedrock: No token usage information found in response'
+          RubyLLM.logger.debug "Response data keys: #{data.keys}" if RubyLLM.config.log_stream_debug
+          { input_tokens: nil, output_tokens: nil }
         end
 
         private
