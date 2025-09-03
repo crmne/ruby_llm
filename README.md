@@ -17,6 +17,9 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
+> [!NOTE]
+> Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+
 ---
 
 Build chatbots, AI agents, RAG applications. Works with OpenAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
