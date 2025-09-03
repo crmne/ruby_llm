@@ -7,23 +7,15 @@ module RubyLLM
         # Module for processing streaming messages from AWS Bedrock.
         module MessageProcessing
           def process_chunk(chunk, &)
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Processing chunk: size=#{chunk.bytesize}, content=#{chunk.inspect}"
-            end
             offset = 0
             offset = process_message(chunk, offset, &) while offset < chunk.bytesize
-          rescue StandardError => e
-            RubyLLM.logger.debug "Error processing chunk: #{e.message}"
-            RubyLLM.logger.debug "Chunk size: #{chunk.bytesize}"
-            RubyLLM.logger.debug "Chunk content: #{chunk.inspect}"
           end
 
           def process_message(chunk, offset, &)
-            RubyLLM.logger.debug "Processing message at offset #{offset}" if RubyLLM.config.log_stream_debug
             return chunk.bytesize unless can_read_prelude?(chunk, offset)
 
             message_info = extract_message_info(chunk, offset)
-            RubyLLM.logger.debug "Message info: #{message_info}" if RubyLLM.config.log_stream_debug
+
             return find_next_message(chunk, offset) unless message_info
 
             process_valid_message(chunk, offset, message_info, &)
@@ -32,7 +24,7 @@ module RubyLLM
           def process_valid_message(chunk, offset, message_info, &)
             headers = extract_headers(chunk, offset + 12, message_info[:headers_end])
             payload = extract_payload(chunk, message_info[:headers_end], message_info[:payload_end])
-            RubyLLM.logger.debug "Extracted payload: #{payload.inspect}" if RubyLLM.config.log_stream_debug
+
             return find_next_message(chunk, offset) unless valid_payload?(payload)
 
             process_payload_with_headers(payload, headers, &)
@@ -43,27 +35,19 @@ module RubyLLM
 
           def extract_message_info(chunk, offset)
             total_length, headers_length = read_prelude(chunk, offset)
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Prelude: total_length=#{total_length}, headers_length=#{headers_length}"
-            end
             return unless valid_lengths?(total_length, headers_length)
 
             message_end = offset + total_length
             return unless chunk.bytesize >= message_end
 
             headers_end, payload_end = calculate_positions(offset, total_length, headers_length)
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Positions: headers_end=#{headers_end}, payload_end=#{payload_end}"
-            end
             return unless valid_positions?(headers_end, payload_end, chunk.bytesize)
 
             { total_length:, headers_length:, headers_end:, payload_end: }
           end
 
           def extract_payload(chunk, headers_end, payload_end)
-            payload = chunk[headers_end...payload_end]
-            RubyLLM.logger.debug "Raw payload: #{payload.inspect}" if RubyLLM.config.log_stream_debug
-            payload
+            chunk[headers_end...payload_end]
           end
 
           def valid_payload?(payload)
@@ -72,12 +56,7 @@ module RubyLLM
             json_start = payload.index('{')
             json_end = payload.rindex('}')
 
-            valid = !(json_start.nil? || json_end.nil? || json_start >= json_end)
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Payload validation: json_start=#{json_start}, json_end=#{json_end}, valid=#{valid}"
-            end
-
-            valid
+            !(json_start.nil? || json_end.nil? || json_start >= json_end)
           end
 
           def extract_headers(chunk, headers_start, headers_end)
@@ -88,11 +67,6 @@ module RubyLLM
           def parse_headers(headers_data)
             headers = {}
             offset = 0
-
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Parsing headers data: #{headers_data.bytesize} bytes"
-              RubyLLM.logger.debug "Raw headers data: #{headers_data.inspect}"
-            end
 
             while offset < headers_data.bytesize
               break if offset + 4 > headers_data.bytesize
@@ -110,22 +84,11 @@ module RubyLLM
               header_value_type = headers_data[offset...(offset + 1)].unpack1('C')
               offset += 1
 
-              if RubyLLM.config.log_stream_debug
-                RubyLLM.logger.debug "Header: name='#{header_name}', type=#{header_value_type}"
-                RubyLLM.logger.debug "  Raw header value type byte: #{headers_data[offset - 1].inspect}"
-              end
-
               case header_value_type
               when 0 # BOOL_TRUE
                 headers[header_name] = true
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Boolean value: true"
-                end
               when 1 # BOOL_FALSE
                 headers[header_name] = false
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Boolean value: false"
-                end
               when 2 # BYTE
                 break if offset + 1 > headers_data.bytesize
 
@@ -133,9 +96,6 @@ module RubyLLM
                 offset += 1
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Byte value: #{header_value}"
-                end
               when 3 # SHORT (int16, big-endian)
                 break if offset + 2 > headers_data.bytesize
 
@@ -143,9 +103,6 @@ module RubyLLM
                 offset += 2
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Short value: #{header_value}"
-                end
               when 4 # INT (int32, big-endian)
                 break if offset + 4 > headers_data.bytesize
 
@@ -153,9 +110,6 @@ module RubyLLM
                 offset += 4
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Integer value: #{header_value}"
-                end
               when 5 # LONG (int64, big-endian)
                 break if offset + 8 > headers_data.bytesize
 
@@ -163,9 +117,6 @@ module RubyLLM
                 offset += 8
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Long value: #{header_value}"
-                end
               when 6 # BYTE_ARRAY
                 break if offset + 2 > headers_data.bytesize
 
@@ -178,9 +129,6 @@ module RubyLLM
                 offset += header_value_length
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Byte array value: #{header_value.inspect}"
-                end
               when 7 # STRING
                 break if offset + 2 > headers_data.bytesize
 
@@ -193,29 +141,16 @@ module RubyLLM
                 offset += header_value_length
 
                 headers[header_name] = header_value
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  String value: '#{header_value}'"
-                end
               when 8 # TIMESTAMP (8-byte milliseconds since epoch)
                 break if offset + 8 > headers_data.bytesize
 
                 # Skip timestamp value (8 bytes)
                 offset += 8
-
-                # Don't store timestamp in headers for now
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  Timestamp value: (skipped)"
-                end
               when 9 # UUID (16 bytes)
                 break if offset + 16 > headers_data.bytesize
 
                 # Skip UUID value (16 bytes)
                 offset += 16
-
-                # Don't store UUID in headers for now
-                if RubyLLM.config.log_stream_debug
-                  RubyLLM.logger.debug "  UUID value: (skipped)"
-                end
               else
                 if RubyLLM.config.log_stream_debug
                   RubyLLM.logger.debug "Unknown header value type: #{header_value_type}"
@@ -223,8 +158,6 @@ module RubyLLM
                 break
               end
             end
-
-            RubyLLM.logger.debug "Parsed headers: #{headers}" if RubyLLM.config.log_stream_debug
 
             headers
           end

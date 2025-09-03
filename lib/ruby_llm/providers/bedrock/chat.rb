@@ -14,10 +14,6 @@ module RubyLLM
             req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
           end
 
-          RubyLLM.logger.debug "Bedrock API Response Status: #{response.status}" if RubyLLM.config.log_stream_debug
-          RubyLLM.logger.debug "Bedrock API Response Headers: #{response.headers}" if RubyLLM.config.log_stream_debug
-          RubyLLM.logger.debug "Bedrock API Response Body: #{response.body}" if RubyLLM.config.log_stream_debug
-
           parse_completion_response response
         end
 
@@ -149,12 +145,6 @@ module RubyLLM
             return nil
           end
 
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Formatting tool call message: #{msg.inspect}"
-            RubyLLM.logger.debug "Tool call: #{tool_call.inspect}"
-            RubyLLM.logger.debug "Tool call ID: #{tool_call.id}"
-          end
-
           # Ensure we have a valid tool call ID
           if tool_call.id.nil? || tool_call.id.empty?
             RubyLLM.logger.warn 'Bedrock: tool_call.id is null or empty for tool call message'
@@ -180,20 +170,10 @@ module RubyLLM
         end
 
         def format_tool_result(msg)
-          # Debug logging to understand the issue
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Formatting tool result message: #{msg.inspect}"
-            RubyLLM.logger.debug "Tool call ID: #{msg.tool_call_id}"
-            RubyLLM.logger.debug "Message role: #{msg.role}"
-            RubyLLM.logger.debug "Message content: #{msg.content}"
-          end
-
-          # Ensure we have a valid tool_call_id
           tool_call_id = msg.tool_call_id
           if tool_call_id.nil? || tool_call_id.empty?
             RubyLLM.logger.warn 'Bedrock: tool_call_id is null or empty for tool result message'
-            # Try to extract from the message content or other sources
-            # For now, we'll skip this message to avoid the validation error
+
             return nil
           end
 
@@ -228,21 +208,10 @@ module RubyLLM
           output = data['output'] || {}
           message = output['message'] || {}
           content_blocks = message['content'] || []
-
-          RubyLLM.logger.debug "Bedrock output: #{output}" if RubyLLM.config.log_stream_debug
-          RubyLLM.logger.debug "Bedrock message: #{message}" if RubyLLM.config.log_stream_debug
-          RubyLLM.logger.debug "Bedrock content_blocks: #{content_blocks}" if RubyLLM.config.log_stream_debug
-
           text_content = extract_text_content(content_blocks)
           tool_use_blocks = find_tool_uses(content_blocks)
 
-          RubyLLM.logger.debug "Extracted text_content: #{text_content}" if RubyLLM.config.log_stream_debug
-          RubyLLM.logger.debug "Extracted tool_use_blocks: #{tool_use_blocks}" if RubyLLM.config.log_stream_debug
-
-          message_obj = build_message(data, text_content, tool_use_blocks, response)
-          RubyLLM.logger.debug "Built message object: #{message_obj.inspect}" if RubyLLM.config.log_stream_debug
-
-          message_obj
+          build_message(data, text_content, tool_use_blocks, response)
         end
 
         def extract_text_content(blocks)
@@ -315,17 +284,10 @@ module RubyLLM
             input_tokens = data['usage']['inputTokens']
             output_tokens = data['usage']['outputTokens']
 
-            if input_tokens && output_tokens
-              if RubyLLM.config.log_stream_debug
-                RubyLLM.logger.debug "Found token usage in response: input=#{input_tokens}, output=#{output_tokens}"
-              end
-              return { input_tokens: input_tokens, output_tokens: output_tokens }
-            end
+            return { input_tokens: input_tokens, output_tokens: output_tokens } if input_tokens && output_tokens
           end
 
           # No token usage found
-          RubyLLM.logger.warn 'Bedrock: No token usage information found in response'
-          RubyLLM.logger.debug "Response data keys: #{data.keys}" if RubyLLM.config.log_stream_debug
           { input_tokens: nil, output_tokens: nil }
         end
 
@@ -341,16 +303,9 @@ module RubyLLM
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
-          payload = build_base_payload(chat_messages, model).tap do |p|
+          build_base_payload(chat_messages, model).tap do |p|
             add_optional_fields(p, system_content:, tools:, temperature:)
           end
-
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug 'Final Bedrock payload:'
-            RubyLLM.logger.debug JSON.pretty_generate(payload)
-          end
-
-          payload
         end
 
         def separate_messages(messages)
@@ -369,30 +324,8 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model)
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Building base payload with #{chat_messages.length} messages"
-            chat_messages.each_with_index do |msg, index|
-              RubyLLM.logger.debug "Message #{index}: role=#{msg.role}, tool_call?=#{msg.tool_call?}, tool_result?=#{msg.tool_result?}, tool_call_id=#{msg.tool_call_id}"
-            end
-          end
-
           formatted_messages = chat_messages.map { |msg| format_message(msg) }
-
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Formatted messages: #{formatted_messages.length} messages"
-            formatted_messages.each_with_index do |msg, index|
-              RubyLLM.logger.debug "Formatted message #{index}: #{msg.inspect}"
-            end
-          end
-
           compacted_messages = formatted_messages.compact
-
-          if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Compacted messages: #{compacted_messages.length} messages"
-            compacted_messages.each_with_index do |msg, index|
-              RubyLLM.logger.debug "Compacted message #{index}: #{msg.inspect}"
-            end
-          end
 
           # Validate that no message contains both toolUse and toolResult
           compacted_messages.each_with_index do |message, index|

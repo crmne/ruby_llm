@@ -25,9 +25,6 @@ module RubyLLM
             # Initialize tool call accumulator for converse-stream
             initialize_tool_call_accumulator
 
-            RubyLLM.logger.debug "Bedrock streaming to URL: #{stream_url}" if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Bedrock streaming payload: #{payload}" if RubyLLM.config.log_stream_debug
-
             response = connection.post stream_url, payload do |req|
               req.headers.merge! build_headers(signature.headers, streaming: block_given?)
               # Merge additional headers, with existing headers taking precedence
@@ -42,43 +39,27 @@ module RubyLLM
 
             if RubyLLM.config.log_stream_debug
               RubyLLM.logger.debug "Bedrock streaming response status: #{response.status}"
-            end
-            if RubyLLM.config.log_stream_debug
               RubyLLM.logger.debug "Bedrock streaming response headers: #{response.headers}"
             end
 
             # Add accumulated tool calls and token usage to the final message
             final_message = accumulator.to_message(response)
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "Bedrock accumulator message: #{final_message.inspect}"
-            end
 
-            if get_accumulated_tool_calls.any?
-              if RubyLLM.config.log_stream_debug
-                RubyLLM.logger.debug "Bedrock accumulated tool calls: #{get_accumulated_tool_calls}"
-              end
+            if accumulated_tool_calls.any?
               # Convert array of tool calls to hash format for consistency with other providers
-              tool_calls_hash = get_accumulated_tool_calls.each_with_object({}) do |tool_call, hash|
+              tool_calls_hash = accumulated_tool_calls.each_with_object({}) do |tool_call, hash|
                 hash[tool_call.id] = tool_call
               end
               final_message.instance_variable_set(:@tool_calls, tool_calls_hash)
             end
 
-            # Add token usage from metadata event
-            token_usage = get_token_usage
             if token_usage.any?
-              RubyLLM.logger.debug "Bedrock token usage: #{token_usage}" if RubyLLM.config.log_stream_debug
               final_message.instance_variable_set(:@input_tokens, token_usage['inputTokens'])
               final_message.instance_variable_set(:@output_tokens, token_usage['outputTokens'])
             end
 
             # Set model_id if it's missing
-            if final_message.model_id.nil?
-              RubyLLM.logger.debug "Setting model_id to: #{@model_id}" if RubyLLM.config.log_stream_debug
-              final_message.instance_variable_set(:@model_id, @model_id)
-            end
-
-            RubyLLM.logger.debug "Bedrock final message: #{final_message.inspect}" if RubyLLM.config.log_stream_debug
+            final_message.instance_variable_set(:@model_id, @model_id) if final_message.model_id.nil?
 
             final_message
           end

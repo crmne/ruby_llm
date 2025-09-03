@@ -13,13 +13,7 @@ module RubyLLM
           def extract_streaming_content(data)
             return '' unless data.is_a?(Hash)
 
-            content = extract_content_by_type(data)
-
-            if RubyLLM.config.log_stream_debug
-              RubyLLM.logger.debug "extract_streaming_content: data=#{data}, content=#{content.inspect}"
-            end
-
-            content
+            extract_content_by_type(data)
           end
 
           def extract_tool_calls(_data)
@@ -45,19 +39,19 @@ module RubyLLM
             data['stopReason']
           end
 
-          def is_tool_use_start?(data)
+          def tool_use_start?(data)
             data['type'] == 'contentBlockStart' && data.dig('start', 'toolUse')
           end
 
-          def is_tool_use_delta?(data)
+          def tool_use_delta?(data)
             data['type'] == 'contentBlockDelta' && data.dig('delta', 'toolUse')
           end
 
-          def is_tool_use_stop?(data)
+          def tool_use_stop?(data)
             data['type'] == 'contentBlockStop'
           end
 
-          def is_metadata_event?(data)
+          def metadata_event?(data)
             data['type'] == 'metadata'
           end
 
@@ -122,14 +116,10 @@ module RubyLLM
 
           def extract_delta_content(data)
             if data.dig('delta', 'toolUse')
-              # This is a tool use delta, no text content
-              RubyLLM.logger.debug 'Tool use delta detected, no text content' if RubyLLM.config.log_stream_debug
               ''
             else
               # Regular text delta
-              text_content = data.dig('delta', 'text').to_s
-              RubyLLM.logger.debug "Text delta content: #{text_content.inspect}" if RubyLLM.config.log_stream_debug
-              text_content
+              data.dig('delta', 'text').to_s
             end
           end
 
