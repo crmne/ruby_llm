@@ -43,9 +43,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     context 'with Anthropic beta headers' do
-      it 'works with anthropic-beta header for fine-grained tool streaming', :vcr do
-        skip unless ENV['ANTHROPIC_API_KEY']
-
+      it 'works with anthropic-beta header for fine-grained tool streaming' do
         chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022', provider: 'anthropic')
                       .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
 

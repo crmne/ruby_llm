@@ -30,5 +30,14 @@ class Create<%= options[:model_model_name].pluralize %> < ActiveRecord::Migratio
       t.index :modalities, using: :gin
 <% end %>
     end
+
+    # Load models from JSON
+    say_with_time "Loading models from models.json" do
+      RubyLLM.models.load_from_json!
+      model_class = '<%= options[:model_model_name] %>'.constantize
+      model_class.save_to_database
+
+      "Loaded #{model_class.count} models"
+    end
   end
 end
