@@ -110,7 +110,7 @@ Instances of `RubyLLM::Error` (and its subclasses related to API responses) hold
 
 ```ruby
 begin
-  chat = RubyLLM.chat(model: 'gpt-4.1-nano') # Assume this requires a specific org sometimes
+  chat = RubyLLM.chat(model: '{{ site.models.default_chat }}') # Assume this requires a specific org sometimes
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"

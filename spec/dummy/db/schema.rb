@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 20_250_602_134_116) do
+ActiveRecord::Schema[7.1].define(version: 20_250_602_134_116) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -43,23 +43,45 @@ ActiveRecord::Schema[8.0].define(version: 20_250_602_134_116) do
   end
 
   create_table 'chats', force: :cascade do |t|
-    t.string 'model_id'
+    t.integer 'model_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.index ['model_id'], name: 'index_chats_on_model_id'
   end
 
   create_table 'messages', force: :cascade do |t|
     t.integer 'chat_id'
     t.string 'role'
     t.text 'content'
-    t.string 'model_id'
+    t.integer 'model_id'
     t.integer 'input_tokens'
     t.integer 'output_tokens'
     t.integer 'tool_call_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
+    t.index ['model_id'], name: 'index_messages_on_model_id'
     t.index ['tool_call_id'], name: 'index_messages_on_tool_call_id'
+  end
+
+  create_table 'models', force: :cascade do |t|
+    t.string 'model_id', null: false
+    t.string 'name', null: false
+    t.string 'provider', null: false
+    t.string 'family'
+    t.datetime 'model_created_at'
+    t.integer 'context_window'
+    t.integer 'max_output_tokens'
+    t.date 'knowledge_cutoff'
+    t.json 'modalities', default: {}
+    t.json 'capabilities', default: []
+    t.json 'pricing', default: {}
+    t.json 'metadata', default: {}
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['family'], name: 'index_models_on_family'
+    t.index %w[provider model_id], name: 'index_models_on_provider_and_model_id', unique: true
+    t.index ['provider'], name: 'index_models_on_provider'
   end
 
   create_table 'tool_calls', force: :cascade do |t|
@@ -74,4 +96,6 @@ ActiveRecord::Schema[8.0].define(version: 20_250_602_134_116) do
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
+  add_foreign_key 'chats', 'models'
+  add_foreign_key 'messages', 'models'
 end

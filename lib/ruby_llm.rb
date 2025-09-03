@@ -22,11 +22,10 @@ loader.inflector.inflect(
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
   'pdf' => 'PDF',
+  'vertexai' => 'VertexAI',
   'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
-loader.ignore("#{__dir__}/ruby_llm/railtie")
-loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/generators")
 loader.setup
 
@@ -89,6 +88,7 @@ RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
+RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
 if defined?(Rails::Railtie)

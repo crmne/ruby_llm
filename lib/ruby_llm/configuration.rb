@@ -10,6 +10,8 @@ module RubyLLM
                   :openai_use_system_role,
                   :anthropic_api_key,
                   :gemini_api_key,
+                  :vertexai_project_id,
+                  :vertexai_location,
                   :deepseek_api_key,
                   :perplexity_api_key,
                   :xai_api_key,
