@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Mon, 18 Aug 2025 06:05:44 GMT
       Access-Control-Allow-Origin:
@@ -35,33 +33,33 @@ http_interactions:
       Etag:
       - W/"68a2c2b8-9c6"
       Expires:
-      - Wed, 20 Aug 2025 07:05:50 GMT
+      - Wed, 03 Sep 2025 06:00:58 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 4934:3FE32:1630AE2:1657871:68A57176
+      - 1366:6EEC2:BD8766:BEFA25:68B7D742
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 20 Aug 2025 17:03:48 GMT
+      - Wed, 03 Sep 2025 14:54:42 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '111'
+      - '43'
       X-Served-By:
-      - cache-fra-etou8220134-FRA
+      - cache-fra-etou8220085-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1755709429.712745,VS0,VE3
+      - S1756911283.967203,VS0,VE8
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - c1ad20accb424fa1e09c56ea00b0b686c75f64f4
+      - 3ea1324fafb72e73a6cb35749e2d9e3b8055cf85
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 20 Aug 2025 17:03:48 GMT
+  recorded_at: Wed, 03 Sep 2025 14:54:42 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:58 GMT
+      - Wed, 03 Sep 2025 14:54:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -174,51 +172,58 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "b2b294fb-1f11-482c-b9fc-0f20ac24a948", "model": "sonar", "created":
-        1755709438, "usage": {"prompt_tokens": 535, "completion_tokens": 414, "total_tokens":
-        949, "search_context_size": "low", "cost": {"input_tokens_cost": 0.001, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.006}}, "citations": ["https://dbpedia.org/page/Ruby_License",
-        "https://www.ruby-lang.org/en/about/license.txt", "https://en.wikipedia.org/wiki/Ruby_License",
-        "https://docs.ruby-lang.org/en/master/LEGAL.html", "https://rubytalk.org/t/licensing-terms-for-linking-with-ruby/68062"],
-        "search_results": [{"title": "About: Ruby License", "url": "https://dbpedia.org/page/Ruby_License",
-        "date": "1999-02-22", "last_updated": "2024-11-29"}, {"title": "license.txt
-        - Ruby", "url": "https://www.ruby-lang.org/en/about/license.txt", "date":
-        null, "last_updated": "2025-08-13"}, {"title": "Ruby License - Wikipedia",
-        "url": "https://en.wikipedia.org/wiki/Ruby_License", "date": "2025-05-13",
-        "last_updated": "2025-05-15"}, {"title": "LEGAL - Documentation for Ruby 3.5",
-        "url": "https://docs.ruby-lang.org/en/master/LEGAL.html", "date": "2014-02-11",
-        "last_updated": "2025-03-18"}, {"title": "Licensing terms for \"linking\"
-        with Ruby", "url": "https://rubytalk.org/t/licensing-terms-for-linking-with-ruby/68062",
-        "date": "2013-06-21", "last_updated": "2024-06-28"}], "object": "chat.completion",
-        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "The file contains the **Ruby License**, which is a free software
-        license authored by Yukihiro Matsumoto (Matz), the creator of Ruby. It allows
-        users to **redistribute and modify Ruby software** under specific conditions
-        or alternatively under the 2-clause BSD License (BSDL). The key points of
-        this license are:\n\n- You can make and distribute verbatim copies of the
-        source without restriction as long as all original copyright notices and disclaimers
-        are kept.\n  \n- You can modify the software, provided you do at least one
-        of these:\n  \n  - Make your modifications public domain or freely available
-        (e.g., post to Usenet or let the author include them).\n  \n  - Use the modified
-        software internally within your organization.\n  \n  - Rename non-standard
-        binaries and include instructions on obtaining the original software.\n  \n  -
-        Arrange different distribution terms with the author.\n  \n- You may distribute
-        the software in binary or object code form if you do at least one of the following:\n  \n  -
-        Distribute binaries with instructions on where to get the original source.\n  \n  -
-        Accompany distribution with machine-readable source code.\n  \n  - Rename
-        binaries and give instructions on source availability.\n  \n  - Make other
-        arrangements with the author.\n  \n- Parts of the software not written by
-        the original author may have different licensing terms (see a separate LEGAL
-        file for those details).\n  \n- Scripts and libraries generated by this software
-        belong to their authors and may be commercially sold or aggregated with the
-        software but are not automatically covered by Ruby\u2019s license.\n  \n-
-        The software is provided **\"as is\"** without any warranty, including implied
-        warranties of merchantability or fitness for a particular purpose.\n\nThis
-        license is dual-licensed with the 2-clause BSD license, giving flexibility
-        to redistribute Ruby under either license.\n\nThis text corresponds closely
-        to the official Ruby License documentation maintained by the Ruby core team
-        and is designed to offer freedom to use, modify, and distribute Ruby software
-        while protecting the author''s rights and disclaiming warranty[1][2][3]."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:03:58 GMT
+      string: '{"id": "d1731e73-90dc-4871-b9be-12da6faebe9e", "model": "sonar", "created":
+        1756911294, "usage": {"prompt_tokens": 535, "completion_tokens": 351, "total_tokens":
+        886, "search_context_size": "low", "cost": {"input_tokens_cost": 0.001, "output_tokens_cost":
+        0.0, "request_cost": 0.005, "total_cost": 0.006}}, "citations": ["https://www.ruby-lang.org/en/about/license.txt",
+        "https://spdx.org/licenses/Ruby.html", "https://docs.ruby-lang.org/en/master/LEGAL.html",
+        "https://docs.aws.amazon.com/xray-sdk-for-ruby/latest/reference/file.LICENSE.html",
+        "https://en.wikipedia.org/wiki/Ruby_License"], "search_results": [{"title":
+        "license.txt - Ruby", "url": "https://www.ruby-lang.org/en/about/license.txt",
+        "date": null, "last_updated": "2025-08-28", "snippet": "3. You may distribute
+        the software in object code or binary form, provided that you do at least
+        ONE of the following: a) distribute the binaries and library ..."}, {"title":
+        "Ruby License | Software Package Data Exchange (SPDX)", "url": "https://spdx.org/licenses/Ruby.html",
+        "date": "2024-12-30", "last_updated": "2025-01-05", "snippet": "Ruby is disjunctively
+        licensed project that allows the choice of this license and another. The other
+        license choice has changed over time."}, {"title": "LEGAL - Documentation
+        for Ruby 3.5", "url": "https://docs.ruby-lang.org/en/master/LEGAL.html", "date":
+        "2014-02-11", "last_updated": "2025-03-18", "snippet": "You may distribute
+        under the terms of either the GNU General Public License or the Artistic License,
+        as specified in the README file of the Perl distribution."}, {"title": "File:
+        LICENSE \u2014 AWS X-Ray SDK for Ruby", "url": "https://docs.aws.amazon.com/xray-sdk-for-ruby/latest/reference/file.LICENSE.html",
+        "date": "2004-01-01", "last_updated": "2025-08-30", "snippet": "Subject to
+        the terms and conditions of this License, each Contributor hereby grants to
+        You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, ..."},
+        {"title": "Ruby License - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_License",
+        "date": "2006-11-20", "last_updated": "2025-09-01", "snippet": "The Ruby License
+        is a free license applied to the Ruby programming language and also available
+        to be used in other projects."}], "object": "chat.completion", "choices":
+        [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content":
+        "This file is the **Ruby License**, a free software license written by Yukihiro
+        Matsumoto, the creator of Ruby. It allows you to **redistribute and modify
+        the Ruby software** under specific conditions:\n\n- You may copy and distribute
+        verbatim copies of the source code freely as long as all original copyright
+        notices and disclaimers are preserved.\n- You may modify the software provided
+        you do at least one of the following:\n  - Make your modifications public
+        domain or freely available (e.g., by posting them publicly or sharing with
+        the author),\n  - Use your modified version only within your own organization,\n  -
+        Distribute modified binaries with non-standard names and include instructions
+        for obtaining the original software,\n  - Or reach other distribution arrangements
+        with the author.\n- You may distribute binaries or object code only if you
+        do at least one of the conditions similar to above (provide binaries with
+        instructions on where to get the original source, include the source, rename
+        non-standard binaries, or arrange with the author).\n- You may incorporate
+        parts of the software into other software, including commercial ones, though
+        some files may have different licenses listed separately.\n- Scripts or library
+        files created as input or output of the software belong to their creators
+        and can be sold or combined with Ruby.\n- The software is provided \"as is\"
+        without warranty of any kind.\n\nThis license has two optional ways of acceptance:
+        either under this Ruby License or the 2-clause BSD license (the \u201cBSDL\u201d),
+        providing flexibility for redistribution[1][2].\n\nThe file also references
+        a separate LEGAL file for details about files not under this license.\n\nOverall,
+        it is a permissive free software license promoting sharing, modification,
+        and use while disclaiming warranties[1][2]."}, "delta": {"role": "assistant",
+        "content": ""}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:54:54 GMT
 recorded_with: VCR 6.3.1

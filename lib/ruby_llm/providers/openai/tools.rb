@@ -44,6 +44,16 @@ module RubyLLM
           end
         end
 
+        def parse_tool_call_arguments(tool_call)
+          arguments = tool_call.dig('function', 'arguments')
+
+          if arguments.nil? || arguments.empty?
+            {}
+          else
+            JSON.parse(arguments)
+          end
+        end
+
         def parse_tool_calls(tool_calls, parse_arguments: true)
           return nil unless tool_calls&.any?
 
@@ -54,12 +64,7 @@ module RubyLLM
                 id: tc['id'],
                 name: tc.dig('function', 'name'),
                 arguments: if parse_arguments
-                             if tc.dig('function', 'arguments').empty?
-                               {}
-                             else
-                               JSON.parse(tc.dig('function',
-                                                 'arguments'))
-                             end
+                             parse_tool_call_arguments(tc)
                            else
                              tc.dig('function', 'arguments')
                            end

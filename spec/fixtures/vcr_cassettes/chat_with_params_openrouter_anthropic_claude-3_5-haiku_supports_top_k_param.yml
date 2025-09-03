@@ -5,11 +5,11 @@ http_interactions:
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"top_k":5,"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."},{"role":"assistant","content":"{"}],"stream":false}'
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What
+        is the square root of 64? Answer with a JSON object with the key `result`."},{"role":"assistant","content":"{"}],"stream":false,"top_k":5}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:08:22 GMT
+      - Tue, 02 Sep 2025 22:51:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1755709701-jeg6lUcRIxtbJKikS12K\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755709701,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\\n
+      string: "\n         \n{\"id\":\"gen-1756853489-Fc6EiPAF6b3wl9IVocHf\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853489,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\\n
         \   \\\"result\\\": 8\\n}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":28,\"completion_tokens\":12,\"total_tokens\":40}}"
-  recorded_at: Wed, 20 Aug 2025 17:08:22 GMT
+  recorded_at: Tue, 02 Sep 2025 22:51:29 GMT
 recorded_with: VCR 6.3.1
