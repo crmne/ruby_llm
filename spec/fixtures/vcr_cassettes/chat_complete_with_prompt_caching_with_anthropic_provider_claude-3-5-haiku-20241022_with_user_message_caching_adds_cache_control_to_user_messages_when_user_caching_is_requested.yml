@@ -1,0 +1,199 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT_FOR_PROMPT_CACHING>\n\nBased
+        on the above, tell me about Ruby","cache_control":{"type":"ephemeral"}}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Aug 2025 16:24:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '399000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-14T16:23:59Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-14T16:24:03Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-14T16:23:59Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '479000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-14T16:23:59Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_018Kg2eT1LZZbyPTHmzomDEH","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but the input you provided is just a very long string of the letter
+        \"a\" and does not contain any information about Ruby. If you would like to
+        know about Ruby, I can provide some information:\n\nRuby is a dynamic, object-oriented
+        programming language created by Yukihiro Matsumoto (often called \"Matz\")
+        in Japan during the mid-1990s. Some key characteristics of Ruby include:\n\n1.
+        Designed for programmer productivity and happiness\n2. Supports multiple programming
+        paradigms (object-oriented, functional, imperative)\n3. Known for its clean
+        and readable syntax\n4. Widely used for web development, particularly with
+        the Ruby on Rails framework\n5. Open-source programming language\n6. Interpreted
+        language\n7. Features like automatic memory management and dynamic typing\n8.
+        Strong support for metaprogramming\n9. Cross-platform compatibility\n\nWould
+        you like me to elaborate on any of these points about Ruby?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":2745,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":2745,"ephemeral_1h_input_tokens":0},"output_tokens":207,"service_tier":"standard"}}'
+  recorded_at: Thu, 14 Aug 2025 16:24:03 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"<MASSIVE_TEXT_FOR_PROMPT_CACHING>\n\nBased
+        on the above, tell me about Ruby"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        apologize, but the input you provided is just a very long string of the letter
+        \"a\" and does not contain any information about Ruby. If you would like to
+        know about Ruby, I can provide some information:\n\nRuby is a dynamic, object-oriented
+        programming language created by Yukihiro Matsumoto (often called \"Matz\")
+        in Japan during the mid-1990s. Some key characteristics of Ruby include:\n\n1.
+        Designed for programmer productivity and happiness\n2. Supports multiple programming
+        paradigms (object-oriented, functional, imperative)\n3. Known for its clean
+        and readable syntax\n4. Widely used for web development, particularly with
+        the Ruby on Rails framework\n5. Open-source programming language\n6. Interpreted
+        language\n7. Features like automatic memory management and dynamic typing\n8.
+        Strong support for metaprogramming\n9. Cross-platform compatibility\n\nWould
+        you like me to elaborate on any of these points about Ruby?"}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me more about Ruby","cache_control":{"type":"ephemeral"}}]}],"stream":false,"max_tokens":8192,"temperature":0.7}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 14 Aug 2025 16:24:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '399000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-14T16:24:04Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-14T16:24:10Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-14T16:24:03Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '479000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-14T16:24:04Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_015rq7u1xDiESviQgHnN16LD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
+        a more detailed overview of Ruby:\n\nLanguage Design:\n- Created by Yukihiro
+        Matsumoto in 1995\n- Philosophy: \"Principle of least surprise\"\n- Designed
+        to make programming more enjoyable and productive\n- Fully object-oriented
+        language (everything is an object)\n\nKey Technical Features:\n- Dynamic typing\n-
+        Automatic memory management\n- Supports multiple programming paradigms\n-
+        Interpreted language\n- Uses garbage collection\n- Strong metaprogramming
+        capabilities\n\nSyntax Characteristics:\n- Clean, readable, and concise\n-
+        Uses indentation for readability\n- Supports functional programming concepts\n-
+        Uses snake_case for method and variable names\n- Uses CamelCase for class
+        and module names\n\nPopular Use Cases:\n- Web development (Ruby on Rails framework)\n-
+        Scripting\n- Automation\n- DevOps tools\n- Prototyping\n- Backend web services\n\nEcosystem:\n-
+        RubyGems package manager\n- Large open-source community\n- Extensive library
+        of pre-built modules\n- Strong testing frameworks\n\nPerformance:\n- Generally
+        slower than compiled languages\n- Improved performance with JIT compilation
+        in recent versions\n- Good for rapid development and scripting\n\nMajor Companies
+        Using Ruby:\n- GitHub\n- Airbnb\n- Shopify\n- Twitch\n- SoundCloud\n\nWould
+        you like me to elaborate on any of these aspects of Ruby?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":215,"cache_read_input_tokens":2745,"cache_creation":{"ephemeral_5m_input_tokens":215,"ephemeral_1h_input_tokens":0},"output_tokens":315,"service_tier":"standard"}}'
+  recorded_at: Thu, 14 Aug 2025 16:24:10 GMT
+recorded_with: VCR 6.3.1
