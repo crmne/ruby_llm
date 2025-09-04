@@ -24,7 +24,7 @@ module RubyLLM
           data['models']&.map do |model_data|
             model_id = model_data['id']
 
-            info = Model::Info.new(
+            Model::Info.new(
               id: model_id,
               name: capabilities.format_display_name(model_id),
               provider: slug,
@@ -40,8 +40,6 @@ module RubyLLM
                 aliases: model_data['aliases']
               }
             )
-            puts info.inspect
-            info
           end || []
         end
       end
