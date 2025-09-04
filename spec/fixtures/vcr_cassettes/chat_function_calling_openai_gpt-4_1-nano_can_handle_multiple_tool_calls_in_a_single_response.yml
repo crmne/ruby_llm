@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:44 GMT
+      - Wed, 03 Sep 2025 15:00:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '923'
+      - '1089'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '949'
+      - '1095'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -78,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C6fQ7t6kqm6pdnJA1BP8pYlO3Wf3a",
+          "id": "chatcmpl-CBjG0fjbHetDrlcWbdlEuboU4sOJ6",
           "object": "chat.completion",
-          "created": 1755705223,
+          "created": 1756911612,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -90,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_h523q6zLScpZkMaEuf1NatYU",
+                    "id": "call_fFm56S3HmmUazmF2zYPismzC",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -98,7 +98,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_J3Hajqw5bjUVCBggCP6xSaTK",
+                    "id": "call_s3EhDiyOaSPoK6EHyxE2UI3c",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -106,7 +106,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_K3oyf1yvcFJK6kku5JWjHnKn",
+                    "id": "call_pOKv6w7o6Fuxs5bDNFrzjnRX",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -137,9 +137,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_e91a518ddb"
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Wed, 20 Aug 2025 15:53:44 GMT
+  recorded_at: Wed, 03 Sep 2025 15:00:13 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -147,10 +147,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_h523q6zLScpZkMaEuf1NatYU","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_J3Hajqw5bjUVCBggCP6xSaTK","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_K3oyf1yvcFJK6kku5JWjHnKn","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_h523q6zLScpZkMaEuf1NatYU"},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_J3Hajqw5bjUVCBggCP6xSaTK"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_K3oyf1yvcFJK6kku5JWjHnKn"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_fFm56S3HmmUazmF2zYPismzC","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_s3EhDiyOaSPoK6EHyxE2UI3c","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_pOKv6w7o6Fuxs5bDNFrzjnRX","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_fFm56S3HmmUazmF2zYPismzC"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_s3EhDiyOaSPoK6EHyxE2UI3c"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_pOKv6w7o6Fuxs5bDNFrzjnRX"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -169,7 +169,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:45 GMT
+      - Wed, 03 Sep 2025 15:00:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -181,13 +181,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '393'
+      - '584'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '414'
+      - '598'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -221,9 +221,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C6fQ80HYNmTnphyroQITJYmr2sfxt",
+          "id": "chatcmpl-CBjG1xKO0JbO6eeVDMbAClNPycgmC",
           "object": "chat.completion",
-          "created": 1755705224,
+          "created": 1756911613,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -254,7 +254,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_e91a518ddb"
+          "system_fingerprint": "fp_c4c155951e"
         }
-  recorded_at: Wed, 20 Aug 2025 15:53:45 GMT
+  recorded_at: Wed, 03 Sep 2025 15:00:14 GMT
 recorded_with: VCR 6.3.1

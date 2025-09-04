@@ -26,21 +26,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 20 Aug 2025 15:53:50 GMT
+      - Wed, 03 Sep 2025 15:00:10 GMT
       Content-Length:
       - '1075'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-410","object":"chat.completion","created":1755705230,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-487","object":"chat.completion","created":1756911610,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a function called dice_roll that rolls a six-sided die. The user
-        specified exactly three times, so I need to call that function three separate
-        times. Each call doesn''t require any parameters, so I''ll just make three
-        individual tool calls. I''ll make sure to format each one correctly within
-        the XML tags. Let me start the first roll.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_r512ca36","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_xsazjph6","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kqc8ymee","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":143,"total_tokens":302}}
+        There''s a function called dice_roll that rolls a single six-sided die. Since
+        they need it done three times, I should call that function three separate
+        times. Each call doesn''t require any parameters, so I''ll just make sure
+        to execute the tool call three times. Let me structure each tool call properly
+        in JSON within the specified XML tags.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_qrozz6id","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_qnv8pu8k","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_6u36v8x1","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":141,"total_tokens":300}}
 
         '
-  recorded_at: Wed, 20 Aug 2025 15:53:50 GMT
+  recorded_at: Wed, 03 Sep 2025 15:00:10 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -50,13 +50,13 @@ http_interactions:
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"<think>\nOkay, the user
         wants me to roll the dice three times. Let me check the tools available. There''s
-        a function called dice_roll that rolls a six-sided die. The user specified
-        exactly three times, so I need to call that function three separate times.
-        Each call doesn''t require any parameters, so I''ll just make three individual
-        tool calls. I''ll make sure to format each one correctly within the XML tags.
-        Let me start the first roll.\n</think>\n\n","tool_calls":[{"id":"call_r512ca36","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_xsazjph6","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kqc8ymee","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_r512ca36"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_xsazjph6"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_kqc8ymee"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a function called dice_roll that rolls a single six-sided die. Since they
+        need it done three times, I should call that function three separate times.
+        Each call doesn''t require any parameters, so I''ll just make sure to execute
+        the tool call three times. Let me structure each tool call properly in JSON
+        within the specified XML tags.\n</think>\n\n","tool_calls":[{"id":"call_qrozz6id","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_qnv8pu8k","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_6u36v8x1","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_qrozz6id"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_qnv8pu8k"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_6u36v8x1"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -75,23 +75,19 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 20 Aug 2025 15:53:51 GMT
+      - Wed, 03 Sep 2025 15:00:11 GMT
       Content-Length:
-      - '1079'
+      - '728'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-631","object":"chat.completion","created":1755705231,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user asked to roll the dice three times, and I called the dice_roll function
-        three times. Each response from the tool gave a roll result: 1, 2, and 3.
-        Now I need to compile these results into a final answer. Let me check if all
-        three rolls were successful. The first roll was 1, the second 2, and the third
-        3. All three are valid numbers for a six-sided die. The user probably wants
-        the sequence of rolls or the total? Wait, the original request was just to
-        roll three times, so maybe they want each individual result listed. I should
-        present each roll in order. Let me format that clearly. Also, make sure there''s
-        no markdown, just plain text. Alright, the final answer should show each roll''s
-        outcome.\n\u003c/think\u003e\n\nThe dice rolls resulted in: 1, 2, and 3."},"finish_reason":"stop"}],"usage":{"prompt_tokens":301,"completion_tokens":186,"total_tokens":487}}
+      string: '{"id":"chatcmpl-808","object":"chat.completion","created":1756911611,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked to roll the dice three times. I need to use the dice_roll function
+        exactly three times. Each time, I''ll generate a random number between 1 and
+        6. Let me make sure each tool call is correctly formatted and that I don''t
+        miss any of the three rolls. Alright, first roll is done, second, third...
+        there we go. All three rolls are accounted for.\n\u003c/think\u003e\n\nThe
+        dice rolls resulted in:\n1, 2, and 3."},"finish_reason":"stop"}],"usage":{"prompt_tokens":299,"completion_tokens":104,"total_tokens":403}}
 
         '
-  recorded_at: Wed, 20 Aug 2025 15:53:51 GMT
+  recorded_at: Wed, 03 Sep 2025 15:00:11 GMT
 recorded_with: VCR 6.3.1

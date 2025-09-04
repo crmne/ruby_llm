@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:51:09 GMT
+      - Wed, 03 Sep 2025 14:59:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c82d-4ea4-70a6-a5b1-ec4f42c5e732'
+      - '01991017-3f73-783c-8ce4-f6ee576f2492'
       X-Kong-Request-Id:
-      - '0198c82d-4ea4-70a6-a5b1-ec4f42c5e732'
+      - '01991017-3f73-783c-8ce4-f6ee576f2492'
       X-Envoy-Upstream-Service-Time:
-      - '162'
+      - '214'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498870'
+      - '498473'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999552253'
+      - '999994261'
       X-Ratelimit-Tokens-Query-Cost:
       - '73'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '55'
+      - '50'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '163'
+      - '215'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -73,15 +73,15 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f812c8f50230491ca4c2e64eb93cab49","created":1755705069,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"R4VhLCenY","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 20 Aug 2025 15:51:09 GMT
+      string: '{"id":"d272c675c7b14a91ab62ea4fa91e4708","created":1756911583,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"cBvLdu76R","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:59:43 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"R4VhLCenY","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"R4VhLCenY"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"cBvLdu76R","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"cBvLdu76R"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -100,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:51:14 GMT
+      - Wed, 03 Sep 2025 14:59:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,29 +108,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c82d-4fb1-797f-8ad8-3a33ff3ef16e'
+      - '01991017-40d0-7eda-ad8b-7138b2fd1146'
       X-Kong-Request-Id:
-      - '0198c82d-4fb1-797f-8ad8-3a33ff3ef16e'
+      - '01991017-40d0-7eda-ad8b-7138b2fd1146'
       X-Envoy-Upstream-Service-Time:
-      - '4997'
+      - '311'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498402'
+      - '498348'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999551785'
+      - '999994136'
       X-Ratelimit-Tokens-Query-Cost:
-      - '468'
+      - '125'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '54'
+      - '50'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '4998'
+      - '312'
       X-Kong-Proxy-Latency:
       - '6'
       Cf-Cache-Status:
@@ -148,30 +148,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"dafb101d7545496c8eeaee7f9eda4df2","created":1755705069,"model":"mistral-small-latest","usage":{"prompt_tokens":92,"total_tokens":468,"completion_tokens":376},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Based
-        on the current trends and demand in the job market, Ruby is often considered
-        a great language to learn, especially for those interested in web development.
-        However, the \"best\" language to learn can depend on your specific goals
-        and interests. Here are a few other popular languages and their common use
-        cases:\n\n1. **Python**: Known for its simplicity and readability, Python
-        is great for beginners. It''s widely used in data science, machine learning,
-        web development, and automation.\n\n2. **JavaScript**: Essential for web development,
-        JavaScript allows you to create interactive and dynamic web pages. It''s also
-        used in server-side programming with Node.js.\n\n3. **Java**: A versatile
-        language used in Android app development, enterprise-level applications, and
-        large systems.\n\n4. **C#**: Popular for Windows applications and game development
-        (especially with Unity).\n\n5. **Swift**: If you''re interested in iOS or
-        macOS development, Swift is the language to learn.\n\n6. **Kotlin**: Increasingly
-        popular for Android development, Kotlin is interoperable with Java and is
-        officially supported by Google for Android development.\n\n7. **Go (Golang)**:
-        Known for its performance and efficiency, Go is great for cloud services and
-        scalable systems.\n\n8. **Rust**: Gaining popularity for systems programming,
-        Rust is known for its performance and safety features.\n\n9. **PHP**: Widely
-        used for server-side web development, PHP powers many of the web''s most popular
-        sites.\n\n10. **TypeScript**: A superset of JavaScript, TypeScript adds static
-        types to JavaScript, making it easier to build and maintain large applications.\n\nUltimately,
-        the best language for you to learn depends on what you want to achieve with
-        your programming skills. If you have a specific project or career goal in
-        mind, that can help guide your decision."}}]}'
-  recorded_at: Wed, 20 Aug 2025 15:51:14 GMT
+      string: '{"id":"2ec0eb1951ba4f87b81ad9e9d67973cd","created":1756911583,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":125,"completion_tokens":31},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        best language to learn is Ruby. It''s known for its simplicity and productivity,
+        making it a great choice for beginners and experienced developers alike."}}]}'
+  recorded_at: Wed, 03 Sep 2025 14:59:43 GMT
 recorded_with: VCR 6.3.1
