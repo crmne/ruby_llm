@@ -2150,6 +2150,110 @@ http_interactions:
   recorded_at: Wed, 27 Aug 2025 16:51:24 GMT
 - request:
     method: get
+    uri: https://api.x.ai/v1/language-models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 08:54:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"models":[{"id":"grok-2-1212","fingerprint":"fp_fced99f24f","created":1737331200,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":20000,"cached_prompt_text_token_price":0,"prompt_image_token_price":0,"completion_text_token_price":100000,"search_price":0,"aliases":["grok-2","grok-2-latest"]},{"id":"grok-2-vision-1212","fingerprint":"fp_236db45c03","created":1733961600,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text","image"],"output_modalities":["text"],"prompt_text_token_price":20000,"cached_prompt_text_token_price":0,"prompt_image_token_price":20000,"completion_text_token_price":100000,"search_price":0,"aliases":["grok-2-vision","grok-2-vision-latest"]},{"id":"grok-3","fingerprint":"fp_898ae9f31c","created":1743724800,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":30000,"cached_prompt_text_token_price":7500,"prompt_image_token_price":0,"completion_text_token_price":150000,"search_price":250000000,"aliases":["grok-3-latest","grok-3-beta"]},{"id":"grok-3-fast","fingerprint":"fp_9c1fa52e52","created":1743724800,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":50000,"cached_prompt_text_token_price":12500,"prompt_image_token_price":0,"completion_text_token_price":250000,"search_price":250000000,"aliases":["grok-3-fast-latest","grok-3-fast-beta"]},{"id":"grok-3-mini","fingerprint":"fp_6a09108ff5","created":1743724800,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":3000,"cached_prompt_text_token_price":750,"prompt_image_token_price":0,"completion_text_token_price":5000,"search_price":250000000,"aliases":["grok-3-mini-latest","grok-3-mini-beta"]},{"id":"grok-3-mini-fast","fingerprint":"fp_5097008838","created":1743724800,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":6000,"cached_prompt_text_token_price":1500,"prompt_image_token_price":0,"completion_text_token_price":40000,"search_price":250000000,"aliases":["grok-3-mini-fast-latest","grok-3-mini-fast-beta"]},{"id":"grok-4-0709","fingerprint":"fp_19e21a36c0","created":1752019200,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":30000,"cached_prompt_text_token_price":7500,"prompt_image_token_price":30000,"completion_text_token_price":150000,"search_price":250000000,"aliases":["grok-4","grok-4-latest"]},{"id":"grok-4-0709-eu","fingerprint":"fp_e83149a648","created":1752019200,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text","image"],"output_modalities":["text"],"prompt_text_token_price":30000,"cached_prompt_text_token_price":7500,"prompt_image_token_price":30000,"completion_text_token_price":150000,"search_price":250000000,"aliases":[]},{"id":"grok-code-fast-1","fingerprint":"fp_10f00c862d","created":1755993600,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text"],"output_modalities":["text"],"prompt_text_token_price":2000,"cached_prompt_text_token_price":200,"prompt_image_token_price":0,"completion_text_token_price":15000,"search_price":0,"aliases":["grok-code-fast","grok-code-fast-1-0825"]}]}'
+  recorded_at: Thu, 04 Sep 2025 08:54:14 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/image-generation-models
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 08:54:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"models":[{"id":"grok-2-image-1212","fingerprint":"fp_cef22a67b0","max_prompt_length":1024,"created":1736726400,"object":"model","owned_by":"xai","version":"1.0","input_modalities":["text","image"],"output_modalities":["image"],"image_price":700000000,"aliases":["grok-2-image","grok-2-image-latest"]}]}'
+  recorded_at: Thu, 04 Sep 2025 08:54:15 GMT
+- request:
+    method: get
     uri: https://api.parsera.org/v1/llm-specs
     body:
       encoding: US-ASCII
