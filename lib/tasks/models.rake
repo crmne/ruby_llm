@@ -46,6 +46,8 @@ def configure_from_env
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
+    config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end
@@ -74,7 +76,7 @@ def refresh_models
     validate_models!(models)
 
     puts "Saving models.json (#{models.all.size} models)"
-    models.save_models
+    models.save_to_json
   end
 
   @models = models
@@ -152,28 +154,11 @@ def generate_models_markdown
 
     ---
 
-    After reading this guide, you will know:
+    ## Model Data Sources
 
-    * How RubyLLM's model registry works and where data comes from
-    * How to find models by provider, capability, or purpose
-    * What information is available for each model
-    * How to use model aliases for simpler configuration
-
-    ## How Model Data Works
-
-    RubyLLM's model registry combines data from multiple sources:
-
-    - **OpenAI, Anthropic, DeepSeek, Gemini**: Data from [Parsera](https://api.parsera.org/v1/llm-specs)
-    - **OpenRouter**: Direct from OpenRouter's API
-    - **Other providers**: Defined in `capabilities.rb` files
-
-    ## Contributing Model Updates
-
-    **For major providers** (OpenAI, Anthropic, DeepSeek, Gemini): File issues with [Parsera](https://github.com/parsera-labs/api-llm-specs/issues) for public model data corrections.
-
-    **For other providers**: Edit `lib/ruby_llm/providers/<provider>/capabilities.rb` then run `rake models:update`.
-
-    See the [Contributing Guide](https://github.com/crmne/ruby_llm/blob/main/CONTRIBUTING.md) for details.
+    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/api-llm-specs))*
+    - **OpenRouter**: Direct API
+    - **Others**: Local capabilities files
 
     ## Last Updated
     {: .d-inline-block }
@@ -388,6 +373,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     aliases[anthropic_name]['openrouter'] = openrouter_model if openrouter_model
   end
 
+  # Gemini models (also map to vertexai)
   models['gemini'].each do |model|
     openrouter_variants = [
       "google/#{model}",
@@ -396,13 +382,38 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     ]
 
     openrouter_model = openrouter_variants.find { |v| models['openrouter'].include?(v) }
-    next unless openrouter_model
+    vertexai_model = models['vertexai'].include?(model) ? model : nil
+
+    next unless openrouter_model || vertexai_model
 
     alias_key = model.gsub('-latest', '')
-    aliases[alias_key] = {
-      'gemini' => model,
-      'openrouter' => openrouter_model
-    }
+    aliases[alias_key] = { 'gemini' => model }
+    aliases[alias_key]['openrouter'] = openrouter_model if openrouter_model
+    aliases[alias_key]['vertexai'] = vertexai_model if vertexai_model
+  end
+
+  # VertexAI models that aren't in Gemini (e.g. older models like text-bison)
+  models['vertexai'].each do |model|
+    # Skip if already handled above
+    next if models['gemini'].include?(model)
+
+    # Check if OpenRouter has this Google model
+    openrouter_variants = [
+      "google/#{model}",
+      "google/#{model.tr('.', '-')}"
+    ]
+
+    openrouter_model = openrouter_variants.find { |v| models['openrouter'].include?(v) }
+    gemini_model = models['gemini'].include?(model) ? model : nil
+
+    next unless openrouter_model || gemini_model
+
+    alias_key = model.gsub('-latest', '')
+    next if aliases[alias_key] # Skip if already created
+
+    aliases[alias_key] = { 'vertexai' => model }
+    aliases[alias_key]['openrouter'] = openrouter_model if openrouter_model
+    aliases[alias_key]['gemini'] = gemini_model if gemini_model
   end
 
   models['deepseek'].each do |model|

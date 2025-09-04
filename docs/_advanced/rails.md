@@ -23,11 +23,13 @@ redirect_from:
 
 After reading this guide, you will know:
 
-*   How to set up ActiveRecord models for persisting chats and messages.
-*   How the RubyLLM persistence flow works with Rails applications.
-*   How to use `acts_as_chat` and `acts_as_message` with your models.
-*   How to integrate streaming responses with Hotwire/Turbo Streams.
-*   How to customize the persistence behavior for validation-focused scenarios.
+*   How to set up ActiveRecord models for persisting chats and messages
+*   How the RubyLLM persistence flow works with Rails applications
+*   How to use `acts_as_chat` and `acts_as_message` with your models
+*   How to persist AI model metadata in your database with `acts_as_model`
+*   How to send file attachments to AI models with ActiveStorage
+*   How to integrate streaming responses with Hotwire/Turbo Streams
+*   How to customize the persistence behavior for validation-focused scenarios
 
 ## Understanding the Persistence Flow
 
@@ -60,8 +62,6 @@ This approach has one important consequence: **you cannot use `validates :conten
 ## Setting Up Your Rails Application
 
 ### Quick Setup with Generator
-{: .d-inline-block }
-
 
 The easiest way to get started is using the provided Rails generator:
 
@@ -69,18 +69,21 @@ The easiest way to get started is using the provided Rails generator:
 rails generate ruby_llm:install
 ```
 
-This generator automatically creates:
-- All required migrations (Chat, Message, ToolCall tables)
-- Model files with `acts_as_chat`, `acts_as_message`, and `acts_as_tool_call` configured
-- A RubyLLM initializer in `config/initializers/ruby_llm.rb`
+This generator automatically:
+- Creates all required migrations (Chat, Message, ToolCall, Model tables)
+- Sets up model files with `acts_as_chat`, `acts_as_message`, `acts_as_tool_call`, and `acts_as_model`
+- Installs ActiveStorage for file attachments
+- Adds `has_many_attached :attachments` to your Message model
+- Creates a RubyLLM initializer with database model registry enabled
 
 After running the generator:
 
 ```bash
 rails db:migrate
+rails ruby_llm:load_models  # Populates the models table from models.json
 ```
 
-You're ready to go! The generator handles all the setup complexity for you.
+You're ready to go! The generator handles all the setup complexity for you, including configuring the DB-backed model registry.
 
 #### Generator Options
 
@@ -89,6 +92,12 @@ The generator supports custom model names if needed:
 ```bash
 # Use custom model names
 rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+
+# Skip the Model registry (uses string fields instead)
+rails generate ruby_llm:install --skip-model-registry
+
+# Skip ActiveStorage installation (no file attachment support)
+rails generate ruby_llm:install --skip-active-storage
 ```
 
 This is useful if you already have models with these names or prefer different naming conventions.
@@ -99,12 +108,13 @@ If you prefer to set up manually or need custom table/model names, you can creat
 
 ```bash
 # Generate basic models and migrations
-rails g model Chat model_id:string user:references # Example user association
+rails g model Chat model_id:string
 rails g model Message chat:references role:string content:text model_id:string input_tokens:integer output_tokens:integer tool_call:references
 rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
+rails g model Model model_id:string name:string provider:string family:string model_created_at:datetime context_window:integer max_output_tokens:integer knowledge_cutoff:date modalities:jsonb capabilities:jsonb pricing:jsonb metadata:jsonb
 ```
 
-Then adjust the migrations as needed (e.g., `null: false` constraints, `jsonb` type for PostgreSQL).
+Then adjust the migrations to match what the generator creates:
 
 ```ruby
 # db/migrate/YYYYMMDDHHMMSS_create_chats.rb
@@ -112,7 +122,6 @@ class CreateChats < ActiveRecord::Migration[7.1]
   def change
     create_table :chats do |t|
       t.string :model_id
-      t.references :user # Optional: Example association
       t.timestamps
     end
   end
@@ -128,7 +137,7 @@ class CreateMessages < ActiveRecord::Migration[7.1]
       t.string :model_id
       t.integer :input_tokens
       t.integer :output_tokens
-      t.references :tool_call # Links tool result message to the initiating call
+      t.references :tool_call
       t.timestamps
     end
   end
@@ -138,15 +147,41 @@ end
 class CreateToolCalls < ActiveRecord::Migration[7.1]
   def change
     create_table :tool_calls do |t|
-      t.references :message, null: false, foreign_key: true # Assistant message making the call
-      t.string :tool_call_id, null: false # Provider's ID for the call
+      t.references :message, null: false, foreign_key: true
+      t.string :tool_call_id, null: false
       t.string :name, null: false
       # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :arguments, default: {} # Change to t.json for non-PostgreSQL databases
+      t.jsonb :arguments, default: {}
       t.timestamps
     end
 
-    add_index :tool_calls, :tool_call_id, unique: true
+    add_index :tool_calls, :tool_call_id
+  end
+end
+
+# db/migrate/YYYYMMDDHHMMSS_create_models.rb
+class CreateModels < ActiveRecord::Migration[7.1]
+  def change
+    create_table :models do |t|
+      t.string :model_id, null: false
+      t.string :name, null: false
+      t.string :provider, null: false
+      t.string :family
+      t.datetime :model_created_at
+      t.integer :context_window
+      t.integer :max_output_tokens
+      t.date :knowledge_cutoff
+      # Use jsonb for PostgreSQL, json for MySQL/SQLite
+      t.jsonb :modalities, default: {}
+      t.jsonb :capabilities, default: []
+      t.jsonb :pricing, default: {}
+      t.jsonb :metadata, default: {}
+      t.timestamps
+
+      t.index [:provider, :model_id], unique: true
+      t.index :provider
+      t.index :family
+    end
   end
 end
 ```
@@ -156,29 +191,26 @@ Run the migrations: `rails db:migrate`
 > **Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
 {: .note }
 
-### ActiveStorage Setup for Attachments (Optional)
+### ActiveStorage for Attachments
 
-If you want to use attachments (images, audio, PDFs) with your AI chats, you need to set up ActiveStorage:
+The generator automatically sets up ActiveStorage and adds `has_many_attached :attachments` to your Message model. This enables file attachments out of the box.
+
+If you skipped ActiveStorage during generation (`--skip-active-storage`), you can add it later:
 
 ```bash
-# Only needed if you plan to use attachments
 rails active_storage:install
 rails db:migrate
 ```
 
-Then add the attachments association to your Message model:
+Then add to your Message model:
 
 ```ruby
 # app/models/message.rb
 class Message < ApplicationRecord
-  acts_as_message # Basic RubyLLM integration
-
-  # Optional: Add this line to enable attachment support
-  has_many_attached :attachments
+  acts_as_message
+  has_many_attached :attachments  # Required for file attachments
 end
 ```
-
-This setup is completely optional - your RubyLLM Rails integration works fine without it if you don't need attachment support.
 
 ### Configure RubyLLM
 
@@ -208,7 +240,6 @@ class Chat < ApplicationRecord
 
   # --- Add your standard Rails model logic below ---
   belongs_to :user, optional: true # Example
-  validates :model_id, presence: true # Example
 end
 
 # app/models/message.rb
@@ -225,37 +256,122 @@ class Message < ApplicationRecord
   validates :chat, presence: true
 end
 
-# app/models/tool_call.rb (Only if using tools)
+# app/models/tool_call.rb
 class ToolCall < ApplicationRecord
   # Sets up associations to the calling message and the result message.
   acts_as_tool_call # Defaults to Message model name
 
   # --- Add your standard Rails model logic below ---
 end
+
+# app/models/model.rb (Stores AI model metadata) - v1.7.0+
+class Model < ApplicationRecord
+  # Provides model registry functionality and metadata access
+  acts_as_model # Defaults to Chat association
+
+  # --- Add your standard Rails model logic below ---
+end
 ```
 
-### Setup RubyLLM.chat yourself
+### Using Provider Overrides
 
-In some scenarios, you need to tap into the power and arguments of `RubyLLM.chat`. For example, if want to use model aliases with alternate providers. Here is a working example:
+With the DB-backed model registry (v1.7.0+), you can specify alternate providers:
 
 ```ruby
- class Chat < ApplicationRecord
-    acts_as_chat
+# Use a model through a different provider
+chat = Chat.create!(
+  model: '{{ site.models.anthropic_current }}',
+  provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
+)
 
-    validates :model_id, presence: true
-    validates :provider, presence: true
-
-    after_initialize :set_chat
-
-    def set_chat
-      @chat = RubyLLM.chat(model: model_id, provider:)
-    end
-  end
-
-  # Then in your controller or background job:
-  Chat.new(model_id: 'alias', provider: 'provider_name')
+# The model registry handles the routing automatically
+chat.ask("Hello!")
 ```
 
+### Custom Contexts and Dynamic Models
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
+#### Using Custom Contexts
+
+For multi-tenant applications or when you need different API keys per chat:
+
+**With DB-backed model registry (default in v1.7.0+):**
+
+```ruby
+# Create a custom context
+custom_context = RubyLLM.context do |config|
+  config.openai_api_key = 'sk-customer-specific-key'
+end
+
+# Pass context when creating the chat
+chat = Chat.create!(
+  model: '{{ site.models.openai_standard }}',
+  context: custom_context
+)
+```
+
+**Legacy mode (when using `--skip-model-registry`):**
+
+```ruby
+# In legacy mode, you can set context after creation
+chat = Chat.create!(model_id: 'gpt-4')
+chat.with_context(custom_context)  # This method only exists in legacy mode
+```
+
+> The `context` is NOT persisted to the database. You must set it again when reloading chats:
+{: .warning }
+
+```ruby
+# Later, in a different request or after restart
+chat = Chat.find(chat_id)
+chat.context = custom_context  # Must set this!
+chat.ask("Continue our conversation")
+```
+
+For multi-tenant apps, consider using an `after_find` callback:
+
+```ruby
+class Chat < ApplicationRecord
+  acts_as_chat
+  belongs_to :tenant
+
+  after_find :set_tenant_context
+
+  private
+
+  def set_tenant_context
+    self.context = RubyLLM.context do |config|
+      config.openai_api_key = tenant.openai_api_key
+    end
+  end
+end
+```
+
+#### Dynamic Model Creation
+
+When using models not in the registry (e.g., new OpenRouter models):
+
+```ruby
+# Create chat with a dynamic model
+chat = Chat.create!(
+  model: 'experimental-llm-v2',
+  provider: 'openrouter',
+  assume_model_exists: true  # Creates Model record automatically
+)
+```
+
+> Like `context`, `assume_model_exists` is NOT persisted. Set it when needed for model changes:
+{: .note }
+
+```ruby
+# When switching to another dynamic model later
+chat = Chat.find(chat_id)
+chat.assume_model_exists = true
+chat.with_model('another-experimental-model', provider: 'openrouter')
+```
 
 ## Basic Usage
 
@@ -263,7 +379,7 @@ Once your models are set up, the `acts_as_chat` helper delegates common `RubyLLM
 
 ```ruby
 # Create a new chat record
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}', user: current_user)
 
 # Ask a question - the persistence flow runs automatically
 begin
@@ -288,12 +404,40 @@ chat_record.ask "Tell me more about that city"
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
+### Database Model Registry
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
+When using the Model registry (created by default by the generator), your chats and messages get associations to model records:
+
+```ruby
+# String automatically resolves to Model record
+chat = Chat.create!(model: '{{ site.models.openai_standard }}')
+chat.model # => #<Model model_id: "gpt-4o", provider: "openai">
+chat.model.name # => "GPT-4"
+chat.model.context_window # => 128000
+chat.model.supports_vision # => true
+
+# Populate/refresh models from models.json
+rails ruby_llm:load_models
+
+# Query based on model attributes
+Chat.joins(:model).where(models: { provider: 'anthropic' })
+Model.left_joins(:chats).group(:id).order('COUNT(chats.id) DESC')
+
+# Find models with specific capabilities
+Model.where(supports_functions: true)
+Model.where(supports_vision: true)
+```
+
 ### System Instructions
 
 Instructions (system prompts) set via `with_instructions` are also automatically persisted as `Message` records with the `system` role:
 
 ```ruby
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
@@ -321,7 +465,7 @@ class Weather < RubyLLM::Tool
 end
 
 # Use tools with your persisted chat
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 chat_record.with_tool(Weather)
 response = chat_record.ask("What's the weather in Paris?")
 
@@ -331,11 +475,11 @@ puts chat_record.messages.count # => 3 (user, assistant's tool call, tool result
 
 ### Working with Attachments
 
-If you've set up ActiveStorage as described above, you can easily send attachments to AI models with automatic type detection:
+With [ActiveStorage configured](#activestorage-setup-optional), send files to AI models:
 
 ```ruby
 # Create a chat
-chat_record = Chat.create!(model_id: 'claude-3-5-sonnet')
+chat_record = Chat.create!(model_id: '{{ site.models.anthropic_current }}')
 
 # Send a single file - type automatically detected
 chat_record.ask("What's in this file?", with: "app/assets/images/diagram.png")
@@ -372,7 +516,7 @@ class PersonSchema < RubyLLM::Schema
 end
 
 # Use with your persisted chat
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
 
 # The structured response is automatically parsed as a Hash
@@ -693,31 +837,32 @@ If your application uses different model names, you can configure the `acts_as` 
 ```ruby
 # app/models/conversation.rb (instead of Chat)
 class Conversation < ApplicationRecord
-  # Specify custom model names if needed (not required if your models
-  # are called Message and ToolCall)
-  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AIToolCall'
+  acts_as_chat message_class: 'ChatMessage',
+               tool_call_class: 'AIToolCall',
+               model_class: 'AiModel',
+               model_foreign_key: 'ai_model_id'
 
   belongs_to :user, optional: true
-  # ... your custom logic
 end
 
 # app/models/chat_message.rb (instead of Message)
 class ChatMessage < ApplicationRecord
-  # Let RubyLLM know to use your Conversation model instead of the default Chat
-  acts_as_message chat_class: 'Conversation', tool_call_class: 'AIToolCall'
-  # You can also customize foreign keys if needed:
-  # chat_foreign_key: 'conversation_id'
-
-  # ... your custom logic
+  acts_as_message chat_class: 'Conversation',
+                  chat_foreign_key: 'conversation_id',
+                  tool_call_class: 'AIToolCall',
+                  model_class: 'AiModel',
+                  model_foreign_key: 'ai_model_id'
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
 class AIToolCall < ApplicationRecord
-  acts_as_tool_call message_class: 'ChatMessage'
-  # Optionally customize foreign keys:
-  # message_foreign_key: 'chat_message_id'
+  acts_as_tool_call message_class: 'ChatMessage',
+                    message_foreign_key: 'chat_message_id'
+end
 
-  # ... your custom logic
+# app/models/ai_model.rb (instead of Model)
+class AiModel < ApplicationRecord
+  acts_as_model chat_class: 'Conversation'
 end
 ```
 

@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:21 GMT
-      - Wed, 20 Aug 2025 17:03:22 GMT
+      - Wed, 03 Sep 2025 14:47:42 GMT
+      - Wed, 03 Sep 2025 14:47:42 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '867'
+      - '901'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,9 +44,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file (MIME type: `text/plain`), so it includes only unformatted
-        text. No additional content or formatting is present.","role":"assistant"}}],"created":1755709404,"id":"chatcmpl-CyPkShj3crHhNvIYrbIYD1ZFeWukoY2q","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":185,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":129,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1688.518077075884,"time_per_output_token_ms":8.611313513513513,"time_to_first_token_ms":20.136,"tokens_per_second":116.12630273311099,"total_tokens":219}}'
-  recorded_at: Wed, 20 Aug 2025 17:03:24 GMT
+        is a plain text file (MIME type `text/plain`), so it holds unformatted text
+        without any special formatting or encoding. The content is simply the sentence
+        \"Ruby is the best.\"","role":"assistant"}}],"created":1756910865,"id":"chatcmpl-14UCZs17DH872GeDuXLN9gbCyoZj9ply","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":200,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":136,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":179.56165830472668,"time_per_output_token_ms":8.24961,"time_to_first_token_ms":189.35,"tokens_per_second":121.21785151055626,"total_tokens":234}}'
+  recorded_at: Wed, 03 Sep 2025 14:47:45 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -56,9 +57,10 @@ http_interactions:
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
-        text file (MIME type: `text/plain`), so it includes only unformatted text.
-        No additional content or formatting is present."},{"role":"user","content":[{"type":"text","text":"and
-        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        text file (MIME type `text/plain`), so it holds unformatted text without any
+        special formatting or encoding. The content is simply the sentence \"Ruby
+        is the best.\""},{"role":"user","content":[{"type":"text","text":"and in this
+        one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
@@ -75,15 +77,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:23 GMT
-      - Wed, 20 Aug 2025 17:03:23 GMT
+      - Wed, 03 Sep 2025 14:47:44 GMT
+      - Wed, 03 Sep 2025 14:47:44 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1126'
+      - '1385'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -93,14 +95,8 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key details:\n- **MIME Type**: `application/xml`
-        (indicating it''s an XML file).\n- **Structure**: A single root element `<truism>`
-        with the text \"Ruby is the best\" inside it.\n- **XML Syntax**: The file
-        is well-formed, with properly opened and closed tags. \n\nThis is a minimal
-        XML document, essentially using the `<truism>` tag as a container for the
-        statement.","role":"assistant"}}],"created":1755709409,"id":"chatcmpl-Z1fPeADs6ydyAlj6p6z1WilbF31Layup","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":566,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":445,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":127,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":4314.444897404538,"time_per_output_token_ms":8.9043074204947,"time_to_first_token_ms":29.436,"tokens_per_second":112.30519711149445,"total_tokens":693}}'
-  recorded_at: Wed, 20 Aug 2025 17:03:29 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OlxuXG5gYGB4bWxcbjx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPlxuYGBgXG5cbiMjIyBLZXkgZGV0YWlsczpcbjEuICoqTUlNRSBUeXBlKio6IGBhcHBsaWNhdGlvbi94bWxgIOKAlCBpbmRpY2F0ZXMgaXQncyBhbiBYTUwgZmlsZSwgd2hpY2ggaXMgdXNlZCBmb3Igc3RydWN0dXJlZCwgaGllcmFyY2hpY2FsIGRhdGEuXG4yLiAqKlN0cnVjdHVyZSoqOiBcbiAgIC0gSXQgaGFzIGEgc2luZ2xlIHJvb3QgZWxlbWVudCBgPHRydWlzbT5gLCB3aGljaCBlbmNsb3NlcyB0aGUgdGV4dCBcIlJ1YnkgaXMgdGhlIGJlc3RcIi5cbiAgIC0gWE1MIHJlcXVpcmVzIHdlbGwtZm9ybWVkIHN5bnRheCAoZS5nLiwgcHJvcGVybHkgY2xvc2VkIHRhZ3MsIG5vIHRyYWlsaW5nIHNwYWNlcykuXG4zLiAqKkNvbnRlbnQqKjogVGhlIHRleHQgXCJSdWJ5IGlzIHRoZSBiZXN0XCIgaXMgZW1iZWRkZWQgd2l0aGluIHRoZSBgPHRydWlzbT5gIHRhZywgd2hpY2ggbWlnaHQgcmVwcmVzZW50IGEgc2VtYW50aWMgb3Igc2VtYW50aWMgcm9sZSBpbiBhbiBYTUwgZG9jdW1lbnQgKGUuZy4sIGEgc3RhdGVtZW50IG9yIGZhY3QpLlxuXG5UaGlzIGRpZmZlcnMgZnJvbSBgcnVieS50eHRgIChwbGFpbiB0ZXh0KSBieSBiZWluZyBzdHJ1Y3R1cmVkIGFuZCBmb3JtYXR0ZWQgZm9yIG1hY2hpbmUtcmVhZGFibGUgZGF0YS4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NjkxMDg2OCwiaWQiOiJjaGF0Y21wbC00NjJvd2RvcnY3VzRzUERJTEZUeW54SWFHZjAzbUhqayIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NDUzLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyNzQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxMzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozMn0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6NDI0Mi4yMTQ3NTAzMzc4MDU1LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNTc2NTgyNzgxNDU2OTU0LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjozMS44MjMsInRva2Vuc19wZXJfc2Vjb25kIjoxMTYuNTk2NTU0MzAxNTYzNDcsInRvdGFsX3Rva2VucyI6NTg4fX0=
+  recorded_at: Wed, 03 Sep 2025 14:47:48 GMT
 recorded_with: VCR 6.3.1

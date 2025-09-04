@@ -53,6 +53,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
+  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
@@ -134,16 +136,16 @@ Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `Ruby
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_model = 'claude-3-5-sonnet'           # For RubyLLM.chat
-  config.default_embedding_model = 'text-embedding-3-large'  # For RubyLLM.embed
+  config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
+  config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
   config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
 end
 ```
 
 Defaults if not configured:
-- Chat: `gpt-4.1-nano`
-- Embeddings: `text-embedding-3-small`
-- Images: `gpt-image-1`
+- Chat: `{{ site.models.default_chat }}`
+- Embeddings: `{{ site.models.default_embedding }}`
+- Images: `{{ site.models.default_image }}`
 
 ## Connection Settings
 
@@ -249,7 +251,7 @@ azure_context = RubyLLM.context do |config|
 end
 
 # Use Azure for this specific task
-azure_chat = azure_context.chat(model: 'gpt-4')
+azure_chat = azure_context.chat(model: '{{ site.models.openai_standard }}')
 response = azure_chat.ask("Process this with Azure...")
 
 # Global config unchanged
@@ -314,6 +316,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = String
   config.anthropic_api_key = String
   config.gemini_api_key = String
+  config.vertexai_project_id = String  # GCP project ID
+  config.vertexai_location = String     # e.g., 'us-central1'
   config.deepseek_api_key = String
   config.mistral_api_key = String
   config.perplexity_api_key = String

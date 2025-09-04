@@ -40,7 +40,7 @@ embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
 # The vector representation (an array of floats)
 vector = embedding.vectors
-puts "Vector dimension: #{vector.length}" # e.g., 1536 for text-embedding-3-small
+puts "Vector dimension: #{vector.length}" # e.g., 1536 for {{ site.models.embedding_small }}
 
 # Access metadata
 puts "Model used: #{embedding.model}"
@@ -67,19 +67,19 @@ puts "Total input tokens: #{embeddings.input_tokens}"
 
 ## Choosing Models
 
-By default, RubyLLM uses a capable default embedding model (like OpenAI's `text-embedding-3-small`), but you can specify a different one using the `model:` argument.
+By default, RubyLLM uses a capable default embedding model (like OpenAI's `{{ site.models.embedding_small }}`), but you can specify a different one using the `model:` argument.
 
 ```ruby
 # Use a specific OpenAI model
 embedding_large = RubyLLM.embed(
   "This is a test sentence",
-  model: "text-embedding-3-large"
+  model: "{{ site.models.embedding_large }}"
 )
 
 # Or use a Google model
 embedding_google = RubyLLM.embed(
   "This is another test sentence",
-  model: "text-embedding-004" # Google's model
+  model: "{{ site.models.embedding_google }}" # Google's model
 )
 
 # Use a model not in the registry (useful for custom endpoints)
@@ -95,7 +95,7 @@ You can configure the default embedding model globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_embedding_model = "text-embedding-3-large"
+  config.default_embedding_model = "{{ site.models.embedding_large }}"
 end
 ```
 
@@ -103,12 +103,12 @@ Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for det
 
 ## Choosing Dimensions
 
-Each embedding model has its own default output dimensions. For example, OpenAI's `text-embedding-3-small` outputs 1536 dimensions by default, while `text-embedding-3-large` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
+Each embedding model has its own default output dimensions. For example, OpenAI's `{{ site.models.embedding_small }}` outputs 1536 dimensions by default, while `{{ site.models.embedding_large }}` outputs 3072 dimensions. RubyLLM allows you to specify these dimensions per request:
 
 ```ruby
 embedding = RubyLLM.embed(
   "This is a test sentence",
-  model: "text-embedding-3-small",
+  model: "{{ site.models.embedding_small }}",
   dimensions: 512
 )
 ```
@@ -137,7 +137,8 @@ puts embedding.vectors.first.class  # => Float
 puts embedding.vectors.first.length # => 1536
 
 # The model used
-puts embedding.model  # => "text-embedding-3-small"
+puts embedding.model  # => "{{ site.models.embedding_small }}"
+```
 
 ## Using Embedding Results
 
@@ -178,7 +179,7 @@ For comprehensive error handling patterns and retry strategies, see the [Error H
 
 *   **Batching:** Always embed multiple texts in a single call when possible. `RubyLLM.embed(["text1", "text2"])` is much faster than calling `RubyLLM.embed` twice.
 *   **Caching/Persistence:** Embeddings are generally static for a given text and model. Store generated embeddings in your database or cache instead of regenerating them frequently.
-*   **Dimensionality:** Different models produce vectors of different lengths (dimensions). Ensure your storage and similarity calculation methods handle the correct dimensionality (e.g., `text-embedding-3-small` uses 1536 dimensions, `text-embedding-3-large` uses 3072).
+*   **Dimensionality:** Different models produce vectors of different lengths (dimensions). Ensure your storage and similarity calculation methods handle the correct dimensionality (e.g., `{{ site.models.embedding_small }}` uses 1536 dimensions, `{{ site.models.embedding_large }}` uses 3072).
 *   **Normalization:** Some vector databases and similarity algorithms perform better if vectors are normalized (scaled to have a length/magnitude of 1). Check the documentation for your specific use case or database.
 
 ## Rails Integration Example

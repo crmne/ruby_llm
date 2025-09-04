@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:16 GMT
+      - Tue, 02 Sep 2025 22:51:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,10 +51,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1755704955-oyENrDZYUUsrvH66PLRO\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1755704955,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        help you check the current weather in Berlin using the provided coordinates.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_016ZSctv8DhuuRVYV85oM5Ln\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":90,\"total_tokens\":479}}"
-  recorded_at: Wed, 20 Aug 2025 15:49:17 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1756853515-iPpyOyTYQTREoDDQY3PY\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853515,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you check the current weather in Berlin using the coordinates you provided.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01KB13StwLqJDndV7qgjb5bZ\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":389,\"completion_tokens\":91,\"total_tokens\":480}}"
+  recorded_at: Tue, 02 Sep 2025 22:51:57 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -62,14 +62,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"I''ll
-        help you check the current weather in Berlin using the provided coordinates.","tool_calls":[{"id":"toolu_vrtx_016ZSctv8DhuuRVYV85oM5Ln","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_016ZSctv8DhuuRVYV85oM5Ln"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        help you check the current weather in Berlin using the coordinates you provided.","tool_calls":[{"id":"toolu_01KB13StwLqJDndV7qgjb5bZ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_01KB13StwLqJDndV7qgjb5bZ"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.13.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -84,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:18 GMT
+      - Tue, 02 Sep 2025 22:51:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -109,6 +109,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzU1NzA0OTU3LWN4RHpoUTdzMmxYZFl4UFhLS3ZDIiwicHJvdmlkZXIiOiJBbnRocm9waWMiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc1NTcwNDk1NywiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJCYXNlZCBvbiB0aGUgd2VhdGhlciBkYXRhLCBoZXJlJ3MgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG4tIFRlbXBlcmF0dXJlOiAxNcKwQyAoNTnCsEYpXG4tIFdpbmQgU3BlZWQ6IDEwIGttL2hcblxuSXQgc2VlbXMgbGlrZSBhIG1pbGQgZGF5IGluIEJlcmxpbiB3aXRoIGEgbW9kZXJhdGUgYnJlZXplLiBUaGUgdGVtcGVyYXR1cmUgaXMgcmVsYXRpdmVseSBjb21mb3J0YWJsZSwgc3VpdGFibGUgZm9yIGxpZ2h0IGNsb3RoaW5nIG9yIGEgbGlnaHQgamFja2V0LiBUaGUgd2luZCBpcyBnZW50bGUsIHdoaWNoIHNob3VsZCBtYWtlIGl0IGZlZWwgcGxlYXNhbnQgb3V0ZG9vcnMuIiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjpudWxsfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1MTgsImNvbXBsZXRpb25fdG9rZW5zIjo4NiwidG90YWxfdG9rZW5zIjo2MDR9fQ==
-  recorded_at: Wed, 20 Aug 2025 15:49:20 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc1Njg1MzUxNy04RDZLdHdSbkFzMmhxS1pLenF6MiIsInByb3ZpZGVyIjoiQW50aHJvcGljIiwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTMuNS1oYWlrdSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTY4NTM1MTcsImNob2ljZXMiOlt7ImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQmFzZWQgb24gdGhlIHdlYXRoZXIgZGF0YSwgaGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKDU5wrBGKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oXG5cbkl0IHNlZW1zIGxpa2UgYSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBhIG1vZGVyYXRlIGJyZWV6ZS4gVGhlIHRlbXBlcmF0dXJlIGlzIHF1aXRlIGNvbWZvcnRhYmxlLCBzdWl0YWJsZSBmb3IgbGlnaHQgY2xvdGhpbmcgb3IgYSBsaWdodCBqYWNrZXQuIFRoZSB3aW5kIGlzIGdlbnRsZSwgd2hpY2ggc2hvdWxkIG1ha2UgZm9yIGEgcGxlYXNhbnQgb3V0ZG9vciBleHBlcmllbmNlLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTE5LCJjb21wbGV0aW9uX3Rva2VucyI6ODYsInRvdGFsX3Rva2VucyI6NjA1fX0=
+  recorded_at: Tue, 02 Sep 2025 22:52:00 GMT
 recorded_with: VCR 6.3.1
