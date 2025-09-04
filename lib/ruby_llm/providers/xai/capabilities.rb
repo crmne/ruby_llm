@@ -35,7 +35,7 @@ module RubyLLM
 
         def supports_vision?(model_id)
           case model_family(model_id)
-          when 'grok_2_vision', 'grok_4' then true
+          when 'grok_2_vision' then true
           else false
           end
         end
