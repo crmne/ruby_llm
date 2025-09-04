@@ -6,13 +6,17 @@ module RubyLLM
   module Providers
     class Bedrock
       module Streaming
-        # Module for processing payloads from AWS Bedrock streaming responses.
-        module PayloadProcessing
+        # Payload helpers for AWS Bedrock streaming responses.
+        module Payload
+          # Extracts JSON content from a raw event payload and yields stream chunks
+          # to the provided block.
           def process_payload(payload, &)
             json_payload = extract_json_payload(payload)
             parse_and_process_json(json_payload, &)
           end
 
+          # Same as +process_payload+ but with pre-parsed headers which are
+          # used to enrich the JSON event data (e.g., :event-type).
           def process_payload_with_headers(payload, headers, &)
             json_payload = extract_json_payload(payload)
             parse_and_process_json_with_headers(json_payload, headers, &)
@@ -20,6 +24,8 @@ module RubyLLM
 
           private
 
+          # Pulls the JSON substring from the binary payload by locating
+          # the outermost braces.
           def extract_json_payload(payload)
             json_start = payload.index('{')
             json_end = payload.rindex('}')
@@ -38,6 +44,7 @@ module RubyLLM
             process_json_data(json_data, &)
           end
 
+          # Routes JSON event data to the appropriate handler.
           def process_json_data(json_data, &)
             # Handle tool call events for converse-stream
             if tool_call_event?(json_data) || metadata_event?(json_data)
@@ -59,6 +66,16 @@ module RubyLLM
 
           def create_and_yield_chunk(data, &block)
             chunk = build_chunk(data)
+            # For Bedrock, we may receive start events with no text content
+            # (e.g., contentBlockStart introducing a block/tool). We still want
+            # to trigger on_new_message so persistence can create the DB row.
+            if chunk.content.nil? || chunk.content.empty?
+              # Only yield for start events to trigger on_new_message
+              event_type = data['type']
+              start_event = %w[messageStart contentBlockStart].include?(event_type)
+              return unless start_event
+            end
+
             block.call(chunk)
           end
 

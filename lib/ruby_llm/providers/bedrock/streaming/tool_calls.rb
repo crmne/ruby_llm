@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require 'json'
-
 module RubyLLM
   module Providers
     class Bedrock
       module Streaming
-        # Module for handling tool call accumulation in converse-stream format.
-        module ToolCallHandling
+        # Instance-method mixin for streaming tool call accumulation/handling
+        module ToolCalls
           def initialize_tool_call_accumulator
             @current_tool_use_id = nil
             @current_tool_name = nil

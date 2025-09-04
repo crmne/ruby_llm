@@ -43,97 +43,23 @@ module RubyLLM
         end
 
         def format_content_for_converse(content)
-          return [format_text_content(content)] unless content.is_a?(RubyLLM::Content)
-
-          parts = []
-          parts << format_text_content(content.text) if content.text
-
-          content.attachments.each do |attachment|
-            case attachment.type
-            when :image
-              parts << format_image_for_converse(attachment)
-            when :pdf
-              parts << format_document_for_converse(attachment)
-            when :text
-              parts << format_text_file_for_converse(attachment)
-            else
-              raise RubyLLM::UnsupportedAttachmentError, attachment.type
-            end
-          end
-
-          parts
+          Media.format_content_for_converse(content)
         end
 
         def format_text_content(text)
-          { 'text' => text.to_s }
+          Media.format_text_for_converse(text)
         end
 
         def format_image_for_converse(image)
-          {
-            'image' => {
-              'format' => extract_image_format(image.mime_type),
-              'name' => sanitize_filename(image.filename) || 'uploaded_image',
-              'source' => { 'bytes' => image.encoded }
-            }
-          }
+          Media.format_image_for_converse(image)
         end
 
         def format_document_for_converse(document)
-          {
-            'document' => {
-              'format' => document.mime_type == 'application/pdf' ? 'pdf' : 'text',
-              'name' => sanitize_filename(document.filename) || 'uploaded_document',
-              'source' => { 'bytes' => document.encoded }
-            }
-          }
+          Media.format_document_for_converse(document)
         end
 
         def format_text_file_for_converse(text_file)
-          {
-            'document' => {
-              'format' => 'text',
-              'name' => sanitize_filename(text_file.filename) || 'uploaded_text',
-              'source' => { 'bytes' => text_file.encoded }
-            }
-          }
-        end
-
-        # Sanitizes filenames according to Bedrock's requirements:
-        # - Only alphanumeric characters, whitespace, hyphens, parentheses, and square brackets
-        # - No more than one consecutive whitespace character
-        def sanitize_filename(filename)
-          return nil unless filename
-
-          # Remove any characters that aren't alphanumeric, whitespace, hyphens, parentheses, or square brackets
-          sanitized = filename.gsub(/[^a-zA-Z0-9\s\-()\[\]]/, '')
-
-          # Replace multiple consecutive whitespace characters with a single space
-          sanitized = sanitized.gsub(/\s+/, ' ')
-
-          # Trim leading and trailing whitespace
-          sanitized = sanitized.strip
-
-          # Return nil if the filename is empty after sanitization
-          sanitized.empty? ? nil : sanitized
-        end
-
-        # Extracts the image format from MIME type for Bedrock's image format field
-        # Bedrock supports: gif, jpeg, png, webp
-        def extract_image_format(mime_type)
-          case mime_type
-          when 'image/png'
-            'png'
-          when 'image/jpeg', 'image/jpg'
-            'jpeg'
-          when 'image/gif'
-            'gif'
-          when 'image/webp'
-            'webp'
-          else
-            # Default to png for unknown formats
-            RubyLLM.logger.warn "Unknown image MIME type: #{mime_type}, defaulting to png"
-            'png'
-          end
+          Media.format_text_file_for_converse(text_file)
         end
 
         def format_tool_call(msg)
@@ -223,15 +149,9 @@ module RubyLLM
           blocks.select { |c| c['toolUse'] }
         end
 
+        # Delegate to Bedrock::Tools for consistency with OpenAI provider naming
         def parse_tool_calls(tool_use_blocks)
-          tool_use_blocks.map do |block|
-            tool_use = block['toolUse']
-            RubyLLM::ToolCall.new(
-              id: tool_use['id'],
-              name: tool_use['name'],
-              arguments: tool_use['input']
-            )
-          end
+          Tools.parse_tool_calls(tool_use_blocks)
         end
 
         def build_message(data, content, tool_use_blocks, response)
@@ -271,7 +191,10 @@ module RubyLLM
           )
 
           if RubyLLM.config.log_stream_debug
-            RubyLLM.logger.debug "Built message: role=#{message.role}, content=#{message.content}, tool_calls=#{message.tool_calls}, input_tokens=#{message.input_tokens}, output_tokens=#{message.output_tokens}"
+            RubyLLM.logger.debug(
+              "Built message: role=#{message.role}, content=#{message.content}, tool_calls=#{message.tool_calls}, " \
+              "input_tokens=#{message.input_tokens}, output_tokens=#{message.output_tokens}"
+            )
           end
 
           message
@@ -324,22 +247,8 @@ module RubyLLM
         end
 
         def build_base_payload(chat_messages, model)
-          formatted_messages = chat_messages.map { |msg| format_message(msg) }
-          compacted_messages = formatted_messages.compact
-
-          # Validate that no message contains both toolUse and toolResult
-          compacted_messages.each_with_index do |message, index|
-            next unless message && message[:content]
-
-            has_tool_use = message[:content].any? { |content| content['toolUse'] }
-            has_tool_result = message[:content].any? { |content| content['toolResult'] }
-
-            next unless has_tool_use && has_tool_result
-
-            RubyLLM.logger.error "Bedrock validation error: Message #{index} contains both toolUse and toolResult"
-            RubyLLM.logger.error "Message content: #{message[:content]}"
-            raise 'Bedrock validation error: Message cannot contain both toolUse and toolResult'
-          end
+          compacted_messages = chat_messages.filter_map { |msg| format_message(msg) }
+          validate_no_tool_use_and_result!(compacted_messages)
 
           {
             messages: compacted_messages,
@@ -347,6 +256,24 @@ module RubyLLM
               maxTokens: model.max_tokens || 4096
             }
           }
+        end
+
+        def validate_no_tool_use_and_result!(messages)
+          index = messages.find_index { |message| invalid_tool_content?(message) }
+          return unless index
+
+          RubyLLM.logger.error "Bedrock validation error: Message #{index} contains both toolUse and toolResult"
+          RubyLLM.logger.error "Message content: #{messages[index][:content]}"
+          raise 'Bedrock validation error: Message cannot contain both toolUse and toolResult'
+        end
+
+        def invalid_tool_content?(message)
+          return false unless message && message[:content]
+
+          content = message[:content]
+          has_tool_use = content.any? { |c| c['toolUse'] }
+          has_tool_result = content.any? { |c| c['toolResult'] }
+          has_tool_use && has_tool_result
         end
 
         def add_optional_fields(payload, system_content:, tools:, temperature:)
@@ -363,32 +290,9 @@ module RubyLLM
           return unless tools.any?
 
           payload[:toolConfig] = {
-            tools: tools.values.map { |t| function_for(t) },
+            tools: tools.values.map { |t| Tools.tool_for(t) },
             toolChoice: { auto: {} }
           }
-        end
-
-        def function_for(tool)
-          {
-            toolSpec: {
-              name: tool.name,
-              description: tool.description,
-              inputSchema: {
-                json: {
-                  type: 'object',
-                  properties: tool.parameters.transform_values { |param| param_schema(param) },
-                  required: tool.parameters.select { |_, p| p.required }.keys
-                }
-              }
-            }
-          }
-        end
-
-        def param_schema(param)
-          {
-            type: param.type,
-            description: param.description
-          }.compact
         end
       end
     end

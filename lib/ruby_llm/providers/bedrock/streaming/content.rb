@@ -4,12 +4,8 @@ module RubyLLM
   module Providers
     class Bedrock
       module Streaming
-        # Module for handling content extraction from AWS Bedrock streaming responses.
-        module ContentExtraction
-          def json_delta?(data)
-            data['type'] == 'contentBlockDelta' && data.dig('delta', 'type') == 'input_json_delta'
-          end
-
+        # Content helpers for AWS Bedrock streaming responses.
+        module Content
           def extract_streaming_content(data)
             return '' unless data.is_a?(Hash)
 
@@ -23,20 +19,6 @@ module RubyLLM
 
           def extract_model_id(_data)
             @model_id
-          end
-
-          def extract_input_tokens(_data)
-            # Tokens are not available in streaming chunks
-            nil
-          end
-
-          def extract_output_tokens(_data)
-            # Tokens are not available in streaming chunks
-            nil
-          end
-
-          def extract_stop_reason(data)
-            data['stopReason']
           end
 
           def tool_use_start?(data)
@@ -56,7 +38,7 @@ module RubyLLM
           end
 
           def extract_metadata_usage(data)
-            data.dig('usage') || {}
+            data['usage'] || {}
           end
 
           def extract_tool_use_start(data)
@@ -82,13 +64,8 @@ module RubyLLM
 
           def extract_content_by_type(data)
             content = case data['type']
-                      when 'messageStart' then extract_message_start_content(data)
                       when 'contentBlockStart' then extract_block_start_content(data)
                       when 'contentBlockDelta' then extract_delta_content(data)
-                      when 'contentBlockStop' then extract_block_stop_content(data)
-                      when 'messageDelta' then extract_message_delta_content(data)
-                      when 'messageStop' then extract_message_stop_content(data)
-                      when 'metadata' then extract_metadata_content(data)
                       else ''
                       end
 
@@ -96,11 +73,6 @@ module RubyLLM
               RubyLLM.logger.debug "Extracted content for #{data['type']}: #{content.inspect}"
             end
             content
-          end
-
-          def extract_message_start_content(_data)
-            # Message start doesn't contain content
-            ''
           end
 
           def extract_block_start_content(data)
@@ -121,26 +93,6 @@ module RubyLLM
               # Regular text delta
               data.dig('delta', 'text').to_s
             end
-          end
-
-          def extract_block_stop_content(_data)
-            # Block stop doesn't contain content
-            ''
-          end
-
-          def extract_message_delta_content(_data)
-            # Message delta might contain role changes or other metadata
-            ''
-          end
-
-          def extract_message_stop_content(_data)
-            # Message stop doesn't contain content
-            ''
-          end
-
-          def extract_metadata_content(_data)
-            # Metadata doesn't contain text content
-            ''
           end
         end
       end

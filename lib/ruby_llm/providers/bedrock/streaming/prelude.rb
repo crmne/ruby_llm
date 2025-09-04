@@ -4,32 +4,45 @@ module RubyLLM
   module Providers
     class Bedrock
       module Streaming
-        # Module for handling message preludes in AWS Bedrock streaming responses.
-        module PreludeHandling
+        # Helpers for parsing AWS Event Stream prelude in Bedrock streaming.
+        module Prelude
+          PRELUDE_BYTES = 12
+          CRC_BYTES = 4
+          MAX_MESSAGE_BYTES = 1_000_000
+
+          # Returns true if enough bytes remain to read a full prelude
+          # (total_length + headers_length + headers_crc)
           def can_read_prelude?(chunk, offset)
-            chunk.bytesize - offset >= 12
+            chunk.bytesize - offset >= PRELUDE_BYTES
           end
 
+          # Reads the 8-byte length fields from the prelude at +offset+
+          # and returns [total_length, headers_length].
           def read_prelude(chunk, offset)
             total_length = chunk[offset...(offset + 4)].unpack1('N')
             headers_length = chunk[(offset + 4)...(offset + 8)].unpack1('N')
             [total_length, headers_length]
           end
 
+          # Validates the relationship between total and headers lengths
           def valid_lengths?(total_length, headers_length)
             valid_length_constraints?(total_length, headers_length)
           end
 
+          # Computes end offsets of headers and payload (exclusive)
           def calculate_positions(offset, total_length, headers_length)
-            headers_end = offset + 12 + headers_length
-            payload_end = offset + total_length - 4 # Subtract 4 bytes for message CRC
+            headers_end = offset + PRELUDE_BYTES + headers_length
+            payload_end = offset + total_length - CRC_BYTES
             [headers_end, payload_end]
           end
 
+          # Ensures derived positions are within the chunk bounds and ordered
           def valid_positions?(headers_end, payload_end, chunk_size)
             headers_end < payload_end && headers_end < chunk_size && payload_end <= chunk_size
           end
 
+          # Attempts to find the next plausible prelude start after a parse error.
+          # Returns the next offset to continue scanning from.
           def find_next_message(chunk, offset)
             next_prelude = find_next_prelude(chunk, offset + 4)
             next_prelude || chunk.bytesize
@@ -62,7 +75,7 @@ module RubyLLM
 
           def valid_length_constraints?(total_length, headers_length)
             return false if total_length.nil? || headers_length.nil?
-            return false if total_length <= 0 || total_length > 1_000_000
+            return false if total_length <= 0 || total_length > MAX_MESSAGE_BYTES
             return false if headers_length <= 0 || headers_length >= total_length
 
             true

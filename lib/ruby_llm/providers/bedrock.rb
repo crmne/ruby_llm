@@ -11,6 +11,7 @@ module RubyLLM
       include Bedrock::Streaming
       include Bedrock::Models
       include Bedrock::Signing
+      include Bedrock::Tools
       include Bedrock::Media
 
       def api_base
