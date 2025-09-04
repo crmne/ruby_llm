@@ -22,7 +22,6 @@ module RubyLLM
           return [] if data.empty?
 
           data['models']&.map do |model_data|
-            # puts model_data
             model_id = model_data['id']
 
             info = Model::Info.new(
