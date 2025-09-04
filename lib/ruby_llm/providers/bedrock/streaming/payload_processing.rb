@@ -39,21 +39,12 @@ module RubyLLM
           end
 
           def process_json_data(json_data, &)
-            # For converse-stream, the JSON data is the event directly, not wrapped in 'bytes'
-            data = if json_data['bytes']
-                     # Old invoke-with-response-stream format
-                     decode_and_parse_data(json_data)
-                   else
-                     # New converse-stream format - JSON data is the event directly
-                     json_data
-                   end
-
             # Handle tool call events for converse-stream
-            if tool_call_event?(data) || metadata_event?(data)
-              process_tool_call_event(data)
+            if tool_call_event?(json_data) || metadata_event?(json_data)
+              process_tool_call_event(json_data)
             else
               # Always create and yield chunks for non-tool-call, non-metadata events
-              create_and_yield_chunk(data, &)
+              create_and_yield_chunk(json_data, &)
             end
           end
 
