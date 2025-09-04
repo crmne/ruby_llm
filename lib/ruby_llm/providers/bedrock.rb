@@ -11,8 +11,8 @@ module RubyLLM
       include Bedrock::Streaming
       include Bedrock::Models
       include Bedrock::Signing
+      include Bedrock::Tools
       include Bedrock::Media
-      include Anthropic::Tools
 
       def api_base
         "https://bedrock-runtime.#{@config.bedrock_region}.amazonaws.com"
