@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:02:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"a14b22fd-e10c-16c7-cccf-f6b09327d39d_us-east-1","object":"chat.completion","created":1756980137,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"First,
+        the user is asking, \"What''s the best language to learn?\" This could mean
+        a programming language, a natural language, or something else. But looking
+        at the available functions, there''s only one: \"best_language_to_learn\".
+        Its description is \"Gets the best language to learn\", and it has no required
+        parameters.\n\nThe function''s name and description suggest it''s designed
+        exactly for this query. Since no parameters are needed, I can call this function
+        directly.\n\nI need to remember the format: If I decide to call a function,
+        I use <function_call> tags with JSON inside, like <function_call>{\"action\":
+        \"function_name\", \"action_input\": {}}</function_call>.\n\nIn this case,
+        the action is \"best_language_to_learn\", and action_input is an empty object
+        because there are no parameters.\n\nAfter calling the function, I should wait
+        for the response, but in this setup, I''m just supposed to output the function
+        call if that''s the next step.\n\nThe instructions say: \"Keep your response
+        to user clear; please do not make your response verbose!\" So, I shouldn''t
+        add extra explanations unless necessary.\n\nThis seems straightforward. No
+        need for clarification since the function matches the query perfectly.\n\nFinally,
+        output only the function call in the specified format.","tool_calls":[{"id":"call_06589537","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":273,"completion_tokens":24,"total_tokens":552,"prompt_tokens_details":{"text_tokens":273,"audio_tokens":0,"image_tokens":0,"cached_tokens":231},"completion_tokens_details":{"reasoning_tokens":255,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:02:23 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_06589537","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_06589537"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:02:29 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"39f37419-ee26-427d-a545-bc42cc2a5148_us-east-1","object":"chat.completion","created":1756980143,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        best language to learn is Ruby.","reasoning_content":"First, the user asked:
+        \"What''s the best language to learn?\" This directly matches the available
+        function \"best_language_to_learn\".\n\nThe function''s description is \"Gets
+        the best language to learn\", and it has no required parameters, so I can
+        call it directly.\n\nIn my previous response, I already called the function,
+        and now I''m receiving a response from it: \"Function: Ruby\". This means
+        the function call has been executed, and it''s providing the result.\n\nI
+        need to handle this in the context of the conversation. The system prompt
+        says: \"In multi-turn conversations, continue calling relevant functions to
+        advance the user''s request until either the user''s request is fully fulfilled
+        or you need more information to call a function.\"\n\nHowever, I''ve already
+        called the function, and now I have the result. So, I should use this result
+        to respond to the user.\n\nThe prompt also says: \"Keep your response to user
+        clear; please do not make your response verbose!\" So, I need to be concise.\n\nMy
+        role is to respond based on the function''s output. Since the function returned
+        \"Ruby\", I can now inform the user of that.\n\nI shouldn''t call another
+        function unless it''s needed. The user''s request seems fulfilled with this
+        information.\n\nFinal response: I should directly tell the user the result
+        from the function call.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":308,"completion_tokens":8,"total_tokens":579,"prompt_tokens_details":{"text_tokens":308,"audio_tokens":0,"image_tokens":0,"cached_tokens":3},"completion_tokens_details":{"reasoning_tokens":263,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:02:29 GMT
+recorded_with: VCR 6.3.1

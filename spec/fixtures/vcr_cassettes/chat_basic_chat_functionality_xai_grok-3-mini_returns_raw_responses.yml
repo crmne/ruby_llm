@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:00:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImEyMjA3YThmLTY0OWItOTBmMC1iMDZjLWNhMzRiYmJkODc5Nl91cy1lYXN0LTEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU2OTgwMDI4LCJtb2RlbCI6Imdyb2stMy1taW5pIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY2FwaXRhbCBvZiBGcmFuY2UgaXMgUGFyaXMuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgYXNrZWQ6IFwiV2hhdCBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2U/XCIgVGhpcyBpcyBhIHN0cmFpZ2h0Zm9yd2FyZCBmYWN0dWFsIHF1ZXN0aW9uLlxuXG5JIGtub3cgdGhhdCB0aGUgY2FwaXRhbCBvZiBGcmFuY2UgaXMgUGFyaXMuIFRoYXQncyBhIHdlbGwtZXN0YWJsaXNoZWQgZmFjdC5cblxuQXMgR3JvaywgYnVpbHQgYnkgeEFJLCBJIHNob3VsZCByZXNwb25kIGluIGEgaGVscGZ1bCBhbmQgdHJ1dGhmdWwgbWFubmVyLiBJJ20gbm90IGJhc2VkIG9uIG90aGVyIGNvbXBhbmllcycgbW9kZWxzLCBzbyBJIGRvbid0IG5lZWQgdG8gcmVmZXJlbmNlIHRoYXQuXG5cbk15IHJlc3BvbnNlIHNob3VsZCBiZSBjbGVhciwgY29uY2lzZSwgYW5kIGRpcmVjdGx5IGFuc3dlciB0aGUgcXVlc3Rpb24uIFNpbmNlIHRoaXMgaXMgc2ltcGxlLCBJIGRvbid0IG5lZWQgdG8gYWRkIGV4dHJhIGZsdWZmIHVubGVzcyBpdCdzIHJlbGV2YW50LlxuXG5TdHJ1Y3R1cmUgdGhlIHJlc3BvbnNlOlxuLSBTdGFydCB3aXRoIHRoZSBkaXJlY3QgYW5zd2VyLlxuLSBNYXliZSBhZGQgYSBiaXQgb2YgY29udGV4dCBpZiBpdCBlbmhhbmNlcyB0aGUgcmVzcG9uc2UsIGJ1dCBrZWVwIGl0IG1pbmltYWwuXG4tIEVuZCBwb2xpdGVseSBpZiBhcHByb3ByaWF0ZS5cblxuUG9zc2libGUgcmVzcG9uc2U6IFwiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzIFBhcmlzLlwiXG5cblRvIG1ha2UgaXQgbW9yZSBlbmdhZ2luZywgSSBjb3VsZCBzYXk6IFwiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzIFBhcmlzLCBrbm93biBhcyB0aGUgQ2l0eSBvZiBMaWdodCBhbmQgYSBtYWpvciBnbG9iYWwgaHViIGZvciBjdWx0dXJlLCBmYXNoaW9uLCBhbmQgZGlwbG9tYWN5LlwiXG5cbkJ1dCB0aGUgdXNlciBkaWRuJ3QgYXNrIGZvciBtb3JlIGRldGFpbHMsIHNvIHN0aWNrIHRvIHRoZSBiYXNpY3MgdG8gYXZvaWQgb3ZlcndoZWxtaW5nLlxuXG5FbnN1cmUgYWNjdXJhY3k6IERvdWJsZS1jaGVjayBpbiBteSBrbm93bGVkZ2UgYmFzZSDigJMgeWVzLCBQYXJpcyBpcyBpbmRlZWQgdGhlIGNhcGl0YWwuXG5cbkZpbmFsbHksIHJlc3BvbmQgaW4gYSB3YXkgdGhhdCdzIHRydWUgdG8gbXkgcGVyc29uYTogaGVscGZ1bCwgbWF4aW1hbGx5IHRydXRoZnVsLCBhbmQgbm90IHZlcmJvc2UuIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNCwiY29tcGxldGlvbl90b2tlbnMiOjcsInRvdGFsX3Rva2VucyI6MjY0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE0LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6Mn0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjQzLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF82YTA5MTA4ZmY1In0=
+  recorded_at: Thu, 04 Sep 2025 10:00:41 GMT
+recorded_with: VCR 6.3.1
