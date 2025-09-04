@@ -142,6 +142,8 @@ RSpec.describe RubyLLM::Chat do
 
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
+        skip 'xAI has a bug with tool arguments in multi-turn streaming' if provider == :xai
+
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -309,7 +311,7 @@ RSpec.describe RubyLLM::Chat do
         end
 
         # Skip providers that don't support images in tool results
-        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
+        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock xai])
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ContentReturningTool)
