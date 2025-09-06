@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:02:10 GMT
+      - Wed, 03 Sep 2025 14:42:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 0ddf962efb8d39086b6db9153f91f126
+      - cbfb62bd996db13b31963cc7c0f83de0
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,13 +52,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"927ab300-b562-4b87-a622-02b3bda4571c","object":"chat.completion","created":1755709329,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
-        on the content you''ve provided, this file contains:\n\n**File name:** `ruby.txt`  \n**MIME
-        type:** `text/plain` (plain text file)  \n**Content:** \"Ruby is the best.\"\n\nThis
-        appears to be a very simple text file that contains a single sentence praising
-        the Ruby programming language. The file is formatted as plain text, so it
-        would be readable in any text editor."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":85,"total_tokens":118,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:02:17 GMT
+      string: '{"id":"2f3000dc-9456-466c-bac2-6075543f7104","object":"chat.completion","created":1756910531,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file \"ruby.txt\" contains the text: \"Ruby is the best.\"\n\nIt''s a plain
+        text file (MIME type: text/plain) with a simple statement praising the Ruby
+        programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":42,"total_tokens":75,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 03 Sep 2025 14:42:17 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -66,12 +64,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"Based on the content
-        you''ve provided, this file contains:\n\n**File name:** `ruby.txt`  \n**MIME
-        type:** `text/plain` (plain text file)  \n**Content:** \"Ruby is the best.\"\n\nThis
-        appears to be a very simple text file that contains a single sentence praising
-        the Ruby programming language. The file is formatted as plain text, so it
-        would be readable in any text editor."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
+        contains the text: \"Ruby is the best.\"\n\nIt''s a plain text file (MIME
+        type: text/plain) with a simple statement praising the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -91,7 +86,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:02:17 GMT
+      - Wed, 03 Sep 2025 14:42:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -103,7 +98,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c9c3a3f99648c9392f29016cc231bb22
+      - e1257c8068c24b25a218bef19da7e0ca
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -118,17 +113,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7fd6ded9-7e32-426a-8ea1-a9fe93fffb3c","object":"chat.completion","created":1755709337,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
-        on the content you''ve provided, this file contains:\n\n**File name:** `ruby.xml`\n**MIME
-        type:** `application/xml` (an XML file)\n**Content:** A simple XML document
-        with a root element `<truism>` containing the text \"Ruby is the best\".\n\n###
-        Breakdown:\n\n*   **It''s an XML file:** The structure follows XML syntax
-        rules, with content wrapped in opening (`<truism>`) and closing (`</truism>`)
-        tags.\n*   **The data:** The file encodes the statement \"Ruby is the best\"
-        as structured data. The tag name `<truism>` acts as a label, giving context
-        to the text it contains (implying it''s a statement held to be true).\n*   **How
-        it''s different from the text file:** While both files contain the same core
-        phrase, the `.txt` file is unstructured plain text, and the `.xml` file adds
-        a layer of meaning and structure around that text."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":159,"completion_tokens":204,"total_tokens":363,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":95},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:02:30 GMT
+      string: '{"id":"681924dd-17a2-4fe9-9b3c-eaebc0f667ca","object":"chat.completion","created":1756910538,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file, \"ruby.xml\", contains XML (Extensible Markup Language) data.\n\nSpecifically,
+        it includes a single XML element:\n*   The root element is `<truism>`\n*   The
+        content of that element is the text string: `Ruby is the best`\n\nUnlike the
+        plain text file, this structures the information, labeling it as a \"truism\"
+        (a statement of obvious truth). This structure allows other programs to easily
+        identify and process this specific piece of information."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":116,"completion_tokens":101,"total_tokens":217,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":52},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 03 Sep 2025 14:42:27 GMT
 recorded_with: VCR 6.3.1

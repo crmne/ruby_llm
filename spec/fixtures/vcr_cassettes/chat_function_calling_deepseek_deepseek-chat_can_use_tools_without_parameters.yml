@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:50:43 GMT
+      - Wed, 03 Sep 2025 14:45:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7c94da71cf2b0fbb5a1dabdb5f159a6c
+      - ebc6c314c0c2bc805961991852b3e386
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,10 +52,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0517d194-87e4-4c70-af5d-63e4adc13126","object":"chat.completion","created":1755705043,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+      string: '{"id":"828d25cd-5c91-4dd9-9063-fc7e7b738db1","object":"chat.completion","created":1756910759,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
         help you find out what the best language to learn is! Let me check that for
-        you.","tool_calls":[{"index":0,"id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":146,"completion_tokens":33,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":146},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 15:50:48 GMT
+        you.","tool_calls":[{"index":0,"id":"call_00_PNd1lgDKJlkEI5FeHRDMjTcG","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":146,"completion_tokens":33,"total_tokens":179,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":146},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 03 Sep 2025 14:46:04 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -63,7 +63,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
         the best language to learn?"},{"role":"assistant","content":"I''ll help you
-        find out what the best language to learn is! Let me check that for you.","tool_calls":[{"id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_0_61b50ca4-6c68-4f3b-9399-7e1611c531ae"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        find out what the best language to learn is! Let me check that for you.","tool_calls":[{"id":"call_00_PNd1lgDKJlkEI5FeHRDMjTcG","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_PNd1lgDKJlkEI5FeHRDMjTcG"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -82,7 +82,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:50:48 GMT
+      - Wed, 03 Sep 2025 14:46:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -94,7 +94,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 99c70733c963415ab74c5bc53ee22556
+      - 716c97b71edbb8ca9e27422c1fad56bb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -109,17 +109,13 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"54029d8e-22c4-4c64-8ae2-5639be792f70","object":"chat.completion","created":1755705048,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
+      string: '{"id":"a60353b0-b001-4364-873e-0bf218424dc7","object":"chat.completion","created":1756910764,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
         on the information available, **Ruby** is considered the best language to
-        learn right now!\n\nRuby is a dynamic, open-source programming language that
-        focuses on simplicity and productivity. It has an elegant syntax that is natural
-        to read and easy to write. Ruby is particularly well-known for the Ruby on
-        Rails web framework, which has been used to build many popular websites and
-        applications.\n\nSome great things about learning Ruby:\n- Excellent for web
-        development (especially with Rails)\n- Very readable and beginner-friendly
-        syntax\n- Strong community support and extensive documentation\n- Great for
-        rapid application development\n- Used by many startups and established companies\n\nWould
-        you like to know more about why Ruby might be a good choice or have any specific
-        questions about learning it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":183,"completion_tokens":147,"total_tokens":330,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 15:50:58 GMT
+        learn right now!\n\nRuby is a great choice because it''s:\n- Known for its
+        elegant and readable syntax\n- Widely used in web development (especially
+        with the Ruby on Rails framework)\n- Has a strong and supportive community\n-
+        Great for beginners due to its intuitive nature\n- Used by many successful
+        companies and startups\n\nWould you like to know more about why Ruby might
+        be a good choice or have any specific questions about learning it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":183,"completion_tokens":103,"total_tokens":286,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":55},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 03 Sep 2025 14:46:14 GMT
 recorded_with: VCR 6.3.1

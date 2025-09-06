@@ -5,9 +5,9 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,57 +25,39 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 20 Aug 2025 15:51:08 GMT
+      - Wed, 03 Sep 2025 14:59:45 GMT
       Content-Length:
-      - '1701'
+      - '1015'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-989","object":"chat.completion","created":1755705068,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking, \"What''s the best language to learn?\" Hmm, first, I
-        need to understand what they mean by \"best.\" Are they looking for a language
-        that''s most useful for employment, easiest to learn, most popular, or maybe
-        something else like programming languages vs. spoken languages?\n\nLooking
-        at the tools provided, there''s a function called best_language_to_learn.
-        The description says it gets the best language to learn, but the parameters
-        are empty. So this function probably doesn''t require any input and just returns
-        a predefined answer. Since the user''s question is straightforward, I should
-        call this function. \n\nWait, but maybe I should consider if there''s any
-        context missing. The user didn''t specify if they''re interested in a programming
-        language, a spoken language, or something else. However, since the function
-        exists and the parameters are empty, it''s likely designed to handle such
-        queries without additional parameters. \n\nI should proceed by invoking the
-        best_language_to_learn function. The response from this function will give
-        the answer the user is looking for. There''s no need to ask for clarification
-        since the function is meant to address this exact question. Let''s call it
-        and provide the result.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_ldeemivr","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":265,"total_tokens":403}}
+      string: '{"id":"chatcmpl-850","object":"chat.completion","created":1756911585,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out which tool to use here. Let me check the available functions. There''s
+        one called best_language_to_learn, and it doesn''t require any parameters.
+        Since the question is exactly about determining the best language, I should
+        call that function. No arguments needed, so the tool call will just have the
+        name and an empty arguments object. Let me make sure there''s no other function,
+        but the tools section only lists this one. Alright, I''ll generate the tool
+        call accordingly.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_2rzr6l6k","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":138,"total_tokens":276}}
 
         '
-  recorded_at: Wed, 20 Aug 2025 15:51:08 GMT
+  recorded_at: Wed, 03 Sep 2025 14:59:45 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"<think>\nOkay,
-        the user is asking, \"What''s the best language to learn?\" Hmm, first, I
-        need to understand what they mean by \"best.\" Are they looking for a language
-        that''s most useful for employment, easiest to learn, most popular, or maybe
-        something else like programming languages vs. spoken languages?\n\nLooking
-        at the tools provided, there''s a function called best_language_to_learn.
-        The description says it gets the best language to learn, but the parameters
-        are empty. So this function probably doesn''t require any input and just returns
-        a predefined answer. Since the user''s question is straightforward, I should
-        call this function. \n\nWait, but maybe I should consider if there''s any
-        context missing. The user didn''t specify if they''re interested in a programming
-        language, a spoken language, or something else. However, since the function
-        exists and the parameters are empty, it''s likely designed to handle such
-        queries without additional parameters. \n\nI should proceed by invoking the
-        best_language_to_learn function. The response from this function will give
-        the answer the user is looking for. There''s no need to ask for clarification
-        since the function is meant to address this exact question. Let''s call it
-        and provide the result.\n</think>\n\n","tool_calls":[{"id":"call_ldeemivr","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_ldeemivr"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"<think>\nOkay, the
+        user is asking, \"What''s the best language to learn?\" I need to figure out
+        which tool to use here. Let me check the available functions. There''s one
+        called best_language_to_learn, and it doesn''t require any parameters. Since
+        the question is exactly about determining the best language, I should call
+        that function. No arguments needed, so the tool call will just have the name
+        and an empty arguments object. Let me make sure there''s no other function,
+        but the tools section only lists this one. Alright, I''ll generate the tool
+        call accordingly.\n</think>\n\n","tool_calls":[{"id":"call_2rzr6l6k","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_2rzr6l6k"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -93,17 +75,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 20 Aug 2025 15:51:09 GMT
+      - Wed, 03 Sep 2025 14:59:46 GMT
       Content-Length:
-      - '627'
+      - '1120'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-161","object":"chat.completion","created":1755705069,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\n\u003c/think\u003e\n\nThe
-        best language to learn is Ruby. It is known for its simplicity and productivity,
-        making it a great choice for beginners and experienced developers alike. Ruby
-        is widely used in web development, particularly with the Ruby on Rails framework,
-        and it emphasizes code readability and developer happiness."},"finish_reason":"stop"}],"usage":{"prompt_tokens":400,"completion_tokens":59,"total_tokens":459}}
-
-        '
-  recorded_at: Wed, 20 Aug 2025 15:51:09 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTY5MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTY5MTE1ODYsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBhbnN3ZXIgY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgaW5mbyBuZWVkZWQsIGJ1dCB0aGUgZnVuY3Rpb24gZGlkbid0IHByb3ZpZGUgYW55IGRldGFpbHMuIFNvIEknbGwganVzdCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIE1heWJlIGFkZCBhIGZyaWVuZGx5IG5vdGUgYWJvdXQgd2h5IFJ1YnkgaXMgZ29vZCwgbGlrZSBpdHMgc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LiBCdXQgc2luY2UgdGhlIGZ1bmN0aW9uIGRpZG4ndCBtZW50aW9uIHJlYXNvbnMsIEkgc2hvdWxkIGtlZXAgaXQgY29uY2lzZS4gSnVzdCBjb25maXJtIHRoZSBhbnN3ZXIgYW5kIG1heWJlIG9mZmVyIGZ1cnRoZXIgaGVscCBpZiB0aGV5IG5lZWQgbW9yZSBpbmZvLlxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn5CYIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHByb2R1Y3Rpdml0eSwgbWFraW5nIGl0IGEgZ3JlYXQgY2hvaWNlIGZvciBiZWdpbm5lcnMgYW5kIGV4cGVyaWVuY2VkIGRldmVsb3BlcnMgYWxpa2UuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzISJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjczLCJjb21wbGV0aW9uX3Rva2VucyI6MTczLCJ0b3RhbF90b2tlbnMiOjQ0Nn19Cg==
+  recorded_at: Wed, 03 Sep 2025 14:59:46 GMT
 recorded_with: VCR 6.3.1
