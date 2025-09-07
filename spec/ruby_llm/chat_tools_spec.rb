@@ -142,7 +142,10 @@ RSpec.describe RubyLLM::Chat do
 
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
-        skip 'xAI has a bug with tool arguments in multi-turn streaming' if provider == :xai
+        if provider == :xai
+          skip 'xAI model infinitely loops calling tools when tool has no parameters' \
+               'and always provides the same result in multi-turn streaming conversations'
+        end
 
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
