@@ -72,7 +72,25 @@ module RubyLLM
           return model_id unless model_data['inferenceTypesSupported']&.include?('INFERENCE_PROFILE')
           return model_id if model_data['inferenceTypesSupported']&.include?('ON_DEMAND')
 
-          "us.#{model_id}"
+          desired_region_prefix = inference_profile_region_prefix
+
+          # Return unchanged if model already has the correct region prefix
+          return model_id if model_id.start_with?("#{desired_region_prefix}.")
+
+          # Remove any existing region prefix (e.g., "us.", "eu.", "ap.")
+          clean_model_id = model_id.sub(/^[a-z]{2}\./, '')
+
+          # Apply the desired region prefix
+          "#{desired_region_prefix}.#{clean_model_id}"
+        end
+
+        def inference_profile_region_prefix
+          # Extract region prefix from bedrock_region (e.g., "eu-west-3" -> "eu")
+          region = @config.bedrock_region.to_s
+          return 'us' if region.empty? # Default fallback
+
+          # Take first two characters as the region prefix
+          region[0, 2]
         end
       end
     end
