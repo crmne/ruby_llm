@@ -11,6 +11,7 @@ CHAT_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :perplexity, model: 'sonar' },
+  { provider: :red_candle, model: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 

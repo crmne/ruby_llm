@@ -20,10 +20,18 @@ module RubyLLM
           else
             result = perform_completion!(payload)
             # Convert to Message object for compatibility
+            # Red Candle doesn't provide token counts, but we can estimate them
+            content = result[:content]
+            # Rough estimation: ~4 characters per token
+            estimated_output_tokens = (content.length / 4.0).round
+            estimated_input_tokens = estimate_input_tokens(payload[:messages])
+            
             Message.new(
               role: result[:role].to_sym,
-              content: result[:content],
-              model_id: model.id
+              content: content,
+              model_id: model.id,
+              input_tokens: estimated_input_tokens,
+              output_tokens: estimated_output_tokens
             )
           end
         end
@@ -130,11 +138,24 @@ module RubyLLM
 
         def format_messages(messages)
           messages.map do |msg|
-            {
-              role: msg[:role].to_s,
-              content: extract_message_content(msg)
-            }
+            # Handle both hash and Message objects
+            if msg.is_a?(Message)
+              {
+                role: msg.role.to_s,
+                content: extract_message_content_from_object(msg)
+              }
+            else
+              {
+                role: msg[:role].to_s,
+                content: extract_message_content(msg)
+              }
+            end
           end
+        end
+
+        def extract_message_content_from_object(message)
+          # For Message objects, get the content directly
+          message.content.to_s
         end
 
         def extract_message_content(message)
@@ -185,6 +206,13 @@ module RubyLLM
             role: :assistant,
             content: token
           )
+        end
+
+        def estimate_input_tokens(messages)
+          # Rough estimation: ~4 characters per token
+          formatted = format_messages(messages)
+          total_chars = formatted.sum { |msg| "#{msg[:role]}: #{msg[:content]}".length }
+          (total_chars / 4.0).round
         end
       end
     end
