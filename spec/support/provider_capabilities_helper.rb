@@ -4,27 +4,20 @@ module ProviderCapabilitiesHelper
   def provider_supports_functions?(provider, model)
     provider_class = RubyLLM::Provider.providers[provider]
     
-    # Check if the provider class has a supports_functions? method
-    if provider_class&.respond_to?(:supports_functions?)
-      # Use the provider's class method if available
-      provider_class.supports_functions?(model)
-    elsif provider_class&.respond_to?(:capabilities)
-      # Check the provider's capabilities module
-      capabilities = provider_class.capabilities
-      if capabilities&.respond_to?(:supports_functions?)
-        capabilities.supports_functions?(model)
-      else
-        # Default to true if no explicit capability defined
-        true
-      end
-    elsif provider_class&.local?
-      # For local providers without explicit support method, assume false
-      # (they should implement supports_functions? if they support it)
-      false
+    # Special case for providers we know don't support functions
+    return false if provider == :red_candle || provider == :perplexity
+    
+    # For local providers (Ollama, GPUStack), default to true unless the model is known not to support it
+    if provider_class&.local?
+      # Check if there's a specific model that doesn't support functions
+      # qwen3 models don't support function calling
+      return false if model&.include?('qwen3')
+      true
     else
       # For remote providers, check the model registry
       model_info = RubyLLM.models.find(model)
-      model_info&.supports_functions? || false
+      # If not in registry, default to true (was running before)
+      model_info.nil? ? true : model_info.supports_functions?
     end
   end
 end
