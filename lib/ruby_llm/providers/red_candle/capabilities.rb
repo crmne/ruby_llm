@@ -10,7 +10,7 @@ module RubyLLM
           false
         end
 
-        def supports_functions?
+        def supports_functions?(_model_id = nil)
           false
         end
 

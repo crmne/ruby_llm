@@ -99,8 +99,12 @@ module RubyLLM
             max_length: payload[:max_tokens] || 512
           )
 
+          # Collect all streamed content
+          full_content = ''
+          
           # Stream tokens
           model.generate_stream(prompt, config: config) do |token|
+            full_content += token
             chunk = format_stream_chunk(token)
             block.call(chunk)
           end
@@ -108,6 +112,18 @@ module RubyLLM
           # Send final chunk with empty content (indicates completion)
           final_chunk = format_stream_chunk('')
           block.call(final_chunk)
+          
+          # Return a Message object with the complete response
+          estimated_output_tokens = (full_content.length / 4.0).round
+          estimated_input_tokens = estimate_input_tokens(payload[:messages])
+          
+          Message.new(
+            role: :assistant,
+            content: full_content,
+            model_id: payload[:model],
+            input_tokens: estimated_input_tokens,
+            output_tokens: estimated_output_tokens
+          )
         end
 
         private
@@ -154,16 +170,50 @@ module RubyLLM
         end
 
         def extract_message_content_from_object(message)
-          # For Message objects, get the content directly
-          message.content.to_s
+          content = message.content
+          
+          # Handle Content objects
+          if content.is_a?(Content)
+            # Extract text from Content object, including attachment text
+            text_parts = []
+            text_parts << content.text if content.text
+            
+            # Add any text from attachments
+            content.attachments&.each do |attachment|
+              if attachment.respond_to?(:data) && attachment.data.is_a?(String)
+                text_parts << attachment.data
+              end
+            end
+            
+            text_parts.join(' ')
+          elsif content.is_a?(String)
+            content
+          else
+            content.to_s
+          end
         end
 
         def extract_message_content(message)
           content = message[:content]
-          return content if content.is_a?(String)
-
-          # Handle array content (e.g., with images)
-          if content.is_a?(Array)
+          
+          # Handle Content objects
+          if content.is_a?(Content)
+            # Extract text from Content object
+            text_parts = []
+            text_parts << content.text if content.text
+            
+            # Add any text from attachments
+            content.attachments&.each do |attachment|
+              if attachment.respond_to?(:data) && attachment.data.is_a?(String)
+                text_parts << attachment.data
+              end
+            end
+            
+            text_parts.join(' ')
+          elsif content.is_a?(String)
+            content
+          elsif content.is_a?(Array)
+            # Handle array content (e.g., with images)
             content.map do |part|
               part[:text] if part[:type] == 'text'
             end.compact.join(' ')

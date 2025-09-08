@@ -20,11 +20,15 @@ RSpec.describe RubyLLM::Chat do
 
         expect(chunks).not_to be_empty
         expect(chunks.first).to be_a(RubyLLM::Chunk)
-        expect(response.raw).to be_present
-        expect(response.raw.headers).to be_present
-        expect(response.raw.status).to be_present
-        expect(response.raw.status).to eq(200)
-        expect(response.raw.env.request_body).to be_present
+        
+        # Red Candle is a local provider without HTTP responses
+        unless provider == :red_candle
+          expect(response.raw).to be_present
+          expect(response.raw.headers).to be_present
+          expect(response.raw.status).to be_present
+          expect(response.raw.status).to eq(200)
+          expect(response.raw.env.request_body).to be_present
+        end
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
@@ -60,6 +64,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
+            skip 'Red Candle is a local provider without HTTP streaming errors' if provider == :red_candle
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)
@@ -75,6 +80,7 @@ RSpec.describe RubyLLM::Chat do
 
           it "#{provider}/#{model} supports handling streaming error events" do
             skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
+            skip 'Red Candle is a local provider without HTTP streaming errors' if provider == :red_candle
 
             # Testing if error handling is now implemented
 
@@ -96,6 +102,7 @@ RSpec.describe RubyLLM::Chat do
           end
 
           it "#{provider}/#{model} supports handling streaming error chunks" do
+            skip 'Red Candle is a local provider without HTTP streaming errors' if provider == :red_candle
             # Testing if error handling is now implemented
 
             stub_error_response(provider, :chunk)
@@ -111,6 +118,7 @@ RSpec.describe RubyLLM::Chat do
 
           it "#{provider}/#{model} supports handling streaming error events" do
             skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
+            skip 'Red Candle is a local provider without HTTP streaming errors' if provider == :red_candle
 
             # Testing if error handling is now implemented
 

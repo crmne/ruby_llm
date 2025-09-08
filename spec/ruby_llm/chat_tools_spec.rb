@@ -74,9 +74,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -94,9 +96,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -118,9 +122,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -136,6 +142,13 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
+        end
+        
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
@@ -175,6 +188,13 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
+        end
+        
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
@@ -213,9 +233,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -303,9 +325,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} preserves Content objects returned from tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Check if the provider supports functions for this model
+        provider_class = RubyLLM::Provider.providers[provider]
+        if provider_class
+          provider_instance = provider_class.new(RubyLLM.config)
+          skip "#{provider}/#{model} doesn't support function calling" unless provider_instance.supports_functions?(model)
         end
 
         # Skip providers that don't support images in tool results
