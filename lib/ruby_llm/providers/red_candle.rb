@@ -36,6 +36,10 @@ module RubyLLM
         def local?
           true
         end
+
+        def supports_functions?(model_id = nil)
+          RedCandle::Capabilities.supports_functions?(model_id)
+        end
       end
 
       private
