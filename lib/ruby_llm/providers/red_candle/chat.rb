@@ -4,6 +4,30 @@ module RubyLLM
   module Providers
     class RedCandle
       module Chat
+        # Override the base complete method to handle local execution
+        def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &)
+          payload = render_payload(
+            messages,
+            tools: tools,
+            temperature: temperature,
+            model: model,
+            stream: block_given?,
+            schema: schema
+          ).merge(params)
+
+          if block_given?
+            perform_streaming_completion!(payload, &)
+          else
+            result = perform_completion!(payload)
+            # Convert to Message object for compatibility
+            Message.new(
+              role: result[:role].to_sym,
+              content: result[:content],
+              model_id: model.id
+            )
+          end
+        end
+
         def render_payload(messages, tools:, temperature:, model:, stream:, schema:)
           # Red Candle doesn't support tools
           if tools && !tools.empty?
@@ -68,18 +92,13 @@ module RubyLLM
           )
 
           # Stream tokens
-          buffer = ''
           model.generate_stream(prompt, config: config) do |token|
-            buffer += token
             chunk = format_stream_chunk(token)
             block.call(chunk)
           end
 
           # Send final chunk with finish reason
-          final_chunk = {
-            delta: { content: '' },
-            finish_reason: 'stop'
-          }
+          final_chunk = format_stream_chunk('', 'stop')
           block.call(final_chunk)
         end
 
@@ -90,14 +109,19 @@ module RubyLLM
         end
 
         def load_model(model_id)
-          # Handle GGUF models with specific files
-          if model_id == 'google/gemma-3-4b-it-qat-q4_0-gguf'
-            ::Candle::LLM.from_pretrained(
-              model_id,
-              device: @device,
-              gguf_file: 'gemma-3-4b-it-q4_0.gguf'
-            )
+          # Get GGUF file and tokenizer if this is a GGUF model  
+          # Access the methods from the Models module which is included in the provider
+          gguf_file = respond_to?(:gguf_file_for) ? gguf_file_for(model_id) : nil
+          tokenizer = respond_to?(:tokenizer_for) ? tokenizer_for(model_id) : nil
+          
+          if gguf_file
+            # For GGUF models, use the tokenizer if specified, otherwise use model_id
+            options = { device: @device, gguf_file: gguf_file }
+            options[:tokenizer] = tokenizer if tokenizer
+            
+            ::Candle::LLM.from_pretrained(model_id, **options)
           else
+            # For regular models, use from_pretrained without gguf_file
             ::Candle::LLM.from_pretrained(model_id, device: @device)
           end
         rescue StandardError => e
@@ -156,11 +180,13 @@ module RubyLLM
           }
         end
 
-        def format_stream_chunk(token)
-          {
-            delta: { content: token },
-            finish_reason: nil
-          }
+        def format_stream_chunk(token, finish_reason = nil)
+          # Return a Chunk object for streaming compatibility
+          Chunk.new(
+            role: :assistant,
+            content: token,
+            finish_reason: finish_reason
+          )
         end
       end
     end

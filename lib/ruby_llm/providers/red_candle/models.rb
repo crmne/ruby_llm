@@ -9,9 +9,20 @@ module RubyLLM
             id: 'google/gemma-3-4b-it-qat-q4_0-gguf',
             name: 'Gemma 3 4B Instruct (Quantized)',
             gguf_file: 'gemma-3-4b-it-q4_0.gguf',
+            tokenizer: 'google/gemma-3-4b-it',  # Tokenizer from base model
             context_window: 8192,
             family: 'gemma',
             architecture: 'gemma2',
+            supports_chat: true,
+            supports_structured: true
+          },
+          {
+            id: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
+            name: 'TinyLlama 1.1B Chat (Quantized)',
+            gguf_file: 'tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf',
+            context_window: 2048,
+            family: 'llama',
+            architecture: 'llama',
             supports_chat: true,
             supports_structured: true
           },
@@ -74,6 +85,11 @@ module RubyLLM
         def gguf_file_for(model_id)
           info = model_info(model_id)
           info ? info[:gguf_file] : nil
+        end
+
+        def tokenizer_for(model_id)
+          info = model_info(model_id)
+          info ? info[:tokenizer] : nil
         end
       end
     end
