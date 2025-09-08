@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Setup Ruby for models guide generation (root Gemfile)
         uses: ruby/setup-ruby@v1

@@ -24,9 +24,20 @@ PreCommit:
     description: 'Update appraisal gemfiles'
     command: ['bundle', 'exec', 'appraisal', 'update']
 
+PrePush:
+  GitLfs:
+    enabled: true
+    description: 'Push LFS objects to remote'
+    command: ['bash', '-c', 'git lfs pre-push "$@"', '--']
+
 PostCheckout:
   ALL: # Special hook name that customizes all hooks of this type
     quiet: true # Change all post-checkout hooks to only display output on failure
 
   IndexTags:
     enabled: true # Generate a tags file with `ctags` each time HEAD changes
+
+  LfsInstall:
+    enabled: true
+    description: 'Ensure Git LFS files are pulled'
+    command: ['git', 'lfs', 'pull']
