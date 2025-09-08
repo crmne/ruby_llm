@@ -280,7 +280,7 @@ With the DB-backed model registry (v1.7.0+), you can specify alternate providers
 ```ruby
 # Use a model through a different provider
 chat = Chat.create!(
-  model: 'claude-3-5-sonnet',
+  model: '{{ site.models.anthropic_current }}',
   provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
 )
 
@@ -308,7 +308,7 @@ end
 
 # Pass context when creating the chat
 chat = Chat.create!(
-  model: 'gpt-4',
+  model: '{{ site.models.openai_standard }}',
   context: custom_context
 )
 ```
@@ -379,7 +379,7 @@ Once your models are set up, the `acts_as_chat` helper delegates common `RubyLLM
 
 ```ruby
 # Create a new chat record
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano', user: current_user)
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}', user: current_user)
 
 # Ask a question - the persistence flow runs automatically
 begin
@@ -414,7 +414,7 @@ When using the Model registry (created by default by the generator), your chats 
 
 ```ruby
 # String automatically resolves to Model record
-chat = Chat.create!(model: 'gpt-4')
+chat = Chat.create!(model: '{{ site.models.openai_standard }}')
 chat.model # => #<Model model_id: "gpt-4o", provider: "openai">
 chat.model.name # => "GPT-4"
 chat.model.context_window # => 128000
@@ -437,7 +437,7 @@ Model.where(supports_vision: true)
 Instructions (system prompts) set via `with_instructions` are also automatically persisted as `Message` records with the `system` role:
 
 ```ruby
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
@@ -465,7 +465,7 @@ class Weather < RubyLLM::Tool
 end
 
 # Use tools with your persisted chat
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 chat_record.with_tool(Weather)
 response = chat_record.ask("What's the weather in Paris?")
 
@@ -479,7 +479,7 @@ With [ActiveStorage configured](#activestorage-setup-optional), send files to AI
 
 ```ruby
 # Create a chat
-chat_record = Chat.create!(model_id: 'claude-3-5-sonnet')
+chat_record = Chat.create!(model_id: '{{ site.models.anthropic_current }}')
 
 # Send a single file - type automatically detected
 chat_record.ask("What's in this file?", with: "app/assets/images/diagram.png")
@@ -516,7 +516,7 @@ class PersonSchema < RubyLLM::Schema
 end
 
 # Use with your persisted chat
-chat_record = Chat.create!(model_id: 'gpt-4.1-nano')
+chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
 response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
 
 # The structured response is automatically parsed as a Hash

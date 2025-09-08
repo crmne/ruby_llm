@@ -49,6 +49,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        lfs: true
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -97,6 +99,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        lfs: true
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1

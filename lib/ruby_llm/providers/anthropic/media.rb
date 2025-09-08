@@ -98,7 +98,7 @@ module RubyLLM
           with_cache_control(
             {
               type: 'text',
-              text: Utils.format_text_file_for_llm(text_file)
+              text: text_file.for_llm
             },
             cache:
           )

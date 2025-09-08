@@ -5,8 +5,8 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"response_format":{"type":"json_object"},"model":"qwen3","messages":[{"role":"user","content":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is the
+        square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,14 +24,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 20 Aug 2025 17:08:18 GMT
+      - Wed, 03 Sep 2025 14:58:07 GMT
       Content-Length:
-      - '300'
+      - '301'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-87","object":"chat.completion","created":1755709698,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
+      string: '{"id":"chatcmpl-657","object":"chat.completion","created":1756911487,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
         8\n}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":10,"total_tokens":39}}
 
         '
-  recorded_at: Wed, 20 Aug 2025 17:08:18 GMT
+  recorded_at: Wed, 03 Sep 2025 14:58:07 GMT
 recorded_with: VCR 6.3.1

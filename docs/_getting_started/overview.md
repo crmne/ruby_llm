@@ -38,7 +38,7 @@ RubyLLM consists of several core components that work together to provide its fu
 The Chat component is the primary interface for conversational AI. When you create a chat instance with `RubyLLM.chat`, you're creating an object that manages a conversation with an AI model.
 
 ```ruby
-chat = RubyLLM.chat(model: "gpt-4.1-nano")
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
 ```
 
 The chat object maintains conversation history, handles message formatting for the specific provider, and manages the request/response cycle. Each provider implements its own chat adapter that translates between RubyLLM's unified format and the provider's specific API requirements.
@@ -85,18 +85,18 @@ Configuration in RubyLLM works at three levels: global defaults, isolated contex
 # Global configuration - applies everywhere
 RubyLLM.configure do |config|
   config.openai_api_key = ENV["OPENAI_API_KEY"]
-  config.default_model = "gpt-4.1-nano"
+  config.default_model = "{{ site.models.default_chat }}"
 end
 
 # Context configuration - isolated scope
 context = RubyLLM.context do |config|
   config.openai_api_key = tenant.api_key  # Different credentials
-  config.default_model = "gpt-4o"         # Different defaults
+  config.default_model = "{{ site.models.openai_tools }}"         # Different defaults
 end
 chat = context.chat  # Uses context configuration
 
 # Instance configuration - what you need right now
-chat = RubyLLM.chat(model: "claude-3-opus", temperature: 0.7)
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_opus }}", temperature: 0.7)
 ```
 
 This layered approach supports everything from simple scripts to complex multi-tenant applications.
@@ -118,7 +118,7 @@ Simple things should be simple, and complex things should be possible. Basic cha
 response = RubyLLM.chat.ask("Hello")
 
 # Advanced
-chat = RubyLLM.chat(model: "gpt-4.1-nano", temperature: 0.2)
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}", temperature: 0.2)
   .with_instructions("You are a helpful assistant")
   .with_tool(DatabaseQuery)
   .with_schema(ResponseFormat)
@@ -142,11 +142,11 @@ When you specify a model, RubyLLM automatically determines which provider to use
 
 ```ruby
 # Automatic detection
-chat = RubyLLM.chat(model: "gpt-4.1-nano")  # Uses OpenAI
+chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")  # Uses OpenAI
 
 # Explicit provider
 chat = RubyLLM.chat(
-  model: "llama-3",
+  model: "{{ site.models.local_llama }}",
   provider: "ollama",
   base_url: "http://localhost:11434"
 )
@@ -157,7 +157,7 @@ chat = RubyLLM.chat(
 Different models have different capabilities. Some support vision, others support tool calling, and some have specific context window sizes. RubyLLM tracks these capabilities and helps you use models appropriately.
 
 ```ruby
-model_info = RubyLLM.models.find("gpt-4o")
+model_info = RubyLLM.models.find("{{ site.models.openai_tools }}")
 puts model_info.capabilities
 # => [:chat, :vision, :tools, :json_mode]
 ```
@@ -176,7 +176,7 @@ class Conversation < ApplicationRecord
 end
 
 # Now your model can interact with AI
-conversation = Conversation.create!(model_id: "gpt-4.1-nano")
+conversation = Conversation.create!(model_id: "{{ site.models.default_chat }}")
 response = conversation.ask("How can I help you today?")
 ```
 

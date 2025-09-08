@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:26 GMT
+      - Wed, 03 Sep 2025 14:59:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,11 +35,11 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c82b-bd3c-77ba-ae65-c6491fb8c3f4'
+      - '01991016-fe81-7e27-ae3c-0980f7579f1f'
       X-Kong-Request-Id:
-      - '0198c82b-bd3c-77ba-ae65-c6491fb8c3f4'
+      - '01991016-fe81-7e27-ae3c-0980f7579f1f'
       X-Envoy-Upstream-Service-Time:
-      - '387'
+      - '260'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
@@ -47,19 +47,19 @@ http_interactions:
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999553623'
+      - '999995623'
       X-Ratelimit-Tokens-Query-Cost:
       - '165'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '55'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '388'
+      - '261'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,17 +75,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3631e9973c374200a889e8d1c428367b","created":1755704966,"model":"mistral-small-latest","usage":{"prompt_tokens":137,"total_tokens":165,"completion_tokens":28},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"Bn6gyXrAJ","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"e99bc91fb1a5401f976ff519eabccafb","created":1756911566,"model":"mistral-small-latest","usage":{"prompt_tokens":137,"total_tokens":165,"completion_tokens":28},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"uVafSqRzb","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Wed, 20 Aug 2025 15:49:26 GMT
+  recorded_at: Wed, 03 Sep 2025 14:59:26 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"Bn6gyXrAJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"Bn6gyXrAJ"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"uVafSqRzb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"uVafSqRzb"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}]}'
@@ -106,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:49:27 GMT
+      - Wed, 03 Sep 2025 14:59:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -114,31 +114,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c82b-bf25-797a-8c78-96084ad8cb5f'
+      - '01991017-000f-7c44-b02f-2fc3a6e621ff'
       X-Kong-Request-Id:
-      - '0198c82b-bf25-797a-8c78-96084ad8cb5f'
+      - '01991017-000f-7c44-b02f-2fc3a6e621ff'
       X-Envoy-Upstream-Service-Time:
-      - '334'
+      - '228'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499595'
+      - '499597'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999553383'
+      - '999995385'
       X-Ratelimit-Tokens-Query-Cost:
-      - '240'
+      - '238'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '54'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '335'
+      - '229'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -155,6 +155,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImYwZTkxMmQ4ZWJhNDQyOWU5NGY0MDhjNWMwODdhYzZlIiwiY3JlYXRlZCI6MTc1NTcwNDk2NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxOCwidG90YWxfdG9rZW5zIjoyNDAsImNvbXBsZXRpb25fdG9rZW5zIjoyMn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9fV19
-  recorded_at: Wed, 20 Aug 2025 15:49:27 GMT
+        eyJpZCI6IjU0Njg1ZGIxNzQ4NzQwOTFhYmNmNzc4NDcxODgwZWU4IiwiY3JlYXRlZCI6MTc1NjkxMTU2NiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxNiwidG90YWxfdG9rZW5zIjoyMzgsImNvbXBsZXRpb25fdG9rZW5zIjoyMn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9fV19
+  recorded_at: Wed, 03 Sep 2025 14:59:27 GMT
 recorded_with: VCR 6.3.1

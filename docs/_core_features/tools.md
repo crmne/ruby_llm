@@ -171,7 +171,7 @@ Attach tools to a `Chat` instance using `with_tool` or `with_tools`.
 
 ```ruby
 # Create a chat instance
-chat = RubyLLM.chat(model: 'gpt-4o') # Use a model that supports tools
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}') # Use a model that supports tools
 
 # Instantiate your tool if it requires arguments, otherwise use the class
 weather_tool = Weather.new
@@ -222,7 +222,7 @@ This entire multi-step process happens behind the scenes within a single `chat.a
 You can monitor tool execution using event callbacks to track when tools are called and what they return:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
       .on_tool_call do |tool_call|
         # Called when the AI decides to use a tool
@@ -256,7 +256,7 @@ To prevent excessive API usage or infinite loops, you can use callbacks to limit
 call_count = 0
 max_calls = 10
 
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
       .on_tool_call do |tool_call|
         call_count += 1
