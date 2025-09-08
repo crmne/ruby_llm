@@ -25,7 +25,7 @@ module RubyLLM
             # Rough estimation: ~4 characters per token
             estimated_output_tokens = (content.length / 4.0).round
             estimated_input_tokens = estimate_input_tokens(payload[:messages])
-            
+
             Message.new(
               role: result[:role].to_sym,
               content: content,
@@ -63,6 +63,9 @@ module RubyLLM
                      messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n") + "\n\nassistant:"
                    end
 
+          # Check context length
+          validate_context_length!(prompt, payload[:model])
+
           # Configure generation
           config_opts = {
             temperature: payload[:temperature] || 0.7,
@@ -93,6 +96,9 @@ module RubyLLM
                      messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n") + "\n\nassistant:"
                    end
 
+          # Check context length
+          validate_context_length!(prompt, payload[:model])
+
           # Configure generation
           config = ::Candle::GenerationConfig.balanced(
             temperature: payload[:temperature] || 0.7,
@@ -101,7 +107,7 @@ module RubyLLM
 
           # Collect all streamed content
           full_content = ''
-          
+
           # Stream tokens
           model.generate_stream(prompt, config: config) do |token|
             full_content += token
@@ -112,11 +118,11 @@ module RubyLLM
           # Send final chunk with empty content (indicates completion)
           final_chunk = format_stream_chunk('')
           block.call(final_chunk)
-          
+
           # Return a Message object with the complete response
           estimated_output_tokens = (full_content.length / 4.0).round
           estimated_input_tokens = estimate_input_tokens(payload[:messages])
-          
+
           Message.new(
             role: :assistant,
             content: full_content,
@@ -133,16 +139,16 @@ module RubyLLM
         end
 
         def load_model(model_id)
-          # Get GGUF file and tokenizer if this is a GGUF model  
+          # Get GGUF file and tokenizer if this is a GGUF model
           # Access the methods from the Models module which is included in the provider
           gguf_file = respond_to?(:gguf_file_for) ? gguf_file_for(model_id) : nil
           tokenizer = respond_to?(:tokenizer_for) ? tokenizer_for(model_id) : nil
-          
+
           if gguf_file
             # For GGUF models, use the tokenizer if specified, otherwise use model_id
             options = { device: @device, gguf_file: gguf_file }
             options[:tokenizer] = tokenizer if tokenizer
-            
+
             ::Candle::LLM.from_pretrained(model_id, **options)
           else
             # For regular models, use from_pretrained without gguf_file
@@ -171,20 +177,20 @@ module RubyLLM
 
         def extract_message_content_from_object(message)
           content = message.content
-          
+
           # Handle Content objects
           if content.is_a?(Content)
             # Extract text from Content object, including attachment text
             text_parts = []
             text_parts << content.text if content.text
-            
+
             # Add any text from attachments
             content.attachments&.each do |attachment|
               if attachment.respond_to?(:data) && attachment.data.is_a?(String)
                 text_parts << attachment.data
               end
             end
-            
+
             text_parts.join(' ')
           elsif content.is_a?(String)
             content
@@ -195,20 +201,20 @@ module RubyLLM
 
         def extract_message_content(message)
           content = message[:content]
-          
+
           # Handle Content objects
           if content.is_a?(Content)
             # Extract text from Content object
             text_parts = []
             text_parts << content.text if content.text
-            
+
             # Add any text from attachments
             content.attachments&.each do |attachment|
               if attachment.respond_to?(:data) && attachment.data.is_a?(String)
                 text_parts << attachment.data
               end
             end
-            
+
             text_parts.join(' ')
           elsif content.is_a?(String)
             content
@@ -263,6 +269,24 @@ module RubyLLM
           formatted = format_messages(messages)
           total_chars = formatted.sum { |msg| "#{msg[:role]}: #{msg[:content]}".length }
           (total_chars / 4.0).round
+        end
+
+        def validate_context_length!(prompt, model_id)
+          # Get the context window for this model
+          context_window = if respond_to?(:model_context_window)
+                             model_context_window(model_id)
+                           else
+                             4096 # Conservative default
+                           end
+
+          # Estimate tokens in prompt (~4 characters per token)
+          estimated_tokens = (prompt.length / 4.0).round
+
+          # Check if prompt exceeds context window (leave some room for response)
+          max_input_tokens = context_window - 512 # Reserve 512 tokens for response
+          if estimated_tokens > max_input_tokens
+            raise Error.new(nil, "Context length exceeded. Estimated #{estimated_tokens} tokens, but model #{model_id} has a context window of #{context_window} tokens.")
+          end
         end
       end
     end
