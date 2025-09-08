@@ -27,11 +27,13 @@ module RubyLLM
             supports_structured: true
           },
           {
-            id: 'Qwen/Qwen2.5-0.5B-Instruct',
-            name: 'Qwen 2.5 0.5B Instruct',
+            id: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF',
+            name: 'Mistral 7B Instruct v0.2 (Quantized)',
+            gguf_file: 'mistral-7b-instruct-v0.2.Q4_K_M.gguf',
+            tokenizer: 'mistralai/Mistral-7B-Instruct-v0.2',
             context_window: 32_768,
-            family: 'qwen',
-            architecture: 'qwen2',
+            family: 'mistral',
+            architecture: 'mistral',
             supports_chat: true,
             supports_structured: true
           }

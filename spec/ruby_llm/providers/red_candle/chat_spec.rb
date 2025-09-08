@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::RedCandle::Chat do
   let(:config) { RubyLLM::Configuration.new }
   let(:provider) { RubyLLM::Providers::RedCandle.new(config) }
-  let(:model) { provider.model('Qwen/Qwen2.5-0.5B-Instruct') }
+  let(:model) { provider.model('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF') }
 
   before(:all) do
     begin
@@ -31,7 +31,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
       expect(payload).to include(
         messages: messages,
         temperature: 0.7,
-        model: 'Qwen/Qwen2.5-0.5B-Instruct',
+        model: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
         stream: false,
         schema: nil
       )
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
         payload = {
           messages: messages,
-          model: 'Qwen/Qwen2.5-0.5B-Instruct',
+          model: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
           temperature: 0.7
         }
 
@@ -92,8 +92,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
         expect(result).to include(
           content: 'Generated response',
-          role: 'assistant',
-          finish_reason: 'stop'
+          role: 'assistant'
         )
       end
     end
@@ -107,7 +106,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
         payload = {
           messages: messages,
-          model: 'Qwen/Qwen2.5-0.5B-Instruct',
+          model: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
           temperature: 0.7,
           schema: schema
         }
@@ -127,7 +126,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
         payload = {
           messages: messages,
-          model: 'Qwen/Qwen2.5-0.5B-Instruct',
+          model: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
           temperature: 0.7,
           schema: schema
         }
@@ -160,7 +159,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
       payload = {
         messages: messages,
-        model: 'Qwen/Qwen2.5-0.5B-Instruct',
+        model: 'TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF',
         temperature: 0.7
       }
 
@@ -170,17 +169,15 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
       # Check token chunks
       tokens.each_with_index do |token, i|
-        expect(chunks_received[i]).to include(
-          delta: { content: token },
-          finish_reason: nil
-        )
+        chunk = chunks_received[i]
+        expect(chunk).to be_a(RubyLLM::Chunk)
+        expect(chunk.content).to eq(token)
       end
 
-      # Check final chunk
-      expect(chunks_received.last).to include(
-        delta: { content: '' },
-        finish_reason: 'stop'
-      )
+      # Check final chunk (empty content indicates completion)
+      final_chunk = chunks_received.last
+      expect(final_chunk).to be_a(RubyLLM::Chunk)
+      expect(final_chunk.content).to eq('')
     end
   end
 

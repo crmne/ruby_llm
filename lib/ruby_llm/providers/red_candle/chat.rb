@@ -97,8 +97,8 @@ module RubyLLM
             block.call(chunk)
           end
 
-          # Send final chunk with finish reason
-          final_chunk = format_stream_chunk('', 'stop')
+          # Send final chunk with empty content (indicates completion)
+          final_chunk = format_stream_chunk('')
           block.call(final_chunk)
         end
 
@@ -175,17 +175,15 @@ module RubyLLM
 
           {
             content: content,
-            role: 'assistant',
-            finish_reason: 'stop'
+            role: 'assistant'
           }
         end
 
-        def format_stream_chunk(token, finish_reason = nil)
+        def format_stream_chunk(token)
           # Return a Chunk object for streaming compatibility
           Chunk.new(
             role: :assistant,
-            content: token,
-            finish_reason: finish_reason
+            content: token
           )
         end
       end
