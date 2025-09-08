@@ -3,9 +3,11 @@
 module RubyLLM
   module Providers
     class RedCandle
+      # Chat implementation for Red Candle provider
       module Chat
         # Override the base complete method to handle local execution
         def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &)
+          _ = headers # Interface compatibility
           payload = render_payload(
             messages,
             tools: tools,
@@ -38,9 +40,7 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream:, schema:)
           # Red Candle doesn't support tools
-          if tools && !tools.empty?
-            raise Error.new(nil, 'Red Candle provider does not support tool calling')
-          end
+          raise Error.new(nil, 'Red Candle provider does not support tool calling') if tools && !tools.empty?
 
           {
             messages: messages,
@@ -60,7 +60,7 @@ module RubyLLM
                      model.apply_chat_template(messages)
                    else
                      # Fallback to simple formatting
-                     messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n") + "\n\nassistant:"
+                     "#{messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n")}\n\nassistant:"
                    end
 
           # Check context length
@@ -93,7 +93,7 @@ module RubyLLM
           prompt = if model.respond_to?(:apply_chat_template)
                      model.apply_chat_template(messages)
                    else
-                     messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n") + "\n\nassistant:"
+                     "#{messages.map { |m| "#{m[:role]}: #{m[:content]}" }.join("\n\n")}\n\nassistant:"
                    end
 
           # Check context length
@@ -186,9 +186,7 @@ module RubyLLM
 
             # Add any text from attachments
             content.attachments&.each do |attachment|
-              if attachment.respond_to?(:data) && attachment.data.is_a?(String)
-                text_parts << attachment.data
-              end
+              text_parts << attachment.data if attachment.respond_to?(:data) && attachment.data.is_a?(String)
             end
 
             text_parts.join(' ')
@@ -203,26 +201,23 @@ module RubyLLM
           content = message[:content]
 
           # Handle Content objects
-          if content.is_a?(Content)
+          case content
+          when Content
             # Extract text from Content object
             text_parts = []
             text_parts << content.text if content.text
 
             # Add any text from attachments
             content.attachments&.each do |attachment|
-              if attachment.respond_to?(:data) && attachment.data.is_a?(String)
-                text_parts << attachment.data
-              end
+              text_parts << attachment.data if attachment.respond_to?(:data) && attachment.data.is_a?(String)
             end
 
             text_parts.join(' ')
-          elsif content.is_a?(String)
+          when String
             content
-          elsif content.is_a?(Array)
+          when Array
             # Handle array content (e.g., with images)
-            content.map do |part|
-              part[:text] if part[:type] == 'text'
-            end.compact.join(' ')
+            content.filter_map { |part| part[:text] if part[:type] == 'text' }.join(' ')
           else
             content.to_s
           end
@@ -284,9 +279,13 @@ module RubyLLM
 
           # Check if prompt exceeds context window (leave some room for response)
           max_input_tokens = context_window - 512 # Reserve 512 tokens for response
-          if estimated_tokens > max_input_tokens
-            raise Error.new(nil, "Context length exceeded. Estimated #{estimated_tokens} tokens, but model #{model_id} has a context window of #{context_window} tokens.")
-          end
+          return unless estimated_tokens > max_input_tokens
+
+          raise Error.new(
+            nil,
+            "Context length exceeded. Estimated #{estimated_tokens} tokens, " \
+            "but model #{model_id} has a context window of #{context_window} tokens."
+          )
         end
       end
     end
