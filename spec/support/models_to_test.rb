@@ -45,3 +45,7 @@ EMBEDDING_MODELS = [
   { provider: :mistral, model: 'mistral-embed' },
   { provider: :vertexai, model: 'text-embedding-004' }
 ].freeze
+
+IMAGE_CHAT_MODELS = [
+  { provider: :gemini, model: 'gemini-2.0-flash-preview-image-generation' }
+].freeze
