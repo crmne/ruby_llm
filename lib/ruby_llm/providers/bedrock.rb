@@ -67,10 +67,13 @@ module RubyLLM
           'Accept' => accept_header
         )
       end
-
       class << self
         def capabilities
           Bedrock::Capabilities
+        end
+
+        def options
+          Anthropic::Options
         end
 
         def configuration_requirements

@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, cache_prompts: {}) # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
           payload = {
             model: model.id,
             messages: format_messages(messages),
