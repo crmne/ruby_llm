@@ -19,7 +19,6 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
-      @cache_prompts = { system: false, user: false, tools: false }
       @params = {}
       @headers = {}
       @schema = nil
