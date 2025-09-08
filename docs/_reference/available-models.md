@@ -30,7 +30,7 @@ redirect_from:
 ## Last Updated
 {: .d-inline-block }
 
-2025-09-02
+2025-09-03
 {: .label .label-green }
 
 ## Models by Provider
@@ -701,9 +701,25 @@ redirect_from:
 | text-multilingual-embedding-002 | vertexai | - | - | - |
 
 
+### XAI (10)
+
+| Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
+| :-- | :-- | --: | --: | :-- |
+| grok-2-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-image-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-vision-1212 | xai | 32768 | - | In: $2.00, Out: $10.00 |
+| grok-3 | xai | 131072 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-3-fast | xai | 131072 | - | In: $5.00, Out: $25.00, Cache: $1.25 |
+| grok-3-mini | xai | 131072 | - | In: $0.30, Out: $0.50, Cache: $0.08 |
+| grok-3-mini-fast | xai | 131072 | - | In: $0.60, Out: $4.00, Cache: $0.15 |
+| grok-4-0709 | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-4-0709-eu | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-code-fast-1 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+
+
 ## Models by Capability
 
-### Function Calling (362)
+### Function Calling (372)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1069,9 +1085,19 @@ redirect_from:
 | text-embedding-004 | vertexai | - | - | - |
 | text-embedding-005 | vertexai | - | - | - |
 | text-multilingual-embedding-002 | vertexai | - | - | - |
+| grok-2-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-image-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-vision-1212 | xai | 32768 | - | In: $2.00, Out: $10.00 |
+| grok-3 | xai | 131072 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-3-fast | xai | 131072 | - | In: $5.00, Out: $25.00, Cache: $1.25 |
+| grok-3-mini | xai | 131072 | - | In: $0.30, Out: $0.50, Cache: $0.08 |
+| grok-3-mini-fast | xai | 131072 | - | In: $0.60, Out: $4.00, Cache: $0.15 |
+| grok-4-0709 | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-4-0709-eu | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-code-fast-1 | xai | 131072 | - | In: $2.00, Out: $10.00 |
 
 
-### Structured Output (339)
+### Structured Output (349)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1414,9 +1440,19 @@ redirect_from:
 | gemini-2.5-flash | vertexai | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-2.5-flash-lite | vertexai | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-2.5-pro | vertexai | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
+| grok-2-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-image-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-vision-1212 | xai | 32768 | - | In: $2.00, Out: $10.00 |
+| grok-3 | xai | 131072 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-3-fast | xai | 131072 | - | In: $5.00, Out: $25.00, Cache: $1.25 |
+| grok-3-mini | xai | 131072 | - | In: $0.30, Out: $0.50, Cache: $0.08 |
+| grok-3-mini-fast | xai | 131072 | - | In: $0.60, Out: $4.00, Cache: $0.15 |
+| grok-4-0709 | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-4-0709-eu | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-code-fast-1 | xai | 131072 | - | In: $2.00, Out: $10.00 |
 
 
-### Streaming (476)
+### Streaming (486)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1896,6 +1932,16 @@ redirect_from:
 | text-embedding-004 | vertexai | - | - | - |
 | text-embedding-005 | vertexai | - | - | - |
 | text-multilingual-embedding-002 | vertexai | - | - | - |
+| grok-2-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-image-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-vision-1212 | xai | 32768 | - | In: $2.00, Out: $10.00 |
+| grok-3 | xai | 131072 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-3-fast | xai | 131072 | - | In: $5.00, Out: $25.00, Cache: $1.25 |
+| grok-3-mini | xai | 131072 | - | In: $0.30, Out: $0.50, Cache: $0.08 |
+| grok-3-mini-fast | xai | 131072 | - | In: $0.60, Out: $4.00, Cache: $0.15 |
+| grok-4-0709 | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-4-0709-eu | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-code-fast-1 | xai | 131072 | - | In: $2.00, Out: $10.00 |
 
 
 ### Batch Processing (133)
@@ -2039,7 +2085,7 @@ redirect_from:
 
 ## Models by Modality
 
-### Vision Models (239)
+### Vision Models (243)
 
 Models that can process images:
 
@@ -2284,6 +2330,10 @@ Models that can process images:
 | gemini-2.5-flash | vertexai | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-2.5-flash-lite | vertexai | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-2.5-pro | vertexai | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache: $0.31 |
+| grok-2-image-1212 | xai | 131072 | - | In: $2.00, Out: $10.00 |
+| grok-2-vision-1212 | xai | 32768 | - | In: $2.00, Out: $10.00 |
+| grok-4-0709 | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
+| grok-4-0709-eu | xai | 256000 | - | In: $3.00, Out: $15.00, Cache: $0.75 |
 
 
 ### Audio Input Models (63)

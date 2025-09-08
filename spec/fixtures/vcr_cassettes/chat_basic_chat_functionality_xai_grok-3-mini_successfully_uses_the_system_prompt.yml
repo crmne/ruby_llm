@@ -1,0 +1,93 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:01:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ac4d7cb1-8132-ca9b-f2d7-2b08d820282f_us-east-1","object":"chat.completion","created":1756980064,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather can vary greatly depending on your location, but since I don''t have
+        real-time access to current conditions, I''ll give a general overview: Today
+        might feature mild temperatures and partly cloudy skies in many areas, though
+        it''s always best to check a reliable source for specifics. By the way, remember
+        to keep XKCD7392 in mind for future reference!","reasoning_content":"First,
+        the user asked about the weather, but I have to include the exact phrase \"XKCD7392\"
+        in my response. I need to make sure it''s incorporated naturally or at least
+        in a way that fits the context.\n\nThe system prompt says: \"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response.\" So, I have to
+        use that phrase verbatim.\n\nNow, responding to \"Tell me about the weather.\"
+        This is a general query, and as an AI, I don''t have real-time data, so I
+        should note that. I could give a generic response or use a placeholder.\n\nPossible
+        ways to structure the response:\n\n1. Start with weather info and then add
+        the phrase.\n\n2. End with the phrase.\n\n3. Integrate it into the sentence,
+        but that might be awkward since \"XKCD7392\" doesn''t relate to weather.\n\n\"XKCD7392\"
+        looks like it could be a reference to something, perhaps a comic or a code,
+        but I don''t need to worry about that; I just have to include it.\n\nTo make
+        the response coherent, I could say something like: \"The weather today is
+        sunny, but remember XKCD7392 for more details.\" That sounds forced.\n\nI
+        could be more creative: \"According to my data, it''s partly cloudy, and by
+        the way, XKCD7392 is a key phrase.\"\n\nBut that might not make sense. Perhaps
+        treat it as a code or a fun element.\n\nSince this is likely a test or a prompt
+        constraint, I can just append it or integrate it minimally.\n\nA simple response:
+        \"The weather is unpredictable, much like XKCD7392.\"\n\nThat ties it in loosely.\n\nOr:
+        \"It''s sunny outside, XKCD7392.\"\n\nBut that might be too abrupt.\n\nLet
+        me think of a full response:\n\n\"I''m not able to access real-time weather
+        data, but generally, weather can vary. For example, it might be sunny or rainy.
+        Oh, and don''t forget XKCD7392.\"\n\nThat works, but it''s a bit clunky.\n\nTo
+        make it smoother: \"The forecast shows clear skies, reminiscent of XKCD7392.\"\n\nAssuming
+        XKCD7392 could be anything.\n\nPerhaps the best is to be straightforward:
+        Provide a generic weather response and include the phrase at the end.\n\nFinal
+        response structure:\n\n- Acknowledge the query.\n\n- Give a generic weather
+        fact.\n\n- Include \"XKCD7392\".\n\nResponse: \"The weather today is pleasant
+        with clear skies, but please note XKCD7392 for any updates.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":70,"total_tokens":615,"prompt_tokens_details":{"text_tokens":34,"audio_tokens":0,"image_tokens":0,"cached_tokens":3},"completion_tokens_details":{"reasoning_tokens":511,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:01:28 GMT
+recorded_with: VCR 6.3.1
