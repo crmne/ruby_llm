@@ -3,12 +3,12 @@
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
-    module ActsAs
+    module ActsAsLegacy
       extend ActiveSupport::Concern
 
       class_methods do # rubocop:disable Metrics/BlockLength
         def acts_as_chat(message_class: 'Message', tool_call_class: 'ToolCall')
-          include ChatMethods
+          include ChatLegacyMethods
 
           @message_class = message_class.to_s
           @tool_call_class = tool_call_class.to_s
@@ -27,7 +27,7 @@ module RubyLLM
                             tool_call_class: 'ToolCall',
                             tool_call_foreign_key: nil,
                             touch_chat: false)
-          include MessageMethods
+          include MessageLegacyMethods
 
           @chat_class = chat_class.to_s
           @chat_foreign_key = chat_foreign_key || ActiveSupport::Inflector.foreign_key(@chat_class)
@@ -79,7 +79,7 @@ module RubyLLM
     end
 
     # Methods mixed into chat models.
-    module ChatMethods
+    module ChatLegacyMethods
       extend ActiveSupport::Concern
 
       class_methods do
@@ -329,7 +329,7 @@ module RubyLLM
     end
 
     # Methods mixed into message models.
-    module MessageMethods
+    module MessageLegacyMethods
       extend ActiveSupport::Concern
 
       class_methods do

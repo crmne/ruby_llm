@@ -35,7 +35,7 @@ chat.model.input_token_cost  # => 2.50
 
 **Provider routing**
 ```ruby
-Chat.create!(model: "claude-3-5-sonnet", provider: "bedrock")
+Chat.create!(model: "{{ site.models.anthropic_current }}", provider: "bedrock")
 ```
 
 **Model associations and queries**
@@ -46,7 +46,7 @@ Model.select { |m| m.supports_functions? }  # Use delegated methods
 
 **Model alias resolution**
 ```ruby
-Chat.create!(model: "gpt-4.1-nano", provider: "openrouter")  # Resolves to openai/gpt-4.1-nano automatically
+Chat.create!(model: "{{ site.models.default_chat }}", provider: "openrouter")  # Resolves to openai/{{ site.models.default_chat }} automatically
 ```
 
 **Usage tracking**
@@ -59,7 +59,7 @@ Model.joins(:chats).group(:id).order('COUNT(chats.id) DESC')
 **Basic functionality** - All core RubyLLM features work
 ```ruby
 chat.ask("Hello!")  # Works fine
-chat.model_id  # => "gpt-4" (string only, no metadata)
+chat.model_id  # => "{{ site.models.openai_standard }}" (string only, no metadata)
 ```
 
 **Limited to:**

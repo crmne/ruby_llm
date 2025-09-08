@@ -75,7 +75,7 @@ end
 # => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue. The framework automatically manages context window limits, truncating older messages if necessary to stay within the model's constraints.
+Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
 
 ## Guiding AI Behavior with System Prompts
 
@@ -106,18 +106,18 @@ System prompts are added to the conversation as messages with the `:system` role
 
 ## Working with Different Models
 
-RubyLLM supports over 500 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
+RubyLLM supports over 600 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
 
 ```ruby
 # Use a specific model via ID or alias
-chat_claude = RubyLLM.chat(model: 'claude-3-5-sonnet')
-chat_gemini = RubyLLM.chat(model: 'gemini-1.5-pro-latest')
+chat_claude = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+chat_gemini = RubyLLM.chat(model: '{{ site.models.gemini_current_latest }}')
 
 # Change the model on an existing chat instance
-chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+chat = RubyLLM.chat(model: '{{ site.models.default_chat }}')
 response1 = chat.ask "Initial question..."
 
-chat.with_model('claude-3-opus-20240229')
+chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
@@ -129,11 +129,11 @@ Many modern AI models can process multiple types of input beyond just text. Ruby
 
 ### Working with Images
 
-Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Some specialized models can also generate and edit images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
+Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Some specialized models can also generate and edit images.
 
 ```ruby
 # Ensure you select a vision-capable model
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_vision }}')
 
 # Ask about a local image file
 response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
@@ -180,10 +180,10 @@ For simple text-to-image generation without existing images, see the [Image Gene
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `gpt-4o-audio-preview` support audio input.
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` support audio input.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
+chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
 
 # Transcribe or ask questions about audio content
 response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
@@ -199,7 +199,7 @@ puts response.content
 You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Analyze a text file
 response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
@@ -216,7 +216,7 @@ PDF support allows models to analyze complex documents including reports, manual
 
 ```ruby
 # Use a model that supports PDFs
-chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')
 
 # Ask about a local PDF
 response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
@@ -239,7 +239,7 @@ puts response.content
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Single file - type automatically detected
 response = chat.ask "What's in this file?", with: "path/to/document.pdf"
@@ -313,7 +313,7 @@ Some providers offer beta features or special capabilities through custom HTTP h
 
 ```ruby
 # Enable Anthropic's beta features
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
       .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
 
 response = chat.ask "Tell me about the weather"
@@ -459,7 +459,7 @@ Models that don't support structured output:
 
 ```ruby
 # RubyLLM 1.6.2+ will attempt to use schemas with any model
-chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
+chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
 chat.with_schema(schema)
 response = chat.ask('Generate a person')
 # Provider will return an error if unsupported

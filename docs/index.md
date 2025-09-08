@@ -80,6 +80,9 @@ permalink: /
 
 Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
 
+Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+{: .note }
+
 ---
 
 ## Why RubyLLM?

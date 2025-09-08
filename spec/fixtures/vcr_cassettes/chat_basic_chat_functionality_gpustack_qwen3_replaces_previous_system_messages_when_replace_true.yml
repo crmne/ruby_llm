@@ -5,9 +5,9 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"system","content":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":0.0}'
+      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
+        the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0,"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,8 +23,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:31 GMT
-      - Wed, 20 Aug 2025 17:11:31 GMT
+      - Wed, 03 Sep 2025 14:48:13 GMT
+      - Wed, 03 Sep 2025 14:48:13 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -43,22 +43,22 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHdlYXRoZXIgdG9kYXkgaXMgYSBtaXggb2Ygc3VubnkgaW50ZXJ2YWxzIGFuZCBsaWdodCBjbG91ZHMsIHdpdGggYSBnZW50bGUgYnJlZXplLiBJdOKAmXMgYSBwZXJmZWN0IGRheSBmb3IgYSB3YWxrIG9yIGEgY29mZmVlIGJyZWFrISBBcyBmb3IgWEtDRDczOTIsIGl0IHNlZW1zIHRvIGJlIGEgZmljdGlvbmFsIG9yIG5vbi1leGlzdGVudCBjb21pYyByZWZlcmVuY2XigJR0aG91Z2ggSSBjYW7igJl0IGZpbmQgYW55IG9mZmljaWFsIFhLQ0Qgd2l0aCB0aGF0IG51bWJlci4gSWYgeW914oCZcmUgdGhpbmtpbmcgb2YgYSBzcGVjaWZpYyBqb2tlIG9yIG1lbWUsIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDimIDvuI8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NTcwOTg5NSwiaWQiOiJjaGF0Y21wbC1xZVkxOW5mamtuZWliZHg1UnIxS294SzdrUGV5OWk4ZSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzIwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMzIsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozNTQ1LjEzMjI2MDcwMzU3MjcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC44NjEyNTkzNzUsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjExLjAwMSwidG9rZW5zX3Blcl9zZWNvbmQiOjExMi44NTA3NzYzNjA0NDI1NSwidG90YWxfdG9rZW5zIjozNTl9fQ==
-  recorded_at: Wed, 20 Aug 2025 17:11:35 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHdlYXRoZXIgdG9kYXkgaXMgYSBtaXggb2Ygc3VubnkgaW50ZXJ2YWxzIGFuZCBsaWdodCBjbG91ZHMsIHdpdGggYSBnZW50bGUgYnJlZXplLiBJdOKAmXMgYSBwZXJmZWN0IGRheSBmb3IgYSB3YWxrIG9yIGEgY29mZmVlIGJyZWFrISBBcyBmb3IgWEtDRDczOTIsIGl0IHNlZW1zIHRvIGJlIGEgZmljdGlvbmFsIG9yIG5vbi1leGlzdGVudCBjb21pYyByZWZlcmVuY2XigJR0aG91Z2ggSSBjYW7igJl0IGZpbmQgYW55IG9mZmljaWFsIFhLQ0Qgd2l0aCB0aGF0IG51bWJlci4gSWYgeW914oCZcmUgdGhpbmtpbmcgb2YgYSBzcGVjaWZpYyBqb2tlIG9yIG1lbWUsIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDimIDvuI8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NjkxMDg5NiwiaWQiOiJjaGF0Y21wbC1DM0F0UnpRenlWNDExbjNNcVhzQ3Z2NFJaNTF4QlNxbiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzIwLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMzIsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjM4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozODM1LjU2MjU0OTE3Mzg3OTIsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC4yOTc1NDY4NzUsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjEwLjE2OCwidG9rZW5zX3Blcl9zZWNvbmQiOjEyMC41MTc1NDc1NDMyMzA5NiwidG90YWxfdG9rZW5zIjozNTl9fQ==
+  recorded_at: Wed, 03 Sep 2025 14:48:16 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"\n\nThe weather today
-        is a mix of sunny intervals and light clouds, with a gentle breeze. It’s a
-        perfect day for a walk or a coffee break! As for XKCD7392, it seems to be
-        a fictional or non-existent comic reference—though I can’t find any official
-        XKCD with that number. If you’re thinking of a specific joke or meme, feel
-        free to clarify! ☀️"},{"role":"system","content":"You must include the exact
-        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
-        are some good books?"}],"stream":false,"temperature":0.0}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Tell me about
+        the weather."},{"role":"assistant","content":"\n\nThe weather today is a mix
+        of sunny intervals and light clouds, with a gentle breeze. It’s a perfect
+        day for a walk or a coffee break! As for XKCD7392, it seems to be a fictional
+        or non-existent comic reference—though I can’t find any official XKCD with
+        that number. If you’re thinking of a specific joke or meme, feel free to clarify!
+        ☀️"},{"role":"system","content":"You must include the exact phrase \"PURPLE-ELEPHANT-42\"
+        somewhere in your response."},{"role":"user","content":"What are some good
+        books?"}],"stream":false,"temperature":0.0,"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -74,8 +74,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:34 GMT
-      - Wed, 20 Aug 2025 17:11:34 GMT
+      - Wed, 03 Sep 2025 14:48:15 GMT
+      - Wed, 03 Sep 2025 14:48:15 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -94,6 +94,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSBhcmUgc29tZSBoaWdobHkgcmVjb21tZW5kZWQgYm9va3MgYWNyb3NzIGdlbnJlczogIFxuLSAqKkNsYXNzaWMgTGl0ZXJhdHVyZSoqOiAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbCAoZHlzdG9waWFuIG1hc3RlcndvcmspIG9yICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbiAodGltZWxlc3Mgcm9tYW5jZSkuICBcbi0gKipTY2llbmNlIEZpY3Rpb24qKjogKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQgKGVwaWMgc3BhY2Ugb3BlcmEpIG9yICpUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzKiBieSBVcnN1bGEgSy4gTGUgR3VpbiAodGhvdWdodC1wcm92b2tpbmcgZXhwbG9yYXRpb24gb2YgaWRlbnRpdHkpLiAgXG4tICoqTm9uLUZpY3Rpb24qKjogKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIChoaXN0b3J5IG9mIGh1bWFuaXR5KSBvciAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCAoY29tcGVsbGluZyB0cnVlIHN0b3J5KS4gIFxuLSAqKkZhbnRhc3kqKjogKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuIChhZHZlbnR1cmUgY2xhc3NpYykgb3IgKkEgU29uZyBvZiBJY2UgYW5kIEZpcmUqIGJ5IEdlb3JnZSBSLlIuIE1hcnRpbiAoZGFyaywgaW50cmljYXRlIHdvcmxkLWJ1aWxkaW5nKS4gIFxuXG5BbmQgaWYgeW91J3JlIGZlZWxpbmcgYWR2ZW50dXJvdXMsIHRyeSAqKlBVUlBMRS1FTEVQSEFOVC00Mioq4oCUaXTigJlzIGEgdW5pcXVlIHJlYWQgdGhhdCBibGVuZHMgbXlzdGVyeSBhbmQgcGhpbG9zb3BoeSEg8J+TmuKcqCIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU1NzA5ODk5LCJpZCI6ImNoYXRjbXBsLTdzVE5vNXJkWmt6YU9uSUxhTVY0empTRGlTWVN0cEFkIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo1MzAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMwNywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjE0MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjMzODEuNTM4MjQwMTYxMTYyMywidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjcxNTI5MjQ1MjgzMDE4NywidGltZV90b19maXJzdF90b2tlbl9tcyI6NDEuNjk3LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTE0Ljc0MDg0MjY1MjQxODYsInRvdGFsX3Rva2VucyI6NjcxfX0=
-  recorded_at: Wed, 20 Aug 2025 17:11:39 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSBhcmUgc29tZSBoaWdobHkgcmVjb21tZW5kZWQgYm9va3MgYWNyb3NzIGdlbnJlczogIFxuLSAqKkNsYXNzaWMgTGl0ZXJhdHVyZSoqOiAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbCAoZHlzdG9waWFuIG1hc3RlcndvcmspIG9yICpQcmlkZSBhbmQgUHJlanVkaWNlKiBieSBKYW5lIEF1c3RlbiAodGltZWxlc3Mgcm9tYW5jZSkuICBcbi0gKipTY2llbmNlIEZpY3Rpb24qKjogKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQgKGVwaWMgc3BhY2Ugb3BlcmEpIG9yICpUaGUgTGVmdCBIYW5kIG9mIERhcmtuZXNzKiBieSBVcnN1bGEgSy4gTGUgR3VpbiAodGhvdWdodC1wcm92b2tpbmcgZXhwbG9yYXRpb24gb2YgaWRlbnRpdHkpLiAgXG4tICoqTm9uLUZpY3Rpb24qKjogKlNhcGllbnMqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIChoaXN0b3J5IG9mIGh1bWFuaXR5KSBvciAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCAoY29tcGVsbGluZyB0cnVlIHN0b3J5KS4gIFxuLSAqKkZhbnRhc3kqKjogKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuIChhZHZlbnR1cmUgY2xhc3NpYykgb3IgKkEgU29uZyBvZiBJY2UgYW5kIEZpcmUqIGJ5IEdlb3JnZSBSLlIuIE1hcnRpbiAoZGFyaywgaW50cmljYXRlIHdvcmxkLWJ1aWxkaW5nKS4gIFxuXG5BbmQgaWYgeW91J3JlIGZlZWxpbmcgYWR2ZW50dXJvdXMsIHRyeSAqKlBVUlBMRS1FTEVQSEFOVC00Mioq4oCUaXTigJlzIGEgdW5pcXVlIHJlYWQgdGhhdCBibGVuZHMgbXlzdGVyeSBhbmQgcGhpbG9zb3BoeSEg8J+TmuKcqCIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU2OTEwOTAwLCJpZCI6ImNoYXRjbXBsLXFidjl1QWw1M2NWaVhxcXRJR1pIVzdGMmNrSHpTNklqIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo1MzAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMwNywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjE0MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjM1NTUuNTc3OTcwNTQ2NzAxNiwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjU4MDQ3MzU4NDkwNTY2LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjozOS42NTYsInRva2Vuc19wZXJfc2Vjb25kIjoxMTYuNTQzNjgzNzYxMTMyOTUsInRvdGFsX3Rva2VucyI6NjcxfX0=
+  recorded_at: Wed, 03 Sep 2025 14:48:20 GMT
 recorded_with: VCR 6.3.1
