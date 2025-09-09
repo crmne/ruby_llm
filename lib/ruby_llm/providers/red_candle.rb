@@ -40,6 +40,22 @@ module RubyLLM
         def supports_functions?(model_id = nil)
           RedCandle::Capabilities.supports_functions?(model_id)
         end
+
+        def models
+          # Return Red Candle models for registration
+          RedCandle::Models::SUPPORTED_MODELS.map do |model_data|
+            Model::Info.new(
+              id: model_data[:id],
+              name: model_data[:name],
+              provider: 'red_candle',
+              type: 'chat',
+              family: model_data[:family],
+              context_window: model_data[:context_window],
+              capabilities: %w[streaming structured_output],
+              modalities: { input: %w[text], output: %w[text] }
+            )
+          end
+        end
       end
 
       private
