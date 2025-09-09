@@ -21,10 +21,8 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{provider}/#{model} returns raw responses" do
         # Red Candle is a truly local provider and doesn't have HTTP responses
-        if provider == :red_candle
-          skip 'Red Candle provider does not have raw HTTP responses'
-        end
-        
+        skip 'Red Candle provider does not have raw HTTP responses' if provider == :red_candle
+
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the capital of France?')
         expect(response.raw).to be_present

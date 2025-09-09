@@ -20,6 +20,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'
+  gem 'red-candle', '~> 1.2'
   gem 'reline'
   gem 'rspec', '~> 3.12'
   gem 'rubocop', '>= 1.0'

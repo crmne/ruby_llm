@@ -7,18 +7,16 @@ RSpec.describe RubyLLM::Providers::RedCandle do
   let(:provider) { described_class.new(config) }
 
   # Skip all tests if Red Candle is not available
-  before(:all) do
-    begin
-      require 'candle'
-    rescue LoadError
-      skip 'Red Candle gem is not installed'
-    end
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    require 'candle'
+  rescue LoadError
+    skip 'Red Candle gem is not installed'
   end
 
   describe '#initialize' do
     context 'when Red Candle is not available' do
       before do
-        allow_any_instance_of(described_class).to receive(:require).with('candle').and_raise(LoadError)
+        allow_any_instance_of(described_class).to receive(:require).with('candle').and_raise(LoadError) # rubocop:disable RSpec/AnyInstance
       end
 
       it 'raises an informative error' do
@@ -29,17 +27,16 @@ RSpec.describe RubyLLM::Providers::RedCandle do
       end
     end
 
-
     context 'with device configuration' do
       it 'uses the configured device' do
         config.red_candle_device = 'cpu'
         provider = described_class.new(config)
-        expect(provider.instance_variable_get(:@device)).to eq(::Candle::Device.cpu)
+        expect(provider.instance_variable_get(:@device)).to eq(Candle::Device.cpu)
       end
 
       it 'defaults to best device when not configured' do
         provider = described_class.new(config)
-        expect(provider.instance_variable_get(:@device)).to eq(::Candle::Device.best)
+        expect(provider.instance_variable_get(:@device)).to eq(Candle::Device.best)
       end
     end
   end

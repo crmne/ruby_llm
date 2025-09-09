@@ -140,8 +140,10 @@ RSpec.describe RubyLLM::Chat do
         unless provider_supports_functions?(provider, model)
           skip "#{provider}/#{model} doesn't support function calling"
         end
-        
-        skip 'gpustack/qwen3 does not support streaming tool calls properly' if provider == :gpustack && model == 'qwen3'
+
+        if provider == :gpustack && model == 'qwen3'
+          skip 'gpustack/qwen3 does not support streaming tool calls properly'
+        end
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
@@ -176,8 +178,10 @@ RSpec.describe RubyLLM::Chat do
         unless provider_supports_functions?(provider, model)
           skip "#{provider}/#{model} doesn't support function calling"
         end
-        
-        skip 'gpustack/qwen3 does not support streaming tool calls properly' if provider == :gpustack && model == 'qwen3'
+
+        if provider == :gpustack && model == 'qwen3'
+          skip 'gpustack/qwen3 does not support streaming tool calls properly'
+        end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models

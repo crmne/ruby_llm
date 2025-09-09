@@ -3,6 +3,7 @@
 module RubyLLM
   module Providers
     class RedCandle
+      # Streaming methods of the RedCandle integration
       module Streaming
         def stream(payload, &block)
           if payload[:stream]

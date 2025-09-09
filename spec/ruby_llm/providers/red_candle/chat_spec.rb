@@ -7,12 +7,10 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
   let(:provider) { RubyLLM::Providers::RedCandle.new(config) }
   let(:model) { provider.model('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF') }
 
-  before(:all) do
-    begin
-      require 'candle'
-    rescue LoadError
-      skip 'Red Candle gem is not installed'
-    end
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    require 'candle'
+  rescue LoadError
+    skip 'Red Candle gem is not installed'
   end
 
   describe '#render_payload' do
@@ -70,7 +68,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
   describe '#perform_completion!' do
     let(:messages) { [{ role: 'user', content: 'Test message' }] }
-    let(:mock_model) { double('Candle::LLM') }
+    let(:mock_model) { instance_double(Candle::LLM) }
 
     before do
       allow(provider).to receive(:ensure_model_loaded!).and_return(mock_model)
@@ -141,7 +139,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
 
   describe '#perform_streaming_completion!' do
     let(:messages) { [{ role: 'user', content: 'Stream test' }] }
-    let(:mock_model) { double('Candle::LLM') }
+    let(:mock_model) { instance_double(Candle::LLM) }
 
     before do
       allow(provider).to receive(:ensure_model_loaded!).and_return(mock_model)
@@ -153,7 +151,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Chat do
       tokens = %w[Hello world !]
       chunks_received = []
 
-      allow(mock_model).to receive(:generate_stream) do |_prompt, config:, &block|
+      allow(mock_model).to receive(:generate_stream) do |_prompt, config:, &block| # rubocop:disable Lint/UnusedBlockArgument
         tokens.each { |token| block.call(token) }
       end
 

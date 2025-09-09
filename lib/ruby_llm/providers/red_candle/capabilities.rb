@@ -3,8 +3,9 @@
 module RubyLLM
   module Providers
     class RedCandle
+      # Determines capabilities and pricing for RedCandle models
       module Capabilities
-        extend self
+        module_function
 
         def supports_vision?
           false
@@ -38,7 +39,7 @@ module RubyLLM
           false
         end
 
-        def normalize_temperature(temperature, model_id)
+        def normalize_temperature(temperature, _model_id)
           # Red Candle uses standard 0-2 range
           return 0.7 if temperature.nil?
 
@@ -109,12 +110,11 @@ module RubyLLM
 
         def available_on_platform?
           # Check if Candle can be loaded
-          begin
-            require 'candle'
-            true
-          rescue LoadError
-            false
-          end
+
+          require 'candle'
+          true
+        rescue LoadError
+          false
         end
       end
     end

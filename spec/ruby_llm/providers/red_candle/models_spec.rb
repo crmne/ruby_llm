@@ -6,12 +6,10 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
   let(:config) { RubyLLM::Configuration.new }
   let(:provider) { RubyLLM::Providers::RedCandle.new(config) }
 
-  before(:all) do
-    begin
-      require 'candle'
-    rescue LoadError
-      skip 'Red Candle gem is not installed'
-    end
+  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+    require 'candle'
+  rescue LoadError
+    skip 'Red Candle gem is not installed'
   end
 
   describe '#models' do
@@ -43,7 +41,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
       it 'raises an error' do
         expect { provider.model('invalid/model') }.to raise_error(
           RubyLLM::Error,
-          /Model invalid\/model not found/
+          %r{Model invalid/model not found}
         )
       end
     end
@@ -84,7 +82,9 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
     end
 
     it 'returns the GGUF file for Mistral model' do
-      expect(provider.gguf_file_for('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')).to eq('mistral-7b-instruct-v0.2.Q4_K_M.gguf')
+      model_id = 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF'
+      gguf_file = 'mistral-7b-instruct-v0.2.Q4_K_M.gguf'
+      expect(provider.gguf_file_for(model_id)).to eq(gguf_file)
     end
 
     it 'returns nil for unknown models' do

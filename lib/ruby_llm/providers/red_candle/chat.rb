@@ -6,7 +6,7 @@ module RubyLLM
       # Chat implementation for Red Candle provider
       module Chat
         # Override the base complete method to handle local execution
-        def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &)
+        def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
           _ = headers # Interface compatibility
           payload = render_payload(
             messages,
@@ -38,7 +38,7 @@ module RubyLLM
           end
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream:, schema:)
+        def render_payload(messages, tools:, temperature:, model:, stream:, schema:) # rubocop:disable Metrics/ParameterLists
           # Red Candle doesn't support tools
           raise Error.new(nil, 'Red Candle provider does not support tool calling') if tools && !tools.empty?
 
@@ -181,15 +181,7 @@ module RubyLLM
           # Handle Content objects
           if content.is_a?(Content)
             # Extract text from Content object, including attachment text
-            text_parts = []
-            text_parts << content.text if content.text
-
-            # Add any text from attachments
-            content.attachments&.each do |attachment|
-              text_parts << attachment.data if attachment.respond_to?(:data) && attachment.data.is_a?(String)
-            end
-
-            text_parts.join(' ')
+            handle_content_object(content)
           elsif content.is_a?(String)
             content
           else
@@ -204,15 +196,7 @@ module RubyLLM
           case content
           when Content
             # Extract text from Content object
-            text_parts = []
-            text_parts << content.text if content.text
-
-            # Add any text from attachments
-            content.attachments&.each do |attachment|
-              text_parts << attachment.data if attachment.respond_to?(:data) && attachment.data.is_a?(String)
-            end
-
-            text_parts.join(' ')
+            handle_content_object(content)
           when String
             content
           when Array
@@ -221,6 +205,18 @@ module RubyLLM
           else
             content.to_s
           end
+        end
+
+        def handle_content_object(content)
+          text_parts = []
+          text_parts << content.text if content.text
+
+          # Add any text from attachments
+          content.attachments&.each do |attachment|
+            text_parts << attachment.data if attachment.respond_to?(:data) && attachment.data.is_a?(String)
+          end
+
+          text_parts.join(' ')
         end
 
         def generate_with_schema(model, prompt, schema, config_opts)

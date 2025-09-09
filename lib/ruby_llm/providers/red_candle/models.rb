@@ -3,13 +3,14 @@
 module RubyLLM
   module Providers
     class RedCandle
+      # Models methods of the RedCandle integration
       module Models
         SUPPORTED_MODELS = [
           {
             id: 'google/gemma-3-4b-it-qat-q4_0-gguf',
             name: 'Gemma 3 4B Instruct (Quantized)',
             gguf_file: 'gemma-3-4b-it-q4_0.gguf',
-            tokenizer: 'google/gemma-3-4b-it',  # Tokenizer from base model
+            tokenizer: 'google/gemma-3-4b-it', # Tokenizer from base model
             context_window: 8192,
             family: 'gemma',
             architecture: 'gemma2',
@@ -59,7 +60,8 @@ module RubyLLM
 
         def model(id)
           models.find { |m| m.id == id } ||
-            raise(Error.new(nil, "Model #{id} not found in Red Candle provider. Available models: #{model_ids.join(', ')}"))
+            raise(Error.new(nil,
+                            "Model #{id} not found in Red Candle provider. Available models: #{model_ids.join(', ')}"))
         end
 
         def model_available?(id)

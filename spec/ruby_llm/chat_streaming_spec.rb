@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Chat do
 
         expect(chunks).not_to be_empty
         expect(chunks.first).to be_a(RubyLLM::Chunk)
-        
+
         # Red Candle is a local provider without HTTP responses
         unless provider == :red_candle
           expect(response.raw).to be_present
