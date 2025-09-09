@@ -20,7 +20,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'
-  gem 'red-candle', '~> 1.2'
   gem 'reline'
   gem 'rspec', '~> 3.12'
   gem 'rubocop', '>= 1.0'
@@ -41,4 +40,10 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+end
+
+# Optional group for Red Candle provider (requires Rust toolchain)
+# To include: bundle config set --local with red-candle
+group :red_candle do
+  gem 'red-candle', '~> 1.2'
 end
