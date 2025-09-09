@@ -85,6 +85,10 @@ redirect_from:
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | us.anthropic.claude-opus-4-1-20250805-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
+| amazon.titan-embed-text-v1:2:8k | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
+| amazon.titan-embed-text-v1 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
+| amazon.titan-embed-text-v2:0:8k | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
+| amazon.titan-embed-text-v2:0 | bedrock | 200000 | 4096 | In: $0.10, Out: $0.20 |
 
 
 ### DeepSeek (2)

@@ -306,6 +306,184 @@
     "metadata": {}
   },
   {
+    "id": "amazon.titan-embed-text-v1",
+    "name": "Titan Embeddings G1 - Text",
+    "provider": "bedrock",
+    "family": "other",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text",
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.2
+        },
+        "batch": {
+          "input_per_million": 0.05,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "streaming_supported": false,
+      "input_modalities": [
+        "TEXT"
+      ],
+      "output_modalities": [
+        "EMBEDDING"
+      ]
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v1:2:8k",
+    "name": "Titan Embeddings G1 - Text",
+    "provider": "bedrock",
+    "family": "other",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text",
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.2
+        },
+        "batch": {
+          "input_per_million": 0.05,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "streaming_supported": false,
+      "input_modalities": [
+        "TEXT"
+      ],
+      "output_modalities": [
+        "EMBEDDING"
+      ]
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v2:0",
+    "name": "Titan Text Embeddings V2",
+    "provider": "bedrock",
+    "family": "other",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text",
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.2
+        },
+        "batch": {
+          "input_per_million": 0.05,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "streaming_supported": false,
+      "input_modalities": [
+        "TEXT"
+      ],
+      "output_modalities": [
+        "EMBEDDING"
+      ]
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v2:0:8k",
+    "name": "Titan Text Embeddings V2",
+    "provider": "bedrock",
+    "family": "other",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text",
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.2
+        },
+        "batch": {
+          "input_per_million": 0.05,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "inference_types": [],
+      "streaming_supported": false,
+      "input_modalities": [
+        "TEXT"
+      ],
+      "output_modalities": [
+        "EMBEDDING"
+      ]
+    }
+  },
+  {
     "id": "anthropic.claude-3-5-haiku-20241022-v1:0",
     "name": "Claude 3.5 Haiku",
     "provider": "bedrock",
