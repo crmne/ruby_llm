@@ -52,7 +52,8 @@ RSpec.describe RubyLLM::Providers::RedCandle::Capabilities do
   describe '#model_context_window' do
     it 'returns correct context window for known models' do
       expect(described_class.model_context_window('google/gemma-3-4b-it-qat-q4_0-gguf')).to eq(8192)
-      expect(described_class.model_context_window('Qwen/Qwen2.5-0.5B-Instruct')).to eq(32_768)
+      expect(described_class.model_context_window('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')).to eq(32_768)
+      expect(described_class.model_context_window('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF')).to eq(2048)
     end
 
     it 'returns default for unknown models' do
@@ -89,7 +90,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Capabilities do
 
   describe '#model_families' do
     it 'returns supported model families' do
-      expect(described_class.model_families).to eq(%w[gemma qwen])
+      expect(described_class.model_families).to eq(%w[gemma llama mistral])
     end
   end
 
