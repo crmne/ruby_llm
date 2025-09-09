@@ -5,6 +5,7 @@ module RubyLLM
     class RedCandle
       # Models methods of the RedCandle integration
       module Models
+        # TODO: red-candle supports more models, but let's start with some well tested ones.
         SUPPORTED_MODELS = [
           {
             id: 'google/gemma-3-4b-it-qat-q4_0-gguf',
