@@ -8,14 +8,17 @@ module RubyLLM
         # Override the base complete method to handle local execution
         def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
           _ = headers # Interface compatibility
-          payload = render_payload(
-            messages,
-            tools: tools,
-            temperature: temperature,
-            model: model,
-            stream: block_given?,
-            schema: schema
-          ).merge(params)
+          payload = Utils.deep_merge(
+            render_payload(
+              messages,
+              tools: tools,
+              temperature: temperature,
+              model: model,
+              stream: block_given?,
+              schema: schema
+            ),
+            params
+          )
 
           if block_given?
             perform_streaming_completion!(payload, &)
