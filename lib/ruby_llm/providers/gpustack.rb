@@ -6,6 +6,7 @@ module RubyLLM
     class GPUStack < OpenAI
       include GPUStack::Chat
       include GPUStack::Models
+      include GPUStack::Media
 
       def api_base
         @config.gpustack_api_base

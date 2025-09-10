@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 10 Sep 2025 14:53:46 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=5380
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Weather is the state of the atmosphere at a particular place and time, encompassing temperature, humidity, precipitation (rain, snow, etc.), wind speed and direction, atmospheric pressure, and cloud cover. It's a constantly changing phenomenon driven by solar radiation, Earth's rotation, and the complex interactions of air masses and water vapor.\n\nTo give you specific weather details, I would need to know your current location. However, I can tell you generally how weather is observed and predicted:\n\n*   **Observation:** Meteorologists use a vast network of tools including ground-based weather stations, weather balloons, radar (to detect precipitation), and satellites (to track cloud patterns and storms from space).\n*   **Prediction:** Data from these observations is fed into sophisticated computer models that simulate atmospheric conditions. These models help predict future weather patterns, though accuracy tends to decrease the further out the forecast goes.\n\nGlobally, weather conditions are incredibly diverse right now. Some regions are experiencing warm, sunny days, while others might be facing cold temperatures, snow, or even severe weather like thunderstorms or tropical cyclones. The specific conditions depend entirely on your geographical location, altitude, and the current season.\n\nFor the most accurate and up-to-date information for your area, I recommend checking a local weather app, a dedicated weather website, or your local news. These sources often provide detailed forecasts, including hourly breakdowns, wind chill factors, and any relevant weather advisories. For example, a specific data point or model run might be internally tagged with an identifier like **XKCD7392** during analysis by meteorologists."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 327,
+            "totalTokenCount": 824,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 27
+              }
+            ],
+            "thoughtsTokenCount": 470
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "-pDBaOnjNI-ukdUP2-6IwQ4"
+        }
+  recorded_at: Wed, 10 Sep 2025 14:53:46 GMT
+recorded_with: VCR 6.3.1

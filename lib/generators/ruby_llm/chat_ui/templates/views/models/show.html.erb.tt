@@ -1,0 +1,18 @@
+<%% content_for :title, @model.name %>
+
+<h1><%%= @model.name %></h1>
+
+<p><strong>ID:</strong> <%%= @model.model_id %></p>
+<p><strong>Provider:</strong> <%%= @model.provider %></p>
+<p><strong>Context Window:</strong> <%%= number_with_delimiter(@model.context_window) %> tokens</p>
+<p><strong>Max Output:</strong> <%%= number_with_delimiter(@model.max_output_tokens) %> tokens</p>
+
+<%% if @model.capabilities.any? %>
+  <p><strong>Capabilities:</strong> <%%= @model.capabilities.join(", ") %></p>
+<%% end %>
+
+<p>
+  <%%= link_to "Start chat with this model", new_chat_path(model: @model.model_id) %> |
+  <%%= link_to "All models", models_path %> |
+  <%%= link_to "Back to chats", chats_path %>
+</p>

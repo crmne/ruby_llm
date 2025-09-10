@@ -66,6 +66,35 @@ puts "Refreshed in-memory model list."
 
 This refreshes the in-memory model registry and is what you want 99% of the time. This method is safe to call from Rails applications, background jobs, or any running Ruby process.
 
+**How refresh! Works:**
+
+The `refresh!` method performs the following steps:
+
+1. **Fetches from configured providers**: Queries the APIs of all configured providers (OpenAI, Anthropic, Ollama, etc.) to get their current list of available models.
+2. **Fetches from Parsera API**: Retrieves comprehensive model metadata from [Parsera](https://parsera.org), a free service that aggregates LLM documentation across providers. Parsera provides detailed information about model capabilities, pricing, context windows, and more.
+3. **Merges the data**: Combines provider-specific data with Parsera's metadata. Provider data takes precedence for availability, while Parsera enriches models with additional details.
+4. **Updates the in-memory registry**: Replaces the current registry with the refreshed data.
+
+The method returns a chainable `Models` instance, allowing you to immediately query the updated registry:
+
+```ruby
+# Refresh and immediately query
+chat_models = RubyLLM.models.refresh!.chat_models
+```
+
+**Note:** We're grateful to [Parsera](https://parsera.org) for providing their free API service to the LLM developer community. They maintain comprehensive, up-to-date model information by scraping provider documentation, making it available to all developers in a standardized JSON format. If you encounter issues with model data, please [file issues with Parsera](https://github.com/parsera-labs/api-llm-specs/issues).
+
+**Local Provider Models:**
+
+By default, `refresh!` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs (available in v1.6.5+):
+
+```ruby
+# Only fetch from remote providers (Anthropic, OpenAI, etc.)
+RubyLLM.models.refresh!(remote_only: true)
+```
+
+This is useful when you want to refresh only cloud-based models without querying local model servers.
+
 **For Gem Development:**
 
 The `rake models:update` task is designed for gem maintainers and updates the `models.json` file shipped with the gem:
@@ -176,7 +205,7 @@ Use `find` to get a `Model::Info` object containing details about a specific mod
 
 ```ruby
 # Find by exact ID or alias
-model_info = RubyLLM.models.find('gpt-4o')
+model_info = RubyLLM.models.find('{{ site.models.openai_tools }}')
 
 if model_info
   puts "Model: #{model_info.name}"
@@ -195,8 +224,8 @@ end
 RubyLLM uses aliases (defined in `lib/ruby_llm/aliases.json`) for convenience, mapping common names to specific versions.
 
 ```ruby
-# 'claude-3-5-sonnet' might resolve to 'claude-3-5-sonnet-20241022'
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+# '{{ site.models.anthropic_current }}' might resolve to 'claude-3-5-sonnet-20241022'
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 puts chat.model.id # => "claude-3-5-sonnet-20241022" (or latest version)
 ```
 
@@ -208,10 +237,10 @@ Specify the provider if the same alias exists across multiple providers.
 
 ```ruby
 # Get Claude 3.5 Sonnet from Anthropic
-model_anthropic = RubyLLM.models.find('claude-3-5-sonnet', :anthropic)
+model_anthropic = RubyLLM.models.find('{{ site.models.anthropic_current }}', :anthropic)
 
 # Get Claude 3.5 Sonnet via AWS Bedrock
-model_bedrock = RubyLLM.models.find('claude-3-5-sonnet', :bedrock)
+model_bedrock = RubyLLM.models.find('{{ site.models.anthropic_current }}', :bedrock)
 ```
 
 ## Connecting to Custom Endpoints & Using Unlisted Models
