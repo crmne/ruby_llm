@@ -617,6 +617,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'prompt caching' do
+    let(:model) { 'claude-3-5-haiku-20241022' }
+
+    it 'allows prompt caching' do
+      chat = Chat.create!(model_id: model)
+      chat.with_provider_options(cache_last_system_prompt: true, cache_last_user_prompt: true, cache_tools: true)
+
+      response = chat.ask('Hello')
+      expect(response.raw.env.request_body).to include('"cache_control":{"type":"ephemeral"}')
+    end
+  end
+
   describe 'assume_model_exists' do
     it 'creates a Model record when assume_model_exists is true' do
       chat = Chat.new

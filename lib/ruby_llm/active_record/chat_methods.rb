@@ -139,6 +139,11 @@ module RubyLLM
         self
       end
 
+      def with_provider_options(...)
+        to_llm.with_provider_options(...)
+        self
+      end
+
       def on_new_message(&block)
         to_llm
 

@@ -81,6 +81,7 @@ module RubyLLM
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
+            cached_tokens: data.dig('usageMetadata', 'cacheTokensDetails', 0, 'tokenCount') || 0,
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )

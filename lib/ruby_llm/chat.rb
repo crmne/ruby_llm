@@ -97,6 +97,11 @@ module RubyLLM
       self
     end
 
+    def with_provider_options(options)
+      @provider.with_options(options)
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self

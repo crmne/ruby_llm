@@ -5,12 +5,18 @@ module RubyLLM
   class Provider
     include Streaming
 
-    attr_reader :config, :connection
+    attr_reader :config, :connection, :options
 
     def initialize(config)
       @config = config
       ensure_configured!
       @connection = Connection.new(self, @config)
+      @options = self.class.respond_to?(:options) ? self.class.options.new : nil
+    end
+
+    def with_options(options)
+      @options = options.is_a?(self.class.options) ? options : self.class.options.new(**options)
+      self
     end
 
     def api_base
