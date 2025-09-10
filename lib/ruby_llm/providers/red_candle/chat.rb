@@ -162,12 +162,14 @@ module RubyLLM
             raise Error.new(nil,
                             "Failed to load tokenizer '#{tokenizer}'. The tokenizer may not exist or require authentication.\n" \
                             "Please verify the tokenizer exists at: https://huggingface.co/#{tokenizer}\n" \
+                            "And that you have accepted the terms of service for the tokenizer.\n" \
                             "If it requires authentication, login with: huggingface-cli login\n" \
                             "Original error: #{e.message}")
           elsif e.message.include?('Failed to find model')
             raise Error.new(nil,
                             "Failed to find model '#{model_id}'. The model may not exist or require authentication.\n" \
                             "Please verify the model exists at: https://huggingface.co/#{model_id}\n" \
+                            "And that you have accepted the terms of service for the model.\n" \
                             "If it requires authentication, login with: huggingface-cli login\n" \
                             "Original error: #{e.message}")
           else
