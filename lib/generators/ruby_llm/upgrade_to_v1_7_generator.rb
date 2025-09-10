@@ -45,18 +45,28 @@ module RubyLLM
       @model_names
     end
 
+    def table_name_for(model_name)
+      # Convert namespaced model names to proper table names
+      # e.g., "Assistant::Chat" -> "assistant_chats" (not "assistant/chats")
+      model_name.underscore.pluralize.tr('/', '_')
+    end
+
     %i[chat message tool_call model].each do |type|
       define_method("#{type}_model_name") do
         @model_names ||= parse_model_mappings
         @model_names[type]
       end
+
+      define_method("#{type}_table_name") do
+        table_name_for(send("#{type}_model_name"))
+      end
     end
 
     def create_migration_file
       # First check if models table exists, if not create it
-      unless table_exists?(model_model_name.tableize)
+      unless table_exists?(table_name_for(model_model_name))
         migration_template 'create_models_migration.rb.tt',
-                           "db/migrate/create_#{model_model_name.tableize}.rb",
+                           "db/migrate/create_#{table_name_for(model_model_name)}.rb",
                            migration_version: migration_version,
                            model_model_name: model_model_name
 
