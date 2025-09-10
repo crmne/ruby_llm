@@ -1,4 +1,4 @@
-class Create<%= model_model_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class Create<%= model_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= model_table_name %> do |t|
       t.string :model_id, null: false

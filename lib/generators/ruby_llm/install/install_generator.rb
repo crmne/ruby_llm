@@ -57,6 +57,10 @@ module RubyLLM
         @model_names ||= parse_model_mappings
         @model_names[type]
       end
+
+      define_method("#{type}_table_name") do
+        table_name_for(send("#{type}_model_name"))
+      end
     end
 
     def acts_as_chat_declaration
@@ -145,22 +149,22 @@ module RubyLLM
       # Create migrations with timestamps to ensure proper order
       # First create chats table
       migration_template 'create_chats_migration.rb.tt',
-                         "db/migrate/create_#{chat_model_name.tableize}.rb"
+                         "db/migrate/create_#{chat_table_name}.rb"
 
       # Then create messages table (must come before tool_calls due to foreign key)
       sleep 1 # Ensure different timestamp
       migration_template 'create_messages_migration.rb.tt',
-                         "db/migrate/create_#{message_model_name.tableize}.rb"
+                         "db/migrate/create_#{message_table_name}.rb"
 
       # Then create tool_calls table (references messages)
       sleep 1 # Ensure different timestamp
       migration_template 'create_tool_calls_migration.rb.tt',
-                         "db/migrate/create_#{tool_call_model_name.tableize}.rb"
+                         "db/migrate/create_#{tool_call_table_name}.rb"
 
       # Create models table
       sleep 1 # Ensure different timestamp
       migration_template 'create_models_migration.rb.tt',
-                         "db/migrate/create_#{model_model_name.tableize}.rb"
+                         "db/migrate/create_#{model_table_name}.rb"
     end
 
     def create_model_files
@@ -180,6 +184,12 @@ module RubyLLM
 
       say '  Installing ActiveStorage for file attachments...', :cyan
       rails_command 'active_storage:install'
+    end
+
+    def table_name_for(model_name)
+      # Convert namespaced model names to proper table names
+      # e.g., "Assistant::Chat" -> "assistant_chats" (not "assistant/chats")
+      model_name.underscore.pluralize.tr('/', '_')
     end
 
     def show_install_info

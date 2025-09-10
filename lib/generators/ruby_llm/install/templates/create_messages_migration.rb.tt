@@ -1,16 +1,16 @@
-class Create<%= message_model_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class Create<%= message_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :<%= message_model_name.tableize %> do |t|
-      t.references :<%= chat_model_name.tableize.singularize %>, null: false, foreign_key: true
+    create_table :<%= message_table_name %> do |t|
+      t.references :<%= chat_table_name.singularize %>, null: false, foreign_key: true
       t.string :role, null: false
       t.text :content
-      t.references :<%= model_model_name.tableize.singularize %>, foreign_key: true
+      t.references :<%= model_table_name.singularize %>, foreign_key: true
       t.integer :input_tokens
       t.integer :output_tokens
-      t.references :<%= tool_call_model_name.tableize.singularize %>, foreign_key: true
+      t.references :<%= tool_call_table_name.singularize %>, foreign_key: true
       t.timestamps
     end
 
-    add_index :<%= message_model_name.tableize %>, :role
+    add_index :<%= message_table_name %>, :role
   end
 end
