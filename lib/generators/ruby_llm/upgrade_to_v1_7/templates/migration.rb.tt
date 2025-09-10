@@ -12,18 +12,18 @@ class MigrateToRubyLLMModelReferences < ActiveRecord::Migration<%= migration_ver
     end
 
     # Migrate foreign keys
-    migrate_foreign_key(:<%= chat_table_name %>, chat_class, model_class, :<%= model_model_name.underscore %>)
-    migrate_foreign_key(:<%= message_table_name %>, message_class, model_class, :<%= model_model_name.underscore %>)
+    migrate_foreign_key(:<%= chat_table_name %>, chat_class, model_class, :<%= model_table_name.singularize %>)
+    migrate_foreign_key(:<%= message_table_name %>, message_class, model_class, :<%= model_table_name.singularize %>)
   end
 
   def down
     # Remove foreign key references
-    if column_exists?(:<%= message_table_name %>, :<%= model_model_name.underscore %>_id)
-      remove_reference :<%= message_table_name %>, :<%= model_model_name.underscore %>, foreign_key: true
+    if column_exists?(:<%= message_table_name %>, :<%= model_table_name.singularize %>_id)
+      remove_reference :<%= message_table_name %>, :<%= model_table_name.singularize %>, foreign_key: true
     end
 
-    if column_exists?(:<%= chat_table_name %>, :<%= model_model_name.underscore %>_id)
-      remove_reference :<%= chat_table_name %>, :<%= model_model_name.underscore %>, foreign_key: true
+    if column_exists?(:<%= chat_table_name %>, :<%= model_table_name.singularize %>_id)
+      remove_reference :<%= chat_table_name %>, :<%= model_table_name.singularize %>, foreign_key: true
     end
 
     # Restore original model_id string columns

@@ -1,6 +1,6 @@
 class Create<%= model_model_name.pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :<%= model_model_name.tableize %> do |t|
+    create_table :<%= model_table_name %> do |t|
       t.string :model_id, null: false
       t.string :name, null: false
       t.string :provider, null: false
