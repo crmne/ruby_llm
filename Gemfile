@@ -44,6 +44,6 @@ end
 
 # Optional group for Red Candle provider (requires Rust toolchain)
 # To include: bundle config set --local with red-candle
-group :red_candle do
+group :red_candle, optional: true do
   gem 'red-candle', '~> 1.2'
 end

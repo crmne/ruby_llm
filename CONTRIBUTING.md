@@ -82,7 +82,7 @@ RED_CANDLE_REAL_INFERENCE=true bundle exec rspec
 
 **To switch back to working without Red Candle:**
 ```bash
-bundle config set --local without red_candle
+bundle config unset with
 bundle install
 ```
 
