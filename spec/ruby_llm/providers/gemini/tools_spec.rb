@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
 
   describe '#format_parameters' do
     context 'with array type parameter' do
-      it 'includes items field for array parameters' do
+      it 'includes items field for array parameters with default STRING type' do
         parameters = {
           fields: RubyLLM::Parameter.new('fields', type: 'array', desc: 'List of fields to return')
         }
@@ -26,6 +26,66 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
           type: 'ARRAY',
           description: 'List of fields to return',
           items: { type: 'STRING' }
+        )
+      end
+
+      it 'supports arrays of numbers' do
+        parameters = {
+          scores: RubyLLM::Parameter.new('scores', type: 'array', desc: 'List of scores', item_type: 'number')
+        }
+
+        result = instance.send(:format_parameters, parameters)
+
+        expect(result[:type]).to eq('OBJECT')
+        expect(result[:properties][:scores]).to eq(
+          type: 'ARRAY',
+          description: 'List of scores',
+          items: { type: 'NUMBER' }
+        )
+      end
+
+      it 'supports arrays of integers' do
+        parameters = {
+          ids: RubyLLM::Parameter.new('ids', type: 'array', desc: 'List of IDs', item_type: 'integer')
+        }
+
+        result = instance.send(:format_parameters, parameters)
+
+        expect(result[:type]).to eq('OBJECT')
+        expect(result[:properties][:ids]).to eq(
+          type: 'ARRAY',
+          description: 'List of IDs',
+          items: { type: 'NUMBER' }
+        )
+      end
+
+      it 'supports arrays of booleans' do
+        parameters = {
+          flags: RubyLLM::Parameter.new('flags', type: 'array', desc: 'List of flags', item_type: 'boolean')
+        }
+
+        result = instance.send(:format_parameters, parameters)
+
+        expect(result[:type]).to eq('OBJECT')
+        expect(result[:properties][:flags]).to eq(
+          type: 'ARRAY',
+          description: 'List of flags',
+          items: { type: 'BOOLEAN' }
+        )
+      end
+
+      it 'supports arrays of objects' do
+        parameters = {
+          users: RubyLLM::Parameter.new('users', type: 'array', desc: 'List of users', item_type: 'object')
+        }
+
+        result = instance.send(:format_parameters, parameters)
+
+        expect(result[:type]).to eq('OBJECT')
+        expect(result[:properties][:users]).to eq(
+          type: 'ARRAY',
+          description: 'List of users',
+          items: { type: 'OBJECT' }
         )
       end
     end

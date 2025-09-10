@@ -6,7 +6,7 @@ require 'ruby_llm/tool'
 RSpec.describe RubyLLM::Providers::OpenAI::Tools do # rubocop:disable RSpec/SpecFilePathFormat
   describe '.param_schema' do
     context 'with array type parameter' do
-      it 'includes items field for array parameters' do
+      it 'includes items field for array parameters with default string type' do
         param = RubyLLM::Parameter.new('tags', type: 'array', desc: 'List of tags')
 
         result = described_class.param_schema(param)
@@ -15,6 +15,54 @@ RSpec.describe RubyLLM::Providers::OpenAI::Tools do # rubocop:disable RSpec/Spec
           type: 'array',
           description: 'List of tags',
           items: { type: 'string' }
+        )
+      end
+
+      it 'supports arrays of integers' do
+        param = RubyLLM::Parameter.new('scores', type: 'array', desc: 'List of scores', item_type: 'integer')
+
+        result = described_class.param_schema(param)
+
+        expect(result).to eq(
+          type: 'array',
+          description: 'List of scores',
+          items: { type: 'integer' }
+        )
+      end
+
+      it 'supports arrays of numbers' do
+        param = RubyLLM::Parameter.new('prices', type: 'array', desc: 'List of prices', item_type: 'number')
+
+        result = described_class.param_schema(param)
+
+        expect(result).to eq(
+          type: 'array',
+          description: 'List of prices',
+          items: { type: 'number' }
+        )
+      end
+
+      it 'supports arrays of booleans' do
+        param = RubyLLM::Parameter.new('flags', type: 'array', desc: 'List of flags', item_type: 'boolean')
+
+        result = described_class.param_schema(param)
+
+        expect(result).to eq(
+          type: 'array',
+          description: 'List of flags',
+          items: { type: 'boolean' }
+        )
+      end
+
+      it 'supports arrays of objects' do
+        param = RubyLLM::Parameter.new('users', type: 'array', desc: 'List of users', item_type: 'object')
+
+        result = described_class.param_schema(param)
+
+        expect(result).to eq(
+          type: 'array',
+          description: 'List of users',
+          items: { type: 'object' }
         )
       end
     end

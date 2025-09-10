@@ -29,7 +29,7 @@ module RubyLLM
           }.compact
 
           # Add items field for array types
-          schema[:items] = { type: 'string' } if param.type.to_s.downcase == 'array'
+          schema[:items] = { type: param.item_type || 'string' } if param.type.to_s.downcase == 'array'
 
           schema
         end

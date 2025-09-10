@@ -3,13 +3,14 @@
 module RubyLLM
   # Parameter definition for Tool methods.
   class Parameter
-    attr_reader :name, :type, :description, :required
+    attr_reader :name, :type, :description, :required, :item_type
 
-    def initialize(name, type: 'string', desc: nil, required: true)
+    def initialize(name, type: 'string', desc: nil, required: true, item_type: nil)
       @name = name
       @type = type
       @description = desc
       @required = required
+      @item_type = item_type
     end
   end
 

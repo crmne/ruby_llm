@@ -59,7 +59,10 @@ module RubyLLM
               }.compact
 
               # Add items field for array types
-              property[:items] = { type: 'STRING' } if param.type.to_s.downcase == 'array'
+              if param.type.to_s.downcase == 'array'
+                item_type = param.item_type ? param_type_for_gemini(param.item_type) : 'STRING'
+                property[:items] = { type: item_type }
+              end
 
               property
             end,
