@@ -15,7 +15,9 @@ module RubyLLM
           @model = model.id
           payload = {
             contents: format_messages(messages),
-            generationConfig: {}
+            generationConfig: {
+              responseModalities: capabilities.modalities_for(model.id)[:output]
+            }
           }
 
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
