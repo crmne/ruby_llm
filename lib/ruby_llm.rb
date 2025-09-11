@@ -48,6 +48,10 @@ module RubyLLM
       Embedding.embed(...)
     end
 
+    def moderate(...)
+      Moderation.moderate(...)
+    end
+
     def paint(...)
       Image.paint(...)
     end
