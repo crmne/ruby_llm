@@ -71,7 +71,7 @@ class MigrateToRubyLLMModelReferences < ActiveRecord::Migration<%= migration_ver
     return if model_id.blank?
 
     begin
-      model_info, _provider = RubyLLM.models.resolve(model_id, provider: provider)
+      model_info, _provider = RubyLLM::Models.resolve(model_id, provider: provider)
 
       model_class.find_or_create_by!(
         model_id: model_info.id,
