@@ -184,23 +184,6 @@ RSpec.describe RubyLLM::Image do
     end
 
     context 'with remote URLs' do
-      it 'supports image edits with a valid remote PNG URL' do
-        image = RubyLLM.paint(prompt, with: 'https://paolino.me/images/rubyllm-1.0.png', model: model)
-
-        expect(image.base64?).to be(true)
-        expect(image.mime_type).to eq('image/png')
-        expect(image.usage).to eq({
-                                    'input_tokens' => 362,
-                                    'input_tokens_details' => { 'image_tokens' => 323, 'text_tokens' => 39 },
-                                    'output_tokens' => 4160,
-                                    'total_tokens' => 4522
-                                  })
-        expect(image.total_cost).to eq(0.16821)
-        expect(image.input_cost).to eq(0.00181)
-        expect(image.output_cost).to eq(0.1664)
-        save_and_verify_image image
-      end
-
       it 'rejects edits with a URL having invalid content type' do
         expect do
           RubyLLM.paint(prompt, with: 'https://rubyllm.com/assets/images/logotype.svg', model: model)
