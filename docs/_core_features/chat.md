@@ -154,7 +154,7 @@ You can also analyze video files or URLs with vision-capable models. RubyLLM wil
 
 ```ruby
 # Ask about a local video file
-chat = RubyLLM.chat(model: 'gemini-2.0-flash')
+chat = RubyLLM.chat(model: 'gemini-2.5-flash')
 response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
 puts response.content
 
