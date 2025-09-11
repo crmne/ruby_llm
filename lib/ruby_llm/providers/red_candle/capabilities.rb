@@ -51,7 +51,7 @@ module RubyLLM
           case model_id
           when /gemma-3-4b/i
             8192
-          when /mistral-7b/i
+          when /qwen2\.5-1\.5b/i, /mistral-7b/i
             32_768
           when /tinyllama/i
             2048
@@ -107,7 +107,7 @@ module RubyLLM
         end
 
         def model_families
-          %w[gemma llama mistral]
+          %w[gemma llama qwen2 mistral phi]
         end
 
         def available_on_platform?

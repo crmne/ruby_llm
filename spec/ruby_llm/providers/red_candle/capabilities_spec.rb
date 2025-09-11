@@ -90,7 +90,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Capabilities do
 
   describe '#model_families' do
     it 'returns supported model families' do
-      expect(described_class.model_families).to eq(%w[gemma llama mistral])
+      expect(described_class.model_families).to eq(%w[gemma llama qwen2 mistral phi])
     end
   end
 

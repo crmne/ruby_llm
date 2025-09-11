@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
     it 'returns an array of supported models' do
       models = provider.models
       expect(models).to be_an(Array)
-      expect(models.size).to eq(3)
+      expect(models.size).to eq(5)
       expect(models.first).to be_a(RubyLLM::Model::Info)
     end
 
@@ -24,16 +24,16 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
       model_ids = provider.models.map(&:id)
       expect(model_ids).to include('google/gemma-3-4b-it-qat-q4_0-gguf')
       expect(model_ids).to include('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF')
-      expect(model_ids).to include('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')
+      expect(model_ids).to include('Qwen/Qwen2.5-1.5B-Instruct-GGUF')
     end
   end
 
   describe '#model' do
     context 'with a valid model ID' do
       it 'returns the model' do
-        model = provider.model('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')
+        model = provider.model('Qwen/Qwen2.5-1.5B-Instruct-GGUF')
         expect(model).to be_a(RubyLLM::Model::Info)
-        expect(model.id).to eq('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')
+        expect(model.id).to eq('Qwen/Qwen2.5-1.5B-Instruct-GGUF')
       end
     end
 
@@ -50,7 +50,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
   describe '#model_available?' do
     it 'returns true for supported models' do
       expect(provider.model_available?('google/gemma-3-4b-it-qat-q4_0-gguf')).to be true
-      expect(provider.model_available?('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')).to be true
+      expect(provider.model_available?('Qwen/Qwen2.5-1.5B-Instruct-GGUF')).to be true
     end
 
     it 'returns false for unsupported models' do
@@ -60,12 +60,12 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
 
   describe '#model_info' do
     it 'returns model information' do
-      info = provider.model_info('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')
+      info = provider.model_info('Qwen/Qwen2.5-1.5B-Instruct-GGUF')
       expect(info).to include(
-        id: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF',
-        name: 'Mistral 7B Instruct v0.2 (Quantized)',
+        id: 'Qwen/Qwen2.5-1.5B-Instruct-GGUF',
+        name: 'Qwen 2.1.5B Instruct (Quantized)',
         context_window: 32_768,
-        family: 'mistral',
+        family: 'qwen2',
         supports_chat: true,
         supports_structured: true
       )
@@ -81,9 +81,9 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
       expect(provider.gguf_file_for('google/gemma-3-4b-it-qat-q4_0-gguf')).to eq('gemma-3-4b-it-q4_0.gguf')
     end
 
-    it 'returns the GGUF file for Mistral model' do
-      model_id = 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF'
-      gguf_file = 'mistral-7b-instruct-v0.2.Q4_K_M.gguf'
+    it 'returns the GGUF file for Qwen model' do
+      model_id = 'Qwen/Qwen2.5-1.5B-Instruct-GGUF'
+      gguf_file = 'qwen2.5-1.5b-instruct-q4_k_m.gguf'
       expect(provider.gguf_file_for(model_id)).to eq(gguf_file)
     end
 
@@ -95,7 +95,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
   describe '#supports_chat?' do
     it 'returns true for all current models' do
       expect(provider.supports_chat?('google/gemma-3-4b-it-qat-q4_0-gguf')).to be true
-      expect(provider.supports_chat?('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')).to be true
+      expect(provider.supports_chat?('Qwen/Qwen2.5-1.5B-Instruct-GGUF')).to be true
       expect(provider.supports_chat?('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF')).to be true
     end
   end
@@ -103,7 +103,7 @@ RSpec.describe RubyLLM::Providers::RedCandle::Models do
   describe '#supports_structured?' do
     it 'returns true for all current models' do
       expect(provider.supports_structured?('google/gemma-3-4b-it-qat-q4_0-gguf')).to be true
-      expect(provider.supports_structured?('TheBloke/Mistral-7B-Instruct-v0.2-GGUF')).to be true
+      expect(provider.supports_structured?('Qwen/Qwen2.5-1.5B-Instruct-GGUF')).to be true
       expect(provider.supports_structured?('TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF')).to be true
     end
   end

@@ -38,6 +38,25 @@ module RubyLLM
             architecture: 'mistral',
             supports_chat: true,
             supports_structured: true
+          },
+          {
+            id: 'Qwen/Qwen2.5-1.5B-Instruct-GGUF',
+            name: 'Qwen 2.1.5B Instruct (Quantized)',
+            gguf_file: 'qwen2.5-1.5b-instruct-q4_k_m.gguf',
+            context_window: 32_768,
+            family: 'qwen2',
+            architecture: 'qwen2',
+            supports_chat: true,
+            supports_structured: true
+          },
+          {
+            id: 'microsoft/Phi-3-mini-4k-instruct',
+            name: 'Phi 3',
+            context_window: 4096,
+            family: 'phi',
+            architecture: 'phi',
+            supports_chat: true,
+            supports_structured: true
           }
         ].freeze
 
