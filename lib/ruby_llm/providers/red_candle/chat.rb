@@ -158,6 +158,7 @@ module RubyLLM
                             "Please verify the tokenizer exists at: https://huggingface.co/#{tokenizer}\n" \
                             "And that you have accepted the terms of service for the tokenizer.\n" \
                             "If it requires authentication, login with: huggingface-cli login\n" \
+                            "See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning\n" \
                             "Original error: #{e.message}")
           elsif e.message.include?('Failed to find model')
             raise Error.new(nil,
@@ -165,6 +166,7 @@ module RubyLLM
                             "Please verify the model exists at: https://huggingface.co/#{model_id}\n" \
                             "And that you have accepted the terms of service for the model.\n" \
                             "If it requires authentication, login with: huggingface-cli login\n" \
+                            "See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning\n" \
                             "Original error: #{e.message}")
           else
             raise Error.new(nil, "Failed to load model #{model_id}: #{e.message}")
