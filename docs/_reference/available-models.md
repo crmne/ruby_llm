@@ -27,6 +27,7 @@ redirect_from:
 - **OpenRouter**: Direct API
 - **Others**: Local capabilities files
 
+
 ## Last Updated
 {: .d-inline-block }
 
@@ -2515,3 +2516,20 @@ Models that generate embeddings:
 | text-moderation-latest | openai | - | 32768 | - |
 | text-moderation-stable | openai | - | 32768 | - |
 
+
+## Local Providers
+
+### Red Candle (5)
+
+Red Candle enables local execution of quantized GGUF models. These models run on your machine with no API costs.
+
+| Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
+| :-- | :-- | --: | --: | :-- |
+| google/gemma-3-4b-it-qat-q4_0-gguf | red_candle | 8192 | 512 | Free (local execution) |
+| TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF | red_candle | 2048 | 512 | Free (local execution) |
+| TheBloke/Mistral-7B-Instruct-v0.2-GGUF | red_candle | 32768 | 512 | Free (local execution) |
+| Qwen/Qwen2.5-1.5B-Instruct-GGUF | red_candle | 32768 | 512 | Free (local execution) |
+| microsoft/Phi-3-mini-4k-instruct | red_candle | 4096 | 512 | Free (local execution) |
+
+> **Note:** Local providers (Ollama, GPUStack, Red Candle) register their models dynamically at runtime based on what's installed locally. Ollama and GPUStack models depend on what you've pulled or configured on your system. Red Candle requires the `red-candle` gem. See the [Configuration Guide]({% link _getting_started/configuration.md %}) for setup instructions.
+{: .note }
