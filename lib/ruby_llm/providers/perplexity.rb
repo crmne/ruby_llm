@@ -18,6 +18,12 @@ module RubyLLM
         }
       end
 
+      # Perplexity doesn't support batch requests yet
+      def render_payload_for_batch_request(_messages, tools:, temperature:, model:, params: {}, schema: nil) # rubocop:disable Metrics/ParameterLists
+        raise NotImplementedError, 'Perplexity does not support batch requests. ' \
+                                   'Batch request generation is not available for this provider.'
+      end
+
       class << self
         def capabilities
           Perplexity::Capabilities
