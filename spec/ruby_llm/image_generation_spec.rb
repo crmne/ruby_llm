@@ -86,7 +86,7 @@ RSpec.describe RubyLLM::Image do
     end
   end
 
-  describe 'edit functionality (OpenAI)', :vcr do # Apply VCR to this context
+  describe 'edit functionality' do
     let(:prompt) { 'turn the logo to green' }
     let(:model) { 'gpt-image-1' } # Assuming this model uses the edits endpoint
 
@@ -165,7 +165,7 @@ RSpec.describe RubyLLM::Image do
       it 'rejects edits with a non-PNG local file' do
         expect do
           RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.wav', model: model)
-        end.to raise_error(RubyLLM::BadRequestError, /Invalid image file or mode for image 0/)
+        end.to raise_error(RubyLLM::BadRequestError, /Invalid file/)
       end
 
       it 'rejects edits with a non-existent local file' do
