@@ -17,7 +17,7 @@ chat_models = [
 
 # Only include Red Candle models if the gem is available
 begin
-  require 'red-candle'
+  require 'candle'
   chat_models << { provider: :red_candle, model: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF' }
 rescue LoadError
   # Red Candle not available - don't include its models

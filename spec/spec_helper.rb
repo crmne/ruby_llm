@@ -21,7 +21,7 @@ require_relative 'support/provider_capabilities_helper'
 
 # Handle Red Candle provider based on availability and environment
 begin
-  require 'red-candle'
+  require 'candle'
 
   # Red Candle gem is installed
   if ENV['RED_CANDLE_REAL_INFERENCE'] == 'true'
