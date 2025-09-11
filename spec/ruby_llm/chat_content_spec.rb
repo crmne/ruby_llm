@@ -103,7 +103,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       provider = model_info[:provider]
       model = model_info[:model]
 
-      it "#{provider}/#{model} can understand local videos" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand local videos" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this video?', with: { video: video_path })
 
@@ -114,7 +114,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(chat.messages.first.content.attachments.first.mime_type).to eq('video/mp4')
       end
 
-      it "#{provider}/#{model} can understand remote videos without extension" do # rubocop:disable RSpec/MultipleExpectations,RSpec/ExampleLength
+      it "#{provider}/#{model} can understand remote videos without extension" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this video?', with: video_url)
 
