@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 Sep 2025 22:52:09 GMT
+      - Wed, 10 Sep 2025 14:58:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,9 +49,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1756853529-jh31vulZ9lATEwf7gxeQ\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853529,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
-        help you find out the best language to learn by using the available tool.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_012XjHeLmhqEmsaaELW6qpCS\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":327,\"completion_tokens\":58,\"total_tokens\":385}}"
-  recorded_at: Tue, 02 Sep 2025 22:52:11 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1757516338-CcgSKUfcO9pvft67U50P\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1757516339,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        help you find out by using the best_language_to_learn tool.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_01KDEGUF8qYXwp6kpB38XXSk\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"best_language_to_learn\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":327,\"completion_tokens\":59,\"total_tokens\":386}}"
+  recorded_at: Wed, 10 Sep 2025 14:59:00 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -59,11 +59,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
         the best language to learn?"},{"role":"assistant","content":"I''ll help you
-        find out the best language to learn by using the available tool.","tool_calls":[{"id":"toolu_012XjHeLmhqEmsaaELW6qpCS","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_012XjHeLmhqEmsaaELW6qpCS"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        find out by using the best_language_to_learn tool.","tool_calls":[{"id":"toolu_01KDEGUF8qYXwp6kpB38XXSk","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"toolu_01KDEGUF8qYXwp6kpB38XXSk"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -78,7 +78,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 Sep 2025 22:52:12 GMT
+      - Wed, 10 Sep 2025 14:59:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -103,19 +103,17 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1756853531-JuMyxmX1CP7jpzZQUUkZ\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853531,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"According
-        to the tool, Ruby is currently considered the best language to learn. Ruby
-        is a dynamic, object-oriented programming language known for its simplicity
-        and readability. It's particularly popular for web development, especially
-        with the Ruby on Rails framework. \\n\\nSome reasons why Ruby might be a great
-        language to learn include:\\n1. Easy to read and write syntax\\n2. Strong
-        community support\\n3. Versatility in web development\\n4. Used in various
-        domains like web applications, scripting, and automation\\n5. Good for beginners
-        due to its intuitive nature\\n\\nOf course, the \\\"best\\\" language can
-        depend on your specific goals, such as web development, data science, mobile
-        app development, or other programming needs. But Ruby is an excellent choice
-        for many programmers, especially those just starting their coding journey.\\n\\nWould
-        you like to know more about Ruby or discuss how it might fit into your programming
-        goals?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":397,\"completion_tokens\":195,\"total_tokens\":592}}"
-  recorded_at: Tue, 02 Sep 2025 22:52:15 GMT
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1757516340-pMnqmCdVi7Gr4SoKupZn\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1757516340,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"According
+        to the tool, Ruby is the best language to learn right now! \\n\\nRuby is a
+        dynamic, object-oriented programming language known for its simplicity and
+        readability. It's particularly popular for web development, especially with
+        the Ruby on Rails framework. Some key advantages of learning Ruby include:\\n\\n1.
+        Easy to read and write syntax\\n2. Strong community support\\n3. Great for
+        web development\\n4. Useful in scripting and automation\\n5. Used by many
+        startups and tech companies\\n\\nHowever, the \\\"best\\\" language can depend
+        on your specific goals:\\n- Web development\\n- Data science\\n- Mobile app
+        development\\n- Machine learning\\n- Career objectives\\n\\nWould you like
+        to know more about why Ruby might be a good choice for you, or are you interested
+        in exploring how it fits with your particular programming goals?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":398,\"completion_tokens\":176,\"total_tokens\":574}}"
+  recorded_at: Wed, 10 Sep 2025 14:59:05 GMT
 recorded_with: VCR 6.3.1

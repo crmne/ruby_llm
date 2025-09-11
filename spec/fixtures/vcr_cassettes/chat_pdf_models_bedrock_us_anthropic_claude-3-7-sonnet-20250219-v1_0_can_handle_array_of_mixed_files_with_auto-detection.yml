@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250826T150422Z
+      - 20250910T144730Z
       X-Amz-Content-Sha256:
       - aae2788b85db2f8c2e2c1b966f72049cfed690ffa488a52860ef484e7b163b74
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250826/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=650c1729aca822e70900840f579a0565d7f0bda5cc6052683a4c0771d167e5e0
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250910/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=fd09ca487ee6529434120145eed21a7d915fceda2bb017405e8e7666a34c26a1
       Content-Type:
       - application/json
       Accept:
@@ -31,35 +31,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 26 Aug 2025 15:04:30 GMT
+      - Wed, 10 Sep 2025 14:47:40 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1243'
+      - '1306'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2772695e-4ee5-4ba4-a537-2d78e6fc3004
+      - f5d21852-ce32-4114-8e2c-fbf144229bfb
       X-Amzn-Bedrock-Invocation-Latency:
-      - '7091'
+      - '8835'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '205'
+      - '216'
       X-Amzn-Bedrock-Input-Token-Count:
       - '2706'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01HRvUPYGAedgP1bxKiaxrca","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I''ve
-        analyzed the files you shared:\n\n1. **Image**: The first file appears to
-        be an image of a Ruby programming language logo. It shows a red, polished
-        gemstone with faceted surfaces that create a 3D diamond-like appearance. The
-        gem has a distinctive red color and shiny surface that''s characteristic of
-        the Ruby language logo.\n\n2. **PDF Document**: The second file is a sample
-        PDF document consisting of two pages. The content includes:\n   - Title: \"Sample
-        PDF\"\n   - Subtitle: \"This is a simple PDF file. Fun fun fun.\"\n   - Main
-        content: Multiple paragraphs of Lorem Ipsum placeholder text, which is commonly
-        used as filler text in document layouts.\n   \nThe PDF appears to be a demonstration
-        document with no specific technical content beyond the placeholder text. Both
-        pages contain identical text content, though they may have different formatting.\n\nWould
-        you like me to provide more detailed analysis of either file?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":205}}'
-  recorded_at: Tue, 26 Aug 2025 15:04:30 GMT
+      string: '{"id":"msg_bdrk_014JAw8ApMyoDr1jtjZ2HC4o","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I''ve
+        analyzed the files you shared. Here''s what I found:\n\n1. Image File - Ruby
+        Logo:\n   - A red, polished gemstone image that appears to be the Ruby programming
+        language logo\n   - The logo has a distinctive three-dimensional appearance
+        with faceted surfaces\n   - It features a bright red color with shading that
+        gives it depth and a polished look\n\n2. PDF Document - Sample PDF:\n   -
+        A simple PDF file with the title \"Sample PDF\"\n   - Contains placeholder
+        text (Lorem ipsum) throughout\n   - The document begins with \"This is a simple
+        PDF file. Fun fun fun.\"\n   - The same content appears twice in the PDF (possibly
+        showing two pages with identical text)\n   - Contains standard Lorem ipsum
+        paragraphs formatted into multiple blocks of text\n   - Appears to be a demonstration
+        or test document without substantive content\n\nThe first file is a visual
+        representation of the Ruby programming language logo, while the second is
+        a simple demonstration PDF document with placeholder text."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":216}}'
+  recorded_at: Wed, 10 Sep 2025 14:47:40 GMT
 recorded_with: VCR 6.3.1

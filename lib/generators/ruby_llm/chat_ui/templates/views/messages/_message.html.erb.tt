@@ -1,0 +1,10 @@
+<%%= tag.div id: dom_id(<%= message_model_name.underscore %>), class: "<%= message_model_name.underscore %>",
+    style: "margin-bottom: 20px; padding: 10px; border-left: 3px solid #{<%= message_model_name.underscore %>.role == 'user' ? '#007bff' : '#28a745'};" do %>
+  <div style="font-weight: bold; margin-bottom: 5px;">
+    <%%= <%= message_model_name.underscore %>.role&.capitalize %>
+  </div>
+  <div style="white-space: pre-wrap;"><%%= <%= message_model_name.underscore %>.content %></div>
+  <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+    <%%= <%= message_model_name.underscore %>.created_at&.strftime("%I:%M %p") %>
+  </div>
+<%% end %>

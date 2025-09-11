@@ -33,7 +33,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 26 Aug 2025 19:10:38 GMT
+      - Wed, 10 Sep 2025 14:57:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=825
+      - gfet4t7; dur=745
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -60,11 +60,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CpQCAVSoXO4vpzmyCZ0PP9zbuWOUhQYe+tw0PSNivELPsWCHoLcXkP5fkskCyVdRnxDcotbIQQo1Cje6H68NfT28cLlXXFL2ynQEHSbcXZjD0B2QdwD89ijo1pTOEKwP5gT+HXfu3uHUTWhwO1asvVNmGVUYRgzJKjRUtVnfiJYgbusPbO0fvFjCXaXNP2WJfWqcwN31giehbm+53krCrieNpTzzX6ucxLtkqKlu5j2avUQkqNAb9tnI7nZ8dJ/Nh22/OiCMcEHB8JPJHYLgMu+PRkQeqfhtyeo+OccRuQOxtN3dJ+J0xMj0yVDuYvLwLN1HK2YMYwkjZbB9Sjn9q8IgirPqq8++JpT9UA6aBhWRoz45T0HH"
+                    "thoughtSignature": "CqgCAdHtim/buqTnX3FSaU+biPiO3vPvFnTjVCs0ApE7mmgNVp+OyWHVJYKGb5nx7/lmSVpw7/XC0/QOeQsAwg0OO2KdrD9salDp46KHN0cdzrgsPlZNR4BK8hJTYxjPmTrMb496WliaYXVtdwCqFJ8ldUqeatS+xFyMTZuIKYQfi41D/8sH6Of02eXX9GbiCDLoGNCINU5adirJTkfig3bBtURhWoQmrRmTysnjP00EqDm8w//tB4Ja4OVUHImv5qB9/b43j+5hmHNagGTHf5FKvvNlNfgemRUsqiJvzasdCxobxgmJ8jXCFU1ExPX0dcfIr+dur7qaMqng6KEk/tUfyI7nTCmnl3KbTXLNTxtw8qYQ4vdznW1rpC4bUCMGKGd1ds1cFfMGau0="
                   }
                 ],
                 "role": "model"
@@ -76,26 +76,26 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 103,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 184,
+            "totalTokenCount": 189,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 103
               }
             ],
-            "thoughtsTokenCount": 51
+            "thoughtsTokenCount": 56
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "rgauaJbvKLyCvdIP9dqW2A0"
+          "responseId": "xJHBaO3AFYzNnsEP3_Oi2A4"
         }
-  recorded_at: Tue, 26 Aug 2025 19:10:38 GMT
+  recorded_at: Wed, 10 Sep 2025 14:57:08 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"a6c3b874-fb21-445f-9e48-adc40186bc11","response":{"name":"a6c3b874-fb21-445f-9e48-adc40186bc11","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"499b0e4a-832d-4d32-91f2-adc4f1d096fb","response":{"name":"499b0e4a-832d-4d32-91f2-adc4f1d096fb","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -123,7 +123,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 26 Aug 2025 19:10:39 GMT
+      - Wed, 10 Sep 2025 14:57:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -133,7 +133,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=479
+      - gfet4t7; dur=478
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -141,6 +141,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNTIsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAzOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyOTAsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI1MgogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogInJ3YXVhTnFGREx5dHhOOFBfdXZKNEEwIgp9Cg==
-  recorded_at: Tue, 26 Aug 2025 19:10:39 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCBhIHdpbmQgb2YgMTAga20vaC4iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1NCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM5LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDI5MywKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjU0CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAieEpIQmFKMjJOZmZqbnNFUG1QZlRxQU0iCn0K
+  recorded_at: Wed, 10 Sep 2025 14:57:08 GMT
 recorded_with: VCR 6.3.1

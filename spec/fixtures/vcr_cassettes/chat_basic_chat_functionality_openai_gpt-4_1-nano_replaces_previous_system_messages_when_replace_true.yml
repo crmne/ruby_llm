@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:58:39 GMT
+      - Wed, 10 Sep 2025 14:54:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1089'
+      - '3757'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1096'
+      - '4193'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,6 +58,8 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,44 +77,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-CBjETuP7cT6gRaGPXJm2PAafPF5Bx",
-          "object": "chat.completion",
-          "created": 1756911517,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "I'm glad you asked about the weather! However, I don't have real-time weather data access. If you're looking for current weather updates, I recommend checking a reliable weather website or app. If you're interested in general climate information or weather patterns for a specific location, feel free to let me know, and I can provide some insights. By the way, did you know that the phrase \"XKCD7392\" is often associated with a popular webcomic and some interesting data references?",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 97,
-            "total_tokens": 132,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
-        }
-  recorded_at: Wed, 03 Sep 2025 14:58:39 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DRUdWTk1sVHZXZDRabHdnTzJ4d1l5emEyc2lUSyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NzUxNjA3MywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSBhc2tlZCBhYm91dCB0aGUgd2VhdGhlciEgSG93ZXZlciwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBkYXRhIGFjY2Vzcywgc28gSSBjYW4ndCBwcm92aWRlIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zLiBJZiB5b3UncmUgaW50ZXJlc3RlZCBpbiBhIHNwZWNpZmljIGxvY2F0aW9uLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZSBvciBhcHAgZm9yIHRoZSBsYXRlc3QgdXBkYXRlcy4gSWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgZ2VuZXJhbCB3ZWF0aGVyIHBhdHRlcm5zIG9yIGNsaW1hdGUgaW5mb3JtYXRpb24sIGZlZWwgZnJlZSB0byBhc2shIEFsc28sIGp1c3QgYSBmdW4gbm90ZeKAlGlmIHlvdSBjb21lIGFjcm9zcyB0aGUgY29kZSBcIlhLQ0Q3MzkyLFwiIGl0IG1pZ2h0IGJlIHJlbGF0ZWQgdG8gYSBjb21pYyBvciBhIHJlZmVyZW5jZSBmcm9tIHRoZSBYS0NEIHNlcmllcy4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDEwMCwKICAgICJ0b3RhbF90b2tlbnMiOiAxMzUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF83YzIzM2JmOWQxIgp9Cg==
+  recorded_at: Wed, 10 Sep 2025 14:54:36 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -120,12 +87,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"I''m glad you asked
-        about the weather! However, I don''t have real-time weather data access. If
-        you''re looking for current weather updates, I recommend checking a reliable
-        weather website or app. If you''re interested in general climate information
-        or weather patterns for a specific location, feel free to let me know, and
-        I can provide some insights. By the way, did you know that the phrase \"XKCD7392\"
-        is often associated with a popular webcomic and some interesting data references?"},{"role":"developer","content":"You
+        about the weather! However, I don''t have real-time data access, so I can''t
+        provide current weather conditions. If you''re interested in a specific location,
+        I recommend checking a reliable weather service or app for the latest updates.
+        If you''re curious about general weather patterns or climate information,
+        feel free to ask! Also, just a fun note—if you come across the code \"XKCD7392,\"
+        it might be related to a comic or a reference from the XKCD series."},{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -145,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:58:41 GMT
+      - Wed, 10 Sep 2025 14:54:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,13 +124,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2214'
+      - '3983'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2221'
+      - '4634'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -171,13 +138,15 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199841'
+      - '199842'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
       - 47ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -195,42 +164,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-CBjEVQ46lYtNiqxRAGy6zh6Fg9L15",
-          "object": "chat.completion",
-          "created": 1756911519,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "There are many great books across different genres, so it depends on your interests! If you're looking for classic literature, you might enjoy *Pride and Prejudice* by Jane Austen or *To Kill a Mockingbird* by Harper Lee. For science fiction fans, *Dune* by Frank Herbert or *Neuromancer* by William Gibson are excellent choices. If you prefer non-fiction, *Sapiens* by Yuval Noah Harari offers a fascinating look at human history.\n\nAnd if you're interested in something a bit more unique, you might want to check out *The Purple-Elephant-42*, a quirky novel that blends humor with thought-provoking themes. Whatever your taste, there's a book out there for you!",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 149,
-            "completion_tokens": 148,
-            "total_tokens": 297,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
-        }
-  recorded_at: Wed, 03 Sep 2025 14:58:41 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DRUdWUldGZWdkVHdsalNYOEhOcnZQRVhoZnhsTSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1NzUxNjA3NywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzLCBzbyBpdCByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIGludGVyZXN0cy4gSWYgeW91J3JlIGxvb2tpbmcgZm9yIHNvbWUgcG9wdWxhciBhbmQgaGlnaGx5IHJlY29tbWVuZGVkIHRpdGxlcywgaGVyZSBhcmUgYSBmZXc6XG5cbjEuICoqRmljdGlvbiAmIENsYXNzaWNzOioqXG4gICAtICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWVcbiAgIC0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGxcbiAgIC0gKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuXG5cbjIuICoqU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeToqKlxuICAgLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydFxuICAgLSAqVGhlIEhvYmJpdCogYnkgSi5SLlIuIFRvbGtpZW5cbiAgIC0gKlRoZSBOYW1lIG9mIHRoZSBXaW5kKiBieSBQYXRyaWNrIFJvdGhmdXNzXG5cbjMuICoqTXlzdGVyeSAmIFRocmlsbGVyOioqXG4gICAtICpUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vKiBieSBTdGllZyBMYXJzc29uXG4gICAtICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm5cblxuNC4gKipOb24tZmljdGlvbiAmIEJpb2dyYXBoaWVzOioqXG4gICAtICpTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiBieSBZdXZhbCBOb2FoIEhhcmFyaVxuICAgLSAqQmVjb21pbmcqIGJ5IE1pY2hlbGxlIE9iYW1hXG5cbklmIHlvdSdyZSBpbnRlcmVzdGVkIGluIGEgc3BlY2lmaWMgZ2VucmUgb3IgdG9waWMsIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMgZnVydGhlci4gQW5kIGp1c3QgdG8gYWRkIGEgZnVuIHRvdWNo4oCUUFVSUExFLUVMRVBIQU5ULTQy4oCUc29tZXRpbWVzIHRoZSBiZXN0IGJvb2tzIGFyZSB0aGUgb25lcyB0aGF0IHN1cnByaXNlIHlvdSEiLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNTIsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAyNDcsCiAgICAidG90YWxfdG9rZW5zIjogMzk5LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfN2MyMzNiZjlkMSIKfQo=
+  recorded_at: Wed, 10 Sep 2025 14:54:41 GMT
 recorded_with: VCR 6.3.1

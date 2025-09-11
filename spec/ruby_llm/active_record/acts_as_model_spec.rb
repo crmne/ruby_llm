@@ -196,7 +196,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       let(:chat_class) do
         stub_const('TestChat', Class.new(ActiveRecord::Base) do
           self.table_name = 'chats'
-          acts_as_chat(model_class: 'TestModel', model_foreign_key: 'model_id')
+          acts_as_chat(model: :model, model_class: 'TestModel')
+
+          # Mock the messages association since we're only testing model association
+          def messages
+            []
+          end
         end)
       end
 
