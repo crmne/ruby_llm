@@ -10,6 +10,7 @@ module RubyLLM
         MODEL_PATTERNS = {
           dall_e: /^dall-e/,
           chatgpt4o: /^chatgpt-4o/,
+          gpt_image: /^gpt-image/,
           gpt41: /^gpt-4\.1(?!-(?:mini|nano))/,
           gpt41_mini: /^gpt-4\.1-mini/,
           gpt41_nano: /^gpt-4\.1-nano/,
@@ -105,6 +106,7 @@ module RubyLLM
         end
 
         PRICES = {
+          gpt_image_1: { input_text: 5.0, input_image: 10.0, output: 8.0, cached_input: 0.5 }, # rubocop:disable Naming/VariableNumber
           gpt41: { input: 2.0, output: 8.0, cached_input: 0.5 },
           gpt41_mini: { input: 0.4, output: 1.6, cached_input: 0.1 },
           gpt41_nano: { input: 0.1, output: 0.4 },
@@ -168,7 +170,7 @@ module RubyLLM
           when /embedding/ then 'embedding'
           when /^tts|whisper|gpt4o_(?:mini_)?(?:transcribe|tts)$/ then 'audio'
           when 'moderation' then 'moderation'
-          when /dall/ then 'image'
+          when /dall-e|gpt-image/ then 'image'
           else 'chat'
           end
         end

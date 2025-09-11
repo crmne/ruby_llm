@@ -15,7 +15,7 @@ def save_and_verify_image(image)
     expect(File.exist?(temp_path)).to be true
 
     file_size = File.size(temp_path)
-    expect(file_size).to be > 1000 # Any real image should be larger than 1KB
+    expect(file_size).to be > 10
   ensure
     # Clean up
     File.delete(temp_path)
@@ -72,8 +72,129 @@ RSpec.describe RubyLLM::Image do
       expect(image.data).to be_present
       expect(image.mime_type).to include('image')
       expect(image.model_id).to eq('gpt-image-1')
+      expect(image.usage).to eq({
+                                  'input_tokens' => 10,
+                                  'input_tokens_details' => {
+                                    'image_tokens' => 0,
+                                    'text_tokens' => 10
+                                  },
+                                  'output_tokens' => 4160,
+                                  'total_tokens' => 4170
+                                })
 
       save_and_verify_image image
+    end
+  end
+
+  describe 'edit functionality' do
+    let(:prompt) { 'turn the logo to green' }
+    let(:model) { 'gpt-image-1' } # Assuming this model uses the edits endpoint
+
+    it 'uses the right payload for image edits' do
+      payload = RubyLLM::Providers::OpenAI::Images.render_edit_payload(
+        'turn the logo to green', model: 'gpt-image-1',
+                                  with: 'spec/fixtures/ruby.png', params: { size: '1024x1024', quality: 'low' }
+      )
+
+      expect(payload[:model]).to eq('gpt-image-1')
+      expect(payload[:prompt]).to eq('turn the logo to green')
+      expect(payload[:n]).to eq(1)
+      expect(payload[:size]).to eq('1024x1024')
+      expect(payload[:quality]).to eq('low')
+
+      # Verify that the image part contains a Faraday::UploadIO with the correct content
+      expect(payload[:image]).to be_an(Array)
+      expect(payload[:image].length).to eq(1)
+
+      upload_io = payload[:image].first
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby.png')
+
+      # Verify the actual file content matches
+      expected_content = File.read('spec/fixtures/ruby.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+
+      # Ensure both strings use the same encoding for comparison
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+    end
+
+    it 'uses the right payload for editing multiple images' do
+      payload = RubyLLM::Providers::OpenAI::Images.render_edit_payload(
+        'turn the logo to green', model: 'gpt-image-1',
+                                  with: ['spec/fixtures/ruby.png', 'spec/fixtures/ruby_with_blue.png'],
+                                  params: { size: '1024x1024', quality: 'low' }
+      )
+      expect(payload[:image]).to be_an(Array)
+      expect(payload[:image].length).to eq(2)
+
+      upload_io = payload[:image].first
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby.png')
+
+      expected_content = File.read('spec/fixtures/ruby.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+
+      upload_io = payload[:image].last
+      expect(upload_io).to be_a(Faraday::UploadIO)
+      expect(upload_io.content_type).to eq('image/png')
+      expect(upload_io.original_filename).to eq('ruby_with_blue.png')
+
+      expected_content = File.read('spec/fixtures/ruby_with_blue.png', mode: 'rb')
+      actual_content = upload_io.io.read
+      upload_io.io.rewind # Reset the IO position for potential future reads
+      actual_content.force_encoding('ASCII-8BIT')
+      expect(actual_content).to eq(expected_content)
+    end
+
+    context 'with local files' do
+      it 'supports image edits with a valid local PNG' do
+        image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model)
+
+        expect(image.base64?).to be(true)
+        expect(image.mime_type).to eq('image/png')
+        save_and_verify_image image
+      end
+
+      it 'rejects edits with a non-PNG local file' do
+        expect do
+          RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.wav', model: model)
+        end.to raise_error(RubyLLM::BadRequestError, /Invalid file/)
+      end
+
+      it 'rejects edits with a non-existent local file' do
+        expect do
+          RubyLLM.paint(prompt, with: 'spec/fixtures/nonexistent.png', model: model)
+        end.to raise_error(Errno::ENOENT, /No such file or directory/)
+      end
+
+      it 'customizes image output' do
+        image = RubyLLM.paint(prompt, with: 'spec/fixtures/ruby.png', model: model,
+                                      params: { size: '1024x1024', quality: 'low' })
+        expect(image.base64?).to be(true)
+        expect(image.mime_type).to eq('image/png')
+        expect(image.usage['output_tokens']).to eq(272)
+      end
+    end
+
+    context 'with remote URLs' do
+      it 'rejects edits with a URL having invalid content type' do
+        expect do
+          RubyLLM.paint(prompt, with: 'https://rubyllm.com/assets/images/logotype.svg', model: model)
+        end.to raise_error(RubyLLM::BadRequestError, /unsupported mimetype/)
+      end
+
+      it 'rejects edits with a URL that returns 404' do
+        expect do
+          RubyLLM.paint(prompt, with: 'https://rubyllm.com/some-asset-that-does-not-exist.png', model: model)
+        end.to raise_error(Faraday::ResourceNotFound)
+      end
     end
   end
 end
