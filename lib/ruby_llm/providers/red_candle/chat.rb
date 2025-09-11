@@ -147,16 +147,10 @@ module RubyLLM
           gguf_file = respond_to?(:gguf_file_for) ? gguf_file_for(model_id) : nil
           tokenizer = respond_to?(:tokenizer_for) ? tokenizer_for(model_id) : nil
 
-          if gguf_file
-            # For GGUF models, use the tokenizer if specified, otherwise use model_id
-            options = { device: @device, gguf_file: gguf_file }
-            options[:tokenizer] = tokenizer if tokenizer
-
-            ::Candle::LLM.from_pretrained(model_id, **options)
-          else
-            # For regular models, use from_pretrained without gguf_file
-            ::Candle::LLM.from_pretrained(model_id, device: @device)
-          end
+          options = { device: @device }
+          options[:gguf_file] = gguf_file if gguf_file
+          options[:tokenizer] = tokenizer if tokenizer
+          ::Candle::LLM.from_pretrained(model_id, **options)
         rescue StandardError => e
           if e.message.include?('Failed to find tokenizer')
             raise Error.new(nil,
