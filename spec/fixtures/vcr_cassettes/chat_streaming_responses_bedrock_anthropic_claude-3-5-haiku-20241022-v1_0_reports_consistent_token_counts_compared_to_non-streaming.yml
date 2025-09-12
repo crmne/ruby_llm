@@ -2,23 +2,22 @@
 http_interactions:
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Count
-        from 1 to 3"}]}],"max_tokens":4096,"temperature":0.0}'
+      string: '{"messages":[{"role":"user","content":[{"text":"Count from 1 to 3"}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250820T171211Z
+      - 20250911T041344Z
       X-Amz-Content-Sha256:
-      - 6ac838760db209fa960995872033a5431e2d18b1bb652994bf2935e16b4fa373
+      - ee1b366f1dcd83143ead56dadb986402d7b9e2d1495f0900a1f17ede240a1268
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3117a5e6cd9c4fe5bf40635df552bb3de57530f77e9d95978d637a70aa6c4400
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ccd7b0a9850c0ea7c6af85d389e7fca8a867c57a2daf2af00734fcfd4240af80
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:12:12 GMT
+      - Thu, 11 Sep 2025 04:13:46 GMT
       Content-Type:
       - application/vnd.amazon.eventstream
       Transfer-Encoding:
@@ -39,33 +38,30 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - a52f4df7-946b-4e07-988b-ac6b30ca7b1d
-      X-Amzn-Bedrock-Content-Type:
-      - application/json
+      - b339fa6c-fc08-4551-9b78-32cb466ab690
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        AAACNQAAAEugJdGMCzpldmVudC10eXBlBwAFY2h1bmsNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJieXRlcyI6ImV5SjBlWEJsSWpvaWJXVnpjMkZuWlY5emRHRnlkQ0lzSW0xbGMzTmhaMlVpT25zaWFXUWlPaUp0YzJkZlltUnlhMTh3TVZWRFpUVnljbXBMWTNoT00zWkRkbHBhYldSUVdqVWlMQ0owZVhCbElqb2liV1Z6YzJGblpTSXNJbkp2YkdVaU9pSmhjM05wYzNSaGJuUWlMQ0p0YjJSbGJDSTZJbU5zWVhWa1pTMHpMVFV0YUdGcGEzVXRNakF5TkRFd01qSWlMQ0pqYjI1MFpXNTBJanBiWFN3aWMzUnZjRjl5WldGemIyNGlPbTUxYkd3c0luTjBiM0JmYzJWeGRXVnVZMlVpT201MWJHd3NJblZ6WVdkbElqcDdJbWx1Y0hWMFgzUnZhMlZ1Y3lJNk1UVXNJbU5oWTJobFgyTnlaV0YwYVc5dVgybHVjSFYwWDNSdmEyVnVjeUk2TUN3aVkyRmphR1ZmY21WaFpGOXBibkIxZEY5MGIydGxibk1pT2pBc0ltOTFkSEIxZEY5MGIydGxibk1pT2pGOWZYMD0iLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUSJ9zgf76QAAAPQAAABLOZix7As6ZXZlbnQtdHlwZQcABWNodW5rDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiYnl0ZXMiOiJleUowZVhCbElqb2lZMjl1ZEdWdWRGOWliRzlqYTE5emRHRnlkQ0lzSW1sdVpHVjRJam93TENKamIyNTBaVzUwWDJKc2IyTnJJanA3SW5SNWNHVWlPaUowWlhoMElpd2lkR1Y0ZENJNklpSjlmUT09IiwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXYifZ+Rf9wAAAD1AAAASwT4mFwLOmV2ZW50LXR5cGUHAAVjaHVuaw06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImJ5dGVzIjoiZXlKMGVYQmxJam9pWTI5dWRHVnVkRjlpYkc5amExOWtaV3gwWVNJc0ltbHVaR1Y0SWpvd0xDSmtaV3gwWVNJNmV5SjBlWEJsSWpvaWRHVjRkRjlrWld4MFlTSXNJblJsZUhRaU9pSklaWEpsSW4xOSIsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2dyJ95e57VAAAASMAAABLyRHBAAs6ZXZlbnQtdHlwZQcABWNodW5rDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiYnl0ZXMiOiJleUowZVhCbElqb2lZMjl1ZEdWdWRGOWliRzlqYTE5a1pXeDBZU0lzSW1sdVpHVjRJam93TENKa1pXeDBZU0k2ZXlKMGVYQmxJam9pZEdWNGRGOWtaV3gwWVNJc0luUmxlSFFpT2lJbmN5QmpiM1Z1ZEdsdVp5Qm1jbTl0SURFZ0luMTkiLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWVyJ9344gSAAAAQMAAABLCNDuBAs6ZXZlbnQtdHlwZQcABWNodW5rDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiYnl0ZXMiOiJleUowZVhCbElqb2lZMjl1ZEdWdWRGOWliRzlqYTE5a1pXeDBZU0lzSW1sdVpHVjRJam93TENKa1pXeDBZU0k2ZXlKMGVYQmxJam9pZEdWNGRGOWtaV3gwWVNJc0luUmxlSFFpT2lKMGJ5QXpPbHh1WEc0eFhHNHlJbjE5IiwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHkifeUsBc8AAADsAAAAS2kIba8LOmV2ZW50LXR5cGUHAAVjaHVuaw06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImJ5dGVzIjoiZXlKMGVYQmxJam9pWTI5dWRHVnVkRjlpYkc5amExOWtaV3gwWVNJc0ltbHVaR1Y0SWpvd0xDSmtaV3gwWVNJNmV5SjBlWEJsSWpvaWRHVjRkRjlrWld4MFlTSXNJblJsZUhRaU9pSmNiak1pZlgwPSIsInAiOiJhYmNkZWZnaGlqa2xtbiJ94lLQ+gAAAK8AAABLdltPNgs6ZXZlbnQtdHlwZQcABWNodW5rDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiYnl0ZXMiOiJleUowZVhCbElqb2lZMjl1ZEdWdWRGOWliRzlqYTE5emRHOXdJaXdpYVc1a1pYZ2lPakI5IiwicCI6ImFiY2RlZmdoaWprbG0ifbTDhlAAAAE5AAAAS+NBTiMLOmV2ZW50LXR5cGUHAAVjaHVuaw06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImJ5dGVzIjoiZXlKMGVYQmxJam9pYldWemMyRm5aVjlrWld4MFlTSXNJbVJsYkhSaElqcDdJbk4wYjNCZmNtVmhjMjl1SWpvaVpXNWtYM1IxY200aUxDSnpkRzl3WDNObGNYVmxibU5sSWpwdWRXeHNmU3dpZFhOaFoyVWlPbnNpYjNWMGNIVjBYM1J2YTJWdWN5STZNakI5ZlE9PSIsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyIn1ZukUBAAABQQAAAEsq4+UtCzpldmVudC10eXBlBwAFY2h1bmsNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJieXRlcyI6ImV5SjBlWEJsSWpvaWJXVnpjMkZuWlY5emRHOXdJaXdpWVcxaGVtOXVMV0psWkhKdlkyc3RhVzUyYjJOaGRHbHZiazFsZEhKcFkzTWlPbnNpYVc1d2RYUlViMnRsYmtOdmRXNTBJam94TlN3aWIzVjBjSFYwVkc5clpXNURiM1Z1ZENJNk1qQXNJbWx1ZG05allYUnBiMjVNWVhSbGJtTjVJam8zTnpJc0ltWnBjbk4wUW5sMFpVeGhkR1Z1WTNraU9qUXpObjE5IiwicCI6ImFiY2RlZmdoaWprIn1yA3HV
-  recorded_at: Wed, 20 Aug 2025 17:12:13 GMT
+        AAAAkwAAAFJ24bJxCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXYiLCJyb2xlIjoiYXNzaXN0YW50In2AaQZuAAAAsQAAAFe9ijqaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IkhlcmUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0In31b2AAAAAA1QAAAFfROOsXCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IidzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1In2V+K29AAAAtQAAAFdICpxaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBjb3VudGluZyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFycyJ9M1/hMQAAAN0AAABX4Uig1gs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZnJvbSAxICJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3In30X3qJAAAA1AAAAFfsWMKnCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6InRvIDM6In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEifY6tM1kAAACvAAAAV2JaE3kLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiXG5cbjFcbjIifSwicCI6ImFiY2RlZmdoaWprbG1uIn1SIBzdAAAAogAAAFeaytfICzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuMyJ9LCJwIjoiYWJjZGVmIn2KOguRAAAAjwAAAFbUnAzrCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamsifSd+pasAAACRAAAAUZUosKsLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wIiwic3RvcFJlYXNvbiI6ImVuZF90dXJuIn1fX8ouAAAAywAAAE5qg2o0CzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Nzg4fSwicCI6ImFiY2RlZmdoaWprIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjE1LCJvdXRwdXRUb2tlbnMiOjIwLCJ0b3RhbFRva2VucyI6MzV9feE+F8Y=
+  recorded_at: Thu, 11 Sep 2025 04:13:46 GMT
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Count
-        from 1 to 3"}]}],"max_tokens":4096,"temperature":0.0}'
+      string: '{"messages":[{"role":"user","content":[{"text":"Count from 1 to 3"}]}],"inferenceConfig":{"maxTokens":4096,"temperature":0.0}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250820T171213Z
+      - 20250911T041346Z
       X-Amz-Content-Sha256:
-      - 6ac838760db209fa960995872033a5431e2d18b1bb652994bf2935e16b4fa373
+      - ee1b366f1dcd83143ead56dadb986402d7b9e2d1495f0900a1f17ede240a1268
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e1092df1f21d7f68f02a1831ed5e199e83c1e5872f60402b98801da732c3fc9c
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=df09bdaa9a6a54277895910a89451fdfe4ffdd4f1931b1a84351007915c05ef4
       Content-Type:
       - application/json
       Accept:
@@ -78,24 +74,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:12:14 GMT
+      - Thu, 11 Sep 2025 04:13:47 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '344'
+      - '330'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 520d1ff4-a08d-4530-9fa5-25873938eb14
-      X-Amzn-Bedrock-Invocation-Latency:
-      - '934'
-      X-Amzn-Bedrock-Output-Token-Count:
-      - '20'
-      X-Amzn-Bedrock-Input-Token-Count:
-      - '15'
+      - 8d24a45d-22f0-48fa-94db-f1290ec849fc
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01BYmfrQPpnho75qBMnEQ7qD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
-        counting from 1 to 3:\n\n1\n2\n3"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":20}}'
-  recorded_at: Wed, 20 Aug 2025 17:12:14 GMT
+      string: '{"metrics":{"latencyMs":730},"output":{"message":{"content":[{"text":"Here''s
+        counting from 1 to 3:\n\n1\n2\n3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":15,"outputTokens":20,"totalTokens":35}}'
+  recorded_at: Thu, 11 Sep 2025 04:13:47 GMT
 recorded_with: VCR 6.3.1

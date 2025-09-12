@@ -142,30 +142,37 @@ module RubyLLM
           multiple_attachments = attachments.size > 1
 
           attachments.each_with_index do |attachment, index|
-            part = case attachment.type
-                   when :image
-                     format_image_for_converse(attachment)
-                   when :pdf
-                     format_document_for_converse(attachment)
-                   when :text
-                     format_text_file_for_converse(attachment)
-                   else
-                     raise UnsupportedAttachmentError, attachment.type
-                   end
-
-            if multiple_attachments
-              counter_prefix = "#{index + 1} "
-              if part['image']
-                part['image']['name'] = counter_prefix + part['image']['name'].to_s
-              elsif part['document']
-                part['document']['name'] = counter_prefix + part['document']['name'].to_s
-              end
-            end
-
+            part = build_part_for_converse(attachment)
+            part = add_counter_prefix_if_needed(part, index, multiple_attachments)
             parts << part
           end
 
           parts
+        end
+
+        def build_part_for_converse(attachment)
+          case attachment.type
+          when :image
+            format_image_for_converse(attachment)
+          when :pdf
+            format_document_for_converse(attachment)
+          when :text
+            format_text_file_for_converse(attachment)
+          else
+            raise UnsupportedAttachmentError, attachment.type
+          end
+        end
+
+        def add_counter_prefix_if_needed(part, index, enabled)
+          return part unless enabled
+
+          counter_prefix = "#{index + 1} "
+          if part['image']
+            part['image']['name'] = counter_prefix + part['image']['name'].to_s
+          elsif part['document']
+            part['document']['name'] = counter_prefix + part['document']['name'].to_s
+          end
+          part
         end
 
         def extract_image_format(mime_type)

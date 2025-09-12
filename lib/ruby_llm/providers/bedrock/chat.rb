@@ -63,32 +63,25 @@ module RubyLLM
         end
 
         def format_tool_call(msg)
-          # Get the first tool call from the hash
-          tool_call = msg.tool_calls.values.first
+          tool_calls = msg.tool_calls.values.compact
 
-          if tool_call.nil?
-            RubyLLM.logger.warn 'Bedrock: tool_call is nil for tool call message'
+          if tool_calls.empty?
+            RubyLLM.logger.warn 'Bedrock: tool_calls empty for tool call message'
             return nil
           end
 
-          # Ensure we have a valid tool call ID
-          if tool_call.id.nil? || tool_call.id.empty?
-            RubyLLM.logger.warn 'Bedrock: tool_call.id is null or empty for tool call message'
+          content_blocks = tool_calls.filter_map do |tc|
+            next if tc.id.nil? || tc.id.empty?
+
+            { 'toolUse' => { 'toolUseId' => tc.id, 'name' => tc.name, 'input' => tc.arguments } }
+          end
+
+          if content_blocks.empty?
+            RubyLLM.logger.warn 'Bedrock: all tool_calls had missing ids; skipping tool call message'
             return nil
           end
 
-          result = {
-            role: convert_role(msg.role),
-            content: [
-              {
-                'toolUse' => {
-                  'toolUseId' => tool_call.id,
-                  'name' => tool_call.name,
-                  'input' => tool_call.arguments
-                }
-              }
-            ]
-          }
+          result = { role: convert_role(msg.role), content: content_blocks }
 
           RubyLLM.logger.debug "Formatted tool call: #{result}" if RubyLLM.config.log_stream_debug
 
@@ -248,6 +241,7 @@ module RubyLLM
 
         def build_base_payload(chat_messages, model)
           compacted_messages = chat_messages.filter_map { |msg| format_message(msg) }
+          compacted_messages = merge_consecutive_tool_result_messages(compacted_messages)
           validate_no_tool_use_and_result!(compacted_messages)
 
           {
@@ -274,6 +268,37 @@ module RubyLLM
           has_tool_use = content.any? { |c| c['toolUse'] }
           has_tool_result = content.any? { |c| c['toolResult'] }
           has_tool_use && has_tool_result
+        end
+
+        # Bedrock requires that if the assistant returns multiple toolUse blocks in a single turn,
+        # the client responds with a single user message containing multiple toolResult blocks.
+        # Merge consecutive toolResult-only messages into one to satisfy this requirement.
+        def merge_consecutive_tool_result_messages(messages)
+          merged = []
+          index = 0
+
+          while index < messages.length
+            message = messages[index]
+            if tool_result_only_message?(message)
+              combined_content = []
+              while index < messages.length && tool_result_only_message?(messages[index])
+                combined_content.concat(messages[index][:content])
+                index += 1
+              end
+              merged << { role: 'user', content: combined_content }
+            else
+              merged << message
+              index += 1
+            end
+          end
+
+          merged
+        end
+
+        def tool_result_only_message?(message)
+          return false unless message && message[:content].is_a?(Array)
+
+          message[:content].all? { |c| c['toolResult'] }
         end
 
         def add_optional_fields(payload, system_content:, tools:, temperature:)

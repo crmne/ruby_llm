@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 18 Aug 2025 06:05:44 GMT
+      - Tue, 09 Sep 2025 17:42:12 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68a2c2b8-9c6"
+      - W/"68c066f4-9c6"
       Expires:
-      - Wed, 20 Aug 2025 07:05:50 GMT
+      - Thu, 11 Sep 2025 04:03:55 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 4934:3FE32:1630AE2:1657871:68A57176
+      - 6FEA:5418C:1EB608:20FF36:68C247D2
       Accept-Ranges:
       - bytes
+      Age:
+      - '486'
       Date:
-      - Wed, 20 Aug 2025 17:02:02 GMT
+      - Thu, 11 Sep 2025 04:12:11 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '5'
       X-Served-By:
-      - cache-fra-etou8220023-FRA
+      - cache-akl10332-AKL
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1755709323.530956,VS0,VE6
+      - S1757563931.097512,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - ff82cb17cec2c87cf9c61776b98d9fb2ff70dd97
+      - f146e9af9fcf9e06224b89a2bb03e46acb4b34d7
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,59 +95,25 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 20 Aug 2025 17:02:02 GMT
+  recorded_at: Thu, 11 Sep 2025 04:12:10 GMT
 - request:
     method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
-        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
-        can redistribute it and/or modify it under either the terms of the\n2-clause
-        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
-        give away verbatim copies of the source form of the\n     software without
-        restriction, provided that you duplicate all of the\n     original copyright
-        notices and associated disclaimers.\n\n  2. You may modify your copy of the
-        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
-        place your modifications in the Public Domain or otherwise\n          make
-        them Freely Available, such as by posting said\n\t  modifications to Usenet
-        or an equivalent medium, or by allowing\n\t  the author to include your modifications
-        in the software.\n\n       b) use the modified software only within your corporation
-        or\n          organization.\n\n       c) give non-standard binaries non-standard
-        names, with\n          instructions on where to get the original software
-        distribution.\n\n       d) make other distribution arrangements with the author.\n\n  3.
-        You may distribute the software in object code or binary form,\n     provided
-        that you do at least ONE of the following:\n\n       a) distribute the binaries
-        and library files of the software,\n\t  together with instructions (in the
-        manual page or equivalent)\n\t  on where to get the original distribution.\n\n       b)
-        accompany the distribution with the machine-readable source of\n\t  the software.\n\n       c)
-        give non-standard binaries non-standard names, with\n          instructions
-        on where to get the original software distribution.\n\n       d) make other
-        distribution arrangements with the author.\n\n  4. You may modify and include
-        the part of the software into any other\n     software (possibly commercial).  But
-        some files in the distribution\n     are not written by the author, so that
-        they are not under these terms.\n\n     For the list of those files and their
-        copying conditions, see the\n     file LEGAL.\n\n  5. The scripts and library
-        files supplied as input to or produced as\n     output from the software do
-        not automatically fall under the\n     copyright of the software, but belong
-        to whomever generated them,\n     and may be sold commercially, and may be
-        aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
-        IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
-        LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"max_tokens":4096}'
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s in this file?"},{"document":{"format":"txt","name":"licensetxt","source":{"bytes":"UnVieSBpcyBjb3B5cmlnaHRlZCBmcmVlIHNvZnR3YXJlIGJ5IFl1a2loaXJvIE1hdHN1bW90byA8bWF0ekBuZXRsYWIuanA+LgpZb3UgY2FuIHJlZGlzdHJpYnV0ZSBpdCBhbmQvb3IgbW9kaWZ5IGl0IHVuZGVyIGVpdGhlciB0aGUgdGVybXMgb2YgdGhlCjItY2xhdXNlIEJTREwgKHNlZSB0aGUgZmlsZSBCU0RMKSwgb3IgdGhlIGNvbmRpdGlvbnMgYmVsb3c6CgogIDEuIFlvdSBtYXkgbWFrZSBhbmQgZ2l2ZSBhd2F5IHZlcmJhdGltIGNvcGllcyBvZiB0aGUgc291cmNlIGZvcm0gb2YgdGhlCiAgICAgc29mdHdhcmUgd2l0aG91dCByZXN0cmljdGlvbiwgcHJvdmlkZWQgdGhhdCB5b3UgZHVwbGljYXRlIGFsbCBvZiB0aGUKICAgICBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcyBhbmQgYXNzb2NpYXRlZCBkaXNjbGFpbWVycy4KCiAgMi4gWW91IG1heSBtb2RpZnkgeW91ciBjb3B5IG9mIHRoZSBzb2Z0d2FyZSBpbiBhbnkgd2F5LCBwcm92aWRlZCB0aGF0CiAgICAgeW91IGRvIGF0IGxlYXN0IE9ORSBvZiB0aGUgZm9sbG93aW5nOgoKICAgICAgIGEpIHBsYWNlIHlvdXIgbW9kaWZpY2F0aW9ucyBpbiB0aGUgUHVibGljIERvbWFpbiBvciBvdGhlcndpc2UKICAgICAgICAgIG1ha2UgdGhlbSBGcmVlbHkgQXZhaWxhYmxlLCBzdWNoIGFzIGJ5IHBvc3Rpbmcgc2FpZAoJICBtb2RpZmljYXRpb25zIHRvIFVzZW5ldCBvciBhbiBlcXVpdmFsZW50IG1lZGl1bSwgb3IgYnkgYWxsb3dpbmcKCSAgdGhlIGF1dGhvciB0byBpbmNsdWRlIHlvdXIgbW9kaWZpY2F0aW9ucyBpbiB0aGUgc29mdHdhcmUuCgogICAgICAgYikgdXNlIHRoZSBtb2RpZmllZCBzb2Z0d2FyZSBvbmx5IHdpdGhpbiB5b3VyIGNvcnBvcmF0aW9uIG9yCiAgICAgICAgICBvcmdhbml6YXRpb24uCgogICAgICAgYykgZ2l2ZSBub24tc3RhbmRhcmQgYmluYXJpZXMgbm9uLXN0YW5kYXJkIG5hbWVzLCB3aXRoCiAgICAgICAgICBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb2Z0d2FyZSBkaXN0cmlidXRpb24uCgogICAgICAgZCkgbWFrZSBvdGhlciBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci4KCiAgMy4gWW91IG1heSBkaXN0cmlidXRlIHRoZSBzb2Z0d2FyZSBpbiBvYmplY3QgY29kZSBvciBiaW5hcnkgZm9ybSwKICAgICBwcm92aWRlZCB0aGF0IHlvdSBkbyBhdCBsZWFzdCBPTkUgb2YgdGhlIGZvbGxvd2luZzoKCiAgICAgICBhKSBkaXN0cmlidXRlIHRoZSBiaW5hcmllcyBhbmQgbGlicmFyeSBmaWxlcyBvZiB0aGUgc29mdHdhcmUsCgkgIHRvZ2V0aGVyIHdpdGggaW5zdHJ1Y3Rpb25zIChpbiB0aGUgbWFudWFsIHBhZ2Ugb3IgZXF1aXZhbGVudCkKCSAgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBkaXN0cmlidXRpb24uCgogICAgICAgYikgYWNjb21wYW55IHRoZSBkaXN0cmlidXRpb24gd2l0aCB0aGUgbWFjaGluZS1yZWFkYWJsZSBzb3VyY2Ugb2YKCSAgdGhlIHNvZnR3YXJlLgoKICAgICAgIGMpIGdpdmUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIG5vbi1zdGFuZGFyZCBuYW1lcywgd2l0aAogICAgICAgICAgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgc29mdHdhcmUgZGlzdHJpYnV0aW9uLgoKICAgICAgIGQpIG1ha2Ugb3RoZXIgZGlzdHJpYnV0aW9uIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IuCgogIDQuIFlvdSBtYXkgbW9kaWZ5IGFuZCBpbmNsdWRlIHRoZSBwYXJ0IG9mIHRoZSBzb2Z0d2FyZSBpbnRvIGFueSBvdGhlcgogICAgIHNvZnR3YXJlIChwb3NzaWJseSBjb21tZXJjaWFsKS4gIEJ1dCBzb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24KICAgICBhcmUgbm90IHdyaXR0ZW4gYnkgdGhlIGF1dGhvciwgc28gdGhhdCB0aGV5IGFyZSBub3QgdW5kZXIgdGhlc2UgdGVybXMuCgogICAgIEZvciB0aGUgbGlzdCBvZiB0aG9zZSBmaWxlcyBhbmQgdGhlaXIgY29weWluZyBjb25kaXRpb25zLCBzZWUgdGhlCiAgICAgZmlsZSBMRUdBTC4KCiAgNS4gVGhlIHNjcmlwdHMgYW5kIGxpYnJhcnkgZmlsZXMgc3VwcGxpZWQgYXMgaW5wdXQgdG8gb3IgcHJvZHVjZWQgYXMKICAgICBvdXRwdXQgZnJvbSB0aGUgc29mdHdhcmUgZG8gbm90IGF1dG9tYXRpY2FsbHkgZmFsbCB1bmRlciB0aGUKICAgICBjb3B5cmlnaHQgb2YgdGhlIHNvZnR3YXJlLCBidXQgYmVsb25nIHRvIHdob21ldmVyIGdlbmVyYXRlZCB0aGVtLAogICAgIGFuZCBtYXkgYmUgc29sZCBjb21tZXJjaWFsbHksIGFuZCBtYXkgYmUgYWdncmVnYXRlZCB3aXRoIHRoaXMKICAgICBzb2Z0d2FyZS4KCiAgNi4gVEhJUyBTT0ZUV0FSRSBJUyBQUk9WSURFRCAiQVMgSVMiIEFORCBXSVRIT1VUIEFOWSBFWFBSRVNTIE9SCiAgICAgSU1QTElFRCBXQVJSQU5USUVTLCBJTkNMVURJTkcsIFdJVEhPVVQgTElNSVRBVElPTiwgVEhFIElNUExJRUQKICAgICBXQVJSQU5USUVTIE9GIE1FUkNIQU5UQUJJTElUWSBBTkQgRklUTkVTUyBGT1IgQSBQQVJUSUNVTEFSCiAgICAgUFVSUE9TRS4K"}}}]}],"inferenceConfig":{"maxTokens":4096}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250820T170202Z
+      - 20250911T041210Z
       X-Amz-Content-Sha256:
-      - e95a283ec27bb852b7bdb5ae0a8e5c8782158b6be7bbe080cf6025ec13151459
+      - c645666a2f9140b1e58a1b494d0eefd3046e0e097439cbb3bd21a804b178f498
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=207b068e20b1829bf61ac225cc4b3439fb6dc1c833fcdb9f734085c1389fcc83
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=fce74f483e07a81dae5045fc539614bfbed39dbfe757eeb3b6b21acb28ad0725
       Content-Type:
       - application/json
       Accept:
@@ -162,35 +126,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:02:06 GMT
+      - Thu, 11 Sep 2025 04:12:15 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1182'
+      - '1206'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e60a24f1-93d3-4b48-b729-76189aebd04d
-      X-Amzn-Bedrock-Invocation-Latency:
-      - '3766'
-      X-Amzn-Bedrock-Output-Token-Count:
-      - '184'
-      X-Amzn-Bedrock-Input-Token-Count:
-      - '588'
+      - 71d62c00-082a-4965-8348-f23db6b39f6b
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01JsC7N83bHd1JsFgGbEt4Vz","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        file is a software license text for Ruby, written by its creator Yukihiro
-        Matsumoto (Matz). It appears to be a permissive open-source license that allows
-        redistribution and modification of the software under certain conditions.
-        The key points of the license include:\n\n1. You can redistribute and modify
-        the software freely\n2. You can make verbatim copies of the source code\n3.
-        You can modify the software with some conditions (like placing modifications
-        in public domain or using them internally)\n4. You can distribute binaries
-        with certain requirements\n5. You can include the software in other software
-        (possibly commercial)\n6. The software is provided \"AS IS\" without warranties\n\nThe
-        license seems to be similar to a BSD-style license, giving users significant
-        freedom to use and modify the software while providing some protections for
-        the original author."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":184}}'
-  recorded_at: Wed, 20 Aug 2025 17:02:06 GMT
+      string: '{"metrics":{"latencyMs":3663},"output":{"message":{"content":[{"text":"This
+        file contains the licensing terms for Ruby, a programming language created
+        by Yukihiro Matsumoto. It is a permissive free software license that allows
+        redistribution and modification under certain conditions. The key points of
+        the license include:\n\n1. You can make and distribute verbatim copies of
+        the source code\n2. You can modify the software with some restrictions (such
+        as making modifications public or using them internally)\n3. You can distribute
+        binaries with certain requirements (like providing instructions on obtaining
+        the original software)\n4. You can incorporate Ruby into other software\n5.
+        Scripts and libraries generated using Ruby are not automatically copyrighted
+        by Ruby\n6. The software is provided \"AS IS\" without warranties\n\nThe license
+        appears to be similar to a BSD-style license, offering significant flexibility
+        for use and distribution of the Ruby programming language."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":615,"outputTokens":179,"totalTokens":794}}'
+  recorded_at: Thu, 11 Sep 2025 04:12:15 GMT
 recorded_with: VCR 6.3.1

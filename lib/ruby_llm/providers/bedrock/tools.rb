@@ -30,17 +30,22 @@ module RubyLLM
           }.compact
         end
 
-        # Parse Bedrock converse toolUse blocks into ToolCall objects
+        # Parse Bedrock converse toolUse blocks into a hash of ToolCall objects keyed by toolUseId
         def parse_tool_calls(tool_use_blocks)
-          return [] unless tool_use_blocks&.any?
+          return {} unless tool_use_blocks&.any?
 
-          tool_use_blocks.map do |block|
-            tool_use = block['toolUse']
-            RubyLLM::ToolCall.new(
-              id: tool_use['id'],
-              name: tool_use['name'],
-              arguments: tool_use['input']
-            )
+          tool_use_blocks.to_h do |block|
+            tool_use = block['toolUse'] || {}
+            tool_use_id = tool_use['toolUseId'] || tool_use['id']
+
+            [
+              tool_use_id,
+              RubyLLM::ToolCall.new(
+                id: tool_use_id,
+                name: tool_use['name'],
+                arguments: tool_use['input'] || {}
+              )
+            ]
           end
         end
       end
