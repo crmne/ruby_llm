@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     class RedCandle
-      # Determines capabilities and pricing for RedCandle models
+      # Determines capabilities for RedCandle models
       module Capabilities
         module_function
 
