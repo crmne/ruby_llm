@@ -15,7 +15,7 @@ begin
     end
   else
     # Use stubs (default when gem is installed)
-    require_relative 'support/red_candle_test_helper'
+    require_relative 'red_candle_test_helper'
   end
 rescue LoadError
   # Red Candle gem not installed - skip tests
