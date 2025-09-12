@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 require 'fileutils'
-require 'generators/ruby_llm/install_generator'
+require 'generators/ruby_llm/install/install_generator'
 
 RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   # Use the actual template directory
   let(:template_dir) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install/templates') }
-  let(:generator_file) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install_generator.rb') }
+  let(:generator_file) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install/install_generator.rb') }
 
   describe 'migration templates' do
     let(:expected_migration_files) do
@@ -29,11 +29,11 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:chat_migration) { File.read(File.join(template_dir, 'create_chats_migration.rb.tt')) }
 
       it 'defines chats table' do
-        expect(chat_migration).to include('create_table :<%= options[:chat_model_name].tableize %>')
+        expect(chat_migration).to include('create_table :<%= chat_table_name %>')
       end
 
       it 'includes model reference' do
-        expect(chat_migration).to include('t.references :<%= options[:model_model_name].tableize.singularize %>')
+        expect(chat_migration).to include('t.references :<%= model_table_name.singularize %>')
       end
     end
 
@@ -41,11 +41,11 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:message_migration) { File.read(File.join(template_dir, 'create_messages_migration.rb.tt')) }
 
       it 'defines messages table' do
-        expect(message_migration).to include('create_table :<%= options[:message_model_name].tableize %>')
+        expect(message_migration).to include('create_table :<%= message_table_name %>')
       end
 
       it 'includes chat reference' do
-        expect(message_migration).to include('t.references :<%= options[:chat_model_name].tableize.singularize %>, null: false, foreign_key: true') # rubocop:disable Layout/LineLength
+        expect(message_migration).to include('t.references :<%= chat_table_name.singularize %>, null: false, foreign_key: true') # rubocop:disable Layout/LineLength
       end
 
       it 'includes role field' do
@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:tool_call_migration) { File.read(File.join(template_dir, 'create_tool_calls_migration.rb.tt')) }
 
       it 'defines tool_calls table' do
-        expect(tool_call_migration).to include('create_table :<%= options[:tool_call_model_name].tableize %>')
+        expect(tool_call_migration).to include('create_table :<%= tool_call_table_name %>')
       end
 
       it 'includes tool_call_id field' do
@@ -125,7 +125,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     let(:models_migration) { File.read(File.join(template_dir, 'create_models_migration.rb.tt')) }
 
     it 'defines models table' do
-      expect(models_migration).to include('create_table :<%= options[:model_model_name].tableize %>')
+      expect(models_migration).to include('create_table :<%= model_table_name %>')
     end
 
     it 'includes model_id field' do
@@ -190,7 +190,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     end
 
     it 'includes usage example with create! and ask' do
-      expect(generator_content).to include('.create!(model_id:').and include('.ask(')
+      expect(generator_content).to include('.create!(model:').and include('.ask(')
     end
 
     it 'includes documentation link' do
@@ -240,11 +240,11 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     it 'creates migrations in correct order' do
       migration_section = generator_content[/def create_migration_files.*?\n    end/m]
 
-      # Look for the model name references which are in the migration paths
-      chats_position = migration_section.index('chat_model_name')
-      messages_position = migration_section.index('message_model_name')
-      tool_calls_position = migration_section.index('tool_call_model_name')
-      models_position = migration_section.index('model_model_name')
+      # Look for the table name references which are in the migration paths
+      chats_position = migration_section.index('chat_table_name')
+      messages_position = migration_section.index('message_table_name')
+      tool_calls_position = migration_section.index('tool_call_table_name')
+      models_position = migration_section.index('model_table_name')
 
       expect(chats_position).not_to be_nil
       expect(messages_position).not_to be_nil
@@ -261,31 +261,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       migration_section = generator_content[/def create_migration_files.*?\n    end/m]
       expect(migration_section).to include('must come before tool_calls due to foreign key')
       expect(migration_section).to include('references messages')
-    end
-  end
-
-  describe 'database detection' do
-    let(:generator_content) { File.read(generator_file) }
-
-    it 'defines postgresql? method' do
-      expect(generator_content).to include('def postgresql?')
-    end
-
-    it 'uses global ActiveRecord constant' do
-      expect(generator_content).to include('::ActiveRecord::Base.connection.adapter_name')
-    end
-
-    it 'detects PostgreSQL adapter' do
-      expect(generator_content).to include('.downcase.include?(\'postgresql\')')
-    end
-
-    it 'includes rescue block for error handling' do
-      expect(generator_content).to include('rescue StandardError')
-    end
-
-    it 'returns false on error' do
-      postgresql_method = generator_content[/def postgresql\?.*?end/m]
-      expect(postgresql_method).to include('false')
     end
   end
 

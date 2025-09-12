@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 10 Sep 2025 14:55:35 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Wed, 27 Aug 2025 14:38:06 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:06 GMT
+  recorded_at: Wed, 10 Sep 2025 14:55:35 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:10 GMT
+      - Wed, 10 Sep 2025 14:55:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -139,10 +139,10 @@ http_interactions:
             "thoughtsTokenCount": 195
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:38:06.977299Z",
-          "responseId": "ThivaJPTO-jEmLAPgfzegQU"
+          "createTime": "2025-09-10T14:55:35.935717Z",
+          "responseId": "Z5HBaKWOOcmFvdIPms--sAE"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
+  recorded_at: Wed, 10 Sep 2025 14:55:39 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -168,7 +168,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 27 Aug 2025 14:38:10 GMT
+      - Wed, 10 Sep 2025 14:55:39 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -195,11 +195,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
+  recorded_at: Wed, 10 Sep 2025 14:55:39 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -257,7 +257,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:15 GMT
+      - Wed, 10 Sep 2025 14:55:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -273,6 +273,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDaG9vc2luZyBcImdvb2RcIiBib29rcyBpcyB3b25kZXJmdWxseSBzdWJqZWN0aXZlLCBhcyB3aGF0IHJlc29uYXRlcyB3aXRoIG9uZSBwZXJzb24gbWlnaHQgbm90IHdpdGggYW5vdGhlciEgSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIHRpdGxlcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCBjb21wZWxsaW5nLlxuXG5IZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbiogICAqKkZvciBhIHRob3VnaHQtcHJvdm9raW5nIHNjaS1maSBhZHZlbnR1cmU6KiogKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIuIEl0J3MgaW5jcmVkaWJseSBjbGV2ZXIsIGZ1bm55LCBhbmQgc2NpZW50aWZpY2FsbHkgZW5nYWdpbmcsIHdpdGggYSBwcm90YWdvbmlzdCB5b3UgY2FuJ3QgaGVscCBidXQgcm9vdCBmb3IuIEl0J3MgYSByZWFsIHBhZ2UtdHVybmVyLlxuKiAgICoqRm9yIGEgZGVlcCBkaXZlIGludG8gaHVtYW4gaGlzdG9yeSBhbmQgcGhpbG9zb3BoeToqKiAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIFRoaXMgbm9uLWZpY3Rpb24gYm9vayBvZmZlcnMgYSBzd2VlcGluZyBwZXJzcGVjdGl2ZSBvbiBob3cgaHVtYW5pdHkgZ290IHRvIHdoZXJlIGl0IGlzIHRvZGF5LCBjaGFsbGVuZ2luZyBtYW55IGNvbnZlbnRpb25hbCBpZGVhcy5cbiogICAqKkZvciBhIGhlYXJ0d2FybWluZyBhbmQgaW50cm9zcGVjdGl2ZSBqb3VybmV5OioqICpUaGUgTWlkbmlnaHQgTGlicmFyeSogYnkgTWF0dCBIYWlnLiBJdCBleHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2VzLCBhbmQgdGhlIG1lYW5pbmcgb2YgbGlmZSBpbiBhIHZlcnkgYWNjZXNzaWJsZSBhbmQgaG9wZWZ1bCB3YXkuXG4qICAgKipGb3IgYSBjbGFzc2ljIHRoYXQgc3RpbGwgcmVzb25hdGVzOioqICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEEgdGltZWxlc3Mgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGgsIHdpdGggdW5mb3JnZXR0YWJsZSBjaGFyYWN0ZXJzLlxuKiAgICoqRm9yIGEgZ3JpcHBpbmcgZmFudGFzeSBlcGljOioqICpNaXN0Ym9ybjogVGhlIEZpbmFsIEVtcGlyZSogYnkgQnJhbmRvbiBTYW5kZXJzb24uIElmIHlvdSdyZSBsb29raW5nIHRvIGdldCBpbnRvIG1vZGVybiBmYW50YXN5LCBTYW5kZXJzb24ncyBpbnRyaWNhdGUgbWFnaWMgc3lzdGVtcyBhbmQgY29tcGVsbGluZyBjaGFyYWN0ZXJzIG1ha2UgdGhpcyBhIGZhbnRhc3RpYyBzdGFydGluZyBwb2ludC5cblxuQW5kIGZvciB0aG9zZSBsb29raW5nIGZvciBzb21ldGhpbmcgdHJ1bHkgdW5pcXVlLCBwZXJoYXBzIGEgYm9vayB0aGF0IGRlZmllcyBlYXN5IGNhdGVnb3JpemF0aW9uIGFuZCBsZWF2ZXMgYSBsYXN0aW5nLCB2aXZpZCBpbXByZXNzaW9uLCB5b3UgbWlnaHQgc2VlayBvdXQgdGl0bGVzIHRoYXQgZXZva2UgdGhlIHNwaXJpdCBvZiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIOKAkyBzb21ldGhpbmcgbWVtb3JhYmxlLCBwZXJoYXBzIGEgYml0IHF1aXJreSwgYW5kIGRlZmluaXRlbHkgaW1wYWN0ZnVsLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjQ5MzU2MjAzMDUyNTEwMDY3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDI5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzU3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE2ODksCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNTcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA5MDMKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNS0wOC0yN1QxNDozODoxMC4zMzcyMjBaIiwKICAicmVzcG9uc2VJZCI6ICJVaGl2YU1US0ZKWFd0X2dQLW91aG9BMCIKfQo=
-  recorded_at: Wed, 27 Aug 2025 14:38:15 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDaG9vc2luZyBcImdvb2RcIiBib29rcyBpcyB3b25kZXJmdWxseSBzdWJqZWN0aXZlLCBhcyB3aGF0IHJlc29uYXRlcyB3aXRoIG9uZSBwZXJzb24gbWlnaHQgbm90IHdpdGggYW5vdGhlciEgSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIHRpdGxlcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCBjb21wZWxsaW5nLlxuXG5IZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbiogICAqKkZvciBhIHRob3VnaHQtcHJvdm9raW5nIHNjaS1maSBhZHZlbnR1cmU6KiogKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIuIEl0J3MgaW5jcmVkaWJseSBjbGV2ZXIsIGZ1bm55LCBhbmQgc2NpZW50aWZpY2FsbHkgZW5nYWdpbmcsIHdpdGggYSBwcm90YWdvbmlzdCB5b3UgY2FuJ3QgaGVscCBidXQgcm9vdCBmb3IuIEl0J3MgYSByZWFsIHBhZ2UtdHVybmVyLlxuKiAgICoqRm9yIGEgZGVlcCBkaXZlIGludG8gaHVtYW4gaGlzdG9yeSBhbmQgcGhpbG9zb3BoeToqKiAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIFRoaXMgbm9uLWZpY3Rpb24gYm9vayBvZmZlcnMgYSBzd2VlcGluZyBwZXJzcGVjdGl2ZSBvbiBob3cgaHVtYW5pdHkgZ290IHRvIHdoZXJlIGl0IGlzIHRvZGF5LCBjaGFsbGVuZ2luZyBtYW55IGNvbnZlbnRpb25hbCBpZGVhcy5cbiogICAqKkZvciBhIGhlYXJ0d2FybWluZyBhbmQgaW50cm9zcGVjdGl2ZSBqb3VybmV5OioqICpUaGUgTWlkbmlnaHQgTGlicmFyeSogYnkgTWF0dCBIYWlnLiBJdCBleHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2VzLCBhbmQgdGhlIG1lYW5pbmcgb2YgbGlmZSBpbiBhIHZlcnkgYWNjZXNzaWJsZSBhbmQgaG9wZWZ1bCB3YXkuXG4qICAgKipGb3IgYSBjbGFzc2ljIHRoYXQgc3RpbGwgcmVzb25hdGVzOioqICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEEgdGltZWxlc3Mgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGgsIHdpdGggdW5mb3JnZXR0YWJsZSBjaGFyYWN0ZXJzLlxuKiAgICoqRm9yIGEgZ3JpcHBpbmcgZmFudGFzeSBlcGljOioqICpNaXN0Ym9ybjogVGhlIEZpbmFsIEVtcGlyZSogYnkgQnJhbmRvbiBTYW5kZXJzb24uIElmIHlvdSdyZSBsb29raW5nIHRvIGdldCBpbnRvIG1vZGVybiBmYW50YXN5LCBTYW5kZXJzb24ncyBpbnRyaWNhdGUgbWFnaWMgc3lzdGVtcyBhbmQgY29tcGVsbGluZyBjaGFyYWN0ZXJzIG1ha2UgdGhpcyBhIGZhbnRhc3RpYyBzdGFydGluZyBwb2ludC5cblxuQW5kIGZvciB0aG9zZSBsb29raW5nIGZvciBzb21ldGhpbmcgdHJ1bHkgdW5pcXVlLCBwZXJoYXBzIGEgYm9vayB0aGF0IGRlZmllcyBlYXN5IGNhdGVnb3JpemF0aW9uIGFuZCBsZWF2ZXMgYSBsYXN0aW5nLCB2aXZpZCBpbXByZXNzaW9uLCB5b3UgbWlnaHQgc2VlayBvdXQgdGl0bGVzIHRoYXQgZXZva2UgdGhlIHNwaXJpdCBvZiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIOKAkyBzb21ldGhpbmcgbWVtb3JhYmxlLCBwZXJoYXBzIGEgYml0IHF1aXJreSwgYW5kIGRlZmluaXRlbHkgaW1wYWN0ZnVsLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjQ5MzU2MjAzMDUyNTEwMDY3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDI5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzU3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE2ODksCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNTcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA5MDMKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNS0wOS0xMFQxNDo1NTozOS45MDI1ODZaIiwKICAicmVzcG9uc2VJZCI6ICJhNUhCYUxxTE4talh4TjhQeTlqdnVBVSIKfQo=
+  recorded_at: Wed, 10 Sep 2025 14:55:46 GMT
 recorded_with: VCR 6.3.1

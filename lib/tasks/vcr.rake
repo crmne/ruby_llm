@@ -75,11 +75,11 @@ end
 
 namespace :vcr do
   desc 'Record VCR cassettes (rake vcr:record[all] or vcr:record[openai,anthropic])'
-  task :record, [:providers] do |_, args|
+  task :record, :providers do |_, args|
     require 'fileutils'
     require 'ruby_llm'
 
-    providers = (args[:providers] || '').downcase.split(',')
+    providers = args.extras.unshift(args[:providers]).compact.map(&:downcase)
     cassette_dir = 'spec/fixtures/vcr_cassettes'
     FileUtils.mkdir_p(cassette_dir)
 

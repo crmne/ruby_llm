@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 10 Sep 2025 14:59:05 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 27 Aug 2025 14:38:32 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:32 GMT
+  recorded_at: Wed, 10 Sep 2025 14:59:05 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:33 GMT
+      - Wed, 10 Sep 2025 14:59:06 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,12 +115,12 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "CvMBAcu98PBeVlzw9g8M5TDG6cAPKxJf0Wg0diTpMF6E0yvh8/alNm1sjLAYS8DRwFcZvtnFjole5j8krNUz7TT6EarVZHRYVE8pKpa9SiSZrakb2zddOWF7mtHAwXkgnTbE1vHpySyrKtHKjOfHkydIO11LwKTCyN3S6rQ9L3G6IBvxrq46Vc+Zyo4otsmTBhVJSO5W/HJZgMDA0pnai2tAn+I2A7Dx9hGinUizjGZ4BW/PeIN3Fayqjpa92eewd6vXGQaAfgz4Zd+lY8Z8twFo6hWsnj/9LA1/iorzftVY9q1y+yfI+3Yp7Z+ZlNbNVwV+PjJ1"
+                    "thoughtSignature": "CvMBAR/MhbaYU4sfgKrb9kQGNKJl778CuyYNIEyGSzRrBrj4Gudcu4MdxQQ3mH1MCJCjOu+pz6ddKUusTgB5BF4SM3R+uN69LYD49/kmC0DW9gU/yU3I3xxdhx44Zxjvp9yCkabl7vGSSPatBoB1PylBFETDqtV5R/KwmstV2vetg+gXwrRT0CUYZPrQX7tdFdZ7L9r4JFupjEOUsjnNj+aDYtAkOdp/Q6u04tWWzz734B7XQD++8U8csYkyn1sVFPgsqVZNSdnYvXogZQPjfnK79vDN377alVWixcX47iG9FdkKzNffT4Mx3yCdUczIvU0cRxSA"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.84645536967686241
+              "avgLogprobs": -0.63646452767508366
             }
           ],
           "usageMetadata": {
@@ -143,10 +143,10 @@ http_interactions:
             "thoughtsTokenCount": 50
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:38:33.020915Z",
-          "responseId": "aRivaLOjAf_ohcIP5ezWgQ8"
+          "createTime": "2025-09-10T14:59:05.629608Z",
+          "responseId": "OZLBaOi2JurntfAPzKf68AY"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:33 GMT
+  recorded_at: Wed, 10 Sep 2025 14:59:06 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -167,14 +167,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 27 Aug 2025 14:38:33 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Wed, 10 Sep 2025 14:59:06 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -199,18 +199,18 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:33 GMT
+  recorded_at: Wed, 10 Sep 2025 14:59:06 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"525b32bd-0029-4bfe-b35f-647317eec87d","response":{"name":"525b32bd-0029-4bfe-b35f-647317eec87d","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"0aac1b20-555a-4091-851f-be881f4cf17b","response":{"name":"0aac1b20-555a-4091-851f-be881f4cf17b","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -235,7 +235,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:34 GMT
+      - Wed, 10 Sep 2025 14:59:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -259,23 +259,23 @@ http_interactions:
                 "parts": [
                   {
                     "text": "Ruby.",
-                    "thoughtSignature": "CsYBAcu98PAOl7K79kzfQ85LyEp8ty+VQ1qFw3qSb98Ra9XHegw7nuSN7a/UEdjEl0So3qZTpH+CInUUyHi97G7leyzf3RJIIcr8yCGsG1hnx5MxYePsBqodv4og4koo1BOJPBFmW0s+YXD0OPMc6yaRq9z0Espsro9kh4gLpmcCgC/vU45AMVUXj4Y2ap4NBcK77nlwpYIm7MS6Ds7vWpRF9pADACBj+XM2T+mM6twiAlZHNpVM/6VK7VrNVyiVSij0cQo09UUI"
+                    "thoughtSignature": "CtIDAR/MhbY9VYlOTnbh8s3+70T5BbTFn0thzmmcu8j3oyDIqGsX5Y0dat0teTIz1Nz2C1ZfsEdP7QUYZ8S/EkVkNcd+s2/BUA5QToyzB0s3EPgg5C2+/kQTr+UtXSBRob4yLHoZG/AcQY7aktd1Vdj0L2xHtVJbpVc5wsKNzJdCLa26GkaPUyvCGzO0Zizbpvk7Kuj/jaohnZoa9VgkLo+8LmfTCMjBf/DRheW/CATm4eS6y/8snum3g8F+zKFkGmQoBzGyyrPVyepjkiSumlUGKeBv7J3G2eru22EXdy/eq98GCFwfNg4JkDpGeCqIwFSmtzr8H2aYqaUu07xefNPWWhBO6nHKRQhH+IrA7xUFBrm6TDEoSz/t9ezLQ9Z49005MdAj8YC9CHtLmSVHuTLCu5IcRkHQ6K8a77lUJ72oAFdnWSyD0oq0gjWl2+QRvms3E/NlXH1v7NDA017rBXdVx1+luCesh92M3zIVQHxTeWGQoVkAHLAsHXg0kCbrPsUEeLDTQs4nftIZ8VNknsMwm/xqb90abkbDztw9rcovvNWGPc+ndzn6BzYnJPlKB/GJKIrC0dS1NLb+00NGX5os23B7gdKi3i7iHo8kfcZdRJNNJA=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -3.9437375068664551
+              "avgLogprobs": -10.848037719726562
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 99,
+            "promptTokenCount": 97,
             "candidatesTokenCount": 2,
-            "totalTokenCount": 144,
+            "totalTokenCount": 253,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 99
+                "tokenCount": 97
               }
             ],
             "candidatesTokensDetails": [
@@ -284,11 +284,11 @@ http_interactions:
                 "tokenCount": 2
               }
             ],
-            "thoughtsTokenCount": 43
+            "thoughtsTokenCount": 154
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:38:33.794181Z",
-          "responseId": "aRivaMW8MNbihcIP6bO0mQ0"
+          "createTime": "2025-09-10T14:59:06.326685Z",
+          "responseId": "OpLBaJ34E9KovdIPqZqLwQs"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:34 GMT
+  recorded_at: Wed, 10 Sep 2025 14:59:07 GMT
 recorded_with: VCR 6.3.1

@@ -7,6 +7,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+  let(:mp3_path) { File.expand_path('../fixtures/ruby.mp3', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
   let(:text_path) { File.expand_path('../fixtures/ruby.txt', __dir__) }
   let(:xml_path) { File.expand_path('../fixtures/ruby.xml', __dir__) }
@@ -108,6 +109,18 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(chat.messages.first.content).to be_a(RubyLLM::Content)
         expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.wav')
         expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/wav')
+      end
+
+      it "#{provider}/#{model} can understand MP3 audio" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What is being said?', with: { audio: mp3_path })
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.mp3')
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/mpeg')
+        expect(chat.messages.first.content.attachments.first.format).to eq('mp3')
       end
     end
   end

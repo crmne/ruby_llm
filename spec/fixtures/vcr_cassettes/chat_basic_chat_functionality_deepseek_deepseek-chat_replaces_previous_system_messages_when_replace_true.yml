@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:01 GMT
+      - Wed, 10 Sep 2025 14:53:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8e052fbbb2ab67c2f256a672821beb0a
+      - d58ef1de927a68489b1397ed0eaff4b2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,24 +52,34 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjhkOGRiN2Y3LTQ3ODktNDIzOS04MWFkLWVhOTAzYzNiNzA2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDk4MDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGUgd2VhdGhlciBpcyBhIGNvbXBsZXggYW5kIGR5bmFtaWMgc3lzdGVtIHRoYXQgZGVzY3JpYmVzIHRoZSBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSBhdCBhIHNwZWNpZmljIHRpbWUgYW5kIHBsYWNlLCBpbmNsdWRpbmcgdmFyaWFibGVzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBhbmQgYXRtb3NwaGVyaWMgcHJlc3N1cmUuIEl0IGlzIGluZmx1ZW5jZWQgYnkgZmFjdG9ycyBzdWNoIGFzIGFpciBtYXNzZXMsIGZyb250cywgYW5kIGdlb2dyYXBoaWMgZmVhdHVyZXMsIGFuZCBpdCBjaGFuZ2VzIG92ZXIgc2hvcnQgcGVyaW9kc+KAlGZyb20gbWludXRlcyB0byB3ZWVrcy4gRm9yIGEgY3VycmVudCBmb3JlY2FzdCwgSeKAmWQgbmVlZCB5b3VyIGxvY2F0aW9uLCBidXQgZ2VuZXJhbGx5LCB3ZWF0aGVyIHBhdHRlcm5zIGFyZSBkcml2ZW4gYnkgdGhlIHN1buKAmXMgZW5lcmd5IGFuZCBFYXJ0aOKAmXMgcm90YXRpb24uIFhLQ0Q3MzkyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4LCJjb21wbGV0aW9uX3Rva2VucyI6MTA1LCJ0b3RhbF90b2tlbnMiOjEzMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2JhZWFjNWFhYTNfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Wed, 20 Aug 2025 17:10:09 GMT
+      string: '{"id":"081db6f0-eb19-464c-ac16-c935a90fb0b8","object":"chat.completion","created":1757515984,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! I''d be happy to talk about the weather, but it''s important to note
+        that I don''t have real-time data access, so I can''t provide current conditions
+        or forecasts. However, I can share general information about weather patterns,
+        climate, or meteorological concepts. If you''re looking for up-to-date weather
+        details, I recommend checking a reliable source like your local weather service
+        or a trusted weather app.\n\nFor example, if you''re curious about how weather
+        forms, the difference between weather and climate, or how specific phenomena
+        like hurricanes or thunderstorms work, I can explain those topics in detail.
+        Just let me know what aspect interests you!\n\nXKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":135,"total_tokens":163,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 10 Sep 2025 14:53:14 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex and dynamic system that describes the state of the atmosphere
-        at a specific time and place, including variables like temperature, humidity,
-        precipitation, wind, and atmospheric pressure. It is influenced by factors
-        such as air masses, fronts, and geographic features, and it changes over short
-        periods—from minutes to weeks. For a current forecast, I’d need your location,
-        but generally, weather patterns are driven by the sun’s energy and Earth’s
-        rotation. XKCD7392."},{"role":"system","content":"You must include the exact
-        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        me about the weather."},{"role":"assistant","content":"Of course! I''d be
+        happy to talk about the weather, but it''s important to note that I don''t
+        have real-time data access, so I can''t provide current conditions or forecasts.
+        However, I can share general information about weather patterns, climate,
+        or meteorological concepts. If you''re looking for up-to-date weather details,
+        I recommend checking a reliable source like your local weather service or
+        a trusted weather app.\n\nFor example, if you''re curious about how weather
+        forms, the difference between weather and climate, or how specific phenomena
+        like hurricanes or thunderstorms work, I can explain those topics in detail.
+        Just let me know what aspect interests you!\n\nXKCD7392"},{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
@@ -88,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:09 GMT
+      - Wed, 10 Sep 2025 14:53:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +110,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a04096592d6200b7e69addbee78f11ba
+      - 73ba65509b9435fc91822d898dfa0d88
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,19 +125,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"789cfcaf-f0af-45b4-8978-df1cac199e78","object":"chat.completion","created":1755709809,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! \"Good books\" can be subjective, as it depends on your personal taste,
-        but here are some widely acclaimed and beloved books across a few genres to
-        get you started:\n\n**Fiction Classics:**\n- *To Kill a Mockingbird* by Harper
-        Lee\n- *1984* by George Orwell\n- *Pride and Prejudice* by Jane Austen\n-
-        *The Great Gatsby* by F. Scott Fitzgerald\n\n**Modern Fiction:**\n- *The Kite
-        Runner* by Khaled Hosseini\n- *The Night Circus* by Erin Morgenstern\n- *A
-        Man Called Ove* by Fredrik Backman\n\n**Science Fiction & Fantasy:**\n- *Dune*
-        by Frank Herbert\n- *The Lord of the Rings* by J.R.R. Tolkien\n- *The Three-Body
-        Problem* by Liu Cixin\n\n**Non-Fiction:**\n- *Sapiens: A Brief History of
-        Humankind* by Yuval Noah Harari\n- *Educated* by Tara Westover\n- *The Immortal
-        Life of Henrietta Lacks* by Rebecca Skloot\n\nIf you let me know what genres
-        or themes you enjoy, I can tailor recommendations more specifically! Also,
-        PURPLE-ELEPHANT-42."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":147,"completion_tokens":261,"total_tokens":408,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":147},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:10:24 GMT
+      string: !binary |-
+        eyJpZCI6Ijk0NmI2YmI0LTIyZDAtNDZjNi1iNDNkLTI1M2UwMzY3NTc5MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc1MTU5OTQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGVyZSBhcmUgY291bnRsZXNzIGV4Y2VsbGVudCBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMsIHNvIEknbGwgc3VnZ2VzdCBhIGZldyB3aWRlbHkgYWNjbGFpbWVkIG9uZXMgaW4gZGlmZmVyZW50IGNhdGVnb3JpZXMgdG8gaGVscCB5b3UgZXhwbG9yZTpcblxuKipGaWN0aW9uOioqXG4tICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUg4oCTIEEgdGltZWxlc3MgY2xhc3NpYyBleHBsb3JpbmcgdGhlbWVzIG9mIHJhY2lhbCBpbmp1c3RpY2UgYW5kIG1vcmFsIGdyb3d0aC5cbi0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZHlzdG9waWFuIG5vdmVsIHRoYXQgcmVtYWlucyBwcm9mb3VuZGx5IHJlbGV2YW50LlxuLSAqVGhlIEdyZWF0IEdhdHNieSogYnkgRi4gU2NvdHQgRml0emdlcmFsZCDigJMgQSBtYXN0ZXJwaWVjZSBhYm91dCB0aGUgQW1lcmljYW4gRHJlYW0gYW5kIGl0cyBpbGx1c2lvbnMuXG5cbioqTm9uLUZpY3Rpb246Kipcbi0gKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAkyBBIHRob3VnaHQtcHJvdm9raW5nIGxvb2sgYXQgdGhlIGhpc3Rvcnkgb2Ygb3VyIHNwZWNpZXMuXG4tICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlciDigJMgQSBwb3dlcmZ1bCBtZW1vaXIgYWJvdXQgc2VsZi1kaXNjb3ZlcnkgYW5kIHRoZSBwdXJzdWl0IG9mIGtub3dsZWRnZS5cbi0gKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3Qg4oCTIEEgY29tcGVsbGluZyBibGVuZCBvZiBzY2llbmNlLCBldGhpY3MsIGFuZCBodW1hbiBzdG9yeS5cblxuKipTY2llbmNlIEZpY3Rpb24vRmFudGFzeToqKlxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydCDigJMgQW4gZXBpYyBzYWdhIG9mIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGVjb2xvZ3kuXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuIGZhbnRhc3kgbm92ZWwgd2l0aCByaWNoIHN0b3J5dGVsbGluZy5cbi0gKkZvdW5kYXRpb24qIGJ5IElzYWFjIEFzaW1vdiDigJMgQSBjb3JuZXJzdG9uZSBvZiBzY2ktZmkgZXhwbG9yaW5nIHRoZSBmYWxsIG9mIGEgZ2FsYWN0aWMgZW1waXJlLlxuXG4qKk15c3RlcnkvVGhyaWxsZXI6Kipcbi0gKkdvbmUgR2lybCogYnkgR2lsbGlhbiBGbHlubiDigJMgQSB0d2lzdHksIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIuXG4tICpUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vKiBieSBTdGllZyBMYXJzc29uIOKAkyBBIGdyaXBwaW5nIGFuZCBjb21wbGV4IG15c3RlcnkuXG4tICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZSDigJMgQSBjbGFzc2ljIHdob2R1bml0IHdpdGggaW1wZWNjYWJsZSBwYWNpbmcuXG5cbioqU2VsZi1JbXByb3ZlbWVudDoqKlxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXIg4oCTIFByYWN0aWNhbCBhZHZpY2Ugb24gYnVpbGRpbmcgZ29vZCBoYWJpdHMgYW5kIGJyZWFraW5nIGJhZCBvbmVzLlxuLSAqVGhlIDcgSGFiaXRzIG9mIEhpZ2hseSBFZmZlY3RpdmUgUGVvcGxlKiBieSBTdGVwaGVuIFIuIENvdmV5IOKAkyBBIGZvdW5kYXRpb25hbCBib29rIG9uIHBlcnNvbmFsIGFuZCBwcm9mZXNzaW9uYWwgZWZmZWN0aXZlbmVzcy5cbi0gKk1pbmRzZXQqIGJ5IENhcm9sIFMuIER3ZWNrIOKAkyBFeHBsb3JlcyB0aGUgcG93ZXIgb2YgaGF2aW5nIGEgZ3Jvd3RoIG1pbmRzZXQuXG5cbklmIHlvdSBsZXQgbWUga25vdyB5b3VyIHByZWZlcnJlZCBnZW5yZSBvciBpbnRlcmVzdHMsIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMgbW9yZSBzcGVjaWZpY2FsbHkhIEFsc28sIFBVUlBMRS1FTEVQSEFOVC00Mi4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNzcsImNvbXBsZXRpb25fdG9rZW5zIjo0MzksInRvdGFsX3Rva2VucyI6NjE2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE3N30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzA4ZjE2OGU0OWJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Wed, 10 Sep 2025 14:53:37 GMT
 recorded_with: VCR 6.3.1

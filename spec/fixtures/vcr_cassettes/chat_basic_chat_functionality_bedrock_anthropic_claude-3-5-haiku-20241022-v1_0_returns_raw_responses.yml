@@ -1,48 +1,50 @@
 ---
 http_interactions:
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What is the capital
-        of France?"}]}],"inferenceConfig":{"maxTokens":4096}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250911T041317Z
-      X-Amz-Content-Sha256:
-      - c7ac0ff571bd9473444811d7a78c4c4e57eff2c94d3185a4af5c5beb577196d1
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9f60737b71be82ed05f4602faebbfdb44b1fc3830ab8b50f2365f4580ed447a4
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 11 Sep 2025 04:13:18 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '322'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 1c6e30f3-f016-4bc7-a42d-e79e5562bdec
-    body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":482},"output":{"message":{"content":[{"text":"The
-        capital of France is Paris."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":14,"outputTokens":10,"totalTokens":24}}'
-  recorded_at: Thu, 11 Sep 2025 04:13:18 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What is the capital
+          of France?"}]}],"inferenceConfig":{"maxTokens":4096}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250911T041317Z
+        X-Amz-Content-Sha256:
+          - c7ac0ff571bd9473444811d7a78c4c4e57eff2c94d3185a4af5c5beb577196d1
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9f60737b71be82ed05f4602faebbfdb44b1fc3830ab8b50f2365f4580ed447a4
+        Content-Type:
+          - application/json
+        Accept:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 11 Sep 2025 04:13:18 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "322"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 1c6e30f3-f016-4bc7-a42d-e79e5562bdec
+      body:
+        encoding: UTF-8
+        string:
+          '{"metrics":{"latencyMs":482},"output":{"message":{"content":[{"text":"The
+          capital of France is Paris."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":14,"outputTokens":10,"totalTokens":24}}'
+    recorded_at: Thu, 11 Sep 2025 04:13:18 GMT
 recorded_with: VCR 6.3.1

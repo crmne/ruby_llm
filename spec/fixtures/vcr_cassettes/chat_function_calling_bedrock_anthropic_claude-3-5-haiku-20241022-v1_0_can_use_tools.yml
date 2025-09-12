@@ -1,100 +1,103 @@
 ---
 http_interactions:
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250911T041351Z
-      X-Amz-Content-Sha256:
-      - b953cce59aafaeaa008e7d7c66fa77c653a967f1cc0194e6c72264ac7fece23f
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c69146d30ad235dad63da3b662ccae55d8d38c6580a76292ff823987f98ba865
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 11 Sep 2025 04:13:54 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '504'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 100e5187-b7ab-4a4b-917b-ee8869d34301
-    body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1579},"output":{"message":{"content":[{"text":"I''ll
-        help you check the current weather in Berlin using the provided coordinates."},{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":389,"outputTokens":90,"totalTokens":479}}'
-  recorded_at: Thu, 11 Sep 2025 04:13:54 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250911T041354Z
-      X-Amz-Content-Sha256:
-      - 7b3714d6af9e9c3dc4b576667242299520466361d7f8f27aefc8fe78ae5540a5
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a62f0601ad0c63f718c68a26682fbe2c0612af6312d54a3a105069c5d3137eb7
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 11 Sep 2025 04:13:57 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '638'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - eb753c38-8095-4964-b55d-f0bb1d01048f
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MjI4NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJCYXNlZCBvbiB0aGUgY3VycmVudCB3ZWF0aGVyIGRhdGEsIGluIEJlcmxpbiAobG9jYXRlZCBhdCBjb29yZGluYXRlcyA1Mi41MjAwwrAgTiwgMTMuNDA1MMKwIEUpOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKHdoaWNoIGlzIG1pbGQgYW5kIGNvbWZvcnRhYmxlKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oIChhIGxpZ2h0IGJyZWV6ZSlcblxuSXQgc2VlbXMgbGlrZSBhIHBsZWFzYW50IGRheSBpbiBCZXJsaW4gd2l0aCBtb2RlcmF0ZSB0ZW1wZXJhdHVyZXMgYW5kIGdlbnRsZSB3aW5kcy4gUGVyZmVjdCBmb3Igd2Fsa2luZyBhcm91bmQgdGhlIGNpdHkgb3IgZW5qb3lpbmcgb3V0ZG9vciBhY3Rpdml0aWVzLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6NTAzLCJvdXRwdXRUb2tlbnMiOjkyLCJ0b3RhbFRva2VucyI6NTk1fX0=
-  recorded_at: Thu, 11 Sep 2025 04:13:57 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250911T041351Z
+        X-Amz-Content-Sha256:
+          - b953cce59aafaeaa008e7d7c66fa77c653a967f1cc0194e6c72264ac7fece23f
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c69146d30ad235dad63da3b662ccae55d8d38c6580a76292ff823987f98ba865
+        Content-Type:
+          - application/json
+        Accept:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 11 Sep 2025 04:13:54 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "504"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 100e5187-b7ab-4a4b-917b-ee8869d34301
+      body:
+        encoding: UTF-8
+        string:
+          '{"metrics":{"latencyMs":1579},"output":{"message":{"content":[{"text":"I''ll
+          help you check the current weather in Berlin using the provided coordinates."},{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":389,"outputTokens":90,"totalTokens":479}}'
+    recorded_at: Thu, 11 Sep 2025 04:13:54 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_aiH6TnwZRCC2GlQMJalELA","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250911T041354Z
+        X-Amz-Content-Sha256:
+          - 7b3714d6af9e9c3dc4b576667242299520466361d7f8f27aefc8fe78ae5540a5
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a62f0601ad0c63f718c68a26682fbe2c0612af6312d54a3a105069c5d3137eb7
+        Content-Type:
+          - application/json
+        Accept:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Thu, 11 Sep 2025 04:13:57 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "638"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - eb753c38-8095-4964-b55d-f0bb1d01048f
+      body:
+        encoding: ASCII-8BIT
+        string: !binary |-
+          eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MjI4NX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJCYXNlZCBvbiB0aGUgY3VycmVudCB3ZWF0aGVyIGRhdGEsIGluIEJlcmxpbiAobG9jYXRlZCBhdCBjb29yZGluYXRlcyA1Mi41MjAwwrAgTiwgMTMuNDA1MMKwIEUpOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKHdoaWNoIGlzIG1pbGQgYW5kIGNvbWZvcnRhYmxlKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oIChhIGxpZ2h0IGJyZWV6ZSlcblxuSXQgc2VlbXMgbGlrZSBhIHBsZWFzYW50IGRheSBpbiBCZXJsaW4gd2l0aCBtb2RlcmF0ZSB0ZW1wZXJhdHVyZXMgYW5kIGdlbnRsZSB3aW5kcy4gUGVyZmVjdCBmb3Igd2Fsa2luZyBhcm91bmQgdGhlIGNpdHkgb3IgZW5qb3lpbmcgb3V0ZG9vciBhY3Rpdml0aWVzLiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6NTAzLCJvdXRwdXRUb2tlbnMiOjkyLCJ0b3RhbFRva2VucyI6NTk1fX0=
+    recorded_at: Thu, 11 Sep 2025 04:13:57 GMT
 recorded_with: VCR 6.3.1
