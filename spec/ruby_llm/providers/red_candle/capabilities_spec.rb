@@ -61,16 +61,6 @@ RSpec.describe RubyLLM::Providers::RedCandle::Capabilities do
     end
   end
 
-  describe '#pricing' do
-    it 'returns infinite tokens per dollar for local execution' do
-      pricing = described_class.pricing
-      expect(pricing[:input_tokens_per_dollar]).to eq(Float::INFINITY)
-      expect(pricing[:output_tokens_per_dollar]).to eq(Float::INFINITY)
-      expect(pricing[:input_price_per_million_tokens]).to eq(0.0)
-      expect(pricing[:output_price_per_million_tokens]).to eq(0.0)
-    end
-  end
-
   describe 'generation parameters' do
     it 'provides correct defaults and limits' do
       expect(described_class.default_max_tokens).to eq(512)

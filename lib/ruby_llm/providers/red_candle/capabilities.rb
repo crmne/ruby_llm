@@ -60,16 +60,6 @@ module RubyLLM
           end
         end
 
-        def pricing
-          # Local execution - no API costs
-          {
-            input_tokens_per_dollar: Float::INFINITY,
-            output_tokens_per_dollar: Float::INFINITY,
-            input_price_per_million_tokens: 0.0,
-            output_price_per_million_tokens: 0.0
-          }
-        end
-
         def default_max_tokens
           512
         end
