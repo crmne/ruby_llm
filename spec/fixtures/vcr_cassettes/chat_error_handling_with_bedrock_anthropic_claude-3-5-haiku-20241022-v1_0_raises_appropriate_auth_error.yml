@@ -1,48 +1,48 @@
 ---
 http_interactions:
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
-    body:
-      encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"max_tokens":4096}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250910T144927Z
-      X-Amz-Content-Sha256:
-      - d0e2b91788bc7649f3c9126d7ecaa5bf9f37fd75270d80e3b43638d8ab271d4c
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=invalid-key/20250910/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e755a39f952d6963be3077ffde6086982dc87ee07e8d5279c1e8450504f6413c
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 403
-      message: Forbidden
-    headers:
-      Date:
-      - Wed, 10 Sep 2025 14:49:28 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '68'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 06b373d7-38c6-48f2-b024-52b03091bc72
-      X-Amzn-Errortype:
-      - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
-    body:
-      encoding: UTF-8
-      string: '{"message":"The security token included in the request is invalid."}'
-  recorded_at: Wed, 10 Sep 2025 14:49:28 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+      body:
+        encoding: UTF-8
+        string: '{"messages":[{"role":"user","content":[{"text":"Hello"}]}],"inferenceConfig":{"maxTokens":4096}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250911T041300Z
+        X-Amz-Content-Sha256:
+          - d1cf7185e440d1fae727167b51623196a394e1fde551a456e72f6d576b5b5182
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=invalid-key/20250911/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=06c3da09b751a628292dcd940c6ebdb4c83a0262ef6ca98ed098981ff6a7ba31
+        Content-Type:
+          - application/json
+        Accept:
+          - application/json
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 403
+        message: Forbidden
+      headers:
+        Date:
+          - Thu, 11 Sep 2025 04:13:01 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "68"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - "098037c1-654a-4e47-a586-030a27972bec"
+        X-Amzn-Errortype:
+          - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
+      body:
+        encoding: UTF-8
+        string: '{"message":"The security token included in the request is invalid."}'
+    recorded_at: Thu, 11 Sep 2025 04:13:01 GMT
 recorded_with: VCR 6.3.1
