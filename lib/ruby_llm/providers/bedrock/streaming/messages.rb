@@ -5,6 +5,7 @@ module RubyLLM
     class Bedrock
       module Streaming
         # Message parsing helpers for AWS Bedrock streaming.
+        # This is super ugly and could be replaced by using the aws-eventstream gem
         module Messages
           # Reference constant from Prelude for clarity and consistency
           PRELUDE_BYTES = RubyLLM::Providers::Bedrock::Streaming::Prelude::PRELUDE_BYTES
@@ -21,6 +22,7 @@ module RubyLLM
           HEADER_TYPE_TIMESTAMP   = 8
           HEADER_TYPE_UUID        = 9
 
+          # When streaming the header is prefixed with a byte that indicates the type of the value
           HEADER_VALUE_PARSERS = {
             HEADER_TYPE_BOOL_TRUE => ->(_ctx, _data, offset) { [true, offset, true] },
             HEADER_TYPE_BOOL_FALSE => ->(_ctx, _data, offset) { [false, offset, true] },
