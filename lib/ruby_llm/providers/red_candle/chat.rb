@@ -141,36 +141,47 @@ module RubyLLM
           @loaded_models[model_id] ||= load_model(model_id)
         end
 
-        def load_model(model_id)
+        def model_options(model_id)
           # Get GGUF file and tokenizer if this is a GGUF model
           # Access the methods from the Models module which is included in the provider
-          gguf_file = respond_to?(:gguf_file_for) ? gguf_file_for(model_id) : nil
-          tokenizer = respond_to?(:tokenizer_for) ? tokenizer_for(model_id) : nil
-
           options = { device: @device }
-          options[:gguf_file] = gguf_file if gguf_file
-          options[:tokenizer] = tokenizer if tokenizer
-          ::Candle::LLM.from_pretrained(model_id, **options)
+          options[:gguf_file] = gguf_file_for(model_id) if respond_to?(:gguf_file_for)
+          options[:tokenizer] = tokenizer_for(model_id) if respond_to?(:tokenizer_for)
+          options
+        end
+
+        def load_model(model_id)
+          ::Candle::LLM.from_pretrained(model_id, **model_options(model_id))
         rescue StandardError => e
           if e.message.include?('Failed to find tokenizer')
-            raise Error.new(nil,
-                            "Failed to load tokenizer '#{tokenizer}'. The tokenizer may not exist or require authentication.\n" \
-                            "Please verify the tokenizer exists at: https://huggingface.co/#{tokenizer}\n" \
-                            "And that you have accepted the terms of service for the tokenizer.\n" \
-                            "If it requires authentication, login with: huggingface-cli login\n" \
-                            "See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning\n" \
-                            "Original error: #{e.message}")
+            raise Error.new(nil, token_error_message(e, options[:tokenizer]))
           elsif e.message.include?('Failed to find model')
-            raise Error.new(nil,
-                            "Failed to find model '#{model_id}'. The model may not exist or require authentication.\n" \
-                            "Please verify the model exists at: https://huggingface.co/#{model_id}\n" \
-                            "And that you have accepted the terms of service for the model.\n" \
-                            "If it requires authentication, login with: huggingface-cli login\n" \
-                            "See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning\n" \
-                            "Original error: #{e.message}")
+            raise Error.new(nil, model_error_message(e, model_id))
           else
             raise Error.new(nil, "Failed to load model #{model_id}: #{e.message}")
           end
+        end
+
+        def token_error_message(exception, tokenizer)
+          <<~ERROR_MESSAGE
+            Failed to load tokenizer '#{tokenizer}'. The tokenizer may not exist or require authentication.
+            Please verify the tokenizer exists at: https://huggingface.co/#{tokenizer}
+            And that you have accepted the terms of service for the tokenizer.
+            If it requires authentication, login with: huggingface-cli login
+            See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning
+            Original error: #{exception.message}"
+          ERROR_MESSAGE
+        end
+
+        def model_error_message(exception, model_id)
+          <<~ERROR_MESSAGE
+            Failed to load model #{model_id}: #{exception.message}
+            Please verify the model exists at: https://huggingface.co/#{model_id}
+            And that you have accepted the terms of service for the model.
+            If it requires authentication, login with: huggingface-cli login
+            See https://github.com/scientist-labs/red-candle?tab=readme-ov-file#%EF%B8%8F-huggingface-login-warning
+            Original error: #{e.message}"
+          ERROR_MESSAGE
         end
 
         def format_messages(messages)
