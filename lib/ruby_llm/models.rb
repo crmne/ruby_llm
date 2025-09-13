@@ -194,15 +194,15 @@ module RubyLLM
     end
 
     def embedding_models
-      self.class.new(all.select { |m| m.type == 'embedding' })
+      self.class.new(all.select { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') })
     end
 
     def audio_models
-      self.class.new(all.select { |m| m.type == 'audio' })
+      self.class.new(all.select { |m| m.type == 'audio' || m.modalities.output.include?('audio') })
     end
 
     def image_models
-      self.class.new(all.select { |m| m.type == 'image' })
+      self.class.new(all.select { |m| m.type == 'image' || m.modalities.output.include?('image') })
     end
 
     def by_family(family)
