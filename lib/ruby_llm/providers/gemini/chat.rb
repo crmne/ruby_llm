@@ -11,7 +11,8 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil)
           @model = model.id
           payload = {
             contents: format_messages(messages),
@@ -25,9 +26,15 @@ module RubyLLM
             payload[:generationConfig][:responseSchema] = convert_schema_to_gemini(schema)
           end
 
-          payload[:tools] = format_tools(tools) if tools.any?
+          if tools.any?
+            payload[:tools] = format_tools(tools)
+            # Gemini doesn't support controlling parallel tool calls
+            payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+          end
+
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
 
         private
 
