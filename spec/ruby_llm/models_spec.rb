@@ -159,6 +159,46 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
+  describe '#resolve' do
+    it 'delegates to the class method when called on instance' do
+      model_id = 'gpt-4o'
+      provider = 'openai'
+
+      model_info, provider_instance = RubyLLM.models.resolve(model_id, provider: provider)
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(model_info.provider).to eq(provider)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+
+    it 'resolves model without provider' do
+      model_id = 'gpt-4o'
+
+      model_info, provider_instance = RubyLLM.models.resolve(model_id)
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+
+    it 'resolves with assume_exists option' do
+      model_id = 'custom-model'
+      provider = 'openai'
+
+      model_info, provider_instance = RubyLLM.models.resolve(
+        model_id,
+        provider: provider,
+        assume_exists: true
+      )
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(model_info.provider).to eq(provider)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+  end
+
   describe '#save_to_json' do
     it 'saves models to the models.json file' do
       temp_file = Tempfile.new(['models', '.json'])

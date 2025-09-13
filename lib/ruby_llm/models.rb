@@ -217,6 +217,10 @@ module RubyLLM
       self.class.refresh!(remote_only: remote_only)
     end
 
+    def resolve(model_id, provider: nil, assume_exists: false, config: nil)
+      self.class.resolve(model_id, provider: provider, assume_exists: assume_exists, config: config)
+    end
+
     private
 
     def find_with_provider(model_id, provider)

@@ -2,7 +2,6 @@
 class Create<%= tool_call_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= tool_call_table_name %> do |t|
-      t.references :<%= message_table_name.singularize %>, null: false, foreign_key: true
       t.string :tool_call_id, null: false
       t.string :name, null: false
       t.<%= postgresql? ? 'jsonb' : 'json' %> :arguments, default: {}
