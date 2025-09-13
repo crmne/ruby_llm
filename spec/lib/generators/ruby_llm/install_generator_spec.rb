@@ -15,7 +15,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
         'create_chats_migration.rb.tt',
         'create_messages_migration.rb.tt',
         'create_tool_calls_migration.rb.tt',
-        'create_models_migration.rb.tt'
+        'create_models_migration.rb.tt',
+        'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'
       ]
     end
 
@@ -31,10 +32,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       it 'defines chats table' do
         expect(chat_migration).to include('create_table :<%= chat_table_name %>')
       end
-
-      it 'includes model reference' do
-        expect(chat_migration).to include('t.references :<%= model_table_name.singularize %>')
-      end
     end
 
     describe 'messages migration' do
@@ -42,10 +39,6 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
       it 'defines messages table' do
         expect(message_migration).to include('create_table :<%= message_table_name %>')
-      end
-
-      it 'includes chat reference' do
-        expect(message_migration).to include('t.references :<%= chat_table_name.singularize %>, null: false, foreign_key: true') # rubocop:disable Layout/LineLength
       end
 
       it 'includes role field' do
@@ -70,6 +63,39 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
       it 'includes name field' do
         expect(tool_call_migration).to include('t.string :name')
+      end
+    end
+
+    describe 'add references migration' do
+      let(:add_references_migration) do
+        File.read(File.join(template_dir, 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'))
+      end
+
+      it 'adds model reference to chats' do
+        expect(add_references_migration).to include('add_reference :<%= chat_table_name %>, ' \
+                                                    ':<%= model_table_name.singularize %>, foreign_key: true')
+      end
+
+      it 'adds message reference to tool_calls' do
+        expect(add_references_migration).to include('add_reference :<%= tool_call_table_name %>, ' \
+                                                    ':<%= message_table_name.singularize %>, ' \
+                                                    'null: false, foreign_key: true')
+      end
+
+      it 'adds chat reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= chat_table_name.singularize %>, ' \
+                                                    'null: false, foreign_key: true')
+      end
+
+      it 'adds model reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= model_table_name.singularize %>, foreign_key: true')
+      end
+
+      it 'adds tool_call reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= tool_call_table_name.singularize %>, foreign_key: true')
       end
     end
   end
@@ -257,10 +283,18 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       expect(models_position).to be > tool_calls_position if models_position
     end
 
-    it 'has comments explaining the order' do
+    it 'adds references after creating all tables' do
       migration_section = generator_content[/def create_migration_files.*?\n    end/m]
-      expect(migration_section).to include('must come before tool_calls due to foreign key')
-      expect(migration_section).to include('references messages')
+
+      add_references_position = migration_section.index(
+        'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'
+      )
+      models_position = migration_section.index('model_table_name')
+
+      expect(add_references_position).not_to be_nil
+      expect(models_position).not_to be_nil
+
+      expect(add_references_position).to be > models_position
     end
   end
 
