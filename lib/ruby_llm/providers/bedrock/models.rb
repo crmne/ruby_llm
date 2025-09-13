@@ -25,7 +25,7 @@ module RubyLLM
         def parse_list_models_response(response, slug, capabilities)
           models = Array(response.body['modelSummaries'])
 
-          models.select { |m| m['modelId'].include?('claude') }.map do |model_data|
+          models.select { |m| m['modelId'] =~ /claude|amazon\.titan-embed-text/ }.map do |model_data|
             model_id = model_data['modelId']
 
             Model::Info.new(

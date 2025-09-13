@@ -120,6 +120,8 @@ module RubyLLM
             modalities[:input] << 'pdf'
           end
 
+          modalities[:output] << 'embeddings' if model_id.match?(/amazon\.titan-embed-text/)
+
           modalities
         end
 
