@@ -56,6 +56,10 @@ module RubyLLM
         modalities.input.include?('image')
       end
 
+      def supports_video?
+        modalities.input.include?('video')
+      end
+
       def supports_functions?
         function_calling?
       end

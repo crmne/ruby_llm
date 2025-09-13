@@ -36,10 +36,16 @@ RSpec.describe RubyLLM::Models do
 
       # There should be models from at least OpenAI and Anthropic
       expect(provider_counts.keys).to include('openai', 'anthropic')
+    end
 
-      # Select only models with vision support
+    it 'filters by vision support' do
       vision_models = RubyLLM.models.select(&:supports_vision?)
       expect(vision_models).to all(have_attributes(supports_vision?: true))
+    end
+
+    it 'filters by video support' do
+      video_models = RubyLLM.models.select(&:supports_video?)
+      expect(video_models).to all(have_attributes(supports_video?: true))
     end
   end
 

@@ -76,6 +76,7 @@ module RubyLLM
 
     def type
       return :image if image?
+      return :video if video?
       return :audio if audio?
       return :pdf if pdf?
       return :text if text?
@@ -85,6 +86,10 @@ module RubyLLM
 
     def image?
       RubyLLM::MimeType.image? mime_type
+    end
+
+    def video?
+      RubyLLM::MimeType.video? mime_type
     end
 
     def audio?
