@@ -25,7 +25,7 @@ module RubyLLM
           else
             result = perform_completion!(payload)
             # Convert to Message object for compatibility
-            # Red Candle doesn't provide token counts, but we can estimate them
+            # Red Candle doesn't provide token counts by default, but we can estimate them
             content = result[:content]
             # Rough estimation: ~4 characters per token
             estimated_output_tokens = (content.length / 4.0).round
