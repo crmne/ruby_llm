@@ -27,23 +27,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 Sep 2025 14:59:28 GMT
+      - Wed, 10 Sep 2025 14:57:11 GMT
       Content-Length:
-      - '1062'
+      - '1077'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-940","object":"chat.completion","created":1756911568,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-254","object":"chat.completion","created":1757516231,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user already
-        gave those values, so I''ll format them into the tool call. Just make sure
-        the JSON is correctly structured with the right keys. No need for any other
-        functions since there''s only the weather function available. Alright, time
-        to put it all together.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_dwoq51mt","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":164,"total_tokens":364}}
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the function call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\" and the values
+        are the strings provided. No other parameters are needed. Alright, that''s
+        all I need to make the tool call.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_sdqx1zp7","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":169,"total_tokens":369}}
 
         '
-  recorded_at: Wed, 03 Sep 2025 14:59:28 GMT
+  recorded_at: Wed, 10 Sep 2025 14:57:11 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -54,12 +54,12 @@ http_interactions:
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user already
-        gave those values, so I''ll format them into the tool call. Just make sure
-        the JSON is correctly structured with the right keys. No need for any other
-        functions since there''s only the weather function available. Alright, time
-        to put it all together.\n</think>\n\n","tool_calls":[{"id":"call_dwoq51mt","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_dwoq51mt"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the function call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\" and the values
+        are the strings provided. No other parameters are needed. Alright, that''s
+        all I need to make the tool call.\n</think>\n\n","tool_calls":[{"id":"call_sdqx1zp7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_sdqx1zp7"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"enable_thinking":false}'
@@ -80,12 +80,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 Sep 2025 14:59:29 GMT
+      - Wed, 10 Sep 2025 14:57:12 GMT
       Content-Length:
       - '402'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTM2MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTY5MTE1NjksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzc0LCJjb21wbGV0aW9uX3Rva2VucyI6NDIsInRvdGFsX3Rva2VucyI6NDE2fX0K
-  recorded_at: Wed, 03 Sep 2025 14:59:29 GMT
+        eyJpZCI6ImNoYXRjbXBsLTE4MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc1MTYyMzIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mzc5LCJjb21wbGV0aW9uX3Rva2VucyI6NDIsInRvdGFsX3Rva2VucyI6NDIxfX0K
+  recorded_at: Wed, 10 Sep 2025 14:57:12 GMT
 recorded_with: VCR 6.3.1

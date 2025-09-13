@@ -22,7 +22,8 @@ loader.inflector.inflect(
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
   'vertexai' => 'VertexAI',
-  'pdf' => 'PDF'
+  'pdf' => 'PDF',
+  'UI' => 'UI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")

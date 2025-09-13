@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:58:13 GMT
+      - Wed, 10 Sep 2025 14:54:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01991015-de55-71ab-9871-1b114db2d7cb'
+      - '0199341e-92e4-77f6-ade1-01ae26d35d4b'
       X-Kong-Request-Id:
-      - '01991015-de55-71ab-9871-1b114db2d7cb'
+      - '0199341e-92e4-77f6-ade1-01ae26d35d4b'
       X-Envoy-Upstream-Service-Time:
-      - '669'
+      - '415'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499834'
+      - '499869'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999996380'
+      - '999990650'
       X-Ratelimit-Tokens-Query-Cost:
-      - '93'
+      - '52'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '57'
+      - '58'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '670'
+      - '415'
       X-Kong-Proxy-Latency:
       - '7'
       Cf-Cache-Status:
@@ -72,7 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImIxNDg5Yjg3MzlhODRlMjliYzQ0MDgwZWZkZTg5Y2E0IiwiY3JlYXRlZCI6MTc1NjkxMTQ5MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJ0b3RhbF90b2tlbnMiOjkzLCJjb21wbGV0aW9uX3Rva2VucyI6ODN9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi5cblxuUGFyaXMgaXMga25vd24gZm9yIGl0cyBpY29uaWMgbGFuZG1hcmtzIHN1Y2ggYXMgdGhlICoqRWlmZmVsIFRvd2VyKiosICoqTG91dnJlIE11c2V1bSoqLCBhbmQgKipOb3RyZS1EYW1lIENhdGhlZHJhbCoqLCBhcyB3ZWxsIGFzIGl0cyByaWNoIGhpc3RvcnksIGN1bHR1cmUsIGFuZCBpbmZsdWVuY2UgaW4gYXJ0LCBmYXNoaW9uLCBhbmQgY3Vpc2luZS4gSXQgaXMgb25lIG9mIHRoZSBtb3N0IHZpc2l0ZWQgY2l0aWVzIGluIHRoZSB3b3JsZC5cblxuV291bGQgeW91IGxpa2UgdG8ga25vdyBtb3JlIGFib3V0IFBhcmlzIG9yIEZyYW5jZT8g8J+YiiJ9fV19
-  recorded_at: Wed, 03 Sep 2025 14:58:13 GMT
+      string: '{"id":"30bc4ad2f36346b9926b78975845c5ad","created":1757516043,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":52,"completion_tokens":42},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**. It is one of the most famous and visited cities
+        in the world, known for its rich history, iconic landmarks like the Eiffel
+        Tower, and cultural significance."}}]}'
+  recorded_at: Wed, 10 Sep 2025 14:54:03 GMT
 recorded_with: VCR 6.3.1

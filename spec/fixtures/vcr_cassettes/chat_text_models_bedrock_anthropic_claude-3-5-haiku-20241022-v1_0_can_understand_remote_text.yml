@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Mon, 18 Aug 2025 06:05:44 GMT
+      - Tue, 09 Sep 2025 17:42:12 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68a2c2b8-9c6"
+      - W/"68c066f4-9c6"
       Expires:
-      - Wed, 20 Aug 2025 07:05:50 GMT
+      - Wed, 10 Sep 2025 14:01:16 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 4934:3FE32:1630AE2:1657871:68A57176
+      - 1E56:33992A:E99239:EB222D:68C18254
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 20 Aug 2025 17:02:02 GMT
+      - Wed, 10 Sep 2025 14:43:22 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '5'
+      - '9'
       X-Served-By:
-      - cache-fra-etou8220023-FRA
+      - cache-fra-etou8220026-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1755709323.530956,VS0,VE6
+      - S1757515402.104593,VS0,VE9
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - ff82cb17cec2c87cf9c61776b98d9fb2ff70dd97
+      - 93fb42c101fe1ad9a501dc3dcc09de7fdde3a303
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 20 Aug 2025 17:02:02 GMT
+  recorded_at: Wed, 10 Sep 2025 14:43:22 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -144,12 +144,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250820T170202Z
+      - 20250910T144322Z
       X-Amz-Content-Sha256:
       - e95a283ec27bb852b7bdb5ae0a8e5c8782158b6be7bbe080cf6025ec13151459
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250820/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=207b068e20b1829bf61ac225cc4b3439fb6dc1c833fcdb9f734085c1389fcc83
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250910/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1912840d3c22db5d86f3ca5301f875a41c59ad6be7db012ce10a42fe51d0f5ec
       Content-Type:
       - application/json
       Accept:
@@ -162,35 +162,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:02:06 GMT
+      - Wed, 10 Sep 2025 14:43:26 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1182'
+      - '1312'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e60a24f1-93d3-4b48-b729-76189aebd04d
+      - 02a93166-02cc-4db3-9cc0-d63d573c15a1
       X-Amzn-Bedrock-Invocation-Latency:
-      - '3766'
+      - '4028'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '184'
+      - '206'
       X-Amzn-Bedrock-Input-Token-Count:
       - '588'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01JsC7N83bHd1JsFgGbEt4Vz","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        file is a software license text for Ruby, written by its creator Yukihiro
-        Matsumoto (Matz). It appears to be a permissive open-source license that allows
-        redistribution and modification of the software under certain conditions.
-        The key points of the license include:\n\n1. You can redistribute and modify
-        the software freely\n2. You can make verbatim copies of the source code\n3.
-        You can modify the software with some conditions (like placing modifications
-        in public domain or using them internally)\n4. You can distribute binaries
-        with certain requirements\n5. You can include the software in other software
-        (possibly commercial)\n6. The software is provided \"AS IS\" without warranties\n\nThe
-        license seems to be similar to a BSD-style license, giving users significant
-        freedom to use and modify the software while providing some protections for
-        the original author."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":184}}'
-  recorded_at: Wed, 20 Aug 2025 17:02:06 GMT
+      string: '{"id":"msg_bdrk_01XQWwUW6gfh9yCHTMwG7aFD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
+        file is a license text for the Ruby programming language. It is the Ruby Software
+        License, written by Ruby''s creator Yukihiro Matsumoto. The license details
+        the terms under which Ruby can be redistributed, modified, and used. Key points
+        include:\n\n1. Users can redistribute and modify Ruby under the 2-clause BSD
+        License or the conditions specified in this document.\n\n2. Users can make
+        and distribute verbatim copies of the source code.\n\n3. Modifications can
+        be made with several conditions, such as placing modifications in the public
+        domain or using them only within an organization.\n\n4. Distribution of binaries
+        is allowed with certain requirements like providing instructions on obtaining
+        the original software.\n\n5. The software can be modified and included in
+        other software.\n\n6. The software is provided \"AS IS\" without any express
+        or implied warranties.\n\nThe license is essentially a permissive open-source
+        license that allows for wide use and modification of the Ruby software."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":206}}'
+  recorded_at: Wed, 10 Sep 2025 14:43:26 GMT
 recorded_with: VCR 6.3.1

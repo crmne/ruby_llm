@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:42:12 GMT
+      - Wed, 10 Sep 2025 14:43:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - cbfb62bd996db13b31963cc7c0f83de0
+      - 04f1774f3be7795d68bb77ca05357eb1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,11 +52,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2f3000dc-9456-466c-bac2-6075543f7104","object":"chat.completion","created":1756910531,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file \"ruby.txt\" contains the text: \"Ruby is the best.\"\n\nIt''s a plain
-        text file (MIME type: text/plain) with a simple statement praising the Ruby
-        programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":42,"total_tokens":75,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:42:17 GMT
+      string: '{"id":"2c4293cc-5861-42a1-9c6a-8470d66abe49","object":"chat.completion","created":1757515407,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
+        on the file content you provided, the file `ruby.txt` contains the text:\n\n**\"Ruby
+        is the best.\"**\n\nIt''s a simple text file (MIME type: text/plain) with
+        a short statement about the Ruby programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":52,"total_tokens":85,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 10 Sep 2025 14:43:32 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -64,9 +64,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
-        contains the text: \"Ruby is the best.\"\n\nIt''s a plain text file (MIME
-        type: text/plain) with a simple statement praising the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"Based on the file content
+        you provided, the file `ruby.txt` contains the text:\n\n**\"Ruby is the best.\"**\n\nIt''s
+        a simple text file (MIME type: text/plain) with a short statement about the
+        Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -86,7 +87,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:42:18 GMT
+      - Wed, 10 Sep 2025 14:43:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -98,7 +99,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e1257c8068c24b25a218bef19da7e0ca
+      - 7597a3f819c4c5b5d4c8ad7bea59e336
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -113,12 +114,13 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"681924dd-17a2-4fe9-9b3c-eaebc0f667ca","object":"chat.completion","created":1756910538,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file, \"ruby.xml\", contains XML (Extensible Markup Language) data.\n\nSpecifically,
-        it includes a single XML element:\n*   The root element is `<truism>`\n*   The
-        content of that element is the text string: `Ruby is the best`\n\nUnlike the
-        plain text file, this structures the information, labeling it as a \"truism\"
-        (a statement of obvious truth). This structure allows other programs to easily
-        identify and process this specific piece of information."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":116,"completion_tokens":101,"total_tokens":217,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":52},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:42:27 GMT
+      string: '{"id":"ba4fabc7-7879-405c-972e-0d071f3a35a7","object":"chat.completion","created":1757515413,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
+        on the content you provided, the file `ruby.xml` contains the following XML
+        data:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\n**Breakdown:**\n\n*   **File
+        Type:** It''s an XML file (MIME type: `application/xml`).\n*   **Content:**
+        It contains a single XML element named `<truism>`.\n*   **Data:** The text
+        \"Ruby is the best\" is stored as the content (or value) of that XML element.\n\nIn
+        essence, it encodes the same sentiment as the text file (\"Ruby is the best\")
+        but structures it within a custom XML tag, making it machine-readable data."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":126,"completion_tokens":141,"total_tokens":267,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":62},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 10 Sep 2025 14:43:42 GMT
 recorded_with: VCR 6.3.1
