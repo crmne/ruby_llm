@@ -12,10 +12,10 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   describe 'migration templates' do
     let(:expected_migration_files) do
       [
+        'create_models_migration.rb.tt',
         'create_chats_migration.rb.tt',
         'create_messages_migration.rb.tt',
-        'create_tool_calls_migration.rb.tt',
-        'create_models_migration.rb.tt'
+        'create_tool_calls_migration.rb.tt'
       ]
     end
 
@@ -87,10 +87,10 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   describe 'model templates' do
     let(:expected_model_files) do
       [
+        'model_model.rb.tt',
         'chat_model.rb.tt',
         'message_model.rb.tt',
-        'tool_call_model.rb.tt',
-        'model_model.rb.tt'
+        'tool_call_model.rb.tt'
       ]
     end
 
@@ -241,20 +241,20 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       migration_section = generator_content[/def create_migration_files.*?\n    end/m]
 
       # Look for the table name references which are in the migration paths
+      models_position = migration_section.index('model_table_name')
       chats_position = migration_section.index('chat_table_name')
       messages_position = migration_section.index('message_table_name')
       tool_calls_position = migration_section.index('tool_call_table_name')
-      models_position = migration_section.index('model_table_name')
 
       expect(chats_position).not_to be_nil
       expect(messages_position).not_to be_nil
       expect(tool_calls_position).not_to be_nil
 
+      # Models migration should come first if present
+      expect(models_position).to be < chats_position if models_position
+
       expect(chats_position).to be < messages_position
       expect(messages_position).to be < tool_calls_position
-
-      # Models migration should come last if present
-      expect(models_position).to be > tool_calls_position if models_position
     end
 
     it 'has comments explaining the order' do

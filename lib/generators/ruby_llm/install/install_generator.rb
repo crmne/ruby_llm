@@ -28,7 +28,13 @@ module RubyLLM
 
     def create_migration_files
       # Create migrations with timestamps to ensure proper order
-      # First create chats table
+
+      # Create models table first since it is being referenced by other models
+      migration_template 'create_models_migration.rb.tt',
+                         "db/migrate/create_#{model_table_name}.rb"
+
+      # Create chats table
+      sleep 1 # Ensure different timestamp
       migration_template 'create_chats_migration.rb.tt',
                          "db/migrate/create_#{chat_table_name}.rb"
 
@@ -41,11 +47,6 @@ module RubyLLM
       sleep 1 # Ensure different timestamp
       migration_template 'create_tool_calls_migration.rb.tt',
                          "db/migrate/create_#{tool_call_table_name}.rb"
-
-      # Create models table
-      sleep 1 # Ensure different timestamp
-      migration_template 'create_models_migration.rb.tt',
-                         "db/migrate/create_#{model_table_name}.rb"
     end
 
     def create_model_files
