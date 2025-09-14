@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/moderations
+    body:
+      encoding: UTF-8
+      string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer test
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 02 Sep 2025 01:16:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '584'
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      X-Request-Id:
+      - req_test123456789
+      Openai-Processing-Ms:
+      - '20'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8b123456789012345-DFW
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "modr-test123456789",
+          "model": "omni-moderation-latest",
+          "results": [
+            {
+              "flagged": false,
+              "categories": {
+                "sexual": false,
+                "hate": false,
+                "harassment": false,
+                "self-harm": false,
+                "sexual/minors": false,
+                "hate/threatening": false,
+                "violence/graphic": false,
+                "self-harm/intent": false,
+                "self-harm/instructions": false,
+                "harassment/threatening": false,
+                "violence": false
+              },
+              "category_scores": {
+                "sexual": 0.0000123,
+                "hate": 0.0000456,
+                "harassment": 0.0000789,
+                "self-harm": 0.0000012,
+                "sexual/minors": 0.0000003,
+                "hate/threatening": 0.0000001,
+                "violence/graphic": 0.0000002,
+                "self-harm/intent": 0.0000001,
+                "self-harm/instructions": 0.0000001,
+                "harassment/threatening": 0.0000004,
+                "violence": 0.0000567
+              }
+            }
+          ]
+        }
+  recorded_at: Tue, 02 Sep 2025 01:16:33 GMT
+recorded_with: VCR 6.3.1
