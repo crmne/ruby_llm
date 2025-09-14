@@ -42,7 +42,7 @@ The registry stores crucial information about each model, including:
 *   **`name`**: A human-friendly name.
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
 *   **`max_tokens`**: Max output tokens (e.g., `16_384`).
-*   **`supports_vision`**: If it can process images.
+*   **`supports_vision`**: If it can process images and videos.
 *   **`supports_functions`**: If it can use [Tools]({% link _core_features/tools.md %}).
 *   **`input_price_per_million`**: Cost in USD per 1 million input tokens.
 *   **`output_price_per_million`**: Cost in USD per 1 million output tokens.

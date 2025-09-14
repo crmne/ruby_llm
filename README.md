@@ -41,6 +41,7 @@ chat.ask "What's the best way to learn Ruby?"
 ```ruby
 # Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
@@ -100,7 +101,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
+* **Vision:** Analyze images and videos
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
