@@ -21,17 +21,15 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
-  'pdf' => 'PDF'
+  'vertexai' => 'VertexAI',
+  'pdf' => 'PDF',
+  'UI' => 'UI'
 )
 loader.ignore("#{__dir__}/tasks")
-loader.ignore("#{__dir__}/ruby_llm/railtie")
-loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/generators")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
-# Provides a unified way to interact with models from OpenAI, Anthropic and others
-# with a focus on developer happiness and convention over configuration.
 module RubyLLM
   class Error < StandardError; end
 
@@ -48,6 +46,10 @@ module RubyLLM
 
     def embed(...)
       Embedding.embed(...)
+    end
+
+    def moderate(...)
+      Moderation.moderate(...)
     end
 
     def paint(...)
@@ -90,6 +92,7 @@ RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
+RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

@@ -8,7 +8,6 @@ module RubyLLM
         module_function
 
         def format_content(content)
-          # Convert Hash/Array back to JSON string for API
           return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
           return content unless content.is_a?(Content)
 
@@ -37,7 +36,7 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : "data:#{image.mime_type};base64,#{image.encoded}"
+              url: image.url? ? image.source : image.for_llm
             }
           }
         end
@@ -47,7 +46,7 @@ module RubyLLM
             type: 'file',
             file: {
               filename: pdf.filename,
-              file_data: "data:#{pdf.mime_type};base64,#{pdf.encoded}"
+              file_data: pdf.for_llm
             }
           }
         end
@@ -55,7 +54,7 @@ module RubyLLM
         def format_text_file(text_file)
           {
             type: 'text',
-            text: Utils.format_text_file_for_llm(text_file)
+            text: text_file.for_llm
           }
         end
 
@@ -64,7 +63,7 @@ module RubyLLM
             type: 'input_audio',
             input_audio: {
               data: audio.encoded,
-              format: audio.mime_type.split('/').last
+              format: audio.format
             }
           }
         end

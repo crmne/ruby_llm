@@ -6,8 +6,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 14:12:21 GMT
+      - Sun, 14 Sep 2025 10:06:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01989453-426a-7202-a8ae-792d7a3f2f86'
+      - '019947b0-a3bf-7fb2-bb7d-0ba22e192236'
       X-Kong-Request-Id:
-      - '01989453-426a-7202-a8ae-792d7a3f2f86'
+      - '019947b0-a3bf-7fb2-bb7d-0ba22e192236'
       X-Envoy-Upstream-Service-Time:
-      - '145'
+      - '127'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '497015'
+      - '498872'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999562152'
+      - '999982748'
       X-Ratelimit-Tokens-Query-Cost:
       - '73'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '46'
+      - '58'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '145'
+      - '128'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,16 +73,16 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"19136bfeb8cf4a8d97e5e7eb9403f456","created":1754835141,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"KP627Sire","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
-  recorded_at: Sun, 10 Aug 2025 14:12:21 GMT
+      string: '{"id":"a86666d233974d3692ded1fd8cb972f2","created":1757844382,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"3ha5zD4jJ","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
+  recorded_at: Sun, 14 Sep 2025 10:06:22 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"KP627Sire","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"KP627Sire"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"3ha5zD4jJ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"3ha5zD4jJ"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -100,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 14:12:23 GMT
+      - Sun, 14 Sep 2025 10:06:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,31 +108,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01989453-435d-7e44-a923-1ae7dbe52732'
+      - '019947b0-a4ac-7f45-aea2-8f58c63be56a'
       X-Kong-Request-Id:
-      - '01989453-435d-7e44-a923-1ae7dbe52732'
+      - '019947b0-a4ac-7f45-aea2-8f58c63be56a'
       X-Envoy-Upstream-Service-Time:
-      - '2034'
+      - '903'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '496656'
+      - '498701'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999561793'
+      - '999982577'
       X-Ratelimit-Tokens-Query-Cost:
-      - '359'
+      - '171'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '45'
+      - '57'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2036'
+      - '904'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -148,23 +148,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"061546050970490aa0ee72c6683425c5","created":1754835141,"model":"mistral-small-latest","usage":{"prompt_tokens":92,"total_tokens":359,"completion_tokens":267},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        best language to learn can depend on various factors such as your goals, interests,
-        and the current demand in the job market. However, here are a few languages
-        that are highly recommended for different purposes:\n\n1. **For Web Development**:
-        JavaScript, Python, and Ruby are excellent choices. JavaScript is essential
-        for front-end development, while Python and Ruby are popular for back-end
-        development.\n\n2. **For Data Science and Machine Learning**: Python is currently
-        the most popular language in this field due to its simplicity and the availability
-        of numerous libraries and frameworks.\n\n3. **For Mobile App Development**:
-        Swift (for iOS) and Kotlin (for Android) are the preferred languages.\n\n4.
-        **For Enterprise Applications**: Java and C# are widely used in large-scale
-        enterprise environments.\n\n5. **For System Programming**: C and C++ are still
-        the go-to languages for system/software development, game development, and
-        operating systems.\n\n6. **For Beginners**: Python and Ruby are known for
-        their easy-to-read syntax, making them great for beginners.\n\n7. **For General-Purpose
-        Programming**: Python, JavaScript, and Java are versatile and can be used
-        for a wide range of applications.\n\nIf you have a specific goal in mind,
-        please let me know, and I can provide a more tailored recommendation."}}]}'
-  recorded_at: Sun, 10 Aug 2025 14:12:23 GMT
+      string: '{"id":"303a29cbec9240e2b367238214198dcb","created":1757844382,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":171,"completion_tokens":77},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        best language to learn is Ruby. It''s a dynamic, open-source programming language
+        with a focus on simplicity and productivity. It has an elegant syntax that
+        makes it easy to read and write, which is why it''s a favorite among developers
+        for building web applications. Ruby on Rails, a popular web application framework
+        written in Ruby, is used by many successful startups and companies."}}]}'
+  recorded_at: Sun, 14 Sep 2025 10:06:23 GMT
 recorded_with: VCR 6.3.1

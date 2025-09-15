@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Base class for LLM providers like OpenAI and Anthropic.
-  # Handles the complexities of API communication, streaming responses,
-  # and error handling so individual providers can focus on their unique features.
-  # Encapsulates configuration and connection to eliminate parameter threading.
+  # Base class for LLM providers.
   class Provider
     include Streaming
 
@@ -44,7 +41,6 @@ module RubyLLM
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
-        params,
         render_payload(
           messages,
           tools: tools,
@@ -52,7 +48,8 @@ module RubyLLM
           model: model,
           stream: block_given?,
           schema: schema
-        )
+        ),
+        params
       )
 
       if block_given?
@@ -71,6 +68,12 @@ module RubyLLM
       payload = render_embedding_payload(text, model:, dimensions:)
       response = @connection.post(embedding_url(model:), payload)
       parse_embedding_response(response, model:, text:)
+    end
+
+    def moderate(input, model:)
+      payload = render_moderation_payload(input, model:)
+      response = @connection.post moderation_url, payload
+      parse_moderation_response(response, model:)
     end
 
     def paint(prompt, model:, size:)
@@ -204,13 +207,12 @@ module RubyLLM
       raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
     end
 
-    def maybe_normalize_temperature(temperature, _model_id)
+    def maybe_normalize_temperature(temperature, _model)
       temperature
     end
 
     def sync_response(connection, payload, additional_headers = {})
       response = connection.post completion_url, payload do |req|
-        # Merge additional headers, with existing headers taking precedence
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
       end
       parse_completion_response response

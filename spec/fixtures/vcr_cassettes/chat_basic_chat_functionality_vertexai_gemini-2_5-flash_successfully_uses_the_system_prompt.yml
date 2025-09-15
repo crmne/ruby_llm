@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 10:02:51 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:02:51 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 14 Sep 2025 10:02:54 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The weather is a fascinating and ever-changing aspect of our planet, driven by complex interactions within the atmosphere. Generally speaking, when we talk about the weather, we're referring to the current state of the atmosphere at a particular time and location. This includes several key elements:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:** The amount of moisture or water vapor in the air.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air, which influences weather patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight now, without knowing your specific location, I can't give you a precise forecast. However, across the globe, you'll find a vast array of weather conditions. Some places are experiencing warm, sunny days, while others are battling cold fronts, heavy rain, or even blizzards. Weather patterns are influenced by everything from ocean currents and mountain ranges to the tilt of the Earth's axis and the amount of solar radiation received.\n\nFor the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news broadcast. They can provide details like the current temperature, \"feels like\" temperature, wind chill, heat index, chance of precipitation, and any active weather warnings. It's always a good idea to stay informed, especially if you have outdoor plans or need to prepare for significant weather events.\n\nAnd remember, even on the most unpredictable days, there's always something interesting happening in the sky, a concept that XKCD7392 might find amusingly complex."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.2594635229316547
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 417,
+            "totalTokenCount": 572,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 417
+              }
+            ],
+            "thoughtsTokenCount": 130
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-09-14T10:02:51.834050Z",
+          "responseId": "y5LGaIL0MunvxN8P8-OciAo"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:02:54 GMT
+recorded_with: VCR 6.3.1

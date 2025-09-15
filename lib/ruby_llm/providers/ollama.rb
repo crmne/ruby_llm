@@ -6,6 +6,7 @@ module RubyLLM
     class Ollama < OpenAI
       include Ollama::Chat
       include Ollama::Media
+      include Ollama::Models
 
       def api_base
         @config.ollama_api_base

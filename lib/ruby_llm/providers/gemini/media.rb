@@ -8,7 +8,6 @@ module RubyLLM
         module_function
 
         def format_content(content)
-          # Convert Hash/Array back to JSON string for API
           return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
           return [format_text(content)] unless content.is_a?(Content)
 
@@ -40,7 +39,7 @@ module RubyLLM
 
         def format_text_file(text_file)
           {
-            text: Utils.format_text_file_for_llm(text_file)
+            text: text_file.for_llm
           }
         end
 

@@ -5,9 +5,9 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:50 GMT
-      - Sun, 10 Aug 2025 13:37:51 GMT
+      - Sun, 14 Sep 2025 10:06:18 GMT
+      - Sun, 14 Sep 2025 10:06:18 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '795'
+      - '796'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,16 +42,16 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G","type":"function"}]}}],"created":1754833072,"id":"chatcmpl-B76ZrhSsvZSWLErF9Ib8dYtNdbFZTby0","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":132,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":111,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3802.642836771556,"time_per_output_token_ms":9.198068181818181,"time_to_first_token_ms":52.595,"tokens_per_second":108.7184809063168,"total_tokens":332}}'
-  recorded_at: Sun, 10 Aug 2025 13:37:52 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc","type":"function"}]}}],"created":1757844381,"id":"chatcmpl-du54Esi6ogkUazxYO3raUNPZUUmz2X5v","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":313,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":292,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3959.4551789673737,"time_per_output_token_ms":8.90320766773163,"time_to_first_token_ms":50.512,"tokens_per_second":112.31906940959642,"total_tokens":513}}'
+  recorded_at: Sun, 14 Sep 2025 10:06:21 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"enable_thinking":false,"model":"qwen3","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-IrBSmJedV0znRYxbqULWxpONKCAtc87G"}],"stream":false,"temperature":0.7,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"tool_choice":"auto"}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -67,15 +67,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:37:51 GMT
-      - Sun, 10 Aug 2025 13:37:52 GMT
+      - Sun, 14 Sep 2025 10:06:21 GMT
+      - Sun, 14 Sep 2025 10:06:21 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1139'
+      - '685'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -85,8 +85,8 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHByb2R1Y3Rpdml0eSwgZXNwZWNpYWxseSBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy4gSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2FsczogIFxuLSAqKldlYiBEZXZlbG9wbWVudCoqOiBSdWJ5IChvciBKYXZhU2NyaXB0L1B5dGhvbikgIFxuLSAqKkRhdGEgU2NpZW5jZSoqOiBQeXRob24gIFxuLSAqKk1vYmlsZSBBcHBzKio6IFN3aWZ0IChpT1MpIG9yIEtvdGxpbiAoQW5kcm9pZCkgIFxuLSAqKkdlbmVyYWwgUHVycG9zZSoqOiBQeXRob24gb3IgSmF2YSAgXG5cbkNvbnNpZGVyIHlvdXIgaW50ZXJlc3RzIGFuZCBjYXJlZXIgcGF0aCB0byBjaG9vc2UgdGhlIG1vc3Qgc3VpdGFibGUgbGFuZ3VhZ2UhIPCfjJ8iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1NDgzMzA3NSwiaWQiOiJjaGF0Y21wbC1HUEh1RVhWd3p3RGIwNFJTU1NxTVduRVBucWV3Y0dDMSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzQ3LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyMzcsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoyMjYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjExNTIzLjU1NzAwNTkxNDc0OSwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjE5ODg5NjI1MzYwMjMwNSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTkuNjEyLCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA4LjcwODY5NDIyMDYxMzUsInRvdGFsX3Rva2VucyI6NTczfX0=
-  recorded_at: Sun, 10 Aug 2025 13:37:55 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        best language to learn is Ruby.","role":"assistant"}}],"created":1757844382,"id":"chatcmpl-vbAINFaIMJ8AO0JYpQt0oYhMvX1P48SG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":90,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":78,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":226,"prompt_tokens_details":{"cached_tokens":199},"prompt_tokens_per_second":12564.630010563185,"time_per_output_token_ms":8.368877777777778,"time_to_first_token_ms":17.987,"tokens_per_second":119.49033389582301,"total_tokens":316}}'
+  recorded_at: Sun, 14 Sep 2025 10:06:22 GMT
 recorded_with: VCR 6.3.1

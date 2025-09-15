@@ -50,7 +50,6 @@ RubyLLM::Error                    # Base error class for API/network issues
 RubyLLM::ConfigurationError   # Missing required configuration (e.g., API key)
 RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
 RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
-RubyLLM::UnsupportedFunctionsError # Tried to use tools with an unsupported model
 ```
 
 ## Basic Error Handling
@@ -111,7 +110,7 @@ Instances of `RubyLLM::Error` (and its subclasses related to API responses) hold
 
 ```ruby
 begin
-  chat = RubyLLM.chat(model: 'gpt-4.1-nano') # Assume this requires a specific org sometimes
+  chat = RubyLLM.chat(model: '{{ site.models.default_chat }}') # Assume this requires a specific org sometimes
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"

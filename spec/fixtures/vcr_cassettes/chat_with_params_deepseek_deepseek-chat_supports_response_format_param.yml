@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"response_format":{"type":"json_object"},"model":"deepseek-chat","messages":[{"role":"user","content":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"temperature":0.7}'
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What
+        is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:31:12 GMT
+      - Sun, 14 Sep 2025 09:58:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 429fc1b852bd2e5afa1f4f8c20cc3687
+      - 5330741cebbcf793212cc209442efcb2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -51,7 +51,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5655470c-d0e3-44b2-9405-a257e544fb7f","object":"chat.completion","created":1754832672,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
-        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":39,"completion_tokens":13,"total_tokens":52,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":39},"system_fingerprint":"fp_8802369eaa_prod0623_fp8_kvcache"}'
-  recorded_at: Sun, 10 Aug 2025 13:31:17 GMT
+      string: '{"id":"1621f971-3cda-4215-b7df-2d5ca0949bc4","object":"chat.completion","created":1757843897,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"{\n    \"result\":
+        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":13,"total_tokens":57,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 14 Sep 2025 09:58:20 GMT
 recorded_with: VCR 6.3.1

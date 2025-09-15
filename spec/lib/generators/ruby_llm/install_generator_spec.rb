@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 require 'fileutils'
-require 'generators/ruby_llm/install_generator'
+require 'generators/ruby_llm/install/install_generator'
 
 RSpec.describe RubyLLM::InstallGenerator, type: :generator do
   # Use the actual template directory
   let(:template_dir) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install/templates') }
-  let(:generator_file) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install_generator.rb') }
+  let(:generator_file) { File.join(__dir__, '../../../../lib/generators/ruby_llm/install/install_generator.rb') }
 
   describe 'migration templates' do
     let(:expected_migration_files) do
       [
         'create_chats_migration.rb.tt',
         'create_messages_migration.rb.tt',
-        'create_tool_calls_migration.rb.tt'
+        'create_tool_calls_migration.rb.tt',
+        'create_models_migration.rb.tt',
+        'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'
       ]
     end
 
@@ -28,11 +30,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:chat_migration) { File.read(File.join(template_dir, 'create_chats_migration.rb.tt')) }
 
       it 'defines chats table' do
-        expect(chat_migration).to include('create_table :<%= options[:chat_model_name].tableize %>')
-      end
-
-      it 'includes model_id field' do
-        expect(chat_migration).to include('t.string :model_id')
+        expect(chat_migration).to include('create_table :<%= chat_table_name %>')
       end
     end
 
@@ -40,11 +38,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:message_migration) { File.read(File.join(template_dir, 'create_messages_migration.rb.tt')) }
 
       it 'defines messages table' do
-        expect(message_migration).to include('create_table :<%= options[:message_model_name].tableize %>')
-      end
-
-      it 'includes chat reference' do
-        expect(message_migration).to include('t.references :<%= options[:chat_model_name].tableize.singularize %>, null: false, foreign_key: true') # rubocop:disable Layout/LineLength
+        expect(message_migration).to include('create_table :<%= message_table_name %>')
       end
 
       it 'includes role field' do
@@ -60,7 +54,7 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       let(:tool_call_migration) { File.read(File.join(template_dir, 'create_tool_calls_migration.rb.tt')) }
 
       it 'defines tool_calls table' do
-        expect(tool_call_migration).to include('create_table :<%= options[:tool_call_model_name].tableize %>')
+        expect(tool_call_migration).to include('create_table :<%= tool_call_table_name %>')
       end
 
       it 'includes tool_call_id field' do
@@ -69,6 +63,39 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
 
       it 'includes name field' do
         expect(tool_call_migration).to include('t.string :name')
+      end
+    end
+
+    describe 'add references migration' do
+      let(:add_references_migration) do
+        File.read(File.join(template_dir, 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'))
+      end
+
+      it 'adds model reference to chats' do
+        expect(add_references_migration).to include('add_reference :<%= chat_table_name %>, ' \
+                                                    ':<%= model_table_name.singularize %>, foreign_key: true')
+      end
+
+      it 'adds message reference to tool_calls' do
+        expect(add_references_migration).to include('add_reference :<%= tool_call_table_name %>, ' \
+                                                    ':<%= message_table_name.singularize %>, ' \
+                                                    'null: false, foreign_key: true')
+      end
+
+      it 'adds chat reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= chat_table_name.singularize %>, ' \
+                                                    'null: false, foreign_key: true')
+      end
+
+      it 'adds model reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= model_table_name.singularize %>, foreign_key: true')
+      end
+
+      it 'adds tool_call reference to messages' do
+        expect(add_references_migration).to include('add_reference :<%= message_table_name %>, ' \
+                                                    ':<%= tool_call_table_name.singularize %>, foreign_key: true')
       end
     end
   end
@@ -88,7 +115,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       [
         'chat_model.rb.tt',
         'message_model.rb.tt',
-        'tool_call_model.rb.tt'
+        'tool_call_model.rb.tt',
+        'model_model.rb.tt'
       ]
     end
 
@@ -112,6 +140,40 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       tool_call_content = File.read(File.join(template_dir, 'tool_call_model.rb.tt'))
       expect(tool_call_content).to include('acts_as_tool_call')
     end
+
+    it 'declares acts_as_model in model model' do
+      model_content = File.read(File.join(template_dir, 'model_model.rb.tt'))
+      expect(model_content).to include('acts_as_model')
+    end
+  end
+
+  describe 'models migration' do
+    let(:models_migration) { File.read(File.join(template_dir, 'create_models_migration.rb.tt')) }
+
+    it 'defines models table' do
+      expect(models_migration).to include('create_table :<%= model_table_name %>')
+    end
+
+    it 'includes model_id field' do
+      expect(models_migration).to include('t.string :model_id')
+    end
+
+    it 'includes provider field' do
+      expect(models_migration).to include('t.string :provider')
+    end
+
+    it 'includes unique index on provider and model_id' do
+      expect(models_migration).to include('t.index [:provider, :model_id], unique: true')
+    end
+
+    it 'supports jsonb for PostgreSQL' do
+      expect(models_migration).to include('t.jsonb :modalities')
+      expect(models_migration).to include('t.jsonb :capabilities')
+      expect(models_migration).to include('t.jsonb :pricing')
+      expect(models_migration).to include('t.json :modalities')
+      expect(models_migration).to include('t.json :capabilities')
+      expect(models_migration).to include('t.json :pricing')
+    end
   end
 
   describe 'initializer template' do
@@ -129,8 +191,8 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
       expect(initializer_content).to include('config.openai_api_key')
     end
 
-    it 'configures Anthropic API key' do
-      expect(initializer_content).to include('config.anthropic_api_key')
+    it 'configures model registry class' do
+      expect(initializer_content).to include('config.model_registry_class')
     end
   end
 
@@ -154,15 +216,11 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     end
 
     it 'includes usage example with create! and ask' do
-      expect(generator_content).to include('.create!(model_id:').and include('.ask(')
+      expect(generator_content).to include('.create!(model:').and include('.ask(')
     end
 
     it 'includes documentation link' do
       expect(generator_content).to include('https://rubyllm.com')
-    end
-
-    it 'includes sponsorship information' do
-      expect(generator_content).to include('https://github.com/sponsors/crmne').and include('Star on GitHub')
     end
   end
 
@@ -206,46 +264,37 @@ RSpec.describe RubyLLM::InstallGenerator, type: :generator do
     let(:generator_content) { File.read(generator_file) }
 
     it 'creates migrations in correct order' do
-      migration_section = generator_content[/def create_migration_files.*?end/m]
+      migration_section = generator_content[/def create_migration_files.*?\n    end/m]
 
-      # Extract the order of migration creation
-      chats_position = migration_section.index('create_chats_migration.rb.tt')
-      messages_position = migration_section.index('create_messages_migration.rb.tt')
-      tool_calls_position = migration_section.index('create_tool_calls_migration.rb.tt')
+      # Look for the table name references which are in the migration paths
+      chats_position = migration_section.index('chat_table_name')
+      messages_position = migration_section.index('message_table_name')
+      tool_calls_position = migration_section.index('tool_call_table_name')
+      models_position = migration_section.index('model_table_name')
+
+      expect(chats_position).not_to be_nil
+      expect(messages_position).not_to be_nil
+      expect(tool_calls_position).not_to be_nil
 
       expect(chats_position).to be < messages_position
       expect(messages_position).to be < tool_calls_position
+
+      # Models migration should come last if present
+      expect(models_position).to be > tool_calls_position if models_position
     end
 
-    it 'has comments explaining the order' do
-      migration_section = generator_content[/def create_migration_files.*?end/m]
-      expect(migration_section).to include('must come before tool_calls due to foreign key')
-      expect(migration_section).to include('references messages')
-    end
-  end
+    it 'adds references after creating all tables' do
+      migration_section = generator_content[/def create_migration_files.*?\n    end/m]
 
-  describe 'database detection' do
-    let(:generator_content) { File.read(generator_file) }
+      add_references_position = migration_section.index(
+        'add_references_to_chats_tool_calls_and_messages_migration.rb.tt'
+      )
+      models_position = migration_section.index('model_table_name')
 
-    it 'defines postgresql? method' do
-      expect(generator_content).to include('def postgresql?')
-    end
+      expect(add_references_position).not_to be_nil
+      expect(models_position).not_to be_nil
 
-    it 'uses global ActiveRecord constant' do
-      expect(generator_content).to include('::ActiveRecord::Base.connection.adapter_name')
-    end
-
-    it 'detects PostgreSQL adapter' do
-      expect(generator_content).to include('.downcase.include?(\'postgresql\')')
-    end
-
-    it 'includes rescue block for error handling' do
-      expect(generator_content).to include('rescue StandardError')
-    end
-
-    it 'returns false on error' do
-      postgresql_method = generator_content[/def postgresql\?.*?end/m]
-      expect(postgresql_method).to include('false')
+      expect(add_references_position).to be > models_position
     end
   end
 

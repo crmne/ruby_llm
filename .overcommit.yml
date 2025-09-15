@@ -18,11 +18,6 @@ PreCommit:
     exclude:
      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
 
-  RakeTarget:
-    enabled: true
-    command: ['bundle', 'exec', 'rake']
-    targets: ['models:update', 'models:docs', 'aliases:generate']
-    on_warn: fail
 
   AppraisalUpdate:
     enabled: true

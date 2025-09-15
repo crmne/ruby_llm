@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Fri, 01 Aug 2025 01:17:08 GMT
+      - Tue, 09 Sep 2025 17:42:13 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"688c1594-9c6"
+      - W/"68c066f5-9c6"
       Expires:
-      - Sun, 10 Aug 2025 10:36:18 GMT
+      - Sun, 14 Sep 2025 10:00:19 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2C76:369D3C:1F85837:1FBBB54:689873C9
+      - 5BE5:BAF07:321C8C2:3283B84:68C68FDA
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 10 Aug 2025 13:26:22 GMT
+      - Sun, 14 Sep 2025 09:50:26 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '8'
+      - '7'
       X-Served-By:
-      - cache-fra-etou8220090-FRA
+      - cache-fra-etou8220124-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1754832383.976226,VS0,VE2
+      - S1757843427.678084,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 559cb87f1b7d1a17899bbb722309897a8721e7f3
+      - f8f211915d9cd11d98c9dbf0d821d5858357ec4a
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 10 Aug 2025 13:26:22 GMT
+  recorded_at: Sun, 14 Sep 2025 09:50:26 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -137,19 +135,19 @@ http_interactions:
         aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
         IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
         LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"max_tokens":4096,"temperature":0.7}'
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
       - Faraday v2.13.4
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250810T132622Z
+      - 20250914T095026Z
       X-Amz-Content-Sha256:
-      - fa165029f44e9c230c70a3aab78dde53e34c435ac4ff8a055a571fa170d5b8b8
+      - e95a283ec27bb852b7bdb5ae0a8e5c8782158b6be7bbe080cf6025ec13151459
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250810/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9989234c4a983dd3b2a56da439092c11822945eb1fa15d3c47f92b4113310f50
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e26843285ed01d799fcc289f00819b704fdc1048806233c78c3ee4200628517d
       Content-Type:
       - application/json
       Accept:
@@ -162,33 +160,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 10 Aug 2025 13:26:26 GMT
+      - Sun, 14 Sep 2025 09:50:30 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1083'
+      - '1136'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 375eb986-0e79-4d57-b810-c6d3e387f3d4
+      - 25dda270-cf79-47a2-bf80-5bb7dfa95d07
       X-Amzn-Bedrock-Invocation-Latency:
-      - '3307'
+      - '3661'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '158'
+      - '170'
       X-Amzn-Bedrock-Input-Token-Count:
       - '588'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01GeVoedRKcRXUGXseGCC3Uw","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        file is the license text for Ruby, a programming language created by Yukihiro
-        Matsumoto. It appears to be a permissive software license that allows redistribution
-        and modification of the Ruby software under certain conditions. The license
-        outlines:\n\n1. Permissions to make and distribute copies\n2. Conditions for
-        modifying and redistributing the software\n3. Restrictions and requirements
-        for distribution\n4. Clarifications about copyright of scripts and library
-        files\n5. A disclaimer of warranties (standard \"AS IS\" clause)\n\nThe license
-        seems to be similar to a BSD-style license, with flexible terms that allow
-        both open-source and potentially commercial use of the software, while requiring
-        proper attribution and providing some guidelines for redistribution."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":158}}'
-  recorded_at: Sun, 10 Aug 2025 13:26:26 GMT
+      string: '{"id":"msg_bdrk_01Mt8dzrCTXiaB9qc8ZPrbpe","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
+        is the license file for Ruby programming language, written by its creator
+        Yukihiro Matsumoto. It appears to be a custom license that allows for redistribution
+        and modification of the software under certain conditions. The key points
+        of the license include:\n\n1. Verbatim copies of the source can be made and
+        distributed freely\n2. Modifications can be made with several options for
+        distribution\n3. Binary distributions are allowed with specific conditions\n4.
+        The software can be included in other software (possibly commercial)\n5. Scripts
+        and library files generated using Ruby do not automatically fall under Ruby''s
+        copyright\n6. The software is provided \"AS IS\" without warranties\n\nThe
+        license seems to be quite permissive, similar to BSD-style open source licenses,
+        with flexible terms for redistribution and use."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":170}}'
+  recorded_at: Sun, 14 Sep 2025 09:50:30 GMT
 recorded_with: VCR 6.3.1

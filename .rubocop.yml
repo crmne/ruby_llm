@@ -1,4 +1,5 @@
 plugins:
+  - rubocop-performance
   - rubocop-rake
   - rubocop-rspec
 
@@ -9,6 +10,7 @@ AllCops:
     - docs/**/*
     - vendor/**/*
     - gemfiles/**/*
+    - lib/generators/**/templates/**/*
   SuggestExtensions: false
 
 Metrics/ClassLength:
@@ -21,6 +23,17 @@ Metrics/MethodLength:
   Enabled: false
 Metrics/ModuleLength:
   Enabled: false
+Performance/CollectionLiteralInLoop:
+  Exclude:
+    - spec/**/*
+Performance/RedundantBlockCall:
+  Enabled: false # TODO: temporarily disabled to avoid potential breaking change
+Performance/StringInclude:
+  Exclude:
+    - lib/ruby_llm/providers/**/capabilities.rb
+Performance/UnfreezeString:
+  Exclude:
+    - spec/**/*
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:

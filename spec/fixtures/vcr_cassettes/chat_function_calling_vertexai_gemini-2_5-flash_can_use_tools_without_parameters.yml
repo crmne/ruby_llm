@@ -1,0 +1,292 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 10:06:35 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:06:35 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 14 Sep 2025 10:06:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "best_language_to_learn",
+                      "args": {}
+                    },
+                    "thoughtSignature": "CtkBAR/MhbYaDeVSCVIv9PZcXSXhxqPpYkFfU9rWFJ/rtyPTGNbeDVxVnd9wXawthtAJnfzXwJgE3BmmHOIJ5njIs9SpKBhyd+SA7wY/AMlJ/FLmtp1tE4nERxXEJlV2G4K2eNA1oy82aVs7PEfZRiCMDy6kyyQa7l03UsKUCvVlYRGTOw6ALCFgwbGd1wDDKzWkGc2dtc0A8aqYyctL6h9GgQSCPEQOfkvpyLL5Q9HWb3lShp9+W/Sj6RNBtlzGvYvJ1+qfioz9pRXL0savHXvBSpAm1snVS06B9Q=="
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -1.1552328382219588
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 22,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 72,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 22
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ],
+            "thoughtsTokenCount": 43
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-09-14T10:06:36.096775Z",
+          "responseId": "rJPGaIf0Ba-smLAPgomwuAE"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:06:36 GMT
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Pragma:
+      - no-cache
+      Date:
+      - Sun, 14 Sep 2025 10:06:36 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:06:36 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"b9dcce3c-be61-4759-8512-4c291c33e3be","response":{"name":"b9dcce3c-be61-4759-8512-4c291c33e3be","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 14 Sep 2025 10:06:37 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "Based on my current knowledge, Ruby is considered the best language to learn."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.45226593017578126
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 97,
+            "candidatesTokenCount": 15,
+            "totalTokenCount": 112,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 97
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 15
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-09-14T10:06:36.783227Z",
+          "responseId": "rJPGaPvmL-nvxN8P8-OciAo"
+        }
+  recorded_at: Sun, 14 Sep 2025 10:06:37 GMT
+recorded_with: VCR 6.3.1

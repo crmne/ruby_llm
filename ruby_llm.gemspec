@@ -28,6 +28,12 @@ Gem::Specification.new do |spec|
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
+  # Post-install message for upgrading users
+  spec.post_install_message = <<~MESSAGE
+    Upgrading from RubyLLM <= 1.6.x? Check the upgrade guide for new features and migration instructions
+    --> https://rubyllm.com/upgrading-to-1-7/
+  MESSAGE
+
   # Use Dir.glob to list all files within the lib directory
   spec.files = Dir.glob('lib/**/*') + ['README.md', 'LICENSE']
   spec.require_paths = ['lib']

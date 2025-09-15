@@ -75,7 +75,7 @@ end
 # => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue. The framework automatically manages context window limits, truncating older messages if necessary to stay within the model's constraints.
+Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
 
 ## Guiding AI Behavior with System Prompts
 
@@ -106,18 +106,18 @@ System prompts are added to the conversation as messages with the `:system` role
 
 ## Working with Different Models
 
-RubyLLM supports over 500 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
+RubyLLM supports over 600 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
 
 ```ruby
 # Use a specific model via ID or alias
-chat_claude = RubyLLM.chat(model: 'claude-3-5-sonnet')
-chat_gemini = RubyLLM.chat(model: 'gemini-1.5-pro-latest')
+chat_claude = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+chat_gemini = RubyLLM.chat(model: '{{ site.models.gemini_current_latest }}')
 
 # Change the model on an existing chat instance
-chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+chat = RubyLLM.chat(model: '{{ site.models.default_chat }}')
 response1 = chat.ask "Initial question..."
 
-chat.with_model('claude-3-opus-20240229')
+chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
@@ -129,11 +129,11 @@ Many modern AI models can process multiple types of input beyond just text. Ruby
 
 ### Working with Images
 
-Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
+Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images.
 
 ```ruby
 # Ensure you select a vision-capable model
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_vision }}')
 
 # Ask about a local image file
 response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
@@ -148,14 +148,40 @@ response = chat.ask "Compare the user interfaces in these two screenshots.", wit
 puts response.content
 ```
 
+### Working with Videos
+
+You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
+
+```ruby
+# Ask about a local video file
+chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
+puts response.content
+
+# Ask about a video from a URL
+response = chat.ask "Summarize the main events in this video.", with: "https://example.com/demo_video.mp4"
+puts response.content
+
+# Combine videos with other file types
+response = chat.ask "Analyze these files for visual content.", with: ["diagram.png", "demo.mp4", "notes.txt"]
+puts response.content
+```
+
+> Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
+>
+> Only Google Gemini and VertexAI models currently support video input.
+>
+> Large video files may be subject to size or duration limits imposed by the provider.
+{: .note }
+
 RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `gpt-4o-audio-preview` support audio input.
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` support audio input.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
+chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
 
 # Transcribe or ask questions about audio content
 response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
@@ -171,7 +197,7 @@ puts response.content
 You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Analyze a text file
 response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
@@ -188,7 +214,7 @@ PDF support allows models to analyze complex documents including reports, manual
 
 ```ruby
 # Use a model that supports PDFs
-chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')
 
 # Ask about a local PDF
 response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
@@ -211,7 +237,7 @@ puts response.content
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Single file - type automatically detected
 response = chat.ask "What's in this file?", with: "path/to/document.pdf"
@@ -230,6 +256,7 @@ response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 
 **Supported file types:**
 - **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Videos:** .mp4, .mov, .avi, .webm
 - **Audio:** .mp3, .wav, .m4a, .ogg, .flac
 - **Documents:** .pdf, .txt, .md, .csv, .json, .xml
 - **Code:** .rb, .py, .js, .html, .css (and many others)
@@ -260,7 +287,7 @@ The `with_temperature` method returns the chat instance, allowing you to chain m
 
 ### Provider-Specific Parameters
 
-Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface.
+Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface. Parameters passed via `with_params` will override any defaults set by RubyLLM, giving you full control over the API request payload.
 
 ```ruby
 # response_format parameter is supported by :openai, :ollama, :deepseek
@@ -269,20 +296,19 @@ response = chat.ask "What is the square root of 64? Answer with a JSON object wi
 puts JSON.parse(response.content)
 ```
 
-> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors.
-{: .note }
+> **With great power comes great responsibility:** The `with_params` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
+{: .warning }
+
+> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
+{: .warning }
 
 ### Custom HTTP Headers
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
 
 ```ruby
 # Enable Anthropic's beta features
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
       .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
 
 response = chat.ask "Tell me about the weather"
@@ -424,17 +450,13 @@ Not all models support structured output. Currently supported:
 - **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
-Models that don't support structured output will raise an error:
+Models that don't support structured output:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
-chat.with_schema(schema) # Raises UnsupportedStructuredOutputError
-```
-
-You can force schema usage even if the model registry says it's unsupported:
-
-```ruby
-chat.with_schema(schema, force: true)
+chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
+chat.with_schema(schema)
+response = chat.ask('Generate a person')
+# Provider will return an error if unsupported
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -509,9 +531,9 @@ RubyLLM provides four event handlers that cover the complete chat lifecycle:
 ```ruby
 chat = RubyLLM.chat
 
-# Called just before the API request for an assistant message starts
+# Called at first chunk received from the assistant
 chat.on_new_message do
-  puts "Assistant is typing..."
+  print "Assistant > "
 end
 
 # Called after the complete assistant message (including tool calls/results) is received
@@ -528,7 +550,7 @@ chat.on_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
-# Called after a tool returns its result (v1.6.0+)
+# Called after a tool returns its result
 chat.on_tool_result do |result|
   puts "Tool returned: #{result}"
 end
