@@ -24,10 +24,10 @@ http_interactions:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 09:53:54 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 10 Sep 2025 14:46:11 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:46:11 GMT
+  recorded_at: Sun, 14 Sep 2025 09:53:54 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:46:14 GMT
+      - Sun, 14 Sep 2025 09:54:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This image displays a **gemstone**, specifically a **ruby**.\n\nIt's stylized, appearing as a faceted red gem with reflections that give it a sense of depth and shine. Given its appearance, it is very similar to the logo for the Ruby programming language."
+                    "text": "This image displays a **bright red, faceted gemstone**, which strongly resembles a **ruby**.\n\nHere are some details:\n*   **Color:** It's a vibrant, deep red, with variations in shade due to light and shadow on its facets, ranging from darker crimson to brilliant scarlet.\n*   **Shape:** It's a polished, multi-faceted gem, cut in a classic style with a visible table (the flat top surface) and numerous geometric facets on its crown and sides.\n*   **Lighting:** There's a prominent, bright white, crescent-shaped highlight on the upper part of the gem, indicating a strong light source reflecting off its polished surface. Other smaller, sharp reflections are also visible on various facets, giving it a brilliant and luminous appearance.\n*   **Context:** This specific image is widely recognized as the **official logo for the Ruby programming language**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.56293532631614
+              "avgLogprobs": -1.9923346146293308
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 55,
-            "totalTokenCount": 371,
+            "candidatesTokenCount": 184,
+            "totalTokenCount": 1272,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "IMAGE",
                 "tokenCount": 258
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 55
+                "tokenCount": 184
               }
             ],
-            "thoughtsTokenCount": 50
+            "thoughtsTokenCount": 822
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:46:12.064724Z",
-          "responseId": "NI_BaNT5A8q1t_gP26T2oAg"
+          "createTime": "2025-09-14T09:53:54.750498Z",
+          "responseId": "spDGaKLnLdf0t_gPkp-q0A0"
         }
-  recorded_at: Wed, 10 Sep 2025 14:46:14 GMT
+  recorded_at: Sun, 14 Sep 2025 09:54:00 GMT
 recorded_with: VCR 6.3.1

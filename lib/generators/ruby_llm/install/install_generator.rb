@@ -32,12 +32,12 @@ module RubyLLM
       migration_template 'create_chats_migration.rb.tt',
                          "db/migrate/create_#{chat_table_name}.rb"
 
-      # Then create messages table (must come before tool_calls due to foreign key)
+      # Then create messages table
       sleep 1 # Ensure different timestamp
       migration_template 'create_messages_migration.rb.tt',
                          "db/migrate/create_#{message_table_name}.rb"
 
-      # Then create tool_calls table (references messages)
+      # Then create tool_calls table
       sleep 1 # Ensure different timestamp
       migration_template 'create_tool_calls_migration.rb.tt',
                          "db/migrate/create_#{tool_call_table_name}.rb"
@@ -46,6 +46,12 @@ module RubyLLM
       sleep 1 # Ensure different timestamp
       migration_template 'create_models_migration.rb.tt',
                          "db/migrate/create_#{model_table_name}.rb"
+
+      # Add references to chats, tool_calls and messages.
+      sleep 1 # Ensure different timestamp
+      migration_template 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt',
+                         'db/migrate/add_references_to_' \
+                         "#{chat_table_name}_#{tool_call_table_name}_and_#{message_table_name}.rb"
     end
 
     def create_model_files

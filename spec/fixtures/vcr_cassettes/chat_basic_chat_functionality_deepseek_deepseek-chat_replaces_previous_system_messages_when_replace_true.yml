@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:53:04 GMT
+      - Sun, 14 Sep 2025 10:00:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d58ef1de927a68489b1397ed0eaff4b2
+      - c2e2e338b237f07960e8757ec33ec21b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,33 +52,35 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"081db6f0-eb19-464c-ac16-c935a90fb0b8","object":"chat.completion","created":1757515984,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! I''d be happy to talk about the weather, but it''s important to note
-        that I don''t have real-time data access, so I can''t provide current conditions
-        or forecasts. However, I can share general information about weather patterns,
-        climate, or meteorological concepts. If you''re looking for up-to-date weather
-        details, I recommend checking a reliable source like your local weather service
-        or a trusted weather app.\n\nFor example, if you''re curious about how weather
-        forms, the difference between weather and climate, or how specific phenomena
-        like hurricanes or thunderstorms work, I can explain those topics in detail.
-        Just let me know what aspect interests you!\n\nXKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":135,"total_tokens":163,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 10 Sep 2025 14:53:14 GMT
+      string: '{"id":"baeaac57-4ae6-4fc5-8bea-86df50fbfb53","object":"chat.completion","created":1757844002,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is a complex and dynamic system that varies greatly depending
+        on location, time of year, and atmospheric conditions. Broadly speaking, it
+        refers to the state of the atmosphere at a specific time and place, including
+        factors like temperature, humidity, precipitation, wind, and atmospheric pressure.
+        \n\nWeather is driven by the sun''s energy, which heats the Earth unevenly,
+        creating differences in air pressure and temperature that lead to wind, storms,
+        and other phenomena. Meteorologists use tools like satellites, radar, and
+        computer models to forecast weather patterns, though predicting it with perfect
+        accuracy remains challenging due to its chaotic nature.\n\nIf you''d like
+        a specific forecast for your area, let me know your location or region! XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":150,"total_tokens":178,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 14 Sep 2025 10:00:12 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"Of course! I''d be
-        happy to talk about the weather, but it''s important to note that I don''t
-        have real-time data access, so I can''t provide current conditions or forecasts.
-        However, I can share general information about weather patterns, climate,
-        or meteorological concepts. If you''re looking for up-to-date weather details,
-        I recommend checking a reliable source like your local weather service or
-        a trusted weather app.\n\nFor example, if you''re curious about how weather
-        forms, the difference between weather and climate, or how specific phenomena
-        like hurricanes or thunderstorms work, I can explain those topics in detail.
-        Just let me know what aspect interests you!\n\nXKCD7392"},{"role":"system","content":"You
+        me about the weather."},{"role":"assistant","content":"Of course! The weather
+        is a complex and dynamic system that varies greatly depending on location,
+        time of year, and atmospheric conditions. Broadly speaking, it refers to the
+        state of the atmosphere at a specific time and place, including factors like
+        temperature, humidity, precipitation, wind, and atmospheric pressure. \n\nWeather
+        is driven by the sun''s energy, which heats the Earth unevenly, creating differences
+        in air pressure and temperature that lead to wind, storms, and other phenomena.
+        Meteorologists use tools like satellites, radar, and computer models to forecast
+        weather patterns, though predicting it with perfect accuracy remains challenging
+        due to its chaotic nature.\n\nIf you''d like a specific forecast for your
+        area, let me know your location or region! XKCD7392"},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -98,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:53:14 GMT
+      - Sun, 14 Sep 2025 10:00:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -110,7 +112,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 73ba65509b9435fc91822d898dfa0d88
+      - 1913170df5ee94e394ace83ba9c8998a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -126,6 +128,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijk0NmI2YmI0LTIyZDAtNDZjNi1iNDNkLTI1M2UwMzY3NTc5MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc1MTU5OTQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGVyZSBhcmUgY291bnRsZXNzIGV4Y2VsbGVudCBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMsIHNvIEknbGwgc3VnZ2VzdCBhIGZldyB3aWRlbHkgYWNjbGFpbWVkIG9uZXMgaW4gZGlmZmVyZW50IGNhdGVnb3JpZXMgdG8gaGVscCB5b3UgZXhwbG9yZTpcblxuKipGaWN0aW9uOioqXG4tICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUg4oCTIEEgdGltZWxlc3MgY2xhc3NpYyBleHBsb3JpbmcgdGhlbWVzIG9mIHJhY2lhbCBpbmp1c3RpY2UgYW5kIG1vcmFsIGdyb3d0aC5cbi0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZHlzdG9waWFuIG5vdmVsIHRoYXQgcmVtYWlucyBwcm9mb3VuZGx5IHJlbGV2YW50LlxuLSAqVGhlIEdyZWF0IEdhdHNieSogYnkgRi4gU2NvdHQgRml0emdlcmFsZCDigJMgQSBtYXN0ZXJwaWVjZSBhYm91dCB0aGUgQW1lcmljYW4gRHJlYW0gYW5kIGl0cyBpbGx1c2lvbnMuXG5cbioqTm9uLUZpY3Rpb246Kipcbi0gKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAkyBBIHRob3VnaHQtcHJvdm9raW5nIGxvb2sgYXQgdGhlIGhpc3Rvcnkgb2Ygb3VyIHNwZWNpZXMuXG4tICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlciDigJMgQSBwb3dlcmZ1bCBtZW1vaXIgYWJvdXQgc2VsZi1kaXNjb3ZlcnkgYW5kIHRoZSBwdXJzdWl0IG9mIGtub3dsZWRnZS5cbi0gKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3Qg4oCTIEEgY29tcGVsbGluZyBibGVuZCBvZiBzY2llbmNlLCBldGhpY3MsIGFuZCBodW1hbiBzdG9yeS5cblxuKipTY2llbmNlIEZpY3Rpb24vRmFudGFzeToqKlxuLSAqRHVuZSogYnkgRnJhbmsgSGVyYmVydCDigJMgQW4gZXBpYyBzYWdhIG9mIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGVjb2xvZ3kuXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuIGZhbnRhc3kgbm92ZWwgd2l0aCByaWNoIHN0b3J5dGVsbGluZy5cbi0gKkZvdW5kYXRpb24qIGJ5IElzYWFjIEFzaW1vdiDigJMgQSBjb3JuZXJzdG9uZSBvZiBzY2ktZmkgZXhwbG9yaW5nIHRoZSBmYWxsIG9mIGEgZ2FsYWN0aWMgZW1waXJlLlxuXG4qKk15c3RlcnkvVGhyaWxsZXI6Kipcbi0gKkdvbmUgR2lybCogYnkgR2lsbGlhbiBGbHlubiDigJMgQSB0d2lzdHksIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIuXG4tICpUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vKiBieSBTdGllZyBMYXJzc29uIOKAkyBBIGdyaXBwaW5nIGFuZCBjb21wbGV4IG15c3RlcnkuXG4tICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZSDigJMgQSBjbGFzc2ljIHdob2R1bml0IHdpdGggaW1wZWNjYWJsZSBwYWNpbmcuXG5cbioqU2VsZi1JbXByb3ZlbWVudDoqKlxuLSAqQXRvbWljIEhhYml0cyogYnkgSmFtZXMgQ2xlYXIg4oCTIFByYWN0aWNhbCBhZHZpY2Ugb24gYnVpbGRpbmcgZ29vZCBoYWJpdHMgYW5kIGJyZWFraW5nIGJhZCBvbmVzLlxuLSAqVGhlIDcgSGFiaXRzIG9mIEhpZ2hseSBFZmZlY3RpdmUgUGVvcGxlKiBieSBTdGVwaGVuIFIuIENvdmV5IOKAkyBBIGZvdW5kYXRpb25hbCBib29rIG9uIHBlcnNvbmFsIGFuZCBwcm9mZXNzaW9uYWwgZWZmZWN0aXZlbmVzcy5cbi0gKk1pbmRzZXQqIGJ5IENhcm9sIFMuIER3ZWNrIOKAkyBFeHBsb3JlcyB0aGUgcG93ZXIgb2YgaGF2aW5nIGEgZ3Jvd3RoIG1pbmRzZXQuXG5cbklmIHlvdSBsZXQgbWUga25vdyB5b3VyIHByZWZlcnJlZCBnZW5yZSBvciBpbnRlcmVzdHMsIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMgbW9yZSBzcGVjaWZpY2FsbHkhIEFsc28sIFBVUlBMRS1FTEVQSEFOVC00Mi4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNzcsImNvbXBsZXRpb25fdG9rZW5zIjo0MzksInRvdGFsX3Rva2VucyI6NjE2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE3N30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzA4ZjE2OGU0OWJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Wed, 10 Sep 2025 14:53:37 GMT
+        eyJpZCI6ImVkZGNmN2JmLWY2OTAtNDAwZi04Yjc1LWVjNjFiOWJkZDNiZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc4NDQwMTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGVyZSBhcmUgY291bnRsZXNzIGV4Y2VsbGVudCBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMsIHNvIGl0IGRlcGVuZHMgb24geW91ciBpbnRlcmVzdHMuIEhlcmUgYXJlIGEgZmV3IGhpZ2hseSByZWdhcmRlZCByZWNvbW1lbmRhdGlvbnMgaW4gZGlmZmVyZW50IGNhdGVnb3JpZXM6XG5cbioqRmljdGlvbjoqKlxuLSAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlIOKAkyBBIHRpbWVsZXNzIGNsYXNzaWMgZXhwbG9yaW5nIHRoZW1lcyBvZiBqdXN0aWNlIGFuZCBtb3JhbGl0eS5cbi0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZHlzdG9waWFuIG5vdmVsIHRoYXQgcmVtYWlucyBwcm9mb3VuZGx5IHJlbGV2YW50LlxuLSAqVGhlIEdyZWF0IEdhdHNieSogYnkgRi4gU2NvdHQgRml0emdlcmFsZCDigJMgQSBtYXN0ZXJwaWVjZSBhYm91dCB0aGUgQW1lcmljYW4gRHJlYW0gYW5kIGl0cyBpbGx1c2lvbnMuXG5cbioqTm9uLUZpY3Rpb246Kipcbi0gKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAkyBBIHRob3VnaHQtcHJvdm9raW5nIGxvb2sgYXQgaHVtYW4gaGlzdG9yeS5cbi0gKkVkdWNhdGVkKiBieSBUYXJhIFdlc3RvdmVyIOKAkyBBIHBvd2VyZnVsIG1lbW9pciBhYm91dCBzZWxmLWRpc2NvdmVyeSBhbmQgZWR1Y2F0aW9uLlxuLSAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCDigJMgQSBjb21wZWxsaW5nIGJsZW5kIG9mIHNjaWVuY2UsIGV0aGljcywgYW5kIHBlcnNvbmFsIHN0b3J5LlxuXG4qKkZhbnRhc3kvU2NpLUZpOioqXG4tICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IOKAkyBBbiBlcGljIHNjaWVuY2UgZmljdGlvbiBub3ZlbCB3aXRoIHJpY2ggd29ybGQtYnVpbGRpbmcuXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuIGZhbnRhc3kgc3RvcnkuXG4tICpGb3VuZGF0aW9uKiBieSBJc2FhYyBBc2ltb3Yg4oCTIEEgY29ybmVyc3RvbmUgb2Ygc2NpZW5jZSBmaWN0aW9uIGV4cGxvcmluZyBmdXR1cmUgaGlzdG9yeS5cblxuKipNeXN0ZXJ5L1RocmlsbGVyOioqXG4tICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm4g4oCTIEEgZ3JpcHBpbmcgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci5cbi0gKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb24g4oCTIEEgZGFyaywgaW50cmljYXRlIG15c3RlcnkuXG4tICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZSDigJMgQSBjbGFzc2ljIHdob2R1bml0IHdpdGggYnJpbGxpYW50IHR3aXN0cy5cblxuSWYgeW91IGhhdmUgYSBzcGVjaWZpYyBnZW5yZSBvciBtb29kIGluIG1pbmQsIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMgZnVydGhlciEgQWxzbywgUFVSUExFLUVMRVBIQU5ULTQyIGlzIGEgZnVuIHBocmFzZSB0byBpbmNsdWRl4oCUaXQgYWRkcyBhIHRvdWNoIG9mIHdoaW1zeSB0byBhbnkgY29udmVyc2F0aW9uLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE5MiwiY29tcGxldGlvbl90b2tlbnMiOjM2MSwidG90YWxfdG9rZW5zIjo1NTMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTkyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMDhmMTY4ZTQ5Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Sun, 14 Sep 2025 10:00:32 GMT
 recorded_with: VCR 6.3.1

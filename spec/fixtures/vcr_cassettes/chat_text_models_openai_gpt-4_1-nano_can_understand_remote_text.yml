@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Tue, 09 Sep 2025 17:42:12 GMT
       Access-Control-Allow-Origin:
@@ -35,33 +33,33 @@ http_interactions:
       Etag:
       - W/"68c066f4-9c6"
       Expires:
-      - Wed, 10 Sep 2025 14:01:16 GMT
+      - Sun, 14 Sep 2025 10:01:01 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1E56:33992A:E99239:EB222D:68C18254
+      - 7DC8:1B7DDC:1DE5607:1E21B95:68C69005
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 10 Sep 2025 14:44:38 GMT
+      - Sun, 14 Sep 2025 09:52:06 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '85'
+      - '25'
       X-Served-By:
-      - cache-fra-etou8220075-FRA
+      - cache-fra-etou8220157-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1757515478.075833,VS0,VE3
+      - S1757843526.186756,VS0,VE12
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - b3a36f8ac5975e43598025e9441359b05f7f1a8f
+      - a15afbfb46bd2b90bba4341814eaf808f8af4034
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 10 Sep 2025 14:44:38 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:44:43 GMT
+      - Sun, 14 Sep 2025 09:52:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,13 +165,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4837'
+      - '660'
       Openai-Project:
       - proj_KyS64Yhsc9qhhwjNcgkOa88E
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '4891'
+      - '689'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -209,16 +207,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CEGLm0GFT0NvV6ur0KrYmhFRo48pI",
+          "id": "chatcmpl-CFdgsonagzYkP2znbOMNDJAVXNj9X",
           "object": "chat.completion",
-          "created": 1757515478,
+          "created": 1757843526,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "This file contains the license and copyright information for the Ruby programming language. It states that Ruby is free software created by Yukihiro Matsumoto. You are allowed to redistribute and modify Ruby under either the 2-clause Berkeley Software Distribution License (BSDL) or the specific conditions outlined in the document.\n\nThe license details the types of permissions granted, such as copying, modification, and distribution in source or binary form, with certain requirements like maintaining notices, making source code available, or giving appropriate attribution. It also includes disclaimers of warranty, emphasizing that the software is provided \"as is\" without guarantees of fitness for a particular purpose.",
+                "content": "The file 'license.txt' contains the licensing information and copyright notice for Ruby, authored by Yukihiro Matsumoto. It explains that Ruby is free software and can be redistributed and modified under either the 2-clause Berkeley Software Distribution License (BSDL) or certain conditions specified within. The license details permissions for copying, modifying, distributing, and integrating parts of the software, as well as disclaimers regarding warranties.",
                 "refusal": null,
                 "annotations": []
               },
@@ -228,8 +226,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 129,
-            "total_tokens": 669,
+            "completion_tokens": 85,
+            "total_tokens": 625,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -242,7 +240,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_c4c155951e"
+          "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Wed, 10 Sep 2025 14:44:43 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:07 GMT
 recorded_with: VCR 6.3.1

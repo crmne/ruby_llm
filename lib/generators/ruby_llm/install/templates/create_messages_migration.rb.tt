@@ -1,13 +1,10 @@
 class Create<%= message_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= message_table_name %> do |t|
-      t.references :<%= chat_table_name.singularize %>, null: false, foreign_key: true
       t.string :role, null: false
       t.text :content
-      t.references :<%= model_table_name.singularize %>, foreign_key: true
       t.integer :input_tokens
       t.integer :output_tokens
-      t.references :<%= tool_call_table_name.singularize %>, foreign_key: true
       t.timestamps
     end
 

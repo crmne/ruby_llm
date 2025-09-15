@@ -23,11 +23,11 @@ http_interactions:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Wed, 10 Sep 2025 14:55:31 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - Sun, 14 Sep 2025 10:02:51 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:55:31 GMT
+  recorded_at: Sun, 14 Sep 2025 10:02:51 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:55:35 GMT
+      - Sun, 14 Sep 2025 10:02:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,18 +111,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by complex interactions within Earth's atmosphere. When we talk about \"the weather,\" we're generally referring to the state of the atmosphere at a particular place and time, encompassing several key elements:\n\n*   **Temperature:** How hot or cold it is, usually measured in Celsius or Fahrenheit. This is influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail. This depends on moisture in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water vapor in the air. High humidity can make it feel muggier, while low humidity can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky is covered by clouds. Clouds play a crucial role in regulating temperature and producing precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with stormy conditions.\n\nWeather is constantly evolving due to the movement of air masses, fronts (boundaries between different air masses), and large-scale atmospheric patterns. Meteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors (like the hypothetical **XKCD7392** weather station, which might be collecting data on temperature and wind speed), to gather data. This data is then fed into sophisticated computer models to predict future weather conditions.\n\nTo get the most accurate and up-to-date weather information for your specific location, you'd typically check a local weather forecast from a reliable source like a national meteorological service, a weather app, or a local news outlet."
+                    "text": "The weather is a fascinating and ever-changing aspect of our planet, driven by complex interactions within the atmosphere. Generally speaking, when we talk about the weather, we're referring to the current state of the atmosphere at a particular time and location. This includes several key elements:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:** The amount of moisture or water vapor in the air.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air, which influences weather patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight now, without knowing your specific location, I can't give you a precise forecast. However, across the globe, you'll find a vast array of weather conditions. Some places are experiencing warm, sunny days, while others are battling cold fronts, heavy rain, or even blizzards. Weather patterns are influenced by everything from ocean currents and mountain ranges to the tilt of the Earth's axis and the amount of solar radiation received.\n\nFor the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news broadcast. They can provide details like the current temperature, \"feels like\" temperature, wind chill, heat index, chance of precipitation, and any active weather warnings. It's always a good idea to stay informed, especially if you have outdoor plans or need to prepare for significant weather events.\n\nAnd remember, even on the most unpredictable days, there's always something interesting happening in the sky, a concept that XKCD7392 might find amusingly complex."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.24875946044921876
+              "avgLogprobs": -0.2594635229316547
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 395,
-            "totalTokenCount": 615,
+            "candidatesTokenCount": 417,
+            "totalTokenCount": 572,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,14 +133,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 395
+                "tokenCount": 417
               }
             ],
-            "thoughtsTokenCount": 195
+            "thoughtsTokenCount": 130
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:55:31.701650Z",
-          "responseId": "Y5HBaNLpKqqdhcIP9M2WiQ4"
+          "createTime": "2025-09-14T10:02:51.834050Z",
+          "responseId": "y5LGaIL0MunvxN8P8-OciAo"
         }
-  recorded_at: Wed, 10 Sep 2025 14:55:35 GMT
+  recorded_at: Sun, 14 Sep 2025 10:02:54 GMT
 recorded_with: VCR 6.3.1

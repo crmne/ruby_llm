@@ -12,12 +12,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250910T144933Z
+      - 20250914T095706Z
       X-Amz-Content-Sha256:
       - dc922a68df4ca30d0640b849fd11d16716252b1f76844396178b4aacb7825ad0
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250910/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b048753203d07f9cb59fa84573e33af075e9f9c07273891f5ed0d82c67103031
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a2c81d1bb9d1848fa45e9c0c6d76e2a51e49883fc55772919b5bf480eed7663c
       Content-Type:
       - application/json
       Accept:
@@ -30,7 +30,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:49:42 GMT
+      - Sun, 14 Sep 2025 09:57:14 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,11 +38,11 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f5e73b86-4c3b-4590-bc6e-5391516daaef
+      - 82f19fd8-f2ca-49ab-9d52-98f8660cf554
       X-Amzn-Errortype:
       - ValidationException:http://internal.amazon.com/coral/com.amazon.bedrock/
     body:
       encoding: UTF-8
       string: '{"message":"too many total text bytes: 10000002 > 9000000"}'
-  recorded_at: Wed, 10 Sep 2025 14:49:42 GMT
+  recorded_at: Sun, 14 Sep 2025 09:57:14 GMT
 recorded_with: VCR 6.3.1

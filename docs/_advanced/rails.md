@@ -87,6 +87,29 @@ rails db:migrate
 
 Your Rails app is now AI-ready!
 
+### Adding a Chat UI
+
+Want a ready-to-use chat interface? Run the chat UI generator:
+
+```bash
+rails generate ruby_llm:chat_ui
+```
+
+This creates a complete chat interface with:
+- **Controllers**: Handles chat and message creation with background processing
+- **Views**: Modern UI with Turbo Streams for real-time updates
+- **Jobs**: Background job for processing AI responses without blocking
+- **Routes**: RESTful routes for chats and messages
+
+After running the generator, start your server and visit `http://localhost:3000/chats` to begin chatting!
+
+The UI generator also supports custom model names:
+
+```bash
+# Use your custom model names from the install generator
+rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
+```
+
 #### Generator Options
 
 The generator uses Rails-like syntax for custom model names:
@@ -105,94 +128,6 @@ rails generate ruby_llm:install --skip-active-storage
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
 
-### Manual Setup
-
-For custom setups, create the migrations manually:
-
-```bash
-# Generate basic models and migrations
-rails g model Chat model_id:string
-rails g model Message chat:references role:string content:text model_id:string input_tokens:integer output_tokens:integer tool_call:references
-rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
-rails g model Model model_id:string name:string provider:string family:string model_created_at:datetime context_window:integer max_output_tokens:integer knowledge_cutoff:date modalities:jsonb capabilities:jsonb pricing:jsonb metadata:jsonb
-```
-
-Then adjust the migrations to match what the generator creates:
-
-```ruby
-# db/migrate/YYYYMMDDHHMMSS_create_chats.rb
-class CreateChats < ActiveRecord::Migration[7.1]
-  def change
-    create_table :chats do |t|
-      t.string :model_id
-      t.timestamps
-    end
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_messages.rb
-class CreateMessages < ActiveRecord::Migration[7.1]
-  def change
-    create_table :messages do |t|
-      t.references :chat, null: false, foreign_key: true
-      t.string :role
-      t.text :content
-      t.string :model_id
-      t.integer :input_tokens
-      t.integer :output_tokens
-      t.references :tool_call
-      t.timestamps
-    end
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_tool_calls.rb
-class CreateToolCalls < ActiveRecord::Migration[7.1]
-  def change
-    create_table :tool_calls do |t|
-      t.references :message, null: false, foreign_key: true
-      t.string :tool_call_id, null: false
-      t.string :name, null: false
-      # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :arguments, default: {}
-      t.timestamps
-    end
-
-    add_index :tool_calls, :tool_call_id
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_models.rb
-class CreateModels < ActiveRecord::Migration[7.1]
-  def change
-    create_table :models do |t|
-      t.string :model_id, null: false
-      t.string :name, null: false
-      t.string :provider, null: false
-      t.string :family
-      t.datetime :model_created_at
-      t.integer :context_window
-      t.integer :max_output_tokens
-      t.date :knowledge_cutoff
-      # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :modalities, default: {}
-      t.jsonb :capabilities, default: []
-      t.jsonb :pricing, default: {}
-      t.jsonb :metadata, default: {}
-      t.timestamps
-
-      t.index [:provider, :model_id], unique: true
-      t.index :provider
-      t.index :family
-    end
-  end
-end
-```
-
-Run the migrations: `rails db:migrate`
-
-> **Database Compatibility:** Use `jsonb` for PostgreSQL, `json` for MySQL/SQLite.
-{: .note }
 
 ### Setting Up ActiveStorage
 
@@ -373,7 +308,7 @@ chat = Chat.create!(
 
 ```ruby
 # In legacy mode, you can set context after creation
-chat = Chat.create!(model_id: 'gpt-4')
+chat = Chat.create!(model: 'gpt-4')
 chat.with_context(custom_context)  # This method only exists in legacy mode
 ```
 
@@ -437,7 +372,7 @@ The `acts_as_chat` helper provides all standard chat methods:
 
 ```ruby
 # Create a chat
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}', user: current_user)
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}', user: current_user)
 
 # Ask a question - the persistence flow runs automatically
 begin
@@ -495,7 +430,7 @@ Model.where(supports_vision: true)
 System prompts are persisted as messages with the `system` role:
 
 ```ruby
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
@@ -523,7 +458,7 @@ class Weather < RubyLLM::Tool
 end
 
 # Register the tool with your chat
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 chat_record.with_tool(Weather)
 
 # When the AI uses the tool, both the call and result are persisted
@@ -547,7 +482,7 @@ Send files to AI models using ActiveStorage:
 
 ```ruby
 # Create a chat
-chat_record = Chat.create!(model_id: '{{ site.models.anthropic_current }}')
+chat_record = Chat.create!(model: '{{ site.models.anthropic_current }}')
 
 # Send a single file - type automatically detected
 chat_record.ask("What's in this file?", with: "app/assets/images/diagram.png")
@@ -582,7 +517,7 @@ class PersonSchema < RubyLLM::Schema
 end
 
 # Use with your persisted chat
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
 
 # The structured response is automatically parsed as a Hash
@@ -644,7 +579,7 @@ class Chat < ApplicationRecord
     # Fill in attributes and save once we have content
     @message.assign_attributes(
       content: message.content,
-      model_id: message.model_id,
+      model: Model.find_by(model_id: message.model_id),
       input_tokens: message.input_tokens,
       output_tokens: message.output_tokens
     )

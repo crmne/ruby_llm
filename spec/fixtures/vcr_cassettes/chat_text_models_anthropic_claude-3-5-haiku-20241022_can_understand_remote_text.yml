@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Tue, 09 Sep 2025 17:42:12 GMT
+      - Tue, 09 Sep 2025 17:42:13 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68c066f4-9c6"
+      - W/"68c066f5-9c6"
       Expires:
-      - Wed, 10 Sep 2025 14:01:16 GMT
+      - Sun, 14 Sep 2025 10:00:19 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1E56:33992A:E99239:EB222D:68C18254
+      - 5BE5:BAF07:321C8C2:3283B84:68C68FDA
       Accept-Ranges:
       - bytes
       Age:
       - '0'
       Date:
-      - Wed, 10 Sep 2025 14:43:13 GMT
+      - Sun, 14 Sep 2025 09:50:19 GMT
       Via:
       - 1.1 varnish
       X-Served-By:
-      - cache-fra-etou8220056-FRA
+      - cache-fra-etou8220046-FRA
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1757515393.192549,VS0,VE99
+      - S1757843419.499478,VS0,VE109
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 154e1ae158f725d9a570534ed091281d137c7320
+      - a17d174698ef0a4138e7be98fa074978758c2ac6
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 10 Sep 2025 14:43:13 GMT
+  recorded_at: Sun, 14 Sep 2025 09:50:19 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -157,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:43:17 GMT
+      - Sun, 14 Sep 2025 09:50:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,25 +167,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-10T14:43:13Z'
+      - '2025-09-14T09:50:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-10T14:43:17Z'
+      - '2025-09-14T09:50:23Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-10T14:43:13Z'
+      - '2025-09-14T09:50:19Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-10T14:43:13Z'
+      - '2025-09-14T09:50:20Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -195,7 +193,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '3937'
+      - '3299'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -208,17 +206,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01FyrQ9BoaqAf9yX1h6q9zgB","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
-        file is the license text for Ruby, a programming language. It appears to be
-        a custom licensing agreement created by Yukihiro Matsumoto (the creator of
-        Ruby), which allows for fairly liberal redistribution and modification of
-        the software with some conditions. The key points of the license include:\n\n1.
-        Allows free redistribution of the source code\n2. Permits modifications under
-        certain conditions\n3. Allows distribution in binary or object code form\n4.
-        Allows incorporation into other software\n5. Provides a disclaimer of warranties
-        (typical of open-source licenses)\n\nThe license seems to be similar to a
-        BSD-style open-source license, giving users significant freedom to use, modify,
-        and distribute the software while providing some protections for the original
-        author."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":163,"service_tier":"standard"}}'
-  recorded_at: Wed, 10 Sep 2025 14:43:17 GMT
+      string: '{"id":"msg_01VyixX8F7UxLhV3ZD72tPxN","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"This
+        file is a license text for the Ruby programming language. Specifically, it
+        appears to be the Ruby License, which is a permissive open-source license
+        that allows redistribution and modification of the software under certain
+        conditions. \n\nKey points of the license include:\n- The software is copyrighted
+        by Yukihiro Matsumoto\n- Users can redistribute and modify the software \n-
+        There are specific guidelines for distributing modified or unmodified versions\n-
+        The software is provided \"AS IS\" without warranties\n- It offers flexibility
+        for both personal and commercial use\n\nThe license is similar to a BSD-style
+        license, with detailed terms about how the software can be used, modified,
+        and distributed."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":151,"service_tier":"standard"}}'
+  recorded_at: Sun, 14 Sep 2025 09:50:23 GMT
 recorded_with: VCR 6.3.1

@@ -5,7 +5,7 @@ module RubyLLM
   class Railtie < Rails::Railtie
     initializer 'ruby_llm.inflections' do
       ActiveSupport::Inflector.inflections(:en) do |inflect|
-        inflect.acronym 'LLM'
+        inflect.acronym 'RubyLLM'
       end
     end
 

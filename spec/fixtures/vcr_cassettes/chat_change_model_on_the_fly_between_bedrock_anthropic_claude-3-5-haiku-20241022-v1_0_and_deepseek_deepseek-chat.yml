@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250910T145553Z
+      - 20250914T100311Z
       X-Amz-Content-Sha256:
       - 01ab27c7d96d3a8fdf4610e6a4bc3a862f94de194536525920292dfaa9df20f2
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250910/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=8bf1089af3fb385cf47cfeee389daa540367eb4eb170057209ef3632e72cc021
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a4c642415ca5bfaf06fb0ad9fd01d078687a55de8a52f9f5d0c1d1861ab36bc4
       Content-Type:
       - application/json
       Accept:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:55:53 GMT
+      - Sun, 14 Sep 2025 10:03:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,17 +39,17 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b3f4363a-5a1f-4518-92f0-4b67c23acd38
+      - d6a9f97c-eb6c-4d0c-913d-e01fd2e24967
       X-Amzn-Bedrock-Invocation-Latency:
-      - '451'
+      - '508'
       X-Amzn-Bedrock-Output-Token-Count:
       - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01FVWAxgBhznQuBBdxMkMPXo","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Wed, 10 Sep 2025 14:55:54 GMT
+      string: '{"id":"msg_bdrk_01HfpGFeyGJf467coSTTSXDJ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Sun, 14 Sep 2025 10:03:12 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -75,7 +75,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:55:54 GMT
+      - Sun, 14 Sep 2025 10:03:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -87,7 +87,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3800e0f35f3800406a594e46115766d1
+      - 551aaa00d5ecde14cc53a3d8015688bf
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -102,8 +102,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8e76cd9d-44fa-4c68-983f-a7003eedfb1b","object":"chat.completion","created":1757516154,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That
-        would be **8**. \n\nIt looks like we''re doubling the previous answer each
-        time!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":19,"total_tokens":43,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 10 Sep 2025 14:55:58 GMT
+      string: '{"id":"02060252-dd74-49e7-9bfb-b6aa1dd24304","object":"chat.completion","created":1757844193,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 14 Sep 2025 10:03:16 GMT
 recorded_with: VCR 6.3.1

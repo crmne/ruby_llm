@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Tue, 09 Sep 2025 17:42:12 GMT
       Access-Control-Allow-Origin:
@@ -35,33 +33,33 @@ http_interactions:
       Etag:
       - W/"68c066f4-9c6"
       Expires:
-      - Wed, 10 Sep 2025 14:01:16 GMT
+      - Sun, 14 Sep 2025 10:01:01 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1E56:33992A:E99239:EB222D:68C18254
+      - 7DC8:1B7DDC:1DE5607:1E21B95:68C69005
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 10 Sep 2025 14:43:58 GMT
+      - Sun, 14 Sep 2025 09:51:01 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '45'
       X-Served-By:
-      - cache-fra-etou8220139-FRA
+      - cache-fra-etou8220058-FRA
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1757515438.220516,VS0,VE43
+      - S1757843461.374844,VS0,VE137
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 71ed1e27bc8685d1e302d2b7bb0c0bfc4d51ab5f
+      - 5e3acbdcdfe9252efa830f9108627370ec2f91e7
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 10 Sep 2025 14:43:58 GMT
+  recorded_at: Sun, 14 Sep 2025 09:51:01 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -160,7 +158,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:44:03 GMT
+      - Sun, 14 Sep 2025 09:51:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -170,7 +168,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=5209
+      - gfet4t7; dur=19108
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -184,7 +182,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "This file, `license.txt`, contains the **license agreement for the Ruby software**, authored by Yukihiro Matsumoto (Matz).\n\nHere's a summary of its key points:\n\n*   **Copyright Holder**: Ruby is copyrighted free software by Yukihiro Matsumoto.\n*   **Dual License**: You can redistribute and/or modify Ruby under either the terms of the **2-clause BSDL** (Berkeley Software Distribution License) or the specific **conditions detailed within this file**.\n*   **Verbatim Copies**: Allowed without restriction, provided all original copyright notices and disclaimers are duplicated.\n*   **Modifications**:\n    *   Must be placed in the Public Domain or made Freely Available (e.g., posted to Usenet, or author includes them).\n    *   Alternatively, used only within your corporation/organization.\n    *   Or, non-standard binaries must have non-standard names with instructions on where to get the original software.\n    *   Or, other distribution arrangements are made with the author.\n*   **Distribution of Object/Binary Form**:\n    *   Must include instructions on where to get the original distribution.\n    *   Or, accompany the distribution with the machine-readable source.\n    *   Or, non-standard binaries must have non-standard names with instructions on where to get the original software.\n    *   Or, other distribution arrangements are made with the author.\n*   **Inclusion in Other Software**: Ruby (or parts of it) can be modified and included in other software, including commercial projects. However, some files in the distribution may have different terms (refer to `LEGAL` file).\n*   **Scripts/Library Files (Input/Output)**: These do not automatically fall under Ruby's copyright; they belong to whoever generated them and can be sold commercially or aggregated with Ruby.\n*   **No Warranty**: The software is provided \"AS IS\" without any express or implied warranties, including MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+                    "text": "This file, `license.txt`, contains the licensing terms for the Ruby programming language.\n\nHere's a summary of its content:\n\n*   **Copyright Holder:** Ruby is copyrighted free software by Yukihiro Matsumoto.\n*   **Licensing Options:** You can redistribute and modify it under either the terms of the 2-clause BSDL (BSD License) or the conditions outlined in this file.\n*   **Source Code Distribution:** Verbatim copies of the source can be given away without restriction, provided all original copyright notices and disclaimers are duplicated.\n*   **Modifications:** If you modify the software, you must do one of the following:\n    *   Place modifications in the Public Domain or make them Freely Available.\n    *   Use the modified software only within your organization.\n    *   Give non-standard binaries non-standard names with instructions for obtaining the original software.\n    *   Make other distribution arrangements with the author.\n*   **Binary Distribution:** If you distribute the software in object code or binary form, you must do one of the following:\n    *   Distribute binaries and library files with instructions on where to get the original distribution.\n    *   Accompany the distribution with the machine-readable source.\n    *   Give non-standard binaries non-standard names with instructions for obtaining the original software.\n    *   Make other distribution arrangements with the author.\n*   **Integration:** You may modify and include parts of the software into other (possibly commercial) software. However, some files in the distribution may have different terms (refer to `LEGAL` file).\n*   **Generated Files:** Scripts and library files generated by or used as input to the software do not automatically fall under Ruby's copyright; they belong to whoever generated them and can be sold commercially.\n*   **Disclaimer:** The software is provided \"AS IS\" without any express or implied warranties, including MERCHANTABILITY and FITNESS FOR A PARTICULAR PURPOSE."
                   }
                 ],
                 "role": "model"
@@ -195,18 +193,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 568,
-            "candidatesTokenCount": 421,
-            "totalTokenCount": 1407,
+            "candidatesTokenCount": 410,
+            "totalTokenCount": 1339,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 568
               }
             ],
-            "thoughtsTokenCount": 418
+            "thoughtsTokenCount": 361
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "s47BaKaKH4rhkdUPz4WwiQM"
+          "responseId": "GJDGaNb3J9ykkdUPuqy76Q0"
         }
-  recorded_at: Wed, 10 Sep 2025 14:44:03 GMT
+  recorded_at: Sun, 14 Sep 2025 09:51:20 GMT
 recorded_with: VCR 6.3.1

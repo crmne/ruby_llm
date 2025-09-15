@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250910T144730Z
+      - 20250914T095525Z
       X-Amz-Content-Sha256:
       - aae2788b85db2f8c2e2c1b966f72049cfed690ffa488a52860ef484e7b163b74
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250910/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=fd09ca487ee6529434120145eed21a7d915fceda2bb017405e8e7666a34c26a1
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=eb22485dff25942c24c42793836a7f7740868320935f94777ab01881515074a0
       Content-Type:
       - application/json
       Accept:
@@ -31,36 +31,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:47:40 GMT
+      - Sun, 14 Sep 2025 09:55:31 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1306'
+      - '1192'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f5d21852-ce32-4114-8e2c-fbf144229bfb
+      - adf5ffea-7d0e-4220-9e14-8fdb0984d99c
       X-Amzn-Bedrock-Invocation-Latency:
-      - '8835'
+      - '5719'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '216'
+      - '181'
       X-Amzn-Bedrock-Input-Token-Count:
       - '2706'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_014JAw8ApMyoDr1jtjZ2HC4o","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I''ve
-        analyzed the files you shared. Here''s what I found:\n\n1. Image File - Ruby
-        Logo:\n   - A red, polished gemstone image that appears to be the Ruby programming
-        language logo\n   - The logo has a distinctive three-dimensional appearance
-        with faceted surfaces\n   - It features a bright red color with shading that
-        gives it depth and a polished look\n\n2. PDF Document - Sample PDF:\n   -
-        A simple PDF file with the title \"Sample PDF\"\n   - Contains placeholder
-        text (Lorem ipsum) throughout\n   - The document begins with \"This is a simple
-        PDF file. Fun fun fun.\"\n   - The same content appears twice in the PDF (possibly
-        showing two pages with identical text)\n   - Contains standard Lorem ipsum
-        paragraphs formatted into multiple blocks of text\n   - Appears to be a demonstration
-        or test document without substantive content\n\nThe first file is a visual
-        representation of the Ruby programming language logo, while the second is
-        a simple demonstration PDF document with placeholder text."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":216}}'
-  recorded_at: Wed, 10 Sep 2025 14:47:40 GMT
+      string: '{"id":"msg_bdrk_013e6mJHxytQJXtkP7FHWhLF","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I''ve
+        analyzed the provided files:\n\n1. Image: The image shows the Ruby programming
+        language logo. It''s a red, polished gemstone with faceted surfaces that create
+        a distinctive diamond-like shape. The ruby gem is the iconic symbol for the
+        Ruby programming language.\n\n2. PDF Document: I analyzed a sample PDF file
+        that contains primarily Lorem Ipsum placeholder text. The document has a simple
+        header reading \"Sample PDF\" followed by \"This is a simple PDF file. Fun
+        fun fun.\" The rest of the content consists of standard Lorem Ipsum text paragraphs
+        that are commonly used for layout and design mockups.\n\nThe PDF appears to
+        be a demonstration file rather than containing substantive content. It''s
+        formatted in a basic layout with standard paragraph spacing. The same content
+        appears to be shown twice in the document, possibly displaying different pages
+        of the same sample PDF."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":181}}'
+  recorded_at: Sun, 14 Sep 2025 09:55:32 GMT
 recorded_with: VCR 6.3.1
