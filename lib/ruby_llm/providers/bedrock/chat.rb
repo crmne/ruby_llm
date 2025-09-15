@@ -38,28 +38,8 @@ module RubyLLM
         def format_basic_message(msg)
           {
             role: convert_role(msg.role),
-            content: format_content_for_converse(msg.content)
+            content: Media.format_content_for_converse(msg.content)
           }
-        end
-
-        def format_content_for_converse(content)
-          Media.format_content_for_converse(content)
-        end
-
-        def format_text_content(text)
-          Media.format_text_for_converse(text)
-        end
-
-        def format_image_for_converse(image)
-          Media.format_image_for_converse(image)
-        end
-
-        def format_document_for_converse(document)
-          Media.format_document_for_converse(document)
-        end
-
-        def format_text_file_for_converse(text_file)
-          Media.format_text_file_for_converse(text_file)
         end
 
         def format_tool_call(msg)
