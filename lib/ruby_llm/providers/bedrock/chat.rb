@@ -19,13 +19,13 @@ module RubyLLM
 
         def format_message(msg)
           if msg.tool_call?
-            result = format_tool_call(msg)
+            result = Tools.format_tool_call(msg, role: convert_role(msg.role))
             # If format_tool_call returns nil (due to missing tool_call), skip this message
             return nil if result.nil?
 
             result
           elsif msg.tool_result?
-            result = format_tool_result(msg)
+            result = Tools.format_tool_result(msg, role: convert_role(msg.role))
             # If format_tool_result returns nil (due to missing tool_call_id), skip this message
             return nil if result.nil?
 
@@ -42,56 +42,7 @@ module RubyLLM
           }
         end
 
-        def format_tool_call(msg)
-          tool_calls = msg.tool_calls.values.compact
-
-          if tool_calls.empty?
-            RubyLLM.logger.warn 'Bedrock: tool_calls empty for tool call message'
-            return nil
-          end
-
-          content_blocks = tool_calls.filter_map do |tc|
-            next if tc.id.nil? || tc.id.empty?
-
-            { 'toolUse' => { 'toolUseId' => tc.id, 'name' => tc.name, 'input' => tc.arguments } }
-          end
-
-          if content_blocks.empty?
-            RubyLLM.logger.warn 'Bedrock: all tool_calls had missing ids; skipping tool call message'
-            return nil
-          end
-
-          result = { role: convert_role(msg.role), content: content_blocks }
-
-          RubyLLM.logger.debug "Formatted tool call: #{result}" if RubyLLM.config.log_stream_debug
-
-          result
-        end
-
-        def format_tool_result(msg)
-          tool_call_id = msg.tool_call_id
-          if tool_call_id.nil? || tool_call_id.empty?
-            RubyLLM.logger.warn 'Bedrock: tool_call_id is null or empty for tool result message'
-
-            return nil
-          end
-
-          result = {
-            role: convert_role(msg.role),
-            content: [
-              {
-                'toolResult' => {
-                  'toolUseId' => tool_call_id,
-                  'content' => [{ 'text' => msg.content }]
-                }
-              }
-            ]
-          }
-
-          RubyLLM.logger.debug "Formatted tool result: #{result}" if RubyLLM.config.log_stream_debug
-
-          result
-        end
+        # Tool message formatting is defined in Tools module
 
         def convert_role(role)
           case role
@@ -108,7 +59,7 @@ module RubyLLM
           message = output['message'] || {}
           content_blocks = message['content'] || []
           text_content = extract_text_content(content_blocks)
-          tool_use_blocks = find_tool_uses(content_blocks)
+          tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
           build_message(data, text_content, tool_use_blocks, response)
         end
@@ -116,15 +67,6 @@ module RubyLLM
         def extract_text_content(blocks)
           text_blocks = blocks.select { |c| c['text'] }
           text_blocks.map { |c| c['text'] }.join
-        end
-
-        def find_tool_uses(blocks)
-          blocks.select { |c| c['toolUse'] }
-        end
-
-        # Delegate to Bedrock::Tools for consistency with OpenAI provider naming
-        def parse_tool_calls(tool_use_blocks)
-          Tools.parse_tool_calls(tool_use_blocks)
         end
 
         def build_message(data, content, tool_use_blocks, response)
@@ -147,7 +89,7 @@ module RubyLLM
           # Parse tool calls safely
           tool_calls = []
           begin
-            tool_calls = parse_tool_calls(tool_use_blocks)
+            tool_calls = Tools.parse_tool_calls(tool_use_blocks)
           rescue StandardError => e
             RubyLLM.logger.warn "Bedrock: Failed to parse tool calls: #{e.message}"
             tool_calls = []
@@ -222,7 +164,7 @@ module RubyLLM
         def build_base_payload(chat_messages, model)
           compacted_messages = chat_messages.filter_map { |msg| format_message(msg) }
           compacted_messages = merge_consecutive_tool_result_messages(compacted_messages)
-          validate_no_tool_use_and_result!(compacted_messages)
+          Tools.validate_no_tool_use_and_result!(compacted_messages)
 
           {
             messages: compacted_messages,
@@ -230,24 +172,6 @@ module RubyLLM
               maxTokens: model.max_tokens || 4096
             }
           }
-        end
-
-        def validate_no_tool_use_and_result!(messages)
-          index = messages.find_index { |message| invalid_tool_content?(message) }
-          return unless index
-
-          RubyLLM.logger.error "Bedrock validation error: Message #{index} contains both toolUse and toolResult"
-          RubyLLM.logger.error "Message content: #{messages[index][:content]}"
-          raise 'Bedrock validation error: Message cannot contain both toolUse and toolResult'
-        end
-
-        def invalid_tool_content?(message)
-          return false unless message && message[:content]
-
-          content = message[:content]
-          has_tool_use = content.any? { |c| c['toolUse'] }
-          has_tool_result = content.any? { |c| c['toolResult'] }
-          has_tool_use && has_tool_result
         end
 
         # Bedrock requires that if the assistant returns multiple toolUse blocks in a single turn,
@@ -259,9 +183,9 @@ module RubyLLM
 
           while index < messages.length
             message = messages[index]
-            if tool_result_only_message?(message)
+            if Tools.tool_result_only_message?(message)
               combined_content = []
-              while index < messages.length && tool_result_only_message?(messages[index])
+              while index < messages.length && Tools.tool_result_only_message?(messages[index])
                 combined_content.concat(messages[index][:content])
                 index += 1
               end
@@ -273,12 +197,6 @@ module RubyLLM
           end
 
           merged
-        end
-
-        def tool_result_only_message?(message)
-          return false unless message && message[:content].is_a?(Array)
-
-          message[:content].all? { |c| c['toolResult'] }
         end
 
         def add_optional_fields(payload, system_content:, tools:, temperature:)

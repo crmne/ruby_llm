@@ -31,58 +31,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
     end
   end
 
-  describe '#format_tool_call' do
-    it 'skips when tool_calls are empty and logs' do
-      msg = RubyLLM::Message.new(role: :assistant, content: '', tool_calls: {})
-      allow(RubyLLM.logger).to receive(:warn)
-      expect(provider.send(:format_tool_call, msg)).to be_nil
-      expect(RubyLLM.logger).to have_received(:warn).with(/tool_calls empty/)
-    end
-
-    it 'filters out calls with missing id and warns if all removed' do
-      calls = {
-        a: RubyLLM::ToolCall.new(id: '', name: 'x', arguments: {}),
-        b: RubyLLM::ToolCall.new(id: nil, name: 'y', arguments: {})
-      }
-      msg = RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls)
-      allow(RubyLLM.logger).to receive(:warn)
-      expect(provider.send(:format_tool_call, msg)).to be_nil
-      expect(RubyLLM.logger).to have_received(:warn).with(/missing ids/)
-    end
-
-    it 'builds toolUse content blocks' do
-      calls = {
-        a: RubyLLM::ToolCall.new(id: 'id1', name: 'search', arguments: { q: 'ruby' }),
-        b: RubyLLM::ToolCall.new(id: 'id2', name: 'calc', arguments: { x: 1 })
-      }
-      msg = RubyLLM::Message.new(role: :assistant, content: '', tool_calls: calls)
-      result = provider.send(:format_tool_call, msg)
-      expect(result[:role]).to eq('assistant')
-      expect(result[:content]).to contain_exactly(
-        { 'toolUse' => { 'toolUseId' => 'id1', 'name' => 'search', 'input' => { q: 'ruby' } } },
-        { 'toolUse' => { 'toolUseId' => 'id2', 'name' => 'calc', 'input' => { x: 1 } } }
-      )
-    end
-  end
-
-  describe '#format_tool_result' do
-    it 'skips when tool_call_id missing' do
-      msg = RubyLLM::Message.new(role: :tool, content: 'ok', tool_call_id: '')
-      allow(RubyLLM.logger).to receive(:warn)
-      expect(provider.send(:format_tool_result, msg)).to be_nil
-      expect(RubyLLM.logger).to have_received(:warn).with(/tool_call_id is null or empty/)
-    end
-
-    it 'formats tool result content' do
-      msg = RubyLLM::Message.new(role: :tool, content: 'ok', tool_call_id: 'tu_1')
-      result = provider.send(:format_tool_result, msg)
-      expect(result[:role]).to eq('user')
-      expect(result[:content]).to eq([
-                                       { 'toolResult' => { 'toolUseId' => 'tu_1', 'content' => [{ 'text' => 'ok' }] } }
-                                     ])
-    end
-  end
-
   describe '#merge_consecutive_tool_result_messages' do
     it 'merges multiple consecutive toolResult messages into one user message' do
       messages = [
@@ -96,15 +44,6 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
       expect(merged.length).to eq(3)
       expect(merged[1][:role]).to eq('user')
       expect(merged[1][:content].length).to eq(2)
-    end
-  end
-
-  describe '#validate_no_tool_use_and_result!' do
-    it 'raises when a message contains both toolUse and toolResult' do
-      msg = { role: 'assistant', content: [{ 'toolUse' => {} }, { 'toolResult' => {} }] }
-      expect do
-        provider.send(:validate_no_tool_use_and_result!, [msg])
-      end.to raise_error(/Message cannot contain both/)
     end
   end
 
