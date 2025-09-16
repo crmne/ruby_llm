@@ -1,264 +1,215 @@
 ---
 http_interactions:
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must use tools
-          whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
-          language to learn?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
-          the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041429Z
-        X-Amz-Content-Sha256:
-          - 3e7743b07e92802007c7319d4ac2829a4557dc7a5adf988fc37ec6f951cfe4dd
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b8a91d0dc59007ea6534648758ceed6044c34b4e375e7409d034a821b78e9142
-        Content-Type:
-          - application/json
-        Accept:
-          - application/vnd.amazon.eventstream
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:14:30 GMT
-        Content-Type:
-          - application/vnd.amazon.eventstream
-        Transfer-Encoding:
-          - chunked
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - 3fa06fef-afec-455e-a88a-09584ad4c367
-      body:
-        encoding: ASCII-8BIT
-        string: !binary |-
-          AAAAnwAAAFKzEV9wCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0giLCJyb2xlIjoiYXNzaXN0YW50In0i9wVBAAAAxAAAAFeMuFUlCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IkknbGwifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTSJ9UrI83gAAAMsAAABXDujC9As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgaGVscCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTIn1W8Ei8AAAAsQAAAFe9ijqaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB5b3UgZmluZCBvdXQifSwicCI6ImFiY2RlZmdoaWprIn17se/tAAAA6wAAAFfPKe3wCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0aGUgYmVzdCBsYW5ndWFnZSB0byJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ9AJhjRgAAANsAAABXbghVdgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbGVhcm4gYnkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNCJ9r3c4bAAAAMIAAABXA/ighQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdXNpbmcgdGhlIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFIn3OoD9GAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBhdmFpbGFibGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowIn0GRVqcAAAAwAAAAFd5OPPlCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0b29sIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdIIn3m3axPAAAApwAAAFdSKli4CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Ii4ifSwicCI6ImFiY2RlZmdoaWprbG0ifa9PEvkAAACtAAAAVm+dcI8LOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OTyJ9wp8EHgAAAQkAAABXVmGq6gs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja1N0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkciLCJzdGFydCI6eyJ0b29sVXNlIjp7Im5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwidG9vbFVzZUlkIjoidG9vbHVzZV9nU3dTOXJ4ZFJCR0tjQXpCU3N2MzVBIn19fWHsw2MAAACwAAAAV4DqEyoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjoxLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiIn19LCJwIjoiYWJjZGVmZ2hpaiJ9ivNscAAAAJEAAABWC0wlCAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwicCI6ImFiY2RlZmdoaWprbG0ifY7CPB4AAACTAAAAUe/o48sLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXIiLCJzdG9wUmVhc29uIjoidG9vbF91c2UifRXBmloAAADQAAAATn2zzKcLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoxNDc3fSwicCI6ImFiY2RlZmdoaWprbG0iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MzM0LCJvdXRwdXRUb2tlbnMiOjU4LCJ0b3RhbFRva2VucyI6MzkyfX35J+RP
-    recorded_at: Thu, 11 Sep 2025 04:14:31 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must use tools
-          whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
-          language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
-          the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041431Z
-        X-Amz-Content-Sha256:
-          - b59153d7ee6782057d66851a4c1d8e7876105905155cb366d5198e2adc488bfe
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9733ce89a34830d8ed85485f5f639844f42e4f2cc47f37de5c16f1df0e3b3730
-        Content-Type:
-          - application/json
-        Accept:
-          - application/vnd.amazon.eventstream
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 429
-        message: Too Many Requests
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:14:32 GMT
-        Content-Type:
-          - application/json
-        Content-Length:
-          - "65"
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - e33ac249-9d0d-4643-9bd0-34f03fc1bd40
-        X-Amzn-Errortype:
-          - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
-      body:
-        encoding: UTF-8
-        string: '{"message":"Too many requests, please wait before trying again."}'
-    recorded_at: Thu, 11 Sep 2025 04:14:32 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must use tools
-          whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
-          language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
-          the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041438Z
-        X-Amz-Content-Sha256:
-          - b59153d7ee6782057d66851a4c1d8e7876105905155cb366d5198e2adc488bfe
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=8ca8d3d9a1a52a4b12ab139ae4b7682d76ac654929afdd8296f3d0991e10941f
-        Content-Type:
-          - application/json
-        Accept:
-          - application/vnd.amazon.eventstream
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:14:40 GMT
-        Content-Type:
-          - application/vnd.amazon.eventstream
-        Transfer-Encoding:
-          - chunked
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - 5b1e288f-3d25-4811-87e8-f6a02f4cebc1
-      body:
-        encoding: ASCII-8BIT
-        string: !binary |-
-          AAAApwAAAFIiQKw3CzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUCIsInJvbGUiOiJhc3Npc3RhbnQife5dZ08AAADXAAAAV6v4uHcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiQWNjb3JkaW5nIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9mVITFgAAAMUAAABXsdh8lQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gdGhlIHRvb2wifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGIn2SqzqhAAAAywAAAFcO6ML0CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiwgUnVieSBpcyB0aGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksifVX6OkMAAADLAAAAVw7owvQLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QSJ9ZPBcXQAAAL0AAABXeHrXmws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgcmlnaHQifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDRCJ9Zl0XoQAAAMsAAABXDujC9As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbm93LiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTIn1CD9+UAAAAsQAAAFe9ijqaCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBSdWJ5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzIn2qUXMcAAAAzgAAAFfGCE2ECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBpcyBhIGR5bmFtaWMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU4ifSxhiuAAAACkAAAAVxWKImgLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLCBvYmplY3QifSwicCI6ImFiYyJ9wTQBrQAAAMoAAABXM4jrRAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiItb3JpZW50ZWQgcHJvZ3JhbW1pbmcifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUIifUpeYYEAAADBAAAAV0RY2lULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGxhbmd1YWdlIGtub3duIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5In1p23jvAAAArwAAAFdiWhN5CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBmb3IgaXRzIHNpbXBsaWNpdHkifSwicCI6ImFiYyJ9BstPpQAAAKcAAABXUipYuAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYW4ifSwicCI6ImFiY2RlZmdoaWprIn2KAJ5VAAAAvwAAAFcCuoT7CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6ImQgcmVhZGFiaWxpdHkuIEl0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHUifX8GV1wAAADeAAAAV6bo2gYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiJ3MgcGFydGljdWxhcmx5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEifR9tocwAAADrAAAAV88p7fALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHBvcHVsYXIgZm9yIHdlYiBkZXZlbG9wbWVudCwifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowIn3b6+wfAAAAywAAAFcO6ML0CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBlc3BlY2lhbGx5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE0ifT1PTO4AAADDAAAAVz6YiTULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHdpdGgifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksifXod0IcAAADBAAAAV0RY2lULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKIn3o4aETAAAAwwAAAFc+mIk1CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBSdWJ5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIn3xx/hzAAAAsgAAAFf6KkBKCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBvbiBSYWlscyBmcmFtZXdvcmsuIn0sInAiOiJhYmNkZSJ966FX6AAAAK0AAABXGJpAGQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzIn36WdgOAAAA0wAAAFdeeB63CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuXG5Tb21lIGtleSByZWFzb25zIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTCJ97fFCMgAAAOMAAABX/1mmMQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgd2h5IFJ1YnkgbWlnaHQifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU2In29v1UFAAAA3wAAAFebiPO2CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBiZSBjb25zaWRlcmUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNCJ9RN0cyQAAAL0AAABXeHrXmws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIGEifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGRyJ9eay6ggAAALIAAABX+ipASgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZ3JlYXQifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnMifdz/H9MAAADsAAAAV30JMeALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGxhbmd1YWdlIHRvIGxlYXJuIGluY2x1ZGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNCJ9iKD6DAAAANYAAABXlpiRxws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiI6In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1NjcifQ82Ar0AAADSAAAAV2MYNwcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiXG4xIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEifX0kqdIAAAC5AAAAV436cVsLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLiBFYXN5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5eiJ9EricgAAAANoAAABXU2h8xgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gcmVhZCBhbmQgd3JpdGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVIn3Lm03SAAAAogAAAFeaytfICzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBzeW50YXgifSwicCI6ImFiIn0LEuRxAAAAzAAAAFe8yB7kCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuMi4gU3Ryb25nIGNvbW11bml0eSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNEIn2h+MYoAAAAzAAAAFe8yB7kCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBzdXBwb3J0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRIn0i0eJ9AAAA2QAAAFcUyAYWCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuMy4gVmVyc2F0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9aHh21QAAALkAAABXjfpxWws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJpbGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDIn1/nTYbAAAA0QAAAFckuE3XCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBmb3IifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVoifaLDAYgAAAC1AAAAV0gKnFoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHdlYiBkZXZlbG9wbWVudCwifSwicCI6ImFiY2RlZmdoaWprIn3SHHowAAAAygAAAFcziOtECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBzY3JpIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUiJ9WKMlNgAAAMkAAABXdCiRlAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJwdGluZywgYW5kIGF1dG9tYXRpb24ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QSJ92koRTAAAAK8AAABXYloTeQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJcbjQuIFVzZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW4ifUyCVfIAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiZCBpbiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKSyJ95LJkswAAALcAAABXMsrPOgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbWFueSBzdGFydCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFycyJ9xhMn+QAAANAAAABXGdhkZws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJ1cHMgYW5kIHRlY2gifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFEife/NrD8AAADaAAAAV1NofMYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGNvbXBhbmllcyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMiJ9b0fFdAAAAL4AAABXP9qtSws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJcbjUuIEdvb2QgZm9yIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3gifV835psAAADkAAAAV015eiELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGJlZ2lubmVycyBkdWUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU2NzgifXtLRD0AAACvAAAAV2JaE3kLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRvIGl0cyBpbnR1In0sInAiOiJhYmNkZWZnaGlqIn1QXdoMAAAAwQAAAFdEWNpVCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Iml0aXZlIG5hdHVyZVxuXG5Xb3VsIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdCJ9H3g5sQAAANsAAABXbghVdgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIHlvdSBsaWtlIHRvIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9evTWnQAAAOAAAABXuPnc4Qs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIga25vdyBtb3JlIGFib3V0IHdoeSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZIn1DB3xbAAAA4gAAAFfCOY+BCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBSdWJ5IGlzIHJlY29tbWVuZGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSJ9wEAA2QAAALEAAABXvYo6mgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIG9yIGV4cGxvcmUgaXRzIn0sInAiOiJhYmNkZWZnaCJ9xXoZ9AAAANwAAABX3CiJZgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgcG90ZW50aWFsIGFwcGxpY2F0aW9ucyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVIifZftMl0AAACpAAAAV+0a5tkLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiPyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vIn3qx7teAAAAkQAAAFYLTCUICzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbSJ9mepY3gAAAIwAAABRDVjjmAs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprIiwic3RvcFJlYXNvbiI6ImVuZF90dXJuIn2GB4QBAAAA4QAAAE7h8l2RCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MzAxNH0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQyIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjozODcsIm91dHB1dFRva2VucyI6MTQzLCJ0b3RhbFRva2VucyI6NTMwfX2QaYyy
-    recorded_at: Thu, 11 Sep 2025 04:14:42 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must use tools
-          whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
-          language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"According
-          to the tool, Ruby is the best language to learn right now. Ruby is a dynamic,
-          object-oriented programming language known for its simplicity and readability.
-          It''s particularly popular for web development, especially with the Ruby on
-          Rails framework. \n\nSome key reasons why Ruby might be considered a great
-          language to learn include:\n1. Easy to read and write syntax\n2. Strong community
-          support\n3. Versatile for web development, scripting, and automation\n4. Used
-          in many startups and tech companies\n5. Good for beginners due to its intuitive
-          nature\n\nWould you like to know more about why Ruby is recommended or explore
-          its potential applications?"}]},{"role":"user","content":[{"text":"Tell me
-          again: what''s the best language to learn?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
-          the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041445Z
-        X-Amz-Content-Sha256:
-          - 05ef9a240d82e4761d1c625e4e46f1ae5e975f1315e6e8adcd6a86ec07009159
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=9c6d9367685d9fbfc045852696594aaaa81cf011ded59c776a459b7803221ce8
-        Content-Type:
-          - application/json
-        Accept:
-          - application/vnd.amazon.eventstream
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:14:46 GMT
-        Content-Type:
-          - application/vnd.amazon.eventstream
-        Transfer-Encoding:
-          - chunked
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - 7d47644f-0950-4d3f-bc1c-d258670d8afe
-      body:
-        encoding: ASCII-8BIT
-        string: !binary |-
-          AAAAgAAAAFJRoV8jCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiYyIsInJvbGUiOiJhc3Npc3RhbnQiffKe2NoAAAEEAAAAV67xblsLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tTdGFydA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQiIsInN0YXJ0Ijp7InRvb2xVc2UiOnsibmFtZSI6ImJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4iLCJ0b29sVXNlSWQiOiJ0b29sdXNlX04yS19xcDVUU3FlZUNBMU15RkRpckEifX19T9VamAAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiIifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFkifQv8fdYAAACIAAAAVma80PsLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkIn1vftOOAAAAmgAAAFHi+IG6CzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eSIsInN0b3BSZWFzb24iOiJ0b29sX3VzZSJ9LacAxgAAAN8AAABO/+Nbdgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjg2Nn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQyIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1NDUsIm91dHB1dFRva2VucyI6NDAsInRvdGFsVG9rZW5zIjo1ODV9fUSIECc=
-    recorded_at: Thu, 11 Sep 2025 04:14:46 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must use tools
-          whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
-          language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_gSwS9rxdRBGKcAzBSsv35A","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"According
-          to the tool, Ruby is the best language to learn right now. Ruby is a dynamic,
-          object-oriented programming language known for its simplicity and readability.
-          It''s particularly popular for web development, especially with the Ruby on
-          Rails framework. \n\nSome key reasons why Ruby might be considered a great
-          language to learn include:\n1. Easy to read and write syntax\n2. Strong community
-          support\n3. Versatile for web development, scripting, and automation\n4. Used
-          in many startups and tech companies\n5. Good for beginners due to its intuitive
-          nature\n\nWould you like to know more about why Ruby is recommended or explore
-          its potential applications?"}]},{"role":"user","content":[{"text":"Tell me
-          again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_N2K_qp5TSqeeCA1MyFDirA","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_N2K_qp5TSqeeCA1MyFDirA","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
-          the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041446Z
-        X-Amz-Content-Sha256:
-          - 7d52fd9180086f6595f7a0afb8bc0c4bfe32f1d824c1ff2961b06ddc5c7630bc
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5187f8406c745a134826309d21b152e853687596c197f74e05d0febfc88671ec
-        Content-Type:
-          - application/json
-        Accept:
-          - application/vnd.amazon.eventstream
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:14:48 GMT
-        Content-Type:
-          - application/vnd.amazon.eventstream
-        Transfer-Encoding:
-          - chunked
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - c31ac92a-3226-4a81-98a7-6fbaf9c2233d
-      body:
-        encoding: ASCII-8BIT
-        string: !binary |-
-          AAAAhwAAAFLjgYMzCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWoiLCJyb2xlIjoiYXNzaXN0YW50In10WSZKAAAAuAAAAFewmljrCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlRoZSB0b29sIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2dyJ9Nqi1ugAAAKoAAABXqrqcCQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgY29uc2lzdGVudGx5In0sInAiOiJhYmNkIn2BK+aNAAAAvAAAAFdFGv4rCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiByZWNvbW1lbmRzIFJ1YnkgYXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3AifbkF3QMAAADgAAAAV7j53OELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRoZSBiZXN0IGxhbmd1YWdlIHRvIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWCJ9oLnnOgAAAK8AAABXYloTeQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbGVhcm4uIn0sInAiOiJhYmNkZWZnaGlqa2xtbm8ifW5LlaMAAACxAAAAV72KOpoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIEFzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHUifTo53hoAAAC/AAAAVwK6hPsLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIG1lbnRpb25lIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQyJ9nsA/qQAAAK4AAABXXzo6yQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIGluIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcSJ9STk//QAAAJ4AAABX/huCTws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbXkifSwicCI6ImFiIn38OqHDAAAA4gAAAFfCOY+BCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBwcmV2aW91cyByZXNwb25zZSwgUnVieSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWVyJ9ByMzdwAAAK4AAABXXzo6yQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgaXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxciJ9yK3bdAAAALcAAABXMsrPOgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYSBkeW5hbWljLCBvYmplY3QifSwicCI6ImFiY2RlZmdoaWprbCJ9ZCB91QAAANMAAABXXngetws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiItb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUIifcUi/2MAAADAAAAAV3k48+ULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGtub3duIGZvciBpdHMgc2ltcGwifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnMifcyDc7sAAAC+AAAAVz/arUsLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiaWNpdHksIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFIn1HwQyGAAAAtgAAAFcPquaKCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiByZWFkYWJpbGl0eSwgYW4ifSwicCI6ImFiY2RlZmdoaWprbG0ifbNqGDsAAADdAAAAV+FIoNYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiZCB2ZXJzYXRpbGl0eS4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSJ9ItCzHgAAAM4AAABXxghNhAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgXG5cbkl0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUIn2YR0JzAAAA5QAAAFdwGVORCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IidzIHdvcnRoIG5vdGluZyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ9S0DhRAAAANAAAABXGdhkZws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdGhhdCB0aGUgXCIifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFEifVh37VEAAACzAAAAV8dKafoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiYmVzdFwiIGxhbmd1YWdlIGNhbiJ9LCJwIjoiYWJjZGVmZyJ9WkW80QAAAOAAAABXuPnc4Qs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZGVwZW5kIG9uIHlvdXIifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzIn0OqJMBAAAAsAAAAFeA6hMqCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBzcGVjaWZpYyBnb2FscywifSwicCI6ImFiY2RlZmcifZsJ4t0AAAC8AAAAV0Ua/isLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHN1Y2ggYXMgd2ViIGRldmVsb3BtZW50LCBkYXRhIn0sInAiOiJhYmNkZSJ95NyShwAAANMAAABXXngetws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgc2NpZW5jZSwgbW9iaWxlIGFwcHMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksifcrG1XAAAADOAAAAV8YITYQLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLCBvciBjYXJlZXIifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUCJ9z3cE2AAAAL8AAABXArqE+ws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgb2JqZWN0aXZlcy4gSG93ZXZlciwgdGhlIn0sInAiOiJhYmNkZWZnaGlqa2xtIn2AXCltAAAA7QAAAFdAaRhQCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0b29sIHN1Z2dlc3RzIFJ1YnkgYXMgYSBzb2xpIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyIn0J2l3UAAAAswAAAFfHSmn6CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6ImQgY2hvaWNlIGZvciBsZWFybmluZyJ9LCJwIjoiYWJjZGUifZjUTncAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHByb2dyYW1taW5nLlxuXG5Xb3VsIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdCJ9FpUByAAAAK4AAABXXzo6yQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIHlvdSBsaWtlIG1lIn0sInAiOiJhYmNkZWZnaCJ9qWmGDgAAANsAAABXbghVdgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gZWxhYm9yYXRlIG9uIFJ1YnkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSUyJ9oprhrQAAAKoAAABXqrqcCQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIncyBmZWF0dXJlcyJ9LCJwIjoiYWJjZGVmIn3WvfSFAAAAxgAAAFf2eAZFCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBvciBkaXNjdXNzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdIIn1s/HK3AAAAxwAAAFfLGC/1CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBob3cgaXQgbWlnaHQifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGRyJ9TxuMQAAAALsAAABX9zoiOws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZml0IGludG8geW91ciBsZWFybmluZyBvciJ9LCJwIjoiYWJjZGVmZ2gifcJRcQ8AAADQAAAAVxnYZGcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGNhcmVlciBwbGFucz8ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PIn15TrmbAAAAugAAAFa9XTsdCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxIn2RG1mRAAAAqgAAAFFD2Tk8CzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk8iLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifYEyRMEAAADYAAAATk3Dh2YLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoyNTI0fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0IiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjU5OCwib3V0cHV0VG9rZW5zIjoxMTksInRvdGFsVG9rZW5zIjo3MTd9ffSgdKA=
-    recorded_at: Thu, 11 Sep 2025 04:14:49 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must use tools
+        whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
+        language to learn?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012415Z
+      X-Amz-Content-Sha256:
+      - 3e7743b07e92802007c7319d4ac2829a4557dc7a5adf988fc37ec6f951cfe4dd
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0390c3955bfb878c8e145410019f25701bf1b851bf3b04684b2d66274b6f32a0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.amazon.eventstream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:24:17 GMT
+      Content-Type:
+      - application/vnd.amazon.eventstream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 9b39c96b-f37f-4f77-a33e-d83bdbf778e8
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        AAAAkQAAAFIMIeERCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0Iiwicm9sZSI6ImFzc2lzdGFudCJ9vw+WSAAAANQAAABX7FjCpws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJJJ2xsIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyIn17TVxJAAAAtgAAAFcPquaKCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB1c2UgdGhlIGF2YWlsYWJsZSB0b29sIn0sInAiOiJhYmNkZWYifa5pPQ4AAADpAAAAV7XpvpALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRvIGhlbHAgZGV0ZXJtaW5lIHRoZSBiZXN0IGxhbmd1YWdlIHRvIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OTyJ9eMd+UwAAANUAAABX0TjrFws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbGVhcm4uIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9GC3F0QAAAKcAAABWJS1oLgs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJIn2xnHuWAAABAgAAAFchsZv7CzpldmVudC10eXBlBwARY29udGVudEJsb2NrU3RhcnQNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6Iiwic3RhcnQiOnsidG9vbFVzZSI6eyJuYW1lIjoiYmVzdF9sYW5ndWFnZV90b19sZWFybiIsInRvb2xVc2VJZCI6InRvb2x1c2VfMVJvb2tDb1NSdy16UTEyaW1QQnp6ZyJ9fX2Nm6vnAAAAygAAAFcziOtECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSiJ9eqSUrgAAAKIAAABW7c3nXgs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDRCJ9Kq4juQAAAKYAAABRhinUPQs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSksiLCJzdG9wUmVhc29uIjoidG9vbF91c2UifZ9zPkQAAADHAAAATq9zhzULOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoxMzU3fSwicCI6ImFiY2QiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MzM0LCJvdXRwdXRUb2tlbnMiOjU2LCJ0b3RhbFRva2VucyI6MzkwfX0dy3I+
+  recorded_at: Tue, 16 Sep 2025 01:24:17 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must use tools
+        whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
+        language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012417Z
+      X-Amz-Content-Sha256:
+      - bf78db87b5b6228f00be075e627a15d860bcae76c660001b5288de3ef0ccecdd
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c2d51d0e85157b79425694d4070efc59389a93a0014e425e841b760a4d4fe6e1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.amazon.eventstream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:24:18 GMT
+      Content-Type:
+      - application/vnd.amazon.eventstream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b059fcbf-8b94-4973-aa38-9ed096ff95d9
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        AAAAqAAAAFKgEDvmCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFEiLCJyb2xlIjoiYXNzaXN0YW50In189ig4AAAAowAAAFenqv54CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IkJhc2UifSwicCI6ImFiY2RlZiJ9QOcLWQAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIG9uIHRoZSB0b29sJ3MgcmVjb21tZW5kYXRpb24ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0gifR2nqC4AAAC8AAAAV0Ua/isLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLCBSdWJ5IGlzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5eiJ9C9IjHAAAALwAAABXRRr+Kws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgc3VnZ2VzdGVkIGFzIHRoZSBiZXN0IGxhbmd1YWdlIn0sInAiOiJhYmNkIn0ObGgKAAAA3gAAAFem6NoGCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0byBsZWFybi4gUnVieSBpcyBhIGR5bmFtaWMsIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OIn25P9dUAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6In27CoLiAAAAvwAAAFcCuoT7CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkifSwicCI6ImFiY2RlZmdoaWprbG0ifd4HCuAAAACsAAAAVyX6aakLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFuZCByZWEifSwicCI6ImFiY2RlZmdoaWprIn1smwD4AAAAxwAAAFfLGC/1CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6ImRhYmlsaXR5LiBJdCdzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRiJ9QCEwVgAAANAAAABXGdhkZws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgcGFydGljdWxhcmx5IHBvcHVsYXIgZm9yIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0Qifcw6n2oAAADXAAAAV6v4uHcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHdlYiBkZXZlbG9wbWVudCwifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSUyJ9Zbsm9gAAAPcAAABXajmXcws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZXNwZWNpYWxseSB3aXRoIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yayJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1gifRb+phgAAAC0AAAAV3VqteoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLiAifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHkifT0RCcwAAADbAAAAV24IVXYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiXG5cblNvbWUga2V5IGJlbmVmaXRzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlMifRy6GhwAAADAAAAAV3k48+ULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIG9mIGxlYXJuaW5nIFJ1YnkgaW5jbHVkZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW4ife3yxZgAAADaAAAAV1NofMYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiOlxuMSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ9+s4eKwAAAMcAAABXyxgv9Qs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIuIENsZWFuIGFuIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUoifXZ14kQAAADZAAAAVxTIBhYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiZCBlbGVnYW50IHN5bnRheCB0aGF0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRIn2Z6PASAAAA1gAAAFeWmJHHCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IidzIGVhc3kgdG8gcmVhZCBhbiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUSJ9JD/R4AAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJkIHdyaXRlXG4yLiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAifboCiGYAAADuAAAAVwfJYoALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIFN0cm9uZyBjb21tdW5pdHkgc3VwcG9ydCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3In0P6MuPAAAA5AAAAFdNeXohCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuMy4gR3JlYXQgZm9yIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1Njc4In0M7CE0AAAAxQAAAFex2HyVCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB3ZWIgZGV2ZWxvcG1lbnQgYW5kIHNjcmkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnMifYMpCLgAAADmAAAAVze5KUELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoicHRpbmdcbjQuIFZlcnNhdCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3OCJ9+i23kgAAAL4AAABXP9qtSws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJpbGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0gifVQ3gjIAAACoAAAAV9B6z2kLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFuZCB1c2UifSwicCI6ImFiY2RlZmcifSfQSyAAAADIAAAAV0lIuCQLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiZCBpbiB2YXJpb3VzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISSJ9rn1nPAAAALsAAABX9zoiOws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgZG9tYWlucyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoifV0k0SgAAADYAAAAVymoL6YLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGxpa2Ugd2ViIGFwcGxpY2F0aW9ucyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk8ifRnnkEwAAAC1AAAAV0gKnFoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLCBhdXRvbWF0aW9uLCBhbmQgZGF0YSJ9LCJwIjoiYWJjZGVmIn34/2CNAAAA8AAAAFfYGUtjCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBwcm9jZXNzaW5nXG5cbkhvd2V2ZXIsIHRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTY3In1n+faTAAAAzgAAAFfGCE2ECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBcImJlc3RcIiBsYW5ndWFnZSBjYW4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREUiffDTrrUAAADDAAAAVz6YiTULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGRlcGVuZCBvbiB5b3VyIHNwZWNpZmljIGdvYWxzIn0sInAiOiJhYmNkZWZnaGlqa2wifQ905D4AAAC+AAAAVz/arUsLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiLCBzdWNoIGFzOiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBIn3W4cb0AAAAtwAAAFcyys86CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuLSBXZWIgZGV2ZWxvcG1lbnQifSwicCI6ImFiY2RlZmdoaWprIn2EOjzqAAAA5gAAAFc3uSlBCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuLSBEYXRhIHNjaWVuY2Vcbi0gTW9iaWxlIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFkifS7R47sAAADlAAAAV3AZU5ELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFwcCBkZXZlbG9wbWVudFxuLSBNYWNoaW5lIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXIn02jhMuAAAAywAAAFcO6ML0CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBsZWFybmluZ1xuLSBDYXJlZXIgb3Bwb3J0dW5pdGllc1xuXG5Xb3VsIn0sInAiOiJhYmNkZWZnaGkifauDGLcAAADuAAAAVwfJYoALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiZCB5b3UgbGlrZSB0byBrbm93IG1vcmUgYWJvdXQgd2h5IFJ1YnkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVIn3Kn/+TAAAA4AAAAFe4+dzhCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBtaWdodCBiZSBhIGdvb2QgY2hvaWNlIGZvciB5b3UsIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE0ifRs4JVYAAADnAAAAVwrZAPELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIG9yIGRvIHlvdSBoYXZlIHNwZWNpZmljIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEifdzWFjsAAADBAAAAV0RY2lULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHByb2dyYW1taW5nIGdvYWxzIGluIG1pbmQ/In0sInAiOiJhYmNkZWZnaGlqa2xtIn22/Nr1AAAAuQAAAFb6/UHNCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAifYgARNQAAACdAAAAUVDYXaoLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCIiwic3RvcFJlYXNvbiI6ImVuZF90dXJuIn12MQIeAAAA4wAAAE6bMg7xCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NDI0M30sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjM4Nywib3V0cHV0VG9rZW5zIjoxODMsInRvdGFsVG9rZW5zIjo1NzB9fbA9Q7g=
+  recorded_at: Tue, 16 Sep 2025 01:24:22 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must use tools
+        whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
+        language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"Based
+        on the tool''s recommendation, Ruby is suggested as the best language to learn.
+        Ruby is a dynamic, object-oriented programming language known for its simplicity
+        and readability. It''s particularly popular for web development, especially
+        with the Ruby on Rails framework. \n\nSome key benefits of learning Ruby include:\n1.
+        Clean and elegant syntax that''s easy to read and write\n2. Strong community
+        support\n3. Great for web development and scripting\n4. Versatile and used
+        in various domains like web applications, automation, and data processing\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Machine learning\n- Career opportunities\n\nWould
+        you like to know more about why Ruby might be a good choice for you, or do
+        you have specific programming goals in mind?"}]},{"role":"user","content":[{"text":"Tell
+        me again: what''s the best language to learn?"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012425Z
+      X-Amz-Content-Sha256:
+      - feeae5489527bd4340a1266979ce75e87129c6979f68f4028775bdc2457c6db7
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e6ad9e645e33ecdfb911337c58046cf938e9838ebc9043e01dddced57bc0a72e
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.amazon.eventstream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:24:27 GMT
+      Content-Type:
+      - application/vnd.amazon.eventstream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 707b06ce-ef75-4a31-9c1d-68ac9b10f828
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        AAAApAAAAFJl4NbnCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTSIsInJvbGUiOiJhc3Npc3RhbnQifSKBqDQAAAEOAAAAV+RBdvoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tTdGFydA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0wiLCJzdGFydCI6eyJ0b29sVXNlIjp7Im5hbWUiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuIiwidG9vbFVzZUlkIjoidG9vbHVzZV9BRmxJb2Z1eFFFYWd6d0NVb0g0ckt3In19fY5BuLUAAACsAAAAVyX6aakLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiIn19LCJwIjoiYWJjZGVmIn1s+n52AAAAmwAAAFZB/D2pCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dncifUV/aJAAAACnAAAAUbtJ/Y0LOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTCIsInN0b3BSZWFzb24iOiJ0b29sX3VzZSJ9fkH89wAAAP0AAABOROInEgs6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjExNDB9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NSIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1ODUsIm91dHB1dFRva2VucyI6NDAsInRvdGFsVG9rZW5zIjo2MjV9fcCrSOA=
+  recorded_at: Tue, 16 Sep 2025 01:24:27 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must use tools
+        whenever possible."}]},{"role":"user","content":[{"text":"What''s the best
+        language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_1RookCoSRw-zQ12imPBzzg","content":[{"text":"Ruby"}]}}]},{"role":"assistant","content":[{"text":"Based
+        on the tool''s recommendation, Ruby is suggested as the best language to learn.
+        Ruby is a dynamic, object-oriented programming language known for its simplicity
+        and readability. It''s particularly popular for web development, especially
+        with the Ruby on Rails framework. \n\nSome key benefits of learning Ruby include:\n1.
+        Clean and elegant syntax that''s easy to read and write\n2. Strong community
+        support\n3. Great for web development and scripting\n4. Versatile and used
+        in various domains like web applications, automation, and data processing\n\nHowever,
+        the \"best\" language can depend on your specific goals, such as:\n- Web development\n-
+        Data science\n- Mobile app development\n- Machine learning\n- Career opportunities\n\nWould
+        you like to know more about why Ruby might be a good choice for you, or do
+        you have specific programming goals in mind?"}]},{"role":"user","content":[{"text":"Tell
+        me again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_AFlIofuxQEagzwCUoH4rKw","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_AFlIofuxQEagzwCUoH4rKw","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012427Z
+      X-Amz-Content-Sha256:
+      - 8cba486feb8a76c3727793dba45504760041e1c319e5ae1f1a17cc7c7332a132
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c7ef654ba4b9be647557e6f024ac1861e0f0933751527edb3e6428dcc4f2e684
+      Content-Type:
+      - application/json
+      Accept:
+      - application/vnd.amazon.eventstream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:24:28 GMT
+      Content-Type:
+      - application/vnd.amazon.eventstream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - a23bc42d-1b23-413a-b5c2-a29021c373a6
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        AAAArQAAAFJo8LSWCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVViIsInJvbGUiOiJhc3Npc3RhbnQiff/V9LIAAAC6AAAAV8paC4sLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiT25jZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkMifSgcu5kAAADfAAAAV5uI87YLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFnYWluLCB0aGUgdG9vbCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxIn3c5rgHAAAA3wAAAFebiPO2CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiByZWNvbW1lbmRzIFJ1YnkgYXMgdGhlIGJlc3QgbGFuZ3VhZ2UifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGRyJ9hPpuAAAAAM8AAABX+2hkNAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdG8gbGVhcm4uIFRoaXMgY29uc2lzdGVudCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQiJ9tc8gBQAAAOEAAABXhZn1UQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgcmVjb21tZW5kYXRpb24gc3VnZ2VzdHMgdGhhdCBSdWJ5IGhhcyBzaWduaWZpY2FudCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1diJ9Tz6wUgAAAOkAAABXtem+kAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbWVyaXRzIGFzIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZm9yIGJlZ2luIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIn1VN/yJAAAA1QAAAFfROOsXCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Im5lcnMgYW5kIGV4cGVyaWVuY2VkIGRldmVsb3BlcnMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDIn3o5SwDAAAAtgAAAFcPquaKCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBhbGlrZS5cblxuVG8gcmVjYXAsIFJ1YnkifSwicCI6ImFiY2QifWuEKuUAAADLAAAAVw7owvQLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIG9mZmVyczpcbi0gUmVhZGFibGUifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDRCJ9oFx3EQAAAOsAAABXzynt8As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYW5kIGJlZ2lubmVyLWZyaWVuZGx5IHN5bnRheCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAifdsw2xYAAADjAAAAV/9ZpjELOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiXG4tIFN0cm9uZyB3ZWIgZGV2ZWxvcG1lbnQgY2FwYWJpbGl0aWVzXG4tIFZlcnNhdCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eSJ9UHLE1gAAAP8AAABXWkncsgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiJpbGl0eSBhY3Jvc3MgZGlmZmVyZW50IHByb2dyYW1taW5nIGRvbWFpbnNcbi0gQWN0aXZlIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWCJ9M203SwAAAMsAAABXDujC9As6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYW5kIHN1cHBvcnRpdmUgY29tbXVuaXR5In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5In0Cha1rAAAA4QAAAFeFmfVRCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlxuXG5SZW1lbWJlciB0aGF0IHdoaWxlIHRoZSB0b29sIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OIn2K4tWVAAAAtgAAAFcPquaKCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBzdWdnZXN0cyBSdWJ5LCB0aGUifSwicCI6ImFiY2RlZmdoaWoifcFqZJIAAADqAAAAV/JJxEALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIFwiYmVzdFwiIGxhbmd1YWdlIGNhbiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTYifYLL0AkAAADWAAAAV5aYkccLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHZhcnkgZGVwZW5kaW5nIG9uIHlvdXIgcGVyc29uYWwifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDIn3AyiqMAAAA3wAAAFebiPO2CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBnb2FscywgaW5kdXN0cnkifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSJ9EvEa/wAAAMQAAABXjLhVJQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIsIGFuZCBzcGVjaWZpYyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkMifUUg/dIAAADfAAAAV5uI87YLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHByb2plY3QgcmVxdWlyZW1lbnRzLiBJZiB5b3UifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PIn3B5u2kAAAAyQAAAFd0KJGUCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBoYXZlIGEifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PIn3CGCaXAAAAyQAAAFd0KJGUCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBwYXJ0aWN1bGFyIGFyZWEifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGIn2NV3XBAAAAuwAAAFf3OiI7CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBvZiBpbnRlcmVzdCBpbiBwcm9ncmFtbWluZyJ9LCJwIjoiYWJjZGVmZyJ9MhStJQAAAOYAAABXN7kpQQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIsIEknZCBiZSBoYXBweSB0byBkaXNjdXNzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaIn1P3NTBAAAA5gAAAFc3uSlBCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBob3cgUnVieSBvciBvdGhlciJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0NTYifYbGQfIAAADYAAAAVymoL6YLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGxhbmd1YWdlcyBtaWdodCBmaXQgeW91ciBuZWVkcy4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREUifXrlRj8AAACmAAAAVhhNQZ4LOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdIIn1e2QM1AAAApAAAAFH86YddCzpldmVudC10eXBlBwALbWVzc2FnZVN0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSEkiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifQKqbhcAAAD5AAAATrFigdILOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjozNDA4fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjYzOCwib3V0cHV0VG9rZW5zIjoxMzYsInRvdGFsVG9rZW5zIjo3NzR9fca6dvs=
+  recorded_at: Tue, 16 Sep 2025 01:24:31 GMT
 recorded_with: VCR 6.3.1

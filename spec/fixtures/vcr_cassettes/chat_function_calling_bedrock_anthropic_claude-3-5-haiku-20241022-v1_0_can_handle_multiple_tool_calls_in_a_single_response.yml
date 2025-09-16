@@ -1,151 +1,97 @@
 ---
 http_interactions:
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must call the dice_roll
-          tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"text":"Roll
-          the dice 3 times"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
-          a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041515Z
-        X-Amz-Content-Sha256:
-          - 2a100916b76513adca679a235f1a01a8d2a7e745781c71ef8ea2cb71c6f495ee
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c378a227b3dcfcc4aa6b402f17e705dad739e8c97a288aafbcf39fa998d83399
-        Content-Type:
-          - application/json
-        Accept:
-          - application/json
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:15:17 GMT
-        Content-Type:
-          - application/json
-        Content-Length:
-          - "630"
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - d169f5dc-5228-42d9-8b1c-f06fa0a29c68
-      body:
-        encoding: UTF-8
-        string:
-          '{"metrics":{"latencyMs":1480},"output":{"message":{"content":[{"text":"I''ll
-          roll the dice 3 times using the dice_roll tool as you requested."},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_mxPfX7H7R_G-9Uz-f2Wpqw"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_zltwZu51TZaqQYRnezwKAA"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_QhT-JVTaQnyynSQIcrNyGw"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":351,"outputTokens":94,"totalTokens":445}}'
-    recorded_at: Thu, 11 Sep 2025 04:15:17 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must call the dice_roll
-          tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"text":"Roll
-          the dice 3 times"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_mxPfX7H7R_G-9Uz-f2Wpqw","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_zltwZu51TZaqQYRnezwKAA","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_QhT-JVTaQnyynSQIcrNyGw","name":"dice_roll","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_mxPfX7H7R_G-9Uz-f2Wpqw","content":[{"text":"{:roll=>1}"}]}},{"toolResult":{"toolUseId":"tooluse_zltwZu51TZaqQYRnezwKAA","content":[{"text":"{:roll=>2}"}]}},{"toolResult":{"toolUseId":"tooluse_QhT-JVTaQnyynSQIcrNyGw","content":[{"text":"{:roll=>3}"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
-          a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041517Z
-        X-Amz-Content-Sha256:
-          - ad190f4cb27e46df4415fac2a8594077ea8651ab176bd0ee678647180b9eb5aa
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d243e661cc692fe543a0c31c3f55ee739886edeb89bfe45115814146fe4d75ee
-        Content-Type:
-          - application/json
-        Accept:
-          - application/json
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 429
-        message: Too Many Requests
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:15:18 GMT
-        Content-Type:
-          - application/json
-        Content-Length:
-          - "65"
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - 6fea5e98-25fc-470a-b6be-002b2f3d072b
-        X-Amzn-Errortype:
-          - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
-      body:
-        encoding: UTF-8
-        string: '{"message":"Too many requests, please wait before trying again."}'
-    recorded_at: Thu, 11 Sep 2025 04:15:18 GMT
-  - request:
-      method: post
-      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
-      body:
-        encoding: UTF-8
-        string:
-          '{"messages":[{"role":"user","content":[{"text":"You must call the dice_roll
-          tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"text":"Roll
-          the dice 3 times"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_mxPfX7H7R_G-9Uz-f2Wpqw","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_zltwZu51TZaqQYRnezwKAA","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_QhT-JVTaQnyynSQIcrNyGw","name":"dice_roll","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_mxPfX7H7R_G-9Uz-f2Wpqw","content":[{"text":"{:roll=>1}"}]}},{"toolResult":{"toolUseId":"tooluse_zltwZu51TZaqQYRnezwKAA","content":[{"text":"{:roll=>2}"}]}},{"toolResult":{"toolUseId":"tooluse_QhT-JVTaQnyynSQIcrNyGw","content":[{"text":"{:roll=>3}"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
-          a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
-      headers:
-        User-Agent:
-          - Faraday v2.13.4
-        Host:
-          - bedrock-runtime.<AWS_REGION>.amazonaws.com
-        X-Amz-Date:
-          - 20250911T041524Z
-        X-Amz-Content-Sha256:
-          - ad190f4cb27e46df4415fac2a8594077ea8651ab176bd0ee678647180b9eb5aa
-        Authorization:
-          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250911/<AWS_REGION>/bedrock/aws4_request,
-            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5b62a8f52e9c378500ff07f65df9f96201f22185452695a12abf18234070542e
-        Content-Type:
-          - application/json
-        Accept:
-          - application/json
-        Accept-Encoding:
-          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-    response:
-      status:
-        code: 200
-        message: OK
-      headers:
-        Date:
-          - Thu, 11 Sep 2025 04:15:25 GMT
-        Content-Type:
-          - application/json
-        Content-Length:
-          - "374"
-        Connection:
-          - keep-alive
-        X-Amzn-Requestid:
-          - 36992326-cfab-4bc7-929c-04ebc0701fc4
-      body:
-        encoding: UTF-8
-        string:
-          '{"metrics":{"latencyMs":919},"output":{"message":{"content":[{"text":"Here
-          are the results of your 3 dice rolls:\n1st roll: 1\n2nd roll: 2\n3rd roll:
-          3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":525,"outputTokens":37,"totalTokens":562}}'
-    recorded_at: Thu, 11 Sep 2025 04:15:25 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must call the dice_roll
+        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"text":"Roll
+        the dice 3 times"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012501Z
+      X-Amz-Content-Sha256:
+      - 2a100916b76513adca679a235f1a01a8d2a7e745781c71ef8ea2cb71c6f495ee
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ba3b5f4eee9ec2a9116e1c3d8c619c06a46c473c7d05a08609b6e39f930701c1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:25:03 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '617'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b9f21893-5234-474b-8a40-8d0ed60af073
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1437},"output":{"message":{"content":[{"text":"I''ll
+        roll the dice three times using the dice_roll tool:"},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_JBfHIkpIRvaRNEyT1WxgNw"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_QlGIIMYySTyVPRCkAtS_fA"}},{"toolUse":{"input":{},"name":"dice_roll","toolUseId":"tooluse_L9htW7WhRHaDHVTCDy65xg"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":351,"outputTokens":89,"totalTokens":440}}'
+  recorded_at: Tue, 16 Sep 2025 01:25:03 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"You must call the dice_roll
+        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","content":[{"text":"Roll
+        the dice 3 times"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_JBfHIkpIRvaRNEyT1WxgNw","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_QlGIIMYySTyVPRCkAtS_fA","name":"dice_roll","input":{}}},{"toolUse":{"toolUseId":"tooluse_L9htW7WhRHaDHVTCDy65xg","name":"dice_roll","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_JBfHIkpIRvaRNEyT1WxgNw","content":[{"text":"{:roll=>1}"}]}},{"toolResult":{"toolUseId":"tooluse_QlGIIMYySTyVPRCkAtS_fA","content":[{"text":"{:roll=>2}"}]}},{"toolResult":{"toolUseId":"tooluse_L9htW7WhRHaDHVTCDy65xg","content":[{"text":"{:roll=>3}"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}],"toolChoice":{"auto":{}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250916T012503Z
+      X-Amz-Content-Sha256:
+      - 99aaf345c04aaec740c03d19c9de77d1a33ee4348f5fc0887eeb921e1abdfe1e
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c3b12689cabc226a6d3c0c64f0da6938ae4e8a430ba7a3a30e1692222c0eeb4d
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 16 Sep 2025 01:25:04 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '360'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - fdb33acb-cf8f-4247-8035-165e0a0241b0
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":1037},"output":{"message":{"content":[{"text":"Here
+        are your 3 dice rolls:\n1st roll: 1\n2nd roll: 2\n3rd roll: 3"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":525,"outputTokens":34,"totalTokens":559}}'
+  recorded_at: Tue, 16 Sep 2025 01:25:04 GMT
 recorded_with: VCR 6.3.1

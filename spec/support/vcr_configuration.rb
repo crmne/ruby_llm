@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+BINARY_CT_REGEX = %r{
+  \A(?:application/(?:pdf|octet-stream|vnd\.amazon\.eventstream)
+    |image/(?:png|jpeg|gif|webp|svg\+xml)
+    |audio/(?:mpeg|wav|x-wav|aac|ogg)
+    |video/(?:mp4|quicktime|x-matroska)
+  )\z
+}x
+
 # VCR Configuration
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
@@ -96,4 +104,14 @@ VCR.configure do |config|
       interaction.response.headers['Set-Cookie'] = interaction.response.headers['Set-Cookie'].map { '<COOKIE>' }
     end
   end
+
+  normalize_binary = lambda do |i|
+    types = Array(i.response.headers['Content-Type']).join(',').downcase
+    if types.split(';').map!(&:strip).any? { |t| t.match?(BINARY_CT_REGEX) }
+      i.response.body = i.response.body.to_s.dup.force_encoding(Encoding::BINARY)
+    end
+  end
+
+  config.before_record(&normalize_binary)
+  config.before_playback(&normalize_binary)
 end
