@@ -2,8 +2,48 @@
 
 require 'spec_helper'
 
+TEST_DELAY = 3.0
+
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
+
+  # Helper to mitigate Bedrock rate limits in CI by retrying with backoff
+  def ask_with_retry(chat, question, provider, &block) # rubocop:disable Metrics/PerceivedComplexity
+    bedrock     = provider == :bedrock
+    max_retries = bedrock ? 3 : 2
+    delay       = bedrock ? TEST_DELAY : 0.5
+
+    tries     = 0
+    start_len = chat.messages.length
+
+    begin
+      # For retries, pause before attempting again to reduce pressure on Bedrock
+      sleep(delay) if bedrock && tries.positive?
+
+      # On retry for Bedrock, if we already have an assistant tool-call turn in history,
+      # resume by calling complete to avoid re-executing tools.
+      if bedrock && tries.positive?
+        recent = chat.messages[start_len..] || []
+        has_assistant_tool_call = recent.any? { |m| m.role == :assistant && m.tool_call? }
+        return chat.complete(&block) if has_assistant_tool_call
+      end
+
+      chat.ask(question, &block)
+    rescue RubyLLM::RateLimitError
+      raise unless bedrock && tries < max_retries
+
+      tries += 1
+      # Do not roll back messages for Bedrock once tools have been called;
+      # rolling back would cause tools to be executed again.
+      unless bedrock
+        extra = chat.messages.length - start_len
+        chat.messages.pop(extra) if extra.positive?
+      end
+
+      sleep(delay * tries)
+      retry
+    end
+  end
 
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets current weather for a location'
@@ -84,7 +124,9 @@ RSpec.describe RubyLLM::Chat do
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
-        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, "What's the weather in Berlin? (52.5200, 13.4050)", provider)
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
@@ -108,7 +150,9 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
 
-        response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)")
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, "What's the weather in Paris? (48.8575, 2.3514)", provider)
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
@@ -127,7 +171,8 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(BestLanguageToLearn)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
-        response = chat.ask("What's the best language to learn?")
+        sleep(TEST_DELAY) if provider == :bedrock
+        response = ask_with_retry(chat, "What's the best language to learn?", provider)
         expect(response.content).to include('Ruby')
       end
     end
@@ -153,7 +198,8 @@ RSpec.describe RubyLLM::Chat do
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
-        response = chat.ask("What's the best language to learn?") do |chunk|
+        sleep(TEST_DELAY) if provider == :bedrock
+        response = ask_with_retry(chat, "What's the best language to learn?", provider) do |chunk|
           chunks << chunk
         end
 
@@ -161,7 +207,9 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('Ruby')
 
-        response = chat.ask("Tell me again: what's the best language to learn?") do |chunk|
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, "Tell me again: what's the best language to learn?", provider) do |chunk|
           chunks << chunk
         end
 
@@ -189,7 +237,9 @@ RSpec.describe RubyLLM::Chat do
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
         chunks = []
 
-        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)") do |chunk|
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, "What's the weather in Berlin? (52.5200, 13.4050)", provider) do |chunk|
           chunks << chunk
         end
 
@@ -198,7 +248,9 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
 
-        response = chat.ask("What's the weather in Paris? (48.8575, 2.3514)") do |chunk|
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, "What's the weather in Paris? (48.8575, 2.3514)", provider) do |chunk|
           chunks << chunk
         end
 
@@ -234,7 +286,9 @@ RSpec.describe RubyLLM::Chat do
           { roll: tool_call_count }
         end
 
-        response = chat.ask('Roll the dice 3 times')
+        sleep(TEST_DELAY) if provider == :bedrock
+
+        response = ask_with_retry(chat, 'Roll the dice 3 times', provider)
 
         # Restore original method
         DiceRoll.define_method(:execute, original_execute)

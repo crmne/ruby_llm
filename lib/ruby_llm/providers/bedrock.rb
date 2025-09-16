@@ -11,8 +11,8 @@ module RubyLLM
       include Bedrock::Streaming
       include Bedrock::Models
       include Bedrock::Signing
+      include Bedrock::Tools
       include Bedrock::Media
-      include Anthropic::Tools
 
       def api_base
         "https://bedrock-runtime.#{@config.bedrock_region}.amazonaws.com"
@@ -66,6 +66,18 @@ module RubyLLM
           'Content-Type' => 'application/json',
           'Accept' => accept_header
         )
+      end
+
+      # Override to sign non-streaming Converse requests (ask)
+      def sync_response(connection, payload, additional_headers = {})
+        signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", payload:)
+
+        response = connection.post completion_url, payload do |req|
+          req.headers.merge! build_headers(signature.headers, streaming: false)
+          req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+        end
+
+        parse_completion_response response
       end
 
       class << self
