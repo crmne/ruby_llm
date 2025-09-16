@@ -24,14 +24,14 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
 
   describe 'converse parts formatting' do
     it 'formats text' do
-      expect(media.send(:format_text_for_converse, 'hi')).to eq({ 'text' => 'hi' })
+      expect(media.send(:format_text, 'hi')).to eq({ 'text' => 'hi' })
     end
 
     it 'formats image' do
       img = RubyLLM::Attachment.new(StringIO.new('data'), filename: 'img.png')
       allow(img).to receive_messages(mime_type: 'image/png', encoded: 'BASE64')
 
-      part = media.send(:format_image_for_converse, img)
+      part = media.send(:format_image, img)
       expect(part['image']['format']).to eq('png')
       expect(part['image']['name']).to eq('imgpng')
       expect(part['image']['source']).to eq({ 'bytes' => 'BASE64' })
@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       pdf = RubyLLM::Attachment.new(StringIO.new('pdfdata'), filename: 'a.pdf')
       allow(pdf).to receive_messages(mime_type: 'application/pdf', encoded: 'BASE64PDF')
 
-      part = media.send(:format_document_for_converse, pdf)
+      part = media.send(:format_document, pdf)
       expect(part['document']['format']).to eq('pdf')
       expect(part['document']['name']).to eq('apdf')
       expect(part['document']['source']).to eq({ 'bytes' => 'BASE64PDF' })
@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       allow(img2).to receive_messages(mime_type: 'image/png', encoded: 'B2')
       content.instance_variable_set(:@attachments, [img1, img2])
 
-      parts = media.send(:format_content_for_converse, content)
+      parts = media.send(:format_content, content)
       expect(parts[0]).to eq({ 'text' => 'hi' })
       expect(parts[1]['image']['name']).to start_with('1 ')
       expect(parts[2]['image']['name']).to start_with('2 ')

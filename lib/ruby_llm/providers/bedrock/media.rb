@@ -40,51 +40,6 @@ module RubyLLM
           'xlsx' => 'xlsx'
         }.freeze
 
-        def format_content(content)
-          return [Anthropic::Media.format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [Anthropic::Media.format_text(content)] unless content.is_a?(Content)
-
-          parts = []
-          parts << Anthropic::Media.format_text(content.text) if content.text
-
-          content.attachments.each do |attachment|
-            case attachment.type
-            when :image
-              parts << format_image(attachment)
-            when :pdf
-              parts << format_pdf(attachment)
-            when :text
-              parts << Anthropic::Media.format_text_file(attachment)
-            else
-              raise UnsupportedAttachmentError, attachment.type
-            end
-          end
-
-          parts
-        end
-
-        def format_image(image)
-          {
-            type: 'image',
-            source: {
-              type: 'base64',
-              media_type: image.mime_type,
-              data: image.encoded
-            }
-          }
-        end
-
-        def format_pdf(pdf)
-          {
-            type: 'document',
-            source: {
-              type: 'base64',
-              media_type: pdf.mime_type,
-              data: pdf.encoded
-            }
-          }
-        end
-
         # Bedrock Converse: filename sanitization for attachments
         # - Only alphanumeric characters, whitespace, hyphens, parentheses, and square brackets
         # - No more than one consecutive whitespace character
@@ -97,12 +52,7 @@ module RubyLLM
           sanitized.empty? ? nil : sanitized
         end
 
-        # Bedrock Converse: parts formatting
-        def format_text_for_converse(text)
-          { 'text' => text.to_s }
-        end
-
-        def format_image_for_converse(image)
+        def format_image(image)
           {
             'image' => {
               'format' => extract_image_format(image.mime_type),
@@ -112,7 +62,7 @@ module RubyLLM
           }
         end
 
-        def format_document_for_converse(document)
+        def format_document(document)
           {
             'document' => {
               'format' => extract_document_format(document),
@@ -122,7 +72,7 @@ module RubyLLM
           }
         end
 
-        def format_text_file_for_converse(text_file)
+        def format_text_file(text_file)
           {
             'document' => {
               'format' => extract_document_format(text_file),
@@ -132,11 +82,17 @@ module RubyLLM
           }
         end
 
-        def format_content_for_converse(content)
-          return [format_text_for_converse(content)] unless content.is_a?(Content)
+        def format_text(text)
+          {
+            'text' => text.to_s
+          }
+        end
+
+        def format_content(content)
+          return [format_text(content)] unless content.is_a?(Content)
 
           parts = []
-          parts << format_text_for_converse(content.text) if content.text
+          parts << format_text(content.text) if content.text
 
           attachments = content.attachments
           multiple_attachments = attachments.size > 1
@@ -153,11 +109,11 @@ module RubyLLM
         def build_part_for_converse(attachment)
           case attachment.type
           when :image
-            format_image_for_converse(attachment)
+            format_image(attachment)
           when :pdf
-            format_document_for_converse(attachment)
+            format_document(attachment)
           when :text
-            format_text_file_for_converse(attachment)
+            format_text_file(attachment)
           else
             raise UnsupportedAttachmentError, attachment.type
           end

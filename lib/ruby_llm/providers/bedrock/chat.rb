@@ -38,7 +38,7 @@ module RubyLLM
           else
             {
               role: format_role(msg.role),
-              content: Media.format_content_for_converse(msg.content)
+              content: Media.format_content(msg.content)
             }
           end
         end
