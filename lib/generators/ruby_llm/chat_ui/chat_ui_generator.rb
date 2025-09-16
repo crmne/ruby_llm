@@ -100,7 +100,7 @@ module RubyLLM
         broadcasting_code = "broadcasts_to ->(#{msg_var}) { \"#{chat_var}_\#{#{msg_var}.#{chat_var}_id}\" }"
 
         inject_into_class "app/models/#{msg_var}.rb", message_model_name do
-          "\n  #{broadcasting_code}\n"
+          "  #{broadcasting_code}\n"
         end
       rescue Errno::ENOENT
         say "#{message_model_name} model not found. Add broadcasting code to your model.", :yellow
