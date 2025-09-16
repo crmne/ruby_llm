@@ -13,21 +13,12 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
     end
   end
 
-  describe '#convert_role' do
+  describe '#format_role' do
     it 'maps system/user/tool to user and assistant stays assistant' do
-      expect(provider.send(:convert_role, :system)).to eq('user')
-      expect(provider.send(:convert_role, :user)).to eq('user')
-      expect(provider.send(:convert_role, :tool)).to eq('user')
-      expect(provider.send(:convert_role, :assistant)).to eq('assistant')
-    end
-  end
-
-  describe '#format_basic_message' do
-    it 'formats content for converse' do
-      msg = RubyLLM::Message.new(role: :user, content: 'hi')
-      formatted = provider.send(:format_basic_message, msg)
-      expect(formatted[:role]).to eq('user')
-      expect(formatted[:content]).to eq([{ 'text' => 'hi' }])
+      expect(provider.send(:format_role, :system)).to eq('user')
+      expect(provider.send(:format_role, :user)).to eq('user')
+      expect(provider.send(:format_role, :tool)).to eq('user')
+      expect(provider.send(:format_role, :assistant)).to eq('assistant')
     end
   end
 

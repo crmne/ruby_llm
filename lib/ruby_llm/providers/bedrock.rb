@@ -68,6 +68,18 @@ module RubyLLM
         )
       end
 
+      # Override to sign non-streaming Converse requests (ask)
+      def sync_response(connection, payload, additional_headers = {})
+        signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", payload:)
+
+        response = connection.post completion_url, payload do |req|
+          req.headers.merge! build_headers(signature.headers, streaming: false)
+          req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+        end
+
+        parse_completion_response response
+      end
+
       class << self
         def capabilities
           Bedrock::Capabilities

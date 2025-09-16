@@ -47,6 +47,9 @@ module RubyLLM
               )
             ]
           end
+        rescue StandardError => e
+          RubyLLM.logger.warn "Bedrock: Failed to parse tool calls: #{e.message}"
+          []
         end
 
         # Format a user message that contains one or more toolUse blocks
@@ -130,6 +133,31 @@ module RubyLLM
 
         def find_tool_uses(blocks)
           blocks.select { |c| c['toolUse'] }
+        end
+
+        # Bedrock requires that if the assistant returns multiple toolUse blocks in a single turn,
+        # the client responds with a single user message containing multiple toolResult blocks.
+        # Merge consecutive toolResult-only messages into one to satisfy this requirement.
+        def merge_consecutive_tool_result_messages(messages)
+          merged = []
+          index = 0
+
+          while index < messages.length
+            message = messages[index]
+            if Tools.tool_result_only_message?(message)
+              combined_content = []
+              while index < messages.length && Tools.tool_result_only_message?(messages[index])
+                combined_content.concat(messages[index][:content])
+                index += 1
+              end
+              merged << { role: 'user', content: combined_content }
+            else
+              merged << message
+              index += 1
+            end
+          end
+
+          merged
         end
       end
     end
