@@ -33,7 +33,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:57:08 GMT
+      - Sun, 14 Sep 2025 10:04:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=745
+      - gfet4t7; dur=1044
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +64,7 @@ http_interactions:
                         "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CqgCAdHtim/buqTnX3FSaU+biPiO3vPvFnTjVCs0ApE7mmgNVp+OyWHVJYKGb5nx7/lmSVpw7/XC0/QOeQsAwg0OO2KdrD9salDp46KHN0cdzrgsPlZNR4BK8hJTYxjPmTrMb496WliaYXVtdwCqFJ8ldUqeatS+xFyMTZuIKYQfi41D/8sH6Of02eXX9GbiCDLoGNCINU5adirJTkfig3bBtURhWoQmrRmTysnjP00EqDm8w//tB4Ja4OVUHImv5qB9/b43j+5hmHNagGTHf5FKvvNlNfgemRUsqiJvzasdCxobxgmJ8jXCFU1ExPX0dcfIr+dur7qaMqng6KEk/tUfyI7nTCmnl3KbTXLNTxtw8qYQ4vdznW1rpC4bUCMGKGd1ds1cFfMGau0="
+                    "thoughtSignature": "Cp4EAdHtim/Y9WFQeBFr7yPRg66EjgEP2PPKDe+twAZEtVtxWxkQiXdHUTOU6jq/oNL0ktNBPQ9daimQgfxlnmWfP1/tC+CcpRHQfH8Zkh4ajL/WhffRXNNDWD+ZqrXC/l7b9ZHwoLhkAfq+xYvMN5v7mbCToUYQWMrJMgpr4Ca3Qo6XHGnDXUA7u1ilex2LegPTAB3FxaEYvXy0jcBPNo5qc9j52CINauKdVgAXP6ZDzI6IzcNBNjuyIYNjDuWu+HCIOjTv7oUJo4IUROwcRbodw6X4Tm00HmrSTNVmKFD26LGazJ8HV03w2SDEsiBUDxaowHzBQLhhbZEa031vwFKAiRt1Fsjm3mWKGrnUvErVLE/VqonzGFZxWpYcDAsevGpDBa/HRKUatlKshp7Qh8rzFBwd8MNuvbyhghjY0LgQUdjIpr/I05kWwDdDpsuaGanx6ZrgYJGphqN5I/xtFK68b+CUseRKiGlDnMDNrrpxCLFNrYVFvUF1oOvN9jqfYuLSBQYPGwH5SZfWQBrjjED84e6uBlrAMP8zLY0aIkJ/YyF5J48+amqdVtVT9tDs7V462jLiAmKHSM6mozz1NoVAeAK/1XUQUQVwU5ckTVNrGZ5mC/mAWptKBx2pxzpKztQCzAXs1yTYLz2aXX6Vw6QL7zyLZrr5ZD8JrfLv/6I1RZmhih0FIjBhEu7faPgkmMib2qpaTivYiJwM/LCkuwM="
                   }
                 ],
                 "role": "model"
@@ -76,26 +76,26 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 103,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 189,
+            "totalTokenCount": 250,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 103
               }
             ],
-            "thoughtsTokenCount": 56
+            "thoughtsTokenCount": 117
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "xJHBaO3AFYzNnsEP3_Oi2A4"
+          "responseId": "L5PGaNupOfqYkdUP0pW-6AY"
         }
-  recorded_at: Wed, 10 Sep 2025 14:57:08 GMT
+  recorded_at: Sun, 14 Sep 2025 10:04:31 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"499b0e4a-832d-4d32-91f2-adc4f1d096fb","response":{"name":"499b0e4a-832d-4d32-91f2-adc4f1d096fb","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"253d5a7c-b286-4400-b0e8-9460160c9149","response":{"name":"253d5a7c-b286-4400-b0e8-9460160c9149","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -123,7 +123,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:57:08 GMT
+      - Sun, 14 Sep 2025 10:04:32 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -133,7 +133,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=478
+      - gfet4t7; dur=628
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -141,6 +141,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCBhIHdpbmQgb2YgMTAga20vaC4iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI1NCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM5LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDI5MywKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjU0CiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAieEpIQmFKMjJOZmZqbnNFUG1QZlRxQU0iCn0K
-  recorded_at: Wed, 10 Sep 2025 14:57:08 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaC4iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI2MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDIwLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDI4MCwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjYwCiAgICAgIH0KICAgIF0KICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiTUpQR2FMbXBKWVRWdmRJUDdwVFJ5QTgiCn0K
+  recorded_at: Sun, 14 Sep 2025 10:04:32 GMT
 recorded_with: VCR 6.3.1

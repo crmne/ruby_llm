@@ -8,7 +8,10 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
+{: .no_toc .d-inline-block }
+
+Available in v1.8.0+
+{: .label .label-green }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }

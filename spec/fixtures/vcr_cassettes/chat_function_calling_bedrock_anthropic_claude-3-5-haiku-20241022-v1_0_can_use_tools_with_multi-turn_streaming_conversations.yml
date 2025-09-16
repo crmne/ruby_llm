@@ -1,312 +1,318 @@
 ---
 http_interactions:
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012434Z
-      X-Amz-Content-Sha256:
-      - b953cce59aafaeaa008e7d7c66fa77c653a967f1cc0194e6c72264ac7fece23f
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b022981d538331f6a0fc9cc3864756b23ec69094eec7161250f19b6ab2ab126b
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:35 GMT
-      Content-Type:
-      - application/vnd.amazon.eventstream
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 9b34bece-cbf0-4c8e-88f2-0aa6e8573a28
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        AAAAkgAAAFJLgZvBCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dSIsInJvbGUiOiJhc3Npc3RhbnQifVMJx7gAAADZAAAAVxTIBhYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiTGV0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1Njc4In01BET7AAAA1QAAAFfROOsXCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBtZSBjaGVjayB0aGUgY3VycmVudCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNIn0gk/UKAAAA5QAAAFdwGVORCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB3ZWF0aGVyIGluIEJlcmxpbiBmb3IgeW91IHVzaW5nIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUiJ9sGLV2gAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdGhlIGNvb3JkaW5hdGVzIHlvdSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVIifQxPBY8AAADXAAAAV6v4uHcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHByb3ZpZGVkLiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWiJ9/VaatgAAALYAAABWeK3WHAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYIn0U1pDTAAAA8wAAAFefuTGzCzpldmVudC10eXBlBwARY29udGVudEJsb2NrU3RhcnQNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6Iiwic3RhcnQiOnsidG9vbFVzZSI6eyJuYW1lIjoid2VhdGhlciIsInRvb2xVc2VJZCI6InRvb2x1c2VfVU5Rc0FkY0ZSanlYRU1YbDM5ZGE2USJ9fX3cSBkMAAAAygAAAFcziOtECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSiJ9eqSUrgAAAMgAAABXSUi4JAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJ7XCJsYXRpdCJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6In3ZCSmDAAAAuQAAAFeN+nFbCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6InVkZVwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW4ifZrKr4sAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjoxLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiOiBcIjUyIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1diJ9JlwlxwAAALwAAABXRRr+Kws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiIuNTIwMFwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vIn1pXyspAAAAxgAAAFf2eAZFCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiwgXCJsb25naXR1ZGUifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzIn3BsChAAAAAtAAAAFd1arXqCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IlwiOiAifX0sInAiOiJhYmNkZWZnaGlqIn39itwFAAAA1AAAAFfsWMKnCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IlwiMTMuNDA1MFwifSJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0gifSDcQiEAAACPAAAAVtScDOsLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsInAiOiJhYmNkZWZnaGlqayJ9Qhme7QAAAIMAAABRjwh0SQs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiIiwic3RvcFJlYXNvbiI6InRvb2xfdXNlIn1SIsnZAAAA2AAAAE5Nw4dmCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTU2NX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHUiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6Mzg5LCJvdXRwdXRUb2tlbnMiOjkxLCJ0b3RhbFRva2VucyI6NDgwfX27INaf
-  recorded_at: Tue, 16 Sep 2025 01:24:36 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012436Z
-      X-Amz-Content-Sha256:
-      - 5c3bed0b5140c8477940e1cca99c6997e5f565370e48235f40d0b09f5f739967
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=77cd2accf4d9e2b0dbe2ad997f97378fc4f5dcd2ccf796b1d3022bc095ad0aeb
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 429
-      message: Too Many Requests
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:37 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '65'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 8e37d075-c905-47ba-b60f-fecad62aac55
-      X-Amzn-Errortype:
-      - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
-    body:
-      encoding: UTF-8
-      string: '{"message":"Too many requests, please wait before trying again."}'
-  recorded_at: Tue, 16 Sep 2025 01:24:37 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012443Z
-      X-Amz-Content-Sha256:
-      - 5c3bed0b5140c8477940e1cca99c6997e5f565370e48235f40d0b09f5f739967
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a5cefc7eaed73553d6279b34e62ca515c9027999ba4c6b5ba9a927dd231d0b8a
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:44 GMT
-      Content-Type:
-      - application/vnd.amazon.eventstream
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 526f81de-eab1-45da-8b77-f8430a249ede
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        AAAAugAAAFK6MP8ECzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU2NzgiLCJyb2xlIjoiYXNzaXN0YW50In00xKBOAAAAqwAAAFeX2rW5CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vIn1REnmHAAAA2wAAAFduCFV2CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIn18GYcFAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiAxNcKwQyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0In3+3PvTAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB3aXRoIGEgd2luZCBzcGVlZCBvZiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QIn0DRwHxAAAA1gAAAFeWmJHHCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiAxMCBrbSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMiJ9KZyhsAAAAL0AAABXeHrXmws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIvaC4gSXQgc2VlbXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eCJ97UNl7QAAAMoAAABXM4jrRAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbGlrZSBhIG1pbGQgZGF5IGluIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0QifQZ+smwAAADGAAAAV/Z4BkULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRoZSBHZXJtYW4gY2FwaXRhbC4gV291bGQgeW91IGxpa2UgdG8ifSwicCI6ImFiY2RlZmcifU3G1eAAAADQAAAAVxnYZGcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGtub3cgYW55dGhpbmcgZWxzZSBhYm91dCB0aGUgd2VhdGhlciJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyIn1yjSWrAAAAxQAAAFex2HyVCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Ij8ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFEifVC0q/QAAACHAAAAVuTsRyoLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmMifcup67cAAACfAAAAUSoYDsoLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0QiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifas1whsAAADLAAAATmqDajQLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoxMjk2fSwicCI6ImFiY2RlZmdoIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjUwMywib3V0cHV0VG9rZW5zIjo0OCwidG90YWxUb2tlbnMiOjU1MX19dhGkuw==
-  recorded_at: Tue, 16 Sep 2025 01:24:44 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
-        current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
-        a mild day in the German capital. Would you like to know anything else about
-        the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
-        Paris? (48.8575, 2.3514)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012447Z
-      X-Amz-Content-Sha256:
-      - 0ec1fc05158cdfa73257f20de6a4eb479a344d6fc97c39ad29068fc1681c23eb
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=80343a6ed8142d43579858b047273cd1ed7562208130edc06ebd587e3e8e0155
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:49 GMT
-      Content-Type:
-      - application/vnd.amazon.eventstream
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 9f8d9b86-43de-47bc-8bf6-0905c11581e2
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        AAAAhQAAAFKZQdBTCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoIiwicm9sZSI6ImFzc2lzdGFudCJ9PVk6xgAAAQ0AAABXo+EMKgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja1N0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaIiwic3RhcnQiOnsidG9vbFVzZSI6eyJuYW1lIjoid2VhdGhlciIsInRvb2xVc2VJZCI6InRvb2x1c2VfbFkxNVRmRGdUcG1iQTM0RGlmY09IZyJ9fX10P3fkAAAA4AAAAFe4+dzhCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDUifUpyb74AAADWAAAAV5aYkccLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0Ijoie1wibGEifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRIn3gHH6ZAAAA3QAAAFfhSKDWCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6InRpdHUifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFkifdXgxn8AAAC3AAAAVzLKzzoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiZGVcIjogXCI0OC44NTcifX0sInAiOiJhYmMifZBY3TUAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiNVwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eSJ9VJmaGwAAALcAAABXMsrPOgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiIsIFwibG9uZ2l0dSJ9fSwicCI6ImFiY2RlZiJ9olob8gAAALMAAABXx0pp+gs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJkZVwiOiBcIjIuIn19LCJwIjoiYWJjIn3cWmZ8AAAAtAAAAFd1arXqCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IjM1MTRcIn0ifX0sInAiOiJhYmNkZWZnIn0TDNcSAAAAtgAAAFZ4rdYcCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1gifRTWkNMAAACOAAAAUXeYsPgLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtIiwic3RvcFJlYXNvbiI6InRvb2xfdXNlIn2n5n52AAAA0AAAAE59s8ynCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTI0Nn0sInAiOiJhYmNkZWZnaGlqa2xtIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjU3Mywib3V0cHV0VG9rZW5zIjo3NCwidG90YWxUb2tlbnMiOjY0N3199dokrg==
-  recorded_at: Tue, 16 Sep 2025 01:24:49 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
-        current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
-        a mild day in the German capital. Would you like to know anything else about
-        the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
-        Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","content":[{"text":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012449Z
-      X-Amz-Content-Sha256:
-      - cdd1e1875aa7ba978aaa35966351978295f2de89b49188370c617ae96a860534
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=114d765fc46e7adc774b37e4bef042faaa57c1239db9ab65e7a746cf44a70511
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 429
-      message: Too Many Requests
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:50 GMT
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '65'
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 6d51e28a-5e93-4dfe-9882-ba3f913ce2b2
-      X-Amzn-Errortype:
-      - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
-    body:
-      encoding: UTF-8
-      string: '{"message":"Too many requests, please wait before trying again."}'
-  recorded_at: Tue, 16 Sep 2025 01:24:50 GMT
-- request:
-    method: post
-    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
-    body:
-      encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
-        current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
-        a mild day in the German capital. Would you like to know anything else about
-        the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
-        Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","content":[{"text":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
-        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Host:
-      - bedrock-runtime.<AWS_REGION>.amazonaws.com
-      X-Amz-Date:
-      - 20250916T012456Z
-      X-Amz-Content-Sha256:
-      - cdd1e1875aa7ba978aaa35966351978295f2de89b49188370c617ae96a860534
-      Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3abb56e0cf860301fd73cc89bda8712507c19a714da127656d7be24e19313279
-      Content-Type:
-      - application/json
-      Accept:
-      - application/vnd.amazon.eventstream
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 16 Sep 2025 01:24:57 GMT
-      Content-Type:
-      - application/vnd.amazon.eventstream
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-Amzn-Requestid:
-      - 6e8ff65d-e9f2-4b9d-8e6f-d609a508cbb0
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        AAAAsAAAAFLwgOelCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWSIsInJvbGUiOiJhc3Npc3RhbnQifdpnxiUAAADbAAAAV24IVXYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFUifXuz3/4AAADVAAAAV9E46xcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGluIFBhcmlzIGlzICJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFUifS6xwU0AAADpAAAAV7XpvpALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSJ9qPYi2AAAANoAAABXU2h8xgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgMTAga20vaC4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzIn00TL2PAAAA9AAAAFctme2jCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBJbnRlcmVzdGluZ2x5LCB0aGUgd2VhdGhlciBjb25kaXRpb25zIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9EhU2iwAAAMYAAABX9ngGRQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYXJlIHF1aXRlIHNpbWlsYXIgdG8gQmVybGluIGF0In0sInAiOiJhYmNkZWZnaGlqa2xtbiJ9Efvt4wAAANQAAABX7FjCpws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdGhlIG1vbWVudC4gSXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSIn3MW74UAAAA+AAAAFfoaQCiCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjMifYu+mYIAAACxAAAAV72KOpoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFib3V0IHRoZSB3ZWF0aGVyPyJ9LCJwIjoiYWJjZGUifaWg1SMAAACNAAAAVq5cX4sLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGkifSTxELEAAAC5AAAAUWSZ1G4LOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMyIsInN0b3BSZWFzb24iOiJlbmRfdHVybiJ94X5cZAAAANAAAABOfbPMpws6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjExNTh9LCJwIjoiYWJjZGVmZ2hpamtsbSIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo2ODcsIm91dHB1dFRva2VucyI6NTYsInRvdGFsVG9rZW5zIjo3NDN9fUmmC4w=
-  recorded_at: Tue, 16 Sep 2025 01:24:57 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012434Z
+        X-Amz-Content-Sha256:
+          - b953cce59aafaeaa008e7d7c66fa77c653a967f1cc0194e6c72264ac7fece23f
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b022981d538331f6a0fc9cc3864756b23ec69094eec7161250f19b6ab2ab126b
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:35 GMT
+        Content-Type:
+          - application/vnd.amazon.eventstream
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 9b34bece-cbf0-4c8e-88f2-0aa6e8573a28
+      body:
+        encoding: ASCII-8BIT
+        string: !binary |-
+          AAAAkgAAAFJLgZvBCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dSIsInJvbGUiOiJhc3Npc3RhbnQifVMJx7gAAADZAAAAVxTIBhYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiTGV0In0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMzQ1Njc4In01BET7AAAA1QAAAFfROOsXCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBtZSBjaGVjayB0aGUgY3VycmVudCJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNIn0gk/UKAAAA5QAAAFdwGVORCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB3ZWF0aGVyIGluIEJlcmxpbiBmb3IgeW91IHVzaW5nIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUiJ9sGLV2gAAANkAAABXFMgGFgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdGhlIGNvb3JkaW5hdGVzIHlvdSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVIifQxPBY8AAADXAAAAV6v4uHcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHByb3ZpZGVkLiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWiJ9/VaatgAAALYAAABWeK3WHAs6ZXZlbnQtdHlwZQcAEGNvbnRlbnRCbG9ja1N0b3ANOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYIn0U1pDTAAAA8wAAAFefuTGzCzpldmVudC10eXBlBwARY29udGVudEJsb2NrU3RhcnQNOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6Iiwic3RhcnQiOnsidG9vbFVzZSI6eyJuYW1lIjoid2VhdGhlciIsInRvb2xVc2VJZCI6InRvb2x1c2VfVU5Rc0FkY0ZSanlYRU1YbDM5ZGE2USJ9fX3cSBkMAAAAygAAAFcziOtECzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSiJ9eqSUrgAAAMgAAABXSUi4JAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJ7XCJsYXRpdCJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6In3ZCSmDAAAAuQAAAFeN+nFbCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6InVkZVwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW4ifZrKr4sAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjoxLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiOiBcIjUyIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1diJ9JlwlxwAAALwAAABXRRr+Kws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiIuNTIwMFwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vIn1pXyspAAAAxgAAAFf2eAZFCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiwgXCJsb25naXR1ZGUifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzIn3BsChAAAAAtAAAAFd1arXqCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IlwiOiAifX0sInAiOiJhYmNkZWZnaGlqIn39itwFAAAA1AAAAFfsWMKnCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MSwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IlwiMTMuNDA1MFwifSJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0gifSDcQiEAAACPAAAAVtScDOsLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjEsInAiOiJhYmNkZWZnaGlqayJ9Qhme7QAAAIMAAABRjwh0SQs6ZXZlbnQtdHlwZQcAC21lc3NhZ2VTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiIiwic3RvcFJlYXNvbiI6InRvb2xfdXNlIn1SIsnZAAAA2AAAAE5Nw4dmCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTU2NX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHUiLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6Mzg5LCJvdXRwdXRUb2tlbnMiOjkxLCJ0b3RhbFRva2VucyI6NDgwfX27INaf
+    recorded_at: Tue, 16 Sep 2025 01:24:36 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012436Z
+        X-Amz-Content-Sha256:
+          - 5c3bed0b5140c8477940e1cca99c6997e5f565370e48235f40d0b09f5f739967
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=77cd2accf4d9e2b0dbe2ad997f97378fc4f5dcd2ccf796b1d3022bc095ad0aeb
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 429
+        message: Too Many Requests
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:37 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "65"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 8e37d075-c905-47ba-b60f-fecad62aac55
+        X-Amzn-Errortype:
+          - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
+      body:
+        encoding: UTF-8
+        string: '{"message":"Too many requests, please wait before trying again."}'
+    recorded_at: Tue, 16 Sep 2025 01:24:37 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012443Z
+        X-Amz-Content-Sha256:
+          - 5c3bed0b5140c8477940e1cca99c6997e5f565370e48235f40d0b09f5f739967
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a5cefc7eaed73553d6279b34e62ca515c9027999ba4c6b5ba9a927dd231d0b8a
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:44 GMT
+        Content-Type:
+          - application/vnd.amazon.eventstream
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 526f81de-eab1-45da-8b77-f8430a249ede
+      body:
+        encoding: ASCII-8BIT
+        string: !binary |-
+          AAAAugAAAFK6MP8ECzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDU2NzgiLCJyb2xlIjoiYXNzaXN0YW50In00xKBOAAAAqwAAAFeX2rW5CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IlRoZSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vIn1REnmHAAAA2wAAAFduCFV2CzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLIn18GYcFAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiAxNcKwQyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjM0In3+3PvTAAAA2AAAAFcpqC+mCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB3aXRoIGEgd2luZCBzcGVlZCBvZiJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QIn0DRwHxAAAA1gAAAFeWmJHHCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiAxMCBrbSJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMiJ9KZyhsAAAAL0AAABXeHrXmws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIvaC4gSXQgc2VlbXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eCJ97UNl7QAAAMoAAABXM4jrRAs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgbGlrZSBhIG1pbGQgZGF5IGluIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0QifQZ+smwAAADGAAAAV/Z4BkULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIHRoZSBHZXJtYW4gY2FwaXRhbC4gV291bGQgeW91IGxpa2UgdG8ifSwicCI6ImFiY2RlZmcifU3G1eAAAADQAAAAVxnYZGcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGtub3cgYW55dGhpbmcgZWxzZSBhYm91dCB0aGUgd2VhdGhlciJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyIn1yjSWrAAAAxQAAAFex2HyVCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6Ij8ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFEifVC0q/QAAACHAAAAVuTsRyoLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmMifcup67cAAACfAAAAUSoYDsoLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0QiLCJzdG9wUmVhc29uIjoiZW5kX3R1cm4ifas1whsAAADLAAAATmqDajQLOmV2ZW50LXR5cGUHAAhtZXRhZGF0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7Im1ldHJpY3MiOnsibGF0ZW5jeU1zIjoxMjk2fSwicCI6ImFiY2RlZmdoIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjUwMywib3V0cHV0VG9rZW5zIjo0OCwidG90YWxUb2tlbnMiOjU1MX19dhGkuw==
+    recorded_at: Tue, 16 Sep 2025 01:24:44 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
+          current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
+          a mild day in the German capital. Would you like to know anything else about
+          the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
+          Paris? (48.8575, 2.3514)"}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012447Z
+        X-Amz-Content-Sha256:
+          - 0ec1fc05158cdfa73257f20de6a4eb479a344d6fc97c39ad29068fc1681c23eb
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=80343a6ed8142d43579858b047273cd1ed7562208130edc06ebd587e3e8e0155
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:49 GMT
+        Content-Type:
+          - application/vnd.amazon.eventstream
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 9f8d9b86-43de-47bc-8bf6-0905c11581e2
+      body:
+        encoding: ASCII-8BIT
+        string: !binary |-
+          AAAAhQAAAFKZQdBTCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoIiwicm9sZSI6ImFzc2lzdGFudCJ9PVk6xgAAAQ0AAABXo+EMKgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja1N0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaIiwic3RhcnQiOnsidG9vbFVzZSI6eyJuYW1lIjoid2VhdGhlciIsInRvb2xVc2VJZCI6InRvb2x1c2VfbFkxNVRmRGdUcG1iQTM0RGlmY09IZyJ9fX10P3fkAAAA4AAAAFe4+dzhCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IiJ9fSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzNDUifUpyb74AAADWAAAAV5aYkccLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0Ijoie1wibGEifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRIn3gHH6ZAAAA3QAAAFfhSKDWCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6InRpdHUifX0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFkifdXgxn8AAAC3AAAAVzLKzzoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiZGVcIjogXCI0OC44NTcifX0sInAiOiJhYmMifZBY3TUAAADCAAAAVwP4oIULOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0b29sVXNlIjp7ImlucHV0IjoiNVwiIn19LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eSJ9VJmaGwAAALcAAABXMsrPOgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiIsIFwibG9uZ2l0dSJ9fSwicCI6ImFiY2RlZiJ9olob8gAAALMAAABXx0pp+gs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRvb2xVc2UiOnsiaW5wdXQiOiJkZVwiOiBcIjIuIn19LCJwIjoiYWJjIn3cWmZ8AAAAtAAAAFd1arXqCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidG9vbFVzZSI6eyJpbnB1dCI6IjM1MTRcIn0ifX0sInAiOiJhYmNkZWZnIn0TDNcSAAAAtgAAAFZ4rdYcCzpldmVudC10eXBlBwAQY29udGVudEJsb2NrU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1gifRTWkNMAAACOAAAAUXeYsPgLOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtIiwic3RvcFJlYXNvbiI6InRvb2xfdXNlIn2n5n52AAAA0AAAAE59s8ynCzpldmVudC10eXBlBwAIbWV0YWRhdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTI0Nn0sInAiOiJhYmNkZWZnaGlqa2xtIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjU3Mywib3V0cHV0VG9rZW5zIjo3NCwidG90YWxUb2tlbnMiOjY0N3199dokrg==
+    recorded_at: Tue, 16 Sep 2025 01:24:49 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
+          current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
+          a mild day in the German capital. Would you like to know anything else about
+          the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
+          Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","content":[{"text":"Current
+          weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012449Z
+        X-Amz-Content-Sha256:
+          - cdd1e1875aa7ba978aaa35966351978295f2de89b49188370c617ae96a860534
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=114d765fc46e7adc774b37e4bef042faaa57c1239db9ab65e7a746cf44a70511
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 429
+        message: Too Many Requests
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:50 GMT
+        Content-Type:
+          - application/json
+        Content-Length:
+          - "65"
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 6d51e28a-5e93-4dfe-9882-ba3f913ce2b2
+        X-Amzn-Errortype:
+          - ThrottlingException:http://internal.amazon.com/coral/com.amazon.bedrock/
+      body:
+        encoding: UTF-8
+        string: '{"message":"Too many requests, please wait before trying again."}'
+    recorded_at: Tue, 16 Sep 2025 01:24:50 GMT
+  - request:
+      method: post
+      uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream
+      body:
+        encoding: UTF-8
+        string:
+          '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+          in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_UNQsAdcFRjyXEMXl39da6Q","content":[{"text":"Current
+          weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]},{"role":"assistant","content":[{"text":"The
+          current weather in Berlin is 15°C with a wind speed of 10 km/h. It seems like
+          a mild day in the German capital. Would you like to know anything else about
+          the weather?"}]},{"role":"user","content":[{"text":"What''s the weather in
+          Paris? (48.8575, 2.3514)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","name":"weather","input":{"latitude":"48.8575","longitude":"2.3514"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_lY15TfDgTpmbA34DifcOHg","content":[{"text":"Current
+          weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{"maxTokens":4096},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+          current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+          (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+          13.4050)"}},"required":["latitude","longitude"]}}}}],"toolChoice":{"auto":{}}}}'
+      headers:
+        User-Agent:
+          - Faraday v2.13.4
+        Host:
+          - bedrock-runtime.<AWS_REGION>.amazonaws.com
+        X-Amz-Date:
+          - 20250916T012456Z
+        X-Amz-Content-Sha256:
+          - cdd1e1875aa7ba978aaa35966351978295f2de89b49188370c617ae96a860534
+        Authorization:
+          - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250916/<AWS_REGION>/bedrock/aws4_request,
+            SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3abb56e0cf860301fd73cc89bda8712507c19a714da127656d7be24e19313279
+        Content-Type:
+          - application/json
+        Accept:
+          - application/vnd.amazon.eventstream
+        Accept-Encoding:
+          - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Date:
+          - Tue, 16 Sep 2025 01:24:57 GMT
+        Content-Type:
+          - application/vnd.amazon.eventstream
+        Transfer-Encoding:
+          - chunked
+        Connection:
+          - keep-alive
+        X-Amzn-Requestid:
+          - 6e8ff65d-e9f2-4b9d-8e6f-d609a508cbb0
+      body:
+        encoding: ASCII-8BIT
+        string: !binary |-
+          AAAAsAAAAFLwgOelCzpldmVudC10eXBlBwAMbWVzc2FnZVN0YXJ0DTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWSIsInJvbGUiOiJhc3Npc3RhbnQifdpnxiUAAADbAAAAV24IVXYLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiVGhlIGN1cnJlbnQgd2VhdGhlciJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFUifXuz3/4AAADVAAAAV9E46xcLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGluIFBhcmlzIGlzICJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFUifS6xwU0AAADpAAAAV7XpvpALOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMSJ9qPYi2AAAANoAAABXU2h8xgs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgMTAga20vaC4ifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVowMTIzIn00TL2PAAAA9AAAAFctme2jCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiBJbnRlcmVzdGluZ2x5LCB0aGUgd2VhdGhlciBjb25kaXRpb25zIn0sInAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMCJ9EhU2iwAAAMYAAABX9ngGRQs6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgYXJlIHF1aXRlIHNpbWlsYXIgdG8gQmVybGluIGF0In0sInAiOiJhYmNkZWZnaGlqa2xtbiJ9Efvt4wAAANQAAABX7FjCpws6ZXZlbnQtdHlwZQcAEWNvbnRlbnRCbG9ja0RlbHRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsImRlbHRhIjp7InRleHQiOiIgdGhlIG1vbWVudC4gSXMifSwicCI6ImFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6QUJDREVGR0hJSktMTU5PUFFSIn3MW74UAAAA+AAAAFfoaQCiCzpldmVudC10eXBlBwARY29udGVudEJsb2NrRGVsdGENOmNvbnRlbnQtdHlwZQcAEGFwcGxpY2F0aW9uL2pzb24NOm1lc3NhZ2UtdHlwZQcABWV2ZW50eyJjb250ZW50QmxvY2tJbmRleCI6MCwiZGVsdGEiOnsidGV4dCI6IiB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdyJ9LCJwIjoiYWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXpBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWjAxMjMifYu+mYIAAACxAAAAV72KOpoLOmV2ZW50LXR5cGUHABFjb250ZW50QmxvY2tEZWx0YQ06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7ImNvbnRlbnRCbG9ja0luZGV4IjowLCJkZWx0YSI6eyJ0ZXh0IjoiIGFib3V0IHRoZSB3ZWF0aGVyPyJ9LCJwIjoiYWJjZGUifaWg1SMAAACNAAAAVq5cX4sLOmV2ZW50LXR5cGUHABBjb250ZW50QmxvY2tTdG9wDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsiY29udGVudEJsb2NrSW5kZXgiOjAsInAiOiJhYmNkZWZnaGkifSTxELEAAAC5AAAAUWSZ1G4LOmV2ZW50LXR5cGUHAAttZXNzYWdlU3RvcA06Y29udGVudC10eXBlBwAQYXBwbGljYXRpb24vanNvbg06bWVzc2FnZS10eXBlBwAFZXZlbnR7InAiOiJhYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaMDEyMyIsInN0b3BSZWFzb24iOiJlbmRfdHVybiJ94X5cZAAAANAAAABOfbPMpws6ZXZlbnQtdHlwZQcACG1ldGFkYXRhDTpjb250ZW50LXR5cGUHABBhcHBsaWNhdGlvbi9qc29uDTptZXNzYWdlLXR5cGUHAAVldmVudHsibWV0cmljcyI6eyJsYXRlbmN5TXMiOjExNTh9LCJwIjoiYWJjZGVmZ2hpamtsbSIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo2ODcsIm91dHB1dFRva2VucyI6NTYsInRvdGFsVG9rZW5zIjo3NDN9fUmmC4w=
+    recorded_at: Tue, 16 Sep 2025 01:24:57 GMT
 recorded_with: VCR 6.3.1

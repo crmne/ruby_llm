@@ -176,7 +176,7 @@ class Conversation < ApplicationRecord
 end
 
 # Now your model can interact with AI
-conversation = Conversation.create!(model_id: "{{ site.models.default_chat }}")
+conversation = Conversation.create!(model: "{{ site.models.default_chat }}")
 response = conversation.ask("How can I help you today?")
 ```
 

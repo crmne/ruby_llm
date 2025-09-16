@@ -26,21 +26,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 10 Sep 2025 15:01:47 GMT
+      - Sun, 14 Sep 2025 10:09:32 GMT
       Content-Length:
-      - '1063'
+      - '1066'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-897","object":"chat.completion","created":1757516507,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user wants me to roll the dice three times. Let me check the tools available.
+      string: '{"id":"chatcmpl-345","object":"chat.completion","created":1757844572,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user wants me to roll the dice three times. Let me check the tools provided.
         There''s a function called dice_roll that rolls a single six-sided die. Since
         they need it three times, I should call that function three separate times.
         Each call doesn''t require any parameters, so I''ll just make three individual
         tool calls. I need to make sure each is in its own tool_call tags. Let me
-        structure that properly.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_amwlgbdm","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_yszkkejf","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_3q9ukguf","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":141,"total_tokens":300}}
+        structure each one properly.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_q2fyzzq0","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_8ragdnby","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_nuj90cpv","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":142,"total_tokens":301}}
 
         '
-  recorded_at: Wed, 10 Sep 2025 15:01:47 GMT
+  recorded_at: Sun, 14 Sep 2025 10:09:32 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -49,14 +49,14 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"<think>\nOkay, the user
-        wants me to roll the dice three times. Let me check the tools available. There''s
+        wants me to roll the dice three times. Let me check the tools provided. There''s
         a function called dice_roll that rolls a single six-sided die. Since they
         need it three times, I should call that function three separate times. Each
         call doesn''t require any parameters, so I''ll just make three individual
         tool calls. I need to make sure each is in its own tool_call tags. Let me
-        structure that properly.\n</think>\n\n","tool_calls":[{"id":"call_amwlgbdm","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_yszkkejf","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_3q9ukguf","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_amwlgbdm"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_yszkkejf"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_3q9ukguf"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        structure each one properly.\n</think>\n\n","tool_calls":[{"id":"call_q2fyzzq0","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_8ragdnby","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_nuj90cpv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_q2fyzzq0"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_8ragdnby"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_nuj90cpv"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -75,12 +75,19 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 10 Sep 2025 15:01:49 GMT
+      - Sun, 14 Sep 2025 10:09:33 GMT
       Content-Length:
-      - '919'
+      - '704'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTIxNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc1MTY1MDksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCB0byByb2xsIHRoZSBkaWNlIHRocmVlIHRpbWVzLiBJIG5lZWQgdG8gdXNlIHRoZSBkaWNlX3JvbGwgZnVuY3Rpb24gZXhhY3RseSB0aHJlZSB0aW1lcy4gRWFjaCBjYWxsIHNob3VsZCBiZSBpbiBzZXBhcmF0ZSB0b29sX2NhbGwgdGFncy4gTGV0IG1lIGNoZWNrIGlmIEkgaGF2ZSB0aGUgY29ycmVjdCBudW1iZXIgb2Ygcm9sbHMuIFRoZSBmaXJzdCByZXNwb25zZSB3YXMgMSwgdGhlbiAyLCB0aGVuIDMuIFRoYXQncyB0aHJlZSByb2xscy4gTm93IEkgc2hvdWxkIHByZXNlbnQgdGhlIHJlc3VsdHMgY2xlYXJseS4gTWF5YmUgbGlzdCBlYWNoIHJvbGwgd2l0aCBhIG51bWJlci4gTGV0IG1lIG1ha2Ugc3VyZSB0aGUgZm9ybWF0dGluZyBpcyBjb3JyZWN0IGFuZCB0aGUgYW5zd2VyIGlzIGVhc3kgdG8gcmVhZC5cblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgZGljZSB3ZXJlIHJvbGxlZCB0aHJlZSB0aW1lcywgYW5kIHRoZSByZXN1bHRzIHdlcmU6XG5cbjEuICoqUm9sbCAxOioqIPCfjrIgMVxuMi4gKipSb2xsIDI6Kiog8J+OsiAyXG4zLiAqKlJvbGwgMzoqKiDwn46yIDNcblxuTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB0byByb2xsIGFnYWluISJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6Mjk5LCJjb21wbGV0aW9uX3Rva2VucyI6MTY1LCJ0b3RhbF90b2tlbnMiOjQ2NH19Cg==
-  recorded_at: Wed, 10 Sep 2025 15:01:49 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-39","object":"chat.completion","created":1757844573,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user asked to roll the dice three times. I need to use the dice_roll function
+        exactly three times. Each call should be in separate tool_call tags. Let me
+        make sure I don''t miss any and that each response is correctly formatted.
+        Alright, first call, then second, then third. No parameters needed, just execute
+        the function three times.\n\u003c/think\u003e\n\nThe dice rolls resulted in:\n1,
+        2, 3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":300,"completion_tokens":91,"total_tokens":391}}
+
+        '
+  recorded_at: Sun, 14 Sep 2025 10:09:33 GMT
 recorded_with: VCR 6.3.1

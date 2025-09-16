@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:07:23 GMT
-      - Wed, 10 Sep 2025 15:07:24 GMT
+      - Sun, 14 Sep 2025 10:04:31 GMT
+      - Sun, 14 Sep 2025 10:04:32 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '829'
+      - '831'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,16 +44,16 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-guyx2X7vWTnSpzMQ99CQPewWHX1uSiZM","type":"function"}]}}],"created":1757516846,"id":"chatcmpl-mtfXcRpn9mSdVtjwo88CAWFd9e2vwCoG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":149,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":109,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3865.021554927903,"time_per_output_token_ms":9.632147651006711,"time_to_first_token_ms":67.27,"tokens_per_second":103.81900654268772,"total_tokens":409}}'
-  recorded_at: Wed, 10 Sep 2025 15:07:26 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-GgsEKibXMueqYSPN4Wjpapd5IlafILC3","type":"function"}]}}],"created":1757844274,"id":"chatcmpl-bGvNC8PpuIdF6QWorLRIFOwXZNBqO2h5","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":151,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":111,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3269.6999421514624,"time_per_output_token_ms":9.149205298013245,"time_to_first_token_ms":79.518,"tokens_per_second":109.29911040657822,"total_tokens":411}}'
+  recorded_at: Sun, 14 Sep 2025 10:04:34 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-guyx2X7vWTnSpzMQ99CQPewWHX1uSiZM","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-guyx2X7vWTnSpzMQ99CQPewWHX1uSiZM"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-GgsEKibXMueqYSPN4Wjpapd5IlafILC3","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-GgsEKibXMueqYSPN4Wjpapd5IlafILC3"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"enable_thinking":false}'
@@ -72,15 +72,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:07:25 GMT
-      - Wed, 10 Sep 2025 15:07:25 GMT
+      - Sun, 14 Sep 2025 10:04:33 GMT
+      - Sun, 14 Sep 2025 10:04:34 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '747'
+      - '731'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,6 +92,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIHdpbmRzIGF0ICoqMTAga20vaCoqLiDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTc1MTY4NDcsImlkIjoiY2hhdGNtcGwtY0NvOFFIUGU0VXFJbTVvdW55WVZLYnM2MmpVaVJKSkUiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE1MywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTA2LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMDM1MC42MTU0NDE5OTkyNTQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC45MDA4NjkyODEwNDU3NTIsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjMyLjE3MiwidG9rZW5zX3Blcl9zZWNvbmQiOjExMi4zNDg1NzcyNDg0NTg1LCJ0b3RhbF90b2tlbnMiOjQ4Nn19
-  recorded_at: Wed, 10 Sep 2025 15:07:27 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU3ODQ0Mjc1LCJpZCI6ImNoYXRjbXBsLXNhR3lMb3FuWDYxTHN5QXBuVVlUNkJhYVU2VU5zOTN3IiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNDUsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjEwNCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjMzMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjI1OX0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTMyMzIuMTM4NTk5Njk4MDA0LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNzMzNjc1ODYyMDY4OTY1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNS4xNjYsInRva2Vuc19wZXJfc2Vjb25kIjoxMTQuNDk5MzI2MDMzMjc3NDQsInRvdGFsX3Rva2VucyI6NDc4fX0=
+  recorded_at: Sun, 14 Sep 2025 10:04:35 GMT
 recorded_with: VCR 6.3.1

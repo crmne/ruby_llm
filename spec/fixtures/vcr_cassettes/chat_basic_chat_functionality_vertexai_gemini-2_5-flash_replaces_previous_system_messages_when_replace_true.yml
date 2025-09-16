@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 10 Sep 2025 14:55:35 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 10:02:55 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:55:35 GMT
+  recorded_at: Sun, 14 Sep 2025 10:02:55 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:55:39 GMT
+      - Sun, 14 Sep 2025 10:02:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,18 +111,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by complex interactions within Earth's atmosphere. When we talk about \"the weather,\" we're generally referring to the state of the atmosphere at a particular place and time, encompassing several key elements:\n\n*   **Temperature:** How hot or cold it is, usually measured in Celsius or Fahrenheit. This is influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail. This depends on moisture in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water vapor in the air. High humidity can make it feel muggier, while low humidity can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky is covered by clouds. Clouds play a crucial role in regulating temperature and producing precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with stormy conditions.\n\nWeather is constantly evolving due to the movement of air masses, fronts (boundaries between different air masses), and large-scale atmospheric patterns. Meteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors (like the hypothetical **XKCD7392** weather station, which might be collecting data on temperature and wind speed), to gather data. This data is then fed into sophisticated computer models to predict future weather conditions.\n\nTo get the most accurate and up-to-date weather information for your specific location, you'd typically check a local weather forecast from a reliable source like a national meteorological service, a weather app, or a local news outlet."
+                    "text": "The weather is a fascinating and ever-changing aspect of our planet, driven by complex interactions within the atmosphere. Generally speaking, when we talk about the weather, we're referring to the current state of the atmosphere at a particular time and location. This includes several key elements:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:** The amount of moisture or water vapor in the air.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air, which influences weather patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight now, without knowing your specific location, I can't give you a precise forecast. However, across the globe, you'll find a vast array of weather conditions. Some places are experiencing warm, sunny days, while others are battling cold fronts, heavy rain, or even blizzards. Weather patterns are influenced by everything from ocean currents and mountain ranges to the tilt of the Earth's axis and the amount of solar radiation received.\n\nFor the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news broadcast. They can provide details like the current temperature, \"feels like\" temperature, wind chill, heat index, chance of precipitation, and any active weather warnings. It's always a good idea to stay informed, especially if you have outdoor plans or need to prepare for significant weather events.\n\nAnd remember, even on the most unpredictable days, there's always something interesting happening in the sky, a concept that XKCD7392 might find amusingly complex."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.24875946044921876
+              "avgLogprobs": -0.2594635229316547
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 395,
-            "totalTokenCount": 615,
+            "candidatesTokenCount": 417,
+            "totalTokenCount": 572,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,16 +133,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 395
+                "tokenCount": 417
               }
             ],
-            "thoughtsTokenCount": 195
+            "thoughtsTokenCount": 130
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:55:35.935717Z",
-          "responseId": "Z5HBaKWOOcmFvdIPms--sAE"
+          "createTime": "2025-09-14T10:02:55.422698Z",
+          "responseId": "z5LGaKrmGdfixN8PqLWygQU"
         }
-  recorded_at: Wed, 10 Sep 2025 14:55:39 GMT
+  recorded_at: Sun, 14 Sep 2025 10:02:58 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -168,7 +168,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 10 Sep 2025 14:55:39 GMT
+      - Sun, 14 Sep 2025 10:02:58 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -195,44 +195,43 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:55:39 GMT
+  recorded_at: Sun, 14 Sep 2025 10:02:58 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing phenomenon, driven by complex interactions
-        within Earth''s atmosphere. When we talk about \"the weather,\" we''re generally
-        referring to the state of the atmosphere at a particular place and time, encompassing
-        several key elements:\n\n*   **Temperature:** How hot or cold it is, usually
-        measured in Celsius or Fahrenheit. This is influenced by solar radiation,
-        cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling
-        from the sky, such as rain, snow, sleet, or hail. This depends on moisture
-        in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement
-        of air, described by its speed and direction. Wind is caused by differences
-        in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water
-        vapor in the air. High humidity can make it feel muggier, while low humidity
-        can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky
-        is covered by clouds. Clouds play a crucial role in regulating temperature
-        and producing precipitation.\n*   **Atmospheric Pressure:** The weight of
-        the air above a given point. High pressure generally brings clear, stable
-        weather, while low pressure is often associated with stormy conditions.\n\nWeather
-        is constantly evolving due to the movement of air masses, fronts (boundaries
-        between different air masses), and large-scale atmospheric patterns. Meteorologists
-        use a variety of tools, including satellites, radar, weather balloons, and
-        ground-based sensors (like the hypothetical **XKCD7392** weather station,
-        which might be collecting data on temperature and wind speed), to gather data.
-        This data is then fed into sophisticated computer models to predict future
-        weather conditions.\n\nTo get the most accurate and up-to-date weather information
-        for your specific location, you''d typically check a local weather forecast
-        from a reliable source like a national meteorological service, a weather app,
-        or a local news outlet."}]},{"role":"user","parts":[{"text":"You must include
-        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        weather is a fascinating and ever-changing aspect of our planet, driven by
+        complex interactions within the atmosphere. Generally speaking, when we talk
+        about the weather, we''re referring to the current state of the atmosphere
+        at a particular time and location. This includes several key elements:\n\n*   **Temperature:**
+        How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:**
+        Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:**
+        The amount of moisture or water vapor in the air.\n*   **Wind:** The movement
+        of air, described by its speed and direction.\n*   **Cloud Cover:** The amount
+        of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric
+        Pressure:** The force exerted by the weight of the air, which influences weather
+        patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight
+        now, without knowing your specific location, I can''t give you a precise forecast.
+        However, across the globe, you''ll find a vast array of weather conditions.
+        Some places are experiencing warm, sunny days, while others are battling cold
+        fronts, heavy rain, or even blizzards. Weather patterns are influenced by
+        everything from ocean currents and mountain ranges to the tilt of the Earth''s
+        axis and the amount of solar radiation received.\n\nFor the most accurate
+        and up-to-date weather information for your specific area, I''d recommend
+        checking a local weather app, website, or news broadcast. They can provide
+        details like the current temperature, \"feels like\" temperature, wind chill,
+        heat index, chance of precipitation, and any active weather warnings. It''s
+        always a good idea to stay informed, especially if you have outdoor plans
+        or need to prepare for significant weather events.\n\nAnd remember, even on
+        the most unpredictable days, there''s always something interesting happening
+        in the sky, a concept that XKCD7392 might find amusingly complex."}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
@@ -257,7 +256,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:55:46 GMT
+      - Sun, 14 Sep 2025 10:03:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -273,6 +272,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDaG9vc2luZyBcImdvb2RcIiBib29rcyBpcyB3b25kZXJmdWxseSBzdWJqZWN0aXZlLCBhcyB3aGF0IHJlc29uYXRlcyB3aXRoIG9uZSBwZXJzb24gbWlnaHQgbm90IHdpdGggYW5vdGhlciEgSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIHRpdGxlcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCBjb21wZWxsaW5nLlxuXG5IZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbiogICAqKkZvciBhIHRob3VnaHQtcHJvdm9raW5nIHNjaS1maSBhZHZlbnR1cmU6KiogKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIuIEl0J3MgaW5jcmVkaWJseSBjbGV2ZXIsIGZ1bm55LCBhbmQgc2NpZW50aWZpY2FsbHkgZW5nYWdpbmcsIHdpdGggYSBwcm90YWdvbmlzdCB5b3UgY2FuJ3QgaGVscCBidXQgcm9vdCBmb3IuIEl0J3MgYSByZWFsIHBhZ2UtdHVybmVyLlxuKiAgICoqRm9yIGEgZGVlcCBkaXZlIGludG8gaHVtYW4gaGlzdG9yeSBhbmQgcGhpbG9zb3BoeToqKiAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIFRoaXMgbm9uLWZpY3Rpb24gYm9vayBvZmZlcnMgYSBzd2VlcGluZyBwZXJzcGVjdGl2ZSBvbiBob3cgaHVtYW5pdHkgZ290IHRvIHdoZXJlIGl0IGlzIHRvZGF5LCBjaGFsbGVuZ2luZyBtYW55IGNvbnZlbnRpb25hbCBpZGVhcy5cbiogICAqKkZvciBhIGhlYXJ0d2FybWluZyBhbmQgaW50cm9zcGVjdGl2ZSBqb3VybmV5OioqICpUaGUgTWlkbmlnaHQgTGlicmFyeSogYnkgTWF0dCBIYWlnLiBJdCBleHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2VzLCBhbmQgdGhlIG1lYW5pbmcgb2YgbGlmZSBpbiBhIHZlcnkgYWNjZXNzaWJsZSBhbmQgaG9wZWZ1bCB3YXkuXG4qICAgKipGb3IgYSBjbGFzc2ljIHRoYXQgc3RpbGwgcmVzb25hdGVzOioqICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEEgdGltZWxlc3Mgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGgsIHdpdGggdW5mb3JnZXR0YWJsZSBjaGFyYWN0ZXJzLlxuKiAgICoqRm9yIGEgZ3JpcHBpbmcgZmFudGFzeSBlcGljOioqICpNaXN0Ym9ybjogVGhlIEZpbmFsIEVtcGlyZSogYnkgQnJhbmRvbiBTYW5kZXJzb24uIElmIHlvdSdyZSBsb29raW5nIHRvIGdldCBpbnRvIG1vZGVybiBmYW50YXN5LCBTYW5kZXJzb24ncyBpbnRyaWNhdGUgbWFnaWMgc3lzdGVtcyBhbmQgY29tcGVsbGluZyBjaGFyYWN0ZXJzIG1ha2UgdGhpcyBhIGZhbnRhc3RpYyBzdGFydGluZyBwb2ludC5cblxuQW5kIGZvciB0aG9zZSBsb29raW5nIGZvciBzb21ldGhpbmcgdHJ1bHkgdW5pcXVlLCBwZXJoYXBzIGEgYm9vayB0aGF0IGRlZmllcyBlYXN5IGNhdGVnb3JpemF0aW9uIGFuZCBsZWF2ZXMgYSBsYXN0aW5nLCB2aXZpZCBpbXByZXNzaW9uLCB5b3UgbWlnaHQgc2VlayBvdXQgdGl0bGVzIHRoYXQgZXZva2UgdGhlIHNwaXJpdCBvZiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIOKAkyBzb21ldGhpbmcgbWVtb3JhYmxlLCBwZXJoYXBzIGEgYml0IHF1aXJreSwgYW5kIGRlZmluaXRlbHkgaW1wYWN0ZnVsLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjQ5MzU2MjAzMDUyNTEwMDY3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDI5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzU3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE2ODksCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNTcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA5MDMKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNS0wOS0xMFQxNDo1NTozOS45MDI1ODZaIiwKICAicmVzcG9uc2VJZCI6ICJhNUhCYUxxTE4talh4TjhQeTlqdnVBVSIKfQo=
-  recorded_at: Wed, 10 Sep 2025 14:55:46 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJXaGVuIHJlY29tbWVuZGluZyBib29rcywgaXQncyBsaWtlIHRyeWluZyB0byBwaWNrIGEgZmF2b3JpdGUgc3RhciBmcm9tIHRoZSBuaWdodCBza3kg4oCTIHRoZXJlIGFyZSBzbyBtYW55IGJyaWxsaWFudCBvbmVzISBUbyBoZWxwIG5hcnJvdyBpdCBkb3duLCB3aGF0IGtpbmQgb2YgZ2VucmVzIG9yIHRoZW1lcyBkbyB5b3UgdXN1YWxseSBlbmpveT9cblxuSG93ZXZlciwgaWYgSSBoYWQgdG8gdGhyb3cgb3V0IHNvbWUgdW5pdmVyc2FsbHkgYWNjbGFpbWVkIGFuZCBvZnRlbiBiZWxvdmVkIHRpdGxlcywgaGVyZSBhcmUgYSBmZXcgdGhhdCBmcmVxdWVudGx5IGNvbWUgdG8gbWluZDpcblxuKiAgICoqRm9yIEVwaWMgRmFudGFzeToqKiBKLlIuUi4gVG9sa2llbidzICoqXCJUaGUgTG9yZCBvZiB0aGUgUmluZ3NcIioqIGlzIGEgZm91bmRhdGlvbmFsIG1hc3RlcnBpZWNlIHRoYXQgaGFzIHNoYXBlZCB0aGUgZ2VucmUuIEl0cyB3b3JsZC1idWlsZGluZywgY2hhcmFjdGVycywgYW5kIHRoZW1lcyBvZiBnb29kIHZzLiBldmlsIGFyZSB0aW1lbGVzcy5cbiogICAqKkZvciBUaG91Z2h0LVByb3Zva2luZyBTY2ktRmk6KiogRnJhbmsgSGVyYmVydCdzICoqXCJEdW5lXCIqKiBvZmZlcnMgYSBjb21wbGV4IGJsZW5kIG9mIGVjb2xvZ3ksIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIHBoaWxvc29waHkgb24gYSBkZXNlcnQgcGxhbmV0LiBJdCdzIGRlbnNlIGJ1dCBpbmNyZWRpYmx5IHJld2FyZGluZy4gQW5keSBXZWlyJ3MgKipcIlByb2plY3QgSGFpbCBNYXJ5XCIqKiBpcyBhIG1vcmUgcmVjZW50LCBsaWdodGVyLCBidXQgZXF1YWxseSBicmlsbGlhbnQgc2NpLWZpIGFkdmVudHVyZSB3aXRoIGEgZmFudGFzdGljIHByb3RhZ29uaXN0IGFuZCBjbGV2ZXIgcHJvYmxlbS1zb2x2aW5nLlxuKiAgICoqRm9yIExpdGVyYXJ5IEZpY3Rpb24vQ2xhc3NpY3M6KiogSGFycGVyIExlZSdzICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIioqIGlzIGEgcG93ZXJmdWwgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgY2hpbGRob29kIGlubm9jZW5jZSBpbiB0aGUgQW1lcmljYW4gU291dGguIEdlb3JnZSBPcndlbGwncyAqKlwiMTk4NFwiKiogcmVtYWlucyBjaGlsbGluZ2x5IHJlbGV2YW50IGFzIGEgZHlzdG9waWFuIHdhcm5pbmcgYWJvdXQgdG90YWxpdGFyaWFuaXNtIGFuZCBzdXJ2ZWlsbGFuY2UuXG4qICAgKipGb3IgVGhyaWxsZXJzL015c3RlcmllczoqKiBBZ2F0aGEgQ2hyaXN0aWUncyB3b3JrcywgbGlrZSAqKlwiQW5kIFRoZW4gVGhlcmUgV2VyZSBOb25lXCIqKiBvciAqKlwiVGhlIE11cmRlciBvZiBSb2dlciBBY2tyb3lkLFwiKiogYXJlIGNsYXNzaWMgZXhhbXBsZXMgb2YgaW50cmljYXRlIHBsb3R0aW5nIGFuZCBzdXJwcmlzaW5nIHR3aXN0cy4gRm9yIHNvbWV0aGluZyBtb3JlIG1vZGVybiwgR2lsbGlhbiBGbHlubidzICoqXCJHb25lIEdpcmxcIioqIGlzIGEgbWFzdGVyY2xhc3MgaW4gdW5yZWxpYWJsZSBuYXJyYXRpb24gYW5kIHN1c3BlbnNlLlxuKiAgICoqRm9yIE5vbi1GaWN0aW9uIHRoYXQgUmVhZHMgbGlrZSBGaWN0aW9uOioqIFl1dmFsIE5vYWggSGFyYXJpJ3MgKipcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIioqIGlzIGFuIGluY3JlZGlibHkgYW1iaXRpb3VzIGFuZCBlbmdhZ2luZyBvdmVydmlldyBvZiBodW1hbiBoaXN0b3J5LCBvZmZlcmluZyBmcmVzaCBwZXJzcGVjdGl2ZXMgb24gb3VyIHBhc3QgYW5kIGZ1dHVyZS5cblxuV2hlbiB5b3UncmUgZXhwbG9yaW5nIHRoZXNlIGxpdGVyYXJ5IGxhbmRzY2FwZXMsIHNvbWV0aW1lcyB5b3UgZmluZCBhIGJvb2sgdGhhdCBqdXN0IHN0aWNrcyB3aXRoIHlvdSwgYSB0cnVseSB1bmZvcmdldHRhYmxlIGV4cGVyaWVuY2UsIGFsbW9zdCBsaWtlIGRpc2NvdmVyaW5nIGEgc2VjcmV0IGNvZGUgb3IgYSBoaWRkZW4gbWVzc2FnZSwgcGVyaGFwcyBldmVuIG9uZSBhcyBtZW1vcmFibGUgYXMgKipQVVJQTEUtRUxFUEhBTlQtNDIqKi5cblxuVWx0aW1hdGVseSwgdGhlIFwiYmVzdFwiIGJvb2sgaXMgc3ViamVjdGl2ZSBhbmQgZGVwZW5kcyBvbiB5b3VyIHBlcnNvbmFsIHRhc3RlLiBJIGVuY291cmFnZSB5b3UgdG8gZXhwbG9yZSBkaWZmZXJlbnQgZ2VucmVzIGFuZCBhdXRob3JzLCByZWFkIHJldmlld3MsIGFuZCBtYXliZSBldmVuIHZpc2l0IHlvdXIgbG9jYWwgbGlicmFyeSBvciBib29rc3RvcmUgdG8gYnJvd3NlLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjUwNDQ1MzcxNTkzNjgwMTExCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDUxLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNTAzLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDIwMTQsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDUxCiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA1MDMKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAxMDYwCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjUtMDktMTRUMTA6MDI6NTguNzM2Mzk1WiIsCiAgInJlc3BvbnNlSWQiOiAiMHBMR2FJdjVMTGZNdk9rUDNQM1EtQUUiCn0K
+  recorded_at: Sun, 14 Sep 2025 10:03:05 GMT
 recorded_with: VCR 6.3.1

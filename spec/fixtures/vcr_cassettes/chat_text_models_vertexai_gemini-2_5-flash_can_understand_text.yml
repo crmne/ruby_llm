@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 09:52:29 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:29 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
+      - Sun, 14 Sep 2025 09:52:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The file contains the text: \"Ruby is the best.\""
+                    "text": "The file named `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.2264978885650635
+              "avgLogprobs": -0.47231652519919654
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
-            "candidatesTokenCount": 12,
-            "totalTokenCount": 81,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 82,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,16 +132,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 12
+                "tokenCount": 22
               }
             ],
-            "thoughtsTokenCount": 39
+            "thoughtsTokenCount": 30
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:45:16.436963Z",
-          "responseId": "_I7BaOPVGoiet_gPxoSDyA4"
+          "createTime": "2025-09-14T09:52:29.949824Z",
+          "responseId": "XZDGaMD8OYX8xN8PxbuSsAY"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:30 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -162,14 +162,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 14 Sep 2025 09:52:30 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -194,11 +194,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:30 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -206,7 +206,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file contains the text: \"Ruby is the best.\""}]},{"role":"user","parts":[{"text":"and
+        file named `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
@@ -232,7 +232,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:45:18 GMT
+      - Sun, 14 Sep 2025 09:52:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -255,36 +255,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains XML data. Specifically, it has a root element named `truism` which contains the text \"Ruby is the best\"."
+                    "text": "The file named `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.675732641509085
+              "avgLogprobs": -0.29835346341133118
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 76,
-            "candidatesTokenCount": 33,
-            "totalTokenCount": 180,
+            "promptTokenCount": 86,
+            "candidatesTokenCount": 32,
+            "totalTokenCount": 169,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 76
+                "tokenCount": 86
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 33
+                "tokenCount": 32
               }
             ],
-            "thoughtsTokenCount": 71
+            "thoughtsTokenCount": 51
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:45:17.137656Z",
-          "responseId": "_Y7BaLizCJGtrNcPuYTHuQE"
+          "createTime": "2025-09-14T09:52:30.647298Z",
+          "responseId": "XpDGaILBJ9rrhcIPyMbRQA"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:18 GMT
+  recorded_at: Sun, 14 Sep 2025 09:52:31 GMT
 recorded_with: VCR 6.3.1

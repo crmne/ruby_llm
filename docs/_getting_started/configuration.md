@@ -110,10 +110,6 @@ chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_ex
 ```
 
 #### System Role Compatibility
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 OpenAI's API now uses 'developer' role for system messages, but some OpenAI-compatible servers still require the traditional 'system' role:
 
@@ -224,7 +220,7 @@ RubyLLM.configure do |config|
   # Enable debug logging via environment variable
   config.log_level = :debug if ENV['RUBYLLM_DEBUG'] == 'true'
 
-  # Show detailed streaming chunks (v1.6.0+)
+  # Show detailed streaming chunks
   config.log_stream_debug = true  # Or set RUBYLLM_STREAM_DEBUG=true
 end
 ```
@@ -332,7 +328,7 @@ RubyLLM.configure do |config|
   # OpenAI Options
   config.openai_organization_id = String
   config.openai_project_id = String
-  config.openai_use_system_role = Boolean  # v1.6.0+
+  config.openai_use_system_role = Boolean
 
   # AWS Bedrock
   config.bedrock_api_key = String
@@ -357,7 +353,7 @@ RubyLLM.configure do |config|
   config.logger = Logger
   config.log_file = String
   config.log_level = Symbol
-  config.log_stream_debug = Boolean  # v1.6.0+
+  config.log_stream_debug = Boolean
 end
 ```
 

@@ -22,10 +22,10 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 14 Sep 2025 10:10:20 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 10 Sep 2025 15:02:44 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 15:02:44 GMT
+  recorded_at: Sun, 14 Sep 2025 10:10:20 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 15:02:44 GMT
+      - Sun, 14 Sep 2025 10:10:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,8 +107,8 @@ http_interactions:
             {
               "embeddings": {
                 "statistics": {
-                  "truncated": false,
-                  "token_count": 3
+                  "token_count": 3,
+                  "truncated": false
                 },
                 "values": [
                   -0.018408726900815964,
@@ -887,5 +887,5 @@ http_interactions:
             "billableCharacterCount": 11
           }
         }
-  recorded_at: Wed, 10 Sep 2025 15:02:44 GMT
+  recorded_at: Sun, 14 Sep 2025 10:10:20 GMT
 recorded_with: VCR 6.3.1

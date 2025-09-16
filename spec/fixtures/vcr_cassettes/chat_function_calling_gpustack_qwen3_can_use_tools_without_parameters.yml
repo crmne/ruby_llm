@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:07:34 GMT
-      - Wed, 10 Sep 2025 15:07:34 GMT
+      - Sun, 14 Sep 2025 10:06:18 GMT
+      - Sun, 14 Sep 2025 10:06:18 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '794'
+      - '796'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,15 +42,15 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-sIwpORDQw4eM0VbVX6tres7dhrOkdmqF","type":"function"}]}}],"created":1757516856,"id":"chatcmpl-dTvS8JdrcZ9Yl7xRT7tgEQwUdjCx4M3D","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":99,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":78,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4852.131298672942,"time_per_output_token_ms":9.262888888888888,"time_to_first_token_ms":41.219,"tokens_per_second":107.95768058920903,"total_tokens":299}}'
-  recorded_at: Wed, 10 Sep 2025 15:07:36 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc","type":"function"}]}}],"created":1757844381,"id":"chatcmpl-du54Esi6ogkUazxYO3raUNPZUUmz2X5v","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":313,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":292,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3959.4551789673737,"time_per_output_token_ms":8.90320766773163,"time_to_first_token_ms":50.512,"tokens_per_second":112.31906940959642,"total_tokens":513}}'
+  recorded_at: Sun, 14 Sep 2025 10:06:21 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-sIwpORDQw4eM0VbVX6tres7dhrOkdmqF","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-sIwpORDQw4eM0VbVX6tres7dhrOkdmqF"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-614ZHpzNOxYVgbdwMhY14jxXcOMBk7Vc"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
@@ -67,15 +67,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:07:35 GMT
-      - Wed, 10 Sep 2025 15:07:35 GMT
+      - Sun, 14 Sep 2025 10:06:21 GMT
+      - Sun, 14 Sep 2025 10:06:21 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '686'
+      - '685'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -87,6 +87,6 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        best language to learn is Ruby.","role":"assistant"}}],"created":1757516857,"id":"chatcmpl-aCEb6PgNMws5LT6JIpDkO6H6ow0eqfcN","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":109,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":97,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":226,"prompt_tokens_details":{"cached_tokens":199},"prompt_tokens_per_second":11242.662421649587,"time_per_output_token_ms":8.954633027522934,"time_to_first_token_ms":20.102,"tokens_per_second":111.67403476238532,"total_tokens":335}}'
-  recorded_at: Wed, 10 Sep 2025 15:07:37 GMT
+        best language to learn is Ruby.","role":"assistant"}}],"created":1757844382,"id":"chatcmpl-vbAINFaIMJ8AO0JYpQt0oYhMvX1P48SG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":90,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":78,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":226,"prompt_tokens_details":{"cached_tokens":199},"prompt_tokens_per_second":12564.630010563185,"time_per_output_token_ms":8.368877777777778,"time_to_first_token_ms":17.987,"tokens_per_second":119.49033389582301,"total_tokens":316}}'
+  recorded_at: Sun, 14 Sep 2025 10:06:22 GMT
 recorded_with: VCR 6.3.1

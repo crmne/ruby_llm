@@ -150,7 +150,7 @@ puts response.content
 
 ### Working with Videos
 
-You can also analyze video files or URLs with vision-capable models. RubyLLM will automatically detect video files and handle them appropriately.
+You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
 
 ```ruby
 # Ask about a local video file
@@ -167,11 +167,12 @@ response = chat.ask "Analyze these files for visual content.", with: ["diagram.p
 puts response.content
 ```
 
-Notes:
-
-    Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
-    Only Google Gemini models currently support video input; check the [Available Models Guide]({% link guides/available-models.md %}) for details.
-    Large video files may be subject to size or duration limits imposed by the provider.
+> Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
+>
+> Only Google Gemini and VertexAI models currently support video input.
+>
+> Large video files may be subject to size or duration limits imposed by the provider.
+{: .note }
 
 RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
 
@@ -302,10 +303,6 @@ puts JSON.parse(response.content)
 {: .warning }
 
 ### Custom HTTP Headers
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
 
@@ -456,13 +453,10 @@ Not all models support structured output. Currently supported:
 Models that don't support structured output:
 
 ```ruby
-# RubyLLM 1.6.2+ will attempt to use schemas with any model
 chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
 chat.with_schema(schema)
 response = chat.ask('Generate a person')
 # Provider will return an error if unsupported
-
-# Prior to 1.6.2, with_schema would raise UnsupportedStructuredOutputError
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -556,7 +550,7 @@ chat.on_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
-# Called after a tool returns its result (v1.6.0+)
+# Called after a tool returns its result
 chat.on_tool_result do |result|
   puts "Tool returned: #{result}"
 end

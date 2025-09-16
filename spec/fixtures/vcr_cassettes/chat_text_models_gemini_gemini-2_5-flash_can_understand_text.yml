@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:43:57 GMT
+      - Sun, 14 Sep 2025 09:50:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1098
+      - gfet4t7; dur=2083
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,7 +54,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"
+                    "text": "The file contains the text: \"Ruby is the best.\""
                   }
                 ],
                 "role": "model"
@@ -65,20 +65,20 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 31,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 151,
+            "candidatesTokenCount": 12,
+            "totalTokenCount": 326,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 99
+            "thoughtsTokenCount": 283
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "rY7BaOPtE8eYkdUP64XxmAM"
+          "responseId": "ApDGaP_KOYuskdUPhKm74AY"
         }
-  recorded_at: Wed, 10 Sep 2025 14:43:57 GMT
+  recorded_at: Sun, 14 Sep 2025 09:50:58 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"}]},{"role":"user","parts":[{"text":"and
+        file contains the text: \"Ruby is the best.\""}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
@@ -112,7 +112,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:43:58 GMT
+      - Sun, 14 Sep 2025 09:51:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -122,7 +122,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=775
+      - gfet4t7; dur=2307
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -136,7 +136,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```"
+                    "text": "The file `ruby.xml` is an XML document. It contains the text \"Ruby is the best\" within a `\u003ctruism\u003e` tag."
                   }
                 ],
                 "role": "model"
@@ -146,19 +146,19 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 88,
-            "candidatesTokenCount": 31,
-            "totalTokenCount": 182,
+            "promptTokenCount": 79,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 415,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 88
+                "tokenCount": 79
               }
             ],
-            "thoughtsTokenCount": 63
+            "thoughtsTokenCount": 306
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "ro7BaM2qCJDokdUPoteAyQ4"
+          "responseId": "BZDGaP3zEfOlkdUPuNy2yQ0"
         }
-  recorded_at: Wed, 10 Sep 2025 14:43:58 GMT
+  recorded_at: Sun, 14 Sep 2025 09:51:01 GMT
 recorded_with: VCR 6.3.1
