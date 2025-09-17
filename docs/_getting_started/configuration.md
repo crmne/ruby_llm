@@ -64,6 +64,7 @@ RubyLLM.configure do |config|
   config.ollama_api_base = 'http://localhost:11434/v1'
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
+  # Red Candle (optional - see below)
 
   # AWS Bedrock (uses standard AWS credential chain if not set)
   config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
@@ -89,6 +90,37 @@ end
 ```
 
 These headers are optional and only needed for organization-specific billing or project tracking.
+
+### Red Candle (Local GGUF Models)
+
+Red Candle is an optional provider that enables local execution of quantized GGUF models. To use it, add the red-candle gem to your Gemfile:
+
+```ruby
+# Gemfile
+gem 'ruby_llm'
+gem 'red-candle'  # Optional: for local GGUF model execution
+```
+
+Then install:
+
+```bash
+bundle install
+```
+
+Red Candle requires no API keys since it runs models locally. Some models may require HuggingFace authentication:
+
+```bash
+huggingface-cli login  # Required for some gated models
+```
+
+See [Red Candle's HuggingFace guide](https://github.com/scientist-labs/red-candle/blob/main/docs/HUGGINGFACE.md) for details on authentication.
+
+Once configured, you can use it like any other provider:
+
+```ruby
+chat = RubyLLM.chat(model: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF', provider: :red_candle)
+response = chat.ask("Hello!")
+```
 
 ## Custom Endpoints
 
