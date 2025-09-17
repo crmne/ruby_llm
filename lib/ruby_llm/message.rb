@@ -44,7 +44,7 @@ module RubyLLM
     def to_h
       {
         role: role,
-        content: content,
+        content: content.is_a?(Content) ? content.to_h : content,
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
         input_tokens: input_tokens,
