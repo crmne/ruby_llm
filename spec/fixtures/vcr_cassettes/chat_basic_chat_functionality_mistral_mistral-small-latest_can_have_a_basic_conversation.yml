@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:01:42 GMT
+      - Sun, 21 Sep 2025 14:44:41 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,21 +32,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019947ac-5a8c-703d-ad3e-b49e185a8b7e'
+      - '01996cbb-f4ef-75ad-93d1-5c1e5a6df425'
       X-Kong-Request-Id:
-      - '019947ac-5a8c-703d-ad3e-b49e185a8b7e'
+      - '01996cbb-f4ef-75ad-93d1-5c1e5a6df425'
       X-Envoy-Upstream-Service-Time:
-      - '328'
+      - '591'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499950'
+      - '499921'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999984954'
+      - '999977207'
       X-Ratelimit-Tokens-Query-Cost:
-      - '50'
+      - '79'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -54,9 +54,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '329'
+      - '592'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '9'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,8 +72,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"089bcf76fc0146269361f281927878f8","created":1757844101,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":50,"completion_tokens":39},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"801592c1d1f24082b6b7a1f0ed8b57d7","created":1758465881,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":79,"completion_tokens":68},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic operation where you add
-        two numbers together. Here''s the calculation:\n\n2\n+2\n----\n4"}}]}'
-  recorded_at: Sun, 14 Sep 2025 10:01:42 GMT
+        two numbers together. Here''s the breakdown:\n\n- **2** (first number)\n-
+        **+ 2** (second number)\n- **= 4** (result)\n\nSo, 2 + 2 = 4."}}]}'
+  recorded_at: Sun, 21 Sep 2025 14:44:41 GMT
 recorded_with: VCR 6.3.1

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:06:22 GMT
+      - Sun, 21 Sep 2025 14:49:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019947b0-a3bf-7fb2-bb7d-0ba22e192236'
+      - '01996cbf-fc37-7deb-b3ac-d5b2a3be5b9d'
       X-Kong-Request-Id:
-      - '019947b0-a3bf-7fb2-bb7d-0ba22e192236'
+      - '01996cbf-fc37-7deb-b3ac-d5b2a3be5b9d'
       X-Envoy-Upstream-Service-Time:
-      - '127'
+      - '132'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498872'
+      - '498874'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999982748'
+      - '999974993'
       X-Ratelimit-Tokens-Query-Cost:
       - '73'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '57'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '128'
+      - '132'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,15 +73,15 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a86666d233974d3692ded1fd8cb972f2","created":1757844382,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"3ha5zD4jJ","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
-  recorded_at: Sun, 14 Sep 2025 10:06:22 GMT
+      string: '{"id":"85b22f52af4143f0820a93a8e9f4c44c","created":1758466145,"model":"mistral-small-latest","usage":{"prompt_tokens":64,"total_tokens":73,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"0ftmXpNOZ","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
+  recorded_at: Sun, 21 Sep 2025 14:49:05 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"3ha5zD4jJ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"3ha5zD4jJ"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"0ftmXpNOZ","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"0ftmXpNOZ"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -100,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:06:23 GMT
+      - Sun, 21 Sep 2025 14:49:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,31 +108,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019947b0-a4ac-7f45-aea2-8f58c63be56a'
+      - '01996cbf-fcfe-7ea0-b4b0-ce9896064492'
       X-Kong-Request-Id:
-      - '019947b0-a4ac-7f45-aea2-8f58c63be56a'
+      - '01996cbf-fcfe-7ea0-b4b0-ce9896064492'
       X-Envoy-Upstream-Service-Time:
-      - '903'
+      - '677'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498701'
+      - '498705'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999982577'
+      - '999974824'
       X-Ratelimit-Tokens-Query-Cost:
-      - '171'
+      - '169'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '57'
+      - '56'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '904'
+      - '677'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -148,11 +148,12 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"303a29cbec9240e2b367238214198dcb","created":1757844382,"model":"mistral-small-latest","usage":{"prompt_tokens":94,"total_tokens":171,"completion_tokens":77},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        best language to learn is Ruby. It''s a dynamic, open-source programming language
-        with a focus on simplicity and productivity. It has an elegant syntax that
-        makes it easy to read and write, which is why it''s a favorite among developers
-        for building web applications. Ruby on Rails, a popular web application framework
-        written in Ruby, is used by many successful startups and companies."}}]}'
-  recorded_at: Sun, 14 Sep 2025 10:06:23 GMT
+      string: '{"id":"c034a0ef373e40358458cb142dac3dc1","created":1758466145,"model":"mistral-small-latest","usage":{"prompt_tokens":92,"total_tokens":169,"completion_tokens":77},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        best language to learn is Ruby. Ruby is a dynamic, open-source programming
+        language with a focus on simplicity and productivity. It has an elegant syntax
+        that makes it easy to read and write. Ruby is known for its developer-friendly
+        community and is often used for web development, particularly with the Ruby
+        on Rails framework. It''s a great choice for beginners and experienced developers
+        alike."}}]}'
+  recorded_at: Sun, 21 Sep 2025 14:49:06 GMT
 recorded_with: VCR 6.3.1

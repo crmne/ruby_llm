@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:03:08 GMT
+      - Sun, 21 Sep 2025 14:46:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-14T10:03:07Z'
+      - '2025-09-21T14:46:03Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-14T10:03:08Z'
+      - '2025-09-21T14:46:03Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-14T10:03:07Z'
+      - '2025-09-21T14:46:03Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-14T10:03:07Z'
+      - '2025-09-21T14:46:03Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -64,7 +64,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '480'
+      - '429'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -77,15 +77,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_016CdXs2zafpEjjyXkQwHqHQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":6,"service_tier":"standard"}}'
-  recorded_at: Sun, 14 Sep 2025 10:03:08 GMT
+      string: '{"id":"msg_01Vs7qP19pJx2HaDvJhgmHsD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard"}}'
+  recorded_at: Sun, 21 Sep 2025 14:46:03 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        2 + 2?"},{"role":"assistant","content":"4."},{"role":"user","content":"and
+        2 + 2?"},{"role":"assistant","content":"4"},{"role":"user","content":"and
         4 + 4?"}],"stream":false}'
     headers:
       User-Agent:
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:03:08 GMT
+      - Sun, 21 Sep 2025 14:46:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,7 +116,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 9e4f6861f41d00e4b2d521c6255dc756
+      - a22193e1d29b250c4958014375f59def
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -131,6 +131,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7daa3173-a2b6-4698-882f-5866ee499aea","object":"chat.completion","created":1757844188,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":25,"completion_tokens":2,"total_tokens":27,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":25},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 14 Sep 2025 10:03:11 GMT
+      string: '{"id":"51837b4f-804d-46c1-b680-5650ab4c03e5","object":"chat.completion","created":1758465963,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:46:06 GMT
 recorded_with: VCR 6.3.1

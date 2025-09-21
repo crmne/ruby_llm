@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.13.4
       Authorization:
-      - Bearer test
+      - Bearer <OPENAI_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,60 +23,124 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 Sep 2025 01:16:33 GMT
+      - Sun, 21 Sep 2025 14:54:00 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '584'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       Openai-Version:
       - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       X-Request-Id:
-      - req_test123456789
+      - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '20'
+      - '1399'
+      X-Envoy-Upstream-Service-Time:
+      - '2095'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
-      - 8b123456789012345-DFW
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-test123456789",
+          "id": "modr-6765",
           "model": "omni-moderation-latest",
           "results": [
             {
               "flagged": false,
               "categories": {
+                "harassment": false,
+                "harassment/threatening": false,
                 "sexual": false,
                 "hate": false,
-                "harassment": false,
-                "self-harm": false,
-                "sexual/minors": false,
                 "hate/threatening": false,
-                "violence/graphic": false,
+                "illicit": false,
+                "illicit/violent": false,
                 "self-harm/intent": false,
                 "self-harm/instructions": false,
-                "harassment/threatening": false,
-                "violence": false
+                "self-harm": false,
+                "sexual/minors": false,
+                "violence": false,
+                "violence/graphic": false
               },
               "category_scores": {
-                "sexual": 0.0000123,
-                "hate": 0.0000456,
-                "harassment": 0.0000789,
-                "self-harm": 0.0000012,
-                "sexual/minors": 0.0000003,
-                "hate/threatening": 0.0000001,
-                "violence/graphic": 0.0000002,
-                "self-harm/intent": 0.0000001,
-                "self-harm/instructions": 0.0000001,
-                "harassment/threatening": 0.0000004,
-                "violence": 0.0000567
+                "harassment": 0.000011959857805023158,
+                "harassment/threatening": 3.7636447180974406e-6,
+                "sexual": 0.00006667023092435894,
+                "hate": 7.602479448313689e-6,
+                "hate/threatening": 3.2377619022355566e-7,
+                "illicit": 0.000015118199327273332,
+                "illicit/violent": 6.709224499600877e-6,
+                "self-harm/intent": 0.00021217710837818755,
+                "self-harm/instructions": 3.944258675190877e-6,
+                "self-harm": 0.0004544456121966584,
+                "sexual/minors": 5.307507822667365e-6,
+                "violence": 0.000493111798506495,
+                "violence/graphic": 2.931153855960119e-6
+              },
+              "category_applied_input_types": {
+                "harassment": [
+                  "text"
+                ],
+                "harassment/threatening": [
+                  "text"
+                ],
+                "sexual": [
+                  "text"
+                ],
+                "hate": [
+                  "text"
+                ],
+                "hate/threatening": [
+                  "text"
+                ],
+                "illicit": [
+                  "text"
+                ],
+                "illicit/violent": [
+                  "text"
+                ],
+                "self-harm/intent": [
+                  "text"
+                ],
+                "self-harm/instructions": [
+                  "text"
+                ],
+                "self-harm": [
+                  "text"
+                ],
+                "sexual/minors": [
+                  "text"
+                ],
+                "violence": [
+                  "text"
+                ],
+                "violence/graphic": [
+                  "text"
+                ]
               }
             }
           ]
         }
-  recorded_at: Tue, 02 Sep 2025 01:16:33 GMT
+  recorded_at: Sun, 21 Sep 2025 14:54:00 GMT
 recorded_with: VCR 6.3.1

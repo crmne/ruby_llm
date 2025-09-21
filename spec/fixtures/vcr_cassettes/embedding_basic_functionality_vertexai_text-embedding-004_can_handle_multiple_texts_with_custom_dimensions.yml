@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 14 Sep 2025 10:10:19 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 21 Sep 2025 14:52:36 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
+          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:10:19 GMT
+  recorded_at: Sun, 21 Sep 2025 14:52:36 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:10:19 GMT
+      - Sun, 21 Sep 2025 14:52:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,8 +107,8 @@ http_interactions:
             {
               "embeddings": {
                 "statistics": {
-                  "token_count": 1,
-                  "truncated": false
+                  "truncated": false,
+                  "token_count": 1
                 },
                 "values": [
                   -0.0071573383174836636,
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Sun, 14 Sep 2025 10:10:20 GMT
+  recorded_at: Sun, 21 Sep 2025 14:52:37 GMT
 recorded_with: VCR 6.3.1

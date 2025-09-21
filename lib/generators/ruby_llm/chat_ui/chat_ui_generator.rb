@@ -58,6 +58,7 @@ module RubyLLM
                  "app/views/#{message_table_name}/_#{message_model_name.underscore}.html.erb"
         template 'views/messages/_tool_calls.html.erb',
                  "app/views/#{message_table_name}/_#{tool_call_model_name.tableize}.html.erb"
+        template 'views/messages/_content.html.erb', "app/views/#{message_table_name}/_content.html.erb"
         template 'views/messages/_form.html.erb', "app/views/#{message_table_name}/_form.html.erb"
         template 'views/messages/create.turbo_stream.erb',
                  "app/views/#{message_table_name}/create.turbo_stream.erb"
@@ -101,12 +102,23 @@ module RubyLLM
         chat_var = chat_model_name.underscore
         broadcasting_code = "broadcasts_to ->(#{msg_var}) { \"#{chat_var}_\#{#{msg_var}.#{chat_var}_id}\" }"
 
-        inject_into_class "app/models/#{msg_var}.rb", message_model_name do
-          "\n  #{broadcasting_code}\n"
+        broadcast_append_chunk_method = <<-RUBY
+
+  def broadcast_append_chunk(content)
+    broadcast_append_to "#{chat_var}_\#{#{chat_var}_id}",
+      target: "#{msg_var}_\#{id}_content",
+      partial: "#{message_table_name}/content",
+      locals: { content: content }
+  end
+        RUBY
+
+        inject_into_file "app/models/#{msg_var}.rb", before: "end\n" do
+          "  #{broadcasting_code}\n#{broadcast_append_chunk_method}"
         end
       rescue Errno::ENOENT
         say "#{message_model_name} model not found. Add broadcasting code to your model.", :yellow
         say "  #{broadcasting_code}", :yellow
+        say broadcast_append_chunk_method, :yellow
       end
 
       def display_post_install_message

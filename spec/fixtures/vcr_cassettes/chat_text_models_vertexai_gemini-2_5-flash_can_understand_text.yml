@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:52:29 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Sun, 21 Sep 2025 14:36:18 GMT
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:29 GMT
+  recorded_at: Sun, 21 Sep 2025 14:36:18 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 09:52:30 GMT
+      - Sun, 21 Sep 2025 14:36:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,13 +115,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.47231652519919654
+              "avgLogprobs": -0.81503477963534265
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
             "candidatesTokenCount": 22,
-            "totalTokenCount": 82,
+            "totalTokenCount": 103,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,13 +135,13 @@ http_interactions:
                 "tokenCount": 22
               }
             ],
-            "thoughtsTokenCount": 30
+            "thoughtsTokenCount": 51
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-14T09:52:29.949824Z",
-          "responseId": "XZDGaMD8OYX8xN8PxbuSsAY"
+          "createTime": "2025-09-21T14:36:18.528313Z",
+          "responseId": "Yg3QaLmfINSgz_IPnKba2Qc"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:30 GMT
+  recorded_at: Sun, 21 Sep 2025 14:36:18 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -162,14 +162,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 14 Sep 2025 09:52:30 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Sun, 21 Sep 2025 14:36:19 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -194,11 +194,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:30 GMT
+  recorded_at: Sun, 21 Sep 2025 14:36:19 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -232,7 +232,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 09:52:31 GMT
+      - Sun, 21 Sep 2025 14:36:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -260,13 +260,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.29835346341133118
+              "avgLogprobs": -0.39892855286598206
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 86,
             "candidatesTokenCount": 32,
-            "totalTokenCount": 169,
+            "totalTokenCount": 158,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -280,11 +280,11 @@ http_interactions:
                 "tokenCount": 32
               }
             ],
-            "thoughtsTokenCount": 51
+            "thoughtsTokenCount": 40
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-14T09:52:30.647298Z",
-          "responseId": "XpDGaILBJ9rrhcIPyMbRQA"
+          "createTime": "2025-09-21T14:36:19.223834Z",
+          "responseId": "Yw3QaNrUDaiXrNcP0oPUiQc"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:31 GMT
+  recorded_at: Sun, 21 Sep 2025 14:36:19 GMT
 recorded_with: VCR 6.3.1

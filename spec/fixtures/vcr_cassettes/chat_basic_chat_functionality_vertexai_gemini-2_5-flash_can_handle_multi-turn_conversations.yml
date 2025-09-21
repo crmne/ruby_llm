@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 14 Sep 2025 10:02:48 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Date:
+      - Sun, 21 Sep 2025 14:45:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:02:48 GMT
+  recorded_at: Sun, 21 Sep 2025 14:45:44 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:02:50 GMT
+      - Sun, 21 Sep 2025 14:45:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,18 +109,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**Ruby** (the programming language) was created by **Yukihiro Matsumoto**, often known by his nickname **\"Matz\"**.\n\nHe began working on Ruby in 1993 and released its first public version in 1995."
+                    "text": "Ruby was created by **Yukihiro Matsumoto**, often known by his nickname **\"Matz\"**.\n\nHe started working on it in the mid-1990s and first released it to the public in **1995**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.3677240518423228
+              "avgLogprobs": -1.0803775398098692
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 7,
-            "candidatesTokenCount": 52,
-            "totalTokenCount": 313,
+            "candidatesTokenCount": 49,
+            "totalTokenCount": 218,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -131,16 +131,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 52
+                "tokenCount": 49
               }
             ],
-            "thoughtsTokenCount": 254
+            "thoughtsTokenCount": 162
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-14T10:02:48.950194Z",
-          "responseId": "yJLGaLL_Oa-smLAPgomwuAE"
+          "createTime": "2025-09-21T14:45:44.790569Z",
+          "responseId": "mA_QaKmgMJOwt_gPoKKHuAc"
         }
-  recorded_at: Sun, 14 Sep 2025 10:02:50 GMT
+  recorded_at: Sun, 21 Sep 2025 14:45:45 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -161,14 +161,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 14 Sep 2025 10:02:50 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 21 Sep 2025 14:45:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -193,21 +193,21 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:02:50 GMT
+  recorded_at: Sun, 21 Sep 2025 14:45:46 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"**Ruby**
-        (the programming language) was created by **Yukihiro Matsumoto**, often known
-        by his nickname **\"Matz\"**.\n\nHe began working on Ruby in 1993 and released
-        its first public version in 1995."}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
+        was created by **Yukihiro Matsumoto**, often known by his nickname **\"Matz\"**.\n\nHe
+        started working on it in the mid-1990s and first released it to the public
+        in **1995**."}]},{"role":"user","parts":[{"text":"What year did he create
+        Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -231,7 +231,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:02:51 GMT
+      - Sun, 21 Sep 2025 14:45:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -254,36 +254,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto (Matz) started creating Ruby in **1993**."
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**.\n\nHe then released the first public version of Ruby (Ruby 0.95) in **1995**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.89802287606632
+              "avgLogprobs": -0.52784072521121006
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 66,
-            "candidatesTokenCount": 17,
-            "totalTokenCount": 121,
+            "promptTokenCount": 63,
+            "candidatesTokenCount": 43,
+            "totalTokenCount": 181,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 66
+                "tokenCount": 63
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 43
               }
             ],
-            "thoughtsTokenCount": 38
+            "thoughtsTokenCount": 75
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-14T10:02:50.793194Z",
-          "responseId": "ypLGaOq0MMnZmLAPvN7K2As"
+          "createTime": "2025-09-21T14:45:46.141382Z",
+          "responseId": "mg_QaMbQCOnDtfAP26XA0A4"
         }
-  recorded_at: Sun, 14 Sep 2025 10:02:51 GMT
+  recorded_at: Sun, 21 Sep 2025 14:45:46 GMT
 recorded_with: VCR 6.3.1

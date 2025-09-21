@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250914T095858Z
+      - 20250921T144244Z
       X-Amz-Content-Sha256:
       - 49335589fd85b7db1238c0aa147a922aa9001f3767cfe1e76d860b5cce113489
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0ff60f2d05f4412e4700b0c7b6408f84ede68ac5f82acc125825692b06940781
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ff0521f8ace2df3a53c7fa18b850f9d022e91b10c1a5a7e80376f34f4f258938
       Content-Type:
       - application/json
       Accept:
@@ -31,29 +31,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:59:00 GMT
+      - Sun, 21 Sep 2025 14:42:47 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '566'
+      - '574'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e0694eab-ba41-4b6b-80cb-487490d850ea
+      - 8c98dce0-f3fe-4a69-8e6e-26116feae136
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1779'
+      - '1782'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '62'
+      - '66'
       X-Amzn-Bedrock-Input-Token-Count:
       - '13'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01UKqS49L7ke3YJ7fcHvP2R5","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
-        was created by Yukihiro Matsumoto (often called \"Matz\") in Japan. He first
-        released Ruby in 1995 and designed it with the goal of making programming
-        more enjoyable and productive for developers, emphasizing human-oriented design
-        and programmer happiness."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":62}}'
-  recorded_at: Sun, 14 Sep 2025 09:59:01 GMT
+      string: '{"id":"msg_bdrk_01Nf55vwjH4KYLgdeFdAbRiQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Ruby
+        was created by Yukihiro Matsumoto (often referred to as \"Matz\") in Japan.
+        He first released Ruby in 1995 with the goal of creating a programming language
+        that was more human-friendly and enjoyable to use, emphasizing programmer
+        productivity and code readability."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":66}}'
+  recorded_at: Sun, 21 Sep 2025 14:42:47 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -61,10 +61,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Who
         was Ruby''s creator?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
-        was created by Yukihiro Matsumoto (often called \"Matz\") in Japan. He first
-        released Ruby in 1995 and designed it with the goal of making programming
-        more enjoyable and productive for developers, emphasizing human-oriented design
-        and programmer happiness."}]},{"role":"user","content":[{"type":"text","text":"What
+        was created by Yukihiro Matsumoto (often referred to as \"Matz\") in Japan.
+        He first released Ruby in 1995 with the goal of creating a programming language
+        that was more human-friendly and enjoyable to use, emphasizing programmer
+        productivity and code readability."}]},{"role":"user","content":[{"type":"text","text":"What
         year did he create Ruby?"}]}],"max_tokens":4096}'
     headers:
       User-Agent:
@@ -72,12 +72,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250914T095901Z
+      - 20250921T144247Z
       X-Amz-Content-Sha256:
-      - 84d6fb685c1af4bb25a122cb38a4b20a53ed09d4eb20372b1c2959f1ea3b5f90
+      - 710ad65ca64a7e10bbb6f429cac9a1e5aaef4ff0676a6364b2df7a4d14eb44b3
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=f17fecf54b152e7eb0cdc0f50ae7c220059434a9d930720e0ad207800ec14f1e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2552373083804dd64021fcdc4150b306843be245e6844fc75d81856b8f635b99
       Content-Type:
       - application/json
       Accept:
@@ -90,26 +90,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:59:02 GMT
+      - Sun, 21 Sep 2025 14:42:48 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '482'
+      - '391'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b234899b-3357-4522-bd7f-4845f8950bc5
+      - 9757da2d-d479-4b31-baef-5bcfd3b4fade
       X-Amzn-Bedrock-Invocation-Latency:
-      - '909'
+      - '799'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '40'
+      - '27'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '85'
+      - '89'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_014g1YR9mi5ekGvvVPbp4DRK","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
-        Matsumoto first released Ruby in 1995. It was initially developed in Japan
-        and gradually gained popularity worldwide as a dynamic, object-oriented programming
-        language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":85,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":40}}'
-  recorded_at: Sun, 14 Sep 2025 09:59:02 GMT
+      string: '{"id":"msg_bdrk_01HiwopvpjdGwuLAZwiz5reD","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Yukihiro
+        Matsumoto created Ruby in 1995 and first released it publicly that same year."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":89,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":27}}'
+  recorded_at: Sun, 21 Sep 2025 14:42:48 GMT
 recorded_with: VCR 6.3.1
