@@ -33,7 +33,7 @@ module RubyLLM
         @model_names
       end
 
-      %i[chat message model].each do |type|
+      %i[chat message model tool_call].each do |type|
         define_method("#{type}_model_name") do
           @model_names ||= parse_model_mappings
           @model_names[type]
@@ -56,6 +56,8 @@ module RubyLLM
         # Message views
         template 'views/messages/_message.html.erb',
                  "app/views/#{message_table_name}/_#{message_model_name.underscore}.html.erb"
+        template 'views/messages/_tool_calls.html.erb',
+                 "app/views/#{message_table_name}/_#{tool_call_model_name.tableize}.html.erb"
         template 'views/messages/_form.html.erb', "app/views/#{message_table_name}/_form.html.erb"
         template 'views/messages/create.turbo_stream.erb',
                  "app/views/#{message_table_name}/create.turbo_stream.erb"
