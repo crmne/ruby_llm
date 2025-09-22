@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Mon, 18 Aug 2025 06:05:44 GMT
+      - Fri, 19 Sep 2025 09:57:52 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68a2c2b8-9c6"
+      - W/"68cd2920-9c6"
       Expires:
-      - Tue, 02 Sep 2025 23:00:56 GMT
+      - Sun, 21 Sep 2025 14:45:05 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8DFF:1CE4CE:1A9671:1AC821:68B774D0
+      - CDDF:C9A0D:477AE4:47E5BA:68D00D19
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Tue, 02 Sep 2025 22:50:56 GMT
+      - Sun, 21 Sep 2025 14:36:00 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '21'
       X-Served-By:
-      - cache-par-lfpg1960082-PAR
+      - cache-fra-etou8220076-FRA
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1756853457.783351,VS0,VE113
+      - S1758465360.232632,VS0,VE14
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - acd637ea7b423303587cc26df5029faf1ee81251
+      - 3087393db1b9e02c116320267c7887f968c0c259
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 02 Sep 2025 22:50:57 GMT
+  recorded_at: Sun, 21 Sep 2025 14:36:00 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -140,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.1
+      - Faraday v2.13.4
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 02 Sep 2025 22:50:58 GMT
+      - Sun, 21 Sep 2025 14:36:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -180,19 +180,15 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1756853457-BWpcDxGAcKQMgkmbvTr6\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1756853457,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This
-        file is a LICENSE.txt file for Ruby, which details the terms and conditions
-        for redistributing and using the Ruby programming language software. It appears
-        to be a permissive open-source license that allows:\\n\\n1. Making and distributing
-        verbatim copies of the source code\\n2. Modifying the software under certain
-        conditions\\n3. Distributing binaries and source code with specific requirements\\n4.
-        Using the software in other software projects\\n5. Noting that scripts and
-        library files generated using Ruby do not automatically fall under Ruby's
-        copyright\\n\\nThe license includes a disclaimer that the software is provided
-        \\\"AS IS\\\" without any express or implied warranties. It is copyrighted
-        by Yukihiro Matsumoto (also known as Matz), the creator of Ruby.\\n\\nThis
-        license seems to be a variant of the BSD (Berkeley Software Distribution)
-        license, which is known for being very permissive and allowing both commercial
-        and non-commercial use.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":203,\"total_tokens\":791}}"
-  recorded_at: Tue, 02 Sep 2025 22:51:01 GMT
+        \        \n\n         \n\n         \n{\"id\":\"gen-1758465360-RAIuQNprjaqQooDJqSru\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1758465360,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"This
+        file is a license text for Ruby, a programming language. It's the Ruby license,
+        which appears to be a modified BSD-style license. The key points of the license
+        include:\\n\\n1. It allows free redistribution of the software\\n2. Permits
+        modification of the software under certain conditions\\n3. Allows distribution
+        of the software in source or binary form\\n4. Provides guidelines for how
+        the software can be modified and redistributed\\n5. Includes a disclaimer
+        of warranties (standard \\\"AS IS\\\" clause)\\n\\nThe license was written
+        by Yukihiro Matsumoto (also known as Matz), the creator of Ruby, and it provides
+        flexible terms for using and distributing the Ruby programming language.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":153,\"total_tokens\":741}}"
+  recorded_at: Sun, 21 Sep 2025 14:36:04 GMT
 recorded_with: VCR 6.3.1

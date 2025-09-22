@@ -9,7 +9,7 @@
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Claude Code for your documents*
 
-[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=7)](https://badge.fury.io/rb/ruby_llm)
+[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=10)](https://badge.fury.io/rb/ruby_llm)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
 [![Gem Downloads](https://img.shields.io/gem/dt/ruby_llm)](https://rubygems.org/gems/ruby_llm)
 [![codecov](https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg?a=2)](https://codecov.io/gh/crmne/ruby_llm)
@@ -41,6 +41,7 @@ chat.ask "What's the best way to learn Ruby?"
 ```ruby
 # Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
@@ -66,6 +67,11 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+```
+
+```ruby
+# Moderate content for safety
+RubyLLM.moderate("Check if this text is safe").flagged? # => false
 ```
 
 ```ruby
@@ -100,11 +106,12 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
+* **Vision:** Analyze images and videos
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Vector search with `RubyLLM.embed`
+* **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
@@ -132,7 +139,11 @@ end
 ## Rails
 
 ```bash
+# Install database models
 rails generate ruby_llm:install
+
+# Add chat UI (optional)
+rails generate ruby_llm:chat_ui
 ```
 
 ```ruby
@@ -140,9 +151,11 @@ class Chat < ApplicationRecord
   acts_as_chat
 end
 
-chat = Chat.create! model_id: "claude-sonnet-4"
+chat = Chat.create! model: "claude-sonnet-4"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
+
+Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
 
 ## Documentation
 

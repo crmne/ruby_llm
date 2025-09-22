@@ -1,0 +1,11 @@
+<%% content_for :title, "New <%= chat_model_name.underscore.humanize.downcase %>" %>
+
+<h1>New <%= chat_model_name.underscore.humanize.downcase %></h1>
+
+<%%= render "form", <%= chat_model_name.underscore %>: @<%= chat_model_name.underscore %> %>
+
+<br>
+
+<div>
+  <%%= link_to "Back to <%= chat_model_name.tableize.humanize.downcase %>", <%= chat_model_name.tableize %>_path %>
+</div>

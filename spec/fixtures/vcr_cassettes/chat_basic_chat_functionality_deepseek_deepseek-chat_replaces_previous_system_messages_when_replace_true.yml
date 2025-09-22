@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:44:03 GMT
+      - Sun, 21 Sep 2025 14:43:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 73b6ca5d0d0c7037315ef3b3540500e0
+      - c0c7e02f475dbe72367082ae64d20fe4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,17 +52,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4537f091-7c05-4b10-9b89-990fcbf30558","object":"chat.completion","created":1756910643,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! The weather is a complex and dynamic system influenced by many factors,
-        including temperature, humidity, atmospheric pressure, wind, and precipitation.
-        It varies greatly by location, season, and time of day. For example, tropical
-        regions often experience warm temperatures and high humidity year-round, while
-        temperate zones have distinct seasons with changing weather patterns. Deserts
-        are typically dry with extreme temperature swings between day and night, and
-        polar regions are cold with long winters and short summers.\n\nIf you''d like
-        specific, current weather information for a particular location, I recommend
-        checking a reliable weather service or app. XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":123,"total_tokens":151,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:44:12 GMT
+      string: '{"id":"d042e4fb-456f-4dce-a6cd-b1802ad5d6c5","object":"chat.completion","created":1758465819,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is a complex system influenced by atmospheric conditions
+        like temperature, humidity, wind, and precipitation. It varies by location,
+        season, and time of day. For specific, real-time weather information, I recommend
+        checking a reliable source like a weather app or website. XKCD7392."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":62,"total_tokens":90,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:45 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -70,15 +65,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex and dynamic system influenced by many factors, including temperature,
-        humidity, atmospheric pressure, wind, and precipitation. It varies greatly
-        by location, season, and time of day. For example, tropical regions often
-        experience warm temperatures and high humidity year-round, while temperate
-        zones have distinct seasons with changing weather patterns. Deserts are typically
-        dry with extreme temperature swings between day and night, and polar regions
-        are cold with long winters and short summers.\n\nIf you''d like specific,
-        current weather information for a particular location, I recommend checking
-        a reliable weather service or app. XKCD7392"},{"role":"system","content":"You
+        is a complex system influenced by atmospheric conditions like temperature,
+        humidity, wind, and precipitation. It varies by location, season, and time
+        of day. For specific, real-time weather information, I recommend checking
+        a reliable source like a weather app or website. XKCD7392."},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -98,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:44:53 GMT
+      - Sun, 21 Sep 2025 14:43:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -110,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 86d60ae1bcbf2d2523b7e27a52bb9efa
+      - '071937a80be6794542445794fca7c89c'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -125,24 +115,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c9472c36-1123-40a9-aa13-b7ca960ee845","object":"chat.completion","created":1756910692,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
-        are countless excellent books across various genres, depending on your interests!
-        Here are a few highly regarded recommendations in different categories:\n\n**Fiction:**\n-
-        *To Kill a Mockingbird* by Harper Lee (a timeless classic exploring justice
-        and morality)\n- *1984* by George Orwell (dystopian fiction that remains strikingly
-        relevant)\n- *The Great Gatsby* by F. Scott Fitzgerald (a masterpiece of American
-        literature)\n\n**Non-Fiction:**\n- *Sapiens: A Brief History of Humankind*
-        by Yuval Noah Harari (a fascinating exploration of human history)\n- *Educated*
-        by Tara Westover (a powerful memoir about self-discovery and education)\n-
-        *The Immortal Life of Henrietta Lacks* by Rebecca Skloot (science, ethics,
-        and human stories intertwined)\n\n**Fantasy/Sci-Fi:**\n- *Dune* by Frank Herbert
-        (epic science fiction with rich world-building)\n- *The Name of the Wind*
-        by Patrick Rothfuss (a beautifully written fantasy novel)\n- *The Three-Body
-        Problem* by Liu Cixin (mind-bending hard sci-fi)\n\n**Mystery/Thriller:**\n-
-        *Gone Girl* by Gillian Flynn (a gripping psychological thriller)\n- *The Girl
-        with the Dragon Tattoo* by Stieg Larsson (tense and intricate plotting)\n-
-        *And Then There Were None* by Agatha Christie (a classic whodunit)\n\nIf you
-        have a specific genre or mood in mind, I can tailor recommendations further!
-        And by the way, PURPLE-ELEPHANT-42."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":165,"completion_tokens":330,"total_tokens":495,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":165},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:45:14 GMT
+      string: '{"id":"50828790-7655-4723-b5b8-27c35ce5903e","object":"chat.completion","created":1758465825,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
+        are countless great books across various genres! Here are a few widely acclaimed
+        recommendations:\n\n- **Fiction**: *To Kill a Mockingbird* by Harper Lee,
+        *1984* by George Orwell, *The Great Gatsby* by F. Scott Fitzgerald.\n- **Fantasy/Sci-Fi**:
+        *The Lord of the Rings* by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name
+        of the Wind* by Patrick Rothfuss.\n- **Non-fiction**: *Sapiens* by Yuval Noah
+        Harari, *Educated* by Tara Westover, *The Immortal Life of Henrietta Lacks*
+        by Rebecca Skloot.\n- **Mystery/Thriller**: *Gone Girl* by Gillian Flynn,
+        *The Girl with the Dragon Tattoo* by Stieg Larsson.\n\nIf you have a specific
+        genre or interest in mind, I can tailor recommendations further! PURPLE-ELEPHANT-42"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":104,"completion_tokens":199,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":104},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:56 GMT
 recorded_with: VCR 6.3.1

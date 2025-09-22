@@ -1,0 +1,12 @@
+class <%= chat_model_name %>ResponseJob < ApplicationJob
+  def perform(<%= chat_model_name.underscore %>_id, content)
+    <%= chat_model_name.underscore %> = <%= chat_model_name %>.find(<%= chat_model_name.underscore %>_id)
+
+    <%= chat_model_name.underscore %>.ask(content) do |chunk|
+      if chunk.content && !chunk.content.blank?
+        <%= message_model_name.underscore %> = <%= chat_model_name.underscore %>.<%= message_model_name.tableize %>.last
+        <%= message_model_name.underscore %>.broadcast_append_chunk(chunk.content)
+      end
+    end
+  end
+end

@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Mon, 18 Aug 2025 06:05:44 GMT
+      - Fri, 19 Sep 2025 09:57:51 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68a2c2b8-9c6"
+      - W/"68cd291f-9c6"
       Expires:
-      - Wed, 03 Sep 2025 06:00:58 GMT
+      - Sun, 21 Sep 2025 14:44:23 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1366:6EEC2:BD8766:BEFA25:68B7D742
+      - CDD6:23DA9:40218A9:409D3F8:68D00CEF
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Wed, 03 Sep 2025 14:42:27 GMT
+      - Sun, 21 Sep 2025 14:34:50 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '27'
       X-Served-By:
-      - cache-fra-etou8220175-FRA
+      - cache-fra-etou8220069-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1756910548.598463,VS0,VE99
+      - S1758465290.381448,VS0,VE4
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - e015f100d6b250d28755a764bf3fb35ff3219727
+      - c561bf3050f7366435c33dc64cfebd0e424b4820
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 03 Sep 2025 14:42:27 GMT
+  recorded_at: Sun, 21 Sep 2025 14:34:50 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:42:28 GMT
+      - Sun, 21 Sep 2025 14:34:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,7 +167,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3e3720c9a850d92b788ce19098687890
+      - ba92a486254725fc075a99eb1f1a96e4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -180,22 +182,20 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a697e19c-3e61-4d4a-a2c7-7968dfc93823","object":"chat.completion","created":1756910548,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
+      string: '{"id":"eddab04b-9e91-44fd-b238-e296d29b98f6","object":"chat.completion","created":1758465290,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
         file contains the license terms for the Ruby programming language. Here''s
-        what''s included:\n\n1. **Copyright Notice**: Ruby is copyrighted free software
-        by Yukihiro Matsumoto (matz@netlab.jp).\n\n2. **Redistribution Terms**: You
-        can redistribute and/or modify Ruby under either:\n   - The 2-clause BSDL
-        (referencing a separate BSDL file)\n   - Or the conditions specified in this
-        license\n\n3. **Key Conditions**:\n   - You can make verbatim copies with
-        original copyright notices\n   - Modifications require at least one of several
-        options (public domain, internal use, non-standard naming, or author arrangements)\n   -
-        Binary distribution requires including source or instructions to obtain original
-        distribution\n   - Some files have different terms (referenced in LEGAL file)\n   -
-        Generated scripts/output files aren''t automatically copyrighted under Ruby''s
-        license\n   - The software comes with no warranties (AS IS)\n\n4. **Additional
-        References**: The license mentions two other files:\n   - BSDL (2-clause BSD
-        license)\n   - LEGAL (for files with different copying conditions)\n\nThis
-        is essentially Ruby''s historical license terms that provide flexibility in
-        how the software can be used and distributed."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":248,"total_tokens":792,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:42:45 GMT
+        what''s included:\n\n- **Copyright notice**: Ruby is copyrighted free software
+        by Yukihiro Matsumoto\n- **Redistribution terms**: You can redistribute/modify
+        it under either:\n  1. The 2-clause BSDL (referencing a separate BSDL file)\n  2.
+        Or the six conditions listed in this file\n\nThe license grants permissions
+        for:\n- Making verbatim copies of source code\n- Modifying the software with
+        certain conditions\n- Distributing object code/binary forms with specific
+        requirements\n- Incorporating parts of Ruby into other software\n- Using scripts/library
+        files generated from Ruby\n\nIt also includes:\n- A disclaimer of warranties
+        (\"AS IS\" without implied warranties)\n- References to other legal files
+        (BSDL and LEGAL) for additional terms\n- Special note that some files in the
+        distribution have different copyright conditions\n\nThis is a permissive open-source
+        license that allows both free and commercial use with certain attribution
+        and redistribution requirements."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":206,"total_tokens":750,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:35:03 GMT
 recorded_with: VCR 6.3.1

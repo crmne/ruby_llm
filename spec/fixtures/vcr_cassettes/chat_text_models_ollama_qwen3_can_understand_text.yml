@@ -25,24 +25,26 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 Sep 2025 14:54:06 GMT
+      - Sun, 21 Sep 2025 14:35:35 GMT
       Content-Length:
-      - '1012'
+      - '1152'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-548","object":"chat.completion","created":1756911246,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking what''s in the file named ruby.txt. Let me check the content
-        they provided. The file content is \"Ruby is the best.\" So the answer should
-        be straightforward. But maybe they want more details? Let me make sure I understand
-        the query correctly. They just want to know the content of the file, right?
-        The MIME type is text/plain, which confirms it''s a plain text file. The content
-        is a simple sentence. I should just state the content clearly. Maybe they''re
-        testing if I can read the file content from the given data. No need to overcomplicate.
-        Just answer with the content of the file.\n\u003c/think\u003e\n\nThe file
-        `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```"},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":157,"total_tokens":191}}
+      string: '{"id":"chatcmpl-27","object":"chat.completion","created":1758465335,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        the user is asking what''s in the file called ruby.txt. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file is a simple
+        text file containing that exact sentence. I should confirm that there''s no
+        additional content beyond that. Since the user might be testing if I can parse
+        the file info correctly, I should state the content clearly. Also, maybe they
+        want to know if there''s anything else, but based on the data, it''s just
+        that one line. I''ll make sure to mention the mime type and the content explicitly.\n\u003c/think\u003e\n\nThe
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a plain text file ( MIME type: `text/plain` ), and its content is a single
+        line stating \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":34,"completion_tokens":193,"total_tokens":227}}
 
         '
-  recorded_at: Wed, 03 Sep 2025 14:54:06 GMT
+  recorded_at: Sun, 21 Sep 2025 14:35:35 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -51,15 +53,17 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"<think>\nOkay, the
-        user is asking what''s in the file named ruby.txt. Let me check the content
-        they provided. The file content is \"Ruby is the best.\" So the answer should
-        be straightforward. But maybe they want more details? Let me make sure I understand
-        the query correctly. They just want to know the content of the file, right?
-        The MIME type is text/plain, which confirms it''s a plain text file. The content
-        is a simple sentence. I should just state the content clearly. Maybe they''re
-        testing if I can read the file content from the given data. No need to overcomplicate.
-        Just answer with the content of the file.\n</think>\n\nThe file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
+        user is asking what''s in the file called ruby.txt. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file is a simple
+        text file containing that exact sentence. I should confirm that there''s no
+        additional content beyond that. Since the user might be testing if I can parse
+        the file info correctly, I should state the content clearly. Also, maybe they
+        want to know if there''s anything else, but based on the data, it''s just
+        that one line. I''ll make sure to mention the mime type and the content explicitly.\n</think>\n\nThe
+        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a plain text file ( MIME type: `text/plain` ), and its content is a single
+        line stating \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -79,37 +83,32 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 Sep 2025 14:54:09 GMT
-      Transfer-Encoding:
-      - chunked
+      - Sun, 21 Sep 2025 14:35:38 GMT
+      Content-Length:
+      - '1780'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-98","object":"chat.completion","created":1756911249,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        let me look at the user''s question. They asked, \"and in this one?\" after
-        previously inquiring about a ruby.txt file. The new file provided is ruby.xml
-        with XML content.\n\nFirst, I need to parse the XML structure. The file has
-        a \u003ctruism\u003e tag containing \"Ruby is the best\". My task is to explain
-        the contents of this XML file.\n\nI should mention the file name, the MIME
-        type, and the structure. Since it''s XML, I should note that it''s a simple
-        structure with a single truism element. Also, the text inside is the same
-        as before but without a period. Maybe the user is comparing the two files
-        or checking for differences.\n\nI should make sure to highlight the key elements:
-        the XML declaration, the truism tag, and the content. Also, point out that
-        the text is similar but slightly different in punctuation. That might be important
-        for the user''s understanding, especially if they''re analyzing multiple files
-        for consistency or content differences.\n\nI need to present the information
-        clearly, ensuring that the user knows the structure and content of the XML
-        file. Since the user asked \"and in this one?\" after the previous file, they
-        might be looking for a comparison or just the details of the new file. I should
-        answer directly but also touch on any notable aspects like the XML tags versus
-        plain text.\n\u003c/think\u003e\n\nThe file `ruby.xml` contains the following
-        XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```\n\n###
-        Key details:\n- **MIME type**: `application/xml` (indicating it''s an XML
-        file).\n- **Structure**: A single `\u003ctruism\u003e` element containing
-        the text \"Ruby is the best\" (without a trailing period, unlike the plain
-        text version).\n- **Purpose**: Likely serves as a structured representation
-        of the same truism, formatted for XML parsing or data interchange."},"finish_reason":"stop"}],"usage":{"prompt_tokens":94,"completion_tokens":392,"total_tokens":486}}
+      string: '{"id":"chatcmpl-22","object":"chat.completion","created":1758465338,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+        let''s see. The user asked what''s in the second file, which is ruby.xml.
+        The previous file was ruby.txt with plain text. Now this one is XML.\n\nFirst,
+        I need to parse the XML content. The file name is ruby.xml, MIME type application/xml.
+        The content is \u003ctruism\u003eRuby is the best\u003c/truism\u003e. \n\nSo
+        the structure is a root element \u003ctruism\u003e containing the text \"Ruby
+        is the best\". I should explain that it''s an XML document with a truism element.
+        Mention the MIME type and the content. Also, note that XML requires proper
+        syntax, but here it''s correctly formed with the tag closed. Maybe the user
+        is comparing XML vs plain text, or checking for differences. They might be
+        testing if I can recognize XML tags and explain the structure. Also, the previous
+        answer had a sentence, so this one is similar but in XML format. I should
+        make sure to highlight the XML structure and the content inside the tag.\n\u003c/think\u003e\n\nThe
+        file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\n### Details:\n- **MIME Type**: `application/xml`
+        (indicating it''s an XML file).\n- **Structure**: It is a simple XML document
+        with a single root element `\u003ctruism\u003e`, which encloses the text `\"Ruby
+        is the best\"`.\n- **Syntax**: The XML is well-formed, with properly closed
+        tags.\n\nThis file differs from `ruby.txt` in format (XML vs. plain text)
+        but shares the same textual content."},"finish_reason":"stop"}],"usage":{"prompt_tokens":124,"completion_tokens":331,"total_tokens":455}}
 
         '
-  recorded_at: Wed, 03 Sep 2025 14:54:09 GMT
+  recorded_at: Sun, 21 Sep 2025 14:35:38 GMT
 recorded_with: VCR 6.3.1

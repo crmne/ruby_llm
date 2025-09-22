@@ -1,0 +1,21 @@
+<%%= form_with(model: [<%= chat_model_name.underscore %>, <%= message_model_name.underscore %>], id: "new_<%= message_model_name.underscore %>") do |form| %>
+  <%% if <%= message_model_name.underscore %>.errors.any? %>
+    <div style="color: red">
+      <h2><%%= pluralize(<%= message_model_name.underscore %>.errors.count, "error") %> prohibited this <%= message_model_name.underscore.humanize.downcase %> from being saved:</h2>
+
+      <ul>
+        <%% <%= message_model_name.underscore %>.errors.each do |error| %>
+          <li><%%= error.full_message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+  <div>
+    <%%= form.text_field :content, style: "width: 100%; max-width: 600px;", placeholder: "Message...", autofocus: true %>
+  </div>
+
+  <div>
+    <%%= form.submit "Send <%= message_model_name.underscore.humanize.downcase %>" %>
+  </div>
+<%% end %>

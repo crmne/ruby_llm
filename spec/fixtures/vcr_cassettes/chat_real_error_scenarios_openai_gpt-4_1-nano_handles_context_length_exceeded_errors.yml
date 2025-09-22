@@ -23,7 +23,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:57:57 GMT
+      - Sun, 21 Sep 2025 14:41:36 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -39,13 +39,17 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '199'
       X-Ratelimit-Remaining-Tokens:
-      - '399999'
+      - '400000'
       X-Ratelimit-Reset-Requests:
       - 300ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '221'
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,5 +76,5 @@ http_interactions:
                 "code": "rate_limit_exceeded"
             }
         }
-  recorded_at: Wed, 03 Sep 2025 14:57:57 GMT
+  recorded_at: Sun, 21 Sep 2025 14:41:36 GMT
 recorded_with: VCR 6.3.1
