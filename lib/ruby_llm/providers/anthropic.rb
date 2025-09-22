@@ -10,6 +10,7 @@ module RubyLLM
       include Anthropic::Models
       include Anthropic::Streaming
       include Anthropic::Tools
+      include Anthropic::Cache
 
       def api_base
         'https://api.anthropic.com'

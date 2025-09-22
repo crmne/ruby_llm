@@ -7,18 +7,21 @@ module RubyLLM
       module Chat
         module_function
 
+        attr_reader :cache_prompts
+
         def completion_url
           '/v1/messages'
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
                            cache_prompts: nil)
+          @cache_prompts = cache_prompts
           system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages, cache: should_cache?(cache_prompts, :system))
+          system_content = build_system_content(system_messages, cache: should_cache?(:system))
 
-          build_base_payload(chat_messages, model, stream, cache: should_cache?(cache_prompts, :user)).tap do |payload|
+          build_base_payload(chat_messages, model, stream, cache: should_cache?(:user)).tap do |payload|
             add_optional_fields(payload, system_content:, tools:, temperature:,
-                                         cache_tools: should_cache?(cache_prompts, :tools))
+                                         cache_tools: should_cache?(:tools))
           end
         end
 
@@ -85,14 +88,6 @@ module RubyLLM
             cached_tokens: data.dig('usage', 'cache_read_input_tokens'),
             raw: response
           )
-        end
-
-        def should_cache?(setting, type)
-          return false unless setting
-          return true if setting == true
-          return true if setting.is_a?(Array) && setting.include?(type)
-          return true if setting.is_a?(Symbol) && setting == type
-          false
         end
 
         def format_message(msg, cache: false)

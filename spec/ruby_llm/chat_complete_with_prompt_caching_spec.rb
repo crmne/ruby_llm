@@ -13,12 +13,71 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
     end
   end
 
+  context 'cache setting' do
+    it 'caches by default' do
+      chat = RubyLLM.chat
+      expect(chat.instance_variable_get(:@cache_prompts)).to be_truthy        
+    end
+
+    it 'honors setting' do
+      RubyLLM.configure do |config|
+        config.cache_prompts = false
+      end
+
+      chat = RubyLLM.chat
+      expect(chat.instance_variable_get(:@cache_prompts)).to be_falsey
+    end
+  end
+
+  context 'cache specification' do
+    class DummyProvider
+      include RubyLLM::Providers::Anthropic::Cache
+
+      attr_reader :cache_prompts
+
+      def render_payload(cache_prompts:)
+        @cache_prompts = cache_prompts
+      end
+    end
+    it 'supports true' do
+      provider = DummyProvider.new
+      provider.render_payload(cache_prompts: true)
+      expect(provider.should_cache?(:system)).to be_truthy
+      expect(provider.should_cache?(:user)).to be_truthy
+      expect(provider.should_cache?(:tools)).to be_truthy
+    end
+
+    it 'supports false' do
+      provider = DummyProvider.new
+      provider.render_payload(cache_prompts: false)
+      expect(provider.should_cache?(:system)).to be_falsey
+      expect(provider.should_cache?(:user)).to be_falsey
+      expect(provider.should_cache?(:tools)).to be_falsey
+    end
+
+    it 'supports array' do
+      provider = DummyProvider.new
+      provider.render_payload(cache_prompts: [:system, :tools])
+      expect(provider.should_cache?(:system)).to be_truthy
+      expect(provider.should_cache?(:user)).to be_falsey
+      expect(provider.should_cache?(:tools)).to be_truthy
+    end
+
+    it 'supports symbol' do
+      provider = DummyProvider.new
+      provider.render_payload(cache_prompts: :tools)
+      expect(provider.should_cache?(:system)).to be_falsey
+      expect(provider.should_cache?(:user)).to be_falsey
+      expect(provider.should_cache?(:tools)).to be_truthy
+    end
+  end
+
   CACHING_MODELS.each do |model_info|
     provider = model_info[:provider]
     model = model_info[:model]
 
     describe "with #{provider} provider (#{model})" do
-      let(:chat) { RubyLLM.chat(model: model, provider: provider).with_temperature(0.7) }
+      let(:chat) { RubyLLM.chat(model: model, provider: provider, cache: false).with_temperature(0.7) }
 
       context 'with system message caching' do
         it 'adds cache_control to the last system message when system caching is requested' do

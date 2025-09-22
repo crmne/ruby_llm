@@ -7,6 +7,8 @@ module RubyLLM
       module Chat
         module_function
 
+        attr_reader :cache_prompts
+
         def sync_response(connection, payload, additional_headers = {})
           signature = sign_request("#{connection.connection.url_prefix}#{completion_url}", payload:)
           response = connection.post completion_url, payload do |req|
@@ -42,17 +44,18 @@ module RubyLLM
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
                            cache_prompts: nil)
           @model_id = model.id
+          @cache_prompts = cache_prompts
 
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
-          system_content = Anthropic::Chat.build_system_content(system_messages, cache: Anthropic::Chat.should_cache?(cache_prompts, :system))
+          system_content = Anthropic::Chat.build_system_content(system_messages, cache: should_cache?(:system))
 
-          build_base_payload(chat_messages, model, cache: Anthropic::Chat.should_cache?(cache_prompts, :user)).tap do |payload|
+          build_base_payload(chat_messages, model, cache: should_cache?(:user)).tap do |payload|
             Anthropic::Chat.add_optional_fields(
               payload,
               system_content:,
               tools:,
               temperature:,
-              cache_tools: Anthropic::Chat.should_cache?(cache_prompts, :tools)
+              cache_tools: should_cache?(:tools)
             )
           end
         end
