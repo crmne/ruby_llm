@@ -43,7 +43,8 @@ module RubyLLM
                   :logger,
                   :log_file,
                   :log_level,
-                  :log_stream_debug
+                  :log_stream_debug,
+                  :cache_prompts
 
     def initialize
       @request_timeout = 120
@@ -64,6 +65,7 @@ module RubyLLM
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       @log_stream_debug = ENV['RUBYLLM_STREAM_DEBUG'] == 'true'
+      @cache_prompts = true
     end
 
     def instance_variables

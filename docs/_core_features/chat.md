@@ -542,6 +542,13 @@ chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022', cache: :tools) # Cache t
 
 # Or a combination
 chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022', cache: [:system, :tools]) # Cache system instructions and tool definitions
+
+# Or do the same on the ask method
+chat.ask("What do you think?", cache: :system)
+chat.ask("What do you think?", cache: :user)
+chat.ask("What do you think?", cache: :tools)
+chat.ask("What do you think?", cache: [:system, :tools])
+
 ```
 
 ### Checking cached token counts

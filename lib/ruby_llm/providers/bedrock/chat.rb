@@ -40,19 +40,19 @@ module RubyLLM
         end
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
-                           cache_prompts: { system: false, user: false, tools: false })
+                           cache_prompts: nil)
           @model_id = model.id
 
           system_messages, chat_messages = Anthropic::Chat.separate_messages(messages)
-          system_content = Anthropic::Chat.build_system_content(system_messages, cache: cache_prompts[:system])
+          system_content = Anthropic::Chat.build_system_content(system_messages, cache: Anthropic::Chat.should_cache?(cache_prompts, :system))
 
-          build_base_payload(chat_messages, model, cache: cache_prompts[:user]).tap do |payload|
+          build_base_payload(chat_messages, model, cache: Anthropic::Chat.should_cache?(cache_prompts, :user)).tap do |payload|
             Anthropic::Chat.add_optional_fields(
               payload,
               system_content:,
               tools:,
               temperature:,
-              cache_tools: cache_prompts[:tools]
+              cache_tools: Anthropic::Chat.should_cache?(cache_prompts, :tools)
             )
           end
         end
