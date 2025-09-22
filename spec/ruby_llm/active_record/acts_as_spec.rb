@@ -622,9 +622,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'allows prompt caching' do
       chat = Chat.create!(model_id: model)
-      chat.cache_prompts(system: true, tools: true, user: true)
 
-      response = chat.ask('Hello')
+      response = chat.ask('Hello', cache: true)
       expect(response.raw.env.request_body).to include('"cache_control":{"type":"ephemeral"}')
     end
   end

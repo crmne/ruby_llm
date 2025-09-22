@@ -2,6 +2,16 @@
 
 require 'spec_helper'
 
+class DummyProvider
+  include RubyLLM::Providers::Anthropic::Cache
+
+  attr_reader :cache_prompts
+
+  def render_payload(cache_prompts:)
+    @cache_prompts = cache_prompts
+  end
+end
+
 RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
   include_context 'with configured RubyLLM'
 
@@ -13,10 +23,10 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
     end
   end
 
-  context 'cache setting' do
+  context 'with cache setting' do
     it 'caches by default' do
       chat = RubyLLM.chat
-      expect(chat.instance_variable_get(:@cache_prompts)).to be_truthy        
+      expect(chat.instance_variable_get(:@cache_prompts)).to be_truthy
     end
 
     it 'honors setting' do
@@ -29,46 +39,37 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
     end
   end
 
-  context 'cache specification' do
-    class DummyProvider
-      include RubyLLM::Providers::Anthropic::Cache
-
-      attr_reader :cache_prompts
-
-      def render_payload(cache_prompts:)
-        @cache_prompts = cache_prompts
-      end
-    end
+  context 'with cache specification' do
     it 'supports true' do
       provider = DummyProvider.new
       provider.render_payload(cache_prompts: true)
-      expect(provider.should_cache?(:system)).to be_truthy
-      expect(provider.should_cache?(:user)).to be_truthy
-      expect(provider.should_cache?(:tools)).to be_truthy
+      expect(provider).to be_should_cache(:system)
+      expect(provider).to be_should_cache(:user)
+      expect(provider).to be_should_cache(:tools)
     end
 
     it 'supports false' do
       provider = DummyProvider.new
       provider.render_payload(cache_prompts: false)
-      expect(provider.should_cache?(:system)).to be_falsey
-      expect(provider.should_cache?(:user)).to be_falsey
-      expect(provider.should_cache?(:tools)).to be_falsey
+      expect(provider).not_to be_should_cache(:system)
+      expect(provider).not_to be_should_cache(:user)
+      expect(provider).not_to be_should_cache(:tools)
     end
 
     it 'supports array' do
       provider = DummyProvider.new
-      provider.render_payload(cache_prompts: [:system, :tools])
-      expect(provider.should_cache?(:system)).to be_truthy
-      expect(provider.should_cache?(:user)).to be_falsey
-      expect(provider.should_cache?(:tools)).to be_truthy
+      provider.render_payload(cache_prompts: %i[system tools])
+      expect(provider).to be_should_cache(:system)
+      expect(provider).not_to be_should_cache(:user)
+      expect(provider).to be_should_cache(:tools)
     end
 
     it 'supports symbol' do
       provider = DummyProvider.new
       provider.render_payload(cache_prompts: :tools)
-      expect(provider.should_cache?(:system)).to be_falsey
-      expect(provider.should_cache?(:user)).to be_falsey
-      expect(provider.should_cache?(:tools)).to be_truthy
+      expect(provider).not_to be_should_cache(:system)
+      expect(provider).not_to be_should_cache(:user)
+      expect(provider).to be_should_cache(:tools)
     end
   end
 
@@ -95,7 +96,10 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
 
       context 'with user message caching' do
         it 'adds cache_control to user messages when user caching is requested' do
-          response = chat.ask("#{MASSIVE_TEXT_FOR_PROMPT_CACHING}\n\nBased on the above, tell me about Ruby", cache: :user)
+          response = chat.ask(
+            "#{MASSIVE_TEXT_FOR_PROMPT_CACHING}\n\nBased on the above, tell me about Ruby",
+            cache: :user
+          )
 
           expect(response.cache_creation_tokens).to be_positive
 
@@ -121,7 +125,10 @@ RSpec.describe RubyLLM::Chat, '.complete with prompt caching' do
           chat.with_tools(DescribeRubyDev)
           chat.with_instructions(MASSIVE_TEXT_FOR_PROMPT_CACHING)
 
-          response = chat.ask("#{MASSIVE_TEXT_FOR_PROMPT_CACHING}\n\nBased on the above, tell me about Ruby", cache: [:system, :tools, :user])
+          response = chat.ask(
+            "#{MASSIVE_TEXT_FOR_PROMPT_CACHING}\n\nBased on the above, tell me about Ruby",
+            cache: %i[system tools user]
+          )
 
           expect(chat.messages[2].cache_creation_tokens).to be_positive
           expect(response.cached_tokens).to be_positive

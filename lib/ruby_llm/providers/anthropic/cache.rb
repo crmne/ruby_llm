@@ -10,6 +10,7 @@ module RubyLLM
           return true if cache_prompts == true
           return true if cache_prompts.is_a?(Array) && cache_prompts.include?(type)
           return true if cache_prompts.is_a?(Symbol) && cache_prompts == type
+
           false
         end
       end

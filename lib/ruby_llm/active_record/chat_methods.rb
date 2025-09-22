@@ -139,11 +139,6 @@ module RubyLLM
         self
       end
 
-      def cache_prompts(...)
-        to_llm.cache_prompts(...)
-        self
-      end
-
       def on_new_message(&block)
         to_llm
 
@@ -184,7 +179,8 @@ module RubyLLM
         message_record
       end
 
-      def ask(message, with: nil, &)
+      def ask(message, with: nil, cache: nil, &)
+        to_llm.instance_variable_set(:@cache_prompts, cache)
         create_user_message(message, with:)
         complete(&)
       end
