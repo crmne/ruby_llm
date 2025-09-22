@@ -22,24 +22,9 @@ module RubyLLM
         }
       end
 
-      # Options for the Anthropic provider
-      class Options
-        attr_accessor :cache_last_system_prompt, :cache_last_user_prompt, :cache_tools
-
-        def initialize(cache_last_system_prompt: false, cache_last_user_prompt: false, cache_tools: false)
-          @cache_last_system_prompt = cache_last_system_prompt
-          @cache_last_user_prompt = cache_last_user_prompt
-          @cache_tools = cache_tools
-        end
-      end
-
       class << self
         def capabilities
           Anthropic::Capabilities
-        end
-
-        def options
-          Anthropic::Options
         end
 
         def configuration_requirements

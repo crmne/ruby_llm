@@ -505,21 +505,21 @@ Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for det
 ### Enabling
 For Anthropic models, you can opt-in to prompt caching which is documented more fully in the [Anthropic API docs](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching).
 
-Enable prompt caching using the `with_provider_options` method on your chat instance:
+Enable prompt caching using the `cache_prompts` method on your chat instance:
 
 ```ruby
 chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022')
 
 # Enable caching for different types of content
-chat.with_provider_options(
-  cache_last_system_prompt: true,  # Cache system instructions
-  cache_last_user_prompt: true,    # Cache user messages
-  cache_tools: true    # Cache tool definitions
+chat.cache_prompts(
+  system: true,  # Cache system instructions
+  user: true,    # Cache user messages
+  tools: true    # Cache tool definitions
 )
 ```
 
 ### Checking cached token counts
-For Anthropic, OpenAI, and Gemini, you can see the number of tokens read from cache by looking at the `cached_tokens` property on the output messages.
+For Anthropic, OpenAI, and Gemini, you can see the number of tokens read from cache by looking at the `cached_tokens` property on the output messages. 
 
 For Anthropic, you can see the tokens written to cache by looking at the `cache_creation_tokens` property.
 

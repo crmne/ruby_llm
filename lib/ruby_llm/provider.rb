@@ -5,18 +5,12 @@ module RubyLLM
   class Provider
     include Streaming
 
-    attr_reader :config, :connection, :options
+    attr_reader :config, :connection
 
     def initialize(config)
       @config = config
       ensure_configured!
       @connection = Connection.new(self, @config)
-      @options = self.class.respond_to?(:options) ? self.class.options.new : nil
-    end
-
-    def with_options(options)
-      @options = options.is_a?(self.class.options) ? options : self.class.options.new(**options)
-      self
     end
 
     def api_base
@@ -43,7 +37,8 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, # rubocop:disable Metrics/ParameterLists
+                 cache_prompts: { system: false, user: false, tools: false }, &)
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
@@ -52,6 +47,7 @@ module RubyLLM
           tools: tools,
           temperature: normalized_temperature,
           model: model,
+          cache_prompts: cache_prompts,
           stream: block_given?,
           schema: schema
         ),

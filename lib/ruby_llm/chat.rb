@@ -98,11 +98,6 @@ module RubyLLM
       self
     end
 
-    def with_provider_options(options)
-      @provider.with_options(options)
-      self
-    end
-
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -127,12 +122,18 @@ module RubyLLM
       messages.each(&)
     end
 
+    def cache_prompts(system: false, user: false, tools: false)
+      @cache_prompts = { system: system, user: user, tools: tools }
+      self
+    end
+
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
         messages,
         tools: @tools,
         temperature: @temperature,
         model: @model,
+        cache_prompts: @cache_prompts.dup,
         params: @params,
         headers: @headers,
         schema: @schema,

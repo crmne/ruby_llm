@@ -135,8 +135,8 @@ module RubyLLM
         self
       end
 
-      def with_provider_options(...)
-        to_llm.with_provider_options(...)
+      def cache_prompts(...)
+        to_llm.cache_prompts(...)
         self
       end
 

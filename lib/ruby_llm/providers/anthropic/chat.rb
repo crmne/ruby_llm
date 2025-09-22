@@ -11,12 +11,14 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+                           cache_prompts: { system: false, user: false, tools: false })
           system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages, options)
+          system_content = build_system_content(system_messages, cache: cache_prompts[:system])
 
-          build_base_payload(chat_messages, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, temperature:, options:)
+          build_base_payload(chat_messages, model, stream, cache: cache_prompts[:user]).tap do |payload|
+            add_optional_fields(payload, system_content:, tools:, temperature:,
+                                         cache_tools: cache_prompts[:tools])
           end
         end
 
@@ -24,16 +26,16 @@ module RubyLLM
           messages.partition { |msg| msg.role == :system }
         end
 
-        def build_system_content(system_messages, options)
+        def build_system_content(system_messages, cache: false)
           system_messages.flat_map.with_index do |msg, idx|
-            message_cache = options.cache_last_system_prompt if idx == system_messages.size - 1
+            message_cache = cache if idx == system_messages.size - 1
             format_system_message(msg, cache: message_cache)
           end
         end
 
-        def build_base_payload(chat_messages, model, stream)
+        def build_base_payload(chat_messages, model, stream, cache: false)
           messages = chat_messages.map.with_index do |msg, idx|
-            message_cache = options.cache_last_user_prompt if idx == chat_messages.size - 1
+            message_cache = cache if idx == chat_messages.size - 1
             format_message(msg, cache: message_cache)
           end
 
@@ -45,10 +47,10 @@ module RubyLLM
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:, temperature:, options:)
+        def add_optional_fields(payload, system_content:, tools:, temperature:, cache_tools: false)
           if tools.any?
             tool_definitions = tools.values.map { |t| Tools.function_for(t) }
-            tool_definitions[-1][:cache_control] = { type: 'ephemeral' } if options.cache_tools
+            tool_definitions[-1][:cache_control] = { type: 'ephemeral' } if cache_tools
             payload[:tools] = tool_definitions
           end
 
