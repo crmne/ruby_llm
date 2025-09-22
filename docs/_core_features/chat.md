@@ -516,11 +516,6 @@ chat.with_provider_options(
   cache_last_user_prompt: true,    # Cache user messages
   cache_tools: true    # Cache tool definitions
 )
-
-# Or, use options class
-options = RubyLLM::Providers::Anthropic::Options.new
-options.cache_last_system_prompt = true
-chat.with_provider_options(options)
 ```
 
 ### Checking cached token counts
