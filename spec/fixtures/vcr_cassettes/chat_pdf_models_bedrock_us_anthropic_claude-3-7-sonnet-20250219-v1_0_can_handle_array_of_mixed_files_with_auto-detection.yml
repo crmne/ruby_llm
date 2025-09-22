@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250914T095525Z
+      - 20250921T143901Z
       X-Amz-Content-Sha256:
       - aae2788b85db2f8c2e2c1b966f72049cfed690ffa488a52860ef484e7b163b74
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250914/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=eb22485dff25942c24c42793836a7f7740868320935f94777ab01881515074a0
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e7bedb2a8a494e161564a0d20da1116962f5f296f99176455474c9907e5e0d29
       Content-Type:
       - application/json
       Accept:
@@ -31,35 +31,38 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:55:31 GMT
+      - Sun, 21 Sep 2025 14:39:09 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1192'
+      - '1403'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - adf5ffea-7d0e-4220-9e14-8fdb0984d99c
+      - c6332fd5-e9cc-440a-aa15-ed421a6ff87c
       X-Amzn-Bedrock-Invocation-Latency:
-      - '5719'
+      - '7647'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '181'
+      - '228'
       X-Amzn-Bedrock-Input-Token-Count:
       - '2706'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_013e6mJHxytQJXtkP7FHWhLF","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I''ve
-        analyzed the provided files:\n\n1. Image: The image shows the Ruby programming
-        language logo. It''s a red, polished gemstone with faceted surfaces that create
-        a distinctive diamond-like shape. The ruby gem is the iconic symbol for the
-        Ruby programming language.\n\n2. PDF Document: I analyzed a sample PDF file
-        that contains primarily Lorem Ipsum placeholder text. The document has a simple
-        header reading \"Sample PDF\" followed by \"This is a simple PDF file. Fun
-        fun fun.\" The rest of the content consists of standard Lorem Ipsum text paragraphs
-        that are commonly used for layout and design mockups.\n\nThe PDF appears to
-        be a demonstration file rather than containing substantive content. It''s
-        formatted in a basic layout with standard paragraph spacing. The same content
-        appears to be shown twice in the document, possibly displaying different pages
-        of the same sample PDF."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":181}}'
-  recorded_at: Sun, 14 Sep 2025 09:55:32 GMT
+      string: '{"id":"msg_bdrk_01YTPxWRU4eiRAPWt1QgZ2pT","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"#
+        Analysis of the Files\n\nI''ve analyzed the two files you''ve shared:\n\n1.
+        **Ruby Logo Image**: The first file appears to be the official Ruby programming
+        language logo - a red, shiny gemstone with faceted surfaces. The ruby gem
+        is rendered in 3D with highlights and reflective properties, showcasing its
+        distinctive deep red color.\n\n2. **Sample PDF Document**: The second file
+        is a PDF document with the title \"Sample PDF\" that contains placeholder
+        text. The document starts with \"This is a simple PDF file. Fun fun fun.\"
+        followed by several paragraphs of Lorem Ipsum text (standard filler text used
+        in design and typesetting). The document appears to be structured in multiple
+        paragraphs with consistent formatting throughout.\n\nThe PDF seems to be a
+        demonstration document, likely used for testing or as a template, without
+        any substantive content beyond the placeholder text. The same content appears
+        to be shown twice in the PDF, possibly representing different pages or formats
+        of the same text.\n\nWould you like me to analyze any particular aspect of
+        either file in more detail?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":2706,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":228}}'
+  recorded_at: Sun, 21 Sep 2025 14:39:09 GMT
 recorded_with: VCR 6.3.1

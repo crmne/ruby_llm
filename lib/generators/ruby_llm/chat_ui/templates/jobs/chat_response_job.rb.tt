@@ -5,7 +5,7 @@ class <%= chat_model_name %>ResponseJob < ApplicationJob
     <%= chat_model_name.underscore %>.ask(content) do |chunk|
       if chunk.content && !chunk.content.blank?
         <%= message_model_name.underscore %> = <%= chat_model_name.underscore %>.<%= message_model_name.tableize %>.last
-        <%= message_model_name.underscore %>.update!(content: <%= message_model_name.underscore %>.content + chunk.content)
+        <%= message_model_name.underscore %>.broadcast_append_chunk(chunk.content)
       end
     end
   end

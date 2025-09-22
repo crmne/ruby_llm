@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 14 Sep 2025 10:04:07 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 21 Sep 2025 14:46:54 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:04:07 GMT
+  recorded_at: Sun, 21 Sep 2025 14:46:54 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 14 Sep 2025 10:04:08 GMT
+      - Sun, 21 Sep 2025 14:46:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -104,12 +104,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"1, 2, 3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
-        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 7,\"totalTokenCount\":
-        37,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        [{\"text\": \"1\\n2\\n3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 5,\"totalTokenCount\":
+        34,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 23},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2025-09-14T10:04:08.055437Z\",\"responseId\":
-        \"GJPGaI2xA83Nt_gPto7v8AU\"}\r\n\r\n"
-  recorded_at: Sun, 14 Sep 2025 10:04:08 GMT
+        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 22},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2025-09-21T14:46:55.073683Z\",\"responseId\":
+        \"3w_QaNO_BN6FvdIPydyQsQY\"}\r\n\r\n"
+  recorded_at: Sun, 21 Sep 2025 14:46:55 GMT
 recorded_with: VCR 6.3.1

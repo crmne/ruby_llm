@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Sun, 14 Sep 2025 10:04:08 GMT
-      Pragma:
-      - no-cache
+      - Sun, 21 Sep 2025 14:46:55 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:04:08 GMT
+  recorded_at: Sun, 21 Sep 2025 14:46:55 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 14 Sep 2025 10:04:09 GMT
+      - Sun, 21 Sep 2025 14:46:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,9 +109,9 @@ http_interactions:
         35,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 23},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2025-09-14T10:04:08.938292Z\",\"responseId\":
-        \"GJPGaLSiOdf0t_gPkp-q0A0\"}\r\n\r\n"
-  recorded_at: Sun, 14 Sep 2025 10:04:09 GMT
+        \"gemini-2.5-flash\",\"createTime\": \"2025-09-21T14:46:55.953031Z\",\"responseId\":
+        \"3w_QaMeVOvKhvdIP9vif6Ao\"}\r\n\r\n"
+  recorded_at: Sun, 21 Sep 2025 14:46:56 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -132,14 +132,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Sun, 14 Sep 2025 10:04:09 GMT
+      - Sun, 21 Sep 2025 14:46:56 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -164,11 +164,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 14 Sep 2025 10:04:09 GMT
+  recorded_at: Sun, 21 Sep 2025 14:46:56 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -198,7 +198,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:04:10 GMT
+      - Sun, 21 Sep 2025 14:46:57 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -226,7 +226,7 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0467984199523925
+              "avgLogprobs": -1.0467986106872558
             }
           ],
           "usageMetadata": {
@@ -249,8 +249,8 @@ http_interactions:
             "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-14T10:04:09.847238Z",
-          "responseId": "GZPGaIbbM-nvxN8P8-OciAo"
+          "createTime": "2025-09-21T14:46:56.756584Z",
+          "responseId": "4A_QaOiWLtuWvdIP98JJ"
         }
-  recorded_at: Sun, 14 Sep 2025 10:04:10 GMT
+  recorded_at: Sun, 21 Sep 2025 14:46:57 GMT
 recorded_with: VCR 6.3.1

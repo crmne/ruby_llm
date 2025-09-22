@@ -25,8 +25,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:05:25 GMT
-      - Sun, 14 Sep 2025 10:05:26 GMT
+      - Sun, 21 Sep 2025 14:48:06 GMT
+      - Sun, 21 Sep 2025 14:48:06 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -44,16 +44,16 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM","type":"function"}]}}],"created":1757844328,"id":"chatcmpl-21z3SMAZdOHDx3HH0vNWhglNrzf6ID8Y","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":150,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":110,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":259},"prompt_tokens_per_second":11309.756840227934,"time_per_output_token_ms":9.352366666666667,"time_to_first_token_ms":22.989,"tokens_per_second":106.92480691161951,"total_tokens":410}}'
-  recorded_at: Sun, 14 Sep 2025 10:05:28 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7","type":"function"}]}}],"created":1758466088,"id":"chatcmpl-MwVZnMHhdhAAsyt5YsRv1fahTL0HbIa6","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":145,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":105,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":259},"prompt_tokens_per_second":11575.619963492278,"time_per_output_token_ms":9.247827586206895,"time_to_first_token_ms":22.461,"tokens_per_second":108.13350386111183,"total_tokens":405}}'
+  recorded_at: Sun, 21 Sep 2025 14:48:08 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}}],"enable_thinking":false}'
@@ -72,15 +72,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:05:27 GMT
-      - Sun, 14 Sep 2025 10:05:27 GMT
+      - Sun, 21 Sep 2025 14:48:07 GMT
+      - Sun, 21 Sep 2025 14:48:08 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '737'
+      - '780'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,19 +92,19 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oLiDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTc4NDQzMjksImlkIjoiY2hhdGNtcGwtUVFRVm41d1dQYkV5UFRzTkVVa3hMSFB5c1dvSjN4UU0iLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE0NCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6OTksInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozMzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTl9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjExOTM3LjYyMzIyOTk2OTUzLCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguOTAzNTA2OTQ0NDQ0NDQ1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNy44OTUsInRva2Vuc19wZXJfc2Vjb25kIjoxMTIuMzE1MjkzOTg5MTgxODUsInRvdGFsX3Rva2VucyI6NDc3fX0=
-  recorded_at: Sun, 14 Sep 2025 10:05:29 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTg0NjYwOTAsImlkIjoiY2hhdGNtcGwtQ0ZqRml1WUh2WndxZEVva3JHNzFCalVpM2M5elA3bm0iLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE3MCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTE0LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMTM2OC42Nzk3OTkyNTU3NDQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS41NTY5OTQxMTc2NDcwNiwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjkuMjkxLCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA0LjYzNTQxMDIyMzEyNTc3LCJ0b3RhbF90b2tlbnMiOjUwM319
+  recorded_at: Sun, 21 Sep 2025 14:48:10 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is 15°C with wind at 10 km/h.
-        \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's the weather in Paris?
-        (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
+        current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
+        of **10 km/h**. It looks like a mild day! \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
         (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"enable_thinking\":false}"
@@ -123,8 +123,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:05:28 GMT
-      - Sun, 14 Sep 2025 10:05:29 GMT
+      - Sun, 21 Sep 2025 14:48:09 GMT
+      - Sun, 21 Sep 2025 14:48:09 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -142,20 +142,20 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-woQuYkrf5cIxtECKbPzJDmi7BPyUWhOx","type":"function"}]}}],"created":1757844330,"id":"chatcmpl-9ve2LNz2sOH4xWhVz2obszeztk5NBEGI","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":138,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":105,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":408,"prompt_tokens_details":{"cached_tokens":331},"prompt_tokens_per_second":15991.22050638865,"time_per_output_token_ms":8.693630434782609,"time_to_first_token_ms":25.514,"tokens_per_second":115.02674371791443,"total_tokens":546}}'
-  recorded_at: Sun, 14 Sep 2025 10:05:30 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-HSZBrFHbKdILC2PSAdgDmJ4ym9bd7HcM","type":"function"}]}}],"created":1758466091,"id":"chatcmpl-Rass38bbC5dt6oqNZUpR1GhcrZ8QG1lu","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":144,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":111,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":419,"prompt_tokens_details":{"cached_tokens":331},"prompt_tokens_per_second":12760.384943354855,"time_per_output_token_ms":9.525916666666667,"time_to_first_token_ms":32.836,"tokens_per_second":104.9767738887771,"total_tokens":563}}'
+  recorded_at: Sun, 21 Sep 2025 14:48:11 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-roqe1xHMV9bubKGxeTJGrai2UZgpcYrM\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
-        current weather in Berlin (52.5200, 13.4050) is 15°C with wind at 10 km/h.
-        \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's the weather in Paris?
-        (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-woQuYkrf5cIxtECKbPzJDmi7BPyUWhOx\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-woQuYkrf5cIxtECKbPzJDmi7BPyUWhOx\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-J3zxicbDOFC63MKgFPius4aofkI1q3l7\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
+        current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
+        of **10 km/h**. It looks like a mild day! \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-HSZBrFHbKdILC2PSAdgDmJ4ym9bd7HcM\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-HSZBrFHbKdILC2PSAdgDmJ4ym9bd7HcM\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
         (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"enable_thinking\":false}"
@@ -174,15 +174,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:05:29 GMT
-      - Sun, 14 Sep 2025 10:05:30 GMT
+      - Sun, 21 Sep 2025 14:48:10 GMT
+      - Sun, 21 Sep 2025 14:48:11 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '725'
+      - '777'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -194,6 +194,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuQ3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpOiAxNcKwQywgV2luZDogMTAga20vaC4g8J+MpO+4jyIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU3ODQ0MzMzLCJpZCI6ImNoYXRjbXBsLUd6WXN2RlJ3MXRhSDFUOWNlN3JCMFdmanhLUG1obGdKIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjozNTcsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMxNSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjQ3OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjQwN30sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTgzNjMuMDQzODk0OTU4Nzg4LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjkuMDQ2MjIxMjg4NTE1NDA2LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNi4wODUsInRva2Vuc19wZXJfc2Vjb25kIjoxMTAuNTQzMzkzNTQ1OTM3ODksInRvdGFsX3Rva2VucyI6ODM2fX0=
-  recorded_at: Sun, 14 Sep 2025 10:05:33 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIEl0IGxvb2tzIGxpa2UgYSBtaWxkIGRheSEg8J+MpO+4jyIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU4NDY2MDkzLCJpZCI6ImNoYXRjbXBsLWFZazVlMkFTdDN3bFdHbnB3TEt3NFhPeUJ5SE10T2xxIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyMTQsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjE1OSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjQ5MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjQxOH0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTY2NTEuMzc0NTg3OTYzNDMzLCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjkuMjEyMDUxNDAxODY5MTU5LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyOS40MjcsInRva2Vuc19wZXJfc2Vjb25kIjoxMDguNTUzNDU0MjA2NDIxLCJ0b3RhbF90b2tlbnMiOjcwNH19
+  recorded_at: Sun, 21 Sep 2025 14:48:13 GMT
 recorded_with: VCR 6.3.1

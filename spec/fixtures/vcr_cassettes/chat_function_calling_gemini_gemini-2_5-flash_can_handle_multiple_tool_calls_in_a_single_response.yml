@@ -32,180 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:09:17 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Server-Timing:
-      - gfet4t7; dur=717
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "functionCall": {
-                      "name": "dice_roll",
-                      "args": {}
-                    },
-                    "thoughtSignature": "CqQBAdHtim+CaWE832cPWeJCoDobUW6kIai4YI1zavMe0W+b/IGqTYID51XY0lBZBVetxmPzgnF2LzCGq8OXa5l0hz1vRyJK6AzXnfmPbOxju610vzOGRpJAIYmxKgdIh/L3PITlaZTgEXyFp/xHcNC6WD6A8ywEj/mXMzTSfWx+bqPIPPwY184Y/DBtW12P3F8XNgVrRzXGXi1PghAk3PRTQRmMiUY="
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 62,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 110,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 62
-              }
-            ],
-            "thoughtsTokenCount": 38
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "TZTGaOTKOdfSvdIPmamT8QI"
-        }
-  recorded_at: Sun, 14 Sep 2025 10:09:17 GMT
-- request:
-    method: post
-    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
-        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","response":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","content":[{"text":"{roll:
-        1}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result"}]}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      X-Goog-Api-Key:
-      - "<GEMINI_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Sun, 14 Sep 2025 10:09:18 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Server-Timing:
-      - gfet4t7; dur=824
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "functionCall": {
-                      "name": "dice_roll",
-                      "args": {}
-                    },
-                    "thoughtSignature": "CooBAdHtim/7qcyqhMUC1y+PovAhGumgpJOsZpGCLeEShfzVG3MWRgh5ZZhepa15UbTmH6C/kQf1MPt0zbwcceLla2pMou29wQ7kAU2eCbmV7nHwb21BP6BX8bPv83PIggEgW2weVXcbPrDoWFfahgK0g0ehVJxc2eWzS02rVUOzdCsRyYJJQizL1cD5"
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 164,
-            "candidatesTokenCount": 10,
-            "totalTokenCount": 203,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 164
-              }
-            ],
-            "thoughtsTokenCount": 29
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "TpTGaLjDMY-okdUP9q3jkQ4"
-        }
-  recorded_at: Sun, 14 Sep 2025 10:09:18 GMT
-- request:
-    method: post
-    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
-        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","response":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"9565c098-1a8c-4031-a8a7-994501705975","response":{"name":"9565c098-1a8c-4031-a8a7-994501705975","content":[{"text":"{roll:
-        2}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result"}]}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      X-Goog-Api-Key:
-      - "<GEMINI_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Sun, 14 Sep 2025 10:09:19 GMT
+      - Sun, 21 Sep 2025 14:51:42 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -233,7 +60,7 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CpMBAdHtim9DCRMtLuhiQjFfN/7yC1OPURmyr+e9CmXlmEIJ9vMrGuqtkl6YoBNp5Eb9Ea5De73SltIBFFken0ztRa/UVlVsMZvzk/5IyouPziSA1LLAqTnNifk3ijji7l49RGc9au7eM/f0FRyDUiQ1Dsmvk+kDoCsCpFen49cJBvQmkbEYLyHngiLIaBMQxFKkU/Se"
+                    "thoughtSignature": "CsABAdHtim+nJK6cGaxgMwJpoEpEd3cRXXrUSOJVwK4kDbg092ePTLcvkgDd1stkRZvSztCT/KDzdfTNhRS2+VC4EShbBJWTO5sqTwI563ggm0UKzfnDYxNOhal5Mz00RQXyXt+xZio/11ExkyMqhT4MOEnGhLai3bjv3zUZXtAH7LIRpjOHUaOY60AoyjmCL5EWl2mlLRrNiJW7Yp0ViGGD1Kd9/SH4XefEcdog3qS/LzWUXQJw5naq7ZBX+XjzTcgK"
                   }
                 ],
                 "role": "model"
@@ -243,21 +70,21 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 270,
+            "promptTokenCount": 62,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 311,
+            "totalTokenCount": 116,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 270
+                "tokenCount": 62
               }
             ],
-            "thoughtsTokenCount": 31
+            "thoughtsTokenCount": 44
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "T5TGaI_PIKrNnsEP4oSl4Q0"
+          "responseId": "_hDQaLSUONedvdIP8d-QqAg"
         }
-  recorded_at: Sun, 14 Sep 2025 10:09:19 GMT
+  recorded_at: Sun, 21 Sep 2025 14:51:42 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -265,9 +92,182 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","response":{"name":"59cd2950-c3a2-4db1-a135-90c04c606c07","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"9565c098-1a8c-4031-a8a7-994501705975","response":{"name":"9565c098-1a8c-4031-a8a7-994501705975","content":[{"text":"{roll:
-        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"05ad01fc-de3d-4cfc-8f3d-f5046badc16a","response":{"name":"05ad01fc-de3d-4cfc-8f3d-f5046badc16a","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","response":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","content":[{"text":"{roll:
+        1}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 21 Sep 2025 14:51:43 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=461
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "dice_roll",
+                      "args": {}
+                    },
+                    "thoughtSignature": "CooBAdHtim9i/kBuMYTNcEAX10ekWAnJCTizBOSIlz2S0iDUXFpMRiwXTCUTzN54Yi4LPbWbBGc0hJ51rSI8+nuUBXGm8f6WdRpPMRhc8j6GuWBXbD0pMdckuiLdT4KM/hPP729M2z6whrtHIcToGSgso2oOelwNBKLMDjtHwwGxU4ypB3AcjIkCfUDo"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 154,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 193,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 154
+              }
+            ],
+            "thoughtsTokenCount": 29
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "_xDQaK2yGt2C7M8P0vWiiAY"
+        }
+  recorded_at: Sun, 21 Sep 2025 14:51:43 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
+        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","response":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"756a1fac-a653-44e4-93ce-96ebdcbe9475","response":{"name":"756a1fac-a653-44e4-93ce-96ebdcbe9475","content":[{"text":"{roll:
+        2}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 21 Sep 2025 14:51:43 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=453
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "dice_roll",
+                      "args": {}
+                    },
+                    "thoughtSignature": "CpABAdHtim8qLO0pweR0JPh4INREt2g+j4WMq1W+Uc5BO0MlQKG8IjtchpoScx/HcyRhB7MsHUKiUm/19iQF8siF74VKuw65U8jf0ACAnHTTxdLoGZugfoyHDA6xSUDKvA0B7uodi4MlPlZt9kOw+Vwf8267OiHzpJsM/+8PjCyFwVBRY3Ezg6nSGrqGKqq6lEh8"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 248,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 288,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 248
+              }
+            ],
+            "thoughtsTokenCount": 30
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "_xDQaKnhOMLqkdUPo8bokAI"
+        }
+  recorded_at: Sun, 21 Sep 2025 14:51:43 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
+        tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","response":{"name":"389f0c24-bd33-4ece-bf1f-4dc1464dbccb","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"756a1fac-a653-44e4-93ce-96ebdcbe9475","response":{"name":"756a1fac-a653-44e4-93ce-96ebdcbe9475","content":[{"text":"{roll:
+        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"aa48cb0c-dbe1-4628-b4f0-a1cb168f69c2","response":{"name":"aa48cb0c-dbe1-4628-b4f0-a1cb168f69c2","content":[{"text":"{roll:
         3}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
@@ -293,7 +293,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 14 Sep 2025 10:09:19 GMT
+      - Sun, 21 Sep 2025 14:51:44 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -303,7 +303,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=379
+      - gfet4t7; dur=563
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -327,18 +327,18 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 364,
+            "promptTokenCount": 346,
             "candidatesTokenCount": 22,
-            "totalTokenCount": 386,
+            "totalTokenCount": 368,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 364
+                "tokenCount": 346
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "T5TGaLOrOp3TvdIPoruL4AQ"
+          "responseId": "ABHQaPjWIO_QvdIP9KumkAI"
         }
-  recorded_at: Sun, 14 Sep 2025 10:09:19 GMT
+  recorded_at: Sun, 21 Sep 2025 14:51:44 GMT
 recorded_with: VCR 6.3.1

@@ -22,15 +22,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:01:20 GMT
-      - Sun, 14 Sep 2025 10:01:21 GMT
+      - Sun, 21 Sep 2025 14:44:24 GMT
+      - Sun, 21 Sep 2025 14:44:24 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1311'
+      - '1182'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -41,32 +41,29 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        term \"Ruby\" can refer to different things, so the answer depends on the
-        context:\n\n1. **Ruby (programming language)**:  \n   Created by **Yukihiro
-        \"Matz\" Matsumoto** in the mid-1990s. He designed Ruby to be a flexible,
-        object-oriented language that prioritized simplicity and productivity.\n\n2.
-        **Ruby (character from \"Ruby''s Rainbow\" book)**:  \n   The character Ruby
-        in the children''s book *Ruby''s Rainbow* by **Sue Ganz-Schmidt** is a fictional
-        child who learns about colors and self-expression. The creator of this story
-        is **Sue Ganz-Schmidt**.\n\nIf you meant something else (e.g., a gemstone,
-        a TV show, or another context), feel free to clarify!","role":"assistant"}}],"created":1757844087,"id":"chatcmpl-lLPSlAq1hvkQV1WAHufDpMlN4syaIGN6","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":591,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":421,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":844.9004224502112,"time_per_output_token_ms":9.271057529610829,"time_to_first_token_ms":16.57,"tokens_per_second":107.8625601023508,"total_tokens":605}}'
-  recorded_at: Sun, 14 Sep 2025 10:01:27 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby
+        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer. He
+        developed the language in the mid-1990s with the goal of creating a language
+        that was both simple and powerful, emphasizing **developer happiness** and
+        **expressiveness**. Ruby was first released in 1995 and has since become known
+        for its elegant syntax and flexibility, widely used in web development (e.g.,
+        through frameworks like Ruby on Rails). Matz is also the lead developer of
+        the Ruby programming language, maintaining its evolution and community.","role":"assistant"}}],"created":1758465868,"id":"chatcmpl-D41tdQW1nt0T4Ngy9OC0lHFfzWeiZ2o6","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":330,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":211,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":808.4074373484235,"time_per_output_token_ms":8.645242424242424,"time_to_first_token_ms":17.318,"tokens_per_second":115.67055623516876,"total_tokens":344}}'
+  recorded_at: Sun, 21 Sep 2025 14:44:28 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"\n\nThe term \"Ruby\" can refer
-        to different things, so the answer depends on the context:\n\n1. **Ruby (programming
-        language)**:  \n   Created by **Yukihiro \"Matz\" Matsumoto** in the mid-1990s.
-        He designed Ruby to be a flexible, object-oriented language that prioritized
-        simplicity and productivity.\n\n2. **Ruby (character from \"Ruby''s Rainbow\"
-        book)**:  \n   The character Ruby in the children''s book *Ruby''s Rainbow*
-        by **Sue Ganz-Schmidt** is a fictional child who learns about colors and self-expression.
-        The creator of this story is **Sue Ganz-Schmidt**.\n\nIf you meant something
-        else (e.g., a gemstone, a TV show, or another context), feel free to clarify!"},{"role":"user","content":"What
+        creator?"},{"role":"assistant","content":"\n\nRuby was created by **Yukihiro
+        \"Matz\" Matsumoto**, a Japanese programmer. He developed the language in
+        the mid-1990s with the goal of creating a language that was both simple and
+        powerful, emphasizing **developer happiness** and **expressiveness**. Ruby
+        was first released in 1995 and has since become known for its elegant syntax
+        and flexibility, widely used in web development (e.g., through frameworks
+        like Ruby on Rails). Matz is also the lead developer of the Ruby programming
+        language, maintaining its evolution and community."},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
@@ -83,15 +80,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:01:26 GMT
-      - Sun, 14 Sep 2025 10:01:26 GMT
+      - Sun, 21 Sep 2025 14:44:27 GMT
+      - Sun, 21 Sep 2025 14:44:27 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1012'
+      - '843'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -101,8 +98,10 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugd2FzIGZpcnN0IHJlbGVhc2VkIGluICoqMTk5NSoqLiBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gYmVnYW4gZGV2ZWxvcGluZyBSdWJ5IGluIDE5OTMsIGJ1dCB0aGUgZmlyc3QgcHVibGljIHZlcnNpb24sICoqUnVieSAwLjAuMSoqLCB3YXMgcmVsZWFzZWQgaW4gKioxOTk1KiouIFRoaXMgbWFya2VkIHRoZSBvZmZpY2lhbCBjcmVhdGlvbiBvZiB0aGUgbGFuZ3VhZ2UuIFxuXG5JZiB5b3Ugd2VyZSByZWZlcnJpbmcgdG8gYSBkaWZmZXJlbnQgXCJSdWJ5XCIgKGUuZy4sIHRoZSBjaGFyYWN0ZXIgb3IgYW5vdGhlciBjb250ZXh0KSwgZmVlbCBmcmVlIHRvIGNsYXJpZnkhIPCfmIoiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1Nzg0NDA5MSwiaWQiOiJjaGF0Y21wbC1tVVpkckk3YW9jQ203Q0E4ZzdhbURaZDJLeEg0WXc4NyIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NDcxLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjozNzAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxOTcsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMn0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6Mzg3MS4zMjI3MzQ2ODY2NTksInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS4xNTc5MTA4MjgwMjU0NzksInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjUwLjg4NywidG9rZW5zX3Blcl9zZWNvbmQiOjEwOS4xOTUyMTA0MzM3NzYyMywidG90YWxfdG9rZW5zIjo2Njh9fQ==
-  recorded_at: Sun, 14 Sep 2025 10:01:31 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nYukihiro
+        \"Matz\" Matsumoto created Ruby, and the first public release of the language
+        was in **1995**. This marked the beginning of Ruby''s development, which continued
+        to evolve over the years.","role":"assistant"}}],"created":1758465870,"id":"chatcmpl-3T6wQR7DZ9LsAFIywFkR67jKNNgEDAqs","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":286,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":235,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":146,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3113.47109376666,"time_per_output_token_ms":8.916611888111888,"time_to_first_token_ms":46.893,"tokens_per_second":112.15022169275467,"total_tokens":432}}'
+  recorded_at: Sun, 21 Sep 2025 14:44:30 GMT
 recorded_with: VCR 6.3.1

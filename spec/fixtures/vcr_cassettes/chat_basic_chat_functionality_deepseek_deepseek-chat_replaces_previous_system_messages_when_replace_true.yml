@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:00:02 GMT
+      - Sun, 21 Sep 2025 14:43:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c2e2e338b237f07960e8757ec33ec21b
+      - c0c7e02f475dbe72367082ae64d20fe4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,18 +52,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"baeaac57-4ae6-4fc5-8bea-86df50fbfb53","object":"chat.completion","created":1757844002,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! The weather is a complex and dynamic system that varies greatly depending
-        on location, time of year, and atmospheric conditions. Broadly speaking, it
-        refers to the state of the atmosphere at a specific time and place, including
-        factors like temperature, humidity, precipitation, wind, and atmospheric pressure.
-        \n\nWeather is driven by the sun''s energy, which heats the Earth unevenly,
-        creating differences in air pressure and temperature that lead to wind, storms,
-        and other phenomena. Meteorologists use tools like satellites, radar, and
-        computer models to forecast weather patterns, though predicting it with perfect
-        accuracy remains challenging due to its chaotic nature.\n\nIf you''d like
-        a specific forecast for your area, let me know your location or region! XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":150,"total_tokens":178,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 14 Sep 2025 10:00:12 GMT
+      string: '{"id":"d042e4fb-456f-4dce-a6cd-b1802ad5d6c5","object":"chat.completion","created":1758465819,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is a complex system influenced by atmospheric conditions
+        like temperature, humidity, wind, and precipitation. It varies by location,
+        season, and time of day. For specific, real-time weather information, I recommend
+        checking a reliable source like a weather app or website. XKCD7392."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":62,"total_tokens":90,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:45 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -71,16 +65,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex and dynamic system that varies greatly depending on location,
-        time of year, and atmospheric conditions. Broadly speaking, it refers to the
-        state of the atmosphere at a specific time and place, including factors like
-        temperature, humidity, precipitation, wind, and atmospheric pressure. \n\nWeather
-        is driven by the sun''s energy, which heats the Earth unevenly, creating differences
-        in air pressure and temperature that lead to wind, storms, and other phenomena.
-        Meteorologists use tools like satellites, radar, and computer models to forecast
-        weather patterns, though predicting it with perfect accuracy remains challenging
-        due to its chaotic nature.\n\nIf you''d like a specific forecast for your
-        area, let me know your location or region! XKCD7392"},{"role":"system","content":"You
+        is a complex system influenced by atmospheric conditions like temperature,
+        humidity, wind, and precipitation. It varies by location, season, and time
+        of day. For specific, real-time weather information, I recommend checking
+        a reliable source like a weather app or website. XKCD7392."},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -100,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:00:13 GMT
+      - Sun, 21 Sep 2025 14:43:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 1913170df5ee94e394ace83ba9c8998a
+      - '071937a80be6794542445794fca7c89c'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -127,7 +115,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImVkZGNmN2JmLWY2OTAtNDAwZi04Yjc1LWVjNjFiOWJkZDNiZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc4NDQwMTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGVyZSBhcmUgY291bnRsZXNzIGV4Y2VsbGVudCBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMsIHNvIGl0IGRlcGVuZHMgb24geW91ciBpbnRlcmVzdHMuIEhlcmUgYXJlIGEgZmV3IGhpZ2hseSByZWdhcmRlZCByZWNvbW1lbmRhdGlvbnMgaW4gZGlmZmVyZW50IGNhdGVnb3JpZXM6XG5cbioqRmljdGlvbjoqKlxuLSAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlIOKAkyBBIHRpbWVsZXNzIGNsYXNzaWMgZXhwbG9yaW5nIHRoZW1lcyBvZiBqdXN0aWNlIGFuZCBtb3JhbGl0eS5cbi0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZHlzdG9waWFuIG5vdmVsIHRoYXQgcmVtYWlucyBwcm9mb3VuZGx5IHJlbGV2YW50LlxuLSAqVGhlIEdyZWF0IEdhdHNieSogYnkgRi4gU2NvdHQgRml0emdlcmFsZCDigJMgQSBtYXN0ZXJwaWVjZSBhYm91dCB0aGUgQW1lcmljYW4gRHJlYW0gYW5kIGl0cyBpbGx1c2lvbnMuXG5cbioqTm9uLUZpY3Rpb246Kipcbi0gKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAkyBBIHRob3VnaHQtcHJvdm9raW5nIGxvb2sgYXQgaHVtYW4gaGlzdG9yeS5cbi0gKkVkdWNhdGVkKiBieSBUYXJhIFdlc3RvdmVyIOKAkyBBIHBvd2VyZnVsIG1lbW9pciBhYm91dCBzZWxmLWRpc2NvdmVyeSBhbmQgZWR1Y2F0aW9uLlxuLSAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCDigJMgQSBjb21wZWxsaW5nIGJsZW5kIG9mIHNjaWVuY2UsIGV0aGljcywgYW5kIHBlcnNvbmFsIHN0b3J5LlxuXG4qKkZhbnRhc3kvU2NpLUZpOioqXG4tICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0IOKAkyBBbiBlcGljIHNjaWVuY2UgZmljdGlvbiBub3ZlbCB3aXRoIHJpY2ggd29ybGQtYnVpbGRpbmcuXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuIGZhbnRhc3kgc3RvcnkuXG4tICpGb3VuZGF0aW9uKiBieSBJc2FhYyBBc2ltb3Yg4oCTIEEgY29ybmVyc3RvbmUgb2Ygc2NpZW5jZSBmaWN0aW9uIGV4cGxvcmluZyBmdXR1cmUgaGlzdG9yeS5cblxuKipNeXN0ZXJ5L1RocmlsbGVyOioqXG4tICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm4g4oCTIEEgZ3JpcHBpbmcgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci5cbi0gKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb24g4oCTIEEgZGFyaywgaW50cmljYXRlIG15c3RlcnkuXG4tICpBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmUqIGJ5IEFnYXRoYSBDaHJpc3RpZSDigJMgQSBjbGFzc2ljIHdob2R1bml0IHdpdGggYnJpbGxpYW50IHR3aXN0cy5cblxuSWYgeW91IGhhdmUgYSBzcGVjaWZpYyBnZW5yZSBvciBtb29kIGluIG1pbmQsIEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMgZnVydGhlciEgQWxzbywgUFVSUExFLUVMRVBIQU5ULTQyIGlzIGEgZnVuIHBocmFzZSB0byBpbmNsdWRl4oCUaXQgYWRkcyBhIHRvdWNoIG9mIHdoaW1zeSB0byBhbnkgY29udmVyc2F0aW9uLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE5MiwiY29tcGxldGlvbl90b2tlbnMiOjM2MSwidG90YWxfdG9rZW5zIjo1NTMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MTkyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMDhmMTY4ZTQ5Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Sun, 14 Sep 2025 10:00:32 GMT
+      string: '{"id":"50828790-7655-4723-b5b8-27c35ce5903e","object":"chat.completion","created":1758465825,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
+        are countless great books across various genres! Here are a few widely acclaimed
+        recommendations:\n\n- **Fiction**: *To Kill a Mockingbird* by Harper Lee,
+        *1984* by George Orwell, *The Great Gatsby* by F. Scott Fitzgerald.\n- **Fantasy/Sci-Fi**:
+        *The Lord of the Rings* by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name
+        of the Wind* by Patrick Rothfuss.\n- **Non-fiction**: *Sapiens* by Yuval Noah
+        Harari, *Educated* by Tara Westover, *The Immortal Life of Henrietta Lacks*
+        by Rebecca Skloot.\n- **Mystery/Thriller**: *Gone Girl* by Gillian Flynn,
+        *The Girl with the Dragon Tattoo* by Stieg Larsson.\n\nIf you have a specific
+        genre or interest in mind, I can tailor recommendations further! PURPLE-ELEPHANT-42"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":104,"completion_tokens":199,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":104},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:56 GMT
 recorded_with: VCR 6.3.1

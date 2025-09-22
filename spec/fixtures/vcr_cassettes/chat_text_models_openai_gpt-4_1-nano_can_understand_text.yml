@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:52:05 GMT
+      - Sun, 21 Sep 2025 14:35:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '305'
+      - '315'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '327'
+      - '328'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -79,16 +79,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CFdgr5RRQnLMCSnjygCPjWlaPbqPt",
+          "id": "chatcmpl-CIFSJByZe3DaWJjEDa8kW1d9vWjSN",
           "object": "chat.completion",
-          "created": 1757843525,
+          "created": 1758465351,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file \"ruby.txt\" contains the text: \"Ruby is the best.\"",
+                "content": "The file named \"ruby.txt\" contains the text: \"Ruby is the best.\"",
                 "refusal": null,
                 "annotations": []
               },
@@ -98,8 +98,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 31,
-            "completion_tokens": 16,
-            "total_tokens": 47,
+            "completion_tokens": 17,
+            "total_tokens": 48,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -114,7 +114,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_04d3664870"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:05 GMT
+  recorded_at: Sun, 21 Sep 2025 14:35:52 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -122,7 +122,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
+        is the best.</file>"}]},{"role":"assistant","content":"The file named \"ruby.txt\"
         contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
@@ -143,7 +143,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 09:52:06 GMT
+      - Sun, 21 Sep 2025 14:35:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,13 +155,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '470'
+      - '436'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '487'
+      - '466'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -169,7 +169,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199932'
+      - '199931'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -197,16 +197,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CFdgrfG5ETzfE9eVkcOJeCbOkFYGZ",
+          "id": "chatcmpl-CIFSKVQ35blYmgP9v8sWknCDUpnm5",
           "object": "chat.completion",
-          "created": 1757843525,
+          "created": 1758465352,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file \"ruby.xml\" contains a simple XML structure with a truism element that says: \"Ruby is the best.\"",
+                "content": "The file named \"ruby.xml\" contains an XML structure with a truism stating: \"Ruby is the best.\"",
                 "refusal": null,
                 "annotations": []
               },
@@ -215,9 +215,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 85,
-            "completion_tokens": 25,
-            "total_tokens": 110,
+            "prompt_tokens": 86,
+            "completion_tokens": 23,
+            "total_tokens": 109,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -230,7 +230,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
+          "system_fingerprint": "fp_04d3664870"
         }
-  recorded_at: Sun, 14 Sep 2025 09:52:06 GMT
+  recorded_at: Sun, 21 Sep 2025 14:35:52 GMT
 recorded_with: VCR 6.3.1
