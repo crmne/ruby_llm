@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     class Mistral
-      # Streaming methods of the Misttral API integration
+      # Streaming methods of the Mistral API integration
       module Streaming
         module_function
 
