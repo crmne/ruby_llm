@@ -1,0 +1,23 @@
+<p style="color: green"><%%= notice %></p>
+
+<%%= turbo_stream_from "<%= chat_model_name.underscore %>_#{@<%= chat_model_name.underscore %>.id}" %>
+
+<%% content_for :title, "<%= chat_model_name %>" %>
+
+<h1><%= chat_model_name %> <%%= @<%= chat_model_name.underscore %>.id %></h1>
+
+<p>Using <strong><%%= @<%= chat_model_name.underscore %>.model_association.name %></strong></p>
+
+<div id="<%= message_model_name.tableize %>">
+  <%% @<%= chat_model_name.underscore %>.messages_association.where.not(id: nil).each do |<%= message_model_name.underscore %>| %>
+    <%%= render "<%= message_model_name.tableize %>/<%= message_model_name.underscore %>", <%= message_model_name.underscore %>: <%= message_model_name.underscore %> %>
+  <%% end %>
+</div>
+
+<div style="margin-top: 30px;">
+  <%%= render "<%= message_model_name.tableize %>/form", <%= chat_model_name.underscore %>: @<%= chat_model_name.underscore %>, <%= message_model_name.underscore %>: @<%= message_model_name.underscore %> %>
+</div>
+
+<div style="margin-top: 20px;">
+  <%%= link_to "Back to <%= chat_model_name.tableize.humanize.downcase %>", <%= chat_model_name.tableize %>_path %>
+</div>

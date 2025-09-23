@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:59 GMT
+      - Sun, 21 Sep 2025 14:35:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,21 +33,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c86f-fb64-7e99-a766-a062139448fd'
+      - '01996cb3-78b1-7a6f-b50f-dfa523098aa8'
       X-Kong-Request-Id:
-      - '0198c86f-fb64-7e99-a766-a062139448fd'
+      - '01996cb3-78b1-7a6f-b50f-dfa523098aa8'
       X-Envoy-Upstream-Service-Time:
-      - '1022'
+      - '319'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499925'
+      - '499927'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999549815'
+      - '999978976'
       X-Ratelimit-Tokens-Query-Cost:
-      - '75'
+      - '73'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -55,9 +55,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1023'
+      - '320'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,11 +73,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"599a9e249833434e86737e68469037c0","created":1755709438,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":75,"completion_tokens":46},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"87b2d50a512541edb309df4b86d88ac3","created":1758465325,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":73,"completion_tokens":44},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nThe
-        file is a plain text file (`mime_type=''text/plain''`) with the content stating
-        that \"Ruby is the best.\""}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:03:59 GMT
+        file is a plain text file (`mime_type=''text/plain''`) with the content \"Ruby
+        is the best.\""}}]}'
+  recorded_at: Sun, 21 Sep 2025 14:35:25 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -87,9 +87,9 @@ http_interactions:
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nThe file is
-        a plain text file (`mime_type=''text/plain''`) with the content stating that
-        \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
-        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        a plain text file (`mime_type=''text/plain''`) with the content \"Ruby is
+        the best.\""},{"role":"user","content":[{"type":"text","text":"and in this
+        one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
@@ -108,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:04:00 GMT
+      - Sun, 21 Sep 2025 14:35:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,21 +116,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c86f-ffb2-73e6-8c80-0f678785a6c5'
+      - '01996cb3-7a3b-7f17-b77d-4eb993655bf4'
       X-Kong-Request-Id:
-      - '0198c86f-ffb2-73e6-8c80-0f678785a6c5'
+      - '01996cb3-7a3b-7f17-b77d-4eb993655bf4'
       X-Envoy-Upstream-Service-Time:
-      - '796'
+      - '1351'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499710'
+      - '499698'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999549600'
+      - '999978747'
       X-Ratelimit-Tokens-Query-Cost:
-      - '215'
+      - '229'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -138,9 +138,9 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '797'
+      - '1352'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -156,12 +156,13 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a59347a0178c4463bec0680df8590616","created":1755709439,"model":"mistral-small-latest","usage":{"prompt_tokens":108,"total_tokens":215,"completion_tokens":107},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"5e0d3f47de334fb8a448ea0489de0b28","created":1758465325,"model":"mistral-small-latest","usage":{"prompt_tokens":106,"total_tokens":229,"completion_tokens":123},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key Details:\n- **File Name:** `ruby.xml`\n-
-        **MIME Type:** `application/xml` (indicating it''s an XML file)\n- **Content:**
-        A simple XML structure with a `<truism>` element stating that \"Ruby is the
-        best.\"\n\nThis is a well-formed XML file with a single root element (`<truism>`)
-        and its text content."}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:04:00 GMT
+        is the best</truism>\n```\n\n### Breakdown:\n- **File name:** `ruby.xml`\n-
+        **MIME type:** `application/xml` (indicating it''s an XML file)\n- **Content:**
+        A simple XML element `<truism>` with the text \"Ruby is the best\" inside
+        it.\n\nThis is a well-formed XML snippet, though it doesn''t follow a specific
+        XML schema or namespace. The `<truism>` tag is arbitrary and could be part
+        of a custom XML structure."}}]}'
+  recorded_at: Sun, 21 Sep 2025 14:35:27 GMT
 recorded_with: VCR 6.3.1

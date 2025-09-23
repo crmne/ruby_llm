@@ -70,13 +70,13 @@ By default, RubyLLM uses the model specified in `config.default_image_model`, bu
 # Explicitly use GPT-Image-1
 image_dalle = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
-  model: "gpt-image-1"
+  model: "{{ site.models.image_openai }}"
 )
 
 # Use Google's Imagen 3
 image_imagen = RubyLLM.paint(
   "Cyberpunk city street at night, raining, neon signs",
-  model: "imagen-3.0-generate-002"
+  model: "{{ site.models.image_google }}"
 )
 
 # Use a model not in the registry (useful for custom endpoints)
@@ -92,7 +92,7 @@ You can configure the default model globally:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_image_model = "gpt-image-1" # Or another available image model ID
+  config.default_image_model = "{{ site.models.default_image }}" # Or another available image model ID
 end
 ```
 

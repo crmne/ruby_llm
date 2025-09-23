@@ -139,3 +139,55 @@ og_image:
       - "#D51F06"
       - "#DE3F24"
       - "#EDA895"
+
+# Model variables for documentation
+# These are used throughout the docs to ensure consistency
+# and make it easy to update model names in one place
+models:
+  # Default models for basic examples
+  default_chat: "gpt-4.1-nano"
+  default_embedding: "text-embedding-3-small"
+  default_image: "gpt-image-1"
+
+  # OpenAI models
+  openai_latest: "gpt-5"
+  openai_current: "gpt-4.1-nano"
+  openai_vision: "gpt-4.1"
+  openai_tools: "gpt-4.1"
+  openai_mini: "gpt-4.1-mini"
+  openai_audio: "gpt-4o-audio-preview"
+  openai_legacy: "gpt-3.5-turbo" # schema unsupported
+  openai_standard: "gpt-4.1"
+
+  # Anthropic models
+  anthropic_latest: "claude-sonnet-4"
+  anthropic_current: "claude-sonnet-4"
+  anthropic_newest: "claude-sonnet-4"
+  anthropic_opus: "claude-opus-4"
+
+  # Google models
+  gemini_latest: "gemini-2.5-pro"
+  gemini_current: "gemini-2.5-pro"
+  gemini_current_latest: "gemini-2.5-pro"
+
+  # Embedding models
+  embedding_small: "text-embedding-3-small"
+  embedding_large: "text-embedding-3-large"
+  embedding_google: "text-embedding-004"
+
+  # Image generation models
+  image_openai: "gpt-image-1"
+  image_dalle: "dall-e-3"
+  image_google: "imagen-3.0-generate-002"
+
+  # Local/Other models
+  local_llama: "llama-3"
+
+  # Model categories for different use cases
+  best_for_code: "gpt-5"
+  best_for_creative: "claude-sonnet-4"
+  best_for_factual: "gemini-2.5-pro"
+  best_for_vision: "gpt-4.1"
+  best_for_audio: "gpt-4o-audio-preview"
+  best_for_tools: "gpt-4.1"
+  best_for_budget: "gemini-2.5-flash"

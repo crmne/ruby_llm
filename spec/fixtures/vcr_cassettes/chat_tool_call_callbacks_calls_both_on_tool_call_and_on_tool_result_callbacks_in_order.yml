@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:56 GMT
+      - Sun, 21 Sep 2025 14:52:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '443'
+      - '361'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '480'
+      - '380'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,6 +58,8 @@ http_interactions:
       - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -77,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C6fQKbWLCmdsTcgDmwEz3LsgCHP70",
+          "id": "chatcmpl-CIFi2o0AR9sk8Fdgz9BSp8Dp7qXyv",
           "object": "chat.completion",
-          "created": 1755705236,
+          "created": 1758466326,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_wpa8kPfHHYaz8Y2GAakyzT3D",
+                    "id": "call_y88fds3ZTUTSF6xvitoW9duM",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -120,17 +122,17 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_c4c155951e"
+          "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Wed, 20 Aug 2025 15:53:56 GMT
+  recorded_at: Sun, 21 Sep 2025 14:52:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Roll
-        a die for me"},{"role":"assistant","tool_calls":[{"id":"call_wpa8kPfHHYaz8Y2GAakyzT3D","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_wpa8kPfHHYaz8Y2GAakyzT3D"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a die for me"},{"role":"assistant","tool_calls":[{"id":"call_y88fds3ZTUTSF6xvitoW9duM","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        4}","tool_call_id":"call_y88fds3ZTUTSF6xvitoW9duM"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
     headers:
       User-Agent:
@@ -149,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 15:53:57 GMT
+      - Sun, 21 Sep 2025 14:52:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -161,13 +163,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '386'
+      - '189'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '403'
+      - '344'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -175,13 +177,15 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199989'
+      - '199988'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
       - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -201,16 +205,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-C6fQK6L0IEmLQEq8M58BBJsaSGJBf",
+          "id": "chatcmpl-CIFi20gltY0fWSafZofO4I2VdCTRT",
           "object": "chat.completion",
-          "created": 1755705236,
+          "created": 1758466326,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "You rolled a 1.",
+                "content": "The die rolled a 4.",
                 "refusal": null,
                 "annotations": []
               },
@@ -220,8 +224,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 72,
-            "completion_tokens": 7,
-            "total_tokens": 79,
+            "completion_tokens": 8,
+            "total_tokens": 80,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -234,7 +238,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_c4c155951e"
+          "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Wed, 20 Aug 2025 15:53:57 GMT
+  recorded_at: Sun, 21 Sep 2025 14:52:07 GMT
 recorded_with: VCR 6.3.1

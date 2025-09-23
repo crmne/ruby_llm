@@ -1,0 +1,16 @@
+<div id="<%%= dom_id <%= chat_model_name.underscore %> %>">
+  <div>
+    <strong>Model:</strong>
+    <%%= <%= chat_model_name.underscore %>.model_association.name %>
+  </div>
+
+  <div>
+    <strong>Messages:</strong>
+    <%%= <%= chat_model_name.underscore %>.messages_association.count %>
+  </div>
+
+  <div>
+    <strong>Created:</strong>
+    <%%= <%= chat_model_name.underscore %>.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+  </div>
+</div>

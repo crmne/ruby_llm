@@ -1,0 +1,39 @@
+class <%= chat_model_name.pluralize %>Controller < ApplicationController
+  before_action :set_<%= chat_model_name.underscore %>, only: [:show]
+
+  def index
+    @<%= chat_model_name.tableize %> = <%= chat_model_name %>.order(created_at: :desc)
+  end
+
+  def new
+    @<%= chat_model_name.underscore %> = <%= chat_model_name %>.new
+    @selected_model = params[:model]
+  end
+
+  def create
+    return unless prompt.present?
+
+    @<%= chat_model_name.underscore %> = <%= chat_model_name %>.create!(model: model)
+    <%= chat_model_name %>ResponseJob.perform_later(@<%= chat_model_name.underscore %>.id, prompt)
+
+    redirect_to @<%= chat_model_name.underscore %>, notice: '<%= chat_model_name.humanize %> was successfully created.'
+  end
+
+  def show
+    @<%= message_model_name.underscore %> = @<%= chat_model_name.underscore %>.<%= message_model_name.tableize %>.build
+  end
+
+  private
+
+  def set_<%= chat_model_name.underscore %>
+    @<%= chat_model_name.underscore %> = <%= chat_model_name %>.find(params[:id])
+  end
+
+  def model
+    params[:<%= chat_model_name.underscore %>][:model].presence
+  end
+
+  def prompt
+    params[:<%= chat_model_name.underscore %>][:prompt]
+  end
+end

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:01 GMT
+      - Sun, 21 Sep 2025 14:43:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8e052fbbb2ab67c2f256a672821beb0a
+      - c0c7e02f475dbe72367082ae64d20fe4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,9 +52,12 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjhkOGRiN2Y3LTQ3ODktNDIzOS04MWFkLWVhOTAzYzNiNzA2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDk4MDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGUgd2VhdGhlciBpcyBhIGNvbXBsZXggYW5kIGR5bmFtaWMgc3lzdGVtIHRoYXQgZGVzY3JpYmVzIHRoZSBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSBhdCBhIHNwZWNpZmljIHRpbWUgYW5kIHBsYWNlLCBpbmNsdWRpbmcgdmFyaWFibGVzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBhbmQgYXRtb3NwaGVyaWMgcHJlc3N1cmUuIEl0IGlzIGluZmx1ZW5jZWQgYnkgZmFjdG9ycyBzdWNoIGFzIGFpciBtYXNzZXMsIGZyb250cywgYW5kIGdlb2dyYXBoaWMgZmVhdHVyZXMsIGFuZCBpdCBjaGFuZ2VzIG92ZXIgc2hvcnQgcGVyaW9kc+KAlGZyb20gbWludXRlcyB0byB3ZWVrcy4gRm9yIGEgY3VycmVudCBmb3JlY2FzdCwgSeKAmWQgbmVlZCB5b3VyIGxvY2F0aW9uLCBidXQgZ2VuZXJhbGx5LCB3ZWF0aGVyIHBhdHRlcm5zIGFyZSBkcml2ZW4gYnkgdGhlIHN1buKAmXMgZW5lcmd5IGFuZCBFYXJ0aOKAmXMgcm90YXRpb24uIFhLQ0Q3MzkyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4LCJjb21wbGV0aW9uX3Rva2VucyI6MTA1LCJ0b3RhbF90b2tlbnMiOjEzMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2JhZWFjNWFhYTNfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Wed, 20 Aug 2025 17:10:09 GMT
+      string: '{"id":"d042e4fb-456f-4dce-a6cd-b1802ad5d6c5","object":"chat.completion","created":1758465819,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is a complex system influenced by atmospheric conditions
+        like temperature, humidity, wind, and precipitation. It varies by location,
+        season, and time of day. For specific, real-time weather information, I recommend
+        checking a reliable source like a weather app or website. XKCD7392."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":62,"total_tokens":90,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:45 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -62,14 +65,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex and dynamic system that describes the state of the atmosphere
-        at a specific time and place, including variables like temperature, humidity,
-        precipitation, wind, and atmospheric pressure. It is influenced by factors
-        such as air masses, fronts, and geographic features, and it changes over short
-        periods—from minutes to weeks. For a current forecast, I’d need your location,
-        but generally, weather patterns are driven by the sun’s energy and Earth’s
-        rotation. XKCD7392."},{"role":"system","content":"You must include the exact
-        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        is a complex system influenced by atmospheric conditions like temperature,
+        humidity, wind, and precipitation. It varies by location, season, and time
+        of day. For specific, real-time weather information, I recommend checking
+        a reliable source like a weather app or website. XKCD7392."},{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
@@ -88,7 +88,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:09 GMT
+      - Sun, 21 Sep 2025 14:43:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +100,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a04096592d6200b7e69addbee78f11ba
+      - '071937a80be6794542445794fca7c89c'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,19 +115,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"789cfcaf-f0af-45b4-8978-df1cac199e78","object":"chat.completion","created":1755709809,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! \"Good books\" can be subjective, as it depends on your personal taste,
-        but here are some widely acclaimed and beloved books across a few genres to
-        get you started:\n\n**Fiction Classics:**\n- *To Kill a Mockingbird* by Harper
-        Lee\n- *1984* by George Orwell\n- *Pride and Prejudice* by Jane Austen\n-
-        *The Great Gatsby* by F. Scott Fitzgerald\n\n**Modern Fiction:**\n- *The Kite
-        Runner* by Khaled Hosseini\n- *The Night Circus* by Erin Morgenstern\n- *A
-        Man Called Ove* by Fredrik Backman\n\n**Science Fiction & Fantasy:**\n- *Dune*
-        by Frank Herbert\n- *The Lord of the Rings* by J.R.R. Tolkien\n- *The Three-Body
-        Problem* by Liu Cixin\n\n**Non-Fiction:**\n- *Sapiens: A Brief History of
-        Humankind* by Yuval Noah Harari\n- *Educated* by Tara Westover\n- *The Immortal
-        Life of Henrietta Lacks* by Rebecca Skloot\n\nIf you let me know what genres
-        or themes you enjoy, I can tailor recommendations more specifically! Also,
-        PURPLE-ELEPHANT-42."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":147,"completion_tokens":261,"total_tokens":408,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":147},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:10:24 GMT
+      string: '{"id":"50828790-7655-4723-b5b8-27c35ce5903e","object":"chat.completion","created":1758465825,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
+        are countless great books across various genres! Here are a few widely acclaimed
+        recommendations:\n\n- **Fiction**: *To Kill a Mockingbird* by Harper Lee,
+        *1984* by George Orwell, *The Great Gatsby* by F. Scott Fitzgerald.\n- **Fantasy/Sci-Fi**:
+        *The Lord of the Rings* by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name
+        of the Wind* by Patrick Rothfuss.\n- **Non-fiction**: *Sapiens* by Yuval Noah
+        Harari, *Educated* by Tara Westover, *The Immortal Life of Henrietta Lacks*
+        by Rebecca Skloot.\n- **Mystery/Thriller**: *Gone Girl* by Gillian Flynn,
+        *The Girl with the Dragon Tattoo* by Stieg Larsson.\n\nIf you have a specific
+        genre or interest in mind, I can tailor recommendations further! PURPLE-ELEPHANT-42"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":104,"completion_tokens":199,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":104},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 21 Sep 2025 14:43:56 GMT
 recorded_with: VCR 6.3.1

@@ -34,8 +34,14 @@ VISION_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+VIDEO_MODELS = [
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :vertexai, model: 'gemini-2.5-flash' }
+].freeze
+
 AUDIO_MODELS = [
-  { provider: :openai, model: 'gpt-4o-mini-audio-preview' }
+  { provider: :openai, model: 'gpt-4o-mini-audio-preview' },
+  { provider: :gemini, model: 'gemini-2.5-flash' }
 ].freeze
 
 EMBEDDING_MODELS = [

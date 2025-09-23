@@ -82,7 +82,7 @@ module RubyLLM
         def format_text_file(text_file)
           {
             type: 'text',
-            text: Utils.format_text_file_for_llm(text_file)
+            text: text_file.for_llm
           }
         end
       end

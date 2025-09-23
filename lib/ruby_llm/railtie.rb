@@ -11,9 +11,7 @@ module RubyLLM
 
     initializer 'ruby_llm.active_record' do
       ActiveSupport.on_load :active_record do
-        model_registry_class = RubyLLM.config.model_registry_class
-
-        if model_registry_class
+        if RubyLLM.config.use_new_acts_as
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
         else
@@ -21,17 +19,11 @@ module RubyLLM
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAsLegacy
 
           Rails.logger.warn(
-            'RubyLLM: String-based model fields are deprecated and will be removed in RubyLLM 2.0.0. ' \
-            'Please migrate to the DB-backed model registry. ' \
-            "Run 'rails generate ruby_llm:migrate_model_fields' to upgrade."
+            "\n!!! RubyLLM's legacy acts_as API is deprecated and will be removed in RubyLLM 2.0.0. " \
+            "Please consult the migration guide at https://rubyllm.com/upgrading-to-1-7/\n"
           )
         end
       end
-    end
-
-    generators do
-      require 'generators/ruby_llm/install_generator'
-      require 'generators/ruby_llm/migrate_model_fields_generator'
     end
 
     rake_tasks do

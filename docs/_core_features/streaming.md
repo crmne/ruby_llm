@@ -203,7 +203,7 @@ When a chat interaction involves [Tools]({% link _core_features/tools.md %}), th
 4.  **Resumed Response Stream:** After the tool result is sent back to the model, streaming resumes, yielding chunks containing the model's final response incorporating the tool's output.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o').with_tool(Weather) # Assumes Weather tool is defined
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tool(Weather) # Assumes Weather tool is defined
 
 puts "Assistant:"
 chat.ask("What's the weather in Berlin (52.52, 13.40)?") do |chunk|

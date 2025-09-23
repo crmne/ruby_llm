@@ -1,0 +1,16 @@
+<tr id="<%%= dom_id <%= model_model_name.underscore %> %>">
+  <td><%%= <%= model_model_name.underscore %>.provider %></td>
+  <td><%%= <%= model_model_name.underscore %>.name %></td>
+  <td><%%= number_with_delimiter(<%= model_model_name.underscore %>.context_window) if <%= model_model_name.underscore %>.context_window %></td>
+  <td>
+    <%% if <%= model_model_name.underscore %>.pricing && <%= model_model_name.underscore %>.pricing['text_tokens'] && <%= model_model_name.underscore %>.pricing['text_tokens']['standard'] %>
+      <%% input = <%= model_model_name.underscore %>.pricing['text_tokens']['standard']['input_per_million'] %>
+      <%% output = <%= model_model_name.underscore %>.pricing['text_tokens']['standard']['output_per_million'] %>
+      <%% if input && output %>
+        $<%%= "%.2f" % input %> / $<%%= "%.2f" % output %>
+      <%% end %>
+    <%% end %>
+  </td>
+  <td><%%= link_to "Show", <%= model_model_name.underscore %> %></td>
+  <td><%%= link_to "Start <%= chat_model_name.underscore.humanize.downcase %>", new_<%= chat_model_name.underscore %>_path(model: <%= model_model_name.underscore %>.model_id) %></td>
+</tr>

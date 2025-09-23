@@ -40,11 +40,11 @@ class ModelRouter < RubyLLM::Tool
 
     case task_type
     when :code
-      RubyLLM.chat(model: 'claude-3-5-sonnet').ask(query).content
+      RubyLLM.chat(model: '{{ site.models.best_for_code }}').ask(query).content
     when :creative
-      RubyLLM.chat(model: 'gpt-4o').ask(query).content
+      RubyLLM.chat(model: '{{ site.models.best_for_creative }}').ask(query).content
     when :factual
-      RubyLLM.chat(model: 'gemini-1.5-pro').ask(query).content
+      RubyLLM.chat(model: '{{ site.models.best_for_factual }}').ask(query).content
     else
       RubyLLM.chat.ask(query).content
     end
@@ -53,7 +53,7 @@ class ModelRouter < RubyLLM::Tool
   private
 
   def classify_task(query)
-    classifier = RubyLLM.chat(model: 'gpt-4o-mini')
+    classifier = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
                      .with_instructions("Classify: code, creative, or factual. One word only.")
     classifier.ask(query).content.downcase.to_sym
   end
@@ -154,7 +154,7 @@ class ResearchAgent < RubyLLM::Tool
   param :topic, desc: "Topic to research"
 
   def execute(topic:)
-    RubyLLM.chat(model: 'gemini-1.5-pro')
+    RubyLLM.chat(model: '{{ site.models.gemini_current }}')
            .ask("Research #{topic}. List key facts.")
            .content
   end
@@ -165,7 +165,7 @@ class WriterAgent < RubyLLM::Tool
   param :research, desc: "Research findings"
 
   def execute(research:)
-    RubyLLM.chat(model: 'claude-3-5-sonnet')
+    RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
            .ask("Write an article:\n#{research}")
            .content
   end
@@ -227,19 +227,19 @@ class CodeReviewSystem
     Async do |task|
       # Run reviews in parallel
       task.async do
-        reviews[:security] = RubyLLM.chat(model: 'claude-3-5-sonnet')
+        reviews[:security] = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
           .ask("Security review:\n#{code}")
           .content
       end
 
       task.async do
-        reviews[:performance] = RubyLLM.chat(model: 'gpt-4o')
+        reviews[:performance] = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
           .ask("Performance review:\n#{code}")
           .content
       end
 
       task.async do
-        reviews[:style] = RubyLLM.chat(model: 'gpt-4o-mini')
+        reviews[:style] = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
           .ask("Style review (Ruby conventions):\n#{code}")
           .content
       end

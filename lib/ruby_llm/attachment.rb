@@ -65,8 +65,18 @@ module RubyLLM
       Base64.strict_encode64(content)
     end
 
+    def for_llm
+      case type
+      when :text
+        "<file name='#{filename}' mime_type='#{mime_type}'>#{content}</file>"
+      else
+        "data:#{mime_type};base64,#{encoded}"
+      end
+    end
+
     def type
       return :image if image?
+      return :video if video?
       return :audio if audio?
       return :pdf if pdf?
       return :text if text?
@@ -78,8 +88,23 @@ module RubyLLM
       RubyLLM::MimeType.image? mime_type
     end
 
+    def video?
+      RubyLLM::MimeType.video? mime_type
+    end
+
     def audio?
       RubyLLM::MimeType.audio? mime_type
+    end
+
+    def format
+      case mime_type
+      when 'audio/mpeg'
+        'mp3'
+      when 'audio/wav', 'audio/wave', 'audio/x-wav'
+        'wav'
+      else
+        mime_type.split('/').last
+      end
     end
 
     def pdf?

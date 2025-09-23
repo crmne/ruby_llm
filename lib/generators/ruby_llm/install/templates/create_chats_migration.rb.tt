@@ -1,7 +1,6 @@
-class Create<%= options[:chat_model_name].pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class Create<%= chat_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :<%= options[:chat_model_name].tableize %> do |t|
-      t.references :<%= options[:model_model_name].tableize.singularize %>, foreign_key: true
+    create_table :<%= chat_table_name %> do |t|
       t.timestamps
     end
   end

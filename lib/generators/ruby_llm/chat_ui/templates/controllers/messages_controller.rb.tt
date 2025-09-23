@@ -1,0 +1,24 @@
+class <%= message_model_name.pluralize %>Controller < ApplicationController
+  before_action :set_<%= chat_model_name.underscore %>
+
+  def create
+    return unless content.present?
+
+    <%= chat_model_name %>ResponseJob.perform_later(@<%= chat_model_name.underscore %>.id, content)
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @<%= chat_model_name.underscore %> }
+    end
+  end
+
+  private
+
+  def set_<%= chat_model_name.underscore %>
+    @<%= chat_model_name.underscore %> = <%= chat_model_name %>.find(params[:<%= chat_model_name.underscore %>_id])
+  end
+
+  def content
+    params[:<%= message_model_name.underscore %>][:content]
+  end
+end
