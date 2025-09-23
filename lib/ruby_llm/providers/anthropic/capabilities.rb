@@ -34,6 +34,14 @@ module RubyLLM
           model_id.match?(/claude-3/)
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          true
+        end
+
         def supports_json_mode?(model_id)
           model_id.match?(/claude-3/)
         end
