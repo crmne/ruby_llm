@@ -65,7 +65,7 @@ module RubyLLM
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:)
           if tools.any?
             payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
-            payload[:tool_choice] = build_tool_choice(tool_prefs) unless tool_prefs[:choice].nil?
+            payload[:tool_choice] = Tools.build_tool_choice(tool_prefs) unless tool_prefs[:choice].nil?
           end
 
           payload[:system] = system_content unless system_content.empty?
