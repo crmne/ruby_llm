@@ -1,0 +1,112 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 23:00:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1758668406-7YToyLJa9lLnIE72IZO5\",\"provider\":\"Google\",\"model\":\"anthropic/claude-3.5-haiku\",\"object\":\"chat.completion\",\"created\":1758668406,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_vrtx_01Y9uiETpFzuYnVZuav5vj4q\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":471,\"completion_tokens\":56,\"total_tokens\":527}}"
+  recorded_at: Tue, 23 Sep 2025 23:00:07 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-3.5-haiku","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_vrtx_01Y9uiETpFzuYnVZuav5vj4q","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01Y9uiETpFzuYnVZuav5vj4q"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 23:00:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzU4NjY4NDA3LU94bWphaHQ4RmJSSjU4dUswcUJpIiwicHJvdmlkZXIiOiJBbnRocm9waWMiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtMy41LWhhaWt1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc1ODY2ODQwNywiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGFwb2xvZ2l6ZSwgYnV0IHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIGlzIG5vdCByZWxhdGVkIHRvIGhpc3RvcmljYWwgaW5mb3JtYXRpb24uIExldCBtZSBwcm92aWRlIHlvdSB3aXRoIGEgZGV0YWlsZWQgZXhwbGFuYXRpb24gYWJvdXQgdGhlIEZhbGwgb2YgUm9tZTpcblxuVGhlIEZhbGwgb2YgUm9tZSByZWZlcnMgdG8gdGhlIGRlY2xpbmUgYW5kIHVsdGltYXRlIGNvbGxhcHNlIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSwgd2hpY2ggaXMgdHJhZGl0aW9uYWxseSBkYXRlZCB0byA0NzYgQ0UuIFRoaXMgd2FzIGEgY29tcGxleCBoaXN0b3JpY2FsIHByb2Nlc3MgdGhhdCBvY2N1cnJlZCBvdmVyIHNldmVyYWwgY2VudHVyaWVzLCBpbnZvbHZpbmcgbXVsdGlwbGUgZmFjdG9yczpcblxuMS4gSW50ZXJuYWwgQ2hhbGxlbmdlczpcbi0gUG9saXRpY2FsIGluc3RhYmlsaXR5IGFuZCBmcmVxdWVudCBjaXZpbCB3YXJzXG4tIENvcnJ1cHRpb24gaW4gZ292ZXJubWVudFxuLSBFY29ub21pYyBkZWNsaW5lXG4tIE92ZXJleHBhbnNpb24gb2YgdGhlIGVtcGlyZVxuXG4yLiBFeHRlcm5hbCBQcmVzc3VyZXM6XG4tIENvbnN0YW50IGludmFzaW9ucyBieSBHZXJtYW5pYyB0cmliZXMgbGlrZSB0aGUgR290aHMsIFZhbmRhbHMsIGFuZCBIdW5zXG4tIE1pZ3JhdGlvbiBwZXJpb2QgKGtub3duIGFzIHRoZSBcIlbDtmxrZXJ3YW5kZXJ1bmdcIilcbi0gV2Vha2VuaW5nIG9mIFJvbWFuIG1pbGl0YXJ5IGNhcGFiaWxpdGllc1xuXG4zLiBLZXkgRXZlbnRzOlxuLSBJbiA0MTAgQ0UsIHRoZSBWaXNpZ290aHMgdW5kZXIgQWxhcmljIHNhY2tlZCBSb21lXG4tIEluIDQ1NSBDRSwgdGhlIFZhbmRhbHMgYWxzbyBzYWNrZWQgUm9tZVxuLSBJbiA0NzYgQ0UsIHRoZSBHZXJtYW5pYyBsZWFkZXIgT2RvYWNlciBkZXBvc2VkIHRoZSBsYXN0IFJvbWFuIEVtcGVyb3IgUm9tdWx1cyBBdWd1c3R1bHVzLCB3aGljaCBpcyBvZnRlbiBjb25zaWRlcmVkIHRoZSBkZWZpbml0aXZlIGVuZCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmVcblxuVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBjb250aW51ZWQgdG8gZXhpc3QgZm9yIG5lYXJseSBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW4gVHVya3MgaW4gMTQ1My5cblxuVGhlIEZhbGwgb2YgUm9tZSBtYXJrZWQgdGhlIGVuZCBvZiBjbGFzc2ljYWwgYW50aXF1aXR5IGFuZCB0aGUgYmVnaW5uaW5nIG9mIHRoZSBNZWRpZXZhbCBwZXJpb2QgaW4gRXVyb3BlYW4gaGlzdG9yeSwgcHJvZm91bmRseSBjaGFuZ2luZyB0aGUgcG9saXRpY2FsLCBzb2NpYWwsIGFuZCBjdWx0dXJhbCBsYW5kc2NhcGUgb2YgRXVyb3BlLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkxLCJjb21wbGV0aW9uX3Rva2VucyI6MzIzLCJ0b3RhbF90b2tlbnMiOjgxNH19
+  recorded_at: Tue, 23 Sep 2025 23:00:14 GMT
+recorded_with: VCR 6.3.1
