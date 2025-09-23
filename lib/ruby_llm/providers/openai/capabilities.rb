@@ -97,6 +97,14 @@ module RubyLLM
           end
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          true
+        end
+
         def supports_structured_output?(model_id)
           case model_family(model_id)
           when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini', 'gpt41_nano', 'chatgpt4o', 'gpt4o',

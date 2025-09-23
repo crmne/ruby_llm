@@ -15,6 +15,14 @@ module RubyLLM
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions|mistral-(tiny|small)-(2312|2402)/)
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          true
+        end
+
         def supports_vision?(model_id)
           model_id.match?(/pixtral|mistral-small-(2503|2506)|mistral-medium/)
         end
