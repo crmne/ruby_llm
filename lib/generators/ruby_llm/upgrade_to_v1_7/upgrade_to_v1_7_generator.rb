@@ -9,7 +9,7 @@ module RubyLLM
     # Generator to upgrade existing RubyLLM apps to v1.7 with new Rails-like API
     class UpgradeToV17Generator < Rails::Generators::Base
       include Rails::Generators::Migration
-      include RubyLLM::GeneratorHelpers
+      include RubyLLM::Generators::GeneratorHelpers
 
       namespace 'ruby_llm:upgrade_to_v1_7'
       source_root File.expand_path('templates', __dir__)
