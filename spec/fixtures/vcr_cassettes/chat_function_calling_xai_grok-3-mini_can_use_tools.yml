@@ -1,0 +1,136 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:02:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"060af794-93a1-4d05-6210-072c97569f1d_us-east-1","object":"chat.completion","created":1756980125,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"First,
+        the user is asking for the weather in Berlin and has provided coordinates:
+        (52.5200, 13.4050). I need to check if this matches any available functions.\n\nThe
+        available function is \"weather\", which requires:\n\n- latitude: a string,
+        e.g., 52.5200\n\n- longitude: a string, e.g., 13.4050\n\nThe user has given
+        exactly that: latitude as 52.5200 and longitude as 13.4050.\n\nI can infer
+        that I should use these values to call the \"weather\" function.\n\nThe function
+        call format is: <function_call>{\"action\": \"function_name\", \"action_input\":
+        {\"parameter\": \"argument\"}}</function_call>\n\nSo, for this, it would be:
+        <function_call>{\"action\": \"weather\", \"action_input\": {\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}}</function_call>\n\nI should not
+        add any other text unless necessary. The instructions say: \"Keep your response
+        to user clear; please do not make your response verbose!\" So, if I''m calling
+        a function, that should be the entire response.\n\nThis seems to fully address
+        the user''s query, so I don''t need to ask for clarification.\n\nFinally,
+        ensure the response is just the function call within the tags.","tool_calls":[{"id":"call_33059789","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":324,"completion_tokens":37,"total_tokens":631,"prompt_tokens_details":{"text_tokens":324,"audio_tokens":0,"image_tokens":0,"cached_tokens":3},"completion_tokens_details":{"reasoning_tokens":270,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:02:12 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_33059789","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_33059789"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:02:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImJlYjgzMjg2LTJhMWYtNDMwNy0wNDgxLTI2YzhmNTlkMzVkYV91cy1lYXN0LTEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU2OTgwMTMyLCJtb2RlbCI6Imdyb2stMy1taW5pIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYmFzZWQgb24gY29vcmRpbmF0ZXMgNTIuNTIwMCwgMTMuNDA1MCkgaXMgYXBwcm94aW1hdGVseSAxNcKwQyB3aXRoIHdpbmRzIGF0IDEwIGttL2guIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiBhbmQgcHJvdmlkZWQgdGhlIGNvb3JkaW5hdGVzICg1Mi41MjAwLCAxMy40MDUwKS4gSSBhbHJlYWR5IGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiBpbiBteSBwcmV2aW91cyByZXNwb25zZS5cblxuTm93LCBpbiB0aGlzIHNpbXVsYXRpb24sIHRoZSBmdW5jdGlvbiBjYWxsIGhhcyBiZWVuIGV4ZWN1dGVkLCBhbmQgSSBoYXZlIHRoZSByZXN1bHQ6IFwiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyMDAsIDEzLjQwNTA6IDE1wrBDLCBXaW5kOiAxMCBrbS9oXCIuXG5cbk15IHJvbGUgaXMgdG8gcmVzcG9uZCB0byB0aGUgdXNlciBiYXNlZCBvbiB0aGUgZnVuY3Rpb24ncyBvdXRwdXQuIEkgbmVlZCB0byBrZWVwIG15IHJlc3BvbnNlIGNsZWFyIGFuZCBub3QgdmVyYm9zZS5cblxuVGhlIGNvbnZlcnNhdGlvbiBmbG93OiBJIGNhbGxlZCB0aGUgZnVuY3Rpb24sIGFuZCBub3cgSSBoYXZlIHRoZSBkYXRhLCBzbyBJIHNob3VsZCBwcmVzZW50IGl0IHRvIHRoZSB1c2VyLlxuXG5JIHNob3VsZG4ndCBjYWxsIGFub3RoZXIgZnVuY3Rpb24gdW5sZXNzIGl0J3MgbmVlZGVkIHRvIGFkdmFuY2UgdGhlIHJlcXVlc3QuIFRoZSByZXF1ZXN0IGlzIGZ1bGZpbGxlZCB3aXRoIHRoaXMgd2VhdGhlciBpbmZvcm1hdGlvbi5cblxuRmluYWwgcmVzcG9uc2U6IERpcmVjdGx5IHByb3ZpZGUgdGhlIHdlYXRoZXIgaW5mb3JtYXRpb24gaW4gYSBzdHJhaWdodGZvcndhcmQgbWFubmVyLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAxLCJjb21wbGV0aW9uX3Rva2VucyI6MzQsInRvdGFsX3Rva2VucyI6NjA0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjQwMSwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjQwMH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTY5LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF82YTA5MTA4ZmY1In0=
+  recorded_at: Thu, 04 Sep 2025 10:02:16 GMT
+recorded_with: VCR 6.3.1
