@@ -19,6 +19,15 @@ module RubyLLM
         }
       end
 
+      # xAI uses separate endpoints for langauge and image models.
+      # Override Provider class method here to support multiple model URLs.
+      def list_models
+        Array(models_url).flat_map do |url|
+          response = @connection.get(url)
+          parse_list_models_response(response, slug, capabilities)
+        end
+      end
+
       # xAI uses a different error format than OpenAI
       # {"code": "...", "error": "..."}
       def parse_error(response)
