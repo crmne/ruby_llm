@@ -85,7 +85,7 @@ module RubyLLM
     def setup_middleware(faraday)
       faraday.request :json
       faraday.response :json
-      faraday.adapter Faraday.default_adapter
+      faraday.adapter :net_http
       faraday.use :llm_errors, provider: @provider
     end
 

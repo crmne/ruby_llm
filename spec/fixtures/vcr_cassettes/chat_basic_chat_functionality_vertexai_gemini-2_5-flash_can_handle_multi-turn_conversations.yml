@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 24 Sep 2025 14:55:06 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 27 Aug 2025 14:37:55 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:37:55 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:06 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:00 GMT
+      - Wed, 24 Sep 2025 14:55:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,18 +109,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The most famous \"Ruby\" with a distinct creator is the **Ruby programming language**. It was created by **Yukihiro \"Matz\" Matsumoto** (often just referred to as \"Matz\"). He began developing Ruby in the mid-1990s in Japan.\n\nHowever, \"Ruby\" is a common name, and there are many fictional characters or other entities named Ruby. If you were thinking of a different \"Ruby,\" please let me know! For example:\n\n*   **Ruby from *RWBY***: Created by Monty Oum (with Rooster Teeth).\n*   **Ruby from *Steven Universe***: Created by Rebecca Sugar.\n*   **Ruby from *Max & Ruby***: Created by Rosemary Wells (children's book series).\n*   **Ruby Gloom**: Originated from Mighty Fine, Inc., adapted into an animated series by Nelvana.\n\nPlease specify which Ruby you're interested in if it's not the programming language!"
+                    "text": "Ruby was created by **Yukihiro \"Matz\" Matsumoto**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.1487749393899642
+              "avgLogprobs": -2.5191107529860277
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 7,
-            "candidatesTokenCount": 201,
-            "totalTokenCount": 1062,
+            "candidatesTokenCount": 13,
+            "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -131,16 +131,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 201
+                "tokenCount": 13
               }
             ],
-            "thoughtsTokenCount": 854
+            "thoughtsTokenCount": 100
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:37:55.443831Z",
-          "responseId": "QxivaLeLG-jEmLAPgfzegQU"
+          "createTime": "2025-09-24T14:55:06.962592Z",
+          "responseId": "SgbUaKDgOvi0mPUP3frG-Qs"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:00 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -161,12 +161,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 24 Sep 2025 14:55:07 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 27 Aug 2025 14:38:00 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -193,28 +193,18 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:00 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"The
-        most famous \"Ruby\" with a distinct creator is the **Ruby programming language**.
-        It was created by **Yukihiro \"Matz\" Matsumoto** (often just referred to
-        as \"Matz\"). He began developing Ruby in the mid-1990s in Japan.\n\nHowever,
-        \"Ruby\" is a common name, and there are many fictional characters or other
-        entities named Ruby. If you were thinking of a different \"Ruby,\" please
-        let me know! For example:\n\n*   **Ruby from *RWBY***: Created by Monty Oum
-        (with Rooster Teeth).\n*   **Ruby from *Steven Universe***: Created by Rebecca
-        Sugar.\n*   **Ruby from *Max & Ruby***: Created by Rosemary Wells (children''s
-        book series).\n*   **Ruby Gloom**: Originated from Mighty Fine, Inc., adapted
-        into an animated series by Nelvana.\n\nPlease specify which Ruby you''re interested
-        in if it''s not the programming language!"}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
+        was created by **Yukihiro \"Matz\" Matsumoto**."}]},{"role":"user","parts":[{"text":"What
         year did he create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
@@ -239,7 +229,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:01 GMT
+      - Wed, 24 Sep 2025 14:55:09 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -262,36 +252,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro \"Matz\" Matsumoto began creating the Ruby programming language in **1993**.\n\nThe first public release of Ruby was in **1995**."
+                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**.\n\nThe first public release, Ruby 0.95, was made in **1995**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0189987182617188
+              "avgLogprobs": -0.81434265772501624
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 215,
-            "candidatesTokenCount": 35,
-            "totalTokenCount": 424,
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 36,
+            "totalTokenCount": 105,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 215
+                "tokenCount": 27
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 35
+                "tokenCount": 36
               }
             ],
-            "thoughtsTokenCount": 174
+            "thoughtsTokenCount": 42
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:38:00.608979Z",
-          "responseId": "SBivaNOVJf_ohcIP5ezWgQ8"
+          "createTime": "2025-09-24T14:55:08.128137Z",
+          "responseId": "TAbUaInpB7iIt_gP3oai0AY"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:01 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:09 GMT
 recorded_with: VCR 6.3.1

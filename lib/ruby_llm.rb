@@ -21,8 +21,9 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
-  'pdf' => 'PDF',
   'vertexai' => 'VertexAI',
+  'pdf' => 'PDF',
+  'UI' => 'UI',
   'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
@@ -46,6 +47,10 @@ module RubyLLM
 
     def embed(...)
       Embedding.embed(...)
+    end
+
+    def moderate(...)
+      Moderation.moderate(...)
     end
 
     def paint(...)

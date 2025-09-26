@@ -70,6 +70,12 @@ module RubyLLM
       parse_embedding_response(response, model:, text:)
     end
 
+    def moderate(input, model:)
+      payload = render_moderation_payload(input, model:)
+      response = @connection.post moderation_url, payload
+      parse_moderation_response(response, model:)
+    end
+
     def paint(prompt, model:, size:)
       payload = render_image_payload(prompt, model:, size:)
       response = @connection.post images_url, payload

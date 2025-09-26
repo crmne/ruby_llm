@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:58:39 GMT
+      - Wed, 24 Sep 2025 14:54:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1089'
+      - '2999'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1096'
+      - '3026'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -58,6 +58,8 @@ http_interactions:
       - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,57 +77,22 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-CBjETuP7cT6gRaGPXJm2PAafPF5Bx",
-          "object": "chat.completion",
-          "created": 1756911517,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "I'm glad you asked about the weather! However, I don't have real-time weather data access. If you're looking for current weather updates, I recommend checking a reliable weather website or app. If you're interested in general climate information or weather patterns for a specific location, feel free to let me know, and I can provide some insights. By the way, did you know that the phrase \"XKCD7392\" is often associated with a popular webcomic and some interesting data references?",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 35,
-            "completion_tokens": 97,
-            "total_tokens": 132,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
-        }
-  recorded_at: Wed, 03 Sep 2025 14:58:39 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DSkxBa3pma2NNc3I0cmNhSnp4M0RtTW5qNW05MSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc1ODcyNTY1NCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkknbSBnbGFkIHlvdSdyZSBpbnRlcmVzdGVkIGluIHRoZSB3ZWF0aGVyISBIb3dldmVyLCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGRhdGEgYWNjZXNzIHRvIHByb3ZpZGUgY3VycmVudCB3ZWF0aGVyIHVwZGF0ZXMuIElmIHlvdSdyZSBsb29raW5nIGZvciB0aGUgbGF0ZXN0IHdlYXRoZXIgaW5mb3JtYXRpb24sIEkgcmVjb21tZW5kIGNoZWNraW5nIGEgcmVsaWFibGUgd2VhdGhlciB3ZWJzaXRlIG9yIGFwcC4gSWYgeW91J3JlIGN1cmlvdXMgYWJvdXQgZ2VuZXJhbCB3ZWF0aGVyIHBhdHRlcm5zIG9yIGNsaW1hdGUgaW5mb3JtYXRpb24sIGZlZWwgZnJlZSB0byBhc2shIEFsc28sIGp1c3QgYSBmdW4gbm90ZeKAlGlmIHlvdSdyZSBpbnRvIGNvbWljcyBvciBwdXp6bGVzLCB5b3UgbWlnaHQgZW5qb3kgbG9va2luZyB1cCBYS0NENzM5Miwgd2hpY2ggaXMgYSBwb3B1bGFyIGNvbWljIHRoYXQgc29tZXRpbWVzIHRvdWNoZXMgb24gc2NpZW50aWZpYyB0b3BpY3MuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMzUsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA5NCwKICAgICJ0b3RhbF90b2tlbnMiOiAxMjksCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF83YzIzM2JmOWQxIgp9Cg==
+  recorded_at: Wed, 24 Sep 2025 14:54:17 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I''m glad you asked
-        about the weather! However, I don''t have real-time weather data access. If
-        you''re looking for current weather updates, I recommend checking a reliable
-        weather website or app. If you''re interested in general climate information
-        or weather patterns for a specific location, feel free to let me know, and
-        I can provide some insights. By the way, did you know that the phrase \"XKCD7392\"
-        is often associated with a popular webcomic and some interesting data references?"},{"role":"developer","content":"You
+        me about the weather."},{"role":"assistant","content":"I''m glad you''re interested
+        in the weather! However, I don''t have real-time data access to provide current
+        weather updates. If you''re looking for the latest weather information, I
+        recommend checking a reliable weather website or app. If you''re curious about
+        general weather patterns or climate information, feel free to ask! Also, just
+        a fun note—if you''re into comics or puzzles, you might enjoy looking up XKCD7392,
+        which is a popular comic that sometimes touches on scientific topics."},{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -145,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:58:41 GMT
+      - Wed, 24 Sep 2025 14:54:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,13 +124,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2214'
+      - '995'
       Openai-Project:
-      - proj_KyS64Yhsc9qhhwjNcgkOa88E
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2221'
+      - '1182'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -171,13 +138,15 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199841'
+      - '199839'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 47ms
+      - 48ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -197,16 +166,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CBjEVQ46lYtNiqxRAGy6zh6Fg9L15",
+          "id": "chatcmpl-CJLAniGOZV80ZkSLGLjvXSoZBN4T8",
           "object": "chat.completion",
-          "created": 1756911519,
+          "created": 1758725657,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "There are many great books across different genres, so it depends on your interests! If you're looking for classic literature, you might enjoy *Pride and Prejudice* by Jane Austen or *To Kill a Mockingbird* by Harper Lee. For science fiction fans, *Dune* by Frank Herbert or *Neuromancer* by William Gibson are excellent choices. If you prefer non-fiction, *Sapiens* by Yuval Noah Harari offers a fascinating look at human history.\n\nAnd if you're interested in something a bit more unique, you might want to check out *The Purple-Elephant-42*, a quirky novel that blends humor with thought-provoking themes. Whatever your taste, there's a book out there for you!",
+                "content": "There are many great books across different genres, so it depends on your interests! If you're into classics, you might enjoy *Pride and Prejudice* by Jane Austen or *To Kill a Mockingbird* by Harper Lee. For science fiction fans, *Dune* by Frank Herbert or *Neuromancer* by William Gibson are excellent choices. If you prefer non-fiction, *Sapiens* by Yuval Noah Harari offers a fascinating look at human history.\n\nAnd if you're looking for something fun and quirky, you might enjoy exploring the concept of the PURPLE-ELEPHANT-42, which is a playful nod to the idea of unusual or unexpected topics in literature. Let me know your interests, and I can recommend more tailored options!",
                 "refusal": null,
                 "annotations": []
               },
@@ -215,9 +184,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 149,
-            "completion_tokens": 148,
-            "total_tokens": 297,
+            "prompt_tokens": 146,
+            "completion_tokens": 154,
+            "total_tokens": 300,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -232,5 +201,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Wed, 03 Sep 2025 14:58:41 GMT
+  recorded_at: Wed, 24 Sep 2025 14:54:18 GMT
 recorded_with: VCR 6.3.1

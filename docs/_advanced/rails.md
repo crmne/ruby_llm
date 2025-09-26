@@ -37,27 +37,30 @@ Before diving into setup, it's important to understand how RubyLLM handles messa
 
 ### How It Works
 
-When you call `chat_record.ask("What is the capital of France?")`, RubyLLM follows these steps:
+When calling `chat_record.ask("What is the capital of France?")`, RubyLLM:
 
-1. **Save the user message** with the question content.
-2. **Call the `complete` method**, which:
-   - **Creates an empty assistant message** with blank content via the `on_new_message` callback
-   - **Makes the API call** to the AI provider using the conversation history
-   - **Process the response:**
-     - **On success**: Updates the assistant message with content, token counts, and tool call information via the `on_end_message` callback
-     - **On failure**: Cleans up by automatically destroying the empty assistant message
+1. **Saves the user message** with the question content
+2. **Calls the `complete` method**, which:
+   - Makes the API call to the AI provider
+   - Creates an empty assistant message:
+     - **With streaming**: On receiving the first chunk
+     - **Without streaming**: Before the API call
+   - Processes the response:
+     - **Success**: Updates the assistant message with content and metadata
+     - **Failure**: Automatically destroys the empty assistant message
 
 ### Why This Design?
 
-This two-phase approach (create empty → update with content) is intentional and optimizes for real-time UI experiences:
+This approach optimizes for real-time experiences:
 
-1. **Streaming-first design**: By creating the message record before the API call, your UI can immediately show a "thinking" state and have a DOM target ready for incoming chunks.
-2. **Turbo Streams compatibility**: Works perfectly with `after_create_commit { broadcast_append_to... }` for real-time updates.
-3. **Clean rollback on failure**: If the API call fails, the empty assistant message is automatically removed, preventing orphaned records that could cause issues with providers like Gemini that reject empty messages.
+1. **Streaming optimized**: Creates DOM target on first chunk for immediate UI updates
+2. **Turbo Streams ready**: Works with `after_create_commit` for real-time broadcasting
+3. **Clean rollback**: Automatic cleanup on failure prevents orphaned records
 
 ### Content Validation Implications
 
-This approach has one important consequence: **you cannot use `validates :content, presence: true`** on your Message model because the initial creation step would fail validation. Later in the guide, we'll show an alternative approach if you need content validations.
+> **Important:** You cannot use `validates :content, presence: true` on your Message model. See [Customizing the Persistence Flow](#customizing-the-persistence-flow) for an alternative approach.
+{: .warning }
 
 ## Setting Up Your Rails Application
 
@@ -69,133 +72,66 @@ The easiest way to get started is using the provided Rails generator:
 rails generate ruby_llm:install
 ```
 
-This generator automatically:
-- Creates all required migrations (Chat, Message, ToolCall, Model tables)
-- Sets up model files with `acts_as_chat`, `acts_as_message`, `acts_as_tool_call`, and `acts_as_model`
+The generator:
+- Creates migrations for Chat, Message, ToolCall, and Model tables
+- Sets up model files with appropriate `acts_as` declarations
 - Installs ActiveStorage for file attachments
-- Adds `has_many_attached :attachments` to your Message model
-- Creates a RubyLLM initializer with database model registry enabled
+- Configures the database model registry
+- Creates an initializer with sensible defaults
 
 After running the generator:
 
 ```bash
 rails db:migrate
-rails ruby_llm:load_models  # Populates the models table from models.json
 ```
 
-You're ready to go! The generator handles all the setup complexity for you, including configuring the DB-backed model registry.
+Your Rails app is now AI-ready!
+
+### Adding a Chat UI
+
+Want a ready-to-use chat interface? Run the chat UI generator:
+
+```bash
+rails generate ruby_llm:chat_ui
+```
+
+This creates a complete chat interface with:
+- **Controllers**: Handles chat and message creation with background processing
+- **Views**: Modern UI with Turbo Streams for real-time updates
+- **Jobs**: Background job for processing AI responses without blocking
+- **Routes**: RESTful routes for chats and messages
+
+After running the generator, start your server and visit `http://localhost:3000/chats` to begin chatting!
+
+The UI generator also supports custom model names:
+
+```bash
+# Use your custom model names from the install generator
+rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
+```
 
 #### Generator Options
 
-The generator supports custom model names if needed:
+The generator uses Rails-like syntax for custom model names:
 
 ```bash
-# Use custom model names
-rails generate ruby_llm:install --chat-model-name=Conversation --message-model-name=ChatMessage --tool-call-model-name=FunctionCall
+# Default - creates Chat, Message, ToolCall, Model
+rails generate ruby_llm:install
 
-# Skip the Model registry (uses string fields instead)
-rails generate ruby_llm:install --skip-model-registry
+# Custom model names using Rails conventions
+rails generate ruby_llm:install chat:Conversation message:ChatMessage
+rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
 
-# Skip ActiveStorage installation (no file attachment support)
+# Skip ActiveStorage if you don't need file attachments
 rails generate ruby_llm:install --skip-active-storage
 ```
 
-This is useful if you already have models with these names or prefer different naming conventions.
+The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
 
-### Manual Setup
 
-If you prefer to set up manually or need custom table/model names, you can create the migrations yourself:
+### Setting Up ActiveStorage
 
-```bash
-# Generate basic models and migrations
-rails g model Chat model_id:string
-rails g model Message chat:references role:string content:text model_id:string input_tokens:integer output_tokens:integer tool_call:references
-rails g model ToolCall message:references tool_call_id:string:index name:string arguments:jsonb
-rails g model Model model_id:string name:string provider:string family:string model_created_at:datetime context_window:integer max_output_tokens:integer knowledge_cutoff:date modalities:jsonb capabilities:jsonb pricing:jsonb metadata:jsonb
-```
-
-Then adjust the migrations to match what the generator creates:
-
-```ruby
-# db/migrate/YYYYMMDDHHMMSS_create_chats.rb
-class CreateChats < ActiveRecord::Migration[7.1]
-  def change
-    create_table :chats do |t|
-      t.string :model_id
-      t.timestamps
-    end
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_messages.rb
-class CreateMessages < ActiveRecord::Migration[7.1]
-  def change
-    create_table :messages do |t|
-      t.references :chat, null: false, foreign_key: true
-      t.string :role
-      t.text :content
-      t.string :model_id
-      t.integer :input_tokens
-      t.integer :output_tokens
-      t.references :tool_call
-      t.timestamps
-    end
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_tool_calls.rb
-class CreateToolCalls < ActiveRecord::Migration[7.1]
-  def change
-    create_table :tool_calls do |t|
-      t.references :message, null: false, foreign_key: true
-      t.string :tool_call_id, null: false
-      t.string :name, null: false
-      # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :arguments, default: {}
-      t.timestamps
-    end
-
-    add_index :tool_calls, :tool_call_id
-  end
-end
-
-# db/migrate/YYYYMMDDHHMMSS_create_models.rb
-class CreateModels < ActiveRecord::Migration[7.1]
-  def change
-    create_table :models do |t|
-      t.string :model_id, null: false
-      t.string :name, null: false
-      t.string :provider, null: false
-      t.string :family
-      t.datetime :model_created_at
-      t.integer :context_window
-      t.integer :max_output_tokens
-      t.date :knowledge_cutoff
-      # Use jsonb for PostgreSQL, json for MySQL/SQLite
-      t.jsonb :modalities, default: {}
-      t.jsonb :capabilities, default: []
-      t.jsonb :pricing, default: {}
-      t.jsonb :metadata, default: {}
-      t.timestamps
-
-      t.index [:provider, :model_id], unique: true
-      t.index :provider
-      t.index :family
-    end
-  end
-end
-```
-
-Run the migrations: `rails db:migrate`
-
-> **Database Compatibility:** The generator automatically detects your database and uses `jsonb` for PostgreSQL or `json` for MySQL/SQLite. If setting up manually, adjust the column type accordingly.
-{: .note }
-
-### ActiveStorage for Attachments
-
-The generator automatically sets up ActiveStorage and adds `has_many_attached :attachments` to your Message model. This enables file attachments out of the box.
-
-If you skipped ActiveStorage during generation (`--skip-active-storage`), you can add it later:
+The generator automatically configures ActiveStorage for file attachments. If you skipped it during generation, add it manually:
 
 ```bash
 rails active_storage:install
@@ -212,70 +148,125 @@ class Message < ApplicationRecord
 end
 ```
 
-### Configure RubyLLM
+### Configuring RubyLLM
 
-Ensure your RubyLLM configuration (API keys, etc.) is set up, typically in `config/initializers/ruby_llm.rb`. See the [Configuration Guide]({% link _getting_started/configuration.md %}) for details.
+Set up your API keys and other configuration in the initializer:
 
 ```ruby
 # config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
-  # Add other provider configurations as needed
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
-  # ...
+
+  # New apps: Use modern API (generator adds this)
+  config.use_new_acts_as = true
+
+  # For custom Model class names (defaults to 'Model')
+  # config.model_registry_class = 'AIModel'
 end
 ```
 
-### Set Up Models with `acts_as` Helpers
+### Setting Up Models with `acts_as` Helpers
 
-Include the RubyLLM helpers in your ActiveRecord models:
+> **New in v1.7.0:** Rails-like `acts_as` API with association names!
+> - **New apps**: Generator sets `config.use_new_acts_as = true` for modern API
+> - **Existing apps**: Continue using legacy API (with deprecation warning)
+> - **Migrate today**: Set `config.use_new_acts_as = true` to use the better API
+> - **Legacy API removed in 2.0**: The new API will become the only option
+{: .warning }
+
+Add RubyLLM capabilities to your models:
+
+#### With Model Registry (Default for new apps)
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
 
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord
-  # Includes methods like ask, with_tool, with_instructions, etc.
-  # Automatically persists associated messages and tool calls.
-  acts_as_chat # Defaults to Message and ToolCall model names
+  # New API style - uses association names as primary parameters
+  acts_as_chat # Defaults: messages: :messages, model: :model
 
-  # --- Add your standard Rails model logic below ---
-  belongs_to :user, optional: true # Example
+  # Or with custom associations:
+  # acts_as_chat messages: :chat_messages,
+  #              message_class: 'ChatMessage',  # Only needed if class can't be inferred
+  #              model: :ai_model
+
+  belongs_to :user, optional: true
 end
 
 # app/models/message.rb
 class Message < ApplicationRecord
-  # Provides methods like tool_call?, tool_result?
-  acts_as_message # Defaults to Chat and ToolCall model names
+  # New API style - uses association names
+  acts_as_message # Defaults: chat: :chat, tool_calls: :tool_calls, model: :model
 
-  # --- Add your standard Rails model logic below ---
+  # Or with custom associations:
+  # acts_as_message chat: :conversation,
+  #                 chat_class: 'Conversation',  # Only needed if class can't be inferred
+  #                 tool_calls: :function_calls
+
   # Note: Do NOT add "validates :content, presence: true"
-  # This would break the assistant message flow described above
-
-  # These validations are fine:
   validates :role, presence: true
   validates :chat, presence: true
 end
 
 # app/models/tool_call.rb
 class ToolCall < ApplicationRecord
-  # Sets up associations to the calling message and the result message.
-  acts_as_tool_call # Defaults to Message model name
-
-  # --- Add your standard Rails model logic below ---
+  acts_as_tool_call # Defaults: message: :message, result: :result
 end
 
-# app/models/model.rb (Stores AI model metadata) - v1.7.0+
+# app/models/model.rb
 class Model < ApplicationRecord
-  # Provides model registry functionality and metadata access
-  acts_as_model # Defaults to Chat association
-
-  # --- Add your standard Rails model logic below ---
+  acts_as_model # Defaults: chats: :chats
 end
 ```
 
-### Using Provider Overrides
+#### Legacy Mode (Without Model Registry)
+{: .d-inline-block }
 
-With the DB-backed model registry (v1.7.0+), you can specify alternate providers:
+Pre-1.7.0 or opt-in
+{: .label .label-yellow }
+
+> Default behavior for existing apps. Set `config.use_new_acts_as = true` to upgrade! Legacy API will be removed in 2.0.
+{: .note }
+
+```ruby
+# app/models/chat.rb
+class Chat < ApplicationRecord
+  # Legacy API style - requires explicit class names
+  acts_as_chat message_class: 'Message',
+               tool_call_class: 'ToolCall',
+               model_class: 'Model'  # Ignored in legacy mode
+end
+
+# app/models/message.rb
+class Message < ApplicationRecord
+  # Legacy API style - all class names and foreign keys explicit
+  acts_as_message chat_class: 'Chat',
+                  chat_foreign_key: 'chat_id',
+                  tool_call_class: 'ToolCall',
+                  model_class: 'Model'  # Ignored in legacy mode
+end
+
+# app/models/tool_call.rb
+class ToolCall < ApplicationRecord
+  acts_as_tool_call message_class: 'Message',
+                    message_foreign_key: 'message_id'
+end
+
+# Note: No Model class in legacy mode - uses string fields instead
+```
+
+### Provider Overrides
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
+Route models through different providers dynamically:
 
 ```ruby
 # Use a model through a different provider
@@ -296,7 +287,7 @@ Available in v1.7.0+
 
 #### Using Custom Contexts
 
-For multi-tenant applications or when you need different API keys per chat:
+Use different API keys per chat in multi-tenant applications:
 
 **With DB-backed model registry (default in v1.7.0+):**
 
@@ -317,11 +308,11 @@ chat = Chat.create!(
 
 ```ruby
 # In legacy mode, you can set context after creation
-chat = Chat.create!(model_id: 'gpt-4')
+chat = Chat.create!(model: 'gpt-4')
 chat.with_context(custom_context)  # This method only exists in legacy mode
 ```
 
-> The `context` is NOT persisted to the database. You must set it again when reloading chats:
+> **Warning:** Context is not persisted. Set it after reloading chats.
 {: .warning }
 
 ```ruby
@@ -363,7 +354,7 @@ chat = Chat.create!(
 )
 ```
 
-> Like `context`, `assume_model_exists` is NOT persisted. Set it when needed for model changes:
+> **Note:** Like context, `assume_model_exists` is not persisted.
 {: .note }
 
 ```ruby
@@ -373,13 +364,15 @@ chat.assume_model_exists = true
 chat.with_model('another-experimental-model', provider: 'openrouter')
 ```
 
-## Basic Usage
+## Working with Chats
 
-Once your models are set up, the `acts_as_chat` helper delegates common `RubyLLM::Chat` methods to your `Chat` model:
+### Basic Chat Operations
+
+The `acts_as_chat` helper provides all standard chat methods:
 
 ```ruby
-# Create a new chat record
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}', user: current_user)
+# Create a chat
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}', user: current_user)
 
 # Ask a question - the persistence flow runs automatically
 begin
@@ -434,10 +427,10 @@ Model.where(supports_vision: true)
 
 ### System Instructions
 
-Instructions (system prompts) set via `with_instructions` are also automatically persisted as `Message` records with the `system` role:
+System prompts are persisted as messages with the `system` role:
 
 ```ruby
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
@@ -449,12 +442,12 @@ system_message = chat_record.messages.find_by(role: :system)
 puts system_message.content # => "You are a concise Ruby expert."
 ```
 
-### Tools Integration
+### Using Tools
 
-[Tools]({% link _core_features/tools.md %}) are automatically persisted too:
+Tools are Ruby classes that the AI can call. While the tool classes themselves aren't persisted, the tool calls and their results are saved as messages:
 
 ```ruby
-# Define a tool
+# Define a tool (this is just a Ruby class, not persisted)
 class Weather < RubyLLM::Tool
   description "Gets current weather for a location"
   param :city, desc: "City name"
@@ -464,22 +457,32 @@ class Weather < RubyLLM::Tool
   end
 end
 
-# Use tools with your persisted chat
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+# Register the tool with your chat
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 chat_record.with_tool(Weather)
+
+# When the AI uses the tool, both the call and result are persisted
 response = chat_record.ask("What's the weather in Paris?")
 
-# The tool call and its result are persisted
-puts chat_record.messages.count # => 3 (user, assistant's tool call, tool result)
+# Check persisted messages:
+# 1. User message: "What's the weather in Paris?"
+# 2. Assistant message with tool_calls (the AI's decision to use the tool)
+# 3. Tool result message (the output from Weather#execute)
+puts chat_record.messages.count # => 3
+
+# The tool call details are stored in the ToolCall table
+tool_call = chat_record.messages.second.tool_calls.first
+puts tool_call.name # => "Weather"
+puts tool_call.arguments # => {"city" => "Paris"}
 ```
 
-### Working with Attachments
+### File Attachments
 
-With [ActiveStorage configured](#activestorage-setup-optional), send files to AI models:
+Send files to AI models using ActiveStorage:
 
 ```ruby
 # Create a chat
-chat_record = Chat.create!(model_id: '{{ site.models.anthropic_current }}')
+chat_record = Chat.create!(model: '{{ site.models.anthropic_current }}')
 
 # Send a single file - type automatically detected
 chat_record.ask("What's in this file?", with: "app/assets/images/diagram.png")
@@ -499,13 +502,11 @@ chat_record.ask("Analyze this file", with: params[:uploaded_file])
 chat_record.ask("What's in this document?", with: user.profile_document)
 ```
 
-The attachment API automatically detects file types based on file extension or content type, so you don't need to specify whether something is an image, audio file, PDF, or text document - RubyLLM figures it out for you!
+File types are automatically detected from extensions or MIME types.
 
-### Structured Output with Schemas
-{: .d-inline-block }
+### Structured Output
 
-
-Structured output works seamlessly with Rails persistence:
+Generate and persist structured responses:
 
 ```ruby
 # Define a schema
@@ -516,7 +517,7 @@ class PersonSchema < RubyLLM::Schema
 end
 
 # Use with your persisted chat
-chat_record = Chat.create!(model_id: '{{ site.models.default_chat }}')
+chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 response = chat_record.with_schema(PersonSchema).ask("Generate a person from Paris")
 
 # The structured response is automatically parsed as a Hash
@@ -528,7 +529,7 @@ puts message.content # => "{\"name\":\"Marie\",\"age\":28,\"city\":\"Paris\"}"
 puts JSON.parse(message.content) # => {"name" => "Marie", "age" => 28, "city" => "Paris"}
 ```
 
-You can use schemas in multi-turn conversations:
+Schemas work in multi-turn conversations:
 
 ```ruby
 # Start with a schema
@@ -543,24 +544,21 @@ analysis = chat_record.ask("What's interesting about this person?")
 puts chat_record.messages.count # => 4
 ```
 
-## Handling Persistence Edge Cases
+## Advanced Topics
 
-### Orphaned Empty Messages
+### Handling Edge Cases
 
-While the error-handling logic destroys empty assistant messages when API calls fail, there might be situations where empty messages remain (e.g., server crashes, connection drops). You can clean these up with:
+#### Automatic Cleanup
 
-```ruby
-# Delete any empty assistant messages
-Message.where(role: "assistant", content: "").destroy_all
-```
+RubyLLM automatically cleans up empty assistant messages when API calls fail. This prevents orphaned records that could cause issues with providers that reject empty content.
 
-### Providers with Empty Content Restrictions
+#### Provider Content Restrictions
 
-Some providers (like Gemini) reject conversations with empty message content. If you're using these providers, ensure you've cleaned up any empty messages in your database before making API calls.
+Some providers (like Gemini) reject conversations with empty message content. RubyLLM's automatic cleanup ensures this isn't an issue during normal operation.
 
-## Alternative: Validation-First Approach
+### Customizing the Persistence Flow
 
-If your application requires content validations or you prefer a different persistence flow, you can override the default methods to use a "validate-first" approach:
+For applications requiring content validations, override the default persistence methods:
 
 ```ruby
 # app/models/chat.rb
@@ -581,7 +579,7 @@ class Chat < ApplicationRecord
     # Fill in attributes and save once we have content
     @message.assign_attributes(
       content: message.content,
-      model_id: message.model_id,
+      model: Model.find_by(model_id: message.model_id),
       input_tokens: message.input_tokens,
       output_tokens: message.output_tokens
     )
@@ -610,18 +608,18 @@ class Message < ApplicationRecord
 end
 ```
 
-With this approach:
-1. The assistant message is only created and saved after receiving a valid API response
-2. Content validations work as expected
-3. The trade-off is that you lose the ability to target the assistant message DOM element for streaming updates before the API call completes
+This approach trades streaming UI updates for content validation support:
+- ✅ Content validations work
+- ✅ No empty messages in database
+- ❌ No DOM target for streaming before API response
 
 ## Streaming Responses with Hotwire/Turbo
 
 The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates.
 
-### Basic Pattern: Instant User Messages
+### Instant User Messages
 
-For a better user experience, show user messages immediately while processing AI responses in the background:
+Show user messages immediately for better UX:
 
 ```ruby
 # app/controllers/messages_controller.rb
@@ -643,11 +641,11 @@ class MessagesController < ApplicationController
 end
 ```
 
-The `create_user_message` method handles message persistence and returns the created message record. This pattern provides instant feedback to users while the AI processes their request.
+The `create_user_message` method provides instant feedback while processing continues in the background.
 
-### Complete Streaming Setup
+### Full Streaming Implementation
 
-Here's a full implementation with background job streaming:
+Complete example with background jobs and Turbo Streams:
 
 ```ruby
 # app/models/chat.rb
@@ -717,18 +715,18 @@ end
 ```
 
 
-This setup allows for:
-1. Real-time UI updates as the AI generates its response
-2. Background processing to prevent request timeouts
-3. Automatic persistence of all messages and tool calls
+This implementation provides:
+- Real-time UI updates during generation
+- Background processing to prevent timeouts
+- Automatic persistence of all messages and tool calls
 
-### Handling Message Ordering with Action Cable
+### Message Ordering Issues
 
-Action Cable does not guarantee message order due to its concurrent processing model. Messages are distributed to worker threads that deliver them to clients concurrently, which can cause out-of-order delivery (e.g., assistant responses appearing above user messages). Here are the recommended solutions:
+Action Cable processes messages concurrently, which can cause out-of-order delivery:
 
-#### Option 1: Client-Side Reordering with Stimulus (Recommended)
+#### Solution 1: Client-Side Reordering (Recommended)
 
-Add a Stimulus controller that maintains correct chronological order based on timestamps. This example demonstrates the concept - adapt it to your specific needs:
+Use Stimulus to maintain chronological order:
 
 ```javascript
 // app/javascript/controllers/message_ordering_controller.js
@@ -809,66 +807,122 @@ Update your views to use the controller:
 <% end %>
 ```
 
-#### Option 2: Server-Side Ordering with AnyCable
+#### Solution 2: Server-Side Ordering
 
 [AnyCable](https://anycable.io) provides order guarantees at the server level through "sticky concurrency" - ensuring messages from the same stream are processed by the same worker. This eliminates the need for client-side reordering code.
 
-#### Understanding the Root Cause
+#### Why This Happens
 
-As confirmed by the Action Cable maintainers, Action Cable uses a threaded executor to distribute broadcast messages, so messages are delivered to connected clients concurrently. This is by design for performance reasons.
+Action Cable uses concurrent processing by design for performance.
 
-The most reliable solution is client-side reordering with order information in the payload. For applications requiring strict ordering guarantees, consider:
+For strict ordering requirements, consider:
 - Server-sent events (SSE) for unidirectional streaming
 - WebSocket libraries with ordered stream support like [Lively](https://github.com/socketry/lively/tree/main/examples/chatbot)
 - AnyCable for server-side ordering guarantees
 
-**Note**: Some users report better behavior with the async Ruby stack (Falcon + async-cable), but this doesn't guarantee ordering and shouldn't be relied upon as a solution.
+> **Note:** The async Ruby stack (Falcon + async-cable) may improve behavior but doesn't guarantee ordering.
+{: .note }
 
 ## Customizing Models
 
-Your `Chat`, `Message`, and `ToolCall` models are standard ActiveRecord models. You can add any other associations, validations, scopes, callbacks, or methods as needed for your application logic. The `acts_as` helpers provide the core persistence bridge to RubyLLM without interfering with other model behavior.
-
-You can use custom model names by passing parameters to the `acts_as` helpers. For example, if you prefer `Conversation` over `Chat`, you could use `acts_as_chat` in your `Conversation` model and then specify `chat_class: 'Conversation'` in your `Message` model's `acts_as_message` call.
+The `acts_as` helpers integrate seamlessly with standard Rails patterns. Add associations, validations, scopes, and callbacks as needed.
 
 ### Using Custom Model Names
 
 If your application uses different model names, you can configure the `acts_as` helpers accordingly:
 
+#### With Model Registry
+{: .d-inline-block }
+
+Available in v1.7.0+
+{: .label .label-green }
+
 ```ruby
 # app/models/conversation.rb (instead of Chat)
 class Conversation < ApplicationRecord
-  acts_as_chat message_class: 'ChatMessage',
-               tool_call_class: 'AIToolCall',
-               model_class: 'AiModel',
-               model_foreign_key: 'ai_model_id'
+  acts_as_chat messages: :chat_messages,  # Association name
+               message_class: 'ChatMessage',  # Optional if inferrable
+               model: :ai_model,
+               model_class: 'AiModel'  # Optional if inferrable
 
   belongs_to :user, optional: true
 end
 
 # app/models/chat_message.rb (instead of Message)
 class ChatMessage < ApplicationRecord
-  acts_as_message chat_class: 'Conversation',
-                  chat_foreign_key: 'conversation_id',
-                  tool_call_class: 'AIToolCall',
-                  model_class: 'AiModel',
-                  model_foreign_key: 'ai_model_id'
+  acts_as_message chat: :conversation,  # Association name
+                  chat_class: 'Conversation',  # Optional if inferrable
+                  tool_calls: :ai_tool_calls,
+                  tool_call_class: 'AIToolCall',  # Required for non-standard naming
+                  model: :ai_model
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
 class AIToolCall < ApplicationRecord
-  acts_as_tool_call message_class: 'ChatMessage',
-                    message_foreign_key: 'chat_message_id'
+  acts_as_tool_call message: :chat_message,
+                    message_class: 'ChatMessage',  # Optional if inferrable
+                    result: :result
 end
 
 # app/models/ai_model.rb (instead of Model)
 class AiModel < ApplicationRecord
-  acts_as_model chat_class: 'Conversation'
+  acts_as_model chats: :conversations,
+                chat_class: 'Conversation'  # Optional if inferrable
 end
 ```
 
-This flexibility allows you to integrate RubyLLM with existing Rails applications that may already have naming conventions established.
+#### Namespaced Models Example
 
-Some common customizations include:
+For namespaced models, you'll need to specify class names explicitly:
+
+```ruby
+# app/models/admin/bot_chat.rb
+module Admin
+  class BotChat < ApplicationRecord
+    acts_as_chat messages: :bot_messages,
+                 message_class: 'Admin::BotMessage'  # Required for namespace
+  end
+end
+
+# app/models/admin/bot_message.rb
+module Admin
+  class BotMessage < ApplicationRecord
+    acts_as_message chat: :bot_chat,
+                    chat_class: 'Admin::BotChat'  # Required for namespace
+  end
+end
+```
+
+#### Legacy Mode
+{: .d-inline-block }
+
+Pre-1.7.0 or opt-in
+{: .label .label-yellow }
+
+```ruby
+# app/models/conversation.rb
+class Conversation < ApplicationRecord
+  acts_as_chat message_class: 'ChatMessage',
+               tool_call_class: 'AIToolCall'
+end
+
+# app/models/chat_message.rb
+class ChatMessage < ApplicationRecord
+  acts_as_message chat_class: 'Conversation',
+                  chat_foreign_key: 'conversation_id',
+                  tool_call_class: 'AIToolCall'
+end
+
+# app/models/ai_tool_call.rb
+class AIToolCall < ApplicationRecord
+  acts_as_tool_call message_class: 'ChatMessage',
+                    message_foreign_key: 'chat_message_id'
+end
+```
+
+### Common Customizations
+
+Extend your models with standard Rails patterns:
 
 ```ruby
 # app/models/chat.rb
