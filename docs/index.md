@@ -67,6 +67,10 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-color.svg" alt="VertexAI" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-text.svg" alt="VertexAI" class="logo-small">
   </div>
+  <div class="provider-logo">
+    <img src="https://raw.githubusercontent.com/scientist-labs/red-candle/refs/heads/main/docs/assets/red-candle-icon.svg" alt="red-candle" class="logo-medium">
+    <img src="https://raw.githubusercontent.com/scientist-labs/red-candle/refs/heads/main/docs/assets/red-candle-text.svg" alt="red-candle" class="logo-small">
+  </div>
 </div>
 
 <div class="badge-container">

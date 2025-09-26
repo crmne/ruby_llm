@@ -95,6 +95,33 @@ RubyLLM.models.refresh!(remote_only: true)
 
 This is useful when you want to refresh only cloud-based models without querying local model servers.
 
+### Dynamic Model Registration (Red Candle)
+
+Some providers register their models dynamically at runtime rather than through the models.json file. Red Candle is one such provider - it registers its GGUF models when the gem is loaded.
+
+**How Red Candle Models Work:**
+
+1. **Not in models.json**: Red Candle models don't appear in the static models.json file since they're only available when the gem is installed.
+
+2. **Dynamic Registration**: When ruby_llm.rb loads and Red Candle is available, it adds models to the in-memory registry:
+   ```ruby
+   # This happens automatically in lib/ruby_llm.rb
+   RubyLLM::Providers::RedCandle.models.each do |model|
+     RubyLLM.models.instance_variable_get(:@models) << model
+   end
+   ```
+
+3. **Excluded from refresh!**: The `refresh!(remote_only: true)` flag excludes Red Candle and other local providers.
+
+4. **Currently Supported Models**:
+   - `google/gemma-3-4b-it-qat-q4_0-gguf`
+   - `TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF`
+   - `TheBloke/Mistral-7B-Instruct-v0.2-GGUF`
+   - `Qwen/Qwen2.5-1.5B-Instruct-GGUF`
+   - `microsoft/Phi-3-mini-4k-instruct`
+
+Red Candle models are only available when the gem is installed with the red_candle group enabled. See the [Configuration Guide]({% link _getting_started/configuration.md %}) for installation instructions.
+
 **For Gem Development:**
 
 The `rake models:update` task is designed for gem maintainers and updates the `models.json` file shipped with the gem:

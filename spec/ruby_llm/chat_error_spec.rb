@@ -72,7 +72,8 @@ RSpec.describe RubyLLM::Chat do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         it 'handles context length exceeded errors' do
-          if RubyLLM::Provider.providers[provider]&.local?
+          # Skip for local providers that don't validate context length
+          if RubyLLM::Provider.providers[provider]&.local? && provider != :red_candle
             skip('Local providers do not throw an error for context length exceeded')
           end
 

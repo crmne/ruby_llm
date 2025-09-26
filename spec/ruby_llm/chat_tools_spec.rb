@@ -74,9 +74,9 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
         skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
@@ -96,9 +96,9 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
         skip 'Flaky test for deepseek' if provider == :deepseek
@@ -122,9 +122,9 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -140,16 +140,15 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
+        end
+
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
-
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
-
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
@@ -179,13 +178,13 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
-        if provider == :gpustack && model == 'qwen3'
-          skip 'gpustack/qwen3 does not support streaming tool calls properly'
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        if provider == :gpustack && model == 'qwen3'
+          skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
@@ -217,9 +216,9 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
         skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
@@ -309,9 +308,9 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} preserves Content objects returned from tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        # Skip for providers that don't support function calling
+        unless provider_supports_functions?(provider, model)
+          skip "#{provider}/#{model} doesn't support function calling"
         end
 
         # Skip providers that don't support images in tool results
