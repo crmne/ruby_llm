@@ -7,7 +7,7 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil, cache: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
@@ -19,6 +19,7 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
+      @cache_prompts = cache.nil? ? @config.cache_prompts : cache
       @params = {}
       @headers = {}
       @schema = nil
@@ -30,7 +31,8 @@ module RubyLLM
       }
     end
 
-    def ask(message = nil, with: nil, &)
+    def ask(message = nil, with: nil, cache: nil, &)
+      @cache_prompts = cache if cache
       add_message role: :user, content: Content.new(message, with)
       complete(&)
     end
@@ -127,6 +129,7 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model,
+        cache_prompts: @cache_prompts.dup,
         params: @params,
         headers: @headers,
         schema: @schema,

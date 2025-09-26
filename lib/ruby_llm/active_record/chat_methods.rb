@@ -179,7 +179,8 @@ module RubyLLM
         message_record
       end
 
-      def ask(message, with: nil, &)
+      def ask(message, with: nil, cache: nil, &)
+        to_llm.instance_variable_set(:@cache_prompts, cache)
         create_user_message(message, with:)
         complete(&)
       end

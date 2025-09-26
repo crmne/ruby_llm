@@ -13,6 +13,7 @@ module RubyLLM
       include Bedrock::Signing
       include Bedrock::Media
       include Anthropic::Tools
+      include Anthropic::Cache
 
       def api_base
         "https://bedrock-runtime.#{@config.bedrock_region}.amazonaws.com"
