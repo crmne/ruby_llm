@@ -224,6 +224,9 @@ module RubyLLM
           modalities[:input] << 'video' if supports_video?(model_id)
           modalities[:input] << 'audio' if model_id.match?(/audio/)
           modalities[:output] << 'embeddings' if model_id.match?(/embedding|gemini-embedding/)
+
+          modalities[:output] << 'image' if model_id.match?(/image-generation/)
+
           modalities[:output] = ['image'] if model_id.match?(/imagen/)
 
           modalities
