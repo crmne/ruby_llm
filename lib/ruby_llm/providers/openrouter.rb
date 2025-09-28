@@ -32,6 +32,8 @@ module RubyLLM
         end
       end
 
+      private
+
       def parse_error_part_message(part)
         message = part.dig('error', 'message')
         raw = try_parse_json(part.dig('error', 'metadata', 'raw'))
