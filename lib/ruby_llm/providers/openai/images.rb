@@ -11,12 +11,12 @@ module RubyLLM
           'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:)
+        def render_image_payload(prompt, model:, **params)
           {
             model: model,
             prompt: prompt,
             n: 1,
-            size: size
+            size: params.delete(:size) || '1024x1024'
           }
         end
 

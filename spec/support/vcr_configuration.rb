@@ -38,6 +38,8 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GOOGLE_CLOUD_PROJECT>') { ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project') }
   config.filter_sensitive_data('<GOOGLE_CLOUD_LOCATION>') { ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1') }
 
+  config.filter_sensitive_data('<REPLICATE_API_KEY>') { ENV.fetch('REPLICATE_API_KEY', nil) }
+
   # Filter Google OAuth tokens and credentials
   config.filter_sensitive_data('<GOOGLE_REFRESH_TOKEN>') do |interaction|
     interaction.request.body[/refresh_token=([^&]+)/, 1] if interaction.request.body&.include?('refresh_token')

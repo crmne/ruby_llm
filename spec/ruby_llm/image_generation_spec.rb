@@ -22,6 +22,19 @@ def save_and_verify_image(image)
   end
 end
 
+def save_and_verify_deferred_image(image)
+  tries = 0
+
+  begin
+    save_and_verify_image image
+  rescue RSpec::Expectations::ExpectationNotMetError => e
+    tries += 1
+    sleep 1
+    retry if tries < 20
+    raise e
+  end
+end
+
 RSpec.describe RubyLLM::Image do
   include_context 'with configured RubyLLM'
 
@@ -57,6 +70,22 @@ RSpec.describe RubyLLM::Image do
       expect(image.mime_type).to include('image')
 
       save_and_verify_image image
+    end
+
+    it 'google/imagen-4-ultra, an official replicate model, can paint images' do
+      image = RubyLLM.paint('a siamese cat', model: 'google/imagen-4-ultra', output_format: 'png')
+
+      expect(image).to be_a(RubyLLM::DeferredImage)
+
+      save_and_verify_deferred_image image
+    end
+
+    it 'prunaai/hidream-l1-fast, an unofficial replicate model, can paint images' do
+      image = RubyLLM.paint('a siamese cat', model: 'prunaai/hidream-l1-fast', output_format: 'png')
+
+      expect(image).to be_a(RubyLLM::DeferredImage)
+
+      save_and_verify_deferred_image image
     end
 
     it 'validates model existence' do

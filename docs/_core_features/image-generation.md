@@ -26,6 +26,7 @@ After reading this guide, you will know:
 *   How to generate images from text prompts.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
+*   How to use model hosting platforms like Replicate.
 *   How to access and save generated image data (URL or Base64).
 *   How to integrate image generation with Rails Active Storage.
 *   Tips for writing effective image prompts.
@@ -119,12 +120,32 @@ image_portrait = RubyLLM.paint(
 )
 ```
 
-> Not all models support size customization. If a size is specified for a model that doesn't support it (like Google Imagen), RubyLLM may log a debug message indicating the size parameter is ignored. Check the provider's documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for supported sizes.
+> Not all models support size customization. Check the provider's documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for supported sizes.
+{: .note }
+
+## Using model hosting platforms
+
+Platforms like Replicate host a large collection of models with different capabilities and parameters. Due to the variety of models available, you should be aware of the parameters supported by the model you're using. This information is available in the platform's documentation.
+
+For example, Imagen 4 Ultra supports `aspect_ratio` as a parameter when used [via Replicate](https://replicate.com/google/imagen-4-ultra). Since it's optional, you can omit it. But if you'd like to specify a value, you just need to add it to your paint call.
+
+```ruby
+image = RubyLLM.paint(
+  "A photorealistic image of a red panda coding Ruby on a laptop",
+  model: "google/imagen-4-ultra",
+  provider: :replicate,
+  aspect_ratio: "16:9"
+)
+```
+
+> When switching between different models, you'll typically need to change the parameters as well, since different models support different parameter sets. Always check the model's documentation for the specific parameters it accepts.
 {: .note }
 
 ## Working with Generated Images
 
-The `RubyLLM::Image` object provides access to the generated image data and metadata.
+When models return the image immediately, the `RubyLLM::Image` object provides access to the generated image data and metadata.
+
+Some models generate images asynchronously. In this case, you will receive a `RubyLLM::DeferredImage` object instead. You can still access the image data, but you will either need to wait for the image to be generated or fetch it by other means—typically after being notified via a webhook.
 
 ### Accessing Image Data
 
@@ -132,6 +153,10 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 *   `image.data`: Returns the Base64-encoded image data string for providers like Google (Imagen). `nil` otherwise.
 *   `image.mime_type`: Returns the MIME type (e.g., `"image/png"`, `"image/jpeg"`).
 *   `image.base64?`: Returns `true` if the image data is Base64-encoded, `false` otherwise.
+
+### Accessing Deferred Image Data
+
+*   `deferred_image.url`: Returns the URL where you can check whether the image has been generated.
 
 ### Saving Images Locally
 
@@ -150,9 +175,23 @@ rescue => e
 end
 ```
 
+For deferred images, the `save` method will write the file and return its path only if the image has been generated. Otherwise, it will return `nil`.
+
+The ideal way to handle deferred images is by having the provider notify you via webhook when the image is generated, and then fetching the image outside of RubyLLM. But if you're not able to configure a webhook, another way to handle these is to call the method recursively with a delay until it succeeds or a condition is met. This is equivalent to a "polling" mechanism. Check your provider's documentation for any rate limits that may apply.
+
+```ruby
+# Only do this if you're not able to configure a webhook
+def save_deferred_image(image, path, remaining_attempts = 10)
+  return nil if remaining_attempts <= 0
+  image.save(path) || (sleep(2) && save_deferred_image(image, path, remaining_attempts - 1))
+end
+
+save_deferred_image(deferred_image, "deferred_image.png")
+```
+
 ### Getting Raw Image Blob
 
-The `to_blob` method returns the raw binary image data (decoded from Base64 or downloaded from URL). This is useful for integration with other libraries or frameworks.
+The `to_blob` method returns the raw binary image data (decoded from Base64 or downloaded from URL). This is useful for integration with other libraries or frameworks. Deferred images return `nil` if the image has not finished generating.
 
 ```ruby
 image = RubyLLM.paint("Abstract geometric patterns in pastel colors")

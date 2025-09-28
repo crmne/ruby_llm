@@ -48,6 +48,8 @@ def configure_from_env
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
+    config.replicate_api_key = ENV.fetch('REPLICATE_API_KEY', nil)
+    config.replicate_webhook_url = ENV.fetch('REPLICATE_WEBHOOK_URL', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end
@@ -425,6 +427,10 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
       'deepseek' => model,
       'openrouter' => openrouter_model
     }
+  end
+
+  models['replicate'].each do |model|
+    aliases[RubyLLM.models.find(model).name] = { 'replicate' => model }
   end
 
   sorted_aliases = aliases.sort.to_h
