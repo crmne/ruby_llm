@@ -148,7 +148,7 @@ chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")  # Uses OpenAI
 chat = RubyLLM.chat(
   model: "{{ site.models.local_llama }}",
   provider: "ollama",
-  base_url: "http://localhost:11434"
+  context: RubyLLM.context { _1.ollama_api_base = "http://localhost:11434/v1" }
 )
 ```
 
