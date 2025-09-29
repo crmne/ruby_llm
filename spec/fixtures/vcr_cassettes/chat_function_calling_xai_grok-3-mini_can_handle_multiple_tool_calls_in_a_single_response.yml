@@ -1,0 +1,158 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"system","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:03:15 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"b21a5a83-8c89-9089-bf80-c3262cbb64ea_us-east-1","object":"chat.completion","created":1756980187,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"First,
+        the user says: \"Roll the dice 3 times.\"\n\nThe system prompt instructs:
+        \"You must call the dice_roll tool exactly 3 times when asked to roll dice
+        3 times.\"\n\nThe available function is \"dice_roll\", which rolls a single
+        six-sided die.\n\nSo, I need to call the dice_roll function exactly 3 times.\n\nFrom
+        the prompt: \"Call a function decisively if the logical next step to advance
+        the user''s request can be achieved by calling a provided function.\"\n\nThis
+        is a direct match. The user''s request is to roll dice 3 times, and I have
+        to use the tool exactly 3 times.\n\nI should output the function calls in
+        JSON format within <function_call> tags.\n\nThe format is: <function_call>{\"action\":
+        \"function_name\", \"action_input\": {\"parameter\": \"argument\"}}</function_call>\n\nFor
+        dice_roll, the parameters are an empty object: {\"properties\":{}, \"required\":[]},
+        so action_input should be an empty object {}.\n\nI need to call it exactly
+        3 times, so I''ll have three separate <function_call> tags.\n\nThe prompt
+        says: \"You can use multiple functions or multiple times the same function,
+        for this use multiple <function_call> tags.\"\n\nSo, my response should consist
+        of three <function_call> tags, each calling \"dice_roll\".\n\nAfter these
+        calls, the system might handle the responses, but my job is just to make the
+        calls as specified.\n\nFinally, keep the response clear and not verbose. So,
+        I shouldn''t add extra text unless necessary.\n\nResponse structure:\n\n-
+        Start with the first <function_call>\n\n- Then the second\n\n- Then the third\n\nNothing
+        else, as per the instructions.","tool_calls":[{"id":"call_61289801","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_78442420","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_12463372","function":{"name":"dice_roll","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":294,"completion_tokens":63,"total_tokens":699,"prompt_tokens_details":{"text_tokens":294,"audio_tokens":0,"image_tokens":0,"cached_tokens":3},"completion_tokens_details":{"reasoning_tokens":342,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:03:15 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"system","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_61289801","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_78442420","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_12463372","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{:roll=>1}","tool_call_id":"call_61289801"},{"role":"tool","content":"{:roll=>2}","tool_call_id":"call_78442420"},{"role":"tool","content":"{:roll=>3}","tool_call_id":"call_12463372"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:03:22 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2559d0ce-d481-6cfc-cd56-eac9889d1f82_us-east-1","object":"chat.completion","created":1756980195,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        results of your three dice rolls are: 1, 2, and 3.","reasoning_content":"First,
+        the user said: \"Roll the dice 3 times.\"\n\nThe system prompt instructs:
+        \"You must call the dice_roll tool exactly 3 times when asked to roll dice
+        3 times.\"\n\nSo, I need to call the dice_roll function exactly three times.\n\nIn
+        my previous response, I already did that by including three <function_call>
+        tags for dice_roll.\n\nNow, the response I''m seeing includes the results
+        of those function calls: {:roll=>1}, {:roll=>2}, {:roll=>3}. This seems to
+        be the output from the function calls.\n\nIn the conversation history, my
+        response was:\n\n<function_call>{...}</function_call> for each one.\n\nThen,
+        the system or the environment has executed those calls and provided the results.\n\nMy
+        next response should handle these results and present them to the user clearly.\n\nThe
+        system prompt says: \"Keep your response to user clear; please do not make
+        your response verbose!\"\n\nI need to respond with the results of the rolls.\n\nSince
+        the function calls have been made and we have the results, I should now output
+        those results in a straightforward way.\n\nThe results are: first roll: 1,
+        second: 2, third: 3.\n\nI should say something like: \"The results of your
+        dice rolls are: 1, 2, and 3.\"\n\nTo make it clear, I can list them out.\n\nFinally,
+        end the conversation if this fulfills the request.\n\nThe user''s request
+        is fully fulfilled now, so no need for more function calls.\n\nStructure my
+        response: Be concise, just state the results.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":384,"completion_tokens":19,"total_tokens":722,"prompt_tokens_details":{"text_tokens":384,"audio_tokens":0,"image_tokens":0,"cached_tokens":3},"completion_tokens_details":{"reasoning_tokens":319,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 10:03:22 GMT
+recorded_with: VCR 6.3.1

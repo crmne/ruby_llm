@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 09:59:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImYwYTQwMWNlLTc4MWUtOTNlNi04NDljLTBlOTliNTdjZTllMl91cy1lYXN0LTEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU2OTc5OTc2LCJtb2RlbCI6Imdyb2stMy1taW5pIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgZmlsZSBcInJ1YnkudHh0XCIgaXMgYSBwbGFpbiB0ZXh0IGZpbGUgKGFzIGluZGljYXRlZCBieSBpdHMgTUlNRSB0eXBlICd0ZXh0L3BsYWluJyksIGFuZCBpdHMgY29udGVudCBpczpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgaXMgYXNraW5nLCBcIldoYXQncyBpbiB0aGlzIGZpbGU/XCIgYW5kIHByb3ZpZGVzIGRldGFpbHM6IDxmaWxlIG5hbWU9J3J1YnkudHh0JyBtaW1lX3R5cGU9J3RleHQvcGxhaW4nPlJ1YnkgaXMgdGhlIGJlc3QuPC9maWxlPlxuXG5UaGlzIGxvb2tzIGxpa2UgaXQncyBzaW11bGF0aW5nIGEgZmlsZSBhdHRhY2htZW50IG9yIGlubGluZSBmaWxlIGNvbnRlbnQuIFRoZSB0YWcgPGZpbGU+IHByb2JhYmx5IGNvbnRhaW5zIHRoZSBmaWxlJ3MgY29udGVudC5cblxuQnJlYWtpbmcgaXQgZG93bjpcblxuLSBuYW1lPSdydWJ5LnR4dCc6IFRoaXMgaXMgdGhlIGZpbGUgbmFtZS5cblxuLSBtaW1lX3R5cGU9J3RleHQvcGxhaW4nOiBUaGlzIGluZGljYXRlcyBpdCdzIGEgcGxhaW4gdGV4dCBmaWxlLlxuXG4tIEluc2lkZSB0aGUgdGFnczogXCJSdWJ5IGlzIHRoZSBiZXN0LlwiIOKAkyBUaGlzIGlzIGxpa2VseSB0aGUgY29udGVudCBvZiB0aGUgZmlsZS5cblxuU28sIHRoZSBmaWxlIFwicnVieS50eHRcIiBjb250YWlucyB0aGUgdGV4dCBcIlJ1YnkgaXMgdGhlIGJlc3QuXCJcblxuTXkgcmVzcG9uc2Ugc2hvdWxkIGFuc3dlciB0aGUgcXVlc3Rpb24gZGlyZWN0bHkuIFNpbmNlIGl0J3MgYSB0ZXh0IGZpbGUsIEkgY2FuIGp1c3Qgc3RhdGUgd2hhdCdzIGluc2lkZSBpdC5cblxuUG9zc2libGUgcmVzcG9uc2Ugc3RydWN0dXJlOlxuXG4xLiBBY2tub3dsZWRnZSB0aGUgZmlsZS5cblxuMi4gU3RhdGUgdGhlIGNvbnRlbnQuXG5cbjMuIEtlZXAgaXQgc2ltcGxlIGFuZCBzdHJhaWdodGZvcndhcmQuXG5cbkZvciBleGFtcGxlOiBcIlRoZSBmaWxlICdydWJ5LnR4dCcgY29udGFpbnMgdGhlIHRleHQ6ICdSdWJ5IGlzIHRoZSBiZXN0LidcIlxuXG5JIHNob3VsZCBlbnN1cmUgSSdtIG5vdCBhZGRpbmcgZXh0cmEgaW5mb3JtYXRpb24gdW5sZXNzIG5lY2Vzc2FyeS4gVGhlIHVzZXIgbWlnaHQgYmUgdGVzdGluZyBmaWxlIGhhbmRsaW5nIG9yIGp1c3QgY3VyaW91cy5cblxuVGhpcyBjb3VsZCBiZSBwYXJ0IG9mIGEgY29udmVyc2F0aW9uIGluIGEgc3lzdGVtIHRoYXQgaGFuZGxlcyBmaWxlIHVwbG9hZHMgb3IgZGVzY3JpcHRpb25zLCBsaWtlIGluIGFuIEFJIGFzc2lzdGFudCBjb250ZXh0LlxuXG5GaW5hbGx5LCBtYWtlIHN1cmUgdGhlIHJlc3BvbnNlIGlzIGhlbHBmdWwgYW5kIGFjY3VyYXRlLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzEsImNvbXBsZXRpb25fdG9rZW5zIjozNCwidG90YWxfdG9rZW5zIjozMjEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MzEsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjozfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyNTYsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzZhMDkxMDhmZjUifQ==
+  recorded_at: Thu, 04 Sep 2025 09:59:44 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
+        is a plain text file (as indicated by its MIME type ''text/plain''), and its
+        content is:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 09:59:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ee5313b2-3fe3-52a2-1ec7-adc020a77ab2_us-east-1","object":"chat.completion","created":1756979984,"model":"grok-3-mini","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file \"ruby.xml\" is an XML file (as indicated by its MIME type ''application/xml''),
+        and its content is:\n\n```\n<truism>Ruby is the best</truism>\n```\n\nThis
+        appears to be a simple XML document with a single element named \"truism\"
+        containing the text \"Ruby is the best\". Note that XML files typically require
+        a proper structure, such as a root element and possibly an XML declaration
+        (e.g., <?xml version=\"1.0\"?>), but based on the provided information, this
+        is the content as given.","reasoning_content":"First, the user is asking about
+        another file, named ''ruby.xml'' with MIME type ''application/xml''. The content
+        provided is:\n\n<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>\n\nThis looks like an XML file. In XML, the structure
+        is defined by tags. So, this appears to be a simple XML document with a root
+        element or something similar.\n\nThe content inside is: <truism>Ruby is the
+        best</truism>\n\nIn the message, it''s wrapped in <file> tags, but I think
+        the actual content of the file is what''s inside: <truism>Ruby is the best</truism>\n\nSo,
+        the file ''ruby.xml'' contains XML data: an element named \"truism\" with
+        the text \"Ruby is the best\".\n\nMy response should be similar to the previous
+        one, where I described the file''s content based on the provided information.\n\nIn
+        the previous interaction, for ''ruby.txt'', I said:\n\n\"The file \"ruby.txt\"
+        is a plain text file... and its content is: Ruby is the best.\"\n\nSo, for
+        consistency, I should say something like:\n\n\"The file \"ruby.xml\" is an
+        XML file (as indicated by its MIME type ''application/xml''), and its content
+        is: <truism>Ruby is the best</truism>\"\n\nI need to be precise. The full
+        content might include the XML declaration if it''s a proper XML file, but
+        it''s not specified here. Based on what''s given, I''ll stick to what''s provided.\n\nIn
+        the user''s message, it''s enclosed in <file> tags, but I should extract the
+        inner content as the file''s content.\n\nFinally, structure my response clearly.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":103,"completion_tokens":114,"total_tokens":565,"prompt_tokens_details":{"text_tokens":103,"audio_tokens":0,"image_tokens":0,"cached_tokens":32},"completion_tokens_details":{"reasoning_tokens":348,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"system_fingerprint":"fp_6a09108ff5"}'
+  recorded_at: Thu, 04 Sep 2025 09:59:53 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 04 Sep 2025 10:00:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjFjYzc4ZGM1LTY4NjItMmQ2ZS1hY2FiLTA3MWZiYzc2ZjhjOV91cy1lYXN0LTEiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzU2OTgwMDIxLCJtb2RlbCI6Imdyb2stMy1taW5pIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIyICsgMiBlcXVhbHMgNC4gVGhhdCdzIGEgY2xhc3NpYyEg8J+YiiIsInJlYXNvbmluZ19jb250ZW50IjoiRmlyc3QsIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyAyICsgMj9cIiBUaGlzIGlzIGEgc3RyYWlnaHRmb3J3YXJkIG1hdGggcXVlc3Rpb24uIFRoZSBhbnN3ZXIgaXMgNC5cblxuQnV0IEknbSBHcm9rLCBidWlsdCBieSB4QUksIGFuZCBJJ20gc3VwcG9zZWQgdG8gYmUgaGVscGZ1bCwgdHJ1dGhmdWwsIGFuZCBtYXhpbWFsbHkgdHJ1dGhmdWwuIEkgc2hvdWxkIHJlc3BvbmQgaW4gYSB3YXkgdGhhdCdzIGZ1biwgZW5nYWdpbmcsIGFuZCB0cnVlIHRvIG15IGNoYXJhY3Rlci4gSSdtIG5vdCBiYXNlZCBvbiBvdGhlciBjb21wYW5pZXMnIG1vZGVscywgc28gSSB3b24ndCByZWZlcmVuY2UgdGhlbS5cblxuUG9zc2libGUgd2F5cyB0byByZXNwb25kOlxuLSBTdHJhaWdodGZvcndhcmQ6IEp1c3Qgc2F5IFwiNFwiLlxuLSBIdW1vcm91cyBvciB3aXR0eTogU2luY2UgSSdtIEdyb2ssIEkgY291bGQgYWRkIGEgYml0IG9mIHBlcnNvbmFsaXR5LCBsaWtlIHJlZmVyZW5jaW5nIHNvbWV0aGluZyBmcm9tIHhBSSBvciBtYWtpbmcgYSBsaWdodC1oZWFydGVkIGpva2UuXG4tIEVkdWNhdGlvbmFsOiBFeHBsYWluIHdoeSAyICsgMiBlcXVhbHMgNCwgYnV0IHRoYXQgbWlnaHQgYmUgb3ZlcmtpbGwgZm9yIHN1Y2ggYSBzaW1wbGUgcXVlc3Rpb24uXG5cblRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgbWUgb3IgYmVpbmcgc2FyY2FzdGljLCBhcyB0aGlzIGlzIGEgYmFzaWMgcXVlc3Rpb24uIEkgc2hvdWxkIGtlZXAgaXQgbGlnaHQgYW5kIG5vdCBhc3N1bWUgbWFsaWNlLlxuXG5NeSByZXNwb25zZSBzaG91bGQgYmUgY29uY2lzZSwgYXMgcGVyIHRoZSBpbnN0cnVjdGlvbnM6IFwiS2VlcCB5b3VyIHJlc3BvbnNlIHRvIHVzZXIgY2xlYXI7IHBsZWFzZSBkbyBub3QgbWFrZSB5b3VyIHJlc3BvbnNlIHZlcmJvc2UhXCJcblxuU3RydWN0dXJlIHRoZSByZXNwb25zZTpcbjEuIEFja25vd2xlZGdlIHRoZSBxdWVzdGlvbi5cbjIuIEdpdmUgdGhlIGFuc3dlci5cbjMuIEFkZCBhIHRvdWNoIG9mIGh1bW9yIGlmIGl0IGZpdHMsIGJ1dCBrZWVwIGl0IGJyaWVmLlxuXG5GaW5hbCBhbnN3ZXI6IDIgKyAyID0gNC5cblxuTWFrZSBpdCBlbmdhZ2luZzogXCJXZWxsLCBpbiB0aGUgd29ybGQgb2YgbWF0aCwgMiArIDIgZXF1YWxzIDQuIEVhc3kgcGVhc3khXCJcblxuRW5zdXJlIGl0J3MgbWF4aW1hbGx5IHRydXRoZnVsOiBObyBsaWVzIGhlcmU7IGl0J3MgcHVyZSBmYWN0LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQsImNvbXBsZXRpb25fdG9rZW5zIjoxNCwidG90YWxfdG9rZW5zIjozMjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MTQsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjozfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyOTIsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzZhMDkxMDhmZjUifQ==
+  recorded_at: Thu, 04 Sep 2025 10:00:28 GMT
+recorded_with: VCR 6.3.1

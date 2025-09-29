@@ -39,16 +39,19 @@ end
 
 def configure_from_env
   RubyLLM.configure do |config|
-    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    # Providers
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
-    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
+    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     configure_bedrock(config)
+    # Requests
     config.request_timeout = 30
   end
 end
@@ -423,6 +426,27 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     alias_key = model.gsub('-latest', '')
     aliases[alias_key] = {
       'deepseek' => model,
+      'openrouter' => openrouter_model
+    }
+  end
+
+  models['xai'].each do |model|
+    # xAI aliases
+    m = RubyLLM.models.find(model)
+    next unless m.metadata&.dig(:aliases)
+
+    m.metadata[:aliases].each do |alias_name|
+      aliases[alias_name] = { 'xai' => m.id }
+    end
+
+    # OpenRouter aliases.
+    # NOTE: OpenRouter uses "x-ai" as the provider slug
+    openrouter_model = "x-ai/#{model}"
+    next unless models['openrouter'].include?(openrouter_model)
+
+    alias_key = model.gsub('-latest', '').gsub(/-\d{4}/, '-4')
+    aliases[alias_key] = {
+      'xai' => alias_key,
       'openrouter' => openrouter_model
     }
   end

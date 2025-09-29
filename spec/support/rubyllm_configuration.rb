@@ -7,14 +7,15 @@ end
 RSpec.shared_context 'with configured RubyLLM' do
   before do
     RubyLLM.configure do |config|
-      config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
-      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
-      config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
-      config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
+      config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+      config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
+      config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
+      config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
+      config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
 
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
