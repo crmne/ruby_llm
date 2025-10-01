@@ -233,4 +233,49 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     # Verify our implementation correctly sums both token types
     expect(response.output_tokens).to eq(candidates_tokens + thoughts_tokens)
   end
+
+  describe 'parameter mapping' do
+    let(:provider) do
+      config = RubyLLM::Configuration.new
+      config.gemini_api_key = 'test_key'
+      RubyLLM::Providers::Gemini.new(config)
+    end
+
+    it 'maps max_tokens to generationConfig.maxOutputTokens' do
+      params = { max_tokens: 1000 }
+      result = provider.send(:apply_parameter_mappings, params)
+
+      expect(result).to eq({ generationConfig: { maxOutputTokens: 1000 } })
+    end
+
+    it 'removes max_tokens from the params after mapping' do
+      params = { max_tokens: 500 }
+      result = provider.send(:apply_parameter_mappings, params)
+
+      expect(result).not_to have_key(:max_tokens)
+    end
+
+    it 'preserves other params while mapping max_tokens' do
+      params = { max_tokens: 1000, other_param: 'value' }
+      result = provider.send(:apply_parameter_mappings, params)
+
+      expect(result[:other_param]).to eq('value')
+      expect(result.dig(:generationConfig, :maxOutputTokens)).to eq(1000)
+    end
+
+    it 'merges with existing generationConfig hash' do
+      params = { max_tokens: 500, generationConfig: { temperature: 0.7 } }
+      result = provider.send(:apply_parameter_mappings, params)
+
+      expect(result.dig(:generationConfig, :temperature)).to eq(0.7)
+      expect(result.dig(:generationConfig, :maxOutputTokens)).to eq(500)
+    end
+
+    it 'handles params without max_tokens' do
+      params = { other: 'value', custom: 123 }
+      result = provider.send(:apply_parameter_mappings, params)
+
+      expect(result).to eq({ other: 'value', custom: 123 })
+    end
+  end
 end

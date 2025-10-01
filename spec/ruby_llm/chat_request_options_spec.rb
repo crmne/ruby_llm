@@ -106,5 +106,24 @@ RSpec.describe RubyLLM::Chat do
         expect(json_response).to eq({ 'result' => 8 })
       end
     end
+
+    # Provider [:gemini] automatically maps max_tokens to generationConfig.maxOutputTokens
+    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} automatically maps max_tokens to maxOutputTokens" do
+        chat = RubyLLM
+               .chat(model: model, provider: provider)
+               .with_params(max_tokens: 100)
+
+        response = chat.ask('Say hello in 3 words.')
+
+        request_body = JSON.parse(response.raw.env.request_body)
+        expect(request_body.dig('generationConfig', 'maxOutputTokens')).to eq(100)
+        expect(request_body).not_to have_key('max_tokens')
+
+        expect(response.content).to be_present
+      end
+    end
   end
 end
