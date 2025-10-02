@@ -94,6 +94,20 @@ RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 
+# Optional Red Candle provider - only available if gem is installed
+begin
+  require 'candle'
+  require 'ruby_llm/providers/red_candle'
+  RubyLLM::Provider.register :red_candle, RubyLLM::Providers::RedCandle
+
+  # Register Red Candle models with the global registry
+  RubyLLM::Providers::RedCandle.models.each do |model|
+    RubyLLM.models.instance_variable_get(:@models) << model
+  end
+rescue LoadError
+  # Red Candle is optional - provider won't be available if gem isn't installed
+end
+
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
   require 'ruby_llm/active_record/acts_as'

@@ -35,4 +35,8 @@ group :development do
   gem "googleauth"
 end
 
+group :red_candle, optional: true do
+  gem "red-candle", "~> 1.2"
+end
+
 gemspec path: "../"

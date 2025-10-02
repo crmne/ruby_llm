@@ -143,15 +143,23 @@ module StreamingErrorHelpers
       },
       chunk_status: 529,
       expected_error: RubyLLM::OverloadedError
+    },
+    red_candle: {
+      # Red Candle is a local provider, so it doesn't have HTTP streaming errors
+      # We include it here to prevent test failures when checking for error handling
+      url: nil,
+      error_response: nil,
+      chunk_status: nil,
+      expected_error: nil
     }
   }.freeze
 
   def error_handling_supported?(provider)
-    ERROR_HANDLING_CONFIGS.key?(provider)
+    ERROR_HANDLING_CONFIGS.key?(provider) && ERROR_HANDLING_CONFIGS[provider][:expected_error]
   end
 
   def expected_error_for(provider)
-    ERROR_HANDLING_CONFIGS[provider][:expected_error]
+    ERROR_HANDLING_CONFIGS[provider]&.fetch(:expected_error, nil)
   end
 
   def stub_error_response(provider, type)

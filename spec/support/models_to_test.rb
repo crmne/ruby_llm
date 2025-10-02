@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-CHAT_MODELS = [
+# Base models available for all installations
+chat_models = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },
   { provider: :bedrock, model: 'anthropic.claude-3-5-haiku-20241022-v1:0' },
   { provider: :deepseek, model: 'deepseek-chat' },
@@ -12,7 +13,17 @@ CHAT_MODELS = [
   { provider: :openrouter, model: 'anthropic/claude-3.5-haiku' },
   { provider: :perplexity, model: 'sonar' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
-].freeze
+]
+
+# Only include Red Candle models if the gem is available
+begin
+  require 'candle'
+  chat_models << { provider: :red_candle, model: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF' }
+rescue LoadError
+  # Red Candle not available - don't include its models
+end
+
+CHAT_MODELS = chat_models.freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-3-5-haiku-20241022' },

@@ -142,6 +142,7 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
+    ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
     fiber-annotation (0.2.0)
     fiber-local (1.1.0)
@@ -280,6 +281,9 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
+    rake-compiler-dock (1.9.1)
+    rb_sys (0.9.117)
+      rake-compiler-dock (= 1.9.1)
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
@@ -374,6 +378,7 @@ GEM
     zeitwerk (2.7.3)
 
 PLATFORMS
+  arm64-darwin-24
   x86_64-linux
 
 DEPENDENCIES
@@ -395,6 +400,7 @@ DEPENDENCIES
   pry (>= 0.14)
   rails (~> 7.2.0)
   rake (>= 13.0)
+  red-candle (~> 1.2)
   reline
   rspec (~> 3.12)
   rubocop (>= 1.0)
