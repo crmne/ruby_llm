@@ -13,7 +13,7 @@ module RubyLLM
       include Gemini::Media
 
       def api_base
-        'https://generativelanguage.googleapis.com/v1beta'
+        @config.gemini_api_base || 'https://generativelanguage.googleapis.com/v1beta'
       end
 
       def headers
