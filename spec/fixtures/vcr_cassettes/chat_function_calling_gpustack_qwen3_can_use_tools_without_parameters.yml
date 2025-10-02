@@ -23,8 +23,8 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:49:01 GMT
-      - Sun, 21 Sep 2025 14:49:02 GMT
+      - Wed, 24 Sep 2025 15:10:54 GMT
+      - Wed, 24 Sep 2025 15:10:54 GMT
       Server:
       - uvicorn
       - uvicorn
@@ -42,15 +42,15 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-cGRNQDdIlzACzEoqW2EU2H2fiA8MCq5h","type":"function"}]}}],"created":1758466143,"id":"chatcmpl-ABD1ybJ54BWLrchgzSaXmZ4vQhMnabka","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":165,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":144,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4329.379167027449,"time_per_output_token_ms":9.130890909090908,"time_to_first_token_ms":46.196,"tokens_per_second":109.51833834794574,"total_tokens":365}}'
-  recorded_at: Sun, 21 Sep 2025 14:49:03 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-VqwjTylixQwlRXzGswNLfeb7v1KcEYm9","type":"function"}]}}],"created":1758726657,"id":"chatcmpl-fufIsauScPQdeXiFiyhq3QBEMQ4L1YUb","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":266,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":245,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":200,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3991.7769395046207,"time_per_output_token_ms":9.66309022556391,"time_to_first_token_ms":50.103,"tokens_per_second":103.48656347577908,"total_tokens":466}}'
+  recorded_at: Wed, 24 Sep 2025 15:10:57 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-cGRNQDdIlzACzEoqW2EU2H2fiA8MCq5h","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-cGRNQDdIlzACzEoqW2EU2H2fiA8MCq5h"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-VqwjTylixQwlRXzGswNLfeb7v1KcEYm9","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-VqwjTylixQwlRXzGswNLfeb7v1KcEYm9"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
     headers:
       User-Agent:
@@ -67,15 +67,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:49:02 GMT
-      - Sun, 21 Sep 2025 14:49:03 GMT
+      - Wed, 24 Sep 2025 15:10:56 GMT
+      - Wed, 24 Sep 2025 15:10:57 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '687'
+      - '1093'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -85,8 +85,8 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        best language to learn is Ruby.","role":"assistant"}}],"created":1758466145,"id":"chatcmpl-BKADwtUWZyfqPfGmqPf1d2VRvqkaHLAD","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":134,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":122,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":226,"prompt_tokens_details":{"cached_tokens":199},"prompt_tokens_per_second":11505.370870030036,"time_per_output_token_ms":9.331805970149254,"time_to_first_token_ms":19.643,"tokens_per_second":107.16039351855554,"total_tokens":360}}'
-  recorded_at: Sun, 21 Sep 2025 14:49:05 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gaXMgKipSdWJ5KiouIEl0J3Mga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCByZWFkYWJpbGl0eSwgYW5kIHZlcnNhdGlsaXR5LCBtYWtpbmcgaXQgZ3JlYXQgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4gUnVieSBpcyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgKGUuZy4sIHdpdGggUnVieSBvbiBSYWlscyksIHNjcmlwdGluZywgYW5kIGF1dG9tYXRpb24uIEhvd2V2ZXIsIHRoZSBcImJlc3RcIiBsYW5ndWFnZSBkZXBlbmRzIG9uIHlvdXIgZ29hbHPigJR3aGV0aGVyIHlvdSdyZSBpbnRlcmVzdGVkIGluIHdlYiBkZXYsIGRhdGEgc2NpZW5jZSwgb3Igc29tZXRoaW5nIGVsc2UuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSB0YWlsb3JlZCByZWNvbW1lbmRhdGlvbnMhIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTg3MjY2NjAsImlkIjoiY2hhdGNtcGwtRk9JM2F4MVkyazk2bE4yU3pKd1BVd3VSTFBhanhqaEsiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjI5NCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTk5LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MjI2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTk5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMTgyMS4zMjAyMjE3ODA1MjMsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS44Nzk0MTQ5NjU5ODYzOTQsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjE5LjExOCwidG9rZW5zX3Blcl9zZWNvbmQiOjEwMS4yMjA1Njg1NzAzOTM3NCwidG90YWxfdG9rZW5zIjo1MjB9fQ==
+  recorded_at: Wed, 24 Sep 2025 15:11:00 GMT
 recorded_with: VCR 6.3.1

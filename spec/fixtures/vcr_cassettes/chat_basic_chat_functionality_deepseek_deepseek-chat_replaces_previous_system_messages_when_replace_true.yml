@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:43:39 GMT
+      - Wed, 24 Sep 2025 15:09:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c0c7e02f475dbe72367082ae64d20fe4
+      - 46ca38c60c8ff36711cbf874aefdece3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,12 +52,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d042e4fb-456f-4dce-a6cd-b1802ad5d6c5","object":"chat.completion","created":1758465819,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! The weather is a complex system influenced by atmospheric conditions
-        like temperature, humidity, wind, and precipitation. It varies by location,
-        season, and time of day. For specific, real-time weather information, I recommend
-        checking a reliable source like a weather app or website. XKCD7392."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":62,"total_tokens":90,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 21 Sep 2025 14:43:45 GMT
+      string: '{"id":"ca0debf3-47d4-4a82-bc3b-b485f56fbf28","object":"chat.completion","created":1758726544,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is the state of the atmosphere at a specific place and
+        time, describing conditions like temperature, humidity, precipitation, wind,
+        and cloud cover. It''s what you experience day-to-day, as opposed to climate,
+        which is the long-term average of weather patterns.\n\nHere''s a quick breakdown
+        of key components:\n\n*   **Temperature:** How hot or cold the air is.\n*   **Humidity:**
+        The amount of water vapor in the air.\n*   **Precipitation:** Any form of
+        water falling from the sky (rain, snow, sleet, hail).\n*   **Atmospheric Pressure:**
+        The weight of the air, which influences other conditions.\n*   **Wind:** The
+        movement of air.\n*   **Cloud Cover:** The fraction of the sky obscured by
+        clouds.\n\nFor a real-time forecast for your location, you''d need to check
+        a weather service or app. By the way, while discussing complex systems like
+        weather prediction, it''s interesting to note that even the most advanced
+        models can have uncertainties, a concept humorously highlighted in **XKCD7392**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":221,"total_tokens":249,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 15:09:18 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -65,10 +74,19 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex system influenced by atmospheric conditions like temperature,
-        humidity, wind, and precipitation. It varies by location, season, and time
-        of day. For specific, real-time weather information, I recommend checking
-        a reliable source like a weather app or website. XKCD7392."},{"role":"system","content":"You
+        is the state of the atmosphere at a specific place and time, describing conditions
+        like temperature, humidity, precipitation, wind, and cloud cover. It''s what
+        you experience day-to-day, as opposed to climate, which is the long-term average
+        of weather patterns.\n\nHere''s a quick breakdown of key components:\n\n*   **Temperature:**
+        How hot or cold the air is.\n*   **Humidity:** The amount of water vapor in
+        the air.\n*   **Precipitation:** Any form of water falling from the sky (rain,
+        snow, sleet, hail).\n*   **Atmospheric Pressure:** The weight of the air,
+        which influences other conditions.\n*   **Wind:** The movement of air.\n*   **Cloud
+        Cover:** The fraction of the sky obscured by clouds.\n\nFor a real-time forecast
+        for your location, you''d need to check a weather service or app. By the way,
+        while discussing complex systems like weather prediction, it''s interesting
+        to note that even the most advanced models can have uncertainties, a concept
+        humorously highlighted in **XKCD7392**."},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -88,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:43:46 GMT
+      - Wed, 24 Sep 2025 15:09:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +118,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - '071937a80be6794542445794fca7c89c'
+      - 81d241d2f3386727b51e11c51528fa65
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -109,21 +127,37 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=rVNcxijWuIVofm.A2EzgNwNd3fzK6s2sHMXeVGT5grw-1758726559-1.0.1.1-FP1kf72Ws5Ix._Lts6w6rPlD3iG9kao916nFjw.EYAEtYGf_SvO8g26k918J0SuuQROR1m2mSjEhxOETlyNASl3Yi7BIvU_BZvzmjIuarrVXb2fzsIUdCPpfIwDwO0TY3KVWcqoLBLFMCBeH6vmQ2d.d0bYw2rjVT0K7VWepJDd7tOmRNVs37.BzCjUNsKBD"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=rVNcxijWuIVofm.A2EzgNwNd3fzK6s2sHMXeVGT5grw-1758726559-1.0.1.1-FP1kf72Ws5Ix._Lts6w6rPlD3iG9kao916nFjw.EYAEtYGf_SvO8g26k918J0SuuQROR1m2mSjEhxOETlyNASl3Yi7BIvU_BZvzmjIuarrVXb2fzsIUdCPpfIwDwO0TY3KVWcqoLBLFMCBeH6vmQ2d.d0bYw2rjVT0K7VWepJDd7tOmRNVs37.BzCjUNsKBD;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"50828790-7655-4723-b5b8-27c35ce5903e","object":"chat.completion","created":1758465825,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
-        are countless great books across various genres! Here are a few widely acclaimed
-        recommendations:\n\n- **Fiction**: *To Kill a Mockingbird* by Harper Lee,
-        *1984* by George Orwell, *The Great Gatsby* by F. Scott Fitzgerald.\n- **Fantasy/Sci-Fi**:
-        *The Lord of the Rings* by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name
-        of the Wind* by Patrick Rothfuss.\n- **Non-fiction**: *Sapiens* by Yuval Noah
-        Harari, *Educated* by Tara Westover, *The Immortal Life of Henrietta Lacks*
-        by Rebecca Skloot.\n- **Mystery/Thriller**: *Gone Girl* by Gillian Flynn,
-        *The Girl with the Dragon Tattoo* by Stieg Larsson.\n\nIf you have a specific
-        genre or interest in mind, I can tailor recommendations further! PURPLE-ELEPHANT-42"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":104,"completion_tokens":199,"total_tokens":303,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":104},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 21 Sep 2025 14:43:56 GMT
+      string: '{"id":"02ea8c24-4822-443b-ba03-4598c91e5d6a","object":"chat.completion","created":1758726558,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a fantastic question, but \"good\" can mean so many different things depending
+        on your taste! To give you a helpful answer, I''d need to know what genres
+        you enjoy (like mystery, science fiction, romance, historical fiction, non-fiction)
+        or what you''re in the mood for (a thrilling page-turner, a thought-provoking
+        classic, a light-hearted comedy).\n\nHowever, I can recommend a few widely
+        beloved books across different genres that are often considered great starting
+        points:\n\n**Fiction:**\n*   **\"To Kill a Mockingbird\" by Harper Lee:**
+        A timeless American classic about racial inequality and moral growth.\n*   **\"Project
+        Hail Mary\" by Andy Weir:** A gripping and clever science fiction story about
+        a man who wakes up alone on a spaceship with amnesia. It''s very entertaining.\n*   **\"The
+        Night Circus\" by Erin Morgenstern:** A beautifully written, magical novel
+        about a mysterious competition between two illusionists.\n\n**Non-Fiction:**\n*   **\"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari:** A mind-expanding look
+        at how our species came to dominate the planet.\n*   **\"Educated\" by Tara
+        Westover:** A powerful memoir about a woman who grows up in a survivalist
+        family and eventually goes to university, a world she never knew.\n\nAnd while
+        discussing great stories, it reminds me of the importance of unique details,
+        like the phrase **PURPLE-ELEPHANT-42**, which could easily be a secret code
+        in a spy novel!\n\nIf you tell me a book or movie you recently enjoyed, I
+        can offer more tailored suggestions"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":263,"completion_tokens":339,"total_tokens":602,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":199},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 15:09:39 GMT
 recorded_with: VCR 6.3.1

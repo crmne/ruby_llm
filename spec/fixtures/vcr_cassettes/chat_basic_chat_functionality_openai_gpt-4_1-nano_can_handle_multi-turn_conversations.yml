@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:45:02 GMT
+      - Wed, 24 Sep 2025 14:54:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '318'
+      - '421'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '339'
+      - '536'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CIFbBrTNL5pWXjXcQF3W2c7d2gfwR",
+          "id": "chatcmpl-CJLAfBV50WKKYiq2KBbcYd5SClvHh",
           "object": "chat.completion",
-          "created": 1758465901,
+          "created": 1758725649,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto.",
+                "content": "Ruby was created by Yukihiro \"Matz\" Matsumoto, a Japanese computer scientist and programmer.",
                 "refusal": null,
                 "annotations": []
               },
@@ -97,8 +97,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 15,
-            "total_tokens": 28,
+            "completion_tokens": 22,
+            "total_tokens": 35,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -111,9 +111,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_04d3664870"
+          "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:02 GMT
+  recorded_at: Wed, 24 Sep 2025 14:54:10 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -121,7 +121,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Who was
         Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by Yukihiro
-        \"Matz\" Matsumoto."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+        \"Matz\" Matsumoto, a Japanese computer scientist and programmer."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -139,7 +140,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:45:02 GMT
+      - Wed, 24 Sep 2025 14:54:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -151,13 +152,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '390'
+      - '719'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '412'
+      - '732'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -165,11 +166,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199971'
+      - '199960'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 12ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -193,16 +194,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CIFbCr4L3Nvi8x71e3WaTUV49Jmi3",
+          "id": "chatcmpl-CJLAgYcpJucT9Bw0rJwLx971EiE67",
           "object": "chat.completion",
-          "created": 1758465902,
+          "created": 1758725650,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Yukihiro \"Matz\" Matsumoto created Ruby in 1995.",
+                "content": "Yukihiro Matsumoto created Ruby in 1995.",
                 "refusal": null,
                 "annotations": []
               },
@@ -211,9 +212,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 43,
-            "completion_tokens": 18,
-            "total_tokens": 61,
+            "prompt_tokens": 50,
+            "completion_tokens": 14,
+            "total_tokens": 64,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -228,5 +229,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:02 GMT
+  recorded_at: Wed, 24 Sep 2025 14:54:11 GMT
 recorded_with: VCR 6.3.1

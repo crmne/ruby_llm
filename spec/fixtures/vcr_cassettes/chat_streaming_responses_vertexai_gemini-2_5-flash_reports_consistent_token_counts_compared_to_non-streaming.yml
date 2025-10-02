@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 24 Sep 2025 14:56:28 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 21 Sep 2025 14:46:55 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 21 Sep 2025 14:46:55 GMT
+  recorded_at: Wed, 24 Sep 2025 14:56:28 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Sun, 21 Sep 2025 14:46:56 GMT
+      - Wed, 24 Sep 2025 14:56:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,9 +109,9 @@ http_interactions:
         35,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 23},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2025-09-21T14:46:55.953031Z\",\"responseId\":
-        \"3w_QaMeVOvKhvdIP9vif6Ao\"}\r\n\r\n"
-  recorded_at: Sun, 21 Sep 2025 14:46:56 GMT
+        \"gemini-2.5-flash\",\"createTime\": \"2025-09-24T14:56:28.362283Z\",\"responseId\":
+        \"nAbUaKuOFpC3mPUPxZfG0Q4\"}\r\n\r\n"
+  recorded_at: Wed, 24 Sep 2025 14:56:28 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -132,14 +132,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 21 Sep 2025 14:46:56 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 24 Sep 2025 14:56:29 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -164,11 +164,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 21 Sep 2025 14:46:56 GMT
+  recorded_at: Wed, 24 Sep 2025 14:56:29 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -198,7 +198,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 21 Sep 2025 14:46:57 GMT
+      - Wed, 24 Sep 2025 14:56:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -249,8 +249,8 @@ http_interactions:
             "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-21T14:46:56.756584Z",
-          "responseId": "4A_QaOiWLtuWvdIP98JJ"
+          "createTime": "2025-09-24T14:56:29.587192Z",
+          "responseId": "nQbUaLjrI5SWt_gPysetiAI"
         }
-  recorded_at: Sun, 21 Sep 2025 14:46:57 GMT
+  recorded_at: Wed, 24 Sep 2025 14:56:29 GMT
 recorded_with: VCR 6.3.1

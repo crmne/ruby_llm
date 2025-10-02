@@ -29,7 +29,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Sun, 21 Sep 2025 14:41:21 GMT
+      - Wed, 24 Sep 2025 14:49:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2395
+      - gfet4t7; dur=3437
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -50,7 +50,7 @@ http_interactions:
         {
           "error": {
             "code": 429,
-            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_input_token_count, limit: 1000000\nPlease retry in 38.614529013s.",
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_paid_tier_input_token_count, limit: 1000000\nPlease retry in 22.375817872s.",
             "status": "RESOURCE_EXHAUSTED",
             "details": [
               {
@@ -60,8 +60,8 @@ http_interactions:
                     "quotaMetric": "generativelanguage.googleapis.com/generate_content_paid_tier_input_token_count",
                     "quotaId": "GenerateContentPaidTierInputTokensPerModelPerMinute",
                     "quotaDimensions": {
-                      "model": "gemini-2.5-flash",
-                      "location": "global"
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
                     },
                     "quotaValue": "1000000"
                   }
@@ -78,10 +78,10 @@ http_interactions:
               },
               {
                 "@type": "type.googleapis.com/google.rpc.RetryInfo",
-                "retryDelay": "38s"
+                "retryDelay": "22s"
               }
             ]
           }
         }
-  recorded_at: Sun, 21 Sep 2025 14:41:21 GMT
+  recorded_at: Wed, 24 Sep 2025 14:49:37 GMT
 recorded_with: VCR 6.3.1

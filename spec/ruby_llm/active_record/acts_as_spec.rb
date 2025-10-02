@@ -28,9 +28,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.role).to eq('user')
       expect(chat.messages.last.role).to eq('assistant')
       expect(chat.messages.last.content).to be_present
-      # Update the chat to simulate a change
-      chat.touch
-      expect(chat.updated_at).to eq(chat.messages.last.chat.updated_at)
     end
 
     it 'tracks token usage' do

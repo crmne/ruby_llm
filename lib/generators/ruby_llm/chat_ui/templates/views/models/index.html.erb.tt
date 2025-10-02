@@ -5,10 +5,10 @@
 <h1><%= model_model_name.pluralize %></h1>
 
 <p>
-  <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_model_name.tableize %>_path, method: :post %>
+  <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post %>
 </p>
 
-<div id="<%= model_model_name.tableize %>">
+<div id="<%= model_table_name %>">
   <table>
     <thead>
       <tr>
@@ -20,11 +20,9 @@
       </tr>
     </thead>
     <tbody>
-      <%% @<%= model_model_name.tableize %>.values.flatten.each do |<%= model_model_name.underscore %>| %>
-        <%%= render <%= model_model_name.underscore %> %>
-      <%% end %>
+      <%%= render @<%= model_variable_name.pluralize %> %>
     </tbody>
   </table>
 </div>
 
-<%%= link_to "Back to <%= chat_model_name.tableize.humanize.downcase %>", <%= chat_model_name.tableize %>_path %>
+<%%= link_to "Back to <%= chat_table_name.humanize.downcase %>", <%= chat_table_name %>_path %>

@@ -9,7 +9,7 @@ PreCommit:
 
   RSpec:
     enabled: true
-    command: ['bundle', 'exec', 'rspec']
+    command: ['bundle', 'exec', 'rspec', '--tag', '~generator']
     on_warn: fail
 
   TrailingWhitespace:

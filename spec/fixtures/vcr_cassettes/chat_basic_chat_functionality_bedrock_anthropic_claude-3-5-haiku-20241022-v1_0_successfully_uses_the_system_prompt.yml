@@ -14,12 +14,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250921T144248Z
+      - 20250924T145130Z
       X-Amz-Content-Sha256:
       - bb8b1b72aacbe95e88cba5ae98e90cf64ef0c9b7fbd69c1be6d17d99c6fa66da
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=233ad92188880abc174615f63a6369d4b5aa8cb4526d6fd8fa8db45145f321e4
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250924/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5ae9c95d7e80f1d3768a2f761ca278a198e196d9c9b10533cec43ecc17b39690
       Content-Type:
       - application/json
       Accept:
@@ -32,30 +32,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:42:51 GMT
+      - Wed, 24 Sep 2025 14:51:32 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '783'
+      - '601'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 5637a6ae-6f1e-46ac-b143-fdbb22791a71
+      - 257eab25-b324-4ec5-8fa0-1d0055fcc31d
       X-Amzn-Bedrock-Invocation-Latency:
-      - '2519'
+      - '1788'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '93'
+      - '68'
       X-Amzn-Bedrock-Input-Token-Count:
       - '32'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01W3UN54vcJ4y627Qzq14xXh","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"The
-        weather can vary widely depending on your specific location and current atmospheric
-        conditions. Without knowing exactly where you are, I can only speak generally.
-        Today might be sunny, cloudy, rainy, or something in between. XKCD7392 If
-        you''re curious about the precise current weather, I recommend checking a
-        local weather forecast or looking outside. Meteorologists use sophisticated
-        computer models and satellite data to predict weather patterns with increasing
-        accuracy."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":93}}'
-  recorded_at: Sun, 21 Sep 2025 14:42:51 GMT
+      string: '{"id":"msg_bdrk_01LfJNT27cftpT88MHiBcHrZ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but I can''t provide real-time weather information. Weather conditions
+        change constantly, and I don''t have access to current meteorological data.
+        XKCD7392 If you want to know the current weather, I recommend checking a local
+        weather website, app, or watching a local weather forecast."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":68}}'
+  recorded_at: Wed, 24 Sep 2025 14:51:32 GMT
 recorded_with: VCR 6.3.1

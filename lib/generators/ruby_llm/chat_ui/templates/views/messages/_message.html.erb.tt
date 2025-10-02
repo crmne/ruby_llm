@@ -1,13 +1,13 @@
-<%%= tag.div id: dom_id(<%= message_model_name.underscore %>), class: "<%= message_model_name.underscore %>",
-    style: "margin-bottom: 20px; padding: 10px; border-left: 3px solid #{<%= message_model_name.underscore %>.role == 'user' ? '#007bff' : '#28a745'};" do %>
+<div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>" class="<%= message_variable_name %>"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid <%%= <%= message_model_name.demodulize.underscore %>.role == 'user' ? '#007bff' : '#28a745' %>">
   <div style="font-weight: bold; margin-bottom: 5px;">
-    <%%= <%= message_model_name.underscore %>.role&.capitalize %>
+    <%%= <%= message_model_name.demodulize.underscore %>.role&.capitalize %>
   </div>
-  <div id="<%%= dom_id(<%= message_model_name.underscore %>) %>_content" style="white-space: pre-wrap;"><%%= <%= message_model_name.underscore %>.content %></div>
-  <%% if <%= message_model_name.underscore %>.<%= tool_call_model_name.tableize %>.any? %>
-    <%%= render "<%= message_table_name %>/<%= tool_call_model_name.tableize %>", <%= message_model_name.underscore %>: <%= message_model_name.underscore %> %>
+  <div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>_content" style="white-space: pre-wrap;"><%%= <%= message_model_name.demodulize.underscore %>.content %></div>
+  <%% if <%= message_model_name.demodulize.underscore %>.tool_call? %>
+    <%%= render "<%= message_model_name.underscore.pluralize %>/tool_calls", <%= message_model_name.demodulize.underscore %>: <%= message_model_name.demodulize.underscore %> %>
   <%% end %>
   <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
-    <%%= <%= message_model_name.underscore %>.created_at&.strftime("%I:%M %p") %>
+    <%%= <%= message_model_name.demodulize.underscore %>.created_at&.strftime("%I:%M %p") %>
   </div>
-<%% end %>
+</div>
