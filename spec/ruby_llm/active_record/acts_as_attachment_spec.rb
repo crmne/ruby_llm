@@ -65,29 +65,29 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(response.content).to be_present
     end
 
-    # it 'handles ActiveStorage::Attached::Many in ask method' do
-    #   chat = Chat.create!(model: model)
+    it 'handles ActiveStorage::Attached::Many in ask method' do
+      chat = Chat.create!(model: model)
 
-    #   document = Document.create!(title: 'Test Document')
-    #   document.files.attach(
-    #     io: File.open(image_path),
-    #     filename: 'ruby.png',
-    #     content_type: 'image/png'
-    #   )
-    #   document.files.attach(
-    #     io: File.open(pdf_path),
-    #     filename: 'sample.pdf',
-    #     content_type: 'application/pdf'
-    #   )
+      document = Document.create!(title: 'Test Document')
+      document.files.attach(
+        io: File.open(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+      document.files.attach(
+        io: File.open(pdf_path),
+        filename: 'sample.pdf',
+        content_type: 'application/pdf'
+      )
 
-    #   response = chat.ask('Analyze these', with: document.files)
+      response = chat.ask('Analyze these', with: document.files)
 
-    #   user_message = chat.messages.find_by(role: 'user')
-    #   expect(user_message.attachments.count).to eq(2)
-    #   filenames = user_message.attachments.map { |a| a.filename.to_s }.sort
-    #   expect(filenames).to eq(['ruby.png', 'sample.pdf'])
-    #   expect(response.content).to be_present
-    # end
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(2)
+      filenames = user_message.attachments.map { |a| a.filename.to_s }.sort
+      expect(filenames).to eq(['ruby.png', 'sample.pdf'])
+      expect(response.content).to be_present
+    end
   end
 
   describe 'attachment types' do
