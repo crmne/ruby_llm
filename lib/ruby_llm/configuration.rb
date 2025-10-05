@@ -23,6 +23,9 @@ module RubyLLM
                   :gpustack_api_base,
                   :gpustack_api_key,
                   :mistral_api_key,
+                  :replicate_api_key,
+                  :replicate_webhook_url,
+                  :replicate_webhook_events_filter,
                   # Default models
                   :default_model,
                   :default_embedding_model,

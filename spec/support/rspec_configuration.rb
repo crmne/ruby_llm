@@ -13,7 +13,7 @@ RSpec.configure do |config|
 
   config.around do |example|
     cassette_name = example.full_description.parameterize(separator: '_').delete_prefix('rubyllm_')
-    VCR.use_cassette(cassette_name) do
+    VCR.use_cassette(cassette_name, record: :new_episodes) do
       example.run
     end
   end

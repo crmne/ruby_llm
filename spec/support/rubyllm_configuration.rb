@@ -15,6 +15,8 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+      config.replicate_api_key = ENV.fetch('REPLICATE_API_KEY', 'test')
+      config.replicate_webhook_url = ENV.fetch('REPLICATE_WEBHOOK_URL', 'https://example.com/webhooks/replicate')
 
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)

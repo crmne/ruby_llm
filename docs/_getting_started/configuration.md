@@ -59,6 +59,8 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.replicate_api_key = ENV['REPLICATE_API_KEY']
+  config.replicate_webhook_url = ENV['REPLICATE_WEBHOOK_URL']
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'

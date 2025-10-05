@@ -76,8 +76,8 @@ module RubyLLM
       parse_moderation_response(response, model:)
     end
 
-    def paint(prompt, model:, size:)
-      payload = render_image_payload(prompt, model:, size:)
+    def paint(prompt, model:, **params)
+      payload = render_image_payload(prompt, model:, **params)
       response = @connection.post images_url, payload
       parse_image_response(response, model:)
     end
