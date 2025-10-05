@@ -203,7 +203,7 @@ To configure Replicate webhooks set the following configuration options:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.replicate_webhook_url = "https://your-app.com/your-webhook-path"
+  config.replicate_webhook_url = "https://example.com/your-webhook-path"
   config.replicate_webhook_events_filter = %w[output completed] # optionally specify which webhook events you want to receive, see Replicate's documentation for more details
 end
 ```
