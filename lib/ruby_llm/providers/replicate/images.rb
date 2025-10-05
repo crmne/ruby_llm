@@ -19,7 +19,7 @@ module RubyLLM
           self.model = model
 
           {}.tap do |payload|
-            payload[:webhook] = @config.replicate_webhook_url
+            payload[:webhook] = @config.replicate_webhook_url if @config.replicate_webhook_url
             payload[:version] = self.model.id unless official_model?
             payload[:input] = { prompt: prompt }.merge(params)
 
