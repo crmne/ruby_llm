@@ -25,7 +25,7 @@ module RubyLLM
         end
 
         def configuration_requirements
-          %i[replicate_api_key replicate_webhook_url]
+          %i[replicate_api_key]
         end
       end
     end

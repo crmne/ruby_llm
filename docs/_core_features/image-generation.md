@@ -197,6 +197,17 @@ end
 save_deferred_image(deferred_image, "deferred_image.png")
 ```
 
+#### Configuring Replicate Webhooks
+
+To configure Replicate webhooks set the following configuration options:
+
+```ruby
+RubyLLM.configure do |config|
+  config.replicate_webhook_url = "https://your-app.com/your-webhook-path"
+  config.replicate_webhook_events_filter = %w[output completed] # optionally specify which webhook events you want to receive, see Replicate's documentation for more details
+end
+```
+
 ### Getting Raw Image Blob
 
 The `to_blob` method returns the raw binary image data (decoded from Base64 or downloaded from URL). This is useful for integration with other libraries or frameworks. Deferred images return `nil` if the image has not finished generating.
