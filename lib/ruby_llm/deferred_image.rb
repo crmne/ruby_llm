@@ -13,7 +13,14 @@ module RubyLLM
     end
 
     def to_blob
-      provider_instance.fetch_image_blob(url)
+      provider_instance.fetch_deferred_blob(url)
+    end
+
+    def self.image_from(url, provider:, config: nil)
+      config ||= RubyLLM.config
+      provider_instance = Provider.providers.fetch(provider.to_sym).new(config)
+
+      Image.new(blob: provider_instance.fetch_finished_blob(url))
     end
   end
 end

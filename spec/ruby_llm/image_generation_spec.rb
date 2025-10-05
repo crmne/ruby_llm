@@ -88,6 +88,16 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_deferred_image image
     end
 
+    it 'fetches finished deferred images' do
+      output_url = 'https://replicate.delivery/xezq/6qGn3LIY0MJmI9wxvoFLfZIY0sn7b8psftLM86DioJ7iIFcVA/tmpexunri3x.png'
+      image = RubyLLM.image_from(output_url, provider: :replicate)
+
+      expect(image).to be_a(described_class)
+      expect(image.blob?).to be(true)
+
+      save_and_verify_image image
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.paint('a cat', model: 'invalid-model')

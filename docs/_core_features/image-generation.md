@@ -177,7 +177,15 @@ end
 
 For deferred images, the `save` method will write the file and return its path only if the image has been generated. Otherwise, it will return `nil`.
 
-The ideal way to handle deferred images is by having the provider notify you via webhook when the image is generated, and then fetching the image outside of RubyLLM. But if you're not able to configure a webhook, another way to handle these is to call the method recursively with a delay until it succeeds or a condition is met. This is equivalent to a "polling" mechanism. Check your provider's documentation for any rate limits that may apply.
+The ideal way to handle deferred images is by having the provider notify you via webhook when the image is generated, and then fetching the image using `RubyLLM.image_from` as follows:
+
+```ruby
+output_url = webhook_payload['output']
+image = RubyLLM.image_from(output_url, provider: :replicate) # returns a RubyLLM::Image instance
+image.save("cartoon_panda.png")
+```
+
+If you're not able to configure a webhook, another way to handle these is to call the method recursively with a delay until it succeeds or a condition is met. This is equivalent to a "polling" mechanism. Check your provider's documentation for any rate limits that may apply.
 
 ```ruby
 # Only do this if you're not able to configure a webhook

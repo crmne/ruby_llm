@@ -7,12 +7,22 @@ module RubyLLM
 
     attr_reader :url, :data, :mime_type, :revised_prompt, :model_id
 
-    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil)
+    def initialize(url: nil, # rubocop:disable Metrics/ParameterLists
+                   data: nil,
+                   blob: nil,
+                   mime_type: nil,
+                   revised_prompt: nil,
+                   model_id: nil)
       @url = url
       @data = data
+      @blob = blob
       @mime_type = mime_type
       @revised_prompt = revised_prompt
       @model_id = model_id
+    end
+
+    def blob?
+      !@blob.nil?
     end
 
     def base64?
@@ -20,7 +30,9 @@ module RubyLLM
     end
 
     def to_blob
-      if base64?
+      if blob?
+        @blob
+      elsif base64?
         Base64.decode64 @data
       else
         response = Connection.basic.get @url

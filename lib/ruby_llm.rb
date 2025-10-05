@@ -56,6 +56,10 @@ module RubyLLM
       Image.paint(...)
     end
 
+    def image_from(...)
+      DeferredImage.image_from(...)
+    end
+
     def models
       Models.instance
     end

@@ -33,12 +33,15 @@ module RubyLLM
           DeferredImage.new(url: response.body.dig('urls', 'get'), provider_instance: self)
         end
 
-        def fetch_image_blob(url)
+        def fetch_deferred_blob(url)
           prediction = @connection.get(url).body
           return unless prediction['status'] == 'succeeded'
 
-          image_url = Array(prediction['output']).first
-          @connection.get(image_url).body
+          fetch_finished_blob(Array(prediction['output']).first)
+        end
+
+        def fetch_finished_blob(url, **)
+          @connection.get(url).body
         end
 
         private
