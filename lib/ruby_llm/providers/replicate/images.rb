@@ -5,11 +5,9 @@ module RubyLLM
     class Replicate
       # Image generation methods for the Replicate API implementation
       module Images
-        attr_reader :model
-
         def images_url
           if official_model?
-            "/v1/models/#{model.name}/predictions"
+            "/v1/models/#{@model.name}/predictions"
           else
             '/v1/predictions'
           end
@@ -20,7 +18,7 @@ module RubyLLM
 
           {}.tap do |payload|
             payload[:webhook] = @config.replicate_webhook_url if @config.replicate_webhook_url
-            payload[:version] = self.model.id unless official_model?
+            payload[:version] = @model.id unless official_model?
             payload[:input] = { prompt: prompt }.merge(params)
 
             if @config.replicate_webhook_events_filter
@@ -51,7 +49,7 @@ module RubyLLM
         end
 
         def official_model?
-          model.metadata[:is_official] == true
+          @model.metadata[:is_official] == true
         end
       end
     end
