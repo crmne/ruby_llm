@@ -79,7 +79,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     bedrock: {
-      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream',
+      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/converse-stream',
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -167,11 +167,12 @@ module StreamingErrorHelpers
 
     status = type == :chunk ? config[:chunk_status] : 200
 
+    # Bedrock streams via AWS Event Stream over the converse-stream endpoint.
     stub_request(:post, config[:url])
       .to_return(
         status: status,
         body: body,
-        headers: { 'Content-Type' => 'text/event-stream' }
+        headers: { 'Content-Type' => 'application/vnd.amazon.eventstream' }
       )
   end
 end
