@@ -41,13 +41,30 @@ module RubyLLM
       end
 
       def create_signer
-        Signing::Signer.new({
-                              access_key_id: @config.bedrock_api_key,
-                              secret_access_key: @config.bedrock_secret_key,
-                              session_token: @config.bedrock_session_token,
-                              region: @config.bedrock_region,
-                              service: 'bedrock'
-                            })
+        signer_options = {
+          region: @config.bedrock_region,
+          service: 'bedrock'
+        }
+
+        if @config.bedrock_credential_provider
+          validate_credential_provider!(@config.bedrock_credential_provider)
+          signer_options[:credentials_provider] = @config.bedrock_credential_provider
+        else
+          signer_options.merge!({
+                                  access_key_id: @config.bedrock_api_key,
+                                  secret_access_key: @config.bedrock_secret_key,
+                                  session_token: @config.bedrock_session_token
+                                })
+        end
+
+        Signing::Signer.new(signer_options)
+      end
+
+      def validate_credential_provider!(provider)
+        return if provider.respond_to?(:credentials)
+
+        raise ConfigurationError,
+              'bedrock_credential_provider must respond to :credentials method'
       end
 
       def build_request(url, method: :post, payload: nil)
@@ -68,13 +85,23 @@ module RubyLLM
         )
       end
 
+      def configuration_requirements
+        # If credential provider is configured, only region is required
+        # Otherwise, require static credentials (api_key, secret_key) + region
+        if @config.bedrock_credential_provider
+          %i[bedrock_region]
+        else
+          %i[bedrock_api_key bedrock_secret_key bedrock_region]
+        end
+      end
+
       class << self
         def capabilities
           Bedrock::Capabilities
         end
 
         def configuration_requirements
-          %i[bedrock_api_key bedrock_secret_key bedrock_region]
+          %i[bedrock_region]
         end
       end
     end

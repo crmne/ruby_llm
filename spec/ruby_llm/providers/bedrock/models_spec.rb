@@ -38,7 +38,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
       it 'adds us. prefix to model ID' do
         # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: 'us-east-1',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -63,7 +67,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
       it 'does not add us. prefix to model ID' do
         # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: 'us-east-1',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -88,7 +96,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
       it 'does not add us. prefix to model ID' do
         # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: 'us-east-1',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -112,7 +124,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
       it 'does not add us. prefix to model ID' do
         # Mock a provider instance to test the region functionality
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('us-east-1')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: 'us-east-1',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -125,7 +141,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
   # New specs for region-aware inference profile handling
   describe '#model_id_with_region with region awareness' do
     let(:provider_instance) do
-      allow(RubyLLM.config).to receive(:bedrock_region).and_return('eu-west-3')
+      allow(RubyLLM.config).to receive_messages(
+        bedrock_region: 'eu-west-3',
+        bedrock_api_key: 'test-key',
+        bedrock_secret_key: 'test-secret'
+      )
       provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
       provider.extend(described_class)
       provider
@@ -163,7 +183,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
     context 'with AP region configured' do
       let(:provider_instance) do
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('ap-south-1')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: 'ap-south-1',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
         provider
@@ -184,7 +208,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
     context 'with region prefix edge cases' do
       it 'handles empty region gracefully' do
-        allow(RubyLLM.config).to receive(:bedrock_region).and_return('')
+        allow(RubyLLM.config).to receive_messages(
+          bedrock_region: '',
+          bedrock_api_key: 'test-key',
+          bedrock_secret_key: 'test-secret'
+        )
         provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
         provider.extend(described_class)
 
@@ -208,7 +236,11 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
         }
 
         regions_and_expected_prefixes.each do |region, expected_prefix|
-          allow(RubyLLM.config).to receive(:bedrock_region).and_return(region)
+          allow(RubyLLM.config).to receive_messages(
+            bedrock_region: region,
+            bedrock_api_key: 'test-key',
+            bedrock_secret_key: 'test-secret'
+          )
           provider = RubyLLM::Providers::Bedrock.new(RubyLLM.config)
           provider.extend(described_class)
 
