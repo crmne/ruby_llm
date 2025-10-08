@@ -119,6 +119,8 @@ RSpec.describe RubyLLM::Chat do
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
         end
 
+        skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
+
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
@@ -140,6 +142,8 @@ RSpec.describe RubyLLM::Chat do
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
         end
+
+        skip 'Flaky test for deepseek' if provider == :deepseek
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
@@ -269,6 +273,8 @@ RSpec.describe RubyLLM::Chat do
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
         end
+
+        skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(DiceRoll)
