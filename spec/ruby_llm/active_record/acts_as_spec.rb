@@ -397,13 +397,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       before(:all) do # rubocop:disable RSpec/BeforeAfterAll
         # Create additional tables for testing edge cases
         ActiveRecord::Migration.suppress_messages do
-          ActiveRecord::Migration.create_table :support_chats, force: true do |t|
+          ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
             t.string :model_id
             t.timestamps
           end
 
           ActiveRecord::Migration.create_table :support_messages, force: true do |t|
-            t.references :chat, foreign_key: { to_table: :support_chats }
+            t.references :chat, foreign_key: { to_table: :support_conversations }
             t.string :role
             t.text :content
             t.string :model_id
@@ -429,17 +429,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
             ActiveRecord::Migration.drop_table :support_tool_calls
           end
           ActiveRecord::Migration.drop_table :support_messages if ActiveRecord::Base.connection.table_exists?(:support_messages)
-          ActiveRecord::Migration.drop_table :support_chats if ActiveRecord::Base.connection.table_exists?(:support_chats)
+          ActiveRecord::Migration.drop_table :support_conversations if ActiveRecord::Base.connection.table_exists?(:support_conversations)
         end
       end
 
       module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-        class Chat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+        def self.table_name_prefix
+          "support_"
+        end
+
+        class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
           acts_as_chat message_class: 'Support::Message'
         end
 
         class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-          acts_as_message chat_class: 'Support::Chat', tool_call_class: 'Support::ToolCall'
+          acts_as_message chat: :conversation, chat_class: 'Support::Conversation', tool_call_class: 'Support::ToolCall'
         end
 
         class ToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
@@ -459,7 +463,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # end
 
       it 'creates messages successfully' do
-        conversation = Support::Chat.create!(model: model)
+        conversation = Support::Conversation.create!(model: model)
 
         expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
         expect(conversation.messages.count).to eq(1)
