@@ -393,6 +393,65 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
 
+    # Test for issue #425 - foreign key generation bug with namespaced models
+    describe 'namespaced models with explicit table_name' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Reproduce issue where acts_as_chat generates wrong foreign key
+        # for namespaced models with explicit table_name
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_replies, force: true do |t|
+            t.references :conversation, null: false, foreign_key: { to_table: :support_conversations }
+            t.string :role
+            t.text :content
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:support_replies)
+            ActiveRecord::Migration.drop_table :support_replies
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_conversations)
+            ActiveRecord::Migration.drop_table :support_conversations
+          end
+        end
+      end
+
+      module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          self.table_name = 'support_conversations'
+          acts_as_chat messages: :replies, message_class: 'Support::Reply'
+        end
+
+        class Reply < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          self.table_name = 'support_replies'
+          acts_as_message chat: :conversation, chat_class: 'Support::Conversation'
+        end
+      end
+
+      it 'generates foreign key from association name not table name' do
+        # Bug: acts_as_chat uses table_name.singularize -> support_conversation_id
+        # Fix: should use association name -> conversation_id
+        reflection = Support::Conversation.reflect_on_association(:replies)
+        expect(reflection.foreign_key).to eq('conversation_id')
+      end
+
+      it 'creates messages with correct foreign key' do
+        conversation = Support::Conversation.create!(model: model)
+
+        # Should use conversation_id (from association name), not support_conversation_id (from table_name)
+        expect { conversation.replies.create!(role: 'user', content: 'Test') }.not_to raise_error
+        expect(conversation.replies.count).to eq(1)
+      end
+    end
+
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model: model)
