@@ -141,21 +141,21 @@ module RubyLLM
 
       private
 
-      def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false)
+      def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false) # rubocop:disable Metrics/ParameterLists
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
 
-        default_foreign_key = "#{default_assoc.to_s}_id"
+        default_foreign_key = "#{default_assoc}_id"
         # has_many/has_one: foreign key is on the associated table pointing back to owner
         # belongs_to:       foreign key is on the owner table pointing to associated table
-        if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
-          foreign_key = "#{owner_table.singularize}_id"
-        else # belongs_to
-          foreign_key = "#{table_name.singularize}_id"
-        end
+        foreign_key = if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
+                        "#{owner_table.singularize}_id"
+                      else # belongs_to
+                        "#{table_name.singularize}_id"
+                      end
 
         params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
-        params << "#{default_assoc.to_s}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
+        params << "#{default_assoc}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
 
       # Convert namespaced model names to proper table names
