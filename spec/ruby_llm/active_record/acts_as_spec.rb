@@ -455,17 +455,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         end
       end
 
-      # it 'works with namespaced classes and custom associations' do
-      #   bot_chat = Assistants::BotChat.create!(model: model)
-      #   bot_chat.ask("What's 2 + 2?")
-
-      #   expect(bot_chat.bot_messages.count).to eq(2)
-      #   expect(bot_chat.bot_messages.first).to be_a(BotMessage)
-      #   expect(bot_chat.bot_messages.first.role).to eq('user')
-      #   expect(bot_chat.bot_messages.last.role).to eq('assistant')
-      #   expect(bot_chat.bot_messages.last.content).to be_present
-      # end
-
       it 'creates messages successfully' do
         conversation = Support::Conversation.create!(model: model)
 
