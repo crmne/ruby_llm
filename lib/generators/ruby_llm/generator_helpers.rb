@@ -144,14 +144,13 @@ module RubyLLM
       def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false)
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
 
-        # For has_many/has_one: foreign key is on the associated table pointing back to owner
-        # For belongs_to: foreign key is on the owner table pointing to associated table
+        default_foreign_key = "#{default_assoc.to_s}_id"
+        # has_many/has_one: foreign key is on the associated table pointing back to owner
+        # belongs_to:       foreign key is on the owner table pointing to associated table
         if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
           foreign_key = "#{owner_table.singularize}_id"
-          default_foreign_key = "#{default_assoc.to_s}_id"
         else # belongs_to
           foreign_key = "#{table_name.singularize}_id"
-          default_foreign_key = "#{default_assoc.to_s}_id"
         end
 
         params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
