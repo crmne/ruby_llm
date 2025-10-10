@@ -31,8 +31,8 @@ module RubyLLM
       end
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(messages: :messages, message_class: nil,
-                         model: :model, model_class: nil)
+        def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
+                         model: :model, model_class: nil, model_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
 
           class_attribute :messages_association_name, :model_association_name, :message_class, :model_class
@@ -45,12 +45,12 @@ module RubyLLM
           has_many messages,
                    -> { order(created_at: :asc) },
                    class_name: self.message_class,
-                   foreign_key: ActiveSupport::Inflector.foreign_key(table_name.singularize),
+                   foreign_key: messages_foreign_key,
                    dependent: :destroy
 
           belongs_to model,
                      class_name: self.model_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(model.to_s.singularize),
+                     foreign_key: model_foreign_key,
                      optional: true
 
           delegate :add_message, to: :to_llm
@@ -68,7 +68,7 @@ module RubyLLM
           end
         end
 
-        def acts_as_model(chats: :chats, chat_class: nil)
+        def acts_as_model(chats: :chats, chat_class: nil, chats_foreign_key: nil)
           include RubyLLM::ActiveRecord::ModelMethods
 
           class_attribute :chats_association_name, :chat_class
@@ -80,18 +80,16 @@ module RubyLLM
           validates :provider, presence: true
           validates :name, presence: true
 
-          has_many chats,
-                   class_name: self.chat_class,
-                   foreign_key: ActiveSupport::Inflector.foreign_key(table_name.singularize)
+          has_many chats, class_name: self.chat_class, foreign_key: chats_foreign_key
 
           define_method :chats_association do
             send(chats_association_name)
           end
         end
 
-        def acts_as_message(chat: :chat, chat_class: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
-                            tool_calls: :tool_calls, tool_call_class: nil,
-                            model: :model, model_class: nil)
+        def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
+                            tool_calls: :tool_calls, tool_call_class: nil, tool_calls_foreign_key: nil,
+                            model: :model, model_class: nil, model_foreign_key: nil)
           include RubyLLM::ActiveRecord::MessageMethods
 
           class_attribute :chat_association_name, :tool_calls_association_name, :model_association_name,
@@ -106,12 +104,12 @@ module RubyLLM
 
           belongs_to chat,
                      class_name: self.chat_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(chat.to_s.singularize),
+                     foreign_key: chat_foreign_key,
                      touch: touch_chat
 
           has_many tool_calls,
                    class_name: self.tool_call_class,
-                   foreign_key: ActiveSupport::Inflector.foreign_key(table_name.singularize),
+                   foreign_key: tool_calls_foreign_key,
                    dependent: :destroy
 
           belongs_to :parent_tool_call,
@@ -126,7 +124,7 @@ module RubyLLM
 
           belongs_to model,
                      class_name: self.model_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(model.to_s.singularize),
+                     foreign_key: model_foreign_key,
                      optional: true
 
           delegate :tool_call?, :tool_result?, to: :to_llm
@@ -144,8 +142,8 @@ module RubyLLM
           end
         end
 
-        def acts_as_tool_call(message: :message, message_class: nil,
-                              result: :result, result_class: nil)
+        def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
+                              result: :result, result_class: nil, result_foreign_key: nil)
           class_attribute :message_association_name, :result_association_name, :message_class, :result_class
 
           self.message_association_name = message
@@ -155,11 +153,11 @@ module RubyLLM
 
           belongs_to message,
                      class_name: self.message_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(message.to_s.singularize)
+                     foreign_key: message_foreign_key
 
           has_one result,
                   class_name: self.result_class,
-                  foreign_key: ActiveSupport::Inflector.foreign_key(table_name.singularize),
+                  foreign_key: result_foreign_key,
                   dependent: :nullify
 
           define_method :message_association do
