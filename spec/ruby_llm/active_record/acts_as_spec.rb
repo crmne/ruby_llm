@@ -403,7 +403,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           end
 
           ActiveRecord::Migration.create_table :support_messages, force: true do |t|
-            t.references :chat, foreign_key: { to_table: :support_conversations }
+            t.references :conversation, foreign_key: { to_table: :support_conversations }
             t.string :role
             t.text :content
             t.string :model_id
