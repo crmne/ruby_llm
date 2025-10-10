@@ -154,9 +154,7 @@ module RubyLLM
           default_foreign_key = "#{default_assoc.to_s}_id"
         end
 
-        return if assoc == default_assoc
-
-        params << "#{default_assoc}: :#{assoc}"
+        params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
         params << "#{default_assoc.to_s}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
