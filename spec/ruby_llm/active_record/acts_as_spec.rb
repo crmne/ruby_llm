@@ -428,14 +428,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
             ActiveRecord::Migration.drop_table :support_tool_calls
           end
-          ActiveRecord::Migration.drop_table :support_messages if ActiveRecord::Base.connection.table_exists?(:support_messages)
-          ActiveRecord::Migration.drop_table :support_conversations if ActiveRecord::Base.connection.table_exists?(:support_conversations)
+          if ActiveRecord::Base.connection.table_exists?(:support_messages)
+            ActiveRecord::Migration.drop_table :support_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_conversations)
+            ActiveRecord::Migration.drop_table :support_conversations
+          end
         end
       end
 
       module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
         def self.table_name_prefix
-          "support_"
+          'support_'
         end
 
         class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
@@ -446,7 +450,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           acts_as_message chat: :conversation, chat_class: 'Support::Conversation', tool_call_class: 'Support::ToolCall'
         end
 
-        class ToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
           acts_as_tool_call message_class: 'Support::Message'
         end
       end
