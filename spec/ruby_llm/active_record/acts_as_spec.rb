@@ -393,11 +393,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
 
-    # Test for issue #425 - foreign key generation bug with namespaced models
     describe 'namespaced models with explicit table_name' do
       before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-        # Reproduce issue where acts_as_chat generates wrong foreign key
-        # for namespaced models with explicit table_name
         ActiveRecord::Migration.suppress_messages do
           ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
             t.string :model_id
@@ -436,17 +433,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         end
       end
 
-      it 'generates foreign key from association name not table name' do
-        # Bug: acts_as_chat uses table_name.singularize -> support_conversation_id
-        # Fix: should use association name -> conversation_id
+      it 'uses association name for foreign key' do
         reflection = Support::Conversation.reflect_on_association(:replies)
         expect(reflection.foreign_key).to eq('conversation_id')
       end
 
-      it 'creates messages with correct foreign key' do
+      it 'creates messages successfully' do
         conversation = Support::Conversation.create!(model: model)
 
-        # Should use conversation_id (from association name), not support_conversation_id (from table_name)
         expect { conversation.replies.create!(role: 'user', content: 'Test') }.not_to raise_error
         expect(conversation.replies.count).to eq(1)
       end
