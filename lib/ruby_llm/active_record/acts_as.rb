@@ -31,7 +31,7 @@ module RubyLLM
       end
 
       class_methods do # rubocop:disable Metrics/BlockLength
-        def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil,
+        def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                          model: :model, model_class: nil, model_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
 
@@ -142,7 +142,7 @@ module RubyLLM
           end
         end
 
-        def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil,
+        def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                               result: :result, result_class: nil, result_foreign_key: nil)
           class_attribute :message_association_name, :result_association_name, :message_class, :result_class
 
