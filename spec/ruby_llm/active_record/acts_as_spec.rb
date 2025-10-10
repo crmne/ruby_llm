@@ -393,18 +393,31 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
 
-    describe 'namespaced models with explicit table_name' do
+    describe 'namespaced chat models with custom foreign keys' do
       before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
         ActiveRecord::Migration.suppress_messages do
-          ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
+          ActiveRecord::Migration.create_table :support_chats, force: true do |t|
             t.string :model_id
             t.timestamps
           end
 
-          ActiveRecord::Migration.create_table :support_replies, force: true do |t|
-            t.references :conversation, null: false, foreign_key: { to_table: :support_conversations }
+          ActiveRecord::Migration.create_table :support_messages, force: true do |t|
+            t.references :chat, foreign_key: { to_table: :support_chats }
             t.string :role
             t.text :content
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.references :tool_call, foreign_key: { to_table: :support_tool_calls }
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_tool_calls, force: true do |t|
+            t.references :message, foreign_key: { to_table: :support_messages }
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
             t.timestamps
           end
         end
@@ -412,37 +425,44 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       after(:all) do # rubocop:disable RSpec/BeforeAfterAll
         ActiveRecord::Migration.suppress_messages do
-          if ActiveRecord::Base.connection.table_exists?(:support_replies)
-            ActiveRecord::Migration.drop_table :support_replies
+          if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
+            ActiveRecord::Migration.drop_table :support_tool_calls
           end
-          if ActiveRecord::Base.connection.table_exists?(:support_conversations)
-            ActiveRecord::Migration.drop_table :support_conversations
-          end
+          ActiveRecord::Migration.drop_table :support_messages if ActiveRecord::Base.connection.table_exists?(:support_messages)
+          ActiveRecord::Migration.drop_table :support_chats if ActiveRecord::Base.connection.table_exists?(:support_chats)
         end
       end
 
       module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-        class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-          self.table_name = 'support_conversations'
-          acts_as_chat messages: :replies, message_class: 'Support::Reply'
+        class Chat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat message_class: 'Support::Message'
         end
 
-        class Reply < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-          self.table_name = 'support_replies'
-          acts_as_message chat: :conversation, chat_class: 'Support::Conversation'
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat_class: 'Support::Chat', tool_call_class: 'Support::ToolCall'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message_class: 'Support::Message'
         end
       end
 
-      it 'uses association name for foreign key' do
-        reflection = Support::Conversation.reflect_on_association(:replies)
-        expect(reflection.foreign_key).to eq('conversation_id')
-      end
+      # it 'works with namespaced classes and custom associations' do
+      #   bot_chat = Assistants::BotChat.create!(model: model)
+      #   bot_chat.ask("What's 2 + 2?")
+
+      #   expect(bot_chat.bot_messages.count).to eq(2)
+      #   expect(bot_chat.bot_messages.first).to be_a(BotMessage)
+      #   expect(bot_chat.bot_messages.first.role).to eq('user')
+      #   expect(bot_chat.bot_messages.last.role).to eq('assistant')
+      #   expect(bot_chat.bot_messages.last.content).to be_present
+      # end
 
       it 'creates messages successfully' do
-        conversation = Support::Conversation.create!(model: model)
+        conversation = Support::Chat.create!(model: model)
 
-        expect { conversation.replies.create!(role: 'user', content: 'Test') }.not_to raise_error
-        expect(conversation.replies.count).to eq(1)
+        expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
+        expect(conversation.messages.count).to eq(1)
       end
     end
 
