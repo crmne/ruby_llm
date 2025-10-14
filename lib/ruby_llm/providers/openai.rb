@@ -7,6 +7,7 @@ module RubyLLM
       include OpenAI::Chat
       include OpenAI::Embeddings
       include OpenAI::Models
+      include OpenAI::Moderation
       include OpenAI::Streaming
       include OpenAI::Tools
       include OpenAI::Images

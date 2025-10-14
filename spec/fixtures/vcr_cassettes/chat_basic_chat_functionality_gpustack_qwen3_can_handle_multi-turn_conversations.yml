@@ -22,15 +22,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:20 GMT
-      - Wed, 20 Aug 2025 17:11:21 GMT
+      - Wed, 24 Sep 2025 15:09:45 GMT
+      - Wed, 24 Sep 2025 15:09:45 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1097'
+      - '1623'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -41,28 +41,41 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby
-        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer. He
-        developed the Ruby programming language in the mid-1990s, with the first version
-        released in 1995. Matsumoto chose the name \"Ruby\" because he admired the
-        gemstone and its qualities, such as its beauty and versatility. He is also
-        the lead developer of the Ruby language and has been actively involved in
-        its evolution and the broader Ruby community since its inception.","role":"assistant"}}],"created":1755709884,"id":"chatcmpl-KDHRalBctwxT8fqJZzP2cKeBGtyo0fmU","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":318,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":213,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":817.9003330022783,"time_per_output_token_ms":8.772367924528302,"time_to_first_token_ms":17.117,"tokens_per_second":113.99430673717107,"total_tokens":332}}'
-  recorded_at: Wed, 20 Aug 2025 17:11:24 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby,
+        the programming language, was created by **Yukihiro \"Matz\" Matsumoto**.
+        He developed it in the mid-1990s, with the first version (Ruby 0.0.0) released
+        in 1993 and the first stable version (Ruby 0.3.0) in 1995. Matsumoto designed
+        Ruby with a focus on simplicity and productivity, emphasizing a balance between
+        functional and object-oriented programming paradigms.\n\nAs for the **Ruby
+        gem** (a package format for Ruby libraries), it was introduced as part of
+        the Ruby ecosystem. The gem system was developed by the Ruby community, with
+        significant contributions from developers like **David Heinemeier Hansson
+        (DHH)**, who created the Ruby on Rails framework. However, the gem system
+        itself is managed by the **RubyGems** organization, which oversees its evolution.\n\nIn
+        summary:\n- **Ruby programming language**: Created by **Yukihiro Matsumoto**.\n-
+        **Ruby gem system**: Developed collaboratively by the Ruby community, with
+        key contributions from figures like DHH.","role":"assistant"}}],"created":1758726593,"id":"chatcmpl-lIPBIGXH2y49d9SV1yXYPuuqbYyBgxId","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":725,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":493,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":813.3860097606322,"time_per_output_token_ms":9.561884137931035,"time_to_first_token_ms":17.212,"tokens_per_second":104.58189887839158,"total_tokens":739}}'
+  recorded_at: Wed, 24 Sep 2025 15:09:53 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"\n\nRuby was created by **Yukihiro
-        \"Matz\" Matsumoto**, a Japanese programmer. He developed the Ruby programming
-        language in the mid-1990s, with the first version released in 1995. Matsumoto
-        chose the name \"Ruby\" because he admired the gemstone and its qualities,
-        such as its beauty and versatility. He is also the lead developer of the Ruby
-        language and has been actively involved in its evolution and the broader Ruby
-        community since its inception."},{"role":"user","content":"What year did he
-        create Ruby?"}],"stream":false}'
+        creator?"},{"role":"assistant","content":"\n\nRuby, the programming language,
+        was created by **Yukihiro \"Matz\" Matsumoto**. He developed it in the mid-1990s,
+        with the first version (Ruby 0.0.0) released in 1993 and the first stable
+        version (Ruby 0.3.0) in 1995. Matsumoto designed Ruby with a focus on simplicity
+        and productivity, emphasizing a balance between functional and object-oriented
+        programming paradigms.\n\nAs for the **Ruby gem** (a package format for Ruby
+        libraries), it was introduced as part of the Ruby ecosystem. The gem system
+        was developed by the Ruby community, with significant contributions from developers
+        like **David Heinemeier Hansson (DHH)**, who created the Ruby on Rails framework.
+        However, the gem system itself is managed by the **RubyGems** organization,
+        which oversees its evolution.\n\nIn summary:\n- **Ruby programming language**:
+        Created by **Yukihiro Matsumoto**.\n- **Ruby gem system**: Developed collaboratively
+        by the Ruby community, with key contributions from figures like DHH."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -78,15 +91,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:23 GMT
-      - Wed, 20 Aug 2025 17:11:24 GMT
+      - Wed, 24 Sep 2025 15:09:52 GMT
+      - Wed, 24 Sep 2025 15:09:52 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '967'
+      - '1088'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -98,10 +111,11 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nYukihiro
-        \"Matz\" Matsumoto created the Ruby programming language, and the **first
-        version (Ruby 0.0)** was released in **1995**. The **first stable version
-        (Ruby 1.0)** was released in **1997**. The exact year of creation is often
-        cited as **1995**, when the initial version was developed and made publicly
-        available.","role":"assistant"}}],"created":1755709889,"id":"chatcmpl-7ONzYKQOeiJoOivSGXXpIG41zFeKzrdq","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":533,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":443,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":132,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3200.155159038014,"time_per_output_token_ms":8.91860037523452,"time_to_first_token_ms":41.248,"tokens_per_second":112.12521672983966,"total_tokens":665}}'
-  recorded_at: Wed, 20 Aug 2025 17:11:29 GMT
+        \"Matz\" Matsumoto created the **Ruby programming language**. The first version
+        of Ruby, **Ruby 0.0.0**, was released in **1993**, but the first **stable
+        version**, **Ruby 0.3.0**, was released in **1995**. This marked the official
+        debut of the language as a mature and usable tool. \n\nSo, while the initial
+        development began in 1993, the stable release that established Ruby as a recognized
+        programming language was in **1995**.","role":"assistant"}}],"created":1758726596,"id":"chatcmpl-chM3eNoTiRtnUdGkLQwLGiMxTUOTDgoK","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":314,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":192,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":259,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3860.140693931083,"time_per_output_token_ms":9.63938535031847,"time_to_first_token_ms":67.096,"tokens_per_second":103.74105439896762,"total_tokens":573}}'
+  recorded_at: Wed, 24 Sep 2025 15:09:56 GMT
 recorded_with: VCR 6.3.1

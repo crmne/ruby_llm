@@ -65,6 +65,16 @@ jobs:
       run: bundle exec rubocop
 
     - name: Run tests
+      if: matrix.ruby-version != '3.4' || matrix.rails-version != 'rails-8.0'
+      run: bundle exec appraisal ${{ matrix.rails-version }} rspec --tag '~generator'
+      env: # Dummy environment variables for local providers
+        OLLAMA_API_BASE: http://localhost:11434/v1
+        GPUSTACK_API_BASE: http://localhost:11444/v1
+        GPUSTACK_API_KEY: test
+        SKIP_COVERAGE: true
+
+    - name: Run full test suite with coverage (latest Ruby/Rails)
+      if: matrix.ruby-version == '3.4' && matrix.rails-version == 'rails-8.0'
       run: bundle exec appraisal ${{ matrix.rails-version }} rspec
       env: # Dummy environment variables for local providers
         OLLAMA_API_BASE: http://localhost:11434/v1
@@ -72,6 +82,7 @@ jobs:
         GPUSTACK_API_KEY: test
 
     - name: Upload coverage to Codecov
+      if: matrix.ruby-version == '3.4' && matrix.rails-version == 'rails-8.0'
       uses: codecov/codecov-action@v5
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -83,11 +94,12 @@ jobs:
       run: |
         FARADAY_VERSION=1.10.3 bundle install
         bundle exec appraisal ${{ matrix.rails-version }} bundle install
-        bundle exec appraisal ${{ matrix.rails-version }} rspec
+        bundle exec appraisal ${{ matrix.rails-version }} rspec --tag '~generator'
       env: # Dummy environment variables for local providers
         OLLAMA_API_BASE: http://localhost:11434/v1
         GPUSTACK_API_BASE: http://localhost:11444/v1
         GPUSTACK_API_KEY: test
+        SKIP_COVERAGE: true
 
   publish:
     name: Build + Publish

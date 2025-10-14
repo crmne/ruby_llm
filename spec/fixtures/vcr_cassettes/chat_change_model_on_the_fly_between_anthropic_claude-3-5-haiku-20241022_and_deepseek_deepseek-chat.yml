@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 26 Aug 2025 14:28:53 GMT
+      - Wed, 24 Sep 2025 14:55:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-08-26T14:28:53Z'
+      - '2025-09-24T14:55:30Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-08-26T14:28:53Z'
+      - '2025-09-24T14:55:30Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-08-26T14:28:53Z'
+      - '2025-09-24T14:55:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-08-26T14:28:53Z'
+      - '2025-09-24T14:55:30Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -64,7 +64,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '466'
+      - '833'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -77,8 +77,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01LYxaRqmLp6As9UJqF3zTcs","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard"}}'
-  recorded_at: Tue, 26 Aug 2025 14:28:53 GMT
+      string: '{"id":"msg_016vmvvuLqDWpnyJvjKDDEaQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard"}}'
+  recorded_at: Wed, 24 Sep 2025 14:55:30 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 26 Aug 2025 14:28:54 GMT
+      - Wed, 24 Sep 2025 14:55:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,7 +116,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 4e1766a77e83a5c8197be5d879ffac35
+      - 7a352cbbf94fc1d9bb4668b76d6741c2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -131,6 +131,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"014c989d-7b7e-43c5-b7f0-4f23bc835c23","object":"chat.completion","created":1756218533,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 26 Aug 2025 14:28:56 GMT
+      string: '{"id":"254ada9b-b178-4bd3-9b36-ae031698f4b3","object":"chat.completion","created":1758725731,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 14:55:34 GMT
 recorded_with: VCR 6.3.1

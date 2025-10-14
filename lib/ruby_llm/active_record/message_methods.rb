@@ -18,14 +18,14 @@ module RubyLLM
           tool_call_id: extract_tool_call_id,
           input_tokens: input_tokens,
           output_tokens: output_tokens,
-          model_id: model_id
+          model_id: model_association&.model_id
         )
       end
 
       private
 
       def extract_tool_calls
-        tool_calls.to_h do |tool_call|
+        tool_calls_association.to_h do |tool_call|
           [
             tool_call.tool_call_id,
             RubyLLM::ToolCall.new(
