@@ -16,6 +16,10 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
+      config.azure_openai_api_base = ENV.fetch('AZURE_OPENAI_ENDPOINT', 'test')
+      config.azure_openai_api_key = ENV.fetch('AZURE_OPENAI_API_KEY', 'test')
+      config.azure_openai_api_version = ENV.fetch('AZURE_OPENAI_API_VER', 'test')
+
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
 

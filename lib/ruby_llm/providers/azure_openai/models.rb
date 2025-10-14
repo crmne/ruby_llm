@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module AzureOpenAI
+    class AzureOpenAI
       # Models methods of the OpenAI API integration
       module Models
         extend OpenAI::Models

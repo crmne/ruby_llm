@@ -315,7 +315,8 @@ RSpec.describe RubyLLM::Chat do
         end
 
         # Skip providers that don't support images in tool results
-        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
+        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock
+                                                                                     azure_openai])
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ContentReturningTool)

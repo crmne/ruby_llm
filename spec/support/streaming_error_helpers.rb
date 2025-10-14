@@ -27,6 +27,19 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    azure_openai: {
+      url: 'https://project.openai.azure.com/deployments/gpt-4o/chat/completions?api_version=2025-01-01-preview',
+      error_response: {
+        error: {
+          message: 'The server is temporarily overloaded. Please try again later.',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     gemini: {
       url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse',
       error_response: {

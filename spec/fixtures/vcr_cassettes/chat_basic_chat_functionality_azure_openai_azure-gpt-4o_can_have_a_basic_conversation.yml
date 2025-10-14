@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1048'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - f338ac4d-ab20-4e4c-adfd-8fc3907409e6
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '395'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      X-Ratelimit-Remaining-Tokens:
+      - '39257'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      Azureml-Model-Session:
+      - d066-20251002221726
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Date:
+      - Wed, 08 Oct 2025 20:45:29 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"2
+        + 2 equals 4.","refusal":null,"role":"assistant"}}],"created":1759956330,"id":"chatcmpl-COVKM1BTK6DCAF5qfzWL8vxKIOF6g","model":"gpt-4o-2024-08-06","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_5d7ee1b844","usage":{"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":14,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":23}}
+
+        '
+  recorded_at: Wed, 08 Oct 2025 20:45:30 GMT
+recorded_with: VCR 6.3.1

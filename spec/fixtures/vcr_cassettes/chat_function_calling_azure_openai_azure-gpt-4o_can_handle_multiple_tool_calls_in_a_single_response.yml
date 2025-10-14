@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1190'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 543e5ad9-1448-4f09-a928-cb861a1855e7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '369'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      X-Ratelimit-Remaining-Tokens:
+      - '37245'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      Azureml-Model-Session:
+      - d097-20251003093454
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Date:
+      - Wed, 08 Oct 2025 20:45:49 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{},"finish_reason":"tool_calls","index":0,"logprobs":null,"message":{"annotations":[],"content":null,"refusal":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_wfa4iyphieUXx5RBmdLMwXHn","type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_ZjV2t2cF6jgXoR9I1YvvNSMs","type":"function"},{"function":{"arguments":"{}","name":"dice_roll"},"id":"call_F0VTAwvY3c0cMyEz0akEGqBh","type":"function"}]}}],"created":1759956348,"id":"chatcmpl-COVKensAxsDoBLlKIvO1sPpatzsHy","model":"gpt-4o-2024-08-06","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_5d7ee1b844","usage":{"completion_tokens":54,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":68,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":122}}
+
+        '
+  recorded_at: Wed, 08 Oct 2025 20:45:49 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","tool_calls":[{"id":"call_wfa4iyphieUXx5RBmdLMwXHn","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_ZjV2t2cF6jgXoR9I1YvvNSMs","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_F0VTAwvY3c0cMyEz0akEGqBh","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_wfa4iyphieUXx5RBmdLMwXHn"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_ZjV2t2cF6jgXoR9I1YvvNSMs"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_F0VTAwvY3c0cMyEz0akEGqBh"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1089'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - c4760668-6f28-4a1b-8e57-d1962205b008
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '368'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      X-Ratelimit-Remaining-Tokens:
+      - '37163'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      Azureml-Model-Session:
+      - d097-20251003093454
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Date:
+      - Wed, 08 Oct 2025 20:45:49 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"The
+        results of the three dice rolls are: 1, 2, and 3.","refusal":null,"role":"assistant"}}],"created":1759956349,"id":"chatcmpl-COVKf3MucvngfkKx4mvVlUlFv4eQB","model":"gpt-4o-2024-08-06","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_5d7ee1b844","usage":{"completion_tokens":21,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":151,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":172}}
+
+        '
+  recorded_at: Wed, 08 Oct 2025 20:45:49 GMT
+recorded_with: VCR 6.3.1

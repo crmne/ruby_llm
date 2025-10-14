@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1026'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - a96c3c13-f2cd-4636-870c-7cc80bf5ed33
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '385'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      X-Ratelimit-Remaining-Tokens:
+      - '38844'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      Azureml-Model-Session:
+      - d076-20251003014048
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Date:
+      - Wed, 08 Oct 2025 20:45:39 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{},"finish_reason":"tool_calls","index":0,"logprobs":null,"message":{"annotations":[],"content":null,"refusal":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call_HcbqUiCrcfhCHj2iPJzN11U0","type":"function"}]}}],"created":1759956340,"id":"chatcmpl-COVKWWq211AQUh3XfrCgDc9hHMPF6","model":"gpt-4o-2024-08-06","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_5d7ee1b844","usage":{"completion_tokens":24,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":88,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":112}}
+
+        '
+  recorded_at: Wed, 08 Oct 2025 20:45:40 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_HcbqUiCrcfhCHj2iPJzN11U0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_HcbqUiCrcfhCHj2iPJzN11U0"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1104'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 29176800-72bb-4da1-a78f-f48070a2829d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '384'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      X-Ratelimit-Remaining-Tokens:
+      - '38734'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      Azureml-Model-Session:
+      - d076-20251003014048
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Date:
+      - Wed, 08 Oct 2025 20:45:40 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsIm1lc3NhZ2UiOnsiYW5ub3RhdGlvbnMiOltdLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1OTk1NjM0MCwiaWQiOiJjaGF0Y21wbC1DT1ZLV3AzN2R1MVJwQnJ4RGZ0WnRQZmxDeFg5QyIsIm1vZGVsIjoiZ3B0LTRvLTIwMjQtMDgtMDYiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOlt7InByb21wdF9pbmRleCI6MCwiY29udGVudF9maWx0ZXJfcmVzdWx0cyI6eyJoYXRlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX19XSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNWQ3ZWUxYjg0NCIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyMSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjE0MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImF1ZGlvX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6MTY0fX0K
+  recorded_at: Wed, 08 Oct 2025 20:45:40 GMT
+recorded_with: VCR 6.3.1

@@ -7123,6 +7123,42 @@
     }
   },
   {
+    "id": "azure-gpt-4o",
+    "name": "Azure GPT-4o",
+    "provider": "azure_openai",
+    "family": "azure_gpt4o",
+    "created_at": "2025-05-10 20:50:49 +0200",
+    "context_window": 32768,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
     "id": "gpt-4o-2024-05-13",
     "name": "GPT-4o 20240513",
     "provider": "openai",
