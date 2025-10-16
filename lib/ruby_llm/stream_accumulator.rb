@@ -6,7 +6,7 @@ module RubyLLM
     attr_reader :content, :model_id, :tool_calls
 
     def initialize
-      @content = +''
+      @content = nil
       @tool_calls = {}
       @input_tokens = 0
       @output_tokens = 0
@@ -20,7 +20,7 @@ module RubyLLM
       if chunk.tool_call?
         accumulate_tool_calls chunk.tool_calls
       else
-        @content << (chunk.content || '')
+        accumulate_content(chunk.content)
       end
 
       count_tokens chunk
@@ -30,7 +30,7 @@ module RubyLLM
     def to_message(response)
       Message.new(
         role: :assistant,
-        content: content.empty? ? nil : content,
+        content: final_content,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens.positive? ? @input_tokens : nil,
@@ -40,6 +40,50 @@ module RubyLLM
     end
 
     private
+
+    def accumulate_content(new_content)
+      return unless new_content
+
+      if @content.nil?
+        @content = new_content.is_a?(String) ? +new_content : new_content
+      else
+        case [@content.class, new_content.class]
+        when [String, String]
+          @content << new_content
+        when [String, Content]
+          @content = Content.new(@content)
+          merge_content(new_content)
+        when [Content, String]
+          @content.instance_variable_set(:@text, (@content.text || '') + new_content)
+        when [Content, Content]
+          merge_content(new_content)
+        end
+      end
+    end
+
+    def merge_content(new_content)
+      current_text = @content.text || ''
+      new_text = new_content.text || ''
+      @content.instance_variable_set(:@text, current_text + new_text)
+
+      existing_encoded = @content.attachments.map(&:encoded)
+      new_content.attachments.each do |attachment|
+        @content.attach(attachment) unless existing_encoded.include?(attachment.encoded)
+      end
+    end
+
+    def final_content
+      case @content
+      when nil
+        nil
+      when String
+        @content.empty? ? nil : @content
+      when Content
+        @content.text.nil? && @content.attachments.empty? ? nil : @content
+      else
+        @content
+      end
+    end
 
     def tool_calls_from_stream
       tool_calls.transform_values do |tc|
