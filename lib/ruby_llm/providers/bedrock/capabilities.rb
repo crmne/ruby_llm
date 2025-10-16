@@ -46,6 +46,14 @@ module RubyLLM
           model_id.match?(/anthropic\.claude/)
         end
 
+        def supports_tool_choice?(model_id)
+          model_id.match?(/anthropic\.claude/)
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          false
+        end
+
         def supports_audio?(_model_id)
           false
         end
