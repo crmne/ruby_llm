@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Fri, 19 Sep 2025 09:57:52 GMT
+      - Mon, 22 Sep 2025 10:00:17 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68cd2920-9c6"
+      - W/"68d11e31-9c6"
       Expires:
-      - Sun, 21 Sep 2025 14:45:05 GMT
+      - Wed, 24 Sep 2025 07:22:10 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - CDDF:C9A0D:477AE4:47E5BA:68D00D19
+      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
       Accept-Ranges:
       - bytes
       Date:
-      - Sun, 21 Sep 2025 14:35:53 GMT
+      - Wed, 24 Sep 2025 14:40:06 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '14'
+      - '324'
       X-Served-By:
-      - cache-fra-etou8220143-FRA
+      - cache-fra-etou8220129-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1758465353.045358,VS0,VE2
+      - S1758724807.553314,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 2b2ea8724a6ef28894b6d21fea7f2b9936677905
+      - ead26a93fb7b7b02a1ad92493928d2d8d4afa322
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 21 Sep 2025 14:35:53 GMT
+  recorded_at: Wed, 24 Sep 2025 14:40:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:35:56 GMT
+      - Wed, 24 Sep 2025 14:40:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,13 +167,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2854'
+      - '1268'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2868'
+      - '1314'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -209,16 +209,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CIFSLjLsM6Jz6HxwC0jgQvB6v3J66",
+          "id": "chatcmpl-CJKx4w0PxoKDAAOJTmlqStItjnagU",
           "object": "chat.completion",
-          "created": 1758465353,
+          "created": 1758724806,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file \"license.txt\" contains the license information for the Ruby programming language. It states that Ruby is free software copyrighted by Yukihiro Matsumoto and provides the terms under which it can be redistributed, modified, and used. \n\nKey points include:\n- You can freely copy and distribute the source code.\n- You can modify the software, provided you adhere to certain conditions such as placing modifications in the public domain or making them freely available.\n- You can distribute binaries, either with source or in compiled form, under certain conditions.\n- You can incorporate parts of Ruby into other software, including commercial products, with some restrictions.\n- The license emphasizes that the software is provided \"as is\" without warranties.\n\nOverall, it describes a permissive license allowing broad use and modification, similar to BSD-style licenses.",
+                "content": "The file 'license.txt' contains the license information and terms for Ruby, a free software created by Yukihiro Matsumoto. It specifies the permissions and conditions under which the software can be redistributed, modified, and included in other software. The license allows for free redistribution and modification under certain conditions, including making modifications freely available or providing source code, and clarifies the disclaimers of warranties.",
                 "refusal": null,
                 "annotations": []
               },
@@ -228,8 +228,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 163,
-            "total_tokens": 703,
+            "completion_tokens": 80,
+            "total_tokens": 620,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -244,5 +244,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_04d3664870"
         }
-  recorded_at: Sun, 21 Sep 2025 14:35:56 GMT
+  recorded_at: Wed, 24 Sep 2025 14:40:08 GMT
 recorded_with: VCR 6.3.1

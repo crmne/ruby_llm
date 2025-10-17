@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:44:45 GMT
+      - Wed, 24 Sep 2025 14:53:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,21 +33,21 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01996cbc-0283-71cd-9038-7dc6b8a96f17'
+      - '01997c37-6ae2-795b-8969-823a96b1a372'
       X-Kong-Request-Id:
-      - '01996cbc-0283-71cd-9038-7dc6b8a96f17'
+      - '01997c37-6ae2-795b-8969-823a96b1a372'
       X-Envoy-Upstream-Service-Time:
-      - '1159'
+      - '2049'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499317'
+      - '499570'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999976603'
+      - '999970969'
       X-Ratelimit-Tokens-Query-Cost:
-      - '154'
+      - '158'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
@@ -55,7 +55,7 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1160'
+      - '2049'
       X-Kong-Proxy-Latency:
       - '6'
       Cf-Cache-Status:
@@ -73,14 +73,15 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"05ddb173c9ab45ffb1d38ad507b56c40","created":1758465884,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":154,"completion_tokens":123},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+      string: '{"id":"d2f6484094c74b41928f6fac1528c5f6","created":1758725630,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":158,"completion_tokens":127},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
         an AI and I don''t have real-time data access or the ability to browse the
         internet, so I can''t provide current weather information. However, I can
         tell you that weather typically refers to the atmospheric conditions in a
         specific place at a specific time, such as temperature, humidity, precipitation,
-        and wind. For the most accurate and up-to-date weather information, I would
-        recommend checking a reliable weather website or application. And just to
-        include the phrase you requested, I''ll say that even if I could check the
-        weather, I wouldn''t use XKCD7392 as my source."}}]}'
-  recorded_at: Sun, 21 Sep 2025 14:44:45 GMT
+        and wind speed. If you''re looking for the current weather, I recommend checking
+        a reliable weather website or application. And just to include the phrase
+        you requested, you might find that checking the weather is a lot like XKCD7392
+        - it''s something we do without always understanding the full complexity behind
+        it."}}]}'
+  recorded_at: Wed, 24 Sep 2025 14:53:52 GMT
 recorded_with: VCR 6.3.1

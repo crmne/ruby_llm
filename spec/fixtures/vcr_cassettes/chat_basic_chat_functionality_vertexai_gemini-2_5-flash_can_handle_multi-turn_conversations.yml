@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 24 Sep 2025 14:55:06 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Sun, 21 Sep 2025 14:45:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:44 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:06 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 21 Sep 2025 14:45:45 GMT
+      - Wed, 24 Sep 2025 14:55:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,18 +109,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ruby was created by **Yukihiro Matsumoto**, often known by his nickname **\"Matz\"**.\n\nHe started working on it in the mid-1990s and first released it to the public in **1995**."
+                    "text": "Ruby was created by **Yukihiro \"Matz\" Matsumoto**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0803775398098692
+              "avgLogprobs": -2.5191107529860277
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 7,
-            "candidatesTokenCount": 49,
-            "totalTokenCount": 218,
+            "candidatesTokenCount": 13,
+            "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -131,16 +131,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 49
+                "tokenCount": 13
               }
             ],
-            "thoughtsTokenCount": 162
+            "thoughtsTokenCount": 100
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-21T14:45:44.790569Z",
-          "responseId": "mA_QaKmgMJOwt_gPoKKHuAc"
+          "createTime": "2025-09-24T14:55:06.962592Z",
+          "responseId": "SgbUaKDgOvi0mPUP3frG-Qs"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:45 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -161,14 +161,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Wed, 24 Sep 2025 14:55:07 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 21 Sep 2025 14:45:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -193,21 +193,19 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:46 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
-        was created by **Yukihiro Matsumoto**, often known by his nickname **\"Matz\"**.\n\nHe
-        started working on it in the mid-1990s and first released it to the public
-        in **1995**."}]},{"role":"user","parts":[{"text":"What year did he create
-        Ruby?"}]}],"generationConfig":{}}'
+        was created by **Yukihiro \"Matz\" Matsumoto**."}]},{"role":"user","parts":[{"text":"What
+        year did he create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.13.4
@@ -231,7 +229,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 21 Sep 2025 14:45:46 GMT
+      - Wed, 24 Sep 2025 14:55:09 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -254,36 +252,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**.\n\nHe then released the first public version of Ruby (Ruby 0.95) in **1995**."
+                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**.\n\nThe first public release, Ruby 0.95, was made in **1995**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.52784072521121006
+              "avgLogprobs": -0.81434265772501624
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 63,
-            "candidatesTokenCount": 43,
-            "totalTokenCount": 181,
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 36,
+            "totalTokenCount": 105,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 63
+                "tokenCount": 27
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 43
+                "tokenCount": 36
               }
             ],
-            "thoughtsTokenCount": 75
+            "thoughtsTokenCount": 42
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-21T14:45:46.141382Z",
-          "responseId": "mg_QaMbQCOnDtfAP26XA0A4"
+          "createTime": "2025-09-24T14:55:08.128137Z",
+          "responseId": "TAbUaInpB7iIt_gP3oai0AY"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:46 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:09 GMT
 recorded_with: VCR 6.3.1

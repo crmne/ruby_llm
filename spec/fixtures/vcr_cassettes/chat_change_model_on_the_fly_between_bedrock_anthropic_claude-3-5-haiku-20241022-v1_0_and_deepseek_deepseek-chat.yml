@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250921T144606Z
+      - 20250924T145534Z
       X-Amz-Content-Sha256:
       - 01ab27c7d96d3a8fdf4610e6a4bc3a862f94de194536525920292dfaa9df20f2
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a46c41f33c99463923dd7cddb49e21e65be8c11ecda50e012288611cbf0a792e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250924/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e1f007943942f215cff42db45b949b000af134ba36e198281ee83290962341fe
       Content-Type:
       - application/json
       Accept:
@@ -31,32 +31,32 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:46:08 GMT
+      - Wed, 24 Sep 2025 14:55:35 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '306'
+      - '305'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c676596f-4f13-4f4d-9581-72fdb823400e
+      - f5e91bcd-be71-4e79-af75-f285956bf558
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1069'
+      - '514'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '6'
+      - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01MTsTECdDYqdZqxdUZfyGy3","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":6}}'
-  recorded_at: Sun, 21 Sep 2025 14:46:08 GMT
+      string: '{"id":"msg_bdrk_015tsztjhU5h8qAhXdiRQtfs","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Wed, 24 Sep 2025 14:55:35 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        2 + 2?"},{"role":"assistant","content":"4."},{"role":"user","content":"and
+        2 + 2?"},{"role":"assistant","content":"4"},{"role":"user","content":"and
         4 + 4?"}],"stream":false}'
     headers:
       User-Agent:
@@ -75,7 +75,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:46:08 GMT
+      - Wed, 24 Sep 2025 14:55:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -87,7 +87,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 4d841a86b039b447b65fc698ea46d85f
+      - 78e4abf996cdcf5e8764b202973080ca
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -102,7 +102,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1a1dc57f-3a1d-400c-b76d-8ab528d61288","object":"chat.completion","created":1758465968,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That
-        would be **8**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":25,"completion_tokens":6,"total_tokens":31,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":25},"system_fingerprint":"fp_08f168e49b_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 21 Sep 2025 14:46:11 GMT
+      string: '{"id":"41f90252-6a25-40d6-9b4f-a4f85af202c1","object":"chat.completion","created":1758725735,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 14:55:38 GMT
 recorded_with: VCR 6.3.1

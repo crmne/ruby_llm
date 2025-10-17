@@ -71,7 +71,7 @@ permalink: /
 
 <div class="badge-container">
   <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-  <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
+  <a href="https://github.com/rubocop/rubocop"><img src="https://img.shields.io/badge/code_style-rubocop-brightgreen.svg" alt="Ruby Style Guide" /></a>
   <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
@@ -132,7 +132,7 @@ RubyLLM.embed "Ruby is elegant and expressive"
 
 ```ruby
 # Moderate content for safety
-RubyLLM.moderate("Check if this text is safe").flagged? # => false
+RubyLLM.moderate "Check if this text is safe"
 ```
 
 ```ruby
@@ -171,7 +171,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
-* **Embeddings:** Vector search with `RubyLLM.embed`
+* **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
@@ -200,10 +200,10 @@ end
 ## Rails
 
 ```bash
-# Install database models
+# Install Rails Integration
 rails generate ruby_llm:install
 
-# Add chat UI (optional)
+# Add Chat UI (optional)
 rails generate ruby_llm:chat_ui
 ```
 

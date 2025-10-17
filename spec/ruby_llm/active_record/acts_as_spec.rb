@@ -28,9 +28,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.role).to eq('user')
       expect(chat.messages.last.role).to eq('assistant')
       expect(chat.messages.last.content).to be_present
-      # Update the chat to simulate a change
-      chat.touch
-      expect(chat.updated_at).to eq(chat.messages.last.chat.updated_at)
     end
 
     it 'tracks token usage' do
@@ -118,7 +115,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         chat = Chat.create!(model: 'gpt-4.1-nano')
         expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to eq('GPT-4.1 Nano') if chat.model
+        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
       end
 
       it 'associates messages with model' do

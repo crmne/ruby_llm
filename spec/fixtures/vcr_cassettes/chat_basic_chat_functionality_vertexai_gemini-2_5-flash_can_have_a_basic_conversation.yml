@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 21 Sep 2025 14:45:42 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 24 Sep 2025 14:55:04 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:42 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:04 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 21 Sep 2025 14:45:43 GMT
+      - Wed, 24 Sep 2025 14:55:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -114,7 +114,7 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.2774569988250732
+              "avgLogprobs": -1.2382110357284546
             }
           ],
           "usageMetadata": {
@@ -137,8 +137,8 @@ http_interactions:
             "thoughtsTokenCount": 25
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-21T14:45:42.994922Z",
-          "responseId": "lg_QaOrcPJOwt_gPoKKHuAc"
+          "createTime": "2025-09-24T14:55:04.712143Z",
+          "responseId": "SAbUaM-7K5C3mPUPxZfG0Q4"
         }
-  recorded_at: Sun, 21 Sep 2025 14:45:43 GMT
+  recorded_at: Wed, 24 Sep 2025 14:55:05 GMT
 recorded_with: VCR 6.3.1

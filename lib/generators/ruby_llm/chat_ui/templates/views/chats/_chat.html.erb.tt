@@ -1,16 +1,16 @@
-<div id="<%%= dom_id <%= chat_model_name.underscore %> %>">
+<div id="<%%= dom_id <%= chat_model_name.demodulize.underscore %> %>">
   <div>
     <strong>Model:</strong>
-    <%%= <%= chat_model_name.underscore %>.model_association.name %>
+    <%%= <%= chat_model_name.demodulize.underscore %>.<%= model_table_name.singularize %>&.name || 'Default' %>
   </div>
 
   <div>
     <strong>Messages:</strong>
-    <%%= <%= chat_model_name.underscore %>.messages_association.count %>
+    <%%= <%= chat_model_name.demodulize.underscore %>.<%= message_table_name %>.count %>
   </div>
 
   <div>
     <strong>Created:</strong>
-    <%%= <%= chat_model_name.underscore %>.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+    <%%= <%= chat_model_name.demodulize.underscore %>.created_at.strftime("%B %d, %Y at %I:%M %p") %>
   </div>
 </div>

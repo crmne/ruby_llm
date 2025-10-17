@@ -15,12 +15,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250921T145129Z
+      - 20250924T150129Z
       X-Amz-Content-Sha256:
       - 124e34c28257d2130d4f7af54315b8e5fad531030a0c850b43df47a8fe88d1d6
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=db4cddeab31fd48438d549c78585079fb6bf5f8bbe7b3401b8a45f9e8ccc0f5c
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250924/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=f8a66750b1c31658b0c1deca2c3423724be73a23ed0b0e86d93d99951ab27106
       Content-Type:
       - application/json
       Accept:
@@ -33,26 +33,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:51:31 GMT
+      - Wed, 24 Sep 2025 15:01:31 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '649'
+      - '662'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e2d972e1-5e32-42ba-aed1-79cd042716b9
+      - ee9a20a2-d8e4-4a3d-87d7-c8e1cf2416cc
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1624'
+      - '1472'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '93'
+      - '94'
       X-Amzn-Bedrock-Input-Token-Count:
       - '352'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_01MEGuXLgZz8W5DVcioxxTLG","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
-        roll the dice 3 times for you using the dice_roll function."},{"type":"tool_use","id":"toolu_bdrk_01AtDrJrZnHn6m7GhHnWg9t2","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_01Y49Z2hHdEZTQPPhvbQVsz9","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_01WLJdtMbTyFRWFSDCoxSHzj","name":"dice_roll","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":352,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":93}}'
-  recorded_at: Sun, 21 Sep 2025 14:51:31 GMT
+      string: '{"id":"msg_bdrk_01YbsUpQjWSTWhkAiov9HPJd","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        roll the six-sided die three times for you using the dice_roll function."},{"type":"tool_use","id":"toolu_bdrk_01N4qbqm1w2Rz3izwgfpFhb6","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_018FF5RqWMs6eGTFzs9LPGym","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_019ux3AWub2aMcRA8TfqNLXr","name":"dice_roll","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":352,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":94}}'
+  recorded_at: Wed, 24 Sep 2025 15:01:31 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
@@ -60,9 +60,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Roll
         the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        roll the dice 3 times for you using the dice_roll function."},{"type":"tool_use","id":"toolu_bdrk_01AtDrJrZnHn6m7GhHnWg9t2","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_01Y49Z2hHdEZTQPPhvbQVsz9","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_01WLJdtMbTyFRWFSDCoxSHzj","name":"dice_roll","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01AtDrJrZnHn6m7GhHnWg9t2","content":[{"type":"text","text":"{roll:
-        1}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01Y49Z2hHdEZTQPPhvbQVsz9","content":[{"type":"text","text":"{roll:
-        2}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01WLJdtMbTyFRWFSDCoxSHzj","content":[{"type":"text","text":"{roll:
+        roll the six-sided die three times for you using the dice_roll function."},{"type":"tool_use","id":"toolu_bdrk_01N4qbqm1w2Rz3izwgfpFhb6","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_018FF5RqWMs6eGTFzs9LPGym","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_bdrk_019ux3AWub2aMcRA8TfqNLXr","name":"dice_roll","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01N4qbqm1w2Rz3izwgfpFhb6","content":[{"type":"text","text":"{roll:
+        1}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_018FF5RqWMs6eGTFzs9LPGym","content":[{"type":"text","text":"{roll:
+        2}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_019ux3AWub2aMcRA8TfqNLXr","content":[{"type":"text","text":"{roll:
         3}"}]}]}],"max_tokens":4096,"tools":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","input_schema":{"type":"object","properties":{},"required":[]}}],"system":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}'
@@ -72,12 +72,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20250921T145131Z
+      - 20250924T150131Z
       X-Amz-Content-Sha256:
-      - aab8dbd59c83e1c69af0b1d4dddf15d777ded382af89f9dd6e85da91c1b95870
+      - 62d91625659f37269395e59eaa16333d129df66f0888053046d33953000f07bc
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250921/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=be5ab70bfc3fb03c9266625829e6f475c9eacab77ddb984055a3d0fc85ee04d5
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250924/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e6f498f1ea9c208af3b7c37ead154dfb948de4aef19c73d5854f1bb63f93034f
       Content-Type:
       - application/json
       Accept:
@@ -90,25 +90,25 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:51:32 GMT
+      - Wed, 24 Sep 2025 15:01:33 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '386'
+      - '449'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f1f3ea64-20da-4ea0-b82e-c112312bf6e5
+      - 4ef0dc93-f8f3-49c9-84f9-0e0518793919
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1086'
+      - '1455'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '37'
+      - '48'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '544'
+      - '545'
     body:
       encoding: UTF-8
-      string: '{"id":"msg_bdrk_012DtPm68tKNxPZwNHYRDB4a","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
-        are the results of the 3 dice rolls:\n1st roll: 1\n2nd roll: 2\n3rd roll:
-        3"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":544,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":37}}'
-  recorded_at: Sun, 21 Sep 2025 14:51:33 GMT
+      string: '{"id":"msg_bdrk_013YoeV2ntsYD7ca79QheS4D","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+        are the results of the three dice rolls:\n1st roll: 1\n2nd roll: 2\n3rd roll:
+        3\n\nWould you like me to do anything else with these rolls?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":545,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":48}}'
+  recorded_at: Wed, 24 Sep 2025 15:01:33 GMT
 recorded_with: VCR 6.3.1

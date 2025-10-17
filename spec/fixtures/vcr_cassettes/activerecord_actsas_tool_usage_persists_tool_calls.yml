@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:34:10 GMT
+      - Wed, 24 Sep 2025 14:38:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '332'
+      - '318'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '509'
+      - '331'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -80,9 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CIFQg2iSz705s71LdcsxVZaKQPHHU",
+          "id": "chatcmpl-CJKv3Qa47ERUQNLX3UmdrRLpd9g0i",
           "object": "chat.completion",
-          "created": 1758465250,
+          "created": 1758724681,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -92,7 +92,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_QIMGLQQn4z9iXD4YICcOJmRe",
+                    "id": "call_KbTc5Bd6TYGTkh3zVvtYlnwq",
                     "type": "function",
                     "function": {
                       "name": "calculator",
@@ -125,15 +125,15 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Sun, 21 Sep 2025 14:34:10 GMT
+  recorded_at: Wed, 24 Sep 2025 14:38:01 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","tool_calls":[{"id":"call_QIMGLQQn4z9iXD4YICcOJmRe","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_QIMGLQQn4z9iXD4YICcOJmRe"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        123 * 456?"},{"role":"assistant","tool_calls":[{"id":"call_KbTc5Bd6TYGTkh3zVvtYlnwq","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
+        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_KbTc5Bd6TYGTkh3zVvtYlnwq"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"]}}}]}'
     headers:
@@ -153,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 21 Sep 2025 14:34:11 GMT
+      - Wed, 24 Sep 2025 14:38:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,13 +165,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '311'
+      - '640'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '343'
+      - '860'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -207,16 +207,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CIFQgSqoyh6zBkADXk0wkclovQnUM",
+          "id": "chatcmpl-CJKv4P6OFazVZNu7GziWtUShJrUoJ",
           "object": "chat.completion",
-          "created": 1758465250,
+          "created": 1758724682,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "123 multiplied by 456 equals 56,088.",
+                "content": "The result of 123 multiplied by 456 is 56,088.",
                 "refusal": null,
                 "annotations": []
               },
@@ -226,8 +226,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 79,
-            "completion_tokens": 12,
-            "total_tokens": 91,
+            "completion_tokens": 16,
+            "total_tokens": 95,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -242,5 +242,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_7c233bf9d1"
         }
-  recorded_at: Sun, 21 Sep 2025 14:34:11 GMT
+  recorded_at: Wed, 24 Sep 2025 14:38:03 GMT
 recorded_with: VCR 6.3.1

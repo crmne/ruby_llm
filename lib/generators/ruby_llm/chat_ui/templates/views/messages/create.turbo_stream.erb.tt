@@ -1,9 +1,9 @@
-<%%= turbo_stream.append "<%= message_model_name.tableize %>" do %>
-  <%% @<%= chat_model_name.underscore %>.messages_association.last(2).each do |<%= message_model_name.underscore %>| %>
-    <%%= render "<%= message_model_name.tableize %>/<%= message_model_name.underscore %>", <%= message_model_name.underscore %>: <%= message_model_name.underscore %> %>
+<%%= turbo_stream.append "<%= message_table_name %>" do %>
+  <%% @<%= chat_variable_name %>.<%= message_table_name %>.last(2).each do |<%= message_variable_name %>| %>
+    <%%= render <%= message_variable_name %> %>
   <%% end %>
 <%% end %>
 
-<%%= turbo_stream.replace "new_<%= message_model_name.underscore %>" do %>
-  <%%= render "<%= message_model_name.tableize %>/form", <%= chat_model_name.underscore %>: @<%= chat_model_name.underscore %>, <%= message_model_name.underscore %>: @<%= chat_model_name.underscore %>.messages_association.build %>
+<%%= turbo_stream.replace "new_<%= message_variable_name %>" do %>
+  <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= chat_variable_name %>.<%= message_table_name %>.build %>
 <%% end %>
