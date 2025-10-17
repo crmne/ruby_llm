@@ -66,14 +66,7 @@ module RubyLLM
                     end
                   end
 
-          model ||= Model::Info.new(
-            id: model_id,
-            name: model_id.tr('-', ' ').capitalize,
-            provider: provider_instance.slug,
-            capabilities: %w[function_calling streaming vision structured_output],
-            modalities: { input: %w[text image], output: %w[text] },
-            metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
-          )
+          model ||= Model::Info.default(model_id, provider_instance.slug)
         else
           model = Models.find model_id, provider
           provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
@@ -114,18 +107,34 @@ module RubyLLM
         all_keys = parsera_by_key.keys | provider_by_key.keys
 
         models = all_keys.map do |key|
-          if (parsera_model = parsera_by_key[key])
-            if (provider_model = provider_by_key[key])
-              add_provider_metadata(parsera_model, provider_model)
-            else
-              parsera_model
-            end
+          parsera_model = find_parsera_model(key, parsera_by_key)
+          provider_model = provider_by_key[key]
+
+          if parsera_model && provider_model
+            add_provider_metadata(parsera_model, provider_model)
+          elsif parsera_model
+            parsera_model
           else
-            provider_by_key[key]
+            provider_model
           end
         end
 
         models.sort_by { |m| [m.provider, m.id] }
+      end
+
+      def find_parsera_model(key, parsera_by_key)
+        # Direct match
+        return parsera_by_key[key] if parsera_by_key[key]
+
+        # VertexAI uses same models as Gemini
+        provider, model_id = key.split(':', 2)
+        return unless provider == 'vertexai'
+
+        gemini_model = parsera_by_key["gemini:#{model_id}"]
+        return unless gemini_model
+
+        # Return Gemini's Parsera data but with VertexAI as provider
+        Model::Info.new(gemini_model.to_h.merge(provider: 'vertexai'))
       end
 
       def index_by_key(models)
@@ -146,31 +155,21 @@ module RubyLLM
     end
 
     def load_models
-      # Try to load from database first if configured
-      if RubyLLM.config.model_registry_class
-        load_from_database
-      else
-        load_from_json
-      end
-    rescue StandardError => e
-      RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
-      load_from_json
+      read_from_json
     end
 
-    def load_from_database
-      model_class = RubyLLM.config.model_registry_class
-      model_class = model_class.constantize if model_class.is_a?(String)
-      model_class.all.map(&:to_llm)
+    def load_from_json!
+      @models = read_from_json
     end
 
-    def load_from_json
+    def read_from_json
       data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
       JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
     rescue JSON::ParserError
       []
     end
 
-    def save_models
+    def save_to_json
       File.write(self.class.models_file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
@@ -195,15 +194,15 @@ module RubyLLM
     end
 
     def embedding_models
-      self.class.new(all.select { |m| m.type == 'embedding' })
+      self.class.new(all.select { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') })
     end
 
     def audio_models
-      self.class.new(all.select { |m| m.type == 'audio' })
+      self.class.new(all.select { |m| m.type == 'audio' || m.modalities.output.include?('audio') })
     end
 
     def image_models
-      self.class.new(all.select { |m| m.type == 'image' })
+      self.class.new(all.select { |m| m.type == 'image' || m.modalities.output.include?('image') })
     end
 
     def by_family(family)
@@ -216,6 +215,10 @@ module RubyLLM
 
     def refresh!(remote_only: false)
       self.class.refresh!(remote_only: remote_only)
+    end
+
+    def resolve(model_id, provider: nil, assume_exists: false, config: nil)
+      self.class.resolve(model_id, provider: provider, assume_exists: assume_exists, config: config)
     end
 
     private

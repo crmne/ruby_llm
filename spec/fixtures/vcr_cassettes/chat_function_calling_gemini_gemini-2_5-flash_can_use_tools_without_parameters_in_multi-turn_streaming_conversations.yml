@@ -1,0 +1,247 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must use tools whenever
+        possible."}]},{"role":"user","parts":[{"text":"What''s the best language to
+        learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Sep 2025 14:59:55 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=597
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"functionCall\":
+        {\"name\": \"best_language_to_learn\",\"args\": {}},\"thoughtSignature\":
+        \"CiQB0e2Kb2nMIpLD75+mrbaY4mXEA23OWT3+pIqk0Z4VA8sM5jAKbgHR7YpvbTb65J1mlZWdiaoMoQYVfUmB77CzcW4GnPTv+U8IRBCndh84h2QIOEKHfdvSDAGvK/+mL9Rr+bVg3GJ+NSQomKpDyWrBRN+GWSQnpm/sCjBE5v5mv1wWnvwJAyXVrmLseOUwlw7NEdZFCo0BAdHtim8CKbJRXdGaP4JQ7KXqIcX9riWdjHplcFwr3GG11W7kGLIsygdp1HhiieM4RR/ryKHrffLAi673V/hKI9n/bcKklWuhhDA7V9QCVH6fVAcBW8mMf1jdyD13L5b8lKXajJUkyna2uPe1lmYoNjdxTsrjign9z/UWiZkuzEoaL70w0qNwDlNuczp5\"}],\"role\":
+        \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        49,\"candidatesTokenCount\": 14,\"totalTokenCount\": 108,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 49}],\"thoughtsTokenCount\": 45},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"awfUaI_BDq7CnsEPhrDXmA0\"}\r\n\r\n"
+  recorded_at: Wed, 24 Sep 2025 14:59:55 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must use tools whenever
+        possible."}]},{"role":"user","parts":[{"text":"What''s the best language to
+        learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","response":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Sep 2025 14:59:56 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=593
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"Ruby
+        is the\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        154,\"candidatesTokenCount\": 3,\"totalTokenCount\": 157,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 154}]},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"bAfUaLvpEKWBxs0PvJzA6AI\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \" best language to learn.\"}],\"role\": \"model\"},\"finishReason\":
+        \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 154,\"candidatesTokenCount\":
+        8,\"totalTokenCount\": 162,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        154}]},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\": \"bAfUaLvpEKWBxs0PvJzA6AI\"}\r\n\r\n"
+  recorded_at: Wed, 24 Sep 2025 14:59:56 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must use tools whenever
+        possible."}]},{"role":"user","parts":[{"text":"What''s the best language to
+        learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","response":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"Ruby
+        is the best language to learn."}]},{"role":"user","parts":[{"text":"Tell me
+        again: what''s the best language to learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Sep 2025 14:59:57 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=840
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"functionCall\":
+        {\"name\": \"best_language_to_learn\",\"args\": {}},\"thoughtSignature\":
+        \"CiQB0e2KbxFHpVEwjuypKMYnLLppB9mKdcoLAhz6V+0yWqcgwhkKeQHR7YpvnTwBJS2/Wz7btJSLmEXD3YSXEx8Jd2UXUKuBkGLA6yDMgVcIYFKBZV/mDIU4TVnrGhj8zSfz1dZrLEzjLoyXTJjdrt3ctNTtFBKc3zg4jRgPZMLfXaXqKfSFEoIKhGAH9NJZ/v//bBJyJw4wbrQr/7fmQEQKqAEB0e2Kb9NeHKS3r1pr1x9eGqMLKgxU4w4XbKgWazQ0q3aZjCRBS/vMcJkR+e7PIFswnTj3U1sDTKrlQhPoN0EaUVBV1Yb3cBaU1nTMdC5ddDBaV6eZLOwwMwEKDuewIy3dJU1hw4/veG1y+ofWu9Jitz9eVZvRE73H1whjxanF+44UD2rvl7hDx0Dq2Ym8+0o0wvh9Fl2memkWeSiPiQMg56OaOhF8tHw=\"}],\"role\":
+        \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        177,\"candidatesTokenCount\": 14,\"totalTokenCount\": 244,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 177}],\"thoughtsTokenCount\": 53},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"bAfUaJzSMOPi7M8Pk_3QkAY\"}\r\n\r\n"
+  recorded_at: Wed, 24 Sep 2025 14:59:57 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must use tools whenever
+        possible."}]},{"role":"user","parts":[{"text":"What''s the best language to
+        learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","response":{"name":"f10b7933-3a72-4723-859e-c4968f69cd94","content":[{"text":"Ruby"}]}}}]},{"role":"model","parts":[{"text":"Ruby
+        is the best language to learn."}]},{"role":"user","parts":[{"text":"Tell me
+        again: what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"01bda86c-1846-4241-b3e3-66a05b6efb2d","response":{"name":"01bda86c-1846-4241-b3e3-66a05b6efb2d","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Sep 2025 14:59:57 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=247
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"Ruby\"}],\"role\":
+        \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 280,\"candidatesTokenCount\":
+        1,\"totalTokenCount\": 281,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        280}]},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\": \"bQfUaLDNJ8_XvdIPjuPeqQY\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \" is the best language
+        to learn.\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 280,\"candidatesTokenCount\": 8,\"totalTokenCount\":
+        288,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 280}]},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"bQfUaLDNJ8_XvdIPjuPeqQY\"}\r\n\r\n"
+  recorded_at: Wed, 24 Sep 2025 14:59:57 GMT
+recorded_with: VCR 6.3.1

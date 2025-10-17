@@ -75,14 +75,18 @@ end
     *   **`required:`:** (Optional, defaults to `true`) Whether the AI *must* provide this parameter when calling the tool. Set to `false` for optional parameters and provide a default value in your `execute` method signature.
 4.  **`execute` Method:** The instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
 
-> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`).
+> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining a `name` method in your tool class:
+>
+> ```ruby
+> class WeatherLookup < RubyLLM::Tool
+>   def name
+>     "Weather"
+>   end
+> end
+> ```
 {: .note }
 
 ## Returning Rich Content from Tools
-{: .d-inline-block }
-
-Available in v1.6.4+
-{: .label .label-green }
 
 Tools can return `RubyLLM::Content` objects with file attachments, allowing you to pass images, documents, or other files from your tools to the AI model:
 
@@ -163,7 +167,7 @@ Attach tools to a `Chat` instance using `with_tool` or `with_tools`.
 
 ```ruby
 # Create a chat instance
-chat = RubyLLM.chat(model: 'gpt-4o') # Use a model that supports tools
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}') # Use a model that supports tools
 
 # Instantiate your tool if it requires arguments, otherwise use the class
 weather_tool = Weather.new
@@ -185,14 +189,8 @@ puts response.content
 ```
 
 ### Model Compatibility
-{: .d-inline-block }
 
-Changed in v1.6.2+
-{: .label .label-green }
-
-RubyLLM v1.6.2+ will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
-
-Prior to v1.6.2, calling `with_tool` on an unsupported model would immediately raise `RubyLLM::UnsupportedFunctionsError`.
+RubyLLM will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
 
 ## The Tool Execution Flow
 
@@ -214,14 +212,14 @@ This entire multi-step process happens behind the scenes within a single `chat.a
 You can monitor tool execution using event callbacks to track when tools are called and what they return:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
       .on_tool_call do |tool_call|
         # Called when the AI decides to use a tool
         puts "Calling tool: #{tool_call.name}"
         puts "Arguments: #{tool_call.arguments}"
       end
-      .on_tool_result do |result|  # v1.6.0+
+      .on_tool_result do |result|
         # Called after the tool returns its result
         puts "Tool returned: #{result}"
       end
@@ -248,7 +246,7 @@ To prevent excessive API usage or infinite loops, you can use callbacks to limit
 call_count = 0
 max_calls = 10
 
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
       .on_tool_call do |tool_call|
         call_count += 1
@@ -265,10 +263,6 @@ chat.ask("Check weather for every major city...")
 {: .warning }
 
 ## Advanced: Halting Tool Continuation
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 After a tool executes, the LLM normally continues the conversation to explain what happened. In rare cases, you might want to skip this and return the tool result directly.
 

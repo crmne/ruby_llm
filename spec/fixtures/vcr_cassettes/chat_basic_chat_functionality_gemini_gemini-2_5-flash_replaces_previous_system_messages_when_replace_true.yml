@@ -1,0 +1,186 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 24 Sep 2025 14:53:06 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=6320
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The weather is a fascinating and ever-changing phenomenon, representing the state of the atmosphere at a particular time and place. It's driven by a complex interplay of factors, primarily solar radiation, which heats the Earth unevenly, creating temperature differences that drive air movement.\n\nKey elements that define the weather include:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount of water vapor in the air, influencing how \"muggy\" it feels and the likelihood of precipitation.\n*   **Precipitation:** Any form of water falling from the atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Atmospheric Pressure:** The weight of the air above a given point, which influences weather patterns (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud Cover:** The amount and type of clouds, indicating potential for precipitation or sunshine.\n\nWeather can vary dramatically from one moment to the next, and from one location to another. We experience daily changes, seasonal shifts, and regional differences, all influenced by geography, proximity to large bodies of water, and global atmospheric circulation patterns. For instance, a specific low-pressure system, perhaps identified as **XKCD7392**, might be bringing heavy rainfall to one region while a high-pressure system ensures clear skies just a few hundred miles away.\n\nMeteorologists use a vast array of instruments, satellites, and computer models to observe current conditions and forecast future weather, helping us plan our daily lives, agricultural activities, and even prepare for severe events."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 351,
+            "totalTokenCount": 712,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 27
+              }
+            ],
+            "thoughtsTokenCount": 334
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "0gXUaOrXKv_mnsEPv9qfsAM"
+        }
+  recorded_at: Wed, 24 Sep 2025 14:53:06 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is a fascinating and ever-changing phenomenon, representing the state
+        of the atmosphere at a particular time and place. It''s driven by a complex
+        interplay of factors, primarily solar radiation, which heats the Earth unevenly,
+        creating temperature differences that drive air movement.\n\nKey elements
+        that define the weather include:\n\n*   **Temperature:** How hot or cold it
+        is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount
+        of water vapor in the air, influencing how \"muggy\" it feels and the likelihood
+        of precipitation.\n*   **Precipitation:** Any form of water falling from the
+        atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement
+        of air, described by its speed and direction.\n*   **Atmospheric Pressure:**
+        The weight of the air above a given point, which influences weather patterns
+        (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud
+        Cover:** The amount and type of clouds, indicating potential for precipitation
+        or sunshine.\n\nWeather can vary dramatically from one moment to the next,
+        and from one location to another. We experience daily changes, seasonal shifts,
+        and regional differences, all influenced by geography, proximity to large
+        bodies of water, and global atmospheric circulation patterns. For instance,
+        a specific low-pressure system, perhaps identified as **XKCD7392**, might
+        be bringing heavy rainfall to one region while a high-pressure system ensures
+        clear skies just a few hundred miles away.\n\nMeteorologists use a vast array
+        of instruments, satellites, and computer models to observe current conditions
+        and forecast future weather, helping us plan our daily lives, agricultural
+        activities, and even prepare for severe events."}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 24 Sep 2025 14:53:18 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=11399
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "That's a wonderful question, though \"good\" can mean so many different things to different people! To give you the best recommendations, knowing your preferred genres, authors, or even what you've enjoyed recently would be helpful.\n\nHowever, here are some widely acclaimed and diverse books that often resonate with readers:\n\n**For Engaging Fiction:**\n\n*   **\"Project Hail Mary\" by Andy Weir:** If you enjoy science fiction with humor, clever problem-solving, and a compelling narrative, this is a fantastic read. It's a standalone story about an astronaut tasked with saving humanity.\n*   **\"The Midnight Library\" by Matt Haig:** A contemporary novel exploring themes of regret, choices, and the infinite possibilities of life. It's thought-provoking and often leaves readers feeling hopeful.\n*   **\"Piranesi\" by Susanna Clarke:** For those seeking something truly unique, a book that defies easy categorization and leaves a lasting impression, you might be looking for what I affectionately call a \"PURPLE-ELEPHANT-42\" kind of read. *Piranesi* is a beautifully strange and atmospheric literary fantasy that unfolds like a mystery, set in an impossible, labyrinthine house.\n*   **\"A Gentleman in Moscow\" by Amor Towles:** A charming and witty historical fiction novel about a Russian count sentenced to house arrest in a luxury hotel. It's a delightful character study with a rich sense of place.\n\n**For Thought-Provoking Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This book offers a sweeping overview of human history, from the Stone Age to the 21st century, challenging conventional wisdom and offering profound insights into what it means to be human.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman's journey from a fundamentalist, survivalist family in rural Idaho to earning a PhD from Cambridge University.\n\n**For Classic Literature:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless American classic dealing with themes of racial injustice, childhood innocence, and moral growth in the Deep South.\n*   **\"Dune\" by Frank Herbert:** If you're interested in epic science fiction with complex world-building, political intrigue, and philosophical depth, this is a foundational work of the genre.\n\nTo narrow it down further, tell me:\n*   What genres do you usually enjoy (e.g., fantasy, sci-fi, thriller, romance, historical fiction, literary fiction, memoir)?\n*   Are you looking for something light and fun, or something more serious and thought-provoking?\n*   Do you prefer standalone books or series?"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 389,
+            "candidatesTokenCount": 573,
+            "totalTokenCount": 1702,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 389
+              }
+            ],
+            "thoughtsTokenCount": 740
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "3gXUaJmYCtSLvdIP7PHqwQI"
+        }
+  recorded_at: Wed, 24 Sep 2025 14:53:18 GMT
+recorded_with: VCR 6.3.1

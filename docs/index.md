@@ -63,11 +63,15 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
   </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-color.svg" alt="VertexAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-text.svg" alt="VertexAI" class="logo-small">
+  </div>
 </div>
 
 <div class="badge-container">
   <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-  <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
+  <a href="https://github.com/rubocop/rubocop"><img src="https://img.shields.io/badge/code_style-rubocop-brightgreen.svg" alt="Ruby Style Guide" /></a>
   <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
@@ -75,6 +79,9 @@ permalink: /
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
 Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
+
+Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+{: .note }
 
 ---
 
@@ -95,6 +102,7 @@ chat.ask "What's the best way to learn Ruby?"
 ```ruby
 # Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
@@ -120,6 +128,11 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+```
+
+```ruby
+# Moderate content for safety
+RubyLLM.moderate "Check if this text is safe"
 ```
 
 ```ruby
@@ -158,14 +171,15 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
-* **Embeddings:** Vector search with `RubyLLM.embed`
+* **Embeddings:** Generate embeddings with `RubyLLM.embed`
+* **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
 * **Model registry:** 500+ models with capability detection and pricing
-* **Providers:** OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
@@ -186,7 +200,11 @@ end
 ## Rails
 
 ```bash
+# Install Rails Integration
 rails generate ruby_llm:install
+
+# Add Chat UI (optional)
+rails generate ruby_llm:chat_ui
 ```
 
 ```ruby
@@ -194,7 +212,9 @@ class Chat < ApplicationRecord
   acts_as_chat
 end
 
-chat = Chat.create! model_id: "claude-sonnet-4"
+chat = Chat.create! model: "claude-sonnet-4"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
+
+Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
 

@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 24 Sep 2025 14:53:00 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=4042
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by a complex interplay of atmospheric conditions. Essentially, it's the state of the atmosphere at a particular place and time, encompassing elements like temperature, humidity, precipitation, wind, and atmospheric pressure.\n\nHere's a quick breakdown of what makes up \"the weather\":\n\n*   **Temperature:** This is how hot or cold it is, influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** This includes any form of water falling from the sky, such as rain, snow, sleet, or hail. It occurs when water vapor in the atmosphere condenses and becomes too heavy to remain suspended.\n*   **Wind:** Air in motion, caused by differences in atmospheric pressure. Air naturally flows from areas of high pressure to areas of low pressure, creating breezes, gales, or even hurricanes.\n*   **Humidity:** The amount of water vapor in the air. High humidity can make hot weather feel even hotter and muggier.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with clouds, wind, and precipitation.\n\nThese elements are constantly interacting. For instance, a low-pressure system can draw in moist air, leading to cloud formation and rain. The sun's energy heats the Earth unevenly, creating temperature differences that drive wind and ocean currents, further influencing global weather patterns.\n\nTo get specific weather information for your location, you'd typically check a local forecast, which uses data from satellites, radar, and ground stations to predict these conditions. It's a dynamic system, and even with advanced technology, predicting it perfectly can be a challenge, much like trying to perfectly predict the next viral internet meme, or perhaps even the exact number of a specific webcomic, like XKCD7392."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 397,
+            "totalTokenCount": 550,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 27
+              }
+            ],
+            "thoughtsTokenCount": 126
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "zAXUaLPWEKTmnsEPoK7C6AU"
+        }
+  recorded_at: Wed, 24 Sep 2025 14:53:00 GMT
+recorded_with: VCR 6.3.1

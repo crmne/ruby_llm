@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:21 GMT
-      - Wed, 20 Aug 2025 17:03:22 GMT
+      - Wed, 24 Sep 2025 14:39:18 GMT
+      - Wed, 24 Sep 2025 14:39:18 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '867'
+      - '804'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -43,10 +43,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file (MIME type: `text/plain`), so it includes only unformatted
-        text. No additional content or formatting is present.","role":"assistant"}}],"created":1755709404,"id":"chatcmpl-CyPkShj3crHhNvIYrbIYD1ZFeWukoY2q","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":185,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":129,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1688.518077075884,"time_per_output_token_ms":8.611313513513513,"time_to_first_token_ms":20.136,"tokens_per_second":116.12630273311099,"total_tokens":219}}'
-  recorded_at: Wed, 20 Aug 2025 17:03:24 GMT
+        file `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```\n\nIt
+        is a simple text file with no additional formatting or encoding.","role":"assistant"}}],"created":1758724761,"id":"chatcmpl-jkCfgTGz3cCYkcJpn9YTYBxHc3TiTHn0","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":203,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":165,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":145.068523543768,"time_per_output_token_ms":9.634477832512315,"time_to_first_token_ms":234.372,"tokens_per_second":103.79389702111516,"total_tokens":237}}'
+  recorded_at: Wed, 24 Sep 2025 14:39:21 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -55,9 +54,8 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
-        text file (MIME type: `text/plain`), so it includes only unformatted text.
-        No additional content or formatting is present."},{"role":"user","content":[{"type":"text","text":"and
+        contains the following plain text:\n\n```\nRuby is the best.\n```\n\nIt is
+        a simple text file with no additional formatting or encoding."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -75,15 +73,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:03:23 GMT
-      - Wed, 20 Aug 2025 17:03:23 GMT
+      - Wed, 24 Sep 2025 14:39:20 GMT
+      - Wed, 24 Sep 2025 14:39:21 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1126'
+      - '1316'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -96,11 +94,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key details:\n- **MIME Type**: `application/xml`
-        (indicating it''s an XML file).\n- **Structure**: A single root element `<truism>`
-        with the text \"Ruby is the best\" inside it.\n- **XML Syntax**: The file
-        is well-formed, with properly opened and closed tags. \n\nThis is a minimal
-        XML document, essentially using the `<truism>` tag as a container for the
-        statement.","role":"assistant"}}],"created":1755709409,"id":"chatcmpl-Z1fPeADs6ydyAlj6p6z1WilbF31Layup","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":566,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":445,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":127,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":4314.444897404538,"time_per_output_token_ms":8.9043074204947,"time_to_first_token_ms":29.436,"tokens_per_second":112.30519711149445,"total_tokens":693}}'
-  recorded_at: Wed, 20 Aug 2025 17:03:29 GMT
+        is the best</truism>\n```\n\n### Key details:\n1. **MIME Type**: `application/xml`
+        (indicating it''s an XML file).\n2. **Structure**: A single XML element `<truism>`
+        with the text \"Ruby is the best\" as its content.\n3. **Custom Tag**: The
+        `<truism>` tag is not a standard XML tag (it doesn''t correspond to a widely
+        recognized schema or namespace). It appears to be a custom or placeholder
+        element.\n4. **Content**: The message \"Ruby is the best\" is repeated from
+        the previous file but enclosed in the XML tag.\n\nThis is a minimal XML file
+        with no additional structure or validation.","role":"assistant"}}],"created":1758724765,"id":"chatcmpl-K4pgXeIciV8CsgR9HEszg4LLmOoFjdOE","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":392,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":229,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":109,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":3463.285991167032,"time_per_output_token_ms":9.770530612244897,"time_to_first_token_ms":31.473,"tokens_per_second":102.34858675400415,"total_tokens":501}}'
+  recorded_at: Wed, 24 Sep 2025 14:39:25 GMT
 recorded_with: VCR 6.3.1

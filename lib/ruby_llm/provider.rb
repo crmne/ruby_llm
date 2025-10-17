@@ -41,7 +41,6 @@ module RubyLLM
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
-        params,
         render_payload(
           messages,
           tools: tools,
@@ -49,7 +48,8 @@ module RubyLLM
           model: model,
           stream: block_given?,
           schema: schema
-        )
+        ),
+        params
       )
 
       if block_given?
@@ -68,6 +68,12 @@ module RubyLLM
       payload = render_embedding_payload(text, model:, dimensions:)
       response = @connection.post(embedding_url(model:), payload)
       parse_embedding_response(response, model:, text:)
+    end
+
+    def moderate(input, model:)
+      payload = render_moderation_payload(input, model:)
+      response = @connection.post moderation_url, payload
+      parse_moderation_response(response, model:)
     end
 
     def paint(prompt, model:, size:)

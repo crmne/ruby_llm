@@ -9,7 +9,6 @@ require 'active_storage/engine'
 require 'action_controller/railtie'
 
 Bundler.require(*Rails.groups)
-require 'ruby_llm'
 
 module Dummy
   class Application < Rails::Application

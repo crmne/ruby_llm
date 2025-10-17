@@ -36,10 +36,16 @@ RSpec.describe RubyLLM::Models do
 
       # There should be models from at least OpenAI and Anthropic
       expect(provider_counts.keys).to include('openai', 'anthropic')
+    end
 
-      # Select only models with vision support
+    it 'filters by vision support' do
       vision_models = RubyLLM.models.select(&:supports_vision?)
       expect(vision_models).to all(have_attributes(supports_vision?: true))
+    end
+
+    it 'filters by video support' do
+      video_models = RubyLLM.models.select(&:supports_video?)
+      expect(video_models).to all(have_attributes(supports_video?: true))
     end
   end
 
@@ -103,31 +109,47 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe '#embedding_models' do
-    it 'filters to only embedding models' do
+    it 'filters to models that are embedding-capable' do
       embedding_models = RubyLLM.models.embedding_models
 
       expect(embedding_models).to be_a(described_class)
-      expect(embedding_models.all).to all(have_attributes(type: 'embedding'))
       expect(embedding_models.all).not_to be_empty
+
+      expect(embedding_models.all).to all(
+        satisfy('has type=embedding or output includes embeddings') { |m|
+          m.type == 'embedding' || Array(m.modalities&.output).include?('embeddings')
+        }
+      )
     end
   end
 
   describe '#audio_models' do
-    it 'filters to only audio models' do
+    it 'filters to models that are audio-capable' do
       audio_models = RubyLLM.models.audio_models
 
       expect(audio_models).to be_a(described_class)
-      expect(audio_models.all).to all(have_attributes(type: 'audio'))
+      expect(audio_models.all).not_to be_empty
+
+      expect(audio_models.all).to all(
+        satisfy('has type=audio or output includes audio') { |m|
+          m.type == 'audio' || Array(m.modalities&.output).include?('audio')
+        }
+      )
     end
   end
 
   describe '#image_models' do
-    it 'filters to only image models' do
+    it 'filters to models that are image-capable' do
       image_models = RubyLLM.models.image_models
 
       expect(image_models).to be_a(described_class)
-      expect(image_models.all).to all(have_attributes(type: 'image'))
       expect(image_models.all).not_to be_empty
+
+      expect(image_models.all).to all(
+        satisfy('has type=image or output includes image') { |m|
+          m.type == 'image' || Array(m.modalities&.output).include?('image')
+        }
+      )
     end
   end
 
@@ -143,13 +165,53 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '#save_models' do
+  describe '#resolve' do
+    it 'delegates to the class method when called on instance' do
+      model_id = 'gpt-4o'
+      provider = 'openai'
+
+      model_info, provider_instance = RubyLLM.models.resolve(model_id, provider: provider)
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(model_info.provider).to eq(provider)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+
+    it 'resolves model without provider' do
+      model_id = 'gpt-4o'
+
+      model_info, provider_instance = RubyLLM.models.resolve(model_id)
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+
+    it 'resolves with assume_exists option' do
+      model_id = 'custom-model'
+      provider = 'openai'
+
+      model_info, provider_instance = RubyLLM.models.resolve(
+        model_id,
+        provider: provider,
+        assume_exists: true
+      )
+
+      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info.id).to eq(model_id)
+      expect(model_info.provider).to eq(provider)
+      expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+  end
+
+  describe '#save_to_json' do
     it 'saves models to the models.json file' do
       temp_file = Tempfile.new(['models', '.json'])
       allow(described_class).to receive(:models_file).and_return(temp_file.path)
 
       models = RubyLLM.models
-      models.save_models
+      models.save_to_json
 
       # Verify file was written with valid JSON
       saved_content = File.read(temp_file.path)

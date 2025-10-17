@@ -1,0 +1,166 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 24 Sep 2025 14:58:48 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=769
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "best_language_to_learn",
+                      "args": {}
+                    },
+                    "thoughtSignature": "Ct0BAdHtim9+HXHSTpvIWrbJ4KI7pgfRvxgaapHWtCDFOq4x8oKi3uBgnBUH19PTUgRR/AhWn2MlkpNIA83++PeUzap6ckyN1TQ3I99oOlmant8cAiLaH1M7lEsdVz2O09MogbNm51lp2rzmz6iqW9sFw4ofSGJcTZ8+jmCfkMdtB1vh4594LnvMflnhTxvzvOKqJlxijz7/2oKM84BXXMfJ/IbJcG5jtlJEOgI97kcIQTF6hHSNgdGWeWEqdHMKY+g2lYr+hm9qMij0fdKRz+zRVr+EMVoyc/bJJMg2KuY="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 41,
+            "candidatesTokenCount": 14,
+            "totalTokenCount": 100,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 41
+              }
+            ],
+            "thoughtsTokenCount": 45
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "KAfUaNzdE9LZkdUP9qXvqQM"
+        }
+  recorded_at: Wed, 24 Sep 2025 14:58:48 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"f894f0f2-6e03-476c-ad31-900f095540a0","response":{"name":"f894f0f2-6e03-476c-ad31-900f095540a0","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Wed, 24 Sep 2025 14:58:49 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=664
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Ruby is the best language to learn."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 146,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 154,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 146
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "KQfUaN37CIvpvdIPkIjf2QI"
+        }
+  recorded_at: Wed, 24 Sep 2025 14:58:49 GMT
+recorded_with: VCR 6.3.1

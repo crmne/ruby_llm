@@ -48,6 +48,10 @@ module RubyLLM
       end
     end
 
+    def instance_variables
+      super - %i[@config @connection]
+    end
+
     private
 
     def setup_timeout(faraday)
@@ -81,7 +85,7 @@ module RubyLLM
     def setup_middleware(faraday)
       faraday.request :json
       faraday.response :json
-      faraday.adapter Faraday.default_adapter
+      faraday.adapter :net_http
       faraday.use :llm_errors, provider: @provider
     end
 
@@ -117,10 +121,6 @@ module RubyLLM
 
       raise ConfigurationError,
             "#{@provider.name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
-    end
-
-    def instance_variables
-      super - %i[@config @connection]
     end
   end
 end

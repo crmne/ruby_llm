@@ -7,6 +7,18 @@ module RubyLLM
       attr_reader :id, :name, :provider, :family, :created_at, :context_window, :max_output_tokens, :knowledge_cutoff,
                   :modalities, :capabilities, :pricing, :metadata
 
+      # Create a default model with assumed capabilities
+      def self.default(model_id, provider)
+        new(
+          id: model_id,
+          name: model_id.tr('-', ' ').capitalize,
+          provider: provider,
+          capabilities: %w[function_calling streaming vision structured_output],
+          modalities: { input: %w[text image], output: %w[text] },
+          metadata: { warning: 'Assuming model exists, capabilities may not be accurate' }
+        )
+      end
+
       def initialize(data)
         @id = data[:id]
         @name = data[:name]
@@ -42,6 +54,10 @@ module RubyLLM
 
       def supports_vision?
         modalities.input.include?('image')
+      end
+
+      def supports_video?
+        modalities.input.include?('video')
       end
 
       def supports_functions?

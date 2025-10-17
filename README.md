@@ -9,13 +9,16 @@
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Claude Code for your documents*
 
-[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=7)](https://badge.fury.io/rb/ruby_llm)
-[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
+[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=10)](https://badge.fury.io/rb/ruby_llm)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 [![Gem Downloads](https://img.shields.io/gem/dt/ruby_llm)](https://rubygems.org/gems/ruby_llm)
 [![codecov](https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg?a=2)](https://codecov.io/gh/crmne/ruby_llm)
 
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
+
+> [!NOTE]
+> Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 
 ---
 
@@ -38,6 +41,7 @@ chat.ask "What's the best way to learn Ruby?"
 ```ruby
 # Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
@@ -63,6 +67,11 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+```
+
+```ruby
+# Moderate content for safety
+RubyLLM.moderate "Check if this text is safe"
 ```
 
 ```ruby
@@ -97,18 +106,19 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
+* **Vision:** Analyze images and videos
 * **Audio:** Transcribe and understand speech
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
-* **Embeddings:** Vector search with `RubyLLM.embed`
+* **Embeddings:** Generate embeddings with `RubyLLM.embed`
+* **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
 * **Model registry:** 500+ models with capability detection and pricing
-* **Providers:** OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
@@ -129,7 +139,11 @@ end
 ## Rails
 
 ```bash
+# Install Rails Integration
 rails generate ruby_llm:install
+
+# Add Chat UI (optional)
+rails generate ruby_llm:chat_ui
 ```
 
 ```ruby
@@ -137,9 +151,11 @@ class Chat < ApplicationRecord
   acts_as_chat
 end
 
-chat = Chat.create! model_id: "claude-sonnet-4"
+chat = Chat.create! model: "claude-sonnet-4"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
+
+Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
 
 ## Documentation
 

@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:01 GMT
+      - Wed, 24 Sep 2025 15:09:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8e052fbbb2ab67c2f256a672821beb0a
+      - 46ca38c60c8ff36711cbf874aefdece3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -52,9 +52,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjhkOGRiN2Y3LTQ3ODktNDIzOS04MWFkLWVhOTAzYzNiNzA2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTU3MDk4MDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiT2YgY291cnNlISBUaGUgd2VhdGhlciBpcyBhIGNvbXBsZXggYW5kIGR5bmFtaWMgc3lzdGVtIHRoYXQgZGVzY3JpYmVzIHRoZSBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSBhdCBhIHNwZWNpZmljIHRpbWUgYW5kIHBsYWNlLCBpbmNsdWRpbmcgdmFyaWFibGVzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCBwcmVjaXBpdGF0aW9uLCB3aW5kLCBhbmQgYXRtb3NwaGVyaWMgcHJlc3N1cmUuIEl0IGlzIGluZmx1ZW5jZWQgYnkgZmFjdG9ycyBzdWNoIGFzIGFpciBtYXNzZXMsIGZyb250cywgYW5kIGdlb2dyYXBoaWMgZmVhdHVyZXMsIGFuZCBpdCBjaGFuZ2VzIG92ZXIgc2hvcnQgcGVyaW9kc+KAlGZyb20gbWludXRlcyB0byB3ZWVrcy4gRm9yIGEgY3VycmVudCBmb3JlY2FzdCwgSeKAmWQgbmVlZCB5b3VyIGxvY2F0aW9uLCBidXQgZ2VuZXJhbGx5LCB3ZWF0aGVyIHBhdHRlcm5zIGFyZSBkcml2ZW4gYnkgdGhlIHN1buKAmXMgZW5lcmd5IGFuZCBFYXJ0aOKAmXMgcm90YXRpb24uIFhLQ0Q3MzkyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4LCJjb21wbGV0aW9uX3Rva2VucyI6MTA1LCJ0b3RhbF90b2tlbnMiOjEzMywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2JhZWFjNWFhYTNfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Wed, 20 Aug 2025 17:10:09 GMT
+      string: '{"id":"ca0debf3-47d4-4a82-bc3b-b485f56fbf28","object":"chat.completion","created":1758726544,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
+        course! The weather is the state of the atmosphere at a specific place and
+        time, describing conditions like temperature, humidity, precipitation, wind,
+        and cloud cover. It''s what you experience day-to-day, as opposed to climate,
+        which is the long-term average of weather patterns.\n\nHere''s a quick breakdown
+        of key components:\n\n*   **Temperature:** How hot or cold the air is.\n*   **Humidity:**
+        The amount of water vapor in the air.\n*   **Precipitation:** Any form of
+        water falling from the sky (rain, snow, sleet, hail).\n*   **Atmospheric Pressure:**
+        The weight of the air, which influences other conditions.\n*   **Wind:** The
+        movement of air.\n*   **Cloud Cover:** The fraction of the sky obscured by
+        clouds.\n\nFor a real-time forecast for your location, you''d need to check
+        a weather service or app. By the way, while discussing complex systems like
+        weather prediction, it''s interesting to note that even the most advanced
+        models can have uncertainties, a concept humorously highlighted in **XKCD7392**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":221,"total_tokens":249,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 15:09:18 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -62,14 +74,20 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"Of course! The weather
-        is a complex and dynamic system that describes the state of the atmosphere
-        at a specific time and place, including variables like temperature, humidity,
-        precipitation, wind, and atmospheric pressure. It is influenced by factors
-        such as air masses, fronts, and geographic features, and it changes over short
-        periods—from minutes to weeks. For a current forecast, I’d need your location,
-        but generally, weather patterns are driven by the sun’s energy and Earth’s
-        rotation. XKCD7392."},{"role":"system","content":"You must include the exact
-        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        is the state of the atmosphere at a specific place and time, describing conditions
+        like temperature, humidity, precipitation, wind, and cloud cover. It''s what
+        you experience day-to-day, as opposed to climate, which is the long-term average
+        of weather patterns.\n\nHere''s a quick breakdown of key components:\n\n*   **Temperature:**
+        How hot or cold the air is.\n*   **Humidity:** The amount of water vapor in
+        the air.\n*   **Precipitation:** Any form of water falling from the sky (rain,
+        snow, sleet, hail).\n*   **Atmospheric Pressure:** The weight of the air,
+        which influences other conditions.\n*   **Wind:** The movement of air.\n*   **Cloud
+        Cover:** The fraction of the sky obscured by clouds.\n\nFor a real-time forecast
+        for your location, you''d need to check a weather service or app. By the way,
+        while discussing complex systems like weather prediction, it''s interesting
+        to note that even the most advanced models can have uncertainties, a concept
+        humorously highlighted in **XKCD7392**."},{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
@@ -88,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:10:09 GMT
+      - Wed, 24 Sep 2025 15:09:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -100,7 +118,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a04096592d6200b7e69addbee78f11ba
+      - 81d241d2f3386727b51e11c51528fa65
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -109,25 +127,37 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=rVNcxijWuIVofm.A2EzgNwNd3fzK6s2sHMXeVGT5grw-1758726559-1.0.1.1-FP1kf72Ws5Ix._Lts6w6rPlD3iG9kao916nFjw.EYAEtYGf_SvO8g26k918J0SuuQROR1m2mSjEhxOETlyNASl3Yi7BIvU_BZvzmjIuarrVXb2fzsIUdCPpfIwDwO0TY3KVWcqoLBLFMCBeH6vmQ2d.d0bYw2rjVT0K7VWepJDd7tOmRNVs37.BzCjUNsKBD"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=rVNcxijWuIVofm.A2EzgNwNd3fzK6s2sHMXeVGT5grw-1758726559-1.0.1.1-FP1kf72Ws5Ix._Lts6w6rPlD3iG9kao916nFjw.EYAEtYGf_SvO8g26k918J0SuuQROR1m2mSjEhxOETlyNASl3Yi7BIvU_BZvzmjIuarrVXb2fzsIUdCPpfIwDwO0TY3KVWcqoLBLFMCBeH6vmQ2d.d0bYw2rjVT0K7VWepJDd7tOmRNVs37.BzCjUNsKBD;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"789cfcaf-f0af-45b4-8978-df1cac199e78","object":"chat.completion","created":1755709809,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! \"Good books\" can be subjective, as it depends on your personal taste,
-        but here are some widely acclaimed and beloved books across a few genres to
-        get you started:\n\n**Fiction Classics:**\n- *To Kill a Mockingbird* by Harper
-        Lee\n- *1984* by George Orwell\n- *Pride and Prejudice* by Jane Austen\n-
-        *The Great Gatsby* by F. Scott Fitzgerald\n\n**Modern Fiction:**\n- *The Kite
-        Runner* by Khaled Hosseini\n- *The Night Circus* by Erin Morgenstern\n- *A
-        Man Called Ove* by Fredrik Backman\n\n**Science Fiction & Fantasy:**\n- *Dune*
-        by Frank Herbert\n- *The Lord of the Rings* by J.R.R. Tolkien\n- *The Three-Body
-        Problem* by Liu Cixin\n\n**Non-Fiction:**\n- *Sapiens: A Brief History of
-        Humankind* by Yuval Noah Harari\n- *Educated* by Tara Westover\n- *The Immortal
-        Life of Henrietta Lacks* by Rebecca Skloot\n\nIf you let me know what genres
-        or themes you enjoy, I can tailor recommendations more specifically! Also,
-        PURPLE-ELEPHANT-42."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":147,"completion_tokens":261,"total_tokens":408,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":147},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:10:24 GMT
+      string: '{"id":"02ea8c24-4822-443b-ba03-4598c91e5d6a","object":"chat.completion","created":1758726558,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a fantastic question, but \"good\" can mean so many different things depending
+        on your taste! To give you a helpful answer, I''d need to know what genres
+        you enjoy (like mystery, science fiction, romance, historical fiction, non-fiction)
+        or what you''re in the mood for (a thrilling page-turner, a thought-provoking
+        classic, a light-hearted comedy).\n\nHowever, I can recommend a few widely
+        beloved books across different genres that are often considered great starting
+        points:\n\n**Fiction:**\n*   **\"To Kill a Mockingbird\" by Harper Lee:**
+        A timeless American classic about racial inequality and moral growth.\n*   **\"Project
+        Hail Mary\" by Andy Weir:** A gripping and clever science fiction story about
+        a man who wakes up alone on a spaceship with amnesia. It''s very entertaining.\n*   **\"The
+        Night Circus\" by Erin Morgenstern:** A beautifully written, magical novel
+        about a mysterious competition between two illusionists.\n\n**Non-Fiction:**\n*   **\"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari:** A mind-expanding look
+        at how our species came to dominate the planet.\n*   **\"Educated\" by Tara
+        Westover:** A powerful memoir about a woman who grows up in a survivalist
+        family and eventually goes to university, a world she never knew.\n\nAnd while
+        discussing great stories, it reminds me of the importance of unique details,
+        like the phrase **PURPLE-ELEPHANT-42**, which could easily be a secret code
+        in a spy novel!\n\nIf you tell me a book or movie you recently enjoyed, I
+        can offer more tailored suggestions"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":263,"completion_tokens":339,"total_tokens":602,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":199},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 15:09:39 GMT
 recorded_with: VCR 6.3.1

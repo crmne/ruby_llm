@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/moderations
+    body:
+      encoding: UTF-8
+      string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 24 Sep 2025 15:06:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '94'
+      X-Envoy-Upstream-Service-Time:
+      - '98'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "modr-8134",
+          "model": "omni-moderation-latest",
+          "results": [
+            {
+              "flagged": false,
+              "categories": {
+                "harassment": false,
+                "harassment/threatening": false,
+                "sexual": false,
+                "hate": false,
+                "hate/threatening": false,
+                "illicit": false,
+                "illicit/violent": false,
+                "self-harm/intent": false,
+                "self-harm/instructions": false,
+                "self-harm": false,
+                "sexual/minors": false,
+                "violence": false,
+                "violence/graphic": false
+              },
+              "category_scores": {
+                "harassment": 0.000012533751425646102,
+                "harassment/threatening": 3.944258675190877e-6,
+                "sexual": 0.00006771942330385674,
+                "hate": 7.967300986103147e-6,
+                "hate/threatening": 3.500854414401442e-7,
+                "illicit": 0.00001535623976496012,
+                "illicit/violent": 6.922183404468203e-6,
+                "self-harm/intent": 0.00021239342043348654,
+                "self-harm/instructions": 4.069457790466838e-6,
+                "self-harm": 0.0004552008131639649,
+                "sexual/minors": 5.562206273647035e-6,
+                "violence": 0.0004942623523511968,
+                "violence/graphic": 3.024195853395102e-6
+              },
+              "category_applied_input_types": {
+                "harassment": [
+                  "text"
+                ],
+                "harassment/threatening": [
+                  "text"
+                ],
+                "sexual": [
+                  "text"
+                ],
+                "hate": [
+                  "text"
+                ],
+                "hate/threatening": [
+                  "text"
+                ],
+                "illicit": [
+                  "text"
+                ],
+                "illicit/violent": [
+                  "text"
+                ],
+                "self-harm/intent": [
+                  "text"
+                ],
+                "self-harm/instructions": [
+                  "text"
+                ],
+                "self-harm": [
+                  "text"
+                ],
+                "sexual/minors": [
+                  "text"
+                ],
+                "violence": [
+                  "text"
+                ],
+                "violence/graphic": [
+                  "text"
+                ]
+              }
+            }
+          ]
+        }
+  recorded_at: Wed, 24 Sep 2025 15:06:18 GMT
+recorded_with: VCR 6.3.1

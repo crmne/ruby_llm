@@ -53,6 +53,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
+  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
@@ -108,10 +110,6 @@ chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_ex
 ```
 
 #### System Role Compatibility
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 OpenAI's API now uses 'developer' role for system messages, but some OpenAI-compatible servers still require the traditional 'system' role:
 
@@ -134,16 +132,16 @@ Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `Ruby
 
 ```ruby
 RubyLLM.configure do |config|
-  config.default_model = 'claude-3-5-sonnet'           # For RubyLLM.chat
-  config.default_embedding_model = 'text-embedding-3-large'  # For RubyLLM.embed
+  config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
+  config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
   config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
 end
 ```
 
 Defaults if not configured:
-- Chat: `gpt-4.1-nano`
-- Embeddings: `text-embedding-3-small`
-- Images: `gpt-image-1`
+- Chat: `{{ site.models.default_chat }}`
+- Embeddings: `{{ site.models.default_embedding }}`
+- Images: `{{ site.models.default_image }}`
 
 ## Connection Settings
 
@@ -222,7 +220,7 @@ RubyLLM.configure do |config|
   # Enable debug logging via environment variable
   config.log_level = :debug if ENV['RUBYLLM_DEBUG'] == 'true'
 
-  # Show detailed streaming chunks (v1.6.0+)
+  # Show detailed streaming chunks
   config.log_stream_debug = true  # Or set RUBYLLM_STREAM_DEBUG=true
 end
 ```
@@ -249,7 +247,7 @@ azure_context = RubyLLM.context do |config|
 end
 
 # Use Azure for this specific task
-azure_chat = azure_context.chat(model: 'gpt-4')
+azure_chat = azure_context.chat(model: '{{ site.models.openai_standard }}')
 response = azure_chat.ask("Process this with Azure...")
 
 # Global config unchanged
@@ -314,6 +312,8 @@ RubyLLM.configure do |config|
   config.openai_api_key = String
   config.anthropic_api_key = String
   config.gemini_api_key = String
+  config.vertexai_project_id = String  # GCP project ID
+  config.vertexai_location = String     # e.g., 'us-central1'
   config.deepseek_api_key = String
   config.mistral_api_key = String
   config.perplexity_api_key = String
@@ -328,7 +328,7 @@ RubyLLM.configure do |config|
   # OpenAI Options
   config.openai_organization_id = String
   config.openai_project_id = String
-  config.openai_use_system_role = Boolean  # v1.6.0+
+  config.openai_use_system_role = Boolean
 
   # AWS Bedrock
   config.bedrock_api_key = String
@@ -353,7 +353,7 @@ RubyLLM.configure do |config|
   config.logger = Logger
   config.log_file = String
   config.log_level = Symbol
-  config.log_stream_debug = Boolean  # v1.6.0+
+  config.log_stream_debug = Boolean
 end
 ```
 
