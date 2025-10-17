@@ -50,7 +50,7 @@ module RubyLLM
         def format_text_file(text_file)
           {
             type: 'input_text',
-            text: Utils.format_text_file_for_llm(text_file)
+            text: text_file.for_llm
           }
         end
 
