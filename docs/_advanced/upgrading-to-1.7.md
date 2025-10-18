@@ -191,9 +191,19 @@ The chat UI works with your existing Chat and Message models and includes:
 
 ## Troubleshooting
 
-### "undefined local variable or method 'acts_as_model'" error during migration
+### Config must be set before models load
 
-If you get this error when running `rails db:migrate`, add the configuration to `config/application.rb` **before** your Application class:
+If you're setting `use_new_acts_as = true` in an initializer (like `config/initializers/ruby_llm.rb`), it won't work. Rails loads models before initializers run, causing various issues:
+
+**Symptoms:**
+- Legacy `acts_as` module gets included even though you set `use_new_acts_as = true`
+- `undefined local variable or method 'acts_as_model'` error during migration
+- Errors referencing `lib/ruby_llm/active_record/acts_as_legacy.rb` in backtraces
+- Works in development/staging but fails in production
+
+**Solution:**
+
+Add the configuration to `config/application.rb` **before** your Application class:
 
 ```ruby
 # config/application.rb
@@ -212,7 +222,12 @@ module YourApp
 end
 ```
 
-This ensures RubyLLM is configured before ActiveRecord loads your models.
+This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
+
+> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
+{: .note }
+
+See the [Configuration guide]({% link _getting_started/configuration.md %}#initializer-load-timing-issue-with-use_new_acts_as) for more details.
 
 ## New Applications
 

@@ -14,12 +14,19 @@ module RubyLLM
         Provider.for(model)
       end
 
-      def models_file
-        File.expand_path('models.json', __dir__)
-      end
-
       def schema_file
         File.expand_path('models_schema.json', __dir__)
+      end
+
+      def load_models(file = RubyLLM.config.model_registry_file)
+        read_from_json(file)
+      end
+
+      def read_from_json(file = RubyLLM.config.model_registry_file)
+        data = File.exist?(file) ? File.read(file) : '[]'
+        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+      rescue JSON::ParserError
+        []
       end
 
       def refresh!(remote_only: false)
@@ -151,26 +158,15 @@ module RubyLLM
     end
 
     def initialize(models = nil)
-      @models = models || load_models
+      @models = models || self.class.load_models
     end
 
-    def load_models
-      read_from_json
+    def load_from_json!(file = RubyLLM.config.model_registry_file)
+      @models = self.class.read_from_json(file)
     end
 
-    def load_from_json!
-      @models = read_from_json
-    end
-
-    def read_from_json
-      data = File.exist?(self.class.models_file) ? File.read(self.class.models_file) : '[]'
-      JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
-    rescue JSON::ParserError
-      []
-    end
-
-    def save_to_json
-      File.write(self.class.models_file, JSON.pretty_generate(all.map(&:to_h)))
+    def save_to_json(file = RubyLLM.config.model_registry_file)
+      File.write(file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
     def all

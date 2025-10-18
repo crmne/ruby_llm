@@ -38,7 +38,8 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-color.svg" alt="Gemini" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-text.svg" alt="Gemini" class="logo-small">
   </div>
   <div class="provider-logo">
     <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
@@ -80,7 +81,7 @@ permalink: /
 
 Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
 
-Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
 
 ---

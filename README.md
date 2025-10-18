@@ -18,7 +18,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 </div>
 
 > [!NOTE]
-> Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+> Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 
 ---
 
