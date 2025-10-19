@@ -22,6 +22,14 @@ module RubyLLM
         }
       end
 
+      private
+
+      def parameter_mappings
+        {
+          max_tokens: %i[generationConfig maxOutputTokens]
+        }
+      end
+
       class << self
         def capabilities
           Gemini::Capabilities

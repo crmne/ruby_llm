@@ -21,6 +21,10 @@ module RubyLLM
       {}
     end
 
+    def parameter_mappings
+      {}
+    end
+
     def slug
       self.class.slug
     end
@@ -39,6 +43,7 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
       normalized_temperature = maybe_normalize_temperature(temperature, model)
+      transformed_params = apply_parameter_mappings(params)
 
       payload = Utils.deep_merge(
         render_payload(
@@ -49,7 +54,7 @@ module RubyLLM
           stream: block_given?,
           schema: schema
         ),
-        params
+        transformed_params
       )
 
       if block_given?
@@ -191,6 +196,28 @@ module RubyLLM
     end
 
     private
+
+    def apply_parameter_mappings(params)
+      return params if parameter_mappings.empty?
+
+      transformed = params.dup
+
+      parameter_mappings.each do |source_key, target_path|
+        next unless transformed.key?(source_key)
+
+        value = transformed.delete(source_key)
+        *keys, last_key = target_path
+
+        target = keys.inject(transformed) do |hash, key|
+          hash[key] = {} unless hash[key].is_a?(Hash)
+          hash[key]
+        end
+
+        target[last_key] = value
+      end
+
+      transformed
+    end
 
     def try_parse_json(maybe_json)
       return maybe_json unless maybe_json.is_a?(String)
