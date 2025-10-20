@@ -90,10 +90,24 @@ module RubyLLM
         def convert_schema_to_gemini(schema)
           return nil unless schema
 
+          schema = normalize_any_of(schema) if schema[:anyOf]
+
           build_base_schema(schema).tap do |result|
             result[:description] = schema[:description] if schema[:description]
             apply_type_specific_attributes(result, schema)
           end
+        end
+
+        def normalize_any_of(schema)
+          any_of_schemas = schema[:anyOf]
+          null_schemas = any_of_schemas.select { |s| s[:type] == 'null' }
+          non_null_schemas = any_of_schemas.reject { |s| s[:type] == 'null' }
+
+          return non_null_schemas.first.merge(nullable: true) if non_null_schemas.size == 1 && null_schemas.any?
+
+          return non_null_schemas.first if non_null_schemas.any?
+
+          { type: 'string', nullable: true }
         end
 
         def extract_content(data)

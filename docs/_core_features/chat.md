@@ -178,7 +178,7 @@ RubyLLM automatically handles image encoding and formatting for each provider's 
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` support audio input.
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` and Google's `gemini-2.5` series of models support audio input.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
@@ -189,6 +189,11 @@ puts response.content
 
 # Ask follow-up questions based on the audio context
 response = chat.ask "What were the main action items discussed?"
+puts response.content
+
+# Gemini example
+gemini_chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
 puts response.content
 ```
 

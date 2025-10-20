@@ -218,6 +218,73 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
 
       expect(result).to eq({ type: 'STRING' })
     end
+
+    it 'converts anyOf with null to nullable' do
+      schema = {
+        anyOf: [
+          { type: 'string', format: 'email' },
+          { type: 'null' }
+        ]
+      }
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      expect(result).to eq({
+                             type: 'STRING',
+                             format: 'email',
+                             nullable: true
+                           })
+    end
+
+    it 'converts anyOf with multiple non-null types by choosing first' do
+      schema = {
+        anyOf: [
+          { type: 'string' },
+          { type: 'integer' }
+        ]
+      }
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      expect(result).to eq({ type: 'STRING' })
+    end
+
+    it 'converts anyOf with only null to nullable string' do
+      schema = {
+        anyOf: [
+          { type: 'null' }
+        ]
+      }
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      expect(result).to eq({
+                             type: 'STRING',
+                             nullable: true
+                           })
+    end
+
+    it 'converts complex schema with anyOf in properties' do
+      schema = {
+        type: 'object',
+        properties: {
+          email: {
+            anyOf: [
+              { type: 'string', format: 'email' },
+              { type: 'null' }
+            ]
+          },
+          name: { type: 'string' }
+        },
+        required: %w[name]
+      }
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      expect(result[:type]).to eq('OBJECT')
+      expect(result[:properties][:email]).to eq({
+                                                  type: 'STRING',
+                                                  format: 'email',
+                                                  nullable: true
+                                                })
+      expect(result[:properties][:name]).to eq({ type: 'STRING' })
+    end
   end
 
   it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do

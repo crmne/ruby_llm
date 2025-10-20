@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 24 Sep 2025 14:55:05 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 20 Oct 2025 19:22:19 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:55:05 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:19 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         France?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:55:06 GMT
+      - Mon, 20 Oct 2025 19:22:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,13 +115,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.4875961542129517
+              "avgLogprobs": -0.55270242691040039
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 7,
             "candidatesTokenCount": 8,
-            "totalTokenCount": 45,
+            "totalTokenCount": 34,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,11 +135,11 @@ http_interactions:
                 "tokenCount": 8
               }
             ],
-            "thoughtsTokenCount": 30
+            "thoughtsTokenCount": 19
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:55:05.835072Z",
-          "responseId": "SQbUaID8Mt2hz_IPm7H08Q8"
+          "createTime": "2025-10-20T19:22:19.482167Z",
+          "responseId": "64v2aPe2HbufrNcPz5-MiAo"
         }
-  recorded_at: Wed, 24 Sep 2025 14:55:06 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:19 GMT
 recorded_with: VCR 6.3.1

@@ -8,6 +8,7 @@ module RubyLLM
       include VertexAI::Streaming
       include VertexAI::Embeddings
       include VertexAI::Models
+      include VertexAI::Transcription
 
       def initialize(config)
         super

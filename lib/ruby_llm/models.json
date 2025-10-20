@@ -232,6 +232,37 @@
     "metadata": {}
   },
   {
+    "id": "claude-haiku-4-5",
+    "name": "Claude Haiku 4.5",
+    "provider": "anthropic",
+    "family": "claude-haiku-4-5",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.0,
+          "output_per_million": 5.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
     "id": "claude-haiku-4-5-20251001",
     "name": "Claude Haiku 4.5",
     "provider": "anthropic",
@@ -256,8 +287,38 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 1.0,
-          "cached_input_per_million": 1.25,
           "output_per_million": 5.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
+    "id": "claude-opus-4-1",
+    "name": "Claude Opus 4.1",
+    "provider": "anthropic",
+    "family": "claude-opus-4-1",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 32000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0,
+          "output_per_million": 75.0
         }
       }
     },
@@ -288,7 +349,6 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 15.0,
-          "cached_input_per_million": 18.75,
           "output_per_million": 75.0
         }
       }
@@ -370,6 +430,37 @@
     "metadata": {}
   },
   {
+    "id": "claude-sonnet-4-5",
+    "name": "Claude Sonnet 4.5",
+    "provider": "anthropic",
+    "family": "claude-sonnet-4-5",
+    "created_at": null,
+    "context_window": 200000,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 3.0,
+          "output_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
     "id": "claude-sonnet-4-5-20250929",
     "name": "Claude Sonnet 4.5",
     "provider": "anthropic",
@@ -394,7 +485,6 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 3.0,
-          "cached_input_per_million": 3.75,
           "output_per_million": 15.0
         }
       }
@@ -8083,7 +8173,7 @@
   },
   {
     "id": "gpt-4o-transcribe-diarize",
-    "name": "gpt-4o-transcribe-diarize",
+    "name": "GPT-4o Transcribe Diarize",
     "provider": "openai",
     "family": "gpt-4o-transcribe-diarize",
     "created_at": null,
@@ -9879,7 +9969,13 @@
       ]
     },
     "capabilities": [],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "output_per_million": 100000.0
+        }
+      }
+    },
     "metadata": {
       "object": "model",
       "owned_by": "system"
@@ -9901,7 +9997,8 @@
       ],
       "output": [
         "audio",
-        "embeddings"
+        "embeddings",
+        "image"
       ]
     },
     "capabilities": [],
@@ -9974,7 +10071,8 @@
       ]
     },
     "capabilities": [
-      "batch"
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -10269,8 +10367,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -10302,10 +10399,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -10313,7 +10407,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -10336,8 +10429,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -10362,10 +10454,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -10373,7 +10462,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -10814,8 +10902,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -10839,11 +10926,9 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
+        "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -10853,7 +10938,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -11356,7 +11440,6 @@
         "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "top_a",
         "top_k",
@@ -12537,7 +12620,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -12569,18 +12652,16 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -12603,8 +12684,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -12629,10 +12709,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -12640,7 +12717,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -12663,7 +12739,8 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
@@ -12700,6 +12777,8 @@
         "seed",
         "stop",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -12849,7 +12928,8 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
@@ -12889,6 +12969,8 @@
         "seed",
         "stop",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -13096,7 +13178,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -13127,17 +13209,15 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -13160,8 +13240,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -13185,17 +13264,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -13586,6 +13661,146 @@
     }
   },
   {
+    "id": "deepcogito/cogito-v2-preview-llama-405b",
+    "name": "Deep Cogito: Cogito V2 Preview Llama 405B",
+    "provider": "openrouter",
+    "family": "deepcogito",
+    "created_at": "2025-10-17 16:05:33 +0200",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 3.5,
+          "output_per_million": 3.5
+        }
+      }
+    },
+    "metadata": {
+      "description": "Cogito v2 405B is a dense hybrid reasoning model that combines direct answering capabilities with advanced self-reflection. It represents a significant step toward frontier intelligence with dense architecture delivering performance competitive with leading closed models. This advanced reasoning system combines policy improvement with massive scale for exceptional capabilities.\n",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Llama3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "deepcogito/cogito-v2-preview-llama-70b",
+    "name": "Deep Cogito: Cogito V2 Preview Llama 70B",
+    "provider": "openrouter",
+    "family": "deepcogito",
+    "created_at": "2025-09-02 18:49:44 +0200",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.88,
+          "output_per_million": 0.88
+        }
+      }
+    },
+    "metadata": {
+      "description": "Cogito v2 70B is a dense hybrid reasoning model that combines direct answering capabilities with advanced self-reflection. Built with iterative policy improvement, it delivers strong performance across reasoning tasks while maintaining efficiency through shorter reasoning chains and improved intuition.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Llama3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "deepseek/deepseek-chat",
     "name": "DeepSeek: DeepSeek V3",
     "provider": "openrouter",
@@ -13713,6 +13928,7 @@
         "max_tokens",
         "min_p",
         "presence_penalty",
+        "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -13746,8 +13962,7 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {},
     "metadata": {
@@ -13771,10 +13986,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
@@ -13783,7 +13995,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14134,6 +14345,7 @@
     },
     "capabilities": [
       "streaming",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -14167,17 +14379,17 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14200,8 +14412,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -14226,10 +14437,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -14237,7 +14445,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14260,8 +14467,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -14286,10 +14492,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -14297,7 +14500,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14321,6 +14523,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -14355,7 +14558,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -14364,9 +14566,11 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14416,7 +14620,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -14426,7 +14629,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -14450,6 +14652,7 @@
     },
     "capabilities": [
       "streaming",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -14488,8 +14691,10 @@
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
         "top_p"
@@ -14580,7 +14785,8 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -14603,10 +14809,19 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "frequency_penalty",
         "include_reasoning",
         "max_tokens",
+        "presence_penalty",
         "reasoning",
-        "temperature"
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_k",
+        "top_p"
       ]
     }
   },
@@ -14630,8 +14845,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -14663,8 +14877,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -14678,7 +14890,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -15811,7 +16022,6 @@
         "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -15843,8 +16053,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -15868,17 +16077,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -15937,7 +16142,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -15948,7 +16152,6 @@
         "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -16023,6 +16226,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -16067,6 +16271,8 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_logprobs",
         "top_p"
@@ -16093,8 +16299,7 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -16119,10 +16324,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -16131,7 +16333,6 @@
         "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -16156,8 +16357,7 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -16189,8 +16389,6 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -16200,7 +16398,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -16643,13 +16840,13 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.0,
-          "output_per_million": 3.0
+          "input_per_million": 0.39999999999999997,
+          "output_per_million": 2.0
         }
       }
     },
@@ -16674,12 +16871,10 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
         "structured_outputs",
@@ -16687,7 +16882,69 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "inclusionai/ring-1t",
+    "name": "inclusionAI: Ring 1T",
+    "provider": "openrouter",
+    "family": "inclusionai",
+    "created_at": "2025-10-13 21:34:59 +0200",
+    "context_window": 131072,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5700000000000001,
+          "output_per_million": 2.2800000000000002
+        }
+      }
+    },
+    "metadata": {
+      "description": "Ring-1T has undergone continued scaling with large-scale verifiable reward reinforcement learning (RLVR) training, further unlocking the natural language reasoning capabilities of the trillion-parameter foundation model. Through RLHF training, the model's general abilities have also been refined, making this release of Ring-1T more balanced in performance across various tasks.\n\nRing-1T adopts the Ling 2.0 architecture and is trained on the Ling-1T-base foundation model, which contains 1 trillion total parameters with 50 billion activated parameters, supporting a context window of up to 128K tokens.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "reasoning",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
         "top_p"
       ]
     }
@@ -16984,7 +17241,6 @@
         "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "top_a",
         "top_k",
@@ -17067,8 +17323,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -17092,10 +17347,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -17106,7 +17358,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -17172,6 +17423,7 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -18509,7 +18761,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -18541,18 +18793,16 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -18575,8 +18825,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -18601,10 +18850,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -18612,7 +18858,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -18872,7 +19117,6 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
       "structured_output"
     ],
     "pricing": {
@@ -18912,10 +19156,7 @@
         "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
-        "tool_choice",
-        "tools",
         "top_k",
         "top_p"
       ]
@@ -19162,7 +19403,6 @@
         "repetition_penalty",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -19241,7 +19481,7 @@
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2025-08-01 22:20:30 +0200",
-    "context_window": 256000,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -19279,7 +19519,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
+        "context_length": 32768,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -19520,8 +19760,7 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {},
     "metadata": {
@@ -19545,10 +19784,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
@@ -19557,7 +19793,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -19568,7 +19803,7 @@
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2025-06-08 05:40:54 +0200",
-    "context_window": 40960,
+    "context_window": 32768,
     "max_output_tokens": 40000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -19606,7 +19841,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 40960,
+        "context_length": 32768,
         "max_completion_tokens": 40000,
         "is_moderated": false
       },
@@ -20406,7 +20641,7 @@
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2025-05-07 16:15:41 +0200",
-    "context_window": 131072,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -20446,7 +20681,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 32768,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -20585,7 +20820,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -20621,8 +20855,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -20646,17 +20879,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -20842,7 +21071,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -20855,7 +21083,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -20878,8 +21105,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -20903,17 +21129,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -20939,8 +21161,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -20972,8 +21193,6 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -20986,7 +21205,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -21012,8 +21230,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -21038,10 +21255,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -21052,7 +21266,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -21112,7 +21325,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -21125,7 +21337,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -21150,8 +21361,7 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {},
     "metadata": {
@@ -21176,10 +21386,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
@@ -21189,7 +21396,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -21278,14 +21484,13 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.8999999999999999,
-          "output_per_million": 0.8999999999999999
+          "input_per_million": 2.0,
+          "output_per_million": 6.0
         }
       }
     },
@@ -21310,11 +21515,8 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
         "presence_penalty",
-        "repetition_penalty",
         "response_format",
         "seed",
         "stop",
@@ -21322,8 +21524,6 @@
         "temperature",
         "tool_choice",
         "tools",
-        "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -21475,7 +21675,7 @@
     "provider": "openrouter",
     "family": "mistralai",
     "created_at": "2024-11-19 01:49:48 +0100",
-    "context_window": 131072,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -21515,7 +21715,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 32768,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -21613,8 +21813,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -21639,10 +21838,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -21650,7 +21846,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -22110,7 +22305,8 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -22141,17 +22337,17 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -22174,8 +22370,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -22199,17 +22394,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -22233,7 +22424,8 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -22265,18 +22457,18 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -22502,6 +22694,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -22537,12 +22730,13 @@
         "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -22572,6 +22766,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -22607,12 +22802,13 @@
         "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -24804,7 +25000,7 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 5.0,
+          "input_per_million": 10.0,
           "output_per_million": 10.0,
           "cached_input_per_million": 1.25
         }
@@ -24818,6 +25014,82 @@
           "image",
           "text",
           "file"
+        ],
+        "output_modalities": [
+          "image",
+          "text"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 400000,
+        "max_completion_tokens": 128000,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/gpt-5-image-mini",
+    "name": "OpenAI: GPT-5 Image Mini",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2025-10-16 16:23:03 +0200",
+    "context_window": 400000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "file",
+        "image",
+        "text"
+      ],
+      "output": [
+        "image",
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 2.0,
+          "cached_input_per_million": 0.25
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-5 Image Mini combines OpenAI's advanced language capabilities, powered by [GPT-5 Mini](https://openrouter.ai/openai/gpt-5-mini), with GPT Image 1 Mini for efficient image generation. This natively multimodal model features superior instruction following, text rendering, and detailed image editing with reduced latency and cost. It excels at high-quality visual creation while maintaining strong text understanding, making it ideal for applications that require both efficient image generation and text processing at scale.",
+      "architecture": {
+        "modality": "text+image->text+image",
+        "input_modalities": [
+          "file",
+          "image",
+          "text"
         ],
         "output_modalities": [
           "image",
@@ -25214,8 +25486,8 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -25240,10 +25512,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -25252,8 +25521,9 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -26047,8 +26317,7 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -26080,10 +26349,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -26092,7 +26358,6 @@
         "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -26504,6 +26769,7 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -26531,8 +26797,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -26556,17 +26821,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -26590,6 +26851,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -26630,7 +26892,10 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -26696,6 +26961,7 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
         "top_logprobs",
@@ -26721,8 +26987,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -26746,17 +27011,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -27422,8 +27683,7 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -27448,10 +27708,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -27459,7 +27716,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -27484,6 +27740,7 @@
     },
     "capabilities": [
       "streaming",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -27522,8 +27779,10 @@
         "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
         "top_logprobs",
@@ -27675,8 +27934,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -27701,10 +27959,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -27712,7 +27967,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -27847,6 +28101,7 @@
         "max_tokens",
         "min_p",
         "presence_penalty",
+        "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -27954,8 +28209,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -27980,10 +28234,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -27995,7 +28246,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -28128,7 +28378,6 @@
         "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -28200,7 +28449,6 @@
         "logit_bias",
         "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -28235,8 +28483,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -28261,10 +28508,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -28272,7 +28516,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -28489,8 +28732,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -28515,10 +28757,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -28526,7 +28765,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -28588,6 +28826,7 @@
         "max_tokens",
         "min_p",
         "presence_penalty",
+        "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -28817,8 +29056,7 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "predicted_outputs"
+      "function_calling"
     ],
     "pricing": {},
     "metadata": {
@@ -28842,10 +29080,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
@@ -28854,7 +29089,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -29121,7 +29355,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -29135,7 +29368,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -29167,8 +29399,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.44999999999999996,
-          "output_per_million": 3.5
+          "input_per_million": 0.3,
+          "output_per_million": 1.2
         }
       }
     },
@@ -29305,8 +29537,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -29339,15 +29570,8 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
         "reasoning",
-        "repetition_penalty",
         "response_format",
-        "seed",
-        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -29700,7 +29924,8 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
@@ -29737,6 +29962,8 @@
         "seed",
         "stop",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -29799,6 +30026,7 @@
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
         "top_p"
@@ -29887,6 +30115,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output"
     ],
     "pricing": {
@@ -29927,6 +30156,8 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -30015,7 +30246,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -30046,17 +30277,15 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30079,8 +30308,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -30104,17 +30332,13 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30262,8 +30486,7 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -30295,10 +30518,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -30308,7 +30528,6 @@
         "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30331,8 +30550,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -30357,10 +30575,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -30368,7 +30583,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30587,6 +30801,7 @@
     },
     "capabilities": [
       "streaming",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -30619,16 +30834,16 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30779,7 +30994,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -30811,18 +31026,16 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30846,7 +31059,7 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -30878,18 +31091,16 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30912,8 +31123,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -30938,10 +31148,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -30949,7 +31156,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -30973,7 +31179,8 @@
     },
     "capabilities": [
       "streaming",
-      "predicted_outputs"
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -31005,18 +31212,18 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -31039,8 +31246,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -31065,10 +31271,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -31076,7 +31279,6 @@
         "stop",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -31841,8 +32043,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {
@@ -31867,21 +32068,18 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -31907,6 +32105,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -31947,8 +32146,10 @@
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -32036,7 +32237,7 @@
     "name": "Sonar",
     "provider": "perplexity",
     "family": "sonar",
-    "created_at": "2025-10-16 11:18:56 +0200",
+    "created_at": "2025-10-18 15:08:22 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -32068,7 +32269,7 @@
     "name": "Sonar Deep Research",
     "provider": "perplexity",
     "family": "sonar_deep_research",
-    "created_at": "2025-10-16 11:18:56 +0200",
+    "created_at": "2025-10-18 15:08:22 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -32103,7 +32304,7 @@
     "name": "Sonar Pro",
     "provider": "perplexity",
     "family": "sonar_pro",
-    "created_at": "2025-10-16 11:18:56 +0200",
+    "created_at": "2025-10-18 15:08:22 +0200",
     "context_window": 200000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
@@ -32135,7 +32336,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2025-10-16 11:18:56 +0200",
+    "created_at": "2025-10-18 15:08:22 +0200",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -32167,7 +32368,7 @@
     "name": "Sonar Reasoning Pro",
     "provider": "perplexity",
     "family": "sonar_reasoning_pro",
-    "created_at": "2025-10-16 11:18:56 +0200",
+    "created_at": "2025-10-18 15:08:22 +0200",
     "context_window": 128000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,

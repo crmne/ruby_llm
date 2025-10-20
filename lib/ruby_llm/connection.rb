@@ -34,8 +34,7 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      body = payload.is_a?(Hash) ? JSON.generate(payload, ascii_only: false) : payload
-      @connection.post url, body do |req|
+      @connection.post url, payload do |req|
         req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
         yield req if block_given?
       end
@@ -83,6 +82,7 @@ module RubyLLM
     end
 
     def setup_middleware(faraday)
+      faraday.request :multipart
       faraday.request :json
       faraday.response :json
       faraday.adapter :net_http

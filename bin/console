@@ -15,6 +15,7 @@ RubyLLM.configure do |config|
   config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
   config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
   config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+  config.gemini_api_base = ENV.fetch('GEMINI_API_BASE', nil)
   config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', nil)
   config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
   config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)

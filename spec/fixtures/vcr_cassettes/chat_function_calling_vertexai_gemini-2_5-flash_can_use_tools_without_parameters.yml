@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Mon, 20 Oct 2025 19:22:55 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 24 Sep 2025 14:59:05 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:59:05 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -67,7 +67,7 @@ http_interactions:
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:59:06 GMT
+      - Mon, 20 Oct 2025 19:22:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "CpACAR/MhbZYqxK7dnmWlqfnaF65eOwPjRkqK/+KWfr7/zKPPDAn15CuWBVKOXyggszWScqUzImVLhhZa0Mzw6K5DIwXul1Eh1vJuFmps2tm4T7XvUsPTpzBZxOZJb1BKqARI5edpjsjP8NwLVFX62cse3IR0mopG4zn4VQmitPrCZgSYZzwbsTGiKAKb08WaJ/jm4YX/PlCv2XVPu4/o+8zyikX3OtbNfFT5hznt12kd7U8zvlEURz3X9BdqDdqCS1a0vIW6H9wrpvzZhgO/6/I7dFExikZ1gue8V8zSHDVuJ6dUEsa2ossChIQF2zctAwTER33ml5pPFFkcLIkBtmq1jqAItBlcjCpHYUG78NWpHE="
+                    "thoughtSignature": "Ct0BAePx/15+wAAsIxILv+6yniX+Xs35nVHBb3yUwal+RGIJlpPOPLqEaKigZehfhDF2irBGc0R8GZ9V0KgUcc7FrDnRHTbfRfWc3VNL6+z8bPq6pq400XKJbYm46QqhnGQjZ7tMvmiGNRkEkVSxOrCnxVCtdWPy1b0S0W7uB0n50V46DFFrkRM9GHQ4cp2w/5pc8VBzWtyzqUVC0oAlTOvw751iVM0qEo7urhygfYcf+Je3WKVDk2+0Xs9nmxP9YBiRSX8QHl5eByy4pETAv8W+tUEtVlMbaVL11vxaZjQ="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.1647297995431083
+              "avgLogprobs": -0.62592826570783344
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 84,
+            "totalTokenCount": 74,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,13 +140,13 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 55
+            "thoughtsTokenCount": 45
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:59:05.427981Z",
-          "responseId": "OQfUaM2PGuigmPUPxq7o-A0"
+          "createTime": "2025-10-20T19:22:55.159161Z",
+          "responseId": "D4z2aLnbCa-wmPUPuaKD-As"
         }
-  recorded_at: Wed, 24 Sep 2025 14:59:06 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -155,7 +155,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -167,14 +167,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Mon, 20 Oct 2025 19:22:55 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 24 Sep 2025 14:59:06 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -199,22 +199,22 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:59:06 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"9cd588dc-c594-46ab-a23e-f5081343f32a","response":{"name":"9cd588dc-c594-46ab-a23e-f5081343f32a","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"7aca0691-34e8-41a6-bb10-edcf8c83bdda","response":{"name":"7aca0691-34e8-41a6-bb10-edcf8c83bdda","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -235,7 +235,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:59:07 GMT
+      - Mon, 20 Oct 2025 19:22:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -258,37 +258,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ruby.",
-                    "thoughtSignature": "Ct0DAR/MhbYifyBScqvpcGbk5MIwDM1DlI13DC8aXT2P79sSDrHqUV+94uHTM/I5jYu8ySftEhD+NiNyPGFALKsTcMrPIHnm2vs96Kf8B+r/3Nkf/TypDlqYCYlx4i+PvEoB+SaZkkq3IOz/Q3gl3m/uBmo0FKjruTA/FNFcHbLmqXHco4ThPZDAeSw0U8V/VSUhpPDCoATc7KE2yPS7KtZTJTSqp7uKnCAq5C0uc3Z3TOm3hpzmHY1/Lfr94VtdDI1eB1Lc/YwJK67XKoXn5dnK0D8J3K0KX6TJbdkXCVDnYjJeotXwWka8ImjYByLH5i7qfDPjPfOjWjvzXxa9KXin9niGgHMruML+YT0/D3C/UPgf8pPc+JpXj9jeUN644u/ra2l+mCyvj5y9m+Tl7VK3Zog6iBz2AA1RmPkv0+WgkmUGA8D9Rd+SBCvyLVWb7I272bIewnh7ShYpbeuq5uEompI1o//vfIR7xM5s6vsQEsIjyMgKs2UoYYyKmKh9YoNlNIKzI0F37RQWP+4eYocdHARI4Lof/6s/u80L6rWA4rQC1ZA1KYVu+mFYSJJiGiT8Kn9+LKqYSmlgcfELqOwnl4UYAOsZLwbSp0GZAMdsLHsAiXoKaWvCECAHAWqh"
+                    "text": "The best language to learn is Ruby."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -8.244720458984375
+              "avgLogprobs": -0.26087221503257751
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 99,
-            "candidatesTokenCount": 2,
-            "totalTokenCount": 263,
+            "promptTokenCount": 91,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 99,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 99
+                "tokenCount": 91
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 2
+                "tokenCount": 8
               }
-            ],
-            "thoughtsTokenCount": 162
+            ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:59:06.473290Z",
-          "responseId": "OgfUaMrxHN2hz_IPm7H08Q8"
+          "createTime": "2025-10-20T19:22:55.864694Z",
+          "responseId": "D4z2aLbjNK6ArNcPzaSx0QM"
         }
-  recorded_at: Wed, 24 Sep 2025 14:59:07 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:56 GMT
 recorded_with: VCR 6.3.1
