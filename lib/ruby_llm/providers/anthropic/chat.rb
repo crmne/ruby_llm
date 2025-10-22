@@ -11,7 +11,7 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages, schema)
 
@@ -32,7 +32,7 @@ module RubyLLM
             )
           end
 
-          system_messages.flat_map do |msg|
+          messages = system_messages.flat_map do |msg|
             content = msg.content
 
             if content.is_a?(RubyLLM::Content::Raw)
@@ -42,7 +42,19 @@ module RubyLLM
             end
           end
 
-          # system_prompt + "\n\n" + "RETURN A RESPONSE ADHERING TO THIS SCHEMA: #{schema}"
+          merge_system_text_prompts(messages, schema)
+        end
+
+        def merge_system_text_prompts(messages, schema)
+          text, non_text = messages.partition { |message| message[:type] == 'text' }
+
+          system_prompt = text.map { |message| message[:text] }.join("\n\n")
+          cache_control = (text.detect { |message| message.key?(:cache_control) } || {}).slice(:cache_control)
+
+          system_prompt = "#{system_prompt} \n\n RETURN A RESPONSE ADHERING TO THIS SCHEMA: #{schema}" if schema
+          system_text_message = { type: 'text', text: system_prompt }.merge(cache_control)
+
+          [system_text_message] + non_text
         end
 
         def build_base_payload(chat_messages, model, stream)

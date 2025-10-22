@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'pry'
 
 RSpec.describe RubyLLM::Providers::Anthropic::Chat do
   describe '.render_payload' do
@@ -26,6 +27,36 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
 
       expect(payload[:system]).to eq(system_raw.value)
       expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
+    end
+
+    context 'when there are multiple system messages' do
+      it 'combines them' do
+        system_raw1 = RubyLLM::Providers::Anthropic::Content.new(
+          'avoid greetings',
+          cache_control: { type: 'ephemeral' }
+        )
+        system_raw2 = RubyLLM::Providers::Anthropic::Content.new(
+          'do not mention the war',
+          cache_control: { type: 'ephemeral' }
+        )
+
+        system_message1 = RubyLLM::Message.new(role: :system, content: system_raw1)
+        system_message2 = RubyLLM::Message.new(role: :system, content: system_raw2)
+        user_message = RubyLLM::Message.new(role: :user, content: 'Hello there')
+
+        payload = described_class.render_payload(
+          [system_message1, system_message2, user_message],
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: nil
+        )
+
+        expect(payload[:system]).to match([{ type: 'text',
+                                             text: "avoid greetings\n\ndo not mention the war",
+                                             cache_control: { type: 'ephemeral' } }])
+      end
     end
   end
 
