@@ -13,7 +13,7 @@ module RubyLLM
 
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages)
+          system_content = build_system_content(system_messages, schema)
 
           build_base_payload(chat_messages, model, stream).tap do |payload|
             add_optional_fields(payload, system_content:, tools:, temperature:)
@@ -24,9 +24,7 @@ module RubyLLM
           messages.partition { |msg| msg.role == :system }
         end
 
-        def build_system_content(system_messages)
-          return [] if system_messages.empty?
-
+        def build_system_content(system_messages, schema)
           if system_messages.length > 1
             RubyLLM.logger.warn(
               "Anthropic's Claude implementation only supports a single system message. " \
@@ -43,6 +41,8 @@ module RubyLLM
               Media.format_content(content)
             end
           end
+
+          # system_prompt + "\n\n" + "RETURN A RESPONSE ADHERING TO THIS SCHEMA: #{schema}"
         end
 
         def build_base_payload(chat_messages, model, stream)
