@@ -13,6 +13,27 @@ module RubyLLM
           }]
         end
 
+        def format_tool_call(msg)
+          [{
+            functionCall: {
+              name: msg.tool_calls.values.first.name,
+              args: msg.tool_calls.values.first.arguments
+            }
+          }]
+        end
+
+        def format_tool_result(msg)
+          [{
+            functionResponse: {
+              name: msg.tool_call_id,
+              response: {
+                name: msg.tool_call_id,
+                content: Media.format_content(msg.content)
+              }
+            }
+          }]
+        end
+
         def extract_tool_calls(data)
           return nil unless data
 
