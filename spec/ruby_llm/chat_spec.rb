@@ -101,4 +101,36 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+
+  describe '#extract_json' do
+    let(:chat) { RubyLLM.chat }
+
+    it 'extracts JSON object from text' do
+      text = 'Here is the data: {"name": "John", "age": 30} and more text'
+      result = chat.send(:extract_json, text)
+      expect(result).to eq('{"name": "John", "age": 30}')
+    end
+
+    it 'extracts JSON array from text' do
+      text = 'The array is [1, 2, 3] in the middle'
+      result = chat.send(:extract_json, text)
+      expect(result).to eq('[1, 2, 3]')
+    end
+
+    it 'extracts nested JSON structures' do
+      text = 'Result: {"user": {"name": "Alice", "roles": ["admin", "user"]}} done'
+      result = chat.send(:extract_json, text)
+      expect(result).to eq('{"user": {"name": "Alice", "roles": ["admin", "user"]}}')
+    end
+
+    it 'returns original text if blank' do
+      expect(chat.send(:extract_json, '')).to eq('')
+      expect(chat.send(:extract_json, nil)).to be_nil
+    end
+
+    it 'handles text with no JSON' do
+      text = 'Just plain text with no JSON'
+      expect(chat.send(:extract_json, text)).to eq(text)
+    end
+  end
 end
