@@ -27,6 +27,30 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
       expect(payload[:system]).to eq(system_raw.value)
       expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
     end
+
+    context 'when a a schema is provided' do
+      let(:expected_system_message) do
+        {
+          type: 'text',
+          text: 'You should respond with json that follows this schema: {"name":"TestSchema"}'
+        }
+      end
+
+      it 'is added as a system prompt message' do
+        user_message = RubyLLM::Message.new(role: :user, content: 'Hello there')
+
+        payload = described_class.render_payload(
+          [user_message],
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: '{"name":"TestSchema"}'
+        )
+
+        expect(payload[:system]).to match([expected_system_message])
+      end
+    end
   end
 
   describe '.parse_completion_response' do

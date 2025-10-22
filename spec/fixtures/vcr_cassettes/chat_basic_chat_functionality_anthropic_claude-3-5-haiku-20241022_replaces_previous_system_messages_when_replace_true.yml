@@ -6,11 +6,11 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
-        me about the weather."}]}],"stream":false,"max_tokens":8192,"system":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response.","temperature":0.0}'
+        me about the weather."}]}],"stream":false,"max_tokens":8000,"system":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:51:18 GMT
+      - Wed, 22 Oct 2025 21:40:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,29 +35,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:51:15Z'
+      - '2025-10-22T21:40:55Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:51:18Z'
+      - '2025-10-22T21:40:58Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:51:15Z'
+      - '2025-10-22T21:40:55Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:51:15Z'
+      - '2025-10-22T21:40:55Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -65,7 +65,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '2984'
+      - '3368'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -78,15 +78,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01TxqvCJH6QM3vGnkZzZiAYa","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here''s
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01JS3jpkGF4HXSuAEaGUpgMh","type":"message","role":"assistant","content":[{"type":"text","text":"Here''s
         a general weather overview: Conditions can vary widely depending on your specific
-        location, time of year, and local climate patterns. Some areas might be experiencing
-        sunny skies, while others could have rain or cloudy conditions. XKCD7392 Weather
-        forecasting has become quite sophisticated with modern meteorological technology,
-        allowing for increasingly accurate predictions. If you''re curious about the
-        current weather in your specific area, I recommend checking a local weather
-        service or app for the most up-to-date information."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":107,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:51:18 GMT
+        location and current season. Some areas might be experiencing sunny skies,
+        while others could have rain or cloudy conditions. XKCD7392 Weather patterns
+        are complex and always changing, influenced by factors like temperature, humidity,
+        air pressure, and wind currents. For the most accurate and up-to-date forecast,
+        I recommend checking a local weather service or meteorological website that
+        can provide real-time information for your specific region."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":109,"service_tier":"standard"}}'
+  recorded_at: Wed, 22 Oct 2025 21:40:58 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -95,17 +95,17 @@ http_interactions:
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Tell
         me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"Here''s
         a general weather overview: Conditions can vary widely depending on your specific
-        location, time of year, and local climate patterns. Some areas might be experiencing
-        sunny skies, while others could have rain or cloudy conditions. XKCD7392 Weather
-        forecasting has become quite sophisticated with modern meteorological technology,
-        allowing for increasingly accurate predictions. If you''re curious about the
-        current weather in your specific area, I recommend checking a local weather
-        service or app for the most up-to-date information."}]},{"role":"user","content":[{"type":"text","text":"What
-        are some good books?"}]}],"stream":false,"max_tokens":8192,"system":"You must
-        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","temperature":0.0}'
+        location and current season. Some areas might be experiencing sunny skies,
+        while others could have rain or cloudy conditions. XKCD7392 Weather patterns
+        are complex and always changing, influenced by factors like temperature, humidity,
+        air pressure, and wind currents. For the most accurate and up-to-date forecast,
+        I recommend checking a local weather service or meteorological website that
+        can provide real-time information for your specific region."}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"max_tokens":8000,"system":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -122,7 +122,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:51:23 GMT
+      - Wed, 22 Oct 2025 21:41:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,29 +130,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:51:19Z'
+      - '2025-10-22T21:40:59Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:51:23Z'
+      - '2025-10-22T21:41:03Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:51:18Z'
+      - '2025-10-22T21:40:58Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:51:19Z'
+      - '2025-10-22T21:40:59Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -160,7 +160,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '4361'
+      - '4400'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -173,18 +173,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_014Lt6b7PXnDLYa16XQnfwEA","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Here
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01Kdr1vLDVzv4FvVow4B7nEq","type":"message","role":"assistant","content":[{"type":"text","text":"Here
         are some book recommendations across different genres:\n\nFiction:\n1. \"To
         Kill a Mockingbird\" by Harper Lee\n2. \"1984\" by George Orwell\n3. \"The
-        Name of the Wind\" by Patrick Rothfuss\n4. \"The Ocean at the End of the Lane\"
-        by Neil Gaiman\n\nNon-Fiction:\n1. \"Sapiens\" by Yuval Noah Harari\n2. \"The
-        Immortal Life of Henrietta Lacks\" by Rebecca Skloot\n3. \"Into Thin Air\"
-        by Jon Krakauer\n\nScience Fiction:\n1. \"Dune\" by Frank Herbert\n2. \"The
-        Hitchhiker''s Guide to the Galaxy\" by Douglas Adams\n3. \"Neuromancer\" by
-        William Gibson\n\nClassics:\n1. \"Pride and Prejudice\" by Jane Austen\n2.
-        \"Crime and Punishment\" by Fyodor Dostoevsky\n\nPURPLE-ELEPHANT-42 These
-        recommendations span various styles and interests, so there''s likely something
-        for everyone. The best book often depends on personal taste, so don''t be
-        afraid to explore and find what you enjoy!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":149,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":263,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:51:23 GMT
+        Name of the Wind\" by Patrick Rothfuss\n4. \"The Night Circus\" by Erin Morgenstern\n\nNon-Fiction:\n1.
+        \"Sapiens\" by Yuval Noah Harari\n2. \"The Immortal Life of Henrietta Lacks\"
+        by Rebecca Skloot\n3. \"Into Thin Air\" by Jon Krakauer\n\nScience Fiction:\n1.
+        \"Dune\" by Frank Herbert\n2. \"The Hitchhiker''s Guide to the Galaxy\" by
+        Douglas Adams\n3. \"Neuromancer\" by William Gibson\n\nClassics:\n1. \"Pride
+        and Prejudice\" by Jane Austen\n2. \"Crime and Punishment\" by Fyodor Dostoevsky\n\nPURPLE-ELEPHANT-42
+        These recommendations span various styles and interests, so there''s likely
+        something for everyone. The best book often depends on personal taste, so
+        I recommend reading reviews and summaries to find what might appeal to you
+        most."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":151,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":266,"service_tier":"standard"}}'
+  recorded_at: Wed, 22 Oct 2025 21:41:03 GMT
 recorded_with: VCR 6.3.1

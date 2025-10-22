@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"stream":false,"max_tokens":8192}'
+        2 + 2?"}]}],"stream":false,"max_tokens":8000}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:55:30 GMT
+      - Wed, 22 Oct 2025 21:41:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,29 +34,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:55:30Z'
+      - '2025-10-22T21:41:09Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:55:30Z'
+      - '2025-10-22T21:41:09Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:55:30Z'
+      - '2025-10-22T21:41:08Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:55:30Z'
+      - '2025-10-22T21:41:09Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -64,7 +64,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '833'
+      - '503'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -77,8 +77,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_016vmvvuLqDWpnyJvjKDDEaQ","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:55:30 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01PVba4cfsZ9NbpcedaepAyM","type":"message","role":"assistant","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard"}}'
+  recorded_at: Wed, 22 Oct 2025 21:41:09 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -89,7 +89,7 @@ http_interactions:
         4 + 4?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:55:31 GMT
+      - Wed, 22 Oct 2025 21:41:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,7 +116,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7a352cbbf94fc1d9bb4668b76d6741c2
+      - 1664339108d93517513e82f24f505ae9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -131,6 +131,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"254ada9b-b178-4bd3-9b36-ae031698f4b3","object":"chat.completion","created":1758725731,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 14:55:34 GMT
+      string: '{"id":"0d7706c5-a2e4-4e68-af82-74a1d3572ed2","object":"chat.completion","created":1761169269,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That
+        would be **8**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":6,"total_tokens":30,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 22 Oct 2025 21:41:10 GMT
 recorded_with: VCR 6.3.1

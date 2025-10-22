@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"stream":false,"max_tokens":8192,"service_tier":"standard_only"}'
+        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"stream":false,"max_tokens":8000,"service_tier":"standard_only"}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:50:48 GMT
+      - Wed, 22 Oct 2025 21:40:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -34,29 +34,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:50:47Z'
+      - '2025-10-22T21:40:46Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:50:48Z'
+      - '2025-10-22T21:40:46Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:50:47Z'
+      - '2025-10-22T21:40:45Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:50:47Z'
+      - '2025-10-22T21:40:46Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -64,7 +64,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '1001'
+      - '729'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -77,7 +77,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_011cZdzKNBz2dY1ZyhcjRAUH","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"\n    \"result\":
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01AahWhDF3vgMtnH8UxKoRno","type":"message","role":"assistant","content":[{"type":"text","text":"\n    \"result\":
         8\n}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:50:48 GMT
+  recorded_at: Wed, 22 Oct 2025 21:40:46 GMT
 recorded_with: VCR 6.3.1

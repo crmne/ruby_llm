@@ -5,12 +5,10 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007f90f02c55c8>"}]}],"stream":false,"max_tokens":8000}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -27,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:38:15 GMT
+      - Wed, 22 Oct 2025 21:39:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:38:14Z'
+      - '2025-10-22T21:39:54Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:38:15Z'
+      - '2025-10-22T21:39:56Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:38:13Z'
+      - '2025-10-22T21:39:53Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:38:14Z'
+      - '2025-10-22T21:39:54Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -65,7 +63,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '1850'
+      - '2139'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -78,27 +76,27 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01CznEsoHA4bWeyTVQSPw6Ci","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Based
-        on the file details you provided:\n\n- Filename: ruby.txt\n- MIME Type: text/plain\n-
-        Content: \"Ruby is the best.\"\n\nThe file contains a simple text string praising
-        the Ruby programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":36,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":53,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:38:15 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01Skz4ZdU3eZE4mtWkNqNCL5","type":"message","role":"assistant","content":[{"type":"text","text":"I
+        apologize, but this looks like a Ruby object representation, not a complete
+        or meaningful message. Could you provide more context or clarify what specific
+        information or task you would like help with? If you''re working with Ruby
+        and a language model, I can assist you with Ruby programming or LLM-related
+        questions."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":31,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":68,"service_tier":"standard"}}'
+  recorded_at: Wed, 22 Oct 2025 21:39:56 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"Based
-        on the file details you provided:\n\n- Filename: ruby.txt\n- MIME Type: text/plain\n-
-        Content: \"Ruby is the best.\"\n\nThe file contains a simple text string praising
-        the Ruby programming language."}]},{"role":"user","content":[{"type":"text","text":"and
-        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"stream":false,"max_tokens":8192}'
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007f90f02c55c8>"}]},{"role":"assistant","content":[{"type":"text","text":"I
+        apologize, but this looks like a Ruby object representation, not a complete
+        or meaningful message. Could you provide more context or clarify what specific
+        information or task you would like help with? If you''re working with Ruby
+        and a language model, I can assist you with Ruby programming or LLM-related
+        questions."}]},{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007f90f01a7e48>"}]}],"stream":false,"max_tokens":8000}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -115,7 +113,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:38:24 GMT
+      - Wed, 22 Oct 2025 21:40:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -123,29 +121,29 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '100000'
+      - '400000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:38:23Z'
+      - '2025-10-22T21:39:56Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '20000'
+      - '80000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:38:24Z'
+      - '2025-10-22T21:40:01Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '4000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '3999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:38:15Z'
+      - '2025-10-22T21:39:56Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '120000'
+      - '480000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:38:23Z'
+      - '2025-10-22T21:39:56Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -153,7 +151,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '8841'
+      - '4653'
       Via:
       - 1.1 google
       Cf-Cache-Status:
@@ -166,10 +164,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01M5joS79Y3QUXWyrUi8Jkg8","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"For
-        this file:\n\n- Filename: ruby.xml\n- MIME Type: application/xml\n- Content:
-        An XML document with a single `<truism>` element containing the text \"Ruby
-        is the best\"\n\nThe file is an XML document that wraps the statement about
-        Ruby in a custom XML tag called \"truism\"."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":127,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":74,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:38:24 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01VkqeFSjMGHArd5V5JxDPow","type":"message","role":"assistant","content":[{"type":"text","text":"It
+        seems like you''re encountering an object reference from a Ruby library called
+        RubyLLM, which appears to be related to a language model or content handling.
+        These hexadecimal object references (#<ClassName:0x...>) are typically memory
+        addresses of Ruby objects.\n\nWithout more context, I can only suggest a few
+        things:\n\n1. If you''re trying to print or inspect this object, you might
+        want to use:\n   - `.inspect` method\n   - `.to_s` method\n   - `puts` the
+        object\n\n2. Could you share more code around how this object was created
+        or what you''re trying to do with it?\n\n3. Are you experiencing a specific
+        issue with this object or the RubyLLM library?\n\nIf you can provide more
+        details about your code, the context, or what you''re trying to achieve, I
+        can offer more specific guidance."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":126,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":194,"service_tier":"standard"}}'
+  recorded_at: Wed, 22 Oct 2025 21:40:00 GMT
 recorded_with: VCR 6.3.1
