@@ -173,9 +173,13 @@ module RubyLLM
         providers[name.to_sym] = provider_class
       end
 
+      def resolve(name)
+        providers[name.to_sym]
+      end
+
       def for(model)
         model_info = Models.find(model)
-        providers[model_info.provider.to_sym]
+        resolve model_info.provider
       end
 
       def providers
