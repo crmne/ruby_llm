@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         chat = Chat.create!(model: 'gpt-4.1-nano')
         expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to eq('GPT-4.1 Nano') if chat.model
+        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
       end
 
       it 'associates messages with model' do
@@ -157,13 +157,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Check that the message is saved in ActiveRecord with valid JSON
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
-      expect(saved_message.content).to be_a(String)
-
-      # The saved content should be parseable JSON
-      parsed_saved_content = JSON.parse(saved_message.content)
-      expect(parsed_saved_content).to be_a(Hash)
-      expect(parsed_saved_content['name']).to eq('Alice')
-      expect(parsed_saved_content['age']).to eq(25)
+      expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
     end
   end
 
@@ -227,6 +221,35 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'raw content support' do
+    let(:anthropic_model) { 'claude-3-5-haiku-20241022' }
+
+    it 'persists raw content blocks separately from plain text' do
+      chat = Chat.create!(model: anthropic_model)
+      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+
+      message = chat.create_user_message(raw_block)
+
+      expect(message.content).to be_nil
+      expect(message.content_raw).to eq(JSON.parse(raw_block.value.to_json))
+
+      reconstructed = message.to_llm
+      expect(reconstructed.content).to be_a(RubyLLM::Content::Raw)
+      expect(reconstructed.content.value).to eq(JSON.parse(raw_block.value.to_json))
+    end
+
+    it 'round-trips cached token metrics through ActiveRecord models' do
+      chat = Chat.create!(model: anthropic_model)
+      message = chat.messages.create!(role: 'assistant', content: 'Hi there',
+                                      cached_tokens: 42, cache_creation_tokens: 7)
+
+      llm_message = message.to_llm
+
+      expect(llm_message.cached_tokens).to eq(42)
+      expect(llm_message.cache_creation_tokens).to eq(7)
+    end
+  end
+
   describe 'custom headers' do
     it 'supports with_headers for custom HTTP headers' do
       chat = Chat.create!(model: model)
@@ -283,9 +306,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.references :bot_chat
           t.string :role
           t.text :content
+          t.json :content_raw
           t.string :model_id
           t.integer :input_tokens
           t.integer :output_tokens
+          t.integer :cached_tokens
+          t.integer :cache_creation_tokens
           t.references :bot_tool_call
           t.timestamps
         end

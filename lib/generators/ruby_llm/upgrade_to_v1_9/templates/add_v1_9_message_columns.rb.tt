@@ -1,0 +1,15 @@
+class AddRubyLlmV19Columns < ActiveRecord::Migration<%= migration_version %>
+  def change
+    unless column_exists?(:<%= message_table_name %>, :cached_tokens)
+      add_column :<%= message_table_name %>, :cached_tokens, :integer
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :cache_creation_tokens)
+      add_column :<%= message_table_name %>, :cache_creation_tokens, :integer
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :content_raw)
+      add_column :<%= message_table_name %>, :content_raw, :json
+    end
+  end
+end

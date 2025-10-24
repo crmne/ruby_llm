@@ -86,6 +86,30 @@ end
 > ```
 {: .note }
 
+### Provider-Specific Parameters
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Some providers allow you to attach extra metadata to tool definitions (for example, Anthropic's `cache_control` directive for prompt caching). Use `with_params` on your tool class to declare these once and RubyLLM will merge them into the API payload when the provider understands them.
+
+```ruby
+class TodoTool < RubyLLM::Tool
+  description "Adds a task to the shared TODO list"
+  param :title, desc: "Human-friendly task description"
+
+  with_params cache_control: { type: 'ephemeral' }
+
+  def execute(title:)
+    Todo.create!(title:)
+    "Added “#{title}” to the list."
+  end
+end
+```
+
+Provider-specific tool parameters are passed through verbatim. Use `RUBYLLM_DEBUG=true` and keep an eye on your logs when rolling out new metadata.
+
 ## Returning Rich Content from Tools
 
 Tools can return `RubyLLM::Content` objects with file attachments, allowing you to pass images, documents, or other files from your tools to the AI model:

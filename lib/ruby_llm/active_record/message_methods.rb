@@ -11,6 +11,9 @@ module RubyLLM
       end
 
       def to_llm
+        cached = has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
+        cache_creation = has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
+
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content,
@@ -18,6 +21,8 @@ module RubyLLM
           tool_call_id: extract_tool_call_id,
           input_tokens: input_tokens,
           output_tokens: output_tokens,
+          cached_tokens: cached,
+          cache_creation_tokens: cache_creation,
           model_id: model_association&.model_id
         )
       end
@@ -42,9 +47,13 @@ module RubyLLM
       end
 
       def extract_content
-        return content unless respond_to?(:attachments) && attachments.attached?
+        return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
-        RubyLLM::Content.new(content).tap do |content_obj|
+        content_value = self[:content]
+
+        return content_value unless respond_to?(:attachments) && attachments.attached?
+
+        RubyLLM::Content.new(content_value).tap do |content_obj|
           @_tempfiles = []
 
           attachments.each do |attachment|

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 24 Sep 2025 15:03:04 GMT
+      - Mon, 20 Oct 2025 19:23:10 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -51,12 +51,12 @@ http_interactions:
       string: |-
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid",
+          "expires_in": 3598,
+          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 15:03:04 GMT
+  recorded_at: Mon, 20 Oct 2025 19:23:10 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"instances":[{"content":"Ruby is a programmer''s best friend"}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 15:03:04 GMT
+      - Mon, 20 Oct 2025 19:23:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,8 +107,8 @@ http_interactions:
             {
               "embeddings": {
                 "statistics": {
-                  "token_count": 10,
-                  "truncated": false
+                  "truncated": false,
+                  "token_count": 10
                 },
                 "values": [
                   0.025784462690353394,
@@ -887,5 +887,5 @@ http_interactions:
             "billableCharacterCount": 29
           }
         }
-  recorded_at: Wed, 24 Sep 2025 15:03:04 GMT
+  recorded_at: Mon, 20 Oct 2025 19:23:10 GMT
 recorded_with: VCR 6.3.1

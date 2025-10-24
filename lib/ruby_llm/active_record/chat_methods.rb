@@ -174,8 +174,16 @@ module RubyLLM
       end
 
       def create_user_message(content, with: nil)
-        message_record = messages_association.create!(role: :user, content: content)
+        content_text, attachments, content_raw = prepare_content_for_storage(content)
+
+        message_record = messages_association.build(role: :user)
+        message_record.content = content_text
+        message_record.content_raw = content_raw if message_record.respond_to?(:content_raw=)
+        message_record.save!
+
         persist_content(message_record, with) if with.present?
+        persist_content(message_record, attachments) if attachments.present?
+
         message_record
       end
 
@@ -235,28 +243,25 @@ module RubyLLM
         @message = messages_association.create!(role: :assistant, content: '')
       end
 
-      def persist_message_completion(message) # rubocop:disable Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/PerceivedComplexity
+      def persist_message_completion(message)
         return unless message
 
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
-          content = message.content
-          attachments_to_persist = nil
-
-          if content.is_a?(RubyLLM::Content)
-            attachments_to_persist = content.attachments if content.attachments.any?
-            content = content.text
-          elsif content.is_a?(Hash) || content.is_a?(Array)
-            content = content.to_json
-          end
+          content_text, attachments_to_persist, content_raw = prepare_content_for_storage(message.content)
 
           attrs = {
             role: message.role,
-            content: content,
+            content: content_text,
             input_tokens: message.input_tokens,
             output_tokens: message.output_tokens
           }
+          attrs[:cached_tokens] = message.cached_tokens if @message.has_attribute?(:cached_tokens)
+          if @message.has_attribute?(:cache_creation_tokens)
+            attrs[:cache_creation_tokens] = message.cache_creation_tokens
+          end
 
           # Add model association dynamically
           attrs[self.class.model_association_name] = model_association
@@ -266,12 +271,15 @@ module RubyLLM
             attrs[parent_tool_call_assoc.foreign_key] = tool_call_id
           end
 
-          @message.update!(attrs)
+          @message.assign_attributes(attrs)
+          @message.content_raw = content_raw if @message.respond_to?(:content_raw=)
+          @message.save!
 
           persist_content(@message, attachments_to_persist) if attachments_to_persist
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
         end
       end
+      # rubocop:enable Metrics/PerceivedComplexity
 
       def persist_tool_calls(tool_calls)
         tool_calls.each_value do |tool_call|
@@ -330,6 +338,26 @@ module RubyLLM
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
+      end
+
+      def prepare_content_for_storage(content)
+        attachments = nil
+        content_raw = nil
+        content_text = content
+
+        case content
+        when RubyLLM::Content::Raw
+          content_raw = content.value
+          content_text = nil
+        when RubyLLM::Content
+          attachments = content.attachments if content.attachments.any?
+          content_text = content.text
+        when Hash, Array
+          content_raw = content
+          content_text = nil
+        end
+
+        [content_text, attachments, content_raw]
       end
     end
   end

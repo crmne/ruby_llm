@@ -1,8 +1,11 @@
 ---
 layout: default
-title: Upgrading to 1.7
+title: Upgrading
 nav_order: 6
-description: Upgrade to the DB-backed model registry for better data integrity and rich model metadata.
+description: Upgrade guides for changes in data formats
+redirect_from:
+  - /upgrading-to-1-7
+  - /upgrading-to-1-7/
 ---
 
 # {{ page.title }}
@@ -18,6 +21,32 @@ description: Upgrade to the DB-backed model registry for better data integrity a
 {:toc}
 
 ---
+# Upgrade to 1.9
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+rails generate ruby_llm:upgrade_to_v1_9
+
+# Run migrations
+rails db:migrate
+```
+
+That's it! The generator:
+- Adds the `cached_tokens` and `cache_creation_tokens` columns for tracking accessed cached tokens and created cache tokens respectively.
+- Adds the `content_raw` column for the new [Raw Content Blocks]({% link _core_features/chat.md %}#raw-content-blocks) feature
+
+## What's New in 1.9
+
+Among other features:
+
+- [Raw Content Blocks]({% link _core_features/chat.md %}#raw-content-blocks) to pass content verbatim to an LLM, e.g. useful to enable Anthropic Prompt Caching.
+- Cached token tracking to accurately track costs given cache hits
+
+# Upgrade to 1.7
+
+Upgrade to the DB-backed model registry for better data integrity and rich model metadata.
 
 ## How to Upgrade
 
@@ -191,9 +220,19 @@ The chat UI works with your existing Chat and Message models and includes:
 
 ## Troubleshooting
 
-### "undefined local variable or method 'acts_as_model'" error during migration
+### Config must be set before models load
 
-If you get this error when running `rails db:migrate`, add the configuration to `config/application.rb` **before** your Application class:
+If you're setting `use_new_acts_as = true` in an initializer (like `config/initializers/ruby_llm.rb`), it won't work. Rails loads models before initializers run, causing various issues:
+
+**Symptoms:**
+- Legacy `acts_as` module gets included even though you set `use_new_acts_as = true`
+- `undefined local variable or method 'acts_as_model'` error during migration
+- Errors referencing `lib/ruby_llm/active_record/acts_as_legacy.rb` in backtraces
+- Works in development/staging but fails in production
+
+**Solution:**
+
+Add the configuration to `config/application.rb` **before** your Application class:
 
 ```ruby
 # config/application.rb
@@ -212,7 +251,12 @@ module YourApp
 end
 ```
 
-This ensures RubyLLM is configured before ActiveRecord loads your models.
+This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
+
+> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
+{: .note }
+
+See the [Configuration guide]({% link _getting_started/configuration.md %}#initializer-load-timing-issue-with-use_new_acts_as) for more details.
 
 ## New Applications
 

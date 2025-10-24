@@ -49,6 +49,8 @@ puts response.content
 # The response object contains metadata
 puts "Model Used: #{response.model_id}"
 puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
+puts "Cached Prompt Tokens: #{response.cached_tokens}" # v1.9.0+
+puts "Cache Writes: #{response.cache_creation_tokens}" # v1.9.0+
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
@@ -178,7 +180,7 @@ RubyLLM automatically handles image encoding and formatting for each provider's 
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` support audio input.
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` and Google's `gemini-2.5` series of models support audio input.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
@@ -189,6 +191,11 @@ puts response.content
 
 # Ask follow-up questions based on the audio context
 response = chat.ask "What were the main action items discussed?"
+puts response.content
+
+# Gemini example
+gemini_chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
 puts response.content
 ```
 
@@ -301,6 +308,83 @@ puts JSON.parse(response.content)
 
 > Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
 {: .warning }
+
+## Raw Content Blocks
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Most of the time you can rely on RubyLLM to format messages for each provider. When you need to send a custom payload as content,  wrap it in `RubyLLM::Content::Raw`. The block is forwarded verbatim, with no additional processing.
+
+```ruby
+raw_block = RubyLLM::Content::Raw.new([
+  { type: 'text', text: 'Reusable analysis prompt' },
+  { type: 'text', text: "Today's request: #{summary}" }
+])
+
+chat = RubyLLM.chat
+chat.add_message(role: :system, content: raw_block)
+chat.ask(raw_block)
+```
+
+Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values.
+
+### Anthropic Prompt Caching
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+One use case for Raw Content Blocks is Anthropic Prompt Caching.
+
+Anthropic lets you mark individual prompt blocks for caching, which can dramatically reduce costs on long conversations. RubyLLM provides a convenience builder that returns a `Content::Raw` instance with the proper structure:
+
+```ruby
+system_block = RubyLLM::Providers::Anthropic::Content.new(
+  "You are a release-notes assistant. Always group changes by subsystem.",
+  cache: true # shorthand for cache_control: { type: 'ephemeral' }
+)
+
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
+chat.add_message(role: :system, content: system_block)
+
+response = chat.ask(
+  RubyLLM::Providers::Anthropic::Content.new(
+    "Summarize the API changes in this diff.",
+    cache_control: { type: 'ephemeral', ttl: '1h' }
+  )
+)
+```
+
+Need something even more custom? Build the payload manually and wrap it in `Content::Raw`:
+
+```ruby
+raw_prompt = RubyLLM::Content::Raw.new([
+  { type: 'text', text: File.read('/a/large/file'), cache_control: { type: 'ephemeral' } },
+  { type: 'text', text: "Today's request: #{summary}" }
+])
+
+chat.ask(raw_prompt)
+```
+
+The same idea applies to tool definitions:
+
+```ruby
+class ChangelogTool < RubyLLM::Tool
+  description "Formats commits into human-readable changelog entries."
+  param :commits, type: :array, desc: "List of commits to summarize"
+
+  with_params cache_control: { type: 'ephemeral' }
+
+  def execute(commits:)
+    # ...
+  end
+end
+```
+
+Providers that do not understand these extra fields silently ignore them, so you can reuse the same tools across models.
+See the [Tool Provider Parameters]({% link _core_features/tools.md %}#provider-specific-parameters) section for more detail.
 
 ### Custom HTTP Headers
 
@@ -497,9 +581,13 @@ response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
 input_tokens = response.input_tokens   # Tokens in the prompt sent TO the model
 output_tokens = response.output_tokens # Tokens in the response FROM the model
+cached_tokens = response.cached_tokens # Tokens served from the provider's prompt cache (if supported) - v1.9.0+
+cache_creation_tokens = response.cache_creation_tokens # Tokens written to the cache (Anthropic/Bedrock) - v1.9.0+
 
 puts "Input Tokens: #{input_tokens}"
 puts "Output Tokens: #{output_tokens}"
+puts "Cached Prompt Tokens: #{cached_tokens}" # v1.9.0+
+puts "Cache Creation Tokens: #{cache_creation_tokens}" # v1.9.0+
 puts "Total Tokens for this turn: #{input_tokens + output_tokens}"
 
 # Estimate cost for this turn
@@ -517,6 +605,8 @@ end
 total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + (msg.output_tokens || 0) }
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
 ```
+
+`cached_tokens` captures the portion of the prompt served from the provider's cache. OpenAI reports this value automatically for prompts over 1024 tokens, while Anthropic and Bedrock/Claude expose both cache hits and cache writes. When the provider does not send cache data the attributes remain `nil`, so the example above falls back to zero for display. Available from v1.9+
 
 Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 

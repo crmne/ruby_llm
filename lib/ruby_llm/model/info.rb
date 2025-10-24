@@ -72,6 +72,10 @@ module RubyLLM
         pricing.text_tokens.output
       end
 
+      def provider_class
+        RubyLLM::Provider.resolve provider
+      end
+
       def type # rubocop:disable Metrics/PerceivedComplexity
         if modalities.output.include?('embeddings') && !modalities.output.include?('text')
           'embedding'

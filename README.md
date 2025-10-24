@@ -18,7 +18,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 </div>
 
 > [!NOTE]
-> Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+> Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 
 ---
 
@@ -70,6 +70,11 @@ RubyLLM.embed "Ruby is elegant and expressive"
 ```
 
 ```ruby
+# Transcribe audio to text
+RubyLLM.transcribe "meeting.wav"
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```
@@ -107,7 +112,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
 * **Vision:** Analyze images and videos
-* **Audio:** Transcribe and understand speech
+* **Audio:** Transcribe and understand speech with `RubyLLM.transcribe`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`

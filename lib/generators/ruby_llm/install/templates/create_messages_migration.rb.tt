@@ -3,8 +3,11 @@ class Create<%= message_model_name.gsub('::', '').pluralize %> < ActiveRecord::M
     create_table :<%= message_table_name %> do |t|
       t.string :role, null: false
       t.text :content
+      t.json :content_raw
       t.integer :input_tokens
       t.integer :output_tokens
+      t.integer :cached_tokens
+      t.integer :cache_creation_tokens
       t.timestamps
     end
 

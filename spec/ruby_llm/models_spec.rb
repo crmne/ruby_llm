@@ -208,10 +208,9 @@ RSpec.describe RubyLLM::Models do
   describe '#save_to_json' do
     it 'saves models to the models.json file' do
       temp_file = Tempfile.new(['models', '.json'])
-      allow(described_class).to receive(:models_file).and_return(temp_file.path)
 
       models = RubyLLM.models
-      models.save_to_json
+      models.save_to_json(temp_file)
 
       # Verify file was written with valid JSON
       saved_content = File.read(temp_file.path)
@@ -220,6 +219,21 @@ RSpec.describe RubyLLM::Models do
       # Verify model data was saved
       parsed_models = JSON.parse(saved_content)
       expect(parsed_models.size).to eq(models.all.size)
+
+      temp_file.unlink
+    end
+
+    it 'saves and loads from a custom file path' do
+      temp_file = Tempfile.new(['custom_models', '.json'])
+
+      models = RubyLLM.models
+      models.save_to_json(temp_file.path)
+
+      # Load from custom path
+      reloaded_models = described_class.read_from_json(temp_file.path)
+
+      expect(reloaded_models.size).to eq(models.all.size)
+      expect(reloaded_models.first.id).to eq(models.all.first.id)
 
       temp_file.unlink
     end

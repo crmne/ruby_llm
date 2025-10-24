@@ -69,6 +69,15 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Has provider-specific params'
+    with_params cache_control: { type: 'ephemeral' }
+
+    def execute(**)
+      'ok'
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -251,6 +260,37 @@ RSpec.describe RubyLLM::Chat do
         # Verify the response contains some dice roll results
         expect(response.content).to match(/\d+/) # Contains at least one number
         expect(response.content.downcase).to match(/roll|dice|result/) # Mentions rolling or results
+      end
+
+      it "#{provider}/#{model} can handle with_params" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(ParamsTool)
+                      .with_instructions('You must call the params tool.')
+
+        provider_instance = chat.instance_variable_get(:@provider)
+        captured_payload = nil
+
+        allow(provider_instance).to receive(:sync_response) do |_connection, payload, _|
+          captured_payload = payload
+          RubyLLM::Message.new(role: :assistant, content: 'ok')
+        end
+
+        chat.ask('Call the params tool for me')
+
+        expect(captured_payload).not_to be_nil
+
+        extracted = case provider
+                    when :gemini, :vertexai
+                      captured_payload.dig(:tools, 0, :functionDeclarations, 0, :cache_control)
+                    else
+                      captured_payload.dig(:tools, 0, :cache_control)
+                    end
+
+        expect(extracted).to eq(type: 'ephemeral')
       end
     end
   end

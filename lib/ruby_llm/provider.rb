@@ -82,6 +82,13 @@ module RubyLLM
       parse_image_response(response, model:)
     end
 
+    def transcribe(audio_file, model:, language:, **options)
+      file_part = build_audio_file_part(audio_file)
+      payload = render_transcription_payload(file_part, model:, language:, **options)
+      response = @connection.post transcription_url, payload
+      parse_transcription_response(response, model:)
+    end
+
     def configured?
       configuration_requirements.all? { |req| @config.send(req) }
     end
@@ -160,9 +167,13 @@ module RubyLLM
         providers[name.to_sym] = provider_class
       end
 
+      def resolve(name)
+        providers[name.to_sym]
+      end
+
       def for(model)
         model_info = Models.find(model)
-        providers[model_info.provider.to_sym]
+        resolve model_info.provider
       end
 
       def providers
@@ -191,6 +202,17 @@ module RubyLLM
     end
 
     private
+
+    def build_audio_file_part(file_path)
+      expanded_path = File.expand_path(file_path)
+      mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
+
+      Faraday::Multipart::FilePart.new(
+        expanded_path,
+        mime_type,
+        File.basename(expanded_path)
+      )
+    end
 
     def try_parse_json(maybe_json)
       return maybe_json unless maybe_json.is_a?(String)

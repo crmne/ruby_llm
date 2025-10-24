@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 24 Sep 2025 14:57:11 GMT
+      - Mon, 20 Oct 2025 19:22:47 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:57:11 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:47 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -69,7 +69,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:57:12 GMT
+      - Mon, 20 Oct 2025 19:22:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -120,18 +120,18 @@ http_interactions:
                         "latitude": "52.5200"
                       }
                     },
-                    "thoughtSignature": "CtsEAR/MhbbgI2FaxRGC5x9VXNiw/VO7zvoJ8Q8eMiBV1uCvLDHgAnFV1ryypR8cgFkZe08DtS7KKQim71bizdd2mrgCupWSDuUAGC08DnXXCGLss2AlBpIPkw2yZMxL9KNbZy2LESqEF6oa60L7W8vaZhWtfvb61F8LxusIrRdcXE/tWzIn3K/wEhkMhju6NytBesdiXQ+OIDbbix223eGvljkSUwAWkVMUEU7aSiKrKyYgm8Glmtlc+jPG/DzNv0Alf1gNTqaIBxC32siyGVeWPPY1cxMQGD3yWudi06zTxfBLPP8zhmP0eiMmtin4wHist2CCRf7SZc0qJiyTCeMlpyFL0FvR62vg5874oUgDu7X1lWirsoQFQ73c89OlsPDjXCHGU3DiUrqCo9Fp0hzbvOO1PEKHb+j7yUMNLzt5LoVYkCX130fwq2EdrZsq1+4SzW7nhHzK+2lAMk4r80+YtqPyD+CjMZeQQAh1i8rG7Uc07DiEWGYGkw5AjACtlIE8UXtcOgP3UeOS1NVsAupv4aiL4Q2+VTZWKP1EnvIOo56MB9kEHwdIn/gU8deM+XlDxrrM/4MLth8gYh1bT2HyHFY2IDf2tdWeua2NLdXfic/1N34G7EVvWJoNd3JaA+xwSpQXQK/DN684vMUYvaMVA0dsWLQ/oMSAGUxaJLr+z147W+TWJyR0xWYJXXmcAd0lD7/LEby5nRqPrGhX3Q01cYWUqsBJQ6Ygs9weR/qgtdCWfGK7bIWVLa+DzWwXUNexgSetPKaNFiyblExhxfpc2lTeekSEbk0aLG4/"
+                    "thoughtSignature": "CpEEAePx/14SkgitPNiMP7Nbo2i9C5ZJha/Iyivm7p5g4MYuNN18yHqBc56XNXeih/D6JatQ//7sNQErHh+FttoDgndRAKAbZ3ramBywAfJWGZ8Xld9xEIe1nzP3m0sxIlgdg7wMZLnRylOM5cRR+oullPhekKRTa2iocrb0DJ7Eb0EQpaznLx33H3pl3fZt8uhqq738vcyDxngtNAZ+1cPEWRlOgh3EYKXAHOhmL6DGxN69xQB2bxFt0X/IdpMhGVI4sVJDVbEjxvuDCnGRbEzpkbza0p89pgnJdTreGIUopHBMBhB4OaM5eEEhFoBjcgL37BtGvqq8inIlaVcckIkH3MmTLbxed+eaf0SrhLbsfHE13bhz+nqJ8K4lUYylZgdztDcvgzsRe5sJGE4AljW4qARigqevbtloYyjGQElMqj3FMVFLf28IROk77pd+D1VGZW13sCBgVK15mFoIj4c0As7emIZ94QJPcIKvQMFtd5EUolxfnh3k3C3KmcvV9Y3g/LASe56PBFQo8nJJlSDSzg63fQjoI7JkMKiwCR6ufxe0fzbXCjDqPnQ0IVjHzj2c5+TvzR1zalulcemnErWxOKqAqzhVBYnZdjKcc8uHlhNtfxRV1/L+jY4ip1R8FGafIrb2xXf56BMG71BSAEIdpWtKZdaxI8CXIDowsBtOYKx+tQSfdh0+WWJ06QYjipenNw=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.3022518157958984
+              "avgLogprobs": -0.611748078290154
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 70,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 243,
+            "totalTokenCount": 188,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -145,13 +145,13 @@ http_interactions:
                 "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 156
+            "thoughtsTokenCount": 101
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:57:11.307940Z",
-          "responseId": "xwbUaOTlEuu5rNcPtqv_2AQ"
+          "createTime": "2025-10-20T19:22:47.576119Z",
+          "responseId": "B4z2aPeUI9-ovdIP7aKYyAI"
         }
-  recorded_at: Wed, 24 Sep 2025 14:57:12 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:48 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -160,7 +160,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -172,14 +172,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 20 Oct 2025 19:22:48 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 24 Sep 2025 14:57:12 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -204,25 +204,25 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:57:12 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:48 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"38f8afe0-279f-40df-b604-d8a6671661b3","response":{"name":"38f8afe0-279f-40df-b604-d8a6671661b3","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"7c11e672-1882-4dd2-bf3c-c2e463fb9f03","response":{"name":"7c11e672-1882-4dd2-bf3c-c2e463fb9f03","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -243,7 +243,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:57:13 GMT
+      - Mon, 20 Oct 2025 19:22:49 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -259,6 +259,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2giLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJDcEFFQVIvTWhiWUo0c3U3Y2RRTzV5VE5RWko5YW4zU0FPMjh6MSsrTUQzVUpmcHRpY2k4RlVUMlVISnBhdDlmTCt6L1ZpSTBYRlF6cHN4TFVBYWNiZmx3MjJzVjJCRlUva2VuVUhVNHBiUEpLZHZTMGFTclNIVk9IRWpSMHZ5aCtrZjA4UlFWbWUzTThveG1WWTIzUVRPZkNyU3VPK1ZRZUdNSDZ5OE9rUjBuVDZ0c0hyMldZK2ZUSE4wZ3MwaXJXZVVXbG5Vd3FTSXYrYkJRZUlQYXE5WnBhZ0FRZzhHdG93cVdwQkE5aU94YUNTRGh1Ylo2c2VMMkxBWUFNMXdlRm5BYVBqYWlUbkE3K3lZamxjYjkvZjRkNitVSzQrR2dBeCtnN1BkcytoV2hJQ2F5RkRFeWMwWmtCYVY5a0Iya2ZZbDBKaHVGUlE0SE1UQjQzRm1iR0k4L0ZoTDZSSHNGU3RMREI5a2MzMTNEMWRCaEFIMFh3U2JvRC9UTTdSS2lFTk8rT3NGbW9jWmt3VUFad2dZV1BWQWZrUjc1YVY0MTZRWm8xdDA0VHgwMnhwNWRseklmUHNYK05VYjZqQVI0dmZkSFFIVlZOTmluSlhrNGFoOHFaMWhmZ2xXMDNsYUtlZU9wV05zL1pldHdOVDM3UGVKenYrVEVBSytRNlF3dDhFNUdqa1k2VHlvYXBKS3hpTUYvbjlXMmtEK1E4c0U4UWJNcXFvL2VhcnhVcTl0dm41WlgxWFhsOWtIbHpkU0ZEdDlkZTJXeDJLMXVQZ1JjeWF3bXNKUlBHdTVZTFR2Z1pFSVFqL3F2UzRaWmEwdHBVN1FVUUpRV2Qzc2RndHdwN2Y3UUwveXZUTnFJTkpjQU9HWUlQUWFaRkJiMFhqam9CS3MwYWF6eVNYTVJSdXlrMlFBZmNQNVhIMFpoak0zQ0pPRk4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMC44MjAwOTE2ODM1MjM5OTU1MwogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDE5MSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM1LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDM2MiwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxOTEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDM1CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTM2CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjUtMDktMjRUMTQ6NTc6MTIuNjE4Mzc4WiIsCiAgInJlc3BvbnNlSWQiOiAieUFiVWFJcmZKZmkwbVBVUDNmckctUXMiCn0K
-  recorded_at: Wed, 24 Sep 2025 14:57:13 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDdXJyZW50IHdlYXRoZXIgYXQgNTIuNTIwMCwgMTMuNDA1MDogMTXCsEMsIFdpbmQ6IDEwIGttL2giLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJDb0FFQWVQeC8xNDJXbUpHdDU4aFN5alBVdjRzRVdYRDN6NDlZU0c0V2c1QzN6T1gwVlBCK1FaV2dlQy8zRi94Ykx6aHpzS1Q0WDlQa25EWW1zVHdjK1lwREZtbHRyaTh3Tmd4SW9TRThDTFJBemNGbDZkS1JzbTE5VzNyNjAyTlVFcmNVTkxWRzBIMktqeWw3UG1lcUJ4MGlxL2JrMzRyMjRjT0hrR3c3bE4zVnRwb1hqelhxUXZxQW9Pcm9wd255aXh6MTJDbHRSL3FRdXlSeHRERmpvM1czQWhmWU93VDlDV3BRRGJya3dmL2J5Rm9yeFlRODhjTG5wZVRSSkxBZ0NaWkIzcnlGamltOCtMMWFRVWxxWStDZUVjeXlYcFRTUzVHSXRWbWUzWHEwOGNZNzlld3grY2RKQ3BNR2RlWlhvaWl3SzA4bkh0Q1daelJESmNPeUN1ajNpTmtQMFJrbUFPY0MrTWtZKzBLRHJUWmsrQnBCc2c3a3B2YnJVTnoxL2NnQzJaNGIyN2RmV2tCUjBqU2ZCVFRnNzUyOHpneThQOTJXZmVoYXVnUmplaGdaQ0pTYXVwM1RFNDdtOXNXRjkwMmZyY3JlOHJJNjhJaW5ReGpaOVpJYWxWNCtPMkduQXhoejJjSFd5NE9Eb2M5a1p4dVJzTlJXSk5zTnY0dDhiZnUyVDJTeUJEV2QxR2NjRG9vMll4RXcrTjBvZzVFS1pON1E1Ykt6M3lKK0ltNHA5TU5jempTY3A4SnhGeHA2VkZqWDJqQ01Sd1RYNFZoU1ZBT0lFVDkrNFg0UUg1VGo2a21Zc0c5TW1SVUJpM3RNQi96amJzQmxqL1RPclNHNkc1ZjhTR0M4eTd1ODlOeGoxZmV1eGtWZm1LQVhWM2ZtVHdpQzVBZHBzak9mbUU9IgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTEuMTIwOTc5MzA5MDgyMDMxMgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDE5MSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM1LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDM1MiwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxOTEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDM1CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogMTI2CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJjcmVhdGVUaW1lIjogIjIwMjUtMTAtMjBUMTk6MjI6NDguNDk1MDMwWiIsCiAgInJlc3BvbnNlSWQiOiAiQ0l6MmFMYWJIdXlodmRJUG03ZXI4QXMiCn0K
+  recorded_at: Mon, 20 Oct 2025 19:22:49 GMT
 recorded_with: VCR 6.3.1

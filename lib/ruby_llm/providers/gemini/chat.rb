@@ -50,22 +50,9 @@ module RubyLLM
 
         def format_parts(msg)
           if msg.tool_call?
-            [{
-              functionCall: {
-                name: msg.tool_calls.values.first.name,
-                args: msg.tool_calls.values.first.arguments
-              }
-            }]
+            format_tool_call(msg)
           elsif msg.tool_result?
-            [{
-              functionResponse: {
-                name: msg.tool_call_id,
-                response: {
-                  name: msg.tool_call_id,
-                  content: Media.format_content(msg.content)
-                }
-              }
-            }]
+            format_tool_result(msg)
           else
             Media.format_content(msg.content)
           end
@@ -77,7 +64,7 @@ module RubyLLM
 
           Message.new(
             role: :assistant,
-            content: extract_content(data),
+            content: parse_content(data),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
@@ -89,23 +76,36 @@ module RubyLLM
         def convert_schema_to_gemini(schema)
           return nil unless schema
 
+          schema = normalize_any_of(schema) if schema[:anyOf]
+
           build_base_schema(schema).tap do |result|
             result[:description] = schema[:description] if schema[:description]
             apply_type_specific_attributes(result, schema)
           end
         end
 
-        def extract_content(data)
+        def normalize_any_of(schema)
+          any_of_schemas = schema[:anyOf]
+          null_schemas = any_of_schemas.select { |s| s[:type] == 'null' }
+          non_null_schemas = any_of_schemas.reject { |s| s[:type] == 'null' }
+
+          return non_null_schemas.first.merge(nullable: true) if non_null_schemas.size == 1 && null_schemas.any?
+
+          return non_null_schemas.first if non_null_schemas.any?
+
+          { type: 'string', nullable: true }
+        end
+
+        def parse_content(data)
           candidate = data.dig('candidates', 0)
           return '' unless candidate
 
           return '' if function_call?(candidate)
 
           parts = candidate.dig('content', 'parts')
-          text_parts = parts&.select { |p| p['text'] }
-          return '' unless text_parts&.any?
+          return '' unless parts&.any?
 
-          text_parts.map { |p| p['text'] }.join
+          build_response_content(parts)
         end
 
         def function_call?(candidate)

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 24 Sep 2025 14:56:27 GMT
+      - Mon, 20 Oct 2025 19:22:41 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:56:27 GMT
+  recorded_at: Mon, 20 Oct 2025 19:22:41 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 24 Sep 2025 14:56:27 GMT
+      - Mon, 20 Oct 2025 19:22:41 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -104,12 +104,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"1\\n2\\n3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
-        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 5,\"totalTokenCount\":
+        [{\"text\": \"1, 2, 3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 7,\"totalTokenCount\":
         36,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 24},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2025-09-24T14:56:27.406835Z\",\"responseId\":
-        \"mwbUaLPqGLiIt_gP3oai0AY\"}\r\n\r\n"
-  recorded_at: Wed, 24 Sep 2025 14:56:27 GMT
+        \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 22},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2025-10-20T19:22:41.460849Z\",\"responseId\":
+        \"AYz2aLGQHMCuvdIPy7_ioA4\"}\r\n\r\n"
+  recorded_at: Mon, 20 Oct 2025 19:22:41 GMT
 recorded_with: VCR 6.3.1

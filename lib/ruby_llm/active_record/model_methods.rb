@@ -77,7 +77,7 @@ module RubyLLM
       delegate :supports?, :supports_vision?, :supports_functions?, :type,
                :input_price_per_million, :output_price_per_million,
                :function_calling?, :structured_output?, :batch?,
-               :reasoning?, :citations?, :streaming?,
+               :reasoning?, :citations?, :streaming?, :provider_class,
                to: :to_llm
     end
   end
