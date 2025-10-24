@@ -13,6 +13,27 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
   end
 
   describe '#convert_schema_to_gemini' do
+    it 'extracts inner schema from wrapper format' do
+      # Simulate what RubyLLM::Schema.to_json_schema returns
+      schema = {
+        name: 'PersonSchema',
+        schema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            age: { type: 'integer' }
+          }
+        }
+      }
+
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      # Should extract the inner schema and convert it
+      expect(result[:type]).to eq('OBJECT')
+      expect(result[:properties][:name][:type]).to eq('STRING')
+      expect(result[:properties][:age][:type]).to eq('INTEGER')
+    end
+
     it 'converts simple string schema' do
       schema = { type: 'string' }
       result = test_obj.send(:convert_schema_to_gemini, schema)

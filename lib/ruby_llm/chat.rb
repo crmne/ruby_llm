@@ -89,7 +89,7 @@ module RubyLLM
 
       # Accept both RubyLLM::Schema instances and plain JSON schemas
       @schema = if schema_instance.respond_to?(:to_json_schema)
-                  schema_instance.to_json_schema[:schema]
+                  schema_instance.to_json_schema
                 else
                   schema_instance
                 end

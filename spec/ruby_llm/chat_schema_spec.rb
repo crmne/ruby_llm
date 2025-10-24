@@ -2,6 +2,12 @@
 
 require 'spec_helper'
 
+# Define a test schema class for testing RubyLLM::Schema instances
+class PersonSchemaClass < RubyLLM::Schema
+  string :name
+  number :age
+end
+
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
@@ -63,6 +69,19 @@ RSpec.describe RubyLLM::Chat do
           expect(response2.content).to be_a(String)
           expect(response2.content).to include('Ruby')
         end
+
+        it 'accepts RubyLLM::Schema class instances and returns structured output' do
+          skip 'Model does not support structured output' unless chat.model.structured_output?
+
+          response = chat
+                     .with_schema(PersonSchemaClass)
+                     .ask('Generate a person named Alice who is 28 years old')
+
+          # Content should already be parsed as a Hash when schema is used
+          expect(response.content).to be_a(Hash)
+          expect(response.content['name']).to eq('Alice')
+          expect(response.content['age']).to eq(28)
+        end
       end
     end
 
@@ -85,6 +104,19 @@ RSpec.describe RubyLLM::Chat do
           expect(response.content).to be_a(Hash)
           expect(response.content['name']).to eq('Jane')
           expect(response.content['age']).to eq(25)
+        end
+
+        it 'accepts RubyLLM::Schema class instances and returns structured output' do
+          skip 'Model does not support structured output' unless chat.model.structured_output?
+
+          response = chat
+                     .with_schema(PersonSchemaClass)
+                     .ask('Generate a person named Carol who is 32 years old')
+
+          # Content should already be parsed as a Hash when schema is used
+          expect(response.content).to be_a(Hash)
+          expect(response.content['name']).to eq('Carol')
+          expect(response.content['age']).to eq(32)
         end
       end
     end
