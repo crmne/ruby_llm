@@ -22,13 +22,21 @@ module RubyLLM
           payload[:tools] = tools.map { |_, tool| tool_for(tool) } if tools.any?
 
           if schema
-            strict = schema[:strict] != false
+            # OpenAI's response_format requires a 'name' for the json_schema.
+            # Custom names are useful for debugging, logging, and clarity when using multiple schemas.
+            #
+            # Supports two formats:
+            # 1. Full: { name: 'custom_schema_name', schema: { type: 'object', properties: {...} } }
+            # 2. Schema only: { type: 'object', properties: {...} } - name defaults to 'response'
+            schema_name = schema[:name] || 'response'
+            schema_def = schema[:schema] || schema
+            strict = schema.fetch(:strict, true)
 
             payload[:response_format] = {
               type: 'json_schema',
               json_schema: {
-                name: 'response',
-                schema: schema,
+                name: schema_name,
+                schema: schema_def,
                 strict: strict
               }
             }
