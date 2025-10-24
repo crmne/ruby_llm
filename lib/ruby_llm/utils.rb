@@ -36,6 +36,8 @@ module RubyLLM
       original.merge(overrides) do |_key, original_value, overrides_value|
         if original_value.is_a?(Hash) && overrides_value.is_a?(Hash)
           deep_merge(original_value, overrides_value)
+        elsif original_value.is_a?(Array) && overrides_value.is_a?(Array)
+          original_value + overrides_value
         else
           overrides_value
         end
