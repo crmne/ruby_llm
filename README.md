@@ -75,6 +75,11 @@ RubyLLM.transcribe "meeting.wav"
 ```
 
 ```ruby
+# Text to speech
+RubyLLM.tts "Hello, welcome to RubyLLM!"
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```

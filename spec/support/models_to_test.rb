@@ -57,3 +57,7 @@ TRANSCRIPTION_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
+
+SPEECH_MODELS = [
+  { provider: :openai, model: 'gpt-4o-mini-tts' }
+].freeze
