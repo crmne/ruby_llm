@@ -17,7 +17,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   def create_message_with_action_text(content_text)
     message = chat.messages.create!(role: :user)
     action_text_content = mock_action_text(content_text)
-    allow(message).to receive(:content).and_return(action_text_content)
+    allow(message).to receive(:[]) do |key|
+      key == :content ? action_text_content : message.read_attribute(key)
+    end
     [message, action_text_content]
   end
 
