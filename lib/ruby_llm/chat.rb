@@ -31,7 +31,7 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: Content.new(message, with)
+      add_message role: :user, content: build_content(message, with)
       complete(&)
     end
 
@@ -193,7 +193,7 @@ module RubyLLM
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
         @on[:tool_result]&.call(result)
-        content = result.is_a?(Content) ? result : result.to_s
+        content = content_like?(result) ? result : result.to_s
         message = add_message role: :tool, content:, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
 
@@ -207,6 +207,16 @@ module RubyLLM
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def build_content(message, attachments)
+      return message if content_like?(message)
+
+      Content.new(message, attachments)
+    end
+
+    def content_like?(object)
+      object.is_a?(Content) || object.is_a?(Content::Raw)
     end
   end
 end

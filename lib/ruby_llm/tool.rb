@@ -42,6 +42,15 @@ module RubyLLM
       def parameters
         @parameters ||= {}
       end
+
+      def with_params(**params)
+        @provider_params = params
+        self
+      end
+
+      def provider_params
+        @provider_params ||= {}
+      end
     end
 
     def name
@@ -61,6 +70,10 @@ module RubyLLM
 
     def parameters
       self.class.parameters
+    end
+
+    def provider_params
+      self.class.provider_params
     end
 
     def call(args)

@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def tool_for(tool)
-          {
+          definition = {
             type: 'function',
             function: {
               name: tool.name,
@@ -20,6 +20,10 @@ module RubyLLM
               }
             }
           }
+
+          return definition if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(definition, tool.provider_params)
         end
 
         def param_schema(param)

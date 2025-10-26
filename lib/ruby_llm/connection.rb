@@ -34,8 +34,7 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      body = payload.is_a?(Hash) ? JSON.generate(payload, ascii_only: false) : payload
-      @connection.post url, body do |req|
+      @connection.post url, payload do |req|
         req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
         yield req if block_given?
       end
@@ -66,7 +65,7 @@ module RubyLLM
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        logger.filter(%r{[A-Za-z0-9+/=]{100,}}, 'data":"[BASE64 DATA]"')
+        logger.filter(%r{[A-Za-z0-9+/=]{100,}}, '[BASE64 DATA]')
         logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
       end
     end
@@ -83,9 +82,10 @@ module RubyLLM
     end
 
     def setup_middleware(faraday)
+      faraday.request :multipart
       faraday.request :json
       faraday.response :json
-      faraday.adapter Faraday.default_adapter
+      faraday.adapter :net_http
       faraday.use :llm_errors, provider: @provider
     end
 

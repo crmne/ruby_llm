@@ -47,12 +47,17 @@ module RubyLLM
           message_data = data.dig('choices', 0, 'message')
           return unless message_data
 
+          usage = data['usage'] || {}
+          cached_tokens = usage.dig('prompt_tokens_details', 'cached_tokens')
+
           Message.new(
             role: :assistant,
             content: message_data['content'],
             tool_calls: parse_tool_calls(message_data['tool_calls']),
-            input_tokens: data['usage']['prompt_tokens'],
-            output_tokens: data['usage']['completion_tokens'],
+            input_tokens: usage['prompt_tokens'],
+            output_tokens: usage['completion_tokens'],
+            cached_tokens: cached_tokens,
+            cache_creation_tokens: 0,
             model_id: data['model'],
             raw: response
           )

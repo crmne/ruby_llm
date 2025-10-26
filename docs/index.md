@@ -4,6 +4,8 @@ title: Home
 nav_order: 1
 description: One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, AI agents, RAG applications, and content generators.
 permalink: /
+redirect_from:
+ - /guides/
 ---
 
 <h1>
@@ -38,7 +40,8 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-color.svg" alt="Gemini" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-text.svg" alt="Gemini" class="logo-small">
   </div>
   <div class="provider-logo">
     <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
@@ -71,7 +74,7 @@ permalink: /
 
 <div class="badge-container">
   <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-  <a href="https://github.com/testdouble/standard"><img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="Ruby Style Guide" /></a>
+  <a href="https://github.com/rubocop/rubocop"><img src="https://img.shields.io/badge/code_style-rubocop-brightgreen.svg" alt="Ruby Style Guide" /></a>
   <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
   <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
 </div>
@@ -80,7 +83,7 @@ permalink: /
 
 Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
 
-Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
 
 ---
@@ -102,6 +105,7 @@ chat.ask "What's the best way to learn Ruby?"
 ```ruby
 # Analyze any file type
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
+chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
 chat.ask "Explain this code", with: "app.rb"
@@ -127,6 +131,16 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+```
+
+```ruby
+# Transcribe audio to text
+RubyLLM.transcribe "meeting.wav"
+```
+
+```ruby
+# Moderate content for safety
+RubyLLM.moderate "Check if this text is safe"
 ```
 
 ```ruby
@@ -161,11 +175,12 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
-* **Audio:** Transcribe and understand speech
+* **Vision:** Analyze images and videos
+* **Audio:** Transcribe and understand speech with `RubyLLM.transcribe`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
-* **Embeddings:** Vector search with `RubyLLM.embed`
+* **Embeddings:** Generate embeddings with `RubyLLM.embed`
+* **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
@@ -193,7 +208,11 @@ end
 ## Rails
 
 ```bash
+# Install Rails Integration
 rails generate ruby_llm:install
+
+# Add Chat UI (optional)
+rails generate ruby_llm:chat_ui
 ```
 
 ```ruby
@@ -201,7 +220,9 @@ class Chat < ApplicationRecord
   acts_as_chat
 end
 
-chat = Chat.create! model_id: "claude-sonnet-4"
+chat = Chat.create! model: "claude-sonnet-4"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
+
+Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
 

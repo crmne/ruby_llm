@@ -32,6 +32,21 @@ module RubyLLM
             data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
           end
 
+          def extract_cached_tokens(data)
+            data.dig('message', 'usage', 'cache_read_input_tokens') || data.dig('usage', 'cache_read_input_tokens')
+          end
+
+          def extract_cache_creation_tokens(data)
+            direct = data.dig('message', 'usage',
+                              'cache_creation_input_tokens') || data.dig('usage', 'cache_creation_input_tokens')
+            return direct if direct
+
+            breakdown = data.dig('message', 'usage', 'cache_creation') || data.dig('usage', 'cache_creation')
+            return unless breakdown.is_a?(Hash)
+
+            breakdown.values.compact.sum
+          end
+
           private
 
           def extract_content_by_type(data)

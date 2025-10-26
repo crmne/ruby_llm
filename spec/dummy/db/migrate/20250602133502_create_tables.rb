@@ -32,9 +32,12 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.references :chat
       t.string :role
       t.text :content
+      t.json :content_raw
       t.references :model, foreign_key: true
       t.integer :input_tokens
       t.integer :output_tokens
+      t.integer :cached_tokens
+      t.integer :cache_creation_tokens
       t.references :tool_call
       t.timestamps
     end

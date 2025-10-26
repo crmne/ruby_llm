@@ -13,6 +13,27 @@ module RubyLLM
           }]
         end
 
+        def format_tool_call(msg)
+          [{
+            functionCall: {
+              name: msg.tool_calls.values.first.name,
+              args: msg.tool_calls.values.first.arguments
+            }
+          }]
+        end
+
+        def format_tool_result(msg)
+          [{
+            functionResponse: {
+              name: msg.tool_call_id,
+              response: {
+                name: msg.tool_call_id,
+                content: Media.format_content(msg.content)
+              }
+            }
+          }]
+        end
+
         def extract_tool_calls(data)
           return nil unless data
 
@@ -42,11 +63,15 @@ module RubyLLM
         private
 
         def function_declaration_for(tool)
-          {
+          declaration = {
             name: tool.name,
             description: tool.description,
             parameters: tool.parameters.any? ? format_parameters(tool.parameters) : nil
           }.compact
+
+          return declaration if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(declaration, tool.provider_params)
         end
 
         def format_parameters(parameters)

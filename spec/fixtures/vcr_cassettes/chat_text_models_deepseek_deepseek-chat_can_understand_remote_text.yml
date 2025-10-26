@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Mon, 18 Aug 2025 06:05:44 GMT
+      - Mon, 22 Sep 2025 10:00:17 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68a2c2b8-9c6"
+      - W/"68d11e31-9c6"
       Expires:
-      - Wed, 03 Sep 2025 06:00:58 GMT
+      - Wed, 24 Sep 2025 07:22:10 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1366:6EEC2:BD8766:BEFA25:68B7D742
+      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Wed, 03 Sep 2025 14:42:27 GMT
+      - Wed, 24 Sep 2025 14:38:49 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '247'
       X-Served-By:
-      - cache-fra-etou8220175-FRA
+      - cache-fra-etou8220174-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1756910548.598463,VS0,VE99
+      - S1758724730.585976,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - e015f100d6b250d28755a764bf3fb35ff3219727
+      - 05cb6536d4c320fb7ff8797fb4f95b0a8b52dc29
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 03 Sep 2025 14:42:27 GMT
+  recorded_at: Wed, 24 Sep 2025 14:38:49 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 03 Sep 2025 14:42:28 GMT
+      - Wed, 24 Sep 2025 14:38:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,7 +167,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3e3720c9a850d92b788ce19098687890
+      - c1418eeac9a7dff20ec1a625df4a2186
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -180,22 +182,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a697e19c-3e61-4d4a-a2c7-7968dfc93823","object":"chat.completion","created":1756910548,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file contains the license terms for the Ruby programming language. Here''s
-        what''s included:\n\n1. **Copyright Notice**: Ruby is copyrighted free software
-        by Yukihiro Matsumoto (matz@netlab.jp).\n\n2. **Redistribution Terms**: You
-        can redistribute and/or modify Ruby under either:\n   - The 2-clause BSDL
-        (referencing a separate BSDL file)\n   - Or the conditions specified in this
-        license\n\n3. **Key Conditions**:\n   - You can make verbatim copies with
-        original copyright notices\n   - Modifications require at least one of several
-        options (public domain, internal use, non-standard naming, or author arrangements)\n   -
-        Binary distribution requires including source or instructions to obtain original
-        distribution\n   - Some files have different terms (referenced in LEGAL file)\n   -
-        Generated scripts/output files aren''t automatically copyrighted under Ruby''s
-        license\n   - The software comes with no warranties (AS IS)\n\n4. **Additional
-        References**: The license mentions two other files:\n   - BSDL (2-clause BSD
-        license)\n   - LEGAL (for files with different copying conditions)\n\nThis
-        is essentially Ruby''s historical license terms that provide flexibility in
-        how the software can be used and distributed."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":248,"total_tokens":792,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_feb633d1f5_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 03 Sep 2025 14:42:45 GMT
+      string: '{"id":"c183eaa0-354b-412f-a16b-4404f5c2c86a","object":"chat.completion","created":1758724729,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file contains the license terms for the Ruby programming language. It''s a
+        copyright notice and software license that outlines the terms under which
+        Ruby can be used, modified, and distributed.\n\nKey points of this license:\n\n1.
+        **Copyright**: Ruby is copyrighted free software by Yukihiro Matsumoto (\"Matz\")\n\n2.
+        **Redistribution options**: Can be used under either the 2-clause BSDL or
+        the terms specified in this file\n\n3. **Main permissions**:\n   - Free copying
+        of source code with proper attribution\n   - Modification allowed with certain
+        conditions (like making modifications public, using only internally, or making
+        distribution arrangements)\n   - Distribution of binaries with various options\n   -
+        Incorporation into other software (including commercial)\n\n4. **Important
+        limitations**:\n   - Some files have different licensing terms (referenced
+        in \"LEGAL\" file)\n   - Generated scripts/files belong to their creator,
+        not under Ruby''s copyright\n   - Software is provided \"AS IS\" without warranties\n\nThis
+        appears to be Ruby''s historical license before it adopted the more standard
+        BSD-2-Clause license that Ruby uses today."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":229,"total_tokens":773,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Wed, 24 Sep 2025 14:39:05 GMT
 recorded_with: VCR 6.3.1

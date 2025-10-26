@@ -3,9 +3,11 @@
 require 'base64'
 require 'event_stream_parser'
 require 'faraday'
+require 'faraday/multipart'
 require 'faraday/retry'
 require 'json'
 require 'logger'
+require 'marcel'
 require 'securerandom'
 require 'zeitwerk'
 
@@ -22,7 +24,8 @@ loader.inflector.inflect(
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
   'vertexai' => 'VertexAI',
-  'pdf' => 'PDF'
+  'pdf' => 'PDF',
+  'UI' => 'UI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -47,8 +50,16 @@ module RubyLLM
       Embedding.embed(...)
     end
 
+    def moderate(...)
+      Moderation.moderate(...)
+    end
+
     def paint(...)
       Image.paint(...)
+    end
+
+    def transcribe(...)
+      Transcription.transcribe(...)
     end
 
     def models

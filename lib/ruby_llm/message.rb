@@ -5,17 +5,20 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :tool_calls, :tool_call_id, :input_tokens, :output_tokens, :model_id, :raw
+    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :input_tokens, :output_tokens,
+                :cached_tokens, :cache_creation_tokens, :raw
     attr_writer :content
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym
       @content = normalize_content(options.fetch(:content))
+      @model_id = options[:model_id]
       @tool_calls = options[:tool_calls]
+      @tool_call_id = options[:tool_call_id]
       @input_tokens = options[:input_tokens]
       @output_tokens = options[:output_tokens]
-      @model_id = options[:model_id]
-      @tool_call_id = options[:tool_call_id]
+      @cached_tokens = options[:cached_tokens]
+      @cache_creation_tokens = options[:cache_creation_tokens]
       @raw = options[:raw]
 
       ensure_valid_role
@@ -45,11 +48,13 @@ module RubyLLM
       {
         role: role,
         content: content,
+        model_id: model_id,
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
         input_tokens: input_tokens,
         output_tokens: output_tokens,
-        model_id: model_id
+        cached_tokens: cached_tokens,
+        cache_creation_tokens: cache_creation_tokens
       }.compact
     end
 

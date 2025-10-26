@@ -86,11 +86,31 @@ end
 > ```
 {: .note }
 
-## Returning Rich Content from Tools
+### Provider-Specific Parameters
 {: .d-inline-block }
 
-Available in v1.6.4+
+v1.9.0+
 {: .label .label-green }
+
+Some providers allow you to attach extra metadata to tool definitions (for example, Anthropic's `cache_control` directive for prompt caching). Use `with_params` on your tool class to declare these once and RubyLLM will merge them into the API payload when the provider understands them.
+
+```ruby
+class TodoTool < RubyLLM::Tool
+  description "Adds a task to the shared TODO list"
+  param :title, desc: "Human-friendly task description"
+
+  with_params cache_control: { type: 'ephemeral' }
+
+  def execute(title:)
+    Todo.create!(title:)
+    "Added “#{title}” to the list."
+  end
+end
+```
+
+Provider-specific tool parameters are passed through verbatim. Use `RUBYLLM_DEBUG=true` and keep an eye on your logs when rolling out new metadata.
+
+## Returning Rich Content from Tools
 
 Tools can return `RubyLLM::Content` objects with file attachments, allowing you to pass images, documents, or other files from your tools to the AI model:
 
@@ -193,14 +213,8 @@ puts response.content
 ```
 
 ### Model Compatibility
-{: .d-inline-block }
 
-Changed in v1.6.2+
-{: .label .label-green }
-
-RubyLLM v1.6.2+ will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
-
-Prior to v1.6.2, calling `with_tool` on an unsupported model would immediately raise `RubyLLM::UnsupportedFunctionsError`.
+RubyLLM will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
 
 ## The Tool Execution Flow
 
@@ -229,7 +243,7 @@ chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
         puts "Calling tool: #{tool_call.name}"
         puts "Arguments: #{tool_call.arguments}"
       end
-      .on_tool_result do |result|  # v1.6.0+
+      .on_tool_result do |result|
         # Called after the tool returns its result
         puts "Tool returned: #{result}"
       end
@@ -273,10 +287,6 @@ chat.ask("Check weather for every major city...")
 {: .warning }
 
 ## Advanced: Halting Tool Continuation
-{: .d-inline-block }
-
-Available in v1.6.0+
-{: .label .label-green }
 
 After a tool executes, the LLM normally continues the conversation to explain what happened. In rare cases, you might want to skip this and return the tool result directly.
 

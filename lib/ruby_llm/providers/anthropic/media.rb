@@ -7,7 +7,8 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
+        def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
+          return content.value if content.is_a?(RubyLLM::Content::Raw)
           return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
           return [format_text(content)] unless content.is_a?(Content)
 
@@ -82,7 +83,7 @@ module RubyLLM
         def format_text_file(text_file)
           {
             type: 'text',
-            text: Utils.format_text_file_for_llm(text_file)
+            text: text_file.for_llm
           }
         end
       end

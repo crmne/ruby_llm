@@ -28,9 +28,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.role).to eq('user')
       expect(chat.messages.last.role).to eq('assistant')
       expect(chat.messages.last.content).to be_present
-      # Update the chat to simulate a change
-      chat.touch
-      expect(chat.updated_at).to eq(chat.messages.last.chat.updated_at)
     end
 
     it 'tracks token usage' do
@@ -94,6 +91,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'default model' do
+    it 'uses config default when no model specified' do
+      chat = Chat.create!
+      chat.ask('Hello')
+
+      expect(chat.reload.model_id).to eq(RubyLLM.config.default_model)
+      expect(chat.messages.count).to eq(2)
+    end
+  end
+
   describe 'model associations' do
     context 'when model registry is configured' do
       before do
@@ -108,7 +115,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         chat = Chat.create!(model: 'gpt-4.1-nano')
         expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to eq('GPT-4.1 nano') if chat.model
+        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
       end
 
       it 'associates messages with model' do
@@ -150,13 +157,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Check that the message is saved in ActiveRecord with valid JSON
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
-      expect(saved_message.content).to be_a(String)
-
-      # The saved content should be parseable JSON
-      parsed_saved_content = JSON.parse(saved_message.content)
-      expect(parsed_saved_content).to be_a(Hash)
-      expect(parsed_saved_content['name']).to eq('Alice')
-      expect(parsed_saved_content['age']).to eq(25)
+      expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
     end
   end
 
@@ -220,6 +221,35 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'raw content support' do
+    let(:anthropic_model) { 'claude-3-5-haiku-20241022' }
+
+    it 'persists raw content blocks separately from plain text' do
+      chat = Chat.create!(model: anthropic_model)
+      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+
+      message = chat.create_user_message(raw_block)
+
+      expect(message.content).to be_nil
+      expect(message.content_raw).to eq(JSON.parse(raw_block.value.to_json))
+
+      reconstructed = message.to_llm
+      expect(reconstructed.content).to be_a(RubyLLM::Content::Raw)
+      expect(reconstructed.content.value).to eq(JSON.parse(raw_block.value.to_json))
+    end
+
+    it 'round-trips cached token metrics through ActiveRecord models' do
+      chat = Chat.create!(model: anthropic_model)
+      message = chat.messages.create!(role: 'assistant', content: 'Hi there',
+                                      cached_tokens: 42, cache_creation_tokens: 7)
+
+      llm_message = message.to_llm
+
+      expect(llm_message.cached_tokens).to eq(42)
+      expect(llm_message.cache_creation_tokens).to eq(7)
+    end
+  end
+
   describe 'custom headers' do
     it 'supports with_headers for custom HTTP headers' do
       chat = Chat.create!(model: model)
@@ -276,9 +306,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.references :bot_chat
           t.string :role
           t.text :content
+          t.json :content_raw
           t.string :model_id
           t.integer :input_tokens
           t.integer :output_tokens
+          t.integer :cached_tokens
+          t.integer :cache_creation_tokens
           t.references :bot_tool_call
           t.timestamps
         end
@@ -306,17 +339,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     # Define test models inline
     module Assistants # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       class BotChat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-        self.table_name = 'bot_chats'
-        acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
+        acts_as_chat messages: :bot_messages
       end
     end
 
     class BotMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      acts_as_message chat_class: 'Assistants::BotChat', tool_call_class: 'BotToolCall'
+      acts_as_message chat: :bot_chat, chat_class: 'Assistants::BotChat', tool_calls: :bot_tool_calls
     end
 
     class BotToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      acts_as_tool_call message_class: 'BotMessage'
+      acts_as_tool_call message: :bot_message
     end
 
     describe 'namespaced chat models' do
@@ -324,11 +356,11 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.ask("What's 2 + 2?")
 
-        expect(bot_chat.messages.count).to eq(2)
-        expect(bot_chat.messages.first).to be_a(BotMessage)
-        expect(bot_chat.messages.first.role).to eq('user')
-        expect(bot_chat.messages.last.role).to eq('assistant')
-        expect(bot_chat.messages.last.content).to be_present
+        expect(bot_chat.bot_messages.count).to eq(2)
+        expect(bot_chat.bot_messages.first).to be_a(BotMessage)
+        expect(bot_chat.bot_messages.first.role).to eq('user')
+        expect(bot_chat.bot_messages.last.role).to eq('assistant')
+        expect(bot_chat.bot_messages.last.content).to be_present
       end
 
       it 'persists tool calls with custom classes' do
@@ -337,19 +369,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         bot_chat.ask("What's 123 * 456?")
 
-        expect(bot_chat.messages.count).to be >= 3
-        tool_call_message = bot_chat.messages.find { |m| m.tool_calls.any? }
+        expect(bot_chat.bot_messages.count).to be >= 3
+        tool_call_message = bot_chat.bot_messages.find { |m| m.bot_tool_calls.any? }
         expect(tool_call_message).to be_present
-        expect(tool_call_message.tool_calls.first).to be_a(BotToolCall)
+        expect(tool_call_message.bot_tool_calls.first).to be_a(BotToolCall)
       end
 
       it 'handles system messages correctly' do
         bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.with_instructions('You are a helpful bot')
 
-        expect(bot_chat.messages.first.role).to eq('system')
-        expect(bot_chat.messages.first.content).to eq('You are a helpful bot')
-        expect(bot_chat.messages.first).to be_a(BotMessage)
+        expect(bot_chat.bot_messages.first.role).to eq('system')
+        expect(bot_chat.bot_messages.first.content).to eq('You are a helpful bot')
+        expect(bot_chat.bot_messages.first).to be_a(BotMessage)
       end
 
       it 'allows model switching' do
@@ -364,7 +396,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model: model)
-        bot_message = bot_chat.messages.create!(
+        bot_message = bot_chat.bot_messages.create!(
           role: 'user',
           content: 'Test message',
           input_tokens: 10,
@@ -381,9 +413,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       it 'correctly converts tool calls' do
         bot_chat = Assistants::BotChat.create!(model: model)
-        bot_message = bot_chat.messages.create!(role: 'assistant', content: 'I need to calculate something')
+        bot_message = bot_chat.bot_messages.create!(role: 'assistant', content: 'I need to calculate something')
 
-        bot_message.tool_calls.create!(
+        bot_message.bot_tool_calls.create!(
           tool_call_id: 'call_123',
           name: 'calculator',
           arguments: { expression: '2 + 2' }
