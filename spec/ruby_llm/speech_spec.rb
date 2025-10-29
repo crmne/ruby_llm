@@ -31,7 +31,13 @@ RSpec.describe RubyLLM::Speech do
       model = config[:model]
 
       it "#{provider}/#{model} can generate audio from text" do
-        audio = RubyLLM.tts('Hello, welcome to RubyLLM!', model: model, provider: provider)
+        voice = provider == :gemini ? 'Sadachbia' : 'alloy'
+        audio = RubyLLM.tts(
+          'Hello, welcome!',
+          model: model,
+          provider: provider,
+          voice: voice
+        )
 
         expect(audio.model).to eq(model)
 
@@ -41,7 +47,7 @@ RSpec.describe RubyLLM::Speech do
 
     it 'validates model existence' do
       expect do
-        RubyLLM.tts('Hello, welcome to RubyLLM!', model: 'invalid-audio-model')
+        RubyLLM.tts('Hello, welcome!', model: 'invalid-audio-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
   end
