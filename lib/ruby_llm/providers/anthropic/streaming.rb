@@ -16,6 +16,8 @@ module RubyLLM
             role: :assistant,
             model_id: extract_model_id(data),
             content: data.dig('delta', 'text'),
+            thinking: data.dig('delta', 'thinking'),
+            signature: data.dig('delta', 'signature'),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
             cached_tokens: extract_cached_tokens(data),

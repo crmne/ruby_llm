@@ -7,6 +7,8 @@ module RubyLLM
 
     def initialize
       @content = +''
+      @thinking = +''
+      @signature = +''
       @tool_calls = {}
       @input_tokens = nil
       @output_tokens = nil
@@ -23,6 +25,8 @@ module RubyLLM
         accumulate_tool_calls chunk.tool_calls
       else
         @content << (chunk.content || '')
+        @thinking << (chunk.thinking || '')
+        @signature << (chunk.signature || '')
       end
 
       count_tokens chunk
@@ -33,6 +37,8 @@ module RubyLLM
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
+        thinking: @thinking.empty? ? nil : @thinking,
+        signature: @signature.empty? ? nil : @signature,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens,

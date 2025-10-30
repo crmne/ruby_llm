@@ -19,6 +19,7 @@ module RubyLLM
             role: :assistant,
             model_id: data['model'],
             content: data.dig('choices', 0, 'delta', 'content'),
+            thinking: data.dig('choices', 0, 'delta', 'reasoning'),
             tool_calls: parse_tool_calls(data.dig('choices', 0, 'delta', 'tool_calls'), parse_arguments: false),
             input_tokens: usage['prompt_tokens'],
             output_tokens: usage['completion_tokens'],

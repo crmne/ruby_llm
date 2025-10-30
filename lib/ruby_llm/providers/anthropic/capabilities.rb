@@ -39,17 +39,20 @@ module RubyLLM
         end
 
         def supports_extended_thinking?(model_id)
-          model_id.match?(/claude-3-7-sonnet/)
+          model_id.match?(/claude-3-7-sonnet|claude-sonnet-4|claude-opus-4|claude-haiku-4/)
         end
 
         def model_family(model_id)
           case model_id
+          when /claude-sonnet-4/    then 'claude-sonnet-4'
+          when /claude-opus-4/      then 'claude-opus-4'
           when /claude-3-7-sonnet/  then 'claude-3-7-sonnet'
           when /claude-3-5-sonnet/  then 'claude-3-5-sonnet'
           when /claude-3-5-haiku/   then 'claude-3-5-haiku'
           when /claude-3-opus/      then 'claude-3-opus'
           when /claude-3-sonnet/    then 'claude-3-sonnet'
           when /claude-3-haiku/     then 'claude-3-haiku'
+          when /claude-4-5-haiku/   then 'claude-4-haiku'
           else 'claude-2'
           end
         end
@@ -92,13 +95,17 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          if model_id.match?(/claude-3/)
+          if model_id.match?(/claude-3|claude-sonnet-4|claude-opus-4|claude-haiku-4/)
             capabilities << 'function_calling'
             capabilities << 'batch'
           end
 
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7|-4/)
-          capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7/)
+          # Extended thinking for Claude 3.7 and Claude 4
+          capabilities << 'thinking' if supports_extended_thinking?(model_id)
+
+          # Citations
+          capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7|claude-sonnet-4|claude-opus-4/)
+
           capabilities
         end
 
@@ -116,9 +123,10 @@ module RubyLLM
             output_per_million: prices[:output] * 0.5
           }
 
-          if model_id.match?(/claude-3-7/)
-            standard_pricing[:reasoning_output_per_million] = prices[:output] * 2.5
-            batch_pricing[:reasoning_output_per_million] = prices[:output] * 1.25
+          # Add thinking output pricing for 3.7 and 4 models
+          if model_id.match?(/claude-3-7|claude-sonnet-4|claude-opus-4/)
+            standard_pricing[:thinking_output_per_million] = prices[:output] * 2.5
+            batch_pricing[:thinking_output_per_million] = prices[:output] * 1.25
           end
 
           {

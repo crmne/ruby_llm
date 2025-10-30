@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, **)
           payload = {
             model: model.id,
             messages: format_messages(messages),
@@ -53,6 +53,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: message_data['content'],
+            thinking: message_data['reasoning'],
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: usage['prompt_tokens'],
             output_tokens: usage['completion_tokens'],

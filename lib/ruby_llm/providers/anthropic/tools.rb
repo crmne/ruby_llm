@@ -22,10 +22,26 @@ module RubyLLM
             content << format_tool_use_block(tool_call)
           end
 
-          {
-            role: 'assistant',
-            content:
-          }
+          if msg.thinking
+            [
+              {
+                role: 'assistant',
+                content: [
+                  { type: 'thinking', thinking: msg.thinking, signature: msg.signature }
+                ]
+
+              },
+              {
+                role: 'assistant',
+                content:
+              }
+            ]
+          else
+            {
+              role: 'assistant',
+              content:
+            }
+          end
         end
 
         def format_tool_result(msg)

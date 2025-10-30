@@ -17,3 +17,15 @@ require_relative 'support/simplecov_configuration'
 require_relative 'support/vcr_configuration'
 require_relative 'support/models_to_test'
 require_relative 'support/streaming_error_helpers'
+
+THINKING_MODELS = [
+  { model: 'claude-3-7-sonnet', provider: 'anthropic' },
+  { model: 'claude-sonnet-4', provider: 'anthropic' },
+  { model: 'claude-opus-4', provider: 'anthropic' },
+  { model: 'claude-haiku-4-5', provider: 'anthropic' }
+].freeze
+
+NON_THINKING_MODELS = [
+  { model: 'claude-3-haiku', provider: 'anthropic' },
+  { model: 'claude-3-sonnet', provider: 'anthropic' }
+].freeze

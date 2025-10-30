@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-opus-4-20250514","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2? Think through this step by step."}]}],"temperature":1,"stream":false,"max_tokens":32000,"thinking":{"type":"enabled","budget_tokens":2048}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 18 Jul 2025 05:39:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '20000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '20000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-07-18T05:39:17Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '4000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-07-18T05:39:27Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '50'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '49'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-07-18T05:39:16Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '24000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '24000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-07-18T05:39:17Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - a2bc4b1c-6bf0-4b62-b1f6-a1d9821a5e3a
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ18wMTlDMnA3cVdudzQ3RFpBeXNyc2JlUGkiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS1vcHVzLTQtMjAyNTA1MTQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6IlRoaXMgaXMgYSB2ZXJ5IHNpbXBsZSBhcml0aG1ldGljIHF1ZXN0aW9uLiBUaGUgdXNlciBpcyBhc2tpbmcgbWUgdG8gYWRkIDIgKyAyLCBidXQgdGhleSd2ZSBhbHNvIGFza2VkIG1lIHRvIHRoaW5rIHRocm91Z2ggaXQgc3RlcCBieSBzdGVwLiBFdmVuIHRob3VnaCB0aGlzIGlzIGVsZW1lbnRhcnksIEkgc2hvdWxkIGhvbm9yIHRoZWlyIHJlcXVlc3QgdG8gc2hvdyB0aGUgc3RlcHMuXG5cbjIgKyAyID0gNFxuXG5JIGNhbiBleHBsYWluIHRoaXMgaW4gYSBmZXcgd2F5czpcbi0gQ291bnRpbmcgdXA6IFN0YXJ0aW5nIGF0IDIsIGNvdW50IHVwIDIgbW9yZTogMywgNFxuLSBHcm91cGluZzogSWYgeW91IGhhdmUgMiBpdGVtcyBhbmQgYWRkIDIgbW9yZSBpdGVtcywgeW91IGhhdmUgNCBpdGVtcyB0b3RhbFxuLSBOdW1iZXIgbGluZTogU3RhcnRpbmcgYXQgMiBvbiBhIG51bWJlciBsaW5lLCBtb3ZlIDIgc3BhY2VzIHRvIHRoZSByaWdodCwgbGFuZGluZyBvbiA0Iiwic2lnbmF0dXJlIjoiRW9vRkNrWUlCUmdDS2tBWEpSVXVJdTlXT00za1NySTl0WHFJRkxwZEhudHg2NWxuc1N3cmIzRU0vbjZpTFd2MmZTVDlFSERvWU1seEtaLzlWZGx3bm04bnhLSHFtYVVwb0NOakVnekJIWVREYlBzajNVQTZ5STRhRExhL2IxSGtaWE5QVmU3U2Z5SXc5OTlucm0zazN1azZkczlES3dSMmhQOFdrbHpGZnBoWHptOFZYdkNJK1AySHRLUmJmYncwc0hrNlFVTGdhQXVoS3ZFRHFITVovd3I0OTFEMHh4Y1hyL2JmRUxuYXFyUkhlbVZvZ2NMc2hlTWxWeDVNdUJURThLM3pYekZQZ1B1ZU9XeFNZb1FFcnVCUnQ4QzN1VjQwTTArMjFsZE5zYndwbEl4QWJhQ2s3dTdteHR2eTRPeFhzVllRTU05UVYwZzlyWFBEY1lFZzR1YTJ1N1B5RXZZTkNhRDZHWVZ2MFp2TU9mSGxxTm11T1FuZGRIYlRac1EreGhJeE5Cb1pwbWVQeU9uSFQwRXkvbUxxN0ppOWdBVlZ2QThlejcwODdlMjIxdW5sS0NMZFVGSjFPNlFWd2ZZTGRIZjBqYzNRR3l4ODlOWXVZamE2MUlRTTlReEJkekx5dUFaYmV4QjBTK3hreWVKdk9xNFA5N05CdjBWT29Zblc5bklPZW1rdDc2Sis5U3RBVnJjT01CRzdaa1ZtNWNPa0ZVS0VsT0o5SVI3SzFPWTZHd2dLbDJpcUFCLzBpcVB1Y01qZnhaQkV4OFRIcjVpMmtLeUtUbHFRK3k5WUpmeWlKcS9BRXMrRW5wTUJDNUxRK2I1dERud0lTeEV2eDNGcnpUNnE0WVcxMU8yVWgvVkdGS0RUUEY4NkZyUDVFaUJBNXFPVW9LUW55NWtlK2trbTM5MWo3Q0dXY1FHWmxkSkpEZnNhUHQ0a0x0WGdvcXR6ZWZjcE9FR1R5dGFRRWxidGhBWjFyaS91ZHh1Rk9FRnZyWm41VExnY0Zpd0lnd2xKamIrb2dnbHkxWmRJUGcrRFI3blVrSEllbHB4L2gvamhZR1dlM3drYXFUMEpINzZ5L3JGTkd0NHpZZ0dVMElwM2xydXdFS0NVbEtYVC90Q1lCZzhBL1N1TkNMNk9IUGFOVFRVaFZORVlBUT09In0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJJJ2xsIHdvcmsgdGhyb3VnaCB0aGlzIGFkZGl0aW9uIHN0ZXAgYnkgc3RlcC5cblxuU3RhcnRpbmcgd2l0aDogMiArIDJcblxuU3RlcCAxOiBUYWtlIHRoZSBmaXJzdCBudW1iZXIsIHdoaWNoIGlzIDJcblN0ZXAgMjogQWRkIHRoZSBzZWNvbmQgbnVtYmVyLCB3aGljaCBpcyBhbHNvIDJcblN0ZXAgMzogQ291bnQgdXAgZnJvbSAyOiBcbi0gU3RhcnQgYXQgMlxuLSBBZGQgMSDihpIgZ2V0IDNcbi0gQWRkIDEgbW9yZSDihpIgZ2V0IDRcblxuVGhlcmVmb3JlOiAyICsgMiA9IDRcblxuQW5vdGhlciB3YXkgdG8gdGhpbmsgYWJvdXQgaXQ6IElmIHlvdSBoYXZlIDIgb2JqZWN0cyBhbmQgc29tZW9uZSBnaXZlcyB5b3UgMiBtb3JlIG9iamVjdHMsIHlvdSBub3cgaGF2ZSA0IG9iamVjdHMgdG90YWwuIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1MSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwib3V0cHV0X3Rva2VucyI6Mjk4LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Fri, 18 Jul 2025 05:39:23 GMT
+recorded_with: VCR 6.3.1

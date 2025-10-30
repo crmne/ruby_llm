@@ -6,12 +6,14 @@ module RubyLLM
     ROLES = %i[system user assistant tool].freeze
 
     attr_reader :role, :model_id, :tool_calls, :tool_call_id, :input_tokens, :output_tokens,
-                :cached_tokens, :cache_creation_tokens, :raw
+                :cached_tokens, :cache_creation_tokens, :raw, :thinking, :signature
     attr_writer :content
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym
       @content = normalize_content(options.fetch(:content))
+      @thinking = options[:thinking]
+      @signature = options[:signature]
       @model_id = options[:model_id]
       @tool_calls = options[:tool_calls]
       @tool_call_id = options[:tool_call_id]

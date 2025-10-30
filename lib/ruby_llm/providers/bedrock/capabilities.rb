@@ -66,6 +66,10 @@ module RubyLLM
           false
         end
 
+        def supports_extended_thinking?(model_id)
+          model_id.match?(/claude-3-7-sonnet|claude-sonnet-4|claude-opus-4|claude-haiku-4/)
+        end
+
         # Model family patterns for capability lookup
         MODEL_FAMILIES = {
           /anthropic\.claude-3-opus/ => :claude3_opus,
@@ -74,8 +78,11 @@ module RubyLLM
           /anthropic\.claude-3-7-sonnet/ => :claude3_sonnet,
           /anthropic\.claude-3-haiku/ => :claude3_haiku,
           /anthropic\.claude-3-5-haiku/ => :claude3_5_haiku,
+          /anthropic\.claude-4-5-haiku/ => :claude4_5_haiku,
           /anthropic\.claude-v2/ => :claude2,
-          /anthropic\.claude-instant/ => :claude_instant
+          /anthropic\.claude-instant/ => :claude_instant,
+          /anthropic\.claude-sonnet-4/ => :claude_sonnet4,
+          /anthropic\.claude-opus-4/ => :claude_opus4
         }.freeze
 
         def model_family(model_id)
@@ -130,7 +137,11 @@ module RubyLLM
 
           capabilities << 'function_calling' if supports_functions?(model_id)
 
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7/)
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+
+          # Extended thinking for 3.7, and 4 models
+          capabilities << 'thinking' if supports_extended_thinking?(model_id)
+          capabilities << 'reasoning' if supports_extended_thinking?(model_id)
 
           if model_id.match?(/claude-3\.5|claude-3-7/)
             capabilities << 'batch'
