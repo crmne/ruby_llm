@@ -76,6 +76,9 @@ module RubyLLM
         def convert_schema_to_gemini(schema)
           return nil unless schema
 
+          # Extract inner schema if wrapper format (e.g., from RubyLLM::Schema.to_json_schema)
+          schema = schema[:schema] || schema
+
           schema = normalize_any_of(schema) if schema[:anyOf]
 
           build_base_schema(schema).tap do |result|
