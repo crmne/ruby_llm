@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer invalid-key
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: PermissionDenied
+    headers:
+      Content-Length:
+      - '224'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 221e9473-d4a7-4a4f-91b4-75baf0a16224
+      Date:
+      - Wed, 08 Oct 2025 20:45:27 GMT
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"401","message":"Access denied due to invalid subscription
+        key or wrong API endpoint. Make sure to provide a valid key for an active
+        subscription and use a correct regional API endpoint for your resource."}}'
+  recorded_at: Wed, 08 Oct 2025 20:45:28 GMT
+recorded_with: VCR 6.3.1
