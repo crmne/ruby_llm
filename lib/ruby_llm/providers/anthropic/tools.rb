@@ -22,7 +22,7 @@ module RubyLLM
             content << format_tool_use_block(tool_call)
           end
 
-          if msg.thinking
+          if msg.thinking.to_s.length.positive? && msg.signature.to_s.length.positive?
             [
               {
                 role: 'assistant',
