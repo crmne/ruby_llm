@@ -14,6 +14,7 @@ module RubyLLM
             role: :assistant,
             model_id: extract_model_id(data),
             content: extract_content(data),
+            thinking: extract_content(data, thoughts: true),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
             tool_calls: extract_tool_calls(data)
@@ -26,15 +27,21 @@ module RubyLLM
           data['modelVersion']
         end
 
-        def extract_content(data)
+        def extract_content(data, thoughts: false)
           return nil unless data['candidates']&.any?
 
           candidate = data['candidates'][0]
           parts = candidate.dig('content', 'parts')
           return nil unless parts
 
-          text_parts = parts.select { |p| p['text'] }
+          text_parts = select_parts(parts, thoughts: thoughts)
           text_parts.map { |p| p['text'] }.join if text_parts.any?
+        end
+
+        def select_parts(parts, thoughts: false)
+          parts&.select do |p|
+            p['text'] if thoughts == p['thought'] || (!thoughts && p['thought'].nil?)
+          end&.compact
         end
 
         def extract_input_tokens(data)
