@@ -14,6 +14,11 @@ class Create<%= model_model_name.gsub('::', '').pluralize %> < ActiveRecord::Mig
       t.jsonb :capabilities, default: []
       t.jsonb :pricing, default: {}
       t.jsonb :metadata, default: {}
+<% elsif mysql? %>
+      t.json :modalities
+      t.json :capabilities
+      t.json :pricing
+      t.json :metadata
 <% else %>
       t.json :modalities, default: {}
       t.json :capabilities, default: []
