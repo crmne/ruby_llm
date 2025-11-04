@@ -11,7 +11,8 @@ CHAT_MODELS = [
   { provider: :openai, model: 'gpt-4.1-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'sonar' },
-  { provider: :vertexai, model: 'gemini-2.5-flash' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :azure_openai, model: 'azure-gpt-4o' }
 ].freeze
 
 PDF_MODELS = [

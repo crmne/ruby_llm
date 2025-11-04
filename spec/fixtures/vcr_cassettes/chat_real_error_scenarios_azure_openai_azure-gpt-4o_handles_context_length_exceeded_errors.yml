@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_ENDPOINT>/openai/deployments/gpt-4o/chat/completions?api-version=<AZURE_OPENAI_API_VER>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"azure-gpt-4o","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.3
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 429
+      message: Too Many Requests
+    headers:
+      Content-Length:
+      - '440'
+      Content-Type:
+      - application/json
+      Retry-After:
+      - '60'
+      X-Ratelimit-Reset-Tokens:
+      - '60'
+      X-Ratelimit-Limit-Tokens:
+      - '40000'
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4o
+      Apim-Request-Id:
+      - 62954942-596e-4d89-838f-2f8a8209d243
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Policy-Id:
+      - DeploymentRatelimit-Token
+      X-Ms-Region:
+      - Canada East
+      X-Ratelimit-Remaining-Requests:
+      - '396'
+      X-Ratelimit-Limit-Requests:
+      - '400'
+      Date:
+      - Wed, 08 Oct 2025 20:45:29 GMT
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"429","message": "Requests to the ChatCompletions_Create
+        Operation under Azure OpenAI API version <AZURE_OPENAI_API_VER> have exceeded
+        token rate limit of your current OpenAI S0 pricing tier. Please retry after
+        60 seconds. Please go here: https://aka.ms/oai/quotaincrease if you would
+        like to further increase the default rate limit. For Free Account customers,
+        upgrade to Pay as you Go here: https://aka.ms/429TrialUpgrade."}}'
+  recorded_at: Wed, 08 Oct 2025 20:45:29 GMT
+recorded_with: VCR 6.3.1
