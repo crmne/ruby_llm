@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Date:
-      - Thu, 30 Oct 2025 16:55:32 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 02 Nov 2025 21:30:55 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 30 Oct 2025 16:55:32 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:55 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 30 Oct 2025 16:55:34 GMT
+      - Sun, 02 Nov 2025 21:30:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -122,18 +122,18 @@ http_interactions:
                         }
                       }
                     },
-                    "thoughtSignature": "CuMDAePx/14cBkgY0DVJ8NXeD3DQlkiMonTNRieSjcXDq4zV57Zf9lHdivAGhjUMZhRC3vNBKAAjiPxwPHLqs7kor00Gu0zeV2zC37hYolZB6lsMxUBdNhHnvP+tELHiuI0kYgpCyhEvNQZb59z98kXfKxZjvrcuS755HeQFdBXhvh8gCiZL4jVSBgZknIv7IzM5wBblGNxtHpgeJCBgB4GLcAYncUsFHUzyfVHz3qkZHCganVd9nsztCsfhD10q3ady4+O3TQjT4ynnKXxeN01AbPqyzH1eE2KI/VCrYSK99S+iwrAdWWCv1Vku3bZh8LSgqP3UJgdN5qJBowWld6/dWnKpbPG2xoaAI5O7CXHhPurc8ztkGUp6Uz0B+AdjGFxjUK1x8npYlf/+g4niCAU8dYoljD9/niJGXC9miYBknhsvtTorSVx69OrB3v9vXaAo7qs+X9tiHJ2s9+/rcSaThMBCpWO5wOOCDgQd6qdFdwGIIswa2ff9edrQlkS48VhX/GGp+N2250C/PhodtJnNi+MScO/Dq/ur4GJ39Xj1ZJDJZzGQoxrcPBmP5+8EsmrD51lrBwtbKcccwDUD6SzUbBoJ65jKg1PM6yCVsiEjhYzGcyPRnp1EjW3TFzfBxU/bXbtk"
+                    "thoughtSignature": "CvoDAePx/15+PKYRaT0tCr72didKNEHC7GGk52AkK4vwa0Cbn397SEAOYv7y8uIFvT6jrDmF/vunna+sHlQN2NIhwziT4MQoQwHKUL/uiEJ8/jasCg8BF//KzMJqcSCl/miZh9IQZR94ZwAExWbMs177n2+eJ68aWuD/Po2jfCK4kYtyCnfU2rOPjS3jkXryW+HvcmFFpKKRCbt5CIc+WbQs4TD2+8kyL6JZkiFcD+mw4OwIfssrTiLn0AFrq/ALIvQQEOEa46DpNaouABdJA05iEmw8ywB31yryFDBtB1uVEgSnUnOP2t0GQBDRUMxwKz8Tj9rDCFgEwXdlAsFJaW+ZkhuBH+aeKhfDg0YA/duf1yXnX1BqIxbgJHJ8kmXcflox/cZWec6eTykdgssFyp1ZUpRFKtZtEmVW/UCT6W2aU64CYkmm/+bonpA2wFx0jv9PMmfR8oQ6VHB1YeJ+poi0GDSmtWKfMIkh0vQQXWbApVRXCk5/sK7akhjDhptY9ANFxoCHm9zoPyc4rBOvdFRlUojPRH5GKsLxWmDuUHFwWlXAc3IRqM2hGBJHDGbcbxy67SgIjMrzfg/MOj2Yw+c0z33PD8fnxezlc0Xks9YwY++Tdahs+1EOv1alYtkZMdevEI36dlm4GKQSpUL7bv8u1LJE29b+Jxlsddo="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.42773943680983323
+              "avgLogprobs": -0.36562453783475435
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 63,
             "candidatesTokenCount": 26,
-            "totalTokenCount": 224,
+            "totalTokenCount": 232,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -147,11 +147,11 @@ http_interactions:
                 "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 135
+            "thoughtsTokenCount": 143
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-30T16:55:32.398838Z",
-          "responseId": "hJgDafarGJL4_c8Pm9_RoAU"
+          "createTime": "2025-11-02T21:30:55.972627Z",
+          "responseId": "j80HadOuO5u9vdIPmvPVgAc"
         }
-  recorded_at: Thu, 30 Oct 2025 16:55:34 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:56 GMT
 recorded_with: VCR 6.3.1

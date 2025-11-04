@@ -1,0 +1,155 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 02 Nov 2025 21:30:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1675
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
+                      }
+                    },
+                    "thoughtSignature": "CpgEAdHtim/DLSbi2ev98f39jpCIzVTq4BcjsYH/5SL8/U4eqzpchfZeKf6r3ucoMslX3mADGafkjYjVA3G6GgmLjTSpKh0ATz0+VDK8uWtdu3Ydp+GmWz3tnw4MhWi7RuDLFr2N9CMEps0ACTdLZuAp1+g962UIqcZOk0Ob6EWYM4oBrC+wBcLy/GoWFZvN682SVN9mnI8apsO+9jVo9SYWJcRsgxkU1zukwDHp/G+ym1Tqx+e+5if0VhzxZKkEp4LGzWO4ye+ZYr+vn2hyaN/iYjLkHog8iGnuIQXBt4tNDeYSW27G5D+U4jlGS6wSFy4xjDs+tdgGL5WUZO9mne37rCNa/EzzZq+XEOTNd5i7cKzx1fab4gIMZNJ6eTfND5rrBFRSkuBnUbHesNmCukiPAybDkdnPViaHynlMnUqYK6tjG+pjFQiXATwiMi3JVWU6DzRB0NwZZJMe+fkMdnIpQIlmR+P1VbC6BJ/enOEPq3NHRakcJfyeNxSWJmL5OB80jlmQjhuMdjiAvNMHnD8TKkP22ZDIz1rAGYdKksORFe7rpYo/ABbSyMG0cHd3VvWenJfrkpz7RIT4q+GzlWV1YdlcMjqecMHW5xUvL+SxDtXFcOryWDm/O3JPJczpi1PXZIspb+ZMO7QY5luSoYx3cUEtleFgCSas4dbPCeeBhyRQf0WRWhWO5wDfIm+GICwcRCCwpVcGidw="
+                  },
+                  {
+                    "functionCall": {
+                      "name": "best_language_to_learn",
+                      "args": {}
+                    }
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 143,
+            "candidatesTokenCount": 44,
+            "totalTokenCount": 339,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 143
+              }
+            ],
+            "thoughtsTokenCount": 152
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "Ys0HabnLIoi-vdIPso6QoAw"
+        }
+  recorded_at: Sun, 02 Nov 2025 21:30:10 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}}},{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}},{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn"}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 02 Nov 2025 21:30:11 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=856
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiBUaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjc3LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzAsCiAgICAidG90YWxUb2tlbkNvdW50IjogMzA3LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNzcKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJZODBIYWNybkhQM1Z4TjhQdlotYjZBOCIKfQo=
+  recorded_at: Sun, 02 Nov 2025 21:30:11 GMT
+recorded_with: VCR 6.3.1

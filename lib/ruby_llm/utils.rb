@@ -73,5 +73,19 @@ module RubyLLM
         value
       end
     end
+
+    def deep_symbolize_keys(value)
+      case value
+      when Hash
+        value.each_with_object({}) do |(key, val), result|
+          symbolized_key = key.respond_to?(:to_sym) ? key.to_sym : key
+          result[symbolized_key] = deep_symbolize_keys(val)
+        end
+      when Array
+        value.map { |item| deep_symbolize_keys(item) }
+      else
+        value
+      end
+    end
   end
 end

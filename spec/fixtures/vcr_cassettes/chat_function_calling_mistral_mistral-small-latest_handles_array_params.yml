@@ -9,7 +9,7 @@ http_interactions:
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:54:47 GMT
+      - Mon, 03 Nov 2025 14:00:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,38 +35,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019a360b-11e4-7b55-8df2-b28fc2e08787'
+      - '019a4a04-e1ec-76b3-ab90-f26f61d21dff'
       X-Kong-Request-Id:
-      - '019a360b-11e4-7b55-8df2-b28fc2e08787'
+      - '019a4a04-e1ec-76b3-ab90-f26f61d21dff'
       X-Envoy-Upstream-Service-Time:
-      - '677'
+      - '227'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499868'
+      - '499874'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999992090'
+      - '999988883'
       X-Ratelimit-Tokens-Query-Cost:
-      - '132'
+      - '126'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '57'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '677'
+      - '228'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '4'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -75,7 +77,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6fea1794d5e842f19723d0444c05850d","created":1761843286,"model":"mistral-small-latest","usage":{"prompt_tokens":117,"total_tokens":132,"completion_tokens":15},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"qdpinbOnH","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"id":"0967cee3b6b64329a8b4b0c387af29b0","created":1762178425,"model":"mistral-small-latest","usage":{"prompt_tokens":111,"total_tokens":126,"completion_tokens":15},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"5xxPnPInr","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 30 Oct 2025 16:54:47 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:25 GMT
 recorded_with: VCR 6.3.1

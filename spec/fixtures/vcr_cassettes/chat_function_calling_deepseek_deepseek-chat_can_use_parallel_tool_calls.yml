@@ -1,0 +1,124 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:43:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 28dc1587b930ca257380c28aaa6a4d71
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"f87dff7b-d549-4175-9534-02c64b393bd9","object":"chat.completion","created":1762112636,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        get both the weather in Berlin and the best language to learn for you.","tool_calls":[{"index":0,"id":"call_00_PIMfTI1ACb7SN22bLps8XGwV","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"}},{"index":1,"id":"call_01_jbWusedqDqwWtaoIZXXGhbTa","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":272,"completion_tokens":52,"total_tokens":324,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":272},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
+  recorded_at: Sun, 02 Nov 2025 19:43:59 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"},{"role":"assistant","content":"I''ll get both the weather in Berlin
+        and the best language to learn for you.","tool_calls":[{"id":"call_00_PIMfTI1ACb7SN22bLps8XGwV","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_01_jbWusedqDqwWtaoIZXXGhbTa","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_00_PIMfTI1ACb7SN22bLps8XGwV"},{"role":"tool","content":"Ruby","tool_call_id":"call_01_jbWusedqDqwWtaoIZXXGhbTa"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:44:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - e81c44ca8bcdf910d01e6ff540177f0f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImFjNmYzY2EyLTU3NjktNDc0MC1hYTM4LWRjOGZkOTU0Zjc0MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxMTI2MzksIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSGVyZSdzIHRoZSBpbmZvcm1hdGlvbiB5b3UgcmVxdWVzdGVkOlxuXG4qKldlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKToqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgTGFuZ3VhZ2UgdG8gTGVhcm46Kipcbi0gUnVieVxuXG5UaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgcXVpdGUgcGxlYXNhbnQgYXQgMTXCsEMgd2l0aCBtb2RlcmF0ZSB3aW5kLiBBcyBmb3IgbGFuZ3VhZ2UgbGVhcm5pbmcsIFJ1YnkgYXBwZWFycyB0byBiZSB0aGUgcmVjb21tZW5kZWQgY2hvaWNlIGJhc2VkIG9uIGN1cnJlbnQgdHJlbmRzIGFuZCBvcHBvcnR1bml0aWVzLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM1MywiY29tcGxldGlvbl90b2tlbnMiOjg1LCJ0b3RhbF90b2tlbnMiOjQzOCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjI1Nn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjoyNTYsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6OTd9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9mZmM3MjgxZDQ4X3Byb2QwODIwX2ZwOF9rdmNhY2hlIn0=
+  recorded_at: Sun, 02 Nov 2025 19:44:03 GMT
+recorded_with: VCR 6.3.1

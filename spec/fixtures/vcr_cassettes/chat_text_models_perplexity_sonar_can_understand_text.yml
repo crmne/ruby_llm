@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:40:20 GMT
+      - Mon, 03 Nov 2025 13:48:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,67 +44,84 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "e9fca28d-8311-420e-9afd-e2c2c2d1795e", "model": "sonar", "created":
-        1758724820, "usage": {"prompt_tokens": 25, "completion_tokens": 133, "total_tokens":
-        158, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+      string: '{"id": "3e38feb6-d313-4d6c-ab88-26ccfcc3cf04", "model": "sonar", "created":
+        1762177684, "usage": {"prompt_tokens": 25, "completion_tokens": 20, "total_tokens":
+        45, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
         0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.tutorialspoint.com/ruby/ruby_overview.htm",
         "https://www.rubydoc.info/gems/mime-types/3.1/MIME/Types", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "http://mikker.github.io/2013/10/30/get-the-true-mime-type-of-a-file-in-ruby.html",
-        "https://www.oracle.com/developer/what-is-ruby-for-developers/", "https://github.com/rails/marcel",
-        "https://www.geeksforgeeks.org/ruby/ruby-programming-language/", "https://www.ruby-forum.com/t/getting-a-files-mime-type/102129",
-        "https://www.ruby-lang.org/en/", "https://github.com/mime-types/ruby-mime-types"],
+        "https://github.com/rails/marcel", "https://www.geeksforgeeks.org/ruby/ruby-programming-language/",
+        "https://www.ruby-forum.com/t/getting-a-files-mime-type/102129", "https://www.pluralsight.com/resources/blog/cloud/what-is-the-ruby-programming-language",
+        "https://github.com/mime-types/ruby-mime-types", "https://www.ruby-lang.org/en/",
+        "https://betterstack.com/community/guides/scaling-ruby/files-in-ruby/", "https://www.ruby-lang.org/en/about/",
+        "https://ruby-doc.org/core-2.5.5/File.html", "https://launchschool.com/books/ruby/read/introduction",
+        "https://www.youtube.com/watch?v=QVjB4tHeCMo", "https://www.freecodecamp.org/news/a-brief-introduction-to-ruby/"],
         "search_results": [{"title": "Ruby - Overview - Tutorials Point", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
-        "date": "2019-03-01", "last_updated": "2025-09-23", "snippet": "Ruby is a
-        true object-oriented programming language. Ruby is a server-side scripting
-        language similar to Python and PERL. Ruby can be used to write Common ..."},
-        {"title": "Class: MIME::Types - RubyDoc.info", "url": "https://www.rubydoc.info/gems/mime-types/3.1/MIME/Types",
-        "date": "2024-11-01", "last_updated": "2025-09-17", "snippet": "MIME::Types
-        is a registry of MIME types. It is both a class (created with MIME::Types.new)
-        and a default registry (loaded automatically or through interactions)"}, {"title":
-        "Ruby (programming language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-09-19", "snippet": "Ruby is a
+        "date": "2019-03-01", "last_updated": "2025-10-27", "snippet": "Ruby is a
+        pure, object-oriented, open-source, general-purpose, interpreted, and server-side
+        scripting language.", "source": "web"}, {"title": "Class: MIME::Types - RubyDoc.info",
+        "url": "https://www.rubydoc.info/gems/mime-types/3.1/MIME/Types", "date":
+        "2024-11-01", "last_updated": "2025-09-17", "snippet": "MIME::Types is a registry
+        of MIME types. It is both a class (created with MIME::Types.new) and a default
+        registry (loaded automatically or through interactions)", "source": "web"},
+        {"title": "Ruby (programming language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "date": "2001-10-17", "last_updated": "2025-10-30", "snippet": "Ruby is a
         general-purpose programming language. It was designed with an emphasis on
         programming productivity and simplicity. In Ruby, everything is an object,
-        ..."}, {"title": "Get the true mime type of a file in Ruby", "url": "http://mikker.github.io/2013/10/30/get-the-true-mime-type-of-a-file-in-ruby.html",
-        "date": "2013-10-30", "last_updated": "2025-01-04", "snippet": "You can get
-        the true mime type by using the shell command file. true_mime_type = `file
-        --mime -b mp4-renamed-to.mp3`.chomp # => video/mp4; charset=binary"}, {"title":
-        "What is Ruby? - Oracle", "url": "https://www.oracle.com/developer/what-is-ruby-for-developers/",
-        "date": "2024-06-10", "last_updated": "2025-09-24", "snippet": "Ruby is a
-        highly popular programming language that''s used for lots of things, from
-        web app development to data analysis. It''s also very user-friendly ..."},
-        {"title": "rails/marcel: Find the mime type of files, examining file, filename
-        and ...", "url": "https://github.com/rails/marcel", "date": "2017-02-22",
-        "last_updated": "2025-09-20", "snippet": "Marcel chooses the most appropriate
-        content type for a file by inspecting its contents, the declared MIME type
-        (perhaps passed as a Content-Type header), and ..."}, {"title": "Ruby Programming
-        Language - GeeksforGeeks", "url": "https://www.geeksforgeeks.org/ruby/ruby-programming-language/",
-        "date": "2025-09-04", "last_updated": "2025-09-24", "snippet": "Ruby is a
+        ...", "source": "web"}, {"title": "rails/marcel: Find the mime type of files,
+        examining file, filename and ...", "url": "https://github.com/rails/marcel",
+        "date": "2017-02-22", "last_updated": "2025-09-20", "snippet": "Marcel chooses
+        the most appropriate content type for a file by inspecting its contents, the
+        declared MIME type (perhaps passed as a Content-Type header), and ...", "source":
+        "web"}, {"title": "Ruby Programming Language - GeeksforGeeks", "url": "https://www.geeksforgeeks.org/ruby/ruby-programming-language/",
+        "date": "2025-09-04", "last_updated": "2025-11-02", "snippet": "Ruby is a
         popular backend programming language, widely used for building modern applications
-        and services. It makes development faster, easier, ..."}, {"title": "Getting
-        a files mime-type - Ruby-Forum", "url": "https://www.ruby-forum.com/t/getting-a-files-mime-type/102129",
-        "date": "2006-08-11", "last_updated": "2025-09-21", "snippet": "Hi, Can anyone
+        and services. It makes development faster, easier, ...", "source": "web"},
+        {"title": "Getting a files mime-type - Ruby-Forum", "url": "https://www.ruby-forum.com/t/getting-a-files-mime-type/102129",
+        "date": "2006-08-11", "last_updated": "2025-09-26", "snippet": "Hi, Can anyone
         tell me if there is a simple way to get the mime-type of a file? (I''ve seen
-        the Mime::Type library, but haven''t figured out ..."}, {"title": "Ruby Programming
-        Language", "url": "https://www.ruby-lang.org/en/", "date": "2025-09-18", "last_updated":
-        "2025-09-24", "snippet": "A dynamic, open source programming language with
-        a focus on simplicity and productivity. It has an elegant syntax that is natural
-        to read and easy to write."}, {"title": "Ruby MIME type registry library -
-        GitHub", "url": "https://github.com/mime-types/ruby-mime-types", "date": "2008-11-23",
-        "last_updated": "2025-08-28", "snippet": "The mime-types library provides
-        a library and registry for information about MIME content type definitions.
-        It can be used to determine defined filename ..."}], "object": "chat.completion",
-        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "The file named \"ruby.txt\" contains the simple text: **\"Ruby
-        is the best.\"**\n\nThis is a plain text statement expressing a positive opinion
-        about Ruby, a programming language. It does not contain any code or technical
-        details but simply states that Ruby is the best[content of the file]. \n\nFor
-        context, Ruby is a widely used, general-purpose, interpreted programming language
-        created by Yukihiro Matsumoto in the mid-1990s. It is known for its clean
-        syntax, full object-orientation, and is extensively used for web development
-        (especially with Ruby on Rails), automation, data processing, and more[1][3][5]."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:40:20 GMT
+        the Mime::Type library, but haven''t figured out ...", "source": "web"}, {"title":
+        "What is the Ruby programming language? - Pluralsight", "url": "https://www.pluralsight.com/resources/blog/cloud/what-is-the-ruby-programming-language",
+        "date": "2025-04-16", "last_updated": "2025-11-02", "snippet": "What is Ruby?
+        Ruby is an open-source object-oriented scripting language invented in the
+        mid-90s by Yukihiro Matsumoto.", "source": "web"}, {"title": "Ruby MIME type
+        registry library - GitHub", "url": "https://github.com/mime-types/ruby-mime-types",
+        "date": "2008-11-23", "last_updated": "2025-08-28", "snippet": "The mime-types
+        library provides a library and registry for information about MIME content
+        type definitions. It can be used to determine defined filename ...", "source":
+        "web"}, {"title": "Ruby Programming Language", "url": "https://www.ruby-lang.org/en/",
+        "date": "2025-10-23", "last_updated": "2025-10-23", "snippet": "A dynamic,
+        open source programming language with a focus on simplicity and productivity.
+        It has an elegant syntax that is natural to read and easy to write.", "source":
+        "web"}, {"title": "Working With Files in Ruby: A Complete Guide - Better Stack",
+        "url": "https://betterstack.com/community/guides/scaling-ruby/files-in-ruby/",
+        "date": "2025-08-27", "last_updated": "2025-11-01", "snippet": "This guide
+        covers essential file operations in Ruby through practical examples, from
+        basic file reading and writing to directory traversal, ...", "source": "web"},
+        {"title": "About Ruby", "url": "https://www.ruby-lang.org/en/about/", "date":
+        "2003-12-22", "last_updated": "2025-11-01", "snippet": "Ruby is a language
+        of careful balance. Its creator, Yukihiro \u201cMatz\u201d Matsumoto, blended
+        parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and Lisp)",
+        "source": "web"}, {"title": "Class: File (Ruby 2.5.5)", "url": "https://ruby-doc.org/core-2.5.5/File.html",
+        "date": "2021-12-06", "last_updated": "2025-10-28", "snippet": "The File class
+        in Ruby is an abstraction of any file object accessible by the program and
+        is closely associated with class IO.", "source": "web"}, {"title": "An introduction
+        to Ruby Programming - Launch School", "url": "https://launchschool.com/books/ruby/read/introduction",
+        "last_updated": "2025-10-28", "snippet": "Ruby, created for programmer productivity,
+        is designed for beginners to build basic programming knowledge. This book
+        is the first of two, focusing on ...", "source": "web"}, {"title": "Ruby Files
+        - Part 1 - Reading and Writing To Files - YouTube", "url": "https://www.youtube.com/watch?v=QVjB4tHeCMo",
+        "date": "2012-03-26", "last_updated": "2025-09-10", "snippet": "MattStopa
+        mattstopa.com See the code on github https://github.com/MattStopa/Coding-Casts-Code/tree/master/files
+        The video in a series of ...", "source": "web"}, {"title": "A Brief Introduction
+        to Ruby - freeCodeCamp", "url": "https://www.freecodecamp.org/news/a-brief-introduction-to-ruby/",
+        "date": "2025-08-20", "last_updated": "2025-11-03", "snippet": "Ruby is a
+        programming language designed for developer happiness, with intuitive syntax
+        and metaprogramming, and is valuable for learning clean, ...", "source": "web"}],
+        "object": "chat.completion", "choices": [{"index": 0, "finish_reason": "stop",
+        "message": {"role": "assistant", "content": "The file named `ruby.txt` contains
+        the following text:\n\n```\nRuby is the best.\n```"}, "delta": {"role": "assistant",
+        "content": ""}}]}'
+  recorded_at: Mon, 03 Nov 2025 13:48:04 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -112,20 +129,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file named \"ruby.txt\"
-        contains the simple text: **\"Ruby is the best.\"**\n\nThis is a plain text
-        statement expressing a positive opinion about Ruby, a programming language.
-        It does not contain any code or technical details but simply states that Ruby
-        is the best[content of the file]. \n\nFor context, Ruby is a widely used,
-        general-purpose, interpreted programming language created by Yukihiro Matsumoto
-        in the mid-1990s. It is known for its clean syntax, full object-orientation,
-        and is extensively used for web development (especially with Ruby on Rails),
-        automation, data processing, and more[1][3][5]."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file named `ruby.txt`
+        contains the following text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -140,7 +150,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:40:25 GMT
+      - Mon, 03 Nov 2025 13:48:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -159,64 +169,63 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "6519038b-082b-4143-bfec-55d409df5a01", "model": "sonar", "created":
-        1758724825, "usage": {"prompt_tokens": 188, "completion_tokens": 152, "total_tokens":
-        340, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.w3.org/TR/xmlschema-1/",
-        "https://www.oracle.com/technical-resources/articles/srivastava-structures.html",
-        "https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
-        "https://www.oreilly.com/library/view/xml-schema/0596002521/re58.html", "https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-xml-elements-library",
-        "https://help.1e.com/SDK/en/instruction-definition-xml-elements.html", "http://www.w3schools.com/Xml/el_element.asp",
-        "https://help.nintex.com/en-US/k2blackpearl/userguide/4.6.10/XML_Data_Types.html",
-        "https://www.oxygenxml.com/doc/versions/27.1/ug-developer/topics/xml-schema-diagram-element-properties.html"],
-        "search_results": [{"title": "XML Schema Part 1: Structures Second Edition
-        - W3C", "url": "https://www.w3.org/TR/xmlschema-1/", "date": "2004-10-28",
-        "last_updated": "2025-09-23", "snippet": "An element declaration is an association
-        of a name with a type definition, either simple or complex, an (optional)
-        default value and a (possibly ..."}, {"title": "XML Schema: Understanding
-        Structures - Oracle", "url": "https://www.oracle.com/technical-resources/articles/srivastava-structures.html",
-        "date": "2019-03-04", "last_updated": "2025-09-23", "snippet": "In this article,
-        I will explain the schema constructs used to declare, extend, and restrict
-        the structure of XML."}, {"title": "XML Schema Tutorial - Defining Elements
-        and Attributes", "url": "https://www.liquid-technologies.com/xml-schema-tutorial/xsd-elements-attributes",
-        "date": "2000-01-12", "last_updated": "2025-04-10", "snippet": "Elements are
-        the main building block of all XML documents, containing the data and determine
-        the structure of the instance document. An element can be defined ..."}, {"title":
-        "XML Schema - xs:boolean - O''Reilly Media", "url": "https://www.oreilly.com/library/view/xml-schema/0596002521/re58.html",
-        "date": "2014-04-23", "last_updated": "2025-09-23", "snippet": "The value
-        space of xs:boolean is \u201ctrue\u201d and \u201cfalse,\u201d and its lexical
-        space accepts true, false, and also \u201c1\u201d (for true) and \u201c0\u201d
-        (for false)."}, {"title": "XML Elements Library | Microsoft Learn", "url":
-        "https://learn.microsoft.com/en-us/windows/deployment/usmt/usmt-xml-elements-library",
-        "date": "2025-01-29", "last_updated": "2025-08-07", "snippet": "This article
-        describes the XML elements and helper functions that can be employed to author
-        migration .xml files to use with User State Migration Tool (USMT)."}, {"title":
-        "Instruction Definition XML elements - 1E Documentation", "url": "https://help.1e.com/SDK/en/instruction-definition-xml-elements.html",
-        "date": "2022-09-20", "last_updated": "2025-08-31", "snippet": "This is the
-        root element - aside from the XML declaration element - of the document. This
-        element represents an individual Instruction Definition, and must ..."}, {"title":
-        "XML Schema element Element - W3Schools", "url": "http://www.w3schools.com/Xml/el_element.asp",
-        "date": "2025-08-29", "last_updated": "2025-09-23", "snippet": "True enables
-        an instance of the element to have the null attribute set to true. The null
-        attribute is defined as part of the XML Schema namespace for instances."},
-        {"title": "XML Data Types - Nintex Help", "url": "https://help.nintex.com/en-US/k2blackpearl/userguide/4.6.10/XML_Data_Types.html",
-        "date": "2005-09-20", "last_updated": "2025-09-18", "snippet": "The ability
-        to define complex data types in XML is one of its most powerful features.
-        A complex type element declaration is used to describe data collections ..."},
-        {"title": "xs:element - Oxygen XML Editor", "url": "https://www.oxygenxml.com/doc/versions/27.1/ug-developer/topics/xml-schema-diagram-element-properties.html",
-        "date": "2025-01-01", "last_updated": "2025-09-17", "snippet": "Defines an
-        element. An element declaration is an association of a name with a type definition,
-        either simple or complex, an (optional) default value."}], "object": "chat.completion",
-        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
-        "content": "The file named \"ruby.xml\" contains an XML structure with a single
-        element `<truism>` that encloses the text **\"Ruby is the best\"**. Specifically,
-        the content is:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis
-        means the XML document holds one element called \"truism,\" whose content
-        is plain text stating \"Ruby is the best.\" The element has no attributes
-        or child elements, only character data inside it, which is considered *TextOnly*
-        content per XML terminology[2][3].\n\nIn short: the file presents the same
-        phrase as the previous text file but wrapped in an XML element named `<truism>`,
-        which identifies the text as a statement or belief encoded in XML format."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:40:25 GMT
+      string: '{"id": "f96f6585-d015-4a10-8034-acb97262b96a", "model": "sonar", "created":
+        1762177689, "usage": {"prompt_tokens": 75, "completion_tokens": 105, "total_tokens":
+        180, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.w3schools.com/xml/xml_tree.asp",
+        "https://help.genesys.com/cic/mergedprojects/wh_soap/desktop/structure_of_an_xml_file.htm",
+        "https://www.websydian.com/olddoc/v65/source/Websydian%20v6.5/TransacXML/wsyxml/xmlstructure.htm",
+        "https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/",
+        "https://helpx.adobe.com/indesign/using/structuring-documents-xml.html", "https://www.w3schools.com/xml/xml_elements.asp",
+        "https://masking.delphix.com/docs/latest/xml-structure", "https://aws.amazon.com/what-is/xml/",
+        "https://support.microsoft.com/en-us/office/xml-for-the-uninitiated-a87d234d-4c2e-4409-9cbc-45e4eb857d44"],
+        "search_results": [{"title": "XML Tree - W3Schools", "url": "https://www.w3schools.com/xml/xml_tree.asp",
+        "date": "2025-09-09", "last_updated": "2025-10-31", "snippet": "XML documents
+        are formed as element trees. An XML tree starts at a root element and branches
+        from the root to child elements.", "source": "web"}, {"title": "SOAP API Developer''s
+        Guide - Structure of an XML file - Genesys", "url": "https://help.genesys.com/cic/mergedprojects/wh_soap/desktop/structure_of_an_xml_file.htm",
+        "date": "2019-01-01", "last_updated": "2025-10-28", "snippet": "Since an XML
+        document is a tree of elements, each document has a single root element that
+        denotes the beginning and end of the XML statements in the file.", "source":
+        "web"}, {"title": "Basic XML structure - Websydian", "url": "https://www.websydian.com/olddoc/v65/source/Websydian%20v6.5/TransacXML/wsyxml/xmlstructure.htm",
+        "date": "2010-12-31", "last_updated": "2025-10-31", "snippet": "All XML documents
+        can be described as tree-structures. They all have exactly one top element.
+        The top element can contain any number of attributes and simple ...", "source":
+        "web"}, {"title": "How to define structure of XML document ? - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/",
+        "date": "2022-03-09", "last_updated": "2025-10-31", "snippet": "Rule 2: XML
+        Documents must have a root element (the supreme parent element) and its child
+        elements (sub-elements). To have a better view of ...", "source": "web"},
+        {"title": "Structure documents for XML in InDesign - Adobe Help Center", "url":
+        "https://helpx.adobe.com/indesign/using/structuring-documents-xml.html", "date":
+        "2023-05-24", "last_updated": "2025-10-25", "snippet": "The Structure pane
+        displays, in hierarchical form, items in a document that have been marked
+        with XML tags. These items are called elements.", "source": "web"}, {"title":
+        "XML Elements - W3Schools", "url": "https://www.w3schools.com/xml/xml_elements.asp",
+        "date": "2008-01-10", "last_updated": "2025-10-31", "snippet": "An XML element
+        is everything from (including) the element''s start tag to (including) the
+        element''s end tag.", "source": "web"}, {"title": "XML structure - Continuous
+        Compliance", "url": "https://masking.delphix.com/docs/latest/xml-structure",
+        "date": "2025-01-20", "last_updated": "2025-11-03", "snippet": "Elements:
+        Elements are the building blocks of XML documents, denoted by tags. An element
+        can contain text, other elements, or a mix of both. Elements are used ...",
+        "source": "web"}, {"title": "What is XML? - Extensible Markup Language (XML)
+        Explained - AWS", "url": "https://aws.amazon.com/what-is/xml/", "date": "2025-10-17",
+        "last_updated": "2025-11-03", "snippet": "All XML documents begin with a primary
+        tag, which is called the root element. For example, consider the XML file
+        below. <InvitationList> is the root element; ...", "source": "web"}, {"title":
+        "XML for the uninitiated - Microsoft Support", "url": "https://support.microsoft.com/en-us/office/xml-for-the-uninitiated-a87d234d-4c2e-4409-9cbc-45e4eb857d44",
+        "date": "2024-06-06", "last_updated": "2025-10-16", "snippet": "In addition
+        to tagged, well-formed data, XML systems typically use two additional components:
+        schemas and transforms. ... A basic XML file structure with a schema ...",
+        "source": "web"}], "object": "chat.completion", "choices": [{"index": 0, "finish_reason":
+        "stop", "message": {"role": "assistant", "content": "The file named `ruby.xml`
+        contains XML markup with a single root element `<truism>`, which encloses
+        the text:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nThis means
+        the XML document is structured as a tree with one root element (`truism`)
+        that has text content \"Ruby is the best\" inside it. This is consistent with
+        the fundamental XML rule that each XML document must have exactly one root
+        element containing child elements or text content[1][2][6]."}, "delta": {"role":
+        "assistant", "content": ""}}]}'
+  recorded_at: Mon, 03 Nov 2025 13:48:09 GMT
 recorded_with: VCR 6.3.1

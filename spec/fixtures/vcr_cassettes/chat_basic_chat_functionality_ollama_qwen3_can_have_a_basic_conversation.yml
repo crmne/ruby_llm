@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,25 +24,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:53:55 GMT
+      - Mon, 03 Nov 2025 13:56:55 GMT
       Content-Length:
-      - '1202'
+      - '2000'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-330","object":"chat.completion","created":1758725635,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking, \"What''s 2 + 2?\" This seems straightforward, but maybe
-        they''re testing if I can handle basic arithmetic. Let me make sure I''m not
-        missing anything. I know that 2 + 2 is 4. But wait, could there be any trick
-        here? Like, maybe they''re using a different number system? For example, in
-        base 3, 2 + 2 would be 11, but that''s probably not the case here. The question
-        is in standard decimal, so likely the answer is 4. I should confirm that there''s
-        no hidden context. The user might just be checking if I can perform simple
-        addition. Yeah, I think that''s it. So the answer is definitely 4.\n\u003c/think\u003e\n\nThe
-        sum of 2 + 2 is **4**. \n\nIn decimal (base 10) arithmetic, adding 2 and 2
-        results in 4. If you were working in a different number system (like base
-        3), the result would vary, but the question assumes standard base 10 unless
-        specified otherwise. \n\nAnswer: **4**."},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":237,"total_tokens":253}}
-
-        '
-  recorded_at: Wed, 24 Sep 2025 14:53:55 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTc4NyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzgyMTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBzdW0gb2YgMiBhbmQgMiBpcyAqKjQqKi4gXG5cbkhlcmXigJlzIHRoZSBicmVha2Rvd246ICBcbi0gU3RhcnQgd2l0aCAqKjIqKi4gIFxuLSBBZGQgYW5vdGhlciAqKjIqKiB0byBpdC4gIFxuLSAqKjIgKyAyID0gNCoqLiAgXG5cblRoaXMgaXMgYSBiYXNpYyBhcml0aG1ldGljIG9wZXJhdGlvbiwgYW5kIHRoZSByZXN1bHQgaXMgc3RyYWlnaHRmb3J3YXJkLiBObyBoaWRkZW4gY29udGV4dCBvciBjb21wbGV4aXR5IGlzIGludm9sdmVkLiBUaGUgYW5zd2VyIGlzICoqNCoqLiIsInJlYXNvbmluZyI6Ik9rYXksIGxldCdzIHNlZS4gVGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIDIgKyAyP1wiIEhtbSwgdGhhdCdzIGEgYmFzaWMgYXJpdGhtZXRpYyBxdWVzdGlvbi4gTGV0IG1lIGJyZWFrIGl0IGRvd24uXG5cbkZpcnN0LCBJIGtub3cgdGhhdCBhZGRpdGlvbiBpcyBvbmUgb2YgdGhlIGZ1bmRhbWVudGFsIG9wZXJhdGlvbnMgaW4gbWF0aGVtYXRpY3MuIFdoZW4geW91IGFkZCB0d28gbnVtYmVycywgeW91J3JlIGNvbWJpbmluZyB0aGVpciBxdWFudGl0aWVzLiBTbywgMiArIDIgbWVhbnMgY29tYmluaW5nIHR3byBncm91cHMgb2YgdHdvIGl0ZW1zIGVhY2guIFxuXG5MZXQgbWUgdmlzdWFsaXplIGl0LiBJbWFnaW5lIHR3byBhcHBsZXMgYW5kIHRoZW4gYW5vdGhlciB0d28gYXBwbGVzLiBJZiBJIHB1dCB0aGVtIGFsbCB0b2dldGhlciwgaG93IG1hbnkgYXBwbGVzIGRvIEkgaGF2ZT8gTGV0J3MgY291bnQ6IG9uZSwgdHdvLCB0aHJlZSwgZm91ci4gU28gdGhhdCdzIGZvdXIgYXBwbGVzLiBUaGVyZWZvcmUsIDIgKyAyIGVxdWFscyA0LlxuXG5XYWl0LCBtYXliZSBJIHNob3VsZCBkb3VibGUtY2hlY2suIFNvbWV0aW1lcywgZXZlbiBzaW1wbGUgcHJvYmxlbXMgY2FuIGhhdmUgdHJpY2t5IHBhcnRzLiBGb3IgZXhhbXBsZSwgaWYgdGhlIG51bWJlcnMgd2VyZSBkaWZmZXJlbnQsIGxpa2UgMiArIDMsIHRoZSBhbnN3ZXIgd291bGQgYmUgNS4gQnV0IGhlcmUsIGJvdGggbnVtYmVycyBhcmUgMi4gU28gYWRkaW5nIHRoZW0gdG9nZXRoZXIgc2hvdWxkIGJlIHN0cmFpZ2h0Zm9yd2FyZC4gXG5cbkFub3RoZXIgd2F5IHRvIGxvb2sgYXQgaXQgaXMgdXNpbmcgbnVtYmVyIGxpbmVzLiBTdGFydGluZyBhdCAyIGFuZCBtb3ZpbmcgMiB1bml0cyB0byB0aGUgcmlnaHQuIFRoYXQgd291bGQgbGFuZCBtZSBhdCA0LiBZZXAsIHRoYXQgbWFrZXMgc2Vuc2UuIFxuXG5JIGd1ZXNzIHRoZXJlJ3Mgbm8gdHJpY2sgaGVyZS4gSXQncyBqdXN0IGEgYmFzaWMgYWRkaXRpb24gcHJvYmxlbS4gVGhlIGFuc3dlciBpcyBkZWZpbml0ZWx5IDQuIEkgY2FuJ3QgdGhpbmsgb2YgYW55IG90aGVyIHBvc3NpYmxlIGludGVycHJldGF0aW9uLiBNYXliZSBpZiB0aGUgcXVlc3Rpb24gd2FzIGluIGEgZGlmZmVyZW50IGNvbnRleHQsIGxpa2UgaW4gYSBkaWZmZXJlbnQgbnVtYmVyIHN5c3RlbSwgYnV0IHRoZSBxdWVzdGlvbiBkb2Vzbid0IHNwZWNpZnkgdGhhdC4gU28sIGFzc3VtaW5nIGl0J3MgaW4gYmFzZSAxMCwgd2hpY2ggaXMgc3RhbmRhcmQgdW5sZXNzIHN0YXRlZCBvdGhlcndpc2UuIFxuXG5ObywgSSBkb24ndCBzZWUgYW55IGNvbXBsaWNhdGlvbnMuIFRoZSBhbnN3ZXIgaXMgNC4gTGV0IG1lIGNvbmZpcm0gb25jZSBtb3JlLiAyIHBsdXMgMiBpcyA0LiBZZXAsIHRoYXQncyByaWdodC4gSSB0aGluayB0aGF0J3MgYWxsIHRoZXJlIGlzIHRvIGl0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxOCwiY29tcGxldGlvbl90b2tlbnMiOjQzOSwidG90YWxfdG9rZW5zIjo0NTd9fQo=
+  recorded_at: Mon, 03 Nov 2025 13:56:55 GMT
 recorded_with: VCR 6.3.1

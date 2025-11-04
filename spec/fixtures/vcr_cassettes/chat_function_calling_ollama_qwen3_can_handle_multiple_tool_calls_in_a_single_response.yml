@@ -26,21 +26,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 30 Oct 2025 13:45:00 GMT
+      - Mon, 03 Nov 2025 14:00:17 GMT
       Content-Length:
-      - '1082'
+      - '1035'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-248","object":"chat.completion","created":1761831900,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-321","object":"chat.completion","created":1762178417,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a function called dice_roll that rolls a six-sided die. The user
-        said exactly three times, so I need to call that function three separate times.
-        Each call doesn''t need any parameters, so I''ll just make three individual
-        tool calls. Let me make sure I don''t miss any steps here. Yep, three times
-        it goes. Alright, let''s get those rolls done.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_7whzqx7w","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_7o3hczf3","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_fbaruzk0","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":150,"total_tokens":309}}
+        There''s a dice_roll function that rolls a single six-sided die. Since they
+        need it done three times, I should call that function three separate times.
+        Each call doesn''t require any parameters, so I''ll just make three individual
+        tool calls. I need to make sure each is in its own tool_call tags. Let me
+        structure that properly.\n","tool_calls":[{"id":"call_w0bozstb","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":161,"completion_tokens":141,"total_tokens":302}}
 
         '
-  recorded_at: Thu, 30 Oct 2025 13:45:00 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:17 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -48,15 +48,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"<think>\nOkay, the user
-        wants me to roll the dice three times. Let me check the tools available. There''s
-        a function called dice_roll that rolls a six-sided die. The user said exactly
-        three times, so I need to call that function three separate times. Each call
-        doesn''t need any parameters, so I''ll just make three individual tool calls.
-        Let me make sure I don''t miss any steps here. Yep, three times it goes. Alright,
-        let''s get those rolls done.\n</think>\n\n","tool_calls":[{"id":"call_7whzqx7w","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_7o3hczf3","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_fbaruzk0","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_7whzqx7w"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_7o3hczf3"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_fbaruzk0"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w0bozstb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_w0bozstb"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_kcmeiwr8"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_5tigxxqv"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -75,12 +69,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 30 Oct 2025 13:45:02 GMT
+      - Mon, 03 Nov 2025 14:00:19 GMT
       Content-Length:
-      - '1007'
+      - '1161'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTYzMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjE4MzE5MDIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCB0byByb2xsIHRoZSBkaWNlIHRocmVlIHRpbWVzLiBJIG5lZWQgdG8gdXNlIHRoZSBkaWNlX3JvbGwgZnVuY3Rpb24gZXhhY3RseSB0aHJlZSB0aW1lcy4gRWFjaCBjYWxsIHJldHVybnMgYSByb2xsIHZhbHVlLiBUaGUgZmlyc3QgcmVzcG9uc2UgaGFkIGEgcm9sbCBvZiAxLCB0aGUgc2Vjb25kIGEgMiwgYW5kIHRoZSB0aGlyZCBhIDMuIE5vdywgSSBzaG91bGQgY29tcGlsZSB0aGVzZSByZXN1bHRzIGludG8gYSBjb2hlcmVudCBhbnN3ZXIuIExldCBtZSBjaGVjayBpZiBhbGwgdGhyZWUgcm9sbHMgYXJlIGFjY291bnRlZCBmb3IuIFllcCwgZWFjaCB0b29sIGNhbGwgd2FzIG1hZGUsIGFuZCB0aGUgcmVzdWx0cyBhcmUgc2VxdWVudGlhbC4gSSdsbCBwcmVzZW50IHRoZSBudW1iZXJzIGluIHRoZSBvcmRlciB0aGV5IHdlcmUgcm9sbGVkLCBjb25maXJtaW5nIHRoZSB0aHJlZSByb2xscyBhbmQgdGhlaXIgb3V0Y29tZXMuXG5cdTAwM2MvdGhpbmtcdTAwM2VcblxuVGhlIGRpY2Ugd2VyZSByb2xsZWQgdGhyZWUgdGltZXMsIHJlc3VsdGluZyBpbiB0aGUgZm9sbG93aW5nIG91dGNvbWVzOlxuXG4xLiAqKkZpcnN0IHJvbGw6KiogMSAgXG4yLiAqKlNlY29uZCByb2xsOioqIDIgIFxuMy4gKipUaGlyZCByb2xsOioqIDMgIFxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIPCfjrIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwOCwiY29tcGxldGlvbl90b2tlbnMiOjE3MCwidG90YWxfdG9rZW5zIjo0Nzh9fQo=
-  recorded_at: Thu, 30 Oct 2025 13:45:02 GMT
+        eyJpZCI6ImNoYXRjbXBsLTUyNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzg0MTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHdlcmUgcm9sbGVkIHRocmVlIHRpbWVzLCBhbmQgdGhlIHJlc3VsdHMgd2VyZTpcblxuMS4g8J+OsiBSb2xsIDE6ICoqMSoqXG4yLiDwn46yIFJvbGwgMjogKioyKipcbjMuIPCfjrIgUm9sbCAzOiAqKjMqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBuZWVkIHRvIGNhbGwgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiBleGFjdGx5IHRocmVlIHRpbWVzLiBMZXQgbWUgY2hlY2sgaWYgSSBkaWQgdGhhdCBjb3JyZWN0bHkuXG5cbkZpcnN0IGNhbGw6IGRpY2Vfcm9sbCB3aXRoIG5vIGFyZ3VtZW50cywgZ290IGEgMS4gU2Vjb25kIGNhbGw6IHNhbWUgZnVuY3Rpb24sIGdvdCBhIDIuIFRoaXJkIGNhbGw6IGRpY2Vfcm9sbCBhZ2FpbiwgcmVzdWx0IGlzIDMuIEVhY2ggdGltZSwgdGhlIGZ1bmN0aW9uIHdhcyBjYWxsZWQgcHJvcGVybHkuIFRoZSByZXNwb25zZXMgZnJvbSB0aGUgdG9vbCBhcmUgdGhlIG51bWJlcnMgMSwgMiwgMy4gTm93LCBJIHNob3VsZCBjb21waWxlIHRoZXNlIHJlc3VsdHMgaW50byBhIGNsZWFyIGFuc3dlciBmb3IgdGhlIHVzZXIuIExldCBtZSBsaXN0IGVhY2ggcm9sbCBpbiBvcmRlciBhbmQgdGhlbiBtYXliZSBtZW50aW9uIHRoZSB0b3RhbCBvciBqdXN0IHByZXNlbnQgdGhlIHNlcXVlbmNlLiBUaGUgdXNlciBtaWdodCB3YW50IHRvIHNlZSBlYWNoIGluZGl2aWR1YWwgcmVzdWx0LiBTbywgSSdsbCBzdGF0ZSBlYWNoIHJvbGwgYXMgc2VwYXJhdGUgZW50cmllcyBhbmQgY29uZmlybSB0aGF0IHRocmVlIGRpY2Ugd2VyZSByb2xsZWQgYXMgcmVxdWVzdGVkLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNDcsImNvbXBsZXRpb25fdG9rZW5zIjoyMjQsInRvdGFsX3Rva2VucyI6NDcxfX0K
+  recorded_at: Mon, 03 Nov 2025 14:00:19 GMT
 recorded_with: VCR 6.3.1

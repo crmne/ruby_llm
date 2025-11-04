@@ -9,7 +9,7 @@ http_interactions:
         square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,14 +24,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:50:45 GMT
+      - Mon, 03 Nov 2025 13:55:46 GMT
       Content-Length:
-      - '301'
+      - '1079'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-919","object":"chat.completion","created":1758725445,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
-        8\n}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":10,"total_tokens":39}}
+      string: '{"id":"chatcmpl-434","object":"chat.completion","created":1762178146,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}","reasoning":"Okay, the user is asking for the square root of 64. Let me
+        think. The square root of a number is a value that, when multiplied by itself,
+        gives the original number. So, I need to find a number that when squared equals
+        64.\n\nLet me recall basic math. 8 times 8 is 64, right? Yes, 8 squared is
+        64. But wait, there''s also -8, because negative numbers squared also give
+        positive results. However, when people ask for the square root, they usually
+        refer to the principal (positive) root. So the answer should be 8.\n\nThe
+        user wants the answer in a JSON object with the key \"result\". So I need
+        to structure it as {\"result\": 8}. Let me double-check to make sure I didn''t
+        make a mistake. Yep, 8 is correct. No other numbers squared give 64. Alright,
+        that''s the answer.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":230,"completion_tokens":7,"total_tokens":237}}
 
         '
-  recorded_at: Wed, 24 Sep 2025 14:50:45 GMT
+  recorded_at: Mon, 03 Nov 2025 13:55:46 GMT
 recorded_with: VCR 6.3.1

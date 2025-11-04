@@ -1,0 +1,113 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:50:35 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-1762113034-0hR1g3DAESgvNZPMzCXT\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1762113034,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"id\":\"toolu_016BD5urL9stPHLLThzFQWXK\",\"index\":0,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_0129nhpUcwKqnoeiqwaRJ6dF\",\"index\":1,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}},{\"id\":\"toolu_013b5Xt7uAM7vkuhwGDr84or\",\"index\":2,\"type\":\"function\",\"function\":{\"name\":\"dice_roll\",\"arguments\":\"\"}}]}}],\"usage\":{\"prompt_tokens\":596,\"completion_tokens\":75,\"total_tokens\":671}}"
+  recorded_at: Sun, 02 Nov 2025 19:50:35 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_016BD5urL9stPHLLThzFQWXK","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_0129nhpUcwKqnoeiqwaRJ6dF","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"toolu_013b5Xt7uAM7vkuhwGDr84or","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"toolu_016BD5urL9stPHLLThzFQWXK"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"toolu_0129nhpUcwKqnoeiqwaRJ6dF"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"toolu_013b5Xt7uAM7vkuhwGDr84or"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:50:37 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1762113036-yV764VVaeCq7qNX9FlKy\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1762113036,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"Here
+        are your 3 dice rolls:\\n\\n1. **First roll:** 1\\n2. **Second roll:** 2\\n3.
+        **Third roll:** 3\\n\\n**Total:** 6\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":771,\"completion_tokens\":45,\"total_tokens\":816}}"
+  recorded_at: Sun, 02 Nov 2025 19:50:38 GMT
+recorded_with: VCR 6.3.1

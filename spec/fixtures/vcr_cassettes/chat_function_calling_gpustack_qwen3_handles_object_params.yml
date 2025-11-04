@@ -10,7 +10,7 @@ http_interactions:
         result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true,"$defs":{}}}}],"enable_thinking":false}'
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:55:22 GMT
-      - Thu, 30 Oct 2025 16:55:22 GMT
+      - Mon, 03 Nov 2025 14:00:38 GMT
+      - Mon, 03 Nov 2025 14:00:39 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '847'
+      - '1391'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -45,6 +45,13 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-SplDRSbOkZNAYmgdSR1oOBkMQee0pWCO","type":"function"}]}}],"created":1761843324,"id":"chatcmpl-sSgBoyu2wMGQiUi7HGuUNvP3C9KSkVgu","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":189,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":138,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":289,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4811.294054971948,"time_per_output_token_ms":9.426920634920636,"time_to_first_token_ms":60.067,"tokens_per_second":106.07917884612793,"total_tokens":478}}'
-  recorded_at: Thu, 30 Oct 2025 16:55:24 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the object_params function with a window starting
+        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.
+        The function requires a \"window\" object with \"start\" and \"end\" as required
+        fields. Both should be ISO strings. The user provided the dates in the correct
+        format, so I just need to structure the JSON accordingly. No additional properties
+        are allowed, so I''ll make sure the object only includes the window with those
+        dates. Alright, that should do it.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-FnqIWW6OWWd7E4VnO4ztHmcjslagva0q","type":"function"}]}}],"created":1762178440,"id":"chatcmpl-COc8RYOwB0ztGD9hiwyagMO1rrlgteVl","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":176,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":127,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5440.404582199916,"time_per_output_token_ms":8.445107954545454,"time_to_first_token_ms":52.202,"tokens_per_second":118.41174859840184,"total_tokens":460}}'
+  recorded_at: Mon, 03 Nov 2025 14:00:40 GMT
 recorded_with: VCR 6.3.1

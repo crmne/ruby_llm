@@ -6,12 +6,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Say
-        \"beta headers work\""}]}],"stream":false,"max_tokens":8192}'
+        \"beta headers work\""}]}],"stream":false,"max_tokens":8000}'
     headers:
       Anthropic-Beta:
       - fine-grained-tool-streaming-2025-05-14
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:50:39 GMT
+      - Mon, 03 Nov 2025 13:55:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,25 +40,27 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-09-24T14:50:38Z'
+      - '2025-11-03T13:55:42Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-09-24T14:50:39Z'
+      - '2025-11-03T13:55:42Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-09-24T14:50:38Z'
+      - '2025-11-03T13:55:41Z'
+      Retry-After:
+      - '19'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-09-24T14:50:38Z'
+      - '2025-11-03T13:55:42Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -66,9 +68,7 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       X-Envoy-Upstream-Service-Time:
-      - '942'
-      Via:
-      - 1.1 google
+      - '619'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -79,7 +79,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"msg_01NtydW6z3vaDq3Ayytqra4P","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"beta
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01DNktyUTmVqDdmAoZ2FoMCP","type":"message","role":"assistant","content":[{"type":"text","text":"beta
         headers work"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":6,"service_tier":"standard"}}'
-  recorded_at: Wed, 24 Sep 2025 14:50:39 GMT
+  recorded_at: Mon, 03 Nov 2025 13:55:42 GMT
 recorded_with: VCR 6.3.1

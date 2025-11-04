@@ -24,10 +24,10 @@ http_interactions:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
-      Date:
-      - Mon, 20 Oct 2025 19:21:54 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 03 Nov 2025 13:55:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:21:54 GMT
+  recorded_at: Mon, 03 Nov 2025 13:55:00 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Mon, 20 Oct 2025 19:22:15 GMT
+      - Mon, 03 Nov 2025 13:55:41 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,5 +109,5 @@ http_interactions:
             "status": "INVALID_ARGUMENT"
           }
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:15 GMT
+  recorded_at: Mon, 03 Nov 2025 13:55:41 GMT
 recorded_with: VCR 6.3.1

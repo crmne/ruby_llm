@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the array
         params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true,"$defs":{}}}}],"enable_thinking":false}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -26,19 +26,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 30 Oct 2025 16:54:49 GMT
+      - Mon, 03 Nov 2025 14:00:27 GMT
       Content-Length:
-      - '924'
+      - '1095'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-953","object":"chat.completion","created":1761843289,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-769","object":"chat.completion","created":1762178427,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
         and combine them. Let me check the function definition. The function requires
         an array of strings under the \"tags\" parameter. Since the user provided
-        exactly that, I just need to structure the tool call correctly. I''ll make
-        sure the arguments are a JSON object with the tags array. No other parameters
-        are needed. So the tool call should be straightforward.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_bm5d8kre","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":171,"completion_tokens":120,"total_tokens":291}}
+        exactly that, I just need to structure the tool call correctly. The combined
+        tags would be the array elements joined, maybe with a separator? Wait, the
+        function''s description says it uses the params DSL array support, so maybe
+        it''s just passing the array as is. The user probably expects the output to
+        be \"red, blue\" or similar. I''ll make sure to format the JSON arguments
+        properly with the tags array.\n","tool_calls":[{"id":"call_jps0v70w","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":168,"completion_tokens":163,"total_tokens":331}}
 
         '
-  recorded_at: Thu, 30 Oct 2025 16:54:49 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:27 GMT
 recorded_with: VCR 6.3.1

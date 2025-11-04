@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.perplexity.ai/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"}],"stream":false}'
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:54:53 GMT
+      - Sun, 02 Nov 2025 20:02:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,86 +43,85 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "556763b7-83d4-468a-a8d5-f3e05bc51cb7", "model": "sonar", "created":
-        1758725693, "usage": {"prompt_tokens": 6, "completion_tokens": 172, "total_tokens":
-        178, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+      string: '{"id": "0941c1a6-b7b1-471a-a7ae-36d50733e631", "model": "sonar", "created":
+        1762113767, "usage": {"prompt_tokens": 10, "completion_tokens": 142, "total_tokens":
+        152, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
         0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "https://evrone.com/blog/yukihiro-matsumoto-interview-2021", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "https://auth0.com/blog/a-brief-history-of-ruby/", "https://www.ruby-lang.org/en/about/",
-        "https://evrone.com/blog/yukihiro-matsumoto-interview", "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "https://en.wikipedia.org/wiki/Yukihiro_Matsumoto", "https://www.youtube.com/watch?v=Xa08hqK7ozs"],
-        "search_results": [{"title": "At 30 years old, is Ruby in a mid-life crisis
-        or a renaissance? - TNW", "url": "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "date": "2024-11-11", "last_updated": "2025-09-14", "snippet": "Ruby''s creator,
+        "https://www.ruby-lang.org/en/about/", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "https://twobithistory.org/2017/11/19/the-ruby-story.html", "https://auth0.com/blog/a-brief-history-of-ruby/",
+        "https://www.ebsco.com/research-starters/computer-science/ruby-programming-language",
+        "https://evrone.com/blog/yukihiro-matsumoto-interview", "https://www.youtube.com/watch?v=Xa08hqK7ozs",
+        "https://en.wikipedia.org/wiki/Yukihiro_Matsumoto"], "search_results": [{"title":
+        "At 30 years old, is Ruby in a mid-life crisis or a renaissance?", "url":
+        "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
+        "date": "2024-11-11", "last_updated": "2025-11-02", "snippet": "Ruby''s creator,
         Yukihiro Matsumoto (Matz), released the first public version of the programming
-        language in December 1995, making Ruby just shy of its 30th ..."}, {"title":
-        "Ruby Creator Yukihiro Matsumoto Interview - Evrone", "url": "https://evrone.com/blog/yukihiro-matsumoto-interview-2021",
-        "date": "2021-03-03", "last_updated": "2025-08-29", "snippet": "Yukihiro Matsumoto,
-        creator of Ruby, discusses new features in Ruby 3.0, his approach to improving
-        Ruby, and the language''s future. He likes pattern matching ..."}, {"title":
-        "Ruby (programming language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-09-19", "snippet": "It was developed
-        in the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan. Ruby. Paradigm \u00b7
-        Multi-paradigm: functional, imperative, object-oriented, reflective."}, {"title":
-        "A Brief History of Ruby - Auth0", "url": "https://auth0.com/blog/a-brief-history-of-ruby/",
-        "date": "2023-04-12", "last_updated": "2025-09-22", "snippet": "Ruby is an
+        language in December 1995, making Ruby just shy of its 30th ...", "source":
+        "web"}, {"title": "About Ruby", "url": "https://www.ruby-lang.org/en/about/",
+        "date": "2003-12-22", "last_updated": "2025-11-01", "snippet": "Ruby is a
+        language of careful balance. Its creator, Yukihiro \u201cMatz\u201d Matsumoto,
+        blended parts of his favorite languages (Perl, Smalltalk, Eiffel, Ada, and
+        Lisp)", "source": "web"}, {"title": "Ruby (programming language) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)", "date":
+        "2001-10-17", "last_updated": "2025-10-30", "snippet": "It was developed in
+        the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan. Ruby. Paradigm \u00b7
+        Multi-paradigm: functional, imperative, object-oriented, reflective.", "source":
+        "web"}, {"title": "The Ruby Story - Two-Bit History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
+        "date": "2017-11-19", "last_updated": "2025-10-28", "snippet": "Matsumoto
+        started working on Ruby in 1993, only a few years after graduating. He began
+        working on Ruby because he was looking for a scripting ...", "source": "web"},
+        {"title": "A Brief History of Ruby - Auth0", "url": "https://auth0.com/blog/a-brief-history-of-ruby/",
+        "date": "2023-04-12", "last_updated": "2025-10-30", "snippet": "Ruby is an
         object-oriented and interpreted programming language created by Yukihiro Matsumoto
-        in 1993. Ruby was quickly adopted in Japan and ..."}, {"title": "About Ruby",
-        "url": "https://www.ruby-lang.org/en/about/", "date": "2003-12-22", "last_updated":
-        "2025-09-16", "snippet": "Ruby is a language of careful balance. Its creator,
-        Yukihiro \u201cMatz\u201d Matsumoto, blended parts of his favorite languages
-        (Perl, Smalltalk, Eiffel, Ada, and Lisp)"}, {"title": "Yukihiro Matsumoto:
-        \"Ruby is designed for humans, not machines\"", "url": "https://evrone.com/blog/yukihiro-matsumoto-interview",
-        "date": "2019-12-09", "last_updated": "2025-09-21", "snippet": "Yukihiro Matsumoto,
-        creator of the Ruby programming language, has been able to join us at RubyRussia
-        2019 as a speaker for the second time."}, {"title": "The Ruby Story - Two-Bit
-        History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "date": "2017-11-19", "last_updated": "2025-09-22", "snippet": "Ruby was created
-        by Yukihiro Matsumoto (Matz) in 1993, aiming for programmer happiness and
-        a better, object-oriented scripting language. It was ..."}, {"title": "Yukihiro
+        in 1993. Ruby was quickly adopted in Japan and ...", "source": "web"}, {"title":
+        "Ruby (programming language) | Research Starters - EBSCO", "url": "https://www.ebsco.com/research-starters/computer-science/ruby-programming-language",
+        "date": "2024-02-17", "last_updated": "2025-10-29", "snippet": "Ruby was developed
+        in 1993 by Japanese programmer Yukihiro Matsumoto, who was attracted to the
+        idea of an object-oriented scripting language but was ...", "source": "web"},
+        {"title": "Yukihiro Matsumoto: \"Ruby is designed for humans, not machines\"",
+        "url": "https://evrone.com/blog/yukihiro-matsumoto-interview", "date": "2019-12-09",
+        "last_updated": "2025-09-21", "snippet": "Yukihiro Matsumoto, creator of the
+        Ruby programming language, has been able to join us at RubyRussia 2019 as
+        a speaker for the second time.", "source": "web"}, {"title": "An Introduction
+        to mRuby | Ruby Creator Yukihiro \"Matz\" Matsumoto", "url": "https://www.youtube.com/watch?v=Xa08hqK7ozs",
+        "date": "2016-01-11", "last_updated": "2025-07-12", "snippet": "... Ruby programming
+        language and its reference implementation, Matz''s Ruby Interpreter (MRI).
+        His ... Founded by billionaire venture ...", "source": "web"}, {"title": "Yukihiro
         Matsumoto - Wikipedia", "url": "https://en.wikipedia.org/wiki/Yukihiro_Matsumoto",
-        "date": "2002-02-25", "last_updated": "2025-09-14", "snippet": "He is best
+        "date": "2002-02-25", "last_updated": "2025-10-17", "snippet": "He is best
         known as the chief designer of the Ruby programming language and its original
-        reference implementation, Matz''s Ruby Interpreter (MRI)."}, {"title": "An
-        Introduction to mRuby | Ruby Creator Yukihiro \"Matz\" Matsumoto", "url":
-        "https://www.youtube.com/watch?v=Xa08hqK7ozs", "date": "2016-01-11", "last_updated":
-        "2025-07-12", "snippet": "... Ruby programming language and its reference
-        implementation, Matz''s Ruby Interpreter (MRI). His demeanor has brought about
-        a motto in the Ruby ..."}], "object": "chat.completion", "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "**Ruby''s
-        creator is Yukihiro \"Matz\" Matsumoto**. He developed Ruby in the mid-1990s
-        in Japan, releasing its first public version in December 1995[1][3]. Matsumoto
-        designed Ruby by blending aspects of his favorite programming languages such
-        as Perl, Smalltalk, Eiffel, Ada, and Lisp, aiming for a balance between functional
-        and imperative programming[5]. His goal was to create a simple, object-oriented,
-        and easy-to-use scripting language focused on human productivity rather than
-        machine performance[6].\n\nRuby\u2019s name was chosen by Matsumoto and a
-        colleague in early 1993, as a short, beautiful name reflecting the language''s
-        desire to be elegant and practical[4]. Ruby has since grown into a popular
-        language worldwide, notably boosted by the Ruby on Rails framework[5]."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:54:53 GMT
+        reference implementation, Matz''s Ruby Interpreter (MRI).", "source": "web"}],
+        "object": "chat.completion", "choices": [{"index": 0, "finish_reason": "stop",
+        "message": {"role": "assistant", "content": "Yukihiro \"Matz\" Matsumoto is
+        the creator of the Ruby programming language[2][3]. Matsumoto, a Japanese
+        computer programmer, began developing Ruby in 1993, motivated by his desire
+        for a genuine object-oriented, easy-to-use scripting language that combined
+        the features he admired most in languages like Perl, Smalltalk, Eiffel, Ada,
+        and Lisp[2][3][4]. Ruby was first released publicly in December 1995[1]. Matsumoto
+        remains a central figure in the Ruby community, and his philosophy\u2014emphasizing
+        developer happiness and a balance between simplicity and expressiveness\u2014has
+        deeply influenced the language''s culture and evolution[2][7]."}, "delta":
+        {"role": "assistant", "content": ""}}]}'
+  recorded_at: Sun, 02 Nov 2025 20:02:47 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"**Ruby''s creator is Yukihiro \"Matz\"
-        Matsumoto**. He developed Ruby in the mid-1990s in Japan, releasing its first
-        public version in December 1995[1][3]. Matsumoto designed Ruby by blending
-        aspects of his favorite programming languages such as Perl, Smalltalk, Eiffel,
-        Ada, and Lisp, aiming for a balance between functional and imperative programming[5].
-        His goal was to create a simple, object-oriented, and easy-to-use scripting
-        language focused on human productivity rather than machine performance[6].\n\nRuby’s
-        name was chosen by Matsumoto and a colleague in early 1993, as a short, beautiful
-        name reflecting the language''s desire to be elegant and practical[4]. Ruby
-        has since grown into a popular language worldwide, notably boosted by the
-        Ruby on Rails framework[5]."},{"role":"user","content":"What year did he create
-        Ruby?"}],"stream":false}'
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
+        \"Matz\" Matsumoto is the creator of the Ruby programming language[2][3].
+        Matsumoto, a Japanese computer programmer, began developing Ruby in 1993,
+        motivated by his desire for a genuine object-oriented, easy-to-use scripting
+        language that combined the features he admired most in languages like Perl,
+        Smalltalk, Eiffel, Ada, and Lisp[2][3][4]. Ruby was first released publicly
+        in December 1995[1]. Matsumoto remains a central figure in the Ruby community,
+        and his philosophy—emphasizing developer happiness and a balance between simplicity
+        and expressiveness—has deeply influenced the language''s culture and evolution[2][7]."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -137,7 +136,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:54:56 GMT
+      - Sun, 02 Nov 2025 20:02:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -156,57 +155,51 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "b039008d-279c-4185-a677-9d6cd6a3b221", "model": "sonar", "created":
-        1758725696, "usage": {"prompt_tokens": 185, "completion_tokens": 98, "total_tokens":
-        283, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
+      string: '{"id": "efb1bea5-df53-468f-a7e8-4db30814e0db", "model": "sonar", "created":
+        1762113771, "usage": {"prompt_tokens": 159, "completion_tokens": 43, "total_tokens":
+        202, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
         0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://railsformers.com/the-language-that-changed-the-world-of-programming-celebrates-29-years",
-        "https://pwrteams.com/content-hub/blog/29-years-ruby", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "https://sumatosoft.com/blog/everything-you-should-know-about-ruby", "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
+        "https://pwrteams.com/content-hub/blog/29-years-ruby", "https://www.sitepoint.com/history-ruby/",
+        "https://en.wikipedia.org/wiki/Ruby_(programming_language)", "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
         "https://www.tutorialspoint.com/ruby/ruby_overview.htm", "https://www.ruby-lang.org/en/about/",
-        "https://twobithistory.org/2017/11/19/the-ruby-story.html", "https://simple.wikipedia.org/wiki/Ruby_(programming_language)"],
-        "search_results": [{"title": "The language that changed the world of programming
-        celebrates 29 ...", "url": "https://railsformers.com/the-language-that-changed-the-world-of-programming-celebrates-29-years",
-        "date": "2024-12-21", "last_updated": "2025-09-13", "snippet": "On 21 December
+        "https://twobithistory.org/2017/11/19/the-ruby-story.html"], "search_results":
+        [{"title": "The language that changed the world of programming celebrates
+        29 ...", "url": "https://railsformers.com/the-language-that-changed-the-world-of-programming-celebrates-29-years",
+        "date": "2024-12-21", "last_updated": "2025-10-27", "snippet": "On 21 December
         2024, it will be 29 years since the first public version of the Ruby programming
-        language saw the light of day."}, {"title": "Celebrating Ruby: a journey through
-        29 years of programming ...", "url": "https://pwrteams.com/content-hub/blog/29-years-ruby",
-        "date": "2024-12-20", "last_updated": "2025-09-18", "snippet": "Ruby, created
-        in 1995, is a powerful language known for its elegance, simplicity, and the
-        Ruby on Rails framework, which revolutionized web ..."}, {"title": "Ruby (programming
-        language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-09-19", "snippet": "It was developed
+        language saw the light of day.", "source": "web"}, {"title": "Celebrating
+        Ruby: a journey through 29 years of programming ...", "url": "https://pwrteams.com/content-hub/blog/29-years-ruby",
+        "date": "2024-12-20", "last_updated": "2025-11-02", "snippet": "Why Ruby was
+        created? When Yukihiro Matsumoto began working on Ruby in 1993, he envisioned
+        a programming language that prioritised developer ...", "source": "web"},
+        {"title": "The History of Ruby - SitePoint", "url": "https://www.sitepoint.com/history-ruby/",
+        "date": "2014-07-26", "last_updated": "2025-06-15", "snippet": "Ruby was conceived
+        in 1993 by Yukihiro Matsumoto (\u201cMatz\u201d) who desired a language that
+        was syntactically simple, truly object-oriented, ...", "source": "web"}, {"title":
+        "Ruby (programming language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
+        "date": "2001-10-17", "last_updated": "2025-10-30", "snippet": "It was developed
         in the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan. Ruby. Paradigm \u00b7
-        Multi-paradigm: functional, imperative, object-oriented, reflective."}, {"title":
-        "Complete Guide: Everything You Should Know About Ruby Use", "url": "https://sumatosoft.com/blog/everything-you-should-know-about-ruby",
-        "date": "2023-03-09", "last_updated": "2025-09-23", "snippet": "Ruby programming
-        language was created in Japan in the mid-1990s by Yukihiro \u201cMatz\u201d
-        Matsumoto. Matsumoto began designing Ruby in 1993 as a hobby ..."}, {"title":
-        "At 30 years old, is Ruby in a mid-life crisis or a renaissance?", "url":
-        "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "date": "2024-11-11", "last_updated": "2025-09-14", "snippet": "Ruby''s creator,
+        Multi-paradigm: functional, imperative, object-oriented, reflective.", "source":
+        "web"}, {"title": "At 30 years old, is Ruby in a mid-life crisis or a renaissance?",
+        "url": "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
+        "date": "2024-11-11", "last_updated": "2025-11-02", "snippet": "Ruby''s creator,
         Yukihiro Matsumoto (Matz), released the first public version of the programming
-        language in December 1995, making Ruby just shy of its 30th ..."}, {"title":
-        "Ruby - Overview - Tutorials Point", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
-        "date": "2019-03-01", "last_updated": "2025-09-23", "snippet": "Ruby is a
+        language in December 1995, making Ruby just shy of its 30th ...", "source":
+        "web"}, {"title": "Ruby - Overview - Tutorials Point", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
+        "date": "2019-03-01", "last_updated": "2025-10-27", "snippet": "Ruby is a
         pure object-oriented programming language. It was created in 1993 by Yukihiro
-        Matsumoto of Japan."}, {"title": "About Ruby", "url": "https://www.ruby-lang.org/en/about/",
-        "date": "2003-12-22", "last_updated": "2025-09-16", "snippet": "Since its
+        Matsumoto of Japan.", "source": "web"}, {"title": "About Ruby", "url": "https://www.ruby-lang.org/en/about/",
+        "date": "2003-12-22", "last_updated": "2025-11-01", "snippet": "Since its
         public release in 1995, Ruby has drawn devoted coders worldwide. In 2006,
         Ruby achieved mass acceptance. With active user groups formed in the world''s
-        ..."}, {"title": "The Ruby Story - Two-Bit History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "date": "2017-11-19", "last_updated": "2025-09-22", "snippet": "Ruby was created
-        by Yukihiro Matsumoto (Matz) in 1993, aiming for programmer happiness and
-        a better, object-oriented scripting language. It was ..."}, {"title": "Ruby
-        (programming language) - Simple English Wikipedia, the free ...", "url": "https://simple.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2013-04-22", "last_updated": "2025-09-21", "snippet": "Ruby is the
-        name of a programming language that was created in the mid-1990s by Yukihiro
-        \"Matz\" Matsumoto in Japan."}], "object": "chat.completion", "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "Yukihiro
-        \"Matz\" Matsumoto began creating Ruby in **1993**, with the first public
-        release of the language (version 0.95) occurring on **December 21, 1995**[1][2][3][4][5][6].
-        He conceived the idea and started designing Ruby in 1993, inspired by a desire
-        for a true object-oriented scripting language, but it was officially released
-        to the public two years later in 1995."}, "delta": {"role": "assistant", "content":
-        ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:54:56 GMT
+        ...", "source": "web"}, {"title": "The Ruby Story - Two-Bit History", "url":
+        "https://twobithistory.org/2017/11/19/the-ruby-story.html", "date": "2017-11-19",
+        "last_updated": "2025-10-28", "snippet": "Matsumoto started working on Ruby
+        in 1993, only a few years after graduating. He began working on Ruby because
+        he was looking for a scripting ...", "source": "web"}], "object": "chat.completion",
+        "choices": [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant",
+        "content": "Yukihiro \"Matz\" Matsumoto began developing Ruby in 1993, but
+        the first public version of the language was released on December 21, 1995[1][2][3]."},
+        "delta": {"role": "assistant", "content": ""}}]}'
+  recorded_at: Sun, 02 Nov 2025 20:02:51 GMT
 recorded_with: VCR 6.3.1

@@ -9,7 +9,7 @@ http_interactions:
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:54:51 GMT
+      - Mon, 03 Nov 2025 14:00:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '767'
+      - '661'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '937'
+      - '685'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -81,9 +81,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CWQDCKGfL6bHT7C6UAplXc1qZBMn5",
+          "id": "chatcmpl-CXpOdKLr6uhy5U4XqyAXyg1NtuKmS",
           "object": "chat.completion",
-          "created": 1761843290,
+          "created": 1762178427,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -93,7 +93,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_DygzTvxtq0TAnS8mX2YEyrWV",
+                    "id": "call_X7F25TuwSDqhjFl4Vfm4yhNH",
                     "type": "function",
                     "function": {
                       "name": "array_params",
@@ -126,5 +126,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Thu, 30 Oct 2025 16:54:51 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:27 GMT
 recorded_with: VCR 6.3.1

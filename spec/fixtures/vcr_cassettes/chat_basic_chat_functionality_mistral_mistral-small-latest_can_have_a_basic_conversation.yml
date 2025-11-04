@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:48 GMT
+      - Mon, 03 Nov 2025 14:43:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,38 +32,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-5e07-7808-9640-e9d6916b4a56'
+      - '019a4a2b-fc43-7fbe-9981-0b597fb746d8'
       X-Kong-Request-Id:
-      - '01997c37-5e07-7808-9640-e9d6916b4a56'
+      - '019a4a2b-fc43-7fbe-9981-0b597fb746d8'
       X-Envoy-Upstream-Service-Time:
-      - '747'
+      - '1240'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499935'
+      - '499898'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999971334'
+      - '999987139'
       X-Ratelimit-Tokens-Query-Cost:
-      - '65'
+      - '99'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '57'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '748'
+      - '1241'
       X-Kong-Proxy-Latency:
-      - '12'
+      - '4'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -73,6 +75,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNjM2JiYTkwZTFkNzQxNGViNjJiN2M0YTAyNGY0NDg1IiwiY3JlYXRlZCI6MTc1ODcyNTYyNywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExLCJ0b3RhbF90b2tlbnMiOjY1LCJjb21wbGV0aW9uX3Rva2VucyI6NTR9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIHN1bSBvZiAyICsgMiBpcyAqKjQqKi5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgb3BlcmF0aW9uIHdoZXJlIHlvdSBhZGQgdHdvIG51bWJlcnMgdG9nZXRoZXIuIEluIHRoaXMgY2FzZSwgYWRkaW5nIDIgYW5kIDIgZ2l2ZXMgeW91IDQuXG5cbldvdWxkIHlvdSBsaWtlIGhlbHAgd2l0aCBhbnkgb3RoZXIgbWF0aCBwcm9ibGVtcz8g8J+YiiJ9fV19
-  recorded_at: Wed, 24 Sep 2025 14:53:48 GMT
+        eyJpZCI6IjI4ZmEzNmIzZjg3NjQ5NDhhZTg0ZjgzMzgwMzVmZDk3IiwiY3JlYXRlZCI6MTc2MjE4MDk4NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExLCJ0b3RhbF90b2tlbnMiOjk5LCJjb21wbGV0aW9uX3Rva2VucyI6ODh9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIHN1bSBvZiAyICsgMiBpcyAqKjQqKi5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgb3BlcmF0aW9uIHdoZXJlIHlvdSBhZGQgdHdvIG51bWJlcnMgdG9nZXRoZXIuIEhlcmUncyB0aGUgYnJlYWtkb3duOlxuXG4tICoqMioqIChmaXJzdCBudW1iZXIpXG4tICoqKyAyKiogKHNlY29uZCBudW1iZXIgYWRkZWQgdG8gdGhlIGZpcnN0KVxuLSAqKj0gNCoqICh0aGUgcmVzdWx0KS5cblxuVGhpcyBpcyBvbmUgb2YgdGhlIHNpbXBsZXN0IGFuZCBtb3N0IGZ1bmRhbWVudGFsIG1hdGggcHJvYmxlbXMhIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgdG8gZXhwbG9yZSBtb3JlLiDwn5iKIn19XX0=
+  recorded_at: Mon, 03 Nov 2025 14:43:09 GMT
 recorded_with: VCR 6.3.1

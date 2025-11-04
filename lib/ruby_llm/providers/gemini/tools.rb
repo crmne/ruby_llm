@@ -14,27 +14,40 @@ module RubyLLM
         end
 
         def format_tool_call(msg)
-          [{
-            functionCall: {
-              name: msg.tool_calls.values.first.name,
-              args: msg.tool_calls.values.first.arguments
+          parts = []
+
+          if msg.content && !(msg.content.respond_to?(:empty?) && msg.content.empty?)
+            formatted_content = Media.format_content(msg.content)
+            parts.concat(formatted_content.is_a?(Array) ? formatted_content : [formatted_content])
+          end
+
+          msg.tool_calls.each_value do |tool_call|
+            parts << {
+              functionCall: {
+                name: tool_call.name,
+                args: tool_call.arguments
+              }
             }
-          }]
+          end
+
+          parts
         end
 
-        def format_tool_result(msg)
+        def format_tool_result(msg, function_name = nil)
+          function_name ||= msg.tool_call_id
+
           [{
             functionResponse: {
-              name: msg.tool_call_id,
+              name: function_name,
               response: {
-                name: msg.tool_call_id,
+                name: function_name,
                 content: Media.format_content(msg.content)
               }
             }
           }]
         end
 
-        def extract_tool_calls(data)
+        def extract_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
           return nil unless data
 
           candidate = data.is_a?(Hash) ? data.dig('candidates', 0) : nil
@@ -43,21 +56,20 @@ module RubyLLM
           parts = candidate.dig('content', 'parts')
           return nil unless parts.is_a?(Array)
 
-          function_call_part = parts.find { |p| p['functionCall'] }
-          return nil unless function_call_part
+          tool_calls = parts.each_with_object({}) do |part, result|
+            function_data = part['functionCall']
+            next unless function_data
 
-          function_data = function_call_part['functionCall']
-          return nil unless function_data
+            id = SecureRandom.uuid
 
-          id = SecureRandom.uuid
-
-          {
-            id => ToolCall.new(
-              id: id,
+            result[id] = ToolCall.new(
+              id:,
               name: function_data['name'],
-              arguments: function_data['args']
+              arguments: function_data['args'] || {}
             )
-          }
+          end
+
+          tool_calls.empty? ? nil : tool_calls
         end
 
         private

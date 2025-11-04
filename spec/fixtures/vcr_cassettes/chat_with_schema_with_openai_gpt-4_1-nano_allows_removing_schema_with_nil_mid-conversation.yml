@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:50:56 GMT
+      - Sun, 02 Nov 2025 21:55:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '257'
+      - '195'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -78,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CJL7YnwOdVEaQL4PmmzNquHrcf8zK",
+          "id": "chatcmpl-CXaLGWI7khwWo3pw8X1SxE4mbUFz6",
           "object": "chat.completion",
-          "created": 1758725456,
+          "created": 1762120558,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -111,9 +111,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
+          "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Wed, 24 Sep 2025 14:50:56 GMT
+  recorded_at: Sun, 02 Nov 2025 21:55:58 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -124,7 +124,7 @@ http_interactions:
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -139,7 +139,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:50:58 GMT
+      - Sun, 02 Nov 2025 21:56:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -151,13 +151,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1290'
+      - '1004'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1314'
+      - '1137'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -193,16 +193,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CJL7Y6MOqeaiznD2jH9SNrWjDPkQ6",
+          "id": "chatcmpl-CXaLHOStShFrhKgSBlSr0tGzAiJSE",
           "object": "chat.completion",
-          "created": 1758725456,
+          "created": 1762120559,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby is a dynamic, open-source programming language known for its simplicity and productivity. It was created in the mid-1990s by Yukihiro Matsumoto in Japan. Ruby emphasizes human-readable code and supports multiple programming paradigms, including Object-Oriented, functional, and imperative programming. It is widely used for web development, especially with the Ruby on Rails framework, which has contributed to its popularity. Ruby is praised for its elegant syntax and ease of use, making it a favorite among developers for building scalable and maintainable applications.",
+                "content": "Ruby is a dynamic, object-oriented programming language known for its simplicity and readability. Created by Yukihiro Matsumoto in the mid-1990s, Ruby emphasizes productivity and developer happiness. It features a clean syntax that is easy to read and write, making it popular among developers for web development, scripting, and automation tasks. Ruby is also the language behind the popular web framework Ruby on Rails, which has contributed to its widespread adoption.",
                 "refusal": null,
                 "annotations": []
               },
@@ -212,8 +212,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 35,
-            "completion_tokens": 108,
-            "total_tokens": 143,
+            "completion_tokens": 89,
+            "total_tokens": 124,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -226,7 +226,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
+          "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Wed, 24 Sep 2025 14:50:58 GMT
+  recorded_at: Sun, 02 Nov 2025 21:56:00 GMT
 recorded_with: VCR 6.3.1

@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Chat do
       it "#{provider}/#{model} can handle multi-turn conversations" do
         chat = RubyLLM.chat(model: model, provider: provider)
 
-        first = chat.ask("Who was Ruby's creator?")
+        first = chat.ask('Who is the creator of the programming language Ruby?')
         expect(first.content).to include('Matz')
 
         followup = chat.ask('What year did he create Ruby?')

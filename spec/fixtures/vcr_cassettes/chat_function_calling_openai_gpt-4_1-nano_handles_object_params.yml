@@ -10,7 +10,7 @@ http_interactions:
         include the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:55:29 GMT
+      - Mon, 03 Nov 2025 14:00:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,13 +40,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1318'
+      - '1217'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1525'
+      - '1243'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -54,7 +54,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199972'
+      - '199973'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
@@ -82,9 +82,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CWQDoZwIebmkKNmwRLros2yPuSBCF",
+          "id": "chatcmpl-CXpOvJY1jiL3DnvusdUw7abHGx1z9",
           "object": "chat.completion",
-          "created": 1761843328,
+          "created": 1762178445,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -94,7 +94,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_ido8XTUFKexSIRjeb4GuVXLm",
+                    "id": "call_OfiBXlBMR7QRavHWXe1ryUHs",
                     "type": "function",
                     "function": {
                       "name": "object_params",
@@ -127,5 +127,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Thu, 30 Oct 2025 16:55:29 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:46 GMT
 recorded_with: VCR 6.3.1

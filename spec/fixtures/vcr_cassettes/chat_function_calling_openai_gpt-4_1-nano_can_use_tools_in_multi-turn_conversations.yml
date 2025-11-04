@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 13:40:49 GMT
+      - Mon, 03 Nov 2025 13:59:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '642'
+      - '1149'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '672'
+      - '1181'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -81,9 +81,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CWNBRIsjiUis01F5RyB9GNSEDOhZJ",
+          "id": "chatcmpl-CXpNHqy4cNbrCzWlp0KvZRFKh0gc8",
           "object": "chat.completion",
-          "created": 1761831649,
+          "created": 1762178343,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -93,11 +93,11 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_lAA10Awhw9M1B5e0LTN57mDq",
+                    "id": "call_Zv8wbxwtzOl6KXzX5QXy5r6s",
                     "type": "function",
                     "function": {
                       "name": "weather",
-                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
+                      "arguments": "{\"latitude\": \"52.5200\", \"longitude\": \"13.4050\"}"
                     }
                   }
                 ],
@@ -110,8 +110,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 88,
-            "completion_tokens": 23,
-            "total_tokens": 111,
+            "completion_tokens": 39,
+            "total_tokens": 127,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -126,15 +126,15 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Thu, 30 Oct 2025 13:40:49 GMT
+  recorded_at: Mon, 03 Nov 2025 13:59:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_lAA10Awhw9M1B5e0LTN57mDq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_lAA10Awhw9M1B5e0LTN57mDq"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 13:40:51 GMT
+      - Mon, 03 Nov 2025 13:59:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,13 +167,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '878'
+      - '1602'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '898'
+      - '1631'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -208,16 +208,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DV05CUzJlUHFRN25rQXVEMmNQQ245ZVZveEFjaiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2MTgzMTY1MCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogMTYzLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfOTUwZjM2OTM5YiIKfQo=
-  recorded_at: Thu, 30 Oct 2025 13:40:51 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1DWHBOSVJHTUZzU241Z1dtUnNWTkduM3htZ1FTVSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2MjE3ODM0NCwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTQzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjAsCiAgICAidG90YWxfdG9rZW5zIjogMTYzLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiAiZnBfOTUwZjM2OTM5YiIKfQo=
+  recorded_at: Mon, 03 Nov 2025 13:59:06 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_lAA10Awhw9M1B5e0LTN57mDq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_lAA10Awhw9M1B5e0LTN57mDq"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -240,7 +240,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 13:40:51 GMT
+      - Mon, 03 Nov 2025 13:59:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -252,13 +252,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '600'
+      - '1109'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '613'
+      - '1124'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -294,9 +294,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CWNBTqukGsHnDzGjzsn1HQO3kcnWH",
+          "id": "chatcmpl-CXpNKO5GqAVJlJ6EU9qgzhn0M2XHu",
           "object": "chat.completion",
-          "created": 1761831651,
+          "created": 1762178346,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -306,11 +306,11 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_NLNj2A51mpIIiQjARUVdN4DK",
+                    "id": "call_pMUVb9Z0LpQFwWTX0JbsWRAp",
                     "type": "function",
                     "function": {
                       "name": "weather",
-                      "arguments": "{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"
+                      "arguments": "{\"latitude\": \"48.8575\", \"longitude\": \"2.3514\"}"
                     }
                   }
                 ],
@@ -323,8 +323,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 188,
-            "completion_tokens": 23,
-            "total_tokens": 211,
+            "completion_tokens": 39,
+            "total_tokens": 227,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -339,18 +339,18 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Thu, 30 Oct 2025 13:40:51 GMT
+  recorded_at: Mon, 03 Nov 2025 13:59:07 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_lAA10Awhw9M1B5e0LTN57mDq","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_lAA10Awhw9M1B5e0LTN57mDq"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_Zv8wbxwtzOl6KXzX5QXy5r6s"},{"role":"assistant","content":"The
         current weather in Berlin is 15°C with a wind speed of 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_NLNj2A51mpIIiQjARUVdN4DK","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_NLNj2A51mpIIiQjARUVdN4DK"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","tool_calls":[{"id":"call_pMUVb9Z0LpQFwWTX0JbsWRAp","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_pMUVb9Z0LpQFwWTX0JbsWRAp"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -371,7 +371,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 13:40:52 GMT
+      - Mon, 03 Nov 2025 13:59:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -383,13 +383,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '572'
+      - '621'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '585'
+      - '635'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -424,6 +424,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DV05CVHJSY085RWNHMFk5MWdMUWVpNTVhY1NzbyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2MTgzMTY1MSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSB3ZWF0aGVyIGluIFBhcmlzIGlzIGN1cnJlbnRseSAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDI0MywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIwLAogICAgInRvdGFsX3Rva2VucyI6IDI2MywKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogImZwXzk1MGYzNjkzOWIiCn0K
-  recorded_at: Thu, 30 Oct 2025 13:40:52 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1DWHBOTDFSejdEdGF1TVloZUczMWhvSE9sa3d0MSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2MjE3ODM0NywKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMgaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyNDMsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAyMCwKICAgICJ0b3RhbF90b2tlbnMiOiAyNjMsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF85NTBmMzY5MzliIgp9Cg==
+  recorded_at: Mon, 03 Nov 2025 13:59:08 GMT
 recorded_with: VCR 6.3.1

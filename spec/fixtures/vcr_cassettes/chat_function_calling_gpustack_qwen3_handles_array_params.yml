@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the array
         params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true,"$defs":{}}}}],"enable_thinking":false}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -24,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:54:43 GMT
-      - Thu, 30 Oct 2025 16:54:44 GMT
+      - Mon, 03 Nov 2025 14:00:22 GMT
+      - Mon, 03 Nov 2025 14:00:23 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '814'
+      - '1726'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -43,6 +43,18 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-CVoDMyzv6rACH2TYb921C3PhymuxSRBX","type":"function"}]}}],"created":1761843286,"id":"chatcmpl-U86pCNFRWqmmZ9gh2Q65DEyFxN7Ww6sv","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":193,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":166,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":242,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1155.4732188046105,"time_per_output_token_ms":9.245518134715025,"time_to_first_token_ms":209.438,"tokens_per_second":108.16051468713309,"total_tokens":435}}'
-  recorded_at: Thu, 30 Oct 2025 16:54:46 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the array_params function with the tags [\"red\",
+        \"blue\"] and get the combined tags. Let me check the function definition.
+        The function takes an object with a property \"tags\" which is an array of
+        strings. The required parameter is \"tags\", and it''s an array. So I need
+        to structure the arguments correctly. The user provided the tags as [\"red\",
+        \"blue\"], so I should pass those exactly. Since the function is supposed
+        to combine the tags, maybe it just returns them as a single array. I don''t
+        need to do any processing here. Just make sure the JSON is correctly formatted
+        with the tags array. Let me verify the parameters again. The function''s parameters
+        are an object with \"tags\" as an array. So the arguments should be {\"tags\":
+        [\"red\", \"blue\"]}. That''s all. No other parameters are needed. Alright,
+        I''ll generate the tool call with that.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-ds1AF05jBWhdl5QT6iy44KdDUo5c5xiP","type":"function"}]}}],"created":1762178425,"id":"chatcmpl-i9X7XRIM25JC629bvKAOTOhKpjhDIU2L","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":221,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":196,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4771.107621693441,"time_per_output_token_ms":8.445923076923076,"time_to_first_token_ms":49.674,"tokens_per_second":118.4003205916373,"total_tokens":458}}'
+  recorded_at: Mon, 03 Nov 2025 14:00:25 GMT
 recorded_with: VCR 6.3.1
