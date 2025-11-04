@@ -9,7 +9,7 @@ http_interactions:
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:54:59 GMT
+      - Mon, 03 Nov 2025 14:00:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8f80aad0cd493d99f9461ae7f6ffd47d
+      - e8d4684f05a49d6605c0a4dd17890449
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -54,7 +54,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ce157e8a-f975-4526-b4db-fb6a07fa108c","object":"chat.completion","created":1761843299,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_tb6UdoIw65ZdgprDqVnUfxyM","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":233,"completion_tokens":21,"total_tokens":254,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":41},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 30 Oct 2025 16:55:00 GMT
+      string: '{"id":"db31ae02-5579-4e62-8e6c-e55a41da1204","object":"chat.completion","created":1762178428,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the any-of params tool with the task \"Review PR\" and status \"pending\"
+        as requested.","tool_calls":[{"index":0,"id":"call_00_otxSER6nAdYcBwGn36q0dsTf","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":227,"completion_tokens":44,"total_tokens":271,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":227},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
+  recorded_at: Mon, 03 Nov 2025 14:00:30 GMT
 recorded_with: VCR 6.3.1

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Tue, 28 Oct 2025 04:56:13 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"69004ced-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Mon, 03 Nov 2025 09:55:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - 5FE6:2C85A1:1EDEB8E:1F598A8:690879C5
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
+      - Mon, 03 Nov 2025 13:46:57 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '247'
       X-Served-By:
-      - cache-fra-etou8220174-FRA
+      - cache-fra-etou8220066-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1758724730.585976,VS0,VE2
+      - S1762177617.350738,VS0,VE105
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 05cb6536d4c320fb7ff8797fb4f95b0a8b52dc29
+      - f75908d92d8ebde037f497d24fa8404dc5fae268
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:38:49 GMT
+  recorded_at: Mon, 03 Nov 2025 13:46:57 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -140,7 +138,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
+      - Mon, 03 Nov 2025 13:46:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -167,7 +165,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c1418eeac9a7dff20ec1a625df4a2186
+      - ef442ceabb0879bb9b05cffe5aaf8d45
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -182,21 +180,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c183eaa0-354b-412f-a16b-4404f5c2c86a","object":"chat.completion","created":1758724729,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file contains the license terms for the Ruby programming language. It''s a
-        copyright notice and software license that outlines the terms under which
-        Ruby can be used, modified, and distributed.\n\nKey points of this license:\n\n1.
-        **Copyright**: Ruby is copyrighted free software by Yukihiro Matsumoto (\"Matz\")\n\n2.
-        **Redistribution options**: Can be used under either the 2-clause BSDL or
-        the terms specified in this file\n\n3. **Main permissions**:\n   - Free copying
-        of source code with proper attribution\n   - Modification allowed with certain
-        conditions (like making modifications public, using only internally, or making
-        distribution arrangements)\n   - Distribution of binaries with various options\n   -
-        Incorporation into other software (including commercial)\n\n4. **Important
-        limitations**:\n   - Some files have different licensing terms (referenced
-        in \"LEGAL\" file)\n   - Generated scripts/files belong to their creator,
-        not under Ruby''s copyright\n   - Software is provided \"AS IS\" without warranties\n\nThis
-        appears to be Ruby''s historical license before it adopted the more standard
-        BSD-2-Clause license that Ruby uses today."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":229,"total_tokens":773,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 14:39:05 GMT
+      string: '{"id":"19908ba4-0c51-4b36-a53a-13cc0fb62ecb","object":"chat.completion","created":1762177617,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file contains the license terms for the Ruby programming language. Here''s
+        what''s included:\n\n**Key elements of the Ruby license:**\n\n1. **Copyright
+        notice** - Ruby is copyrighted free software by Yukihiro Matsumoto (matz)\n\n2.
+        **Dual licensing options** - Can be used under either:\n   - 2-clause BSDL
+        (referencing a separate BSDL file)\n   - The specific terms outlined in this
+        file\n\n3. **Main permissions granted:**\n   - Free redistribution of verbatim
+        copies\n   - Modification rights with certain conditions\n   - Distribution
+        of binaries/object code with conditions\n   - Inclusion of Ruby components
+        in other software (including commercial)\n\n4. **Important provisions:**\n   -
+        Scripts and library files generated using Ruby don''t fall under Ruby''s copyright\n   -
+        \"AS IS\" warranty disclaimer - no express or implied warranties\n   - Some
+        files in the distribution have different licensing terms (referenced in LEGAL
+        file)\n\nThis is a permissive open source license that allows both non-commercial
+        and commercial use, modification, and distribution of Ruby, while maintaining
+        proper attribution to the original author."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":233,"total_tokens":777,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
+  recorded_at: Mon, 03 Nov 2025 13:47:07 GMT
 recorded_with: VCR 6.3.1

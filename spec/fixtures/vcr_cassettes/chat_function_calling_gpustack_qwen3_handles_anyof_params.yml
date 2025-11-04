@@ -9,7 +9,7 @@ http_interactions:
         params tool for task \"Review PR\" with status \"pending\" and report the
         result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true,"$defs":{}}}}],"enable_thinking":false}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:55:01 GMT
-      - Thu, 30 Oct 2025 16:55:02 GMT
+      - Mon, 03 Nov 2025 14:00:29 GMT
+      - Mon, 03 Nov 2025 14:00:30 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '824'
+      - '1434'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,7 +44,15 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call-OBOEyjoCLXMsr2cjrxjsBD2jtIbVZU3q","type":"function"}]}}],"created":1761843304,"id":"chatcmpl-8OdkINb4p7jAG5h2xGzs6pgSRuMDZyJ6","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":160,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":129,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":266,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4343.140776540509,"time_per_output_token_ms":9.4165875,"time_to_first_token_ms":61.246,"tokens_per_second":106.19558306021156,"total_tokens":426}}'
-  recorded_at: Thu, 30 Oct 2025 16:55:04 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the any_of_params function for a task called \"Review
+        PR\" with status \"pending\". Let me check the function''s parameters. The
+        function requires both task and status. The status can be either \"pending\",
+        \"done\", or null. Since the user provided \"pending\", which is valid, I
+        can use that. I need to structure the JSON arguments correctly. The task is
+        \"Review PR\" and status is \"pending\". So the tool call should include these
+        parameters. Let me make sure there are no typos. Everything seems in order.
+        I''ll generate the tool call now.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call-3g4ENkE7kOFpm8hWkboiK8E8ICmnPZJD","type":"function"}]}}],"created":1762178432,"id":"chatcmpl-OyXGbG5STDZiBUm6za4OP6HACQa6qa5s","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":157,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":128,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5111.333059162211,"time_per_output_token_ms":8.458885350318472,"time_to_first_token_ms":51.063,"tokens_per_second":118.21888565523004,"total_tokens":418}}'
+  recorded_at: Mon, 03 Nov 2025 14:00:32 GMT
 recorded_with: VCR 6.3.1

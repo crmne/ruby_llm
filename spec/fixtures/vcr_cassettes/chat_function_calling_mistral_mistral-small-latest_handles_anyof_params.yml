@@ -9,7 +9,7 @@ http_interactions:
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:55:04 GMT
+      - Mon, 03 Nov 2025 14:44:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,38 +35,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019a360b-57d7-7b6d-b850-cca6852bcf30'
+      - '019a4a2d-0994-7317-8b9c-76cf1d79c901'
       X-Kong-Request-Id:
-      - '019a360b-57d7-7b6d-b850-cca6852bcf30'
+      - '019a4a2d-0994-7317-8b9c-76cf1d79c901'
       X-Envoy-Upstream-Service-Time:
-      - '242'
+      - '440'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499697'
+      - '499835'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999991919'
+      - '999986799'
       X-Ratelimit-Tokens-Query-Cost:
-      - '171'
+      - '165'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '52'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '243'
+      - '441'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -75,7 +77,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"949ba28ef8a24d66b33ae5591829357c","created":1761843304,"model":"mistral-small-latest","usage":{"prompt_tokens":152,"total_tokens":171,"completion_tokens":19},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"BxQXkubk2","function":{"name":"any_of_params","arguments":"{\"task\":
+      string: '{"id":"13351504aa8c43a5adccea82177a1b20","created":1762181056,"model":"mistral-small-latest","usage":{"prompt_tokens":146,"total_tokens":165,"completion_tokens":19},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"M2S7Xvxfe","function":{"name":"any_of_params","arguments":"{\"task\":
         \"Review PR\", \"status\": \"pending\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 30 Oct 2025 16:55:04 GMT
+  recorded_at: Mon, 03 Nov 2025 14:44:17 GMT
 recorded_with: VCR 6.3.1

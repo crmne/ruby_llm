@@ -23,15 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 14:05:13 GMT
-      - Thu, 30 Oct 2025 14:05:14 GMT
+      - Mon, 03 Nov 2025 13:59:16 GMT
+      - Mon, 03 Nov 2025 13:59:16 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '797'
+      - '1243'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,15 +42,21 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-T6LvUQCwQIS8LZA2zNHDzlFSQC4Hh3ri","type":"function"}]}}],"created":1761833115,"id":"chatcmpl-kDIKoJ3PGZgYM8bkDyNCnGlYd5zwaqMh","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":179,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":158,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5428.1484559644705,"time_per_output_token_ms":8.586709497206703,"time_to_first_token_ms":38.503,"tokens_per_second":116.45904642812297,"total_tokens":388}}'
-  recorded_at: Thu, 30 Oct 2025 14:05:15 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters required. Since the user is asking
+        for the best language, the function is designed to get that information. I
+        should call the function to retrieve the answer. No parameters are needed,
+        so I''ll just trigger the function.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh","type":"function"}]}}],"created":1762178358,"id":"chatcmpl-L77bTCmQ4Yw2SJh13P7CRyZr8bm5r7iN","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":109,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":90,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4998.923676720324,"time_per_output_token_ms":8.92054128440367,"time_to_first_token_ms":41.809,"tokens_per_second":112.10082080426682,"total_tokens":318}}'
+  recorded_at: Mon, 03 Nov 2025 13:59:18 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-T6LvUQCwQIS8LZA2zNHDzlFSQC4Hh3ri","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-T6LvUQCwQIS8LZA2zNHDzlFSQC4Hh3ri"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
@@ -67,15 +73,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 14:05:15 GMT
-      - Thu, 30 Oct 2025 14:05:15 GMT
+      - Mon, 03 Nov 2025 13:59:17 GMT
+      - Mon, 03 Nov 2025 13:59:17 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '686'
+      - '1279'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -87,6 +93,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        best language to learn is Ruby.","role":"assistant"}}],"created":1761833117,"id":"chatcmpl-YimW9v8QTGw1ZHdjdPZTpjbVuopzMNz8","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":194,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":182,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":14160.891834890028,"time_per_output_token_ms":8.67670618556701,"time_to_first_token_ms":16.595,"tokens_per_second":115.25110780671795,"total_tokens":429}}'
-  recorded_at: Thu, 30 Oct 2025 14:05:17 GMT
+        best language to learn is Ruby.","reasoning_content":"\nOkay, the user asked,
+        \"What''s the best language to learn?\" I called the function best_language_to_learn,
+        which doesn''t require any parameters. The response from the function was
+        \"Ruby\". Now I need to present this answer. Since the function provided a
+        specific answer, I should just state that Ruby is the best language to learn.
+        No need for extra explanations unless the user asks for more details. Let
+        me make sure to format the response correctly as per the instructions. The
+        user might be looking for a straightforward answer, so keeping it simple is
+        better.\n","role":"assistant"}}],"created":1762178359,"id":"chatcmpl-ZNXBZSapbVYeyimYL2YqTLtlzQSAdVHf","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":126,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":115,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":14098.026276321316,"time_per_output_token_ms":9.018904761904762,"time_to_first_token_ms":16.669,"tokens_per_second":110.87820820815536,"total_tokens":361}}'
+  recorded_at: Mon, 03 Nov 2025 13:59:19 GMT
 recorded_with: VCR 6.3.1

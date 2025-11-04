@@ -27,35 +27,31 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 30 Oct 2025 13:40:08 GMT
+      - Mon, 03 Nov 2025 13:58:42 GMT
       Content-Length:
-      - '938'
+      - '1061'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-522","object":"chat.completion","created":1761831608,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
+      string: '{"id":"chatcmpl-726","object":"chat.completion","created":1762178322,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for those coordinates. Let me check the function
-        parameters. The function requires latitude and longitude as strings. I''ll
-        format the tool call with those values. Make sure to include the parameters
-        correctly and return the JSON within the tool_call tags.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_9y58hiuj","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":200,"completion_tokens":137,"total_tokens":337}}
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given these values, so I should format them into the tool call correctly.
+        Make sure the JSON keys are \"latitude\" and \"longitude\", and the values
+        are the strings provided. No need for any additional parameters. Just plug
+        those numbers in. Alright, that should do it.\n","tool_calls":[{"id":"call_44cnzrtk","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":202,"completion_tokens":170,"total_tokens":372}}
 
         '
-  recorded_at: Thu, 30 Oct 2025 13:40:08 GMT
+  recorded_at: Mon, 03 Nov 2025 13:58:42 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"<think>\nOkay,
-        the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for those coordinates. Let me check the function
-        parameters. The function requires latitude and longitude as strings. I''ll
-        format the tool call with those values. Make sure to include the parameters
-        correctly and return the JSON within the tool_call tags.\n</think>\n\n","tool_calls":[{"id":"call_9y58hiuj","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_9y58hiuj"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_44cnzrtk","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_44cnzrtk"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
@@ -76,12 +72,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 30 Oct 2025 13:40:09 GMT
+      - Mon, 03 Nov 2025 13:58:44 GMT
       Content-Length:
-      - '400'
+      - '997'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTkiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzYxODMxNjA5LCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJcdTAwM2N0aGlua1x1MDAzZVxuXHUwMDNjL3RoaW5rXHUwMDNlXG5cblRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0NywiY29tcGxldGlvbl90b2tlbnMiOjQyLCJ0b3RhbF90b2tlbnMiOjM4OX19Cg==
-  recorded_at: Thu, 30 Oct 2025 13:40:09 GMT
+        eyJpZCI6ImNoYXRjbXBsLTEyOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzgzMjQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4g8J+MpO+4jyAgXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIGFkZGl0aW9uYWwgZGV0YWlscyEiLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzLiBUaGUgcmVzcG9uc2UgY2FtZSBiYWNrIGFzIDE1wrBDIGFuZCB3aW5kIGF0IDEwIGttL2guIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGRldGFpbHMgbmVlZGVkLCBidXQgdGhlIHVzZXIganVzdCB3YW50ZWQgdGhlIGN1cnJlbnQgd2VhdGhlci4gSSdsbCBmb3JtYXQgdGhlIGFuc3dlciBpbiBhIGZyaWVuZGx5IG1hbm5lciwgbWFraW5nIHN1cmUgdG8gbWVudGlvbiB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQuIEFsc28sIG1heWJlIGFkZCBhIG5vdGUgYWJvdXQgQmVybGluJ3MgdHlwaWNhbCB3ZWF0aGVyIGlmIHJlbGV2YW50LCBidXQga2VlcCBpdCBjb25jaXNlLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciBpdC5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjgyLCJjb21wbGV0aW9uX3Rva2VucyI6MTc2LCJ0b3RhbF90b2tlbnMiOjQ1OH19Cg==
+  recorded_at: Mon, 03 Nov 2025 13:58:44 GMT
 recorded_with: VCR 6.3.1

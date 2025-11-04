@@ -120,6 +120,12 @@ module RubyLLM
         false
       end
 
+      def mysql?
+        ::ActiveRecord::Base.connection.adapter_name.downcase.include?('mysql')
+      rescue StandardError
+        false
+      end
+
       def table_exists?(table_name)
         ::ActiveRecord::Base.connection.table_exists?(table_name)
       rescue StandardError

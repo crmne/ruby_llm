@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 20 Oct 2025 19:24:53 GMT
       Pragma:
       - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 03 Nov 2025 14:05:08 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:24:53 GMT
+  recorded_at: Mon, 03 Nov 2025 14:05:08 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:24:55 GMT
+      - Mon, 03 Nov 2025 14:05:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Mmmmm"
+                    "text": "Whoop."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -39.113273620605469
+              "avgLogprobs": -6.7658443450927734
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 44,
-            "candidatesTokenCount": 2,
-            "totalTokenCount": 150,
+            "candidatesTokenCount": 3,
+            "totalTokenCount": 69,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "AUDIO",
-                "tokenCount": 25
-              },
-              {
                 "modality": "TEXT",
                 "tokenCount": 19
+              },
+              {
+                "modality": "AUDIO",
+                "tokenCount": 25
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 2
+                "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 104
+            "thoughtsTokenCount": 22
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:24:53.699868Z",
-          "responseId": "hYz2aNzbKu2PrNcPv9WY-Ag"
+          "createTime": "2025-11-03T14:05:09.033052Z",
+          "responseId": "lbYIaZyCAqKhmPUP17XSmAw"
         }
-  recorded_at: Mon, 20 Oct 2025 19:24:55 GMT
+  recorded_at: Mon, 03 Nov 2025 14:05:12 GMT
 recorded_with: VCR 6.3.1

@@ -9,7 +9,7 @@ http_interactions:
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true,"$defs":{}}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 16:55:07 GMT
+      - Mon, 03 Nov 2025 14:00:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '675'
+      - '1343'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '690'
+      - '1374'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -81,9 +81,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CWQDTBI0QXbOJpAkJj2Ez5PcwV3Gd",
+          "id": "chatcmpl-CXpOkge5CTXGwT9TWm4XDvD77c6C8",
           "object": "chat.completion",
-          "created": 1761843307,
+          "created": 1762178434,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -93,7 +93,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_XySMjynX7F8rbqZAkUOn6Ard",
+                    "id": "call_yMgokF7J3uQLsJlEP0m3U4g3",
                     "type": "function",
                     "function": {
                       "name": "any_of_params",
@@ -126,5 +126,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": "fp_950f36939b"
         }
-  recorded_at: Thu, 30 Oct 2025 16:55:07 GMT
+  recorded_at: Mon, 03 Nov 2025 14:00:35 GMT
 recorded_with: VCR 6.3.1

@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 14:05:03 GMT
-      - Thu, 30 Oct 2025 14:05:03 GMT
+      - Mon, 03 Nov 2025 13:58:37 GMT
+      - Mon, 03 Nov 2025 13:58:37 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '831'
+      - '1442'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,16 +44,24 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-6v0k6eWCUEOzAnoaUMNiTkHwze5A7Vs3","type":"function"}]}}],"created":1761833105,"id":"chatcmpl-kvdwtNTecj5s3vEpwdMw1b3dRsx44Yas","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":152,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":112,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1261.034047919294,"time_per_output_token_ms":8.755986842105264,"time_to_first_token_ms":213.317,"tokens_per_second":114.20757226258723,"total_tokens":421}}'
-  recorded_at: Thu, 30 Oct 2025 14:05:05 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. I need to check if I can answer this
+        with my existing knowledge or if I should use a function.\n\nWait, the tools
+        provided include a weather function that takes latitude and longitude as parameters.
+        The user has already given those coordinates, so I should call the weather
+        function with those values. Since the function requires both parameters and
+        they''re provided, there''s no need to ask for more info. I''ll generate the
+        tool call with the given coordinates.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-ZP0VQM5rWqYIyaEx2Nzu8Y3E8HWLOBHd","type":"function"}]}}],"created":1762178319,"id":"chatcmpl-jn9MTiTMABN80rLVq2uthHIFlNfYecVV","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":166,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":128,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3312.3999507449826,"time_per_output_token_ms":8.78427108433735,"time_to_first_token_ms":81.21,"tokens_per_second":113.8398383199983,"total_tokens":435}}'
+  recorded_at: Mon, 03 Nov 2025 13:58:39 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-6v0k6eWCUEOzAnoaUMNiTkHwze5A7Vs3","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-6v0k6eWCUEOzAnoaUMNiTkHwze5A7Vs3"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-ZP0VQM5rWqYIyaEx2Nzu8Y3E8HWLOBHd","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-ZP0VQM5rWqYIyaEx2Nzu8Y3E8HWLOBHd"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
@@ -72,15 +80,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 30 Oct 2025 14:05:05 GMT
-      - Thu, 30 Oct 2025 14:05:05 GMT
+      - Mon, 03 Nov 2025 13:58:38 GMT
+      - Mon, 03 Nov 2025 13:58:39 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '781'
+      - '1343'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,6 +100,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjE4MzMxMDcsImlkIjoiY2hhdGNtcGwtWmNVamx3SnBNbFVyZVEzR081TmpiRlAxR1U2c29YU3kiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE2OSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTEzLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzQyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjY4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMjY4NS45MzA0ODcwMzU4NjgsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC44MDM0OTExMjQyNjAzNTQsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjI2Ljk1OSwidG9rZW5zX3Blcl9zZWNvbmQiOjExMy41OTEyOTk4NDc0MjQ3MSwidG90YWxfdG9rZW5zIjo1MTF9fQ==
-  recorded_at: Thu, 30 Oct 2025 14:05:07 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCB0aGUgY29vcmRpbmF0ZXMgcHJvdmlkZWQuIEkgY2FsbGVkIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHdpdGggdGhvc2UgY29vcmRpbmF0ZXMuIFRoZSByZXNwb25zZSBjYW1lIGJhY2sgYXMgMTXCsEMgYW5kIHdpbmQgYXQgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgZGV0YWlscyBuZWVkZWQsIGJ1dCB0aGUgdXNlciBqdXN0IHdhbnRlZCB0aGUgY3VycmVudCB3ZWF0aGVyLiBJIHNob3VsZCBzdGF0ZSB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQgaW4gYSBmcmllbmRseSBtYW5uZXIuIE1heWJlIG1lbnRpb24gaXQncyBhIG1pbGQgZGF5LiBObyBuZWVkIGZvciBleHRyYSBpbmZvIHNpbmNlIHRoZSBmdW5jdGlvbiBkaWRuJ3QgcHJvdmlkZSBtb3JlIGRhdGEuIEtlZXAgaXQgc2ltcGxlIGFuZCBzdHJhaWdodGZvcndhcmQuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc2MjE3ODMyMSwiaWQiOiJjaGF0Y21wbC16MkNsSDJhTWx3dmhEVDdJWGxMZUJnMjQyMTV2OHRHMyIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTY5LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxMTQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozNDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNjh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjEzNTU1LjI5MTMxOTg1NzMxMSwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjQ5NDQ5MTEyNDI2MDM1NSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjUuMjMsInRva2Vuc19wZXJfc2Vjb25kIjoxMTcuNzIzMzU1Njg2ODM5MTYsInRvdGFsX3Rva2VucyI6NTExfX0=
+  recorded_at: Mon, 03 Nov 2025 13:58:41 GMT
 recorded_with: VCR 6.3.1

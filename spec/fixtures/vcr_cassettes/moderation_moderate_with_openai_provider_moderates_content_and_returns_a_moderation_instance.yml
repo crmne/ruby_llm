@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:06:16 GMT
+      - Mon, 03 Nov 2025 14:04:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,18 +39,18 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '87'
+      - '88'
       X-Envoy-Upstream-Service-Time:
       - '91'
       X-Openai-Proxy-Wasm:
       - v0.1
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -63,7 +63,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-5441",
+          "id": "modr-2508",
           "model": "omni-moderation-latest",
           "results": [
             {
@@ -84,18 +84,18 @@ http_interactions:
                 "violence/graphic": false
               },
               "category_scores": {
-                "harassment": 0.000012533751425646102,
-                "harassment/threatening": 3.944258675190877e-6,
+                "harassment": 0.000011959857805023158,
+                "harassment/threatening": 3.7636447180974406e-6,
                 "sexual": 0.00006667023092435894,
-                "hate": 7.722191834067996e-6,
-                "hate/threatening": 3.4465788845184155e-7,
+                "hate": 7.602479448313689e-6,
+                "hate/threatening": 3.2377619022355566e-7,
                 "illicit": 0.000015118199327273332,
-                "illicit/violent": 7.0311842669149565e-6,
+                "illicit/violent": 6.709224499600877e-6,
                 "self-harm/intent": 0.00021217710837818755,
-                "self-harm/instructions": 4.069457790466838e-6,
-                "self-harm": 0.00045504740472045987,
-                "sexual/minors": 5.475976980449466e-6,
-                "violence": 0.0004936825844797785,
+                "self-harm/instructions": 3.944258675190877e-6,
+                "self-harm": 0.0004544456121966584,
+                "sexual/minors": 5.307507822667365e-6,
+                "violence": 0.000493111798506495,
                 "violence/graphic": 2.931153855960119e-6
               },
               "category_applied_input_types": {
@@ -142,5 +142,5 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Wed, 24 Sep 2025 15:06:16 GMT
+  recorded_at: Mon, 03 Nov 2025 14:04:28 GMT
 recorded_with: VCR 6.3.1
