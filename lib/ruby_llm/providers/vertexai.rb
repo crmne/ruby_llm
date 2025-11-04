@@ -21,7 +21,7 @@ module RubyLLM
 
       def headers
         if defined?(VCR) && !VCR.current_cassette.recording?
-          {'Authorization' => "Bearer test-token"}
+          { 'Authorization' => 'Bearer test-token' }
         else
           initialize_authorizer unless @authorizer
           @authorizer.apply({})
@@ -47,7 +47,8 @@ module RubyLLM
           ]
         )
       rescue LoadError
-        raise Error, 'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
+        raise Error,
+              'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
       end
     end
   end
