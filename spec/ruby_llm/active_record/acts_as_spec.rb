@@ -544,7 +544,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
     end
 
-    it 'handles multiple attachments' do
+    it 'handles a single attachment in ask method' do
+      chat = Chat.create!(model: model)
+
+      image_upload = uploaded_file(image_path, 'image/png')
+
+      response = chat.ask('What do you see?', with: image_upload)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+      expect(response.content).to be_present
+    end
+
+    it 'handles multiple attachments in ask method' do
       chat = Chat.create!(model: model)
 
       image_upload = uploaded_file(image_path, 'image/png')
@@ -554,18 +566,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       user_message = chat.messages.find_by(role: 'user')
       expect(user_message.attachments.count).to eq(2)
-      expect(response.content).to be_present
-    end
-
-    it 'handles attachments in ask method' do
-      chat = Chat.create!(model: model)
-
-      image_upload = uploaded_file(image_path, 'image/png')
-
-      response = chat.ask('What do you see?', with: image_upload)
-
-      user_message = chat.messages.find_by(role: 'user')
-      expect(user_message.attachments.count).to eq(1)
       expect(response.content).to be_present
     end
 

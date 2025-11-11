@@ -47,28 +47,45 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
     end
 
-    it 'handles multiple attachments' do
+    it 'handles ActiveStorage::Attached::One in ask method' do
       chat = Chat.create!(model: model)
 
-      image_upload = uploaded_file(image_path, 'image/png')
-      pdf_upload = uploaded_file(pdf_path, 'application/pdf')
+      document = Document.create!(title: 'Test Document')
+      document.file.attach(
+        io: File.open(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
 
-      response = chat.ask('Analyze these', with: [image_upload, pdf_upload])
-
-      user_message = chat.messages.find_by(role: 'user')
-      expect(user_message.attachments.count).to eq(2)
-      expect(response.content).to be_present
-    end
-
-    it 'handles attachments in ask method' do
-      chat = Chat.create!(model: model)
-
-      image_upload = uploaded_file(image_path, 'image/png')
-
-      response = chat.ask('What do you see?', with: image_upload)
+      response = chat.ask('What do you see?', with: document.file)
 
       user_message = chat.messages.find_by(role: 'user')
       expect(user_message.attachments.count).to eq(1)
+      expect(user_message.attachments.first.filename.to_s).to eq('ruby.png')
+      expect(response.content).to be_present
+    end
+
+    it 'handles ActiveStorage::Attached::Many in ask method' do
+      chat = Chat.create!(model: model)
+
+      document = Document.create!(title: 'Test Document')
+      document.files.attach(
+        io: File.open(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+      document.files.attach(
+        io: File.open(pdf_path),
+        filename: 'sample.pdf',
+        content_type: 'application/pdf'
+      )
+
+      response = chat.ask('Analyze these', with: document.files)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(2)
+      filenames = user_message.attachments.map { |a| a.filename.to_s }.sort
+      expect(filenames).to eq(['ruby.png', 'sample.pdf'])
       expect(response.content).to be_present
     end
   end
