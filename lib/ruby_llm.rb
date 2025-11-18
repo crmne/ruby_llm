@@ -30,6 +30,7 @@ loader.inflector.inflect(
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
 loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
+loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -103,5 +104,4 @@ RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
-  require 'ruby_llm/active_record/acts_as'
 end
