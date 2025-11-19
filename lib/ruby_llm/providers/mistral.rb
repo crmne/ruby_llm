@@ -7,6 +7,7 @@ module RubyLLM
       include Mistral::Chat
       include Mistral::Models
       include Mistral::Embeddings
+      include Mistral::Streaming
 
       def api_base
         'https://api.mistral.ai/v1'
