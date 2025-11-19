@@ -10,8 +10,14 @@ RSpec.describe RubyLLM::Providers::OpenAI::Capabilities do
       end
     end
 
+    it 'forces temperature to 1.0 for GPT-5 models' do
+      %w[gpt-5 gpt-5-mini gpt-5-nano].each do |model|
+        expect(described_class.normalize_temperature(0.7, model)).to eq(1.0)
+      end
+    end
+
     it 'returns nil for search preview models' do
-      %w[gpt-4o-search-preview gpt-4o-mini-search-preview].each do |model|
+      %w[gpt-4o-search-preview gpt-4o-mini-search-preview gpt-5-search-api].each do |model|
         expect(described_class.normalize_temperature(0.7, model)).to be_nil
       end
     end
