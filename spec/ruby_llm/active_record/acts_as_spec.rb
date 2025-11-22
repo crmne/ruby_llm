@@ -622,6 +622,20 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.count).to eq(2) # Persistence still works
     end
 
+    it 'allows chaining callbacks on to_llm without losing persistence' do
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+
+      user_callback_called = false
+      # Directly attach callback to the underlying Chat object
+      llm_chat.on_new_message { user_callback_called = true }
+
+      chat.ask('Hello')
+
+      expect(user_callback_called).to be true
+      expect(chat.messages.count).to eq(2) # Persistence still works
+    end
+
     it 'calls on_tool_call and on_tool_result callbacks' do
       tool_call_received = nil
       tool_result_received = nil
