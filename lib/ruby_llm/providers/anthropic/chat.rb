@@ -25,6 +25,8 @@ module RubyLLM
         end
 
         def build_system_content(system_messages)
+          return [] if system_messages.empty?
+
           if system_messages.length > 1
             RubyLLM.logger.warn(
               "Anthropic's Claude implementation only supports a single system message. " \
@@ -32,7 +34,15 @@ module RubyLLM
             )
           end
 
-          system_messages.map(&:content).join("\n\n")
+          system_messages.flat_map do |msg|
+            content = msg.content
+
+            if content.is_a?(RubyLLM::Content::Raw)
+              content.value
+            else
+              Media.format_content(content)
+            end
+          end
         end
 
         def build_base_payload(chat_messages, model, stream)
@@ -66,12 +76,21 @@ module RubyLLM
         end
 
         def build_message(data, content, tool_use_blocks, response)
+          usage = data['usage'] || {}
+          cached_tokens = usage['cache_read_input_tokens']
+          cache_creation_tokens = usage['cache_creation_input_tokens']
+          if cache_creation_tokens.nil? && usage['cache_creation'].is_a?(Hash)
+            cache_creation_tokens = usage['cache_creation'].values.compact.sum
+          end
+
           Message.new(
             role: :assistant,
             content: content,
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
-            input_tokens: data.dig('usage', 'input_tokens'),
-            output_tokens: data.dig('usage', 'output_tokens'),
+            input_tokens: usage['input_tokens'],
+            output_tokens: usage['output_tokens'],
+            cached_tokens: cached_tokens,
+            cache_creation_tokens: cache_creation_tokens,
             model_id: data['model'],
             raw: response
           )

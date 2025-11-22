@@ -49,8 +49,8 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_image image
     end
 
-    it 'gemini/imagen-3.0-generate-002 can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'imagen-3.0-generate-002')
+    it 'gemini/imagen-4.0-generate-001 can paint images' do
+      image = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001')
 
       expect(image.base64?).to be(true)
       expect(image.data).to be_present

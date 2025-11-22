@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007fdca51e3320>"}]}],"stream":false,"max_tokens":64000}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:48:56 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-11-02T19:48:55Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-11-02T19:48:56Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-11-02T19:48:55Z'
+      Retry-After:
+      - '5'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-11-02T19:48:55Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1368'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMVR6a2dUd0MyRGFkZDlvVTVjTTVZWHciLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJIG5vdGljZSB5b3UndmUgc2hhcmVkIHdoYXQgYXBwZWFycyB0byBiZSBhIFJ1Ynkgb2JqZWN0IHJlZmVyZW5jZSBvciBtZW1vcnkgYWRkcmVzcywgYnV0IHRoZXJlJ3Mgbm8gYWN0dWFsIHF1ZXN0aW9uIG9yIGNvbnRleHQgYWJvdXQgd2hhdCB5b3UnZCBsaWtlIGhlbHAgd2l0aC5cblxuQ291bGQgeW91IGNsYXJpZnkgd2hhdCB5b3UgbmVlZCBhc3Npc3RhbmNlIHdpdGg/IEZvciBleGFtcGxlOlxuXG4tICoqQXJlIHlvdSBkZWJ1Z2dpbmcgUnVieSBjb2RlPyoqIElmIHNvLCBwbGVhc2Ugc2hhcmUgdGhlIHJlbGV2YW50IGNvZGUgc25pcHBldFxuLSAqKkRvIHlvdSBoYXZlIGEgcXVlc3Rpb24gYWJvdXQgUnVieUxMTT8qKiBGZWVsIGZyZWUgdG8gYXNrIGl0IGRpcmVjdGx5XG4tICoqQXJlIHlvdSB3b3JraW5nIG9uIGEgc3BlY2lmaWMgcHJvYmxlbT8qKiBEZXNjcmliZSB3aGF0IHlvdSdyZSB0cnlpbmcgdG8gYWNjb21wbGlzaFxuXG5QbGVhc2UgcHJvdmlkZSBtb3JlIGRldGFpbHMsIGFuZCBJJ2xsIGJlIGhhcHB5IHRvIGhlbHAhIPCfmIoifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjI5LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MTI5LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Sun, 02 Nov 2025 19:48:56 GMT
+recorded_with: VCR 6.3.1

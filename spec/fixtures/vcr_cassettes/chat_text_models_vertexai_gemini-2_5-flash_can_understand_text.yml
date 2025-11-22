@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
       Pragma:
       - no-cache
+      Date:
+      - Mon, 03 Nov 2025 13:48:17 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Mon, 03 Nov 2025 13:48:17 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -66,7 +66,7 @@ http_interactions:
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
+      - Mon, 03 Nov 2025 13:48:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The file contains the text: \"Ruby is the best.\""
+                    "text": "The file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.2264978885650635
+              "avgLogprobs": -0.65510027749197819
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
-            "candidatesTokenCount": 12,
-            "totalTokenCount": 81,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 91,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,16 +132,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 12
+                "tokenCount": 21
               }
             ],
-            "thoughtsTokenCount": 39
+            "thoughtsTokenCount": 40
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:45:16.436963Z",
-          "responseId": "_I7BaOPVGoiet_gPxoSDyA4"
+          "createTime": "2025-11-03T13:48:17.759055Z",
+          "responseId": "obIIaY-qLrX02fMPmaGE-Qs"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Mon, 03 Nov 2025 13:48:18 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -150,7 +150,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -162,14 +162,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 10 Sep 2025 14:45:16 GMT
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Mon, 03 Nov 2025 13:48:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -194,11 +194,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:16 GMT
+  recorded_at: Mon, 03 Nov 2025 13:48:18 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -206,12 +206,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file contains the text: \"Ruby is the best.\""}]},{"role":"user","parts":[{"text":"and
+        file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -232,7 +232,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:45:18 GMT
+      - Mon, 03 Nov 2025 13:48:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -255,36 +255,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains XML data. Specifically, it has a root element named `truism` which contains the text \"Ruby is the best\"."
+                    "text": "The file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.675732641509085
+              "avgLogprobs": -0.33183857702439828
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 76,
-            "candidatesTokenCount": 33,
-            "totalTokenCount": 180,
+            "promptTokenCount": 85,
+            "candidatesTokenCount": 31,
+            "totalTokenCount": 148,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 76
+                "tokenCount": 85
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 33
+                "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 71
+            "thoughtsTokenCount": 32
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-10T14:45:17.137656Z",
-          "responseId": "_Y7BaLizCJGtrNcPuYTHuQE"
+          "createTime": "2025-11-03T13:48:18.525899Z",
+          "responseId": "orIIacuMIJySrNcP3IbT-AQ"
         }
-  recorded_at: Wed, 10 Sep 2025 14:45:18 GMT
+  recorded_at: Mon, 03 Nov 2025 13:48:19 GMT
 recorded_with: VCR 6.3.1

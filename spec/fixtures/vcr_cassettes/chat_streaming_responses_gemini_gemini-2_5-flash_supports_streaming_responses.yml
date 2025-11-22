@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 10 Sep 2025 14:56:16 GMT
+      - Mon, 03 Nov 2025 13:58:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,15 +43,15 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=390
+      - gfet4t7; dur=1786
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"1\\n2\\n3\"}],\"role\":
-        \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
-        8,\"candidatesTokenCount\": 5,\"totalTokenCount\": 36,\"promptTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 8}],\"thoughtsTokenCount\": 23},\"modelVersion\":
-        \"gemini-2.5-flash\",\"responseId\": \"kJHBaOeHDcmVkdUP_YLIqQM\"}\r\n\r\n"
-  recorded_at: Wed, 10 Sep 2025 14:56:16 GMT
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"1,
+        2, 3\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 8,\"candidatesTokenCount\": 7,\"totalTokenCount\":
+        39,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 8}],\"thoughtsTokenCount\":
+        24},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\": \"67QIaai2Je-DkdUPidzqyAY\"}\r\n\r\n"
+  recorded_at: Mon, 03 Nov 2025 13:58:04 GMT
 recorded_with: VCR 6.3.1

@@ -147,8 +147,7 @@ chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")  # Uses OpenAI
 # Explicit provider
 chat = RubyLLM.chat(
   model: "{{ site.models.local_llama }}",
-  provider: "ollama",
-  base_url: "http://localhost:11434"
+  provider: :ollama,
 )
 ```
 
@@ -176,7 +175,7 @@ class Conversation < ApplicationRecord
 end
 
 # Now your model can interact with AI
-conversation = Conversation.create!(model_id: "{{ site.models.default_chat }}")
+conversation = Conversation.create!(model: "{{ site.models.default_chat }}")
 response = conversation.ask("How can I help you today?")
 ```
 

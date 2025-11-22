@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Tue, 09 Sep 2025 17:42:12 GMT
+      - Tue, 28 Oct 2025 04:56:13 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68c066f4-9c6"
+      - W/"69004ced-9c6"
       Expires:
-      - Wed, 10 Sep 2025 14:01:16 GMT
+      - Mon, 03 Nov 2025 09:55:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 1E56:33992A:E99239:EB222D:68C18254
+      - 5FE6:2C85A1:1EDEB8E:1F598A8:690879C5
       Accept-Ranges:
       - bytes
+      Age:
+      - '218'
       Date:
-      - Wed, 10 Sep 2025 14:44:05 GMT
+      - Mon, 03 Nov 2025 14:40:53 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '52'
       X-Served-By:
-      - cache-fra-etou8220152-FRA
+      - cache-fra-etou8220075-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1757515445.273204,VS0,VE3
+      - S1762180853.453779,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - e3effe9d16fffaa8bd9d35ea30fdeb85cba577c7
+      - 131e8ed32ecbbab47933273b6b83384a34a03265
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 10 Sep 2025 14:44:05 GMT
+  recorded_at: Mon, 03 Nov 2025 14:40:53 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -140,7 +138,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -155,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 14:44:08 GMT
+      - Mon, 03 Nov 2025 14:40:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,38 +161,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01993415-7480-7af8-a288-ac6113bb093f'
+      - '019a4a29-ef04-7517-ac98-36e845413dc5'
       X-Kong-Request-Id:
-      - '01993415-7480-7af8-a288-ac6113bb093f'
+      - '019a4a29-ef04-7517-ac98-36e845413dc5'
       X-Envoy-Upstream-Service-Time:
-      - '3222'
+      - '6110'
       X-Ratelimit-Limit-Tokens-Minute:
       - '500000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498714'
+      - '498949'
       X-Ratelimit-Limit-Tokens-Month:
       - '1000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999991210'
+      - '999987335'
       X-Ratelimit-Tokens-Query-Cost:
-      - '961'
+      - '1044'
       X-Ratelimit-Limit-Req-Minute:
       - '60'
       X-Ratelimit-Remaining-Req-Minute:
-      - '57'
+      - '55'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '3223'
+      - '6112'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -203,30 +203,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7f68aed2c82a4421802d268f703a3969","created":1757515445,"model":"mistral-small-latest","usage":{"prompt_tokens":577,"total_tokens":961,"completion_tokens":384},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"This
-        file (`license.txt`) contains the **Ruby License**, which is a permissive
-        open-source license created by Yukihiro Matsumoto (Matz), the creator of the
-        Ruby programming language. The license allows users to freely use, modify,
-        and distribute Ruby under certain conditions.\n\n### Key Points of the License:\n1.
-        **Copyright & Attribution**:\n   - Ruby is copyrighted by Yukihiro Matsumoto.\n   -
-        You must include the original copyright notices and disclaimers when redistributing
-        verbatim copies.\n\n2. **Redistribution & Modification**:\n   - You can freely
-        redistribute Ruby in source or binary form.\n   - Modifications can be made
-        under the following conditions:\n     - Place modifications in the public
-        domain or make them freely available.\n     - Use modified software only within
-        your organization.\n     - Give non-standard binaries non-standard names with
-        instructions on where to get the original.\n     - Make other distribution
-        arrangements with the author.\n\n3. **Commercial Use & Inclusion in Other
-        Software**:\n   - You can modify and include Ruby in other software (even
-        commercial).\n   - Some files in the distribution may have different licensing
-        terms (check `LEGAL` for details).\n\n4. **No Warranty**:\n   - Ruby is provided
-        \"as is\" with no warranties (express or implied).\n\n### Comparison to Other
-        Licenses:\n- Similar to the **2-clause BSD License** (as mentioned in the
-        file).\n- More permissive than GPL (no copyleft requirement).\n- Allows commercial
-        use and modification with minimal restrictions.\n\n### Files Referenced:\n-
-        **`BSDL`**: Likely refers to the 2-clause BSD License.\n- **`LEGAL`**: Contains
-        details about files with different licensing terms.\n\nThis license is very
-        permissive, making Ruby widely usable in both open-source and proprietary
-        projects."}}]}'
-  recorded_at: Wed, 10 Sep 2025 14:44:08 GMT
+      string: !binary |-
+        eyJpZCI6IjllZTMxZDUyNTI5MzRjOWE5OTZlNjY5YzJjY2IxNGQ4IiwiY3JlYXRlZCI6MTc2MjE4MDg1MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NywidG90YWxfdG9rZW5zIjoxMDQ0LCJjb21wbGV0aW9uX3Rva2VucyI6NDY3fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoaXMgZmlsZSAoYGxpY2Vuc2UudHh0YCkgY29udGFpbnMgdGhlICoqUnVieSBMaWNlbnNlKiosIGEgcGVybWlzc2l2ZSBvcGVuLXNvdXJjZSBzb2Z0d2FyZSBsaWNlbnNlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSwgdGhlIGNyZWF0b3Igb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRoZSBsaWNlbnNlIGFsbG93cyB1c2VycyB0byBmcmVlbHkgcmVkaXN0cmlidXRlLCBtb2RpZnksIGFuZCB1c2UgUnVieSB1bmRlciBjZXJ0YWluIGNvbmRpdGlvbnMuXG5cbiMjIyBLZXkgUG9pbnRzIG9mIHRoZSBMaWNlbnNlOlxuMS4gKipDb3B5cmlnaHQgTm90aWNlKio6IFJ1YnkgaXMgY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLlxuMi4gKipEdWFsIExpY2Vuc2luZyoqOiBVc2VycyBjYW4gY2hvb3NlIGJldHdlZW46XG4gICAtIFRoZSAqKjItY2xhdXNlIEJTRCBMaWNlbnNlKiogKHJlZmVyZW5jZWQgYXMgXCJCU0RMXCIgaW4gdGhlIGZpbGUpLlxuICAgLSBUaGUgY3VzdG9tIGNvbmRpdGlvbnMgbGlzdGVkIGluIHRoZSBmaWxlLlxuMy4gKipQZXJtaXNzaW9ucyoqOlxuICAgLSAqKlJlZGlzdHJpYnV0aW9uKio6IFlvdSBjYW4gZnJlZWx5IGRpc3RyaWJ1dGUgdmVyYmF0aW0gY29waWVzIG9mIFJ1YnksIHByb3ZpZGVkIHlvdSBpbmNsdWRlIHRoZSBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcy5cbiAgIC0gKipNb2RpZmljYXRpb24qKjogWW91IGNhbiBtb2RpZnkgUnVieSwgYnV0IHlvdSBtdXN0IGVpdGhlcjpcbiAgICAgLSBSZWxlYXNlIG1vZGlmaWNhdGlvbnMgcHVibGljbHkgKGUuZy4sIG9uIFVzZW5ldCBvciBlcXVpdmFsZW50KS5cbiAgICAgLSBVc2UgbW9kaWZpY2F0aW9ucyBvbmx5IHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvbi5cbiAgICAgLSBHaXZlIG1vZGlmaWVkIGJpbmFyaWVzIHVuaXF1ZSBuYW1lcyB3aXRoIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsLlxuICAgICAtIE1ha2Ugb3RoZXIgYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci5cbiAgIC0gKipCaW5hcnkgRGlzdHJpYnV0aW9uKio6IFlvdSBjYW4gZGlzdHJpYnV0ZSBjb21waWxlZCB2ZXJzaW9ucyBvZiBSdWJ5LCBidXQgeW91IG11c3QgZWl0aGVyOlxuICAgICAtIEluY2x1ZGUgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlLlxuICAgICAtIFByb3ZpZGUgdGhlIG1hY2hpbmUtcmVhZGFibGUgc291cmNlLlxuICAgICAtIEdpdmUgbW9kaWZpZWQgYmluYXJpZXMgdW5pcXVlIG5hbWVzIHdpdGggaW5zdHJ1Y3Rpb25zLlxuICAgICAtIE1ha2Ugb3RoZXIgYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci5cbiAgIC0gKipJbmNsdXNpb24gaW4gT3RoZXIgU29mdHdhcmUqKjogWW91IGNhbiBpbmNsdWRlIFJ1YnkgaW4gb3RoZXIgc29mdHdhcmUgKGV2ZW4gY29tbWVyY2lhbCksIGJ1dCBzb21lIGZpbGVzIG1heSBoYXZlIGRpZmZlcmVudCBsaWNlbnNpbmcgdGVybXMgKGNoZWNrIHRoZSBgTEVHQUxgIGZpbGUpLlxuICAgLSAqKkdlbmVyYXRlZCBPdXRwdXQqKjogU2NyaXB0cyBvciBmaWxlcyBnZW5lcmF0ZWQgYnkgUnVieSBhcmUgbm90IGF1dG9tYXRpY2FsbHkgY29weXJpZ2h0ZWQgYnkgUnVieeKAmXMgbGljZW5zZS5cbjQuICoqRGlzY2xhaW1lcioqOiBSdWJ5IGlzIHByb3ZpZGVkIFwiYXMgaXNcIiB3aXRoIG5vIHdhcnJhbnRpZXMuXG5cbiMjIyBDb21wYXJpc29uIHRvIEJTRCBMaWNlbnNlOlxuLSBUaGUgUnVieSBMaWNlbnNlIGlzIHNpbWlsYXIgdG8gdGhlICoqMi1jbGF1c2UgQlNEIExpY2Vuc2UqKiBidXQgaW5jbHVkZXMgYWRkaXRpb25hbCBjbGF1c2VzIChlLmcuLCBhbGxvd2luZyBwcml2YXRlIHVzZSBvZiBtb2RpZmljYXRpb25zKS5cbi0gVGhlIEJTRCBMaWNlbnNlIGlzIHJlZmVyZW5jZWQgYnV0IG5vdCB0aGUgcHJpbWFyeSBsaWNlbnNlIGhlcmUuXG5cbiMjIyBGaWxlcyBSZWZlcmVuY2VkOlxuLSBgQlNETGAgKGxpa2VseSBhIHR5cG8gZm9yIFwiQlNEIExpY2Vuc2VcIikuXG4tIGBMRUdBTGAgKGNvbnRhaW5zIGRldGFpbHMgYWJvdXQgZmlsZXMgd2l0aCBkaWZmZXJlbnQgbGljZW5zaW5nIHRlcm1zKS5cblxuVGhpcyBsaWNlbnNlIGlzIHBlcm1pc3NpdmUsIGFsbG93aW5nIGJyb2FkIHVzZSB3aGlsZSByZXF1aXJpbmcgYXR0cmlidXRpb24gYW5kIGNsYXJpdHkgYWJvdXQgbW9kaWZpY2F0aW9ucy4ifX1dfQ==
+  recorded_at: Mon, 03 Nov 2025 14:40:59 GMT
 recorded_with: VCR 6.3.1

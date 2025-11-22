@@ -1,10 +1,10 @@
-<%%= form_with(model: <%= chat_model_name.underscore %>, url: <%= chat_model_name.tableize %>_path) do |form| %>
-  <%% if <%= chat_model_name.underscore %>.errors.any? %>
+<%%= form_with(model: <%= chat_variable_name %>, url: <%= chat_table_name %>_path) do |form| %>
+  <%% if <%= chat_variable_name %>.errors.any? %>
     <div style="color: red">
-      <h2><%%= pluralize(<%= chat_model_name.underscore %>.errors.count, "error") %> prohibited this <%= chat_model_name.underscore.humanize.downcase %> from being saved:</h2>
+      <h2><%%= pluralize(<%= chat_variable_name %>.errors.count, "error") %> prohibited this <%= chat_table_name.singularize.humanize.downcase %> from being saved:</h2>
 
       <ul>
-        <%% <%= chat_model_name.underscore %>.errors.each do |error| %>
+        <%% <%= chat_variable_name %>.errors.each do |error| %>
           <li><%%= error.full_message %></li>
         <%% end %>
       </ul>
@@ -24,6 +24,6 @@
   </div>
 
   <div>
-    <%%= form.submit "Start new <%= chat_model_name.underscore.humanize.downcase %>" %>
+    <%%= form.submit "Start new <%= chat_table_name.singularize.humanize.downcase %>" %>
   </div>
 <%% end %>

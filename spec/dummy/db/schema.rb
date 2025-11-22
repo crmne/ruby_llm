@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_250_602_134_116) do
+ActiveRecord::Schema[7.1].define(version: 20_251_021_170_000) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -49,6 +49,31 @@ ActiveRecord::Schema[7.1].define(version: 20_250_602_134_116) do
     t.index ['model_id'], name: 'index_chats_on_model_id'
   end
 
+  create_table 'document_chats', force: :cascade do |t|
+    t.integer 'model_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['model_id'], name: 'index_document_chats_on_model_id'
+  end
+
+  create_table 'document_messages', force: :cascade do |t|
+    t.integer 'document_chat_id'
+    t.string 'role'
+    t.text 'content'
+    t.json 'raw'
+    t.json 'tool_calls'
+    t.integer 'model_id'
+    t.integer 'input_tokens'
+    t.integer 'output_tokens'
+    t.integer 'total_tokens'
+    t.integer 'tool_call_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['document_chat_id'], name: 'index_document_messages_on_document_chat_id'
+    t.index ['model_id'], name: 'index_document_messages_on_model_id'
+    t.index ['tool_call_id'], name: 'index_document_messages_on_tool_call_id'
+  end
+
   create_table 'messages', force: :cascade do |t|
     t.integer 'chat_id'
     t.string 'role'
@@ -59,6 +84,9 @@ ActiveRecord::Schema[7.1].define(version: 20_250_602_134_116) do
     t.integer 'tool_call_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'cached_tokens'
+    t.integer 'cache_creation_tokens'
+    t.json 'content_raw'
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
     t.index ['model_id'], name: 'index_messages_on_model_id'
     t.index ['tool_call_id'], name: 'index_messages_on_tool_call_id'
@@ -97,5 +125,6 @@ ActiveRecord::Schema[7.1].define(version: 20_250_602_134_116) do
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'chats', 'models'
+  add_foreign_key 'document_messages', 'document_chats'
   add_foreign_key 'messages', 'models'
 end

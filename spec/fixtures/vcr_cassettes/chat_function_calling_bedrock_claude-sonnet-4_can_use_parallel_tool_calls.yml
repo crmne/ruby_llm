@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-20250514-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20251102T204559Z
+      X-Amz-Content-Sha256:
+      - 7ae9769a18479e1e6439ac89f19531a8b78e8527b12d64f6fb985f12e205da8d
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=8f743c302709c4208e78c805f206f5c1510dc10eefe07f980f9b1e11791e5f44
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:46:02 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '633'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - be95064f-f1be-421c-8a95-d72bd1bac5ac
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '2291'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '117'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '518'
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-4-20250514","id":"msg_bdrk_01CsSB6w2XSu4DRvGkptJx7q","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        help you get the current weather in Berlin and find out the best language
+        to learn."},{"type":"tool_use","id":"toolu_bdrk_01MnpGVmzUvHxfEWR2qa85XK","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_017SLkRiCXWcdBdDzw7ufsRD","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":518,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":117}}'
+  recorded_at: Sun, 02 Nov 2025 20:46:02 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-20250514-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll help
+        you get the current weather in Berlin and find out the best language to learn."},{"type":"tool_use","id":"toolu_bdrk_01MnpGVmzUvHxfEWR2qa85XK","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_bdrk_017SLkRiCXWcdBdDzw7ufsRD","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01MnpGVmzUvHxfEWR2qa85XK","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_017SLkRiCXWcdBdDzw7ufsRD","content":[{"type":"text","text":"Ruby"}]}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20251102T204602Z
+      X-Amz-Content-Sha256:
+      - f1325e16d5b6d75efea6059be6313d5051d97e7e810682e5f97ac2456c509ea7
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ba9465198eb5ccb68b9e99d23e08742f1155d7dc1d79137176adacf8bbdeabe8
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:46:05 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '693'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - a1a02dc8-3d0b-4c43-971c-eaed73ed97a7
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '2112'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '107'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '729'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNC0yMDI1MDUxNCIsImlkIjoibXNnX2JkcmtfMDE0bXVCcVlDNXpyTWF2U1FWMWVmWWtlIiwidHlwZSI6Im1lc3NhZ2UiLCJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6W3sidHlwZSI6InRleHQiLCJ0ZXh0IjoiSGVyZSdzIHRoZSBpbmZvcm1hdGlvbiB5b3UgcmVxdWVzdGVkOlxuXG4qKldlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKToqKlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZDogMTAga20vaFxuXG4qKkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46KipcblJ1YnlcblxuVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIHF1aXRlIHBsZWFzYW50IGF0IDE1wrBDIHdpdGggYSBtb2RlcmF0ZSB3aW5kIG9mIDEwIGttL2guIEFzIGZvciBsZWFybmluZyBhIG5ldyBsYW5ndWFnZSwgdGhlIHJlY29tbWVuZGF0aW9uIGlzIFJ1YnkgLSB3aGljaCBpcyBhIGdyZWF0IHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgZWxlZ2FudCBzeW50YXghIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo3MjksImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjEwN319
+  recorded_at: Sun, 02 Nov 2025 20:46:05 GMT
+recorded_with: VCR 6.3.1

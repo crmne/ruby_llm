@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  VERSION = '1.7.1'
+  VERSION = '1.9.1'
 end

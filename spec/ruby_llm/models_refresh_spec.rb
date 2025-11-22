@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
 
   describe 'models.json structure validation' do
-    let(:models_json_path) { described_class.models_file }
+    let(:models_json_path) { RubyLLM.config.model_registry_file }
     let(:models_data) { JSON.parse(File.read(models_json_path)) }
 
     it 'validates models.json has correct structure' do
@@ -122,9 +122,8 @@ RSpec.describe RubyLLM::Models do
 
       # Create a temporary file for testing
       temp_file = Tempfile.new(['test_models', '.json'])
-      allow(described_class).to receive(:models_file).and_return(temp_file.path)
 
-      models.save_to_json
+      models.save_to_json(temp_file)
 
       saved_data = JSON.parse(File.read(temp_file.path))
       expect(saved_data).to be_an(Array)

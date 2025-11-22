@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 10 Sep 2025 14:53:46 GMT
+      - Mon, 03 Nov 2025 13:56:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,43 +41,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=5380
+      - gfet4t7; dur=7829
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "Weather is the state of the atmosphere at a particular place and time, encompassing temperature, humidity, precipitation (rain, snow, etc.), wind speed and direction, atmospheric pressure, and cloud cover. It's a constantly changing phenomenon driven by solar radiation, Earth's rotation, and the complex interactions of air masses and water vapor.\n\nTo give you specific weather details, I would need to know your current location. However, I can tell you generally how weather is observed and predicted:\n\n*   **Observation:** Meteorologists use a vast network of tools including ground-based weather stations, weather balloons, radar (to detect precipitation), and satellites (to track cloud patterns and storms from space).\n*   **Prediction:** Data from these observations is fed into sophisticated computer models that simulate atmospheric conditions. These models help predict future weather patterns, though accuracy tends to decrease the further out the forecast goes.\n\nGlobally, weather conditions are incredibly diverse right now. Some regions are experiencing warm, sunny days, while others might be facing cold temperatures, snow, or even severe weather like thunderstorms or tropical cyclones. The specific conditions depend entirely on your geographical location, altitude, and the current season.\n\nFor the most accurate and up-to-date information for your area, I recommend checking a local weather app, a dedicated weather website, or your local news. These sources often provide detailed forecasts, including hourly breakdowns, wind chill factors, and any relevant weather advisories. For example, a specific data point or model run might be internally tagged with an identifier like **XKCD7392** during analysis by meteorologists."
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 27,
-            "candidatesTokenCount": 327,
-            "totalTokenCount": 824,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 27
-              }
-            ],
-            "thoughtsTokenCount": 470
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "-pDBaOnjNI-ukdUP2-6IwQ4"
-        }
-  recorded_at: Wed, 10 Sep 2025 14:53:46 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkFzIGFuIEFJLCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGFjY2VzcyB0byBsaXZlIHdlYXRoZXIgY29uZGl0aW9ucyBmb3IgeW91ciBzcGVjaWZpYyBsb2NhdGlvbi4gVG8gdGVsbCB5b3UgYWJvdXQgdGhlIHdlYXRoZXIsIEkgd291bGQgbmVlZCB0byBrbm93IHdoZXJlIHlvdSBhcmUhXG5cbkhvd2V2ZXIsIEkgY2FuIHRlbGwgeW91IGdlbmVyYWxseSB3aGF0ICd0aGUgd2VhdGhlcicgcmVmZXJzIHRvOiBpdCBlbmNvbXBhc3NlcyB0aGUgY3VycmVudCBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSwgaW5jbHVkaW5nIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBoYWlsKSwgd2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uLCBodW1pZGl0eSwgY2xvdWQgY292ZXIsIGFuZCBhdG1vc3BoZXJpYyBwcmVzc3VyZS4gV2VhdGhlciBmb3JlY2FzdHMgcHJlZGljdCB0aGVzZSBjb25kaXRpb25zIGZvciB0aGUgZnV0dXJlLCBvZnRlbiBmb3IgcGVyaW9kcyByYW5naW5nIGZyb20gYSBmZXcgaG91cnMgdG8gc2V2ZXJhbCBkYXlzIG9yIGV2ZW4gd2Vla3MuXG5cblR5cGljYWxseSwgd2hlbiBwZW9wbGUgYXNrIGFib3V0IHRoZSB3ZWF0aGVyLCB0aGV5J3JlIGxvb2tpbmcgZm9yOlxuKiAgICoqQ3VycmVudCBDb25kaXRpb25zOioqIFdoYXQgaXQncyBsaWtlIHJpZ2h0IG5vdyAoZS5nLiwgMjDCsEMgYW5kIHN1bm55KS5cbiogICAqKlRvZGF5J3MgRm9yZWNhc3Q6KiogV2hhdCB0byBleHBlY3QgZm9yIHRoZSByZXN0IG9mIHRoZSBkYXkgKGUuZy4sIHBhcnRseSBjbG91ZHkgd2l0aCBhIGNoYW5jZSBvZiBhZnRlcm5vb24gc2hvd2VycykuXG4qICAgKipFeHRlbmRlZCBGb3JlY2FzdDoqKiBXaGF0IHRoZSB3ZWF0aGVyIHdpbGwgYmUgbGlrZSBvdmVyIHRoZSBuZXh0IGZldyBkYXlzIChlLmcuLCBhIHdhcm0gZnJvbnQgbW92aW5nIGluIGJ5IHRoZSB3ZWVrZW5kKS5cblxuV2VhdGhlciBpbmZvcm1hdGlvbiBpcyBnYXRoZXJlZCBmcm9tIGEgdmFzdCBuZXR3b3JrIG9mIHNlbnNvcnMsIHNhdGVsbGl0ZXMsIHJhZGFyIHN5c3RlbXMsIGFuZCBidW95cywgdGhlbiBwcm9jZXNzZWQgYnkgY29tcGxleCBtZXRlb3JvbG9naWNhbCBtb2RlbHMuIEZvciBpbnN0YW5jZSwgYSBwYXJ0aWN1bGFyIG1vZGVsIHJ1biBtaWdodCBiZSBpZGVudGlmaWVkIGJ5IGEgdW5pcXVlIHN0cmluZyBsaWtlICoqWEtDRDczOTIqKiB0byB0cmFjayBpdHMgc3BlY2lmaWMgcGFyYW1ldGVycyBhbmQgb3V0cHV0LlxuXG5UbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgd2VhdGhlciBpbmZvcm1hdGlvbiwgSSByZWNvbW1lbmQgY2hlY2tpbmcgYSBsb2NhbCB3ZWF0aGVyIGFwcCwgd2Vic2l0ZSwgb3IgYnJvYWRjYXN0IGZvciB5b3VyIHByZWNpc2UgbG9jYXRpb24uIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNywKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDMxMCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA5MzcsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI3CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNjAwCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogImdyUUlhZUxaSklXU3ZkSVBwT0c4dUFzIgp9Cg==
+  recorded_at: Mon, 03 Nov 2025 13:56:18 GMT
 recorded_with: VCR 6.3.1

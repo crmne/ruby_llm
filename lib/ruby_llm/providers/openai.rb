@@ -7,10 +7,12 @@ module RubyLLM
       include OpenAI::Chat
       include OpenAI::Embeddings
       include OpenAI::Models
+      include OpenAI::Moderation
       include OpenAI::Streaming
       include OpenAI::Tools
       include OpenAI::Images
       include OpenAI::Media
+      include OpenAI::Transcription
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'

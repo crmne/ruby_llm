@@ -5,11 +5,11 @@ http_interactions:
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,60 +24,58 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 10 Sep 2025 14:54:18 GMT
+      - Sun, 02 Nov 2025 20:02:40 GMT
       Transfer-Encoding:
       - chunked
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg0MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTc1MTYwNTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ilx1MDAzY3RoaW5rXHUwMDNlXG5Pa2F5LCB0aGUgdXNlciBpcyBhc2tpbmcgYWJvdXQgUnVieSdzIGNyZWF0b3IuIEZpcnN0LCBJIG5lZWQgdG8gcmVjYWxsIHRoYXQgUnVieSBpcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlLiBXYWl0LCBidXQgdGhlcmUncyBhbHNvIGEgY2hhcmFjdGVyIG5hbWVkIFJ1YnkgZnJvbSBcIlRoZSBSdWJ5IFJpZGdlIEluY2lkZW50LFwiIHdoaWNoIGlzIGEgcmVhbC1saWZlIGV2ZW50LiBDb3VsZCB0aGUgdXNlciBiZSByZWZlcnJpbmcgdG8gZWl0aGVyIG9mIHRoZXNlP1xuXG5MZXQgbWUgc3RhcnQgYnkgY29uZmlybWluZyB0aGUgbW9zdCBjb21tb24gY29udGV4dC4gUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Ugd2FzIGNyZWF0ZWQgYnkgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvLiBJIHJlbWVtYmVyIGhlIGRldmVsb3BlZCBpdCBpbiB0aGUgbWlkLTE5OTBzLiBCdXQgdGhlIHVzZXIgbWlnaHQgYmUgY29uZnVzZWQgaWYgdGhleSdyZSB0aGlua2luZyBvZiB0aGUgb3RoZXIgUnVieS4gXG5cblRoZSBSdWJ5IFJpZGdlIEluY2lkZW50IGlzIGEgcmVhbCBldmVudCB3aGVyZSBhIGZhbWlseSB3YXMgaW52b2x2ZWQgaW4gYSBzdGFuZG9mZiB3aXRoIGZlZGVyYWwgYWdlbnRzLiBUaGUgY3JlYXRvciBpbiB0aGF0IGNvbnRleHQgd291bGQgYmUgdGhlIGluZGl2aWR1YWxzIGludm9sdmVkLCBidXQgdGhlIHF1ZXN0aW9uIGlzIGFib3V0IFwiY3JlYXRlZFwiIHdoaWNoIG1pZ2h0IGltcGx5IGEgcGVyc29uIG9yIHRlYW0uIEhvd2V2ZXIsIHRoYXQncyBhIHJlYWwtbGlmZSBldmVudCwgc28gaXQncyBub3QgYSBjcmVhdGVkIGVudGl0eSBidXQgYW4gaW5jaWRlbnQuXG5cblRoZSB1c2VyIG1pZ2h0IGJlIHJlZmVycmluZyB0byB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIEJ1dCB0byBiZSB0aG9yb3VnaCwgSSBzaG91bGQgbWVudGlvbiBib3RoIHBvc3NpYmlsaXRpZXMuIFdhaXQsIHRoZSB1c2VyIG1lbnRpb25lZCBcIlJ1YnkncyBjcmVhdG9yLFwiIHNvIGlmIHRoZXkncmUgYXNraW5nIGFib3V0IHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSwgdGhlbiBNYXRzdW1vdG8gaXMgdGhlIGFuc3dlci4gSWYgdGhleSBtZWFudCB0aGUgUnVieSBSaWRnZSBJbmNpZGVudCwgaXQncyBub3QgYSBjcmVhdGVkIGVudGl0eS4gTWF5YmUgdGhleSdyZSBtaXhpbmcgdXAgdGhlIG5hbWVzP1xuXG5BbHRlcm5hdGl2ZWx5LCBjb3VsZCBpdCBiZSBhIGRpZmZlcmVudCBSdWJ5PyBMaWtlIGEgY2hhcmFjdGVyIGluIGEgbW92aWUgb3IgYm9vaz8gSSBzaG91bGQgY2hlY2sgaWYgdGhlcmUncyBhbnkgb3RoZXIgUnVieSB0aGF0IG1pZ2h0IGhhdmUgYSBjcmVhdG9yLiBCdXQgUnVieSB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgYW5kIHRoZSBSdWJ5IFJpZGdlIEluY2lkZW50IGFyZSB0aGUgdHdvIG1haW4gY29udGV4dHMuIFxuXG5JIHNob3VsZCBtYWtlIHN1cmUgdG8gY2xhcmlmeSBib3RoIHBvc3NpYmlsaXRpZXMuIFRoZSB1c2VyIG1pZ2h0IG5vdCBzcGVjaWZ5LCBzbyBwcm92aWRpbmcgYm90aCBhbnN3ZXJzIHdvdWxkIGJlIGhlbHBmdWwuIEJ1dCB0aGUgbW9zdCBsaWtlbHkgYW5zd2VyIGlzIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZS4gTGV0IG1lIGNvbmZpcm0gdGhhdCBZdWtpaGlybyBNYXRzdW1vdG8gaXMgdGhlIGNyZWF0b3IuIFllcywgaGUgZGV2ZWxvcGVkIFJ1YnkgaW4gMTk5NS4gU28sIHRoZSBhbnN3ZXIgaXMgTWF0c3Vtb3RvLCBidXQgdGhlIHVzZXIgc2hvdWxkIGJlIGF3YXJlIG9mIHRoZSBvdGhlciBjb250ZXh0IGlmIHRoZXkgYXJlIHJlZmVycmluZyB0byBzb21ldGhpbmcgZWxzZS5cblx1MDAzYy90aGlua1x1MDAzZVxuXG5UaGUgdGVybSBcIlJ1YnlcIiBjYW4gcmVmZXIgdG8gZGlmZmVyZW50IHRoaW5ncywgc28gdGhlIGFuc3dlciBkZXBlbmRzIG9uIHRoZSBjb250ZXh0OlxuXG4xLiAqKlJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UqKjogIFxuICAgUnVieSB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIChhIEphcGFuZXNlIHByb2dyYW1tZXIpLiBIZSBkZXZlbG9wZWQgaXQgaW4gdGhlIG1pZC0xOTkwcywgYWltaW5nIHRvIGNvbWJpbmUgdGhlIHNpbXBsaWNpdHkgb2YgUHl0aG9uIHdpdGggdGhlIHBvd2VyIG9mIFBlcmwuIFRoZSBsYW5ndWFnZSB3YXMgb2ZmaWNpYWxseSByZWxlYXNlZCBpbiAxOTk1LlxuXG4yLiAqKlJ1YnkgKHRoZSBjaGFyYWN0ZXIgZnJvbSAqVGhlIFJ1YnkgUmlkZ2UgSW5jaWRlbnQqKToqKiAgXG4gICBUaGlzIHJlZmVycyB0byBhIHJlYWwtbGlmZSBldmVudCBpbnZvbHZpbmcgdGhlIE1jVmVpZ2ggZmFtaWx5IGFuZCBhIHN0YW5kb2ZmIHdpdGggZmVkZXJhbCBhZ2VudHMgaW4gMTk5Mi4gSW4gdGhpcyBjb250ZXh0LCB0aGVyZSBpcyBubyBcImNyZWF0b3JcIiBpbiB0aGUgdHJhZGl0aW9uYWwgc2Vuc2U7IHRoZSBldmVudCB3YXMgYSByZWFsLWxpZmUgaW5jaWRlbnQgaW52b2x2aW5nIHNwZWNpZmljIGluZGl2aWR1YWxzLCBub3QgYSBjcmVhdGVkIGVudGl0eS5cblxuSWYgeW91IG1lYW50IHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSwgdGhlIGNyZWF0b3IgaXMgKipZdWtpaGlybyBNYXRzdW1vdG8qKi4gSWYgeW91IG1lYW50IHRoZSByZWFsLWxpZmUgZXZlbnQsIGl04oCZcyBhIGhpc3RvcmljYWwgaW5jaWRlbnQgd2l0aG91dCBhIHNpbmdsZSBcImNyZWF0b3IuXCIgTGV0IG1lIGtub3cgaWYgeW91IG1lYW50IHNvbWV0aGluZyBlbHNlISJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQsImNvbXBsZXRpb25fdG9rZW5zIjo2MDYsInRvdGFsX3Rva2VucyI6NjIwfX0K
-  recorded_at: Wed, 10 Sep 2025 14:54:18 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-880","object":"chat.completion","created":1762113760,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        programming language **Ruby** was created by **Yukihiro \"Matz\" Matsumoto**.
+        He is commonly referred to by his nickname, **Matz**, and is a key figure
+        in the Ruby community. Ruby was first released in **1995**, and it is known
+        for its elegant syntax, simplicity, and emphasis on developer productivity.
+        Matz continues to be involved in the Ruby ecosystem, though he has stepped
+        back from active development in recent years.","reasoning":"Okay, so the user
+        is asking who created the programming language Ruby. Let me think about this.
+        I remember that Ruby is a dynamic, object-oriented programming language, right?
+        It''s known for its simplicity and productivity. But I need to recall who
+        the creator is.\n\nI think the creator''s name is Yukihiro Matsumoto. Wait,
+        sometimes his name is written with different spellings. Sometimes it''s Matz,
+        which is his nickname. Yeah, Matz is a common way to refer to him. Let me
+        make sure I''m not confusing this with someone else. For example, there''s
+        also a language called Python, created by Guido van Rossum. Ruby is different.
+        \n\nWait, was there any other notable figure associated with Ruby? Maybe someone
+        else? No, I think it''s definitely Matsumoto. He''s also known for creating
+        the Ruby on Rails framework, but that''s a web application framework built
+        on Ruby. The language itself was created by him. \n\nI should check if there''s
+        any other possible names. Maybe someone from the Ruby community? But I don''t
+        recall any other names being associated with the creation of Ruby. So, putting
+        it all together, the answer should be Yukihiro Matsumoto, also known as Matz.
+        I should mention both names to be thorough, maybe include that he''s the creator
+        and perhaps a bit about his role in the Ruby community. Also, maybe note that
+        Ruby was created in the 90s, around 1995. Let me confirm the timeline. Yes,
+        Ruby was first released in 1995. That''s a key point. So the answer should
+        include his name, his nickname, and maybe the year of creation. That should
+        cover the user''s question accurately.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":20,"completion_tokens":461,"total_tokens":481}}
+
+        '
+  recorded_at: Sun, 02 Nov 2025 20:02:40 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"<think>\nOkay, the user is asking
-        about Ruby''s creator. First, I need to recall that Ruby is a programming
-        language. Wait, but there''s also a character named Ruby from \"The Ruby Ridge
-        Incident,\" which is a real-life event. Could the user be referring to either
-        of these?\n\nLet me start by confirming the most common context. Ruby the
-        programming language was created by Yukihiro \"Matz\" Matsumoto. I remember
-        he developed it in the mid-1990s. But the user might be confused if they''re
-        thinking of the other Ruby. \n\nThe Ruby Ridge Incident is a real event where
-        a family was involved in a standoff with federal agents. The creator in that
-        context would be the individuals involved, but the question is about \"created\"
-        which might imply a person or team. However, that''s a real-life event, so
-        it''s not a created entity but an incident.\n\nThe user might be referring
-        to the programming language. But to be thorough, I should mention both possibilities.
-        Wait, the user mentioned \"Ruby''s creator,\" so if they''re asking about
-        the programming language, then Matsumoto is the answer. If they meant the
-        Ruby Ridge Incident, it''s not a created entity. Maybe they''re mixing up
-        the names?\n\nAlternatively, could it be a different Ruby? Like a character
-        in a movie or book? I should check if there''s any other Ruby that might have
-        a creator. But Ruby the programming language and the Ruby Ridge Incident are
-        the two main contexts. \n\nI should make sure to clarify both possibilities.
-        The user might not specify, so providing both answers would be helpful. But
-        the most likely answer is the programming language. Let me confirm that Yukihiro
-        Matsumoto is the creator. Yes, he developed Ruby in 1995. So, the answer is
-        Matsumoto, but the user should be aware of the other context if they are referring
-        to something else.\n</think>\n\nThe term \"Ruby\" can refer to different things,
-        so the answer depends on the context:\n\n1. **Ruby programming language**:  \n   Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto** (a Japanese programmer). He
-        developed it in the mid-1990s, aiming to combine the simplicity of Python
-        with the power of Perl. The language was officially released in 1995.\n\n2.
-        **Ruby (the character from *The Ruby Ridge Incident*):**  \n   This refers
-        to a real-life event involving the McVeigh family and a standoff with federal
-        agents in 1992. In this context, there is no \"creator\" in the traditional
-        sense; the event was a real-life incident involving specific individuals,
-        not a created entity.\n\nIf you meant the programming language, the creator
-        is **Yukihiro Matsumoto**. If you meant the real-life event, it’s a historical
-        incident without a single \"creator.\" Let me know if you meant something
-        else!"},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"role":"assistant","content":"The programming
+        language **Ruby** was created by **Yukihiro \"Matz\" Matsumoto**. He is commonly
+        referred to by his nickname, **Matz**, and is a key figure in the Ruby community.
+        Ruby was first released in **1995**, and it is known for its elegant syntax,
+        simplicity, and emphasis on developer productivity. Matz continues to be involved
+        in the Ruby ecosystem, though he has stepped back from active development
+        in recent years."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -92,44 +90,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 10 Sep 2025 14:54:23 GMT
-      Transfer-Encoding:
-      - chunked
+      - Sun, 02 Nov 2025 20:02:42 GMT
+      Content-Length:
+      - '1211'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-666","object":"chat.completion","created":1757516063,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user asked, \"What year did he create Ruby?\" So, first, I need to recall
-        the previous conversation. The user had asked about Ruby''s creator, and I
-        explained that Ruby the programming language was created by Yukihiro Matsumoto
-        in the mid-1990s, with the official release in 1995. Now, they''re asking
-        specifically about the year.\n\nWait, the user might be confused between the
-        creation date and the official release date. The mid-1990s is a range, so
-        I should clarify if they''re asking for the exact year of release. In the
-        previous answer, I mentioned that Ruby was officially released in 1995, so
-        that''s the year to specify. But maybe the user is interested in when Matsumoto
-        started working on it, which could be earlier. Let me check the history.\n\nYukihiro
-        Matsumoto began developing Ruby in 1993, and the first version, Ruby 0.95,
-        was released in 1995. So the creation year is 1995 for the official release.
-        However, the initial development started in 1993. But the user might not know
-        the distinction between development start and official release. To be accurate,
-        I should mention both. Wait, the user is asking \"what year did he create
-        Ruby?\" So \"create\" could mean the year the language was first developed
-        or released. Since the first version was released in 1995, that''s the answer.
-        But maybe they want the start year. To be safe, I should clarify that the
-        first version was released in 1995, and he started working on it in 1993.
-        But the user might just want the release year. Let me confirm. In the previous
-        answer, I said \"officially released in 1995\" so the answer here is 1995.
-        I should make sure to state that clearly, maybe adding the start year for
-        completeness. So, the user might be looking for the exact year of the release,
-        which is 1995.\n\u003c/think\u003e\n\nYukihiro \"Matz\" Matsumoto created
-        the **Ruby programming language** and officially released the first version,
-        **Ruby 0.95**, in **1995**. He began developing Ruby in **1993** as a personal
-        project, aiming to create a language that balanced simplicity with power.
-        The official release in 1995 marked the debut of the language. \n\nIf you
-        meant a different \"Ruby\" (like the character from *The Ruby Ridge Incident*),
-        that context doesn''t involve a creator but rather a real-life event. Let
-        me know if you need further clarification!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":240,"completion_tokens":574,"total_tokens":814}}
+      string: '{"id":"chatcmpl-875","object":"chat.completion","created":1762113762,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        \"Matz\" Matsumoto created the Ruby programming language, and the first version
+        of Ruby (Ruby 0.5) was released in **1995**.","reasoning":"Okay, the user
+        previously asked who created Ruby, and I mentioned Yukihiro Matsumoto, also
+        known as Matz, and that Ruby was first released in 1995. Now the user is asking
+        specifically for the year Ruby was created.\n\nI need to make sure I''m accurate
+        here. I remember that Matz started working on Ruby in the mid-90s. The first
+        version, Ruby 0.5, was released in 1995. So the answer is 1995. But wait,
+        sometimes people might confuse the release date with the start of development.
+        Let me double-check. Yes, the initial release was in 1995. I should confirm
+        that there''s no conflicting information. Also, the user might be looking
+        for the exact year, so 1995 is correct. No need to mention the specific version
+        unless they ask for more details. Just the year should suffice here.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":133,"completion_tokens":238,"total_tokens":371}}
 
         '
-  recorded_at: Wed, 10 Sep 2025 14:54:23 GMT
+  recorded_at: Sun, 02 Nov 2025 20:02:42 GMT
 recorded_with: VCR 6.3.1

@@ -1,0 +1,156 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 21:30:50 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Sun, 02 Nov 2025 21:30:50 GMT
+- request:
+    method: post
+    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Call the array params
+        tool with tags [\"red\",\"blue\"] and tell me the combined tags."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"OBJECT","properties":{"tags":{"type":"ARRAY","description":"List
+        of tags to combine","items":{"type":"STRING"}}},"required":["tags"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 02 Nov 2025 21:30:50 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "array_params",
+                      "args": {
+                        "tags": [
+                          "red",
+                          "blue"
+                        ]
+                      }
+                    },
+                    "thoughtSignature": "CpYCAePx/16Zpsv0qP+MZ2sk3ggYFMkQXa6IQh1dKLA0f1sInL/+1JhnYfZgm4zq0aFTZJjtqNozEEnfIcY6wrXmsNeLX1EEVdHrdqtL/NnbvtCuGN8PTP2fpSBcdQ00cb0lbptTndujws1qGbgaTyxC/fYaE/Z9syOemzmXin0qHtJsATFpulEIYj6Z3TSbnmD0FjumdEM/qY+I+qPYnbSVjxh5PftYSKpmnL7CKHbcExEA5nhcOmPqYFjLXHvQ67GwjY/eApEn8hNq1JVQ7N4VntH+Y5bVuUDulzwkLM8Our61FMPyuqGhI+LcUxbG6wENCNmhFwtVn2SKMCcl+N0DVNtFDWVQ5/Xjn9HWiaXCMfHXuTZuY18="
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -1.2903280258178711
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 37,
+            "candidatesTokenCount": 6,
+            "totalTokenCount": 110,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 37
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 6
+              }
+            ],
+            "thoughtsTokenCount": 67
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2025-11-02T21:30:50.474383Z",
+          "responseId": "is0HaY_6HMGgmPUPjurOqAQ"
+        }
+  recorded_at: Sun, 02 Nov 2025 21:30:50 GMT
+recorded_with: VCR 6.3.1

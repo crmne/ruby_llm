@@ -48,3 +48,26 @@ module RubyLLM
     end
   end
 end
+
+module RubyLLM
+  class Content
+    # Represents provider-specific payloads that should bypass RubyLLM formatting.
+    class Raw
+      attr_reader :value
+
+      def initialize(value)
+        raise ArgumentError, 'Raw content payload cannot be nil' if value.nil?
+
+        @value = value
+      end
+
+      def format
+        @value
+      end
+
+      def to_h
+        @value
+      end
+    end
+  end
+end

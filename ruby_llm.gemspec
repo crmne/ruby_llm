@@ -25,13 +25,14 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri'] = "#{spec.metadata['source_code_uri']}/commits/main"
   spec.metadata['documentation_uri'] = spec.homepage
   spec.metadata['bug_tracker_uri'] = "#{spec.metadata['source_code_uri']}/issues"
+  spec.metadata['funding_uri'] = 'https://github.com/sponsors/crmne'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    Upgrading from RubyLLM <= 1.6.x? Check the upgrade guide for new features and migration instructions
-    --> https://rubyllm.com/upgrading-to-1-7/
+    Upgrading from RubyLLM <= 1.8.x? Check the upgrade guide for new features and migration instructions
+    --> https://rubyllm.com/upgrading/
   MESSAGE
 
   # Use Dir.glob to list all files within the lib directory
@@ -46,5 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday-net_http', '>= 1'
   spec.add_dependency 'faraday-retry', '>= 1'
   spec.add_dependency 'marcel', '~> 1.0'
+  spec.add_dependency 'ruby_llm-schema', '~> 0.2.1'
   spec.add_dependency 'zeitwerk', '~> 2'
 end

@@ -5,11 +5,11 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +22,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:06:57 GMT
-      - Wed, 10 Sep 2025 15:06:57 GMT
+      - Sun, 02 Nov 2025 20:02:23 GMT
+      - Sun, 02 Nov 2025 20:02:23 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1205'
+      - '3187'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -41,34 +41,62 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby
-        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer. He
-        began developing the language in 1993 and released the first version in **1995**.
-        Matsumoto designed Ruby with a focus on simplicity, productivity, and developer
-        happiness, aiming to create a language that was both easy to use and flexible.
-        Ruby gained popularity, especially with the rise of web development frameworks
-        like **Ruby on Rails** in the mid-2000s. Matz is known for his philosophy
-        of \"matz''s principle,\" which emphasizes making programming enjoyable and
-        intuitive.","role":"assistant"}}],"created":1757516821,"id":"chatcmpl-ZbLSJCaCNac6b7nPQdHvhh2N6ThRYtPG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":391,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":262,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":790.4245709123759,"time_per_output_token_ms":9.29109462915601,"time_to_first_token_ms":17.712,"tokens_per_second":107.62994457746025,"total_tokens":405}}'
-  recorded_at: Wed, 10 Sep 2025 15:07:01 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        creator of the programming language **Ruby** is **Yukihiro Matsumoto**, commonly
+        known by his nickname **\"Matz\"**. He developed Ruby in the mid-1990s, with
+        the first version (Ruby 0.2) released in 1995. Matsumoto designed Ruby with
+        a focus on simplicity, productivity, and a clean, readable syntax. His goal
+        was to create a language that balanced power with ease of use, which has made
+        Ruby popular for web development (e.g., through frameworks like Ruby on Rails)
+        and other applications. \n\n**Key points:**\n- **Name:** Yukihiro Matsumoto\n-
+        **Nickname:** Matz\n- **Year of creation:** 1995\n- **Goal:** A language that
+        is both powerful and easy to use, emphasizing developer happiness and productivity.\n\nMatsumoto
+        is still actively involved in the Ruby community and continues to contribute
+        to its development.","reasoning_content":"\nOkay, so I need to find out who
+        created the programming language Ruby. Let me start by recalling what I know
+        about Ruby. I remember that Ruby is a dynamic, object-oriented programming
+        language known for its simplicity and productivity. It''s often used for web
+        development, especially with frameworks like Ruby on Rails. But I''m not sure
+        about the creator''s name.\n\nI think the creator might be a Japanese person.
+        I recall hearing that Ruby was created by someone from Japan. Maybe Yukihiro
+        Matsumoto? Wait, I''ve heard the name Matsumoto before in relation to Ruby.
+        Let me check if that''s correct. \n\nI should also consider other possibilities.
+        Are there any other people associated with Ruby''s creation? I don''t think
+        so. I remember that Matsumoto is sometimes referred to as \"Matz\" in the
+        Ruby community. That''s a nickname he uses. So, putting it all together, the
+        creator is Yukihiro Matsumoto, also known as Matz. \n\nBut wait, I should
+        make sure there''s no confusion with other languages or people. For example,
+        there''s a language called Ruby that''s different from the one I''m thinking
+        of? No, I think Ruby is the correct one. Also, I don''t think there''s another
+        person with a similar name who created Ruby. \n\nAnother way to verify is
+        to think about the timeline. Ruby was first released in 1995. If Matsumoto
+        created it, he would have been working on it around that time. I think he
+        started developing Ruby in the mid-90s. \n\nI can also recall that Matsumoto''s
+        goal was to create a language that was easy to use and had a clean syntax.
+        That aligns with Ruby''s design principles. So, combining all these points,
+        I''m fairly confident that Yukihiro Matsumoto is the creator of Ruby.\n","role":"assistant"}}],"created":1762113749,"id":"chatcmpl-X1D9aIb8fpY1Su2GZIQJsj68UNn6m8ij","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":583,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":384,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":18,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":424.9392100852239,"time_per_output_token_ms":8.211902229845625,"time_to_first_token_ms":42.359,"tokens_per_second":121.77446491819701,"total_tokens":601}}'
+  recorded_at: Sun, 02 Nov 2025 20:02:29 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"\n\nRuby was created by **Yukihiro
-        \"Matz\" Matsumoto**, a Japanese programmer. He began developing the language
-        in 1993 and released the first version in **1995**. Matsumoto designed Ruby
-        with a focus on simplicity, productivity, and developer happiness, aiming
-        to create a language that was both easy to use and flexible. Ruby gained popularity,
-        especially with the rise of web development frameworks like **Ruby on Rails**
-        in the mid-2000s. Matz is known for his philosophy of \"matz''s principle,\"
-        which emphasizes making programming enjoyable and intuitive."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"role":"assistant","content":"\n\nThe
+        creator of the programming language **Ruby** is **Yukihiro Matsumoto**, commonly
+        known by his nickname **\"Matz\"**. He developed Ruby in the mid-1990s, with
+        the first version (Ruby 0.2) released in 1995. Matsumoto designed Ruby with
+        a focus on simplicity, productivity, and a clean, readable syntax. His goal
+        was to create a language that balanced power with ease of use, which has made
+        Ruby popular for web development (e.g., through frameworks like Ruby on Rails)
+        and other applications. \n\n**Key points:**\n- **Name:** Yukihiro Matsumoto\n-
+        **Nickname:** Matz\n- **Year of creation:** 1995\n- **Goal:** A language that
+        is both powerful and easy to use, emphasizing developer happiness and productivity.\n\nMatsumoto
+        is still actively involved in the Ruby community and continues to contribute
+        to its development."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -81,15 +109,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Sep 2025 15:07:00 GMT
-      - Wed, 10 Sep 2025 15:07:01 GMT
+      - Sun, 02 Nov 2025 20:02:28 GMT
+      - Sun, 02 Nov 2025 20:02:28 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '880'
+      - '2767'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -101,8 +129,33 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nYukihiro
-        \"Matz\" Matsumoto began developing Ruby in **1993**, but the first official
-        version of the language (Ruby 0.2) was released in **1995**. So, while the
-        creation process started in 1993, the formal release year is **1995**.","role":"assistant"}}],"created":1757516825,"id":"chatcmpl-d6HkmoxO0QHzIteGpytqOgqA3TFP3Icr","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":366,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":291,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":156,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3303.335097935416,"time_per_output_token_ms":9.490330601092895,"time_to_first_token_ms":47.225,"tokens_per_second":105.3704072105603,"total_tokens":522}}'
-  recorded_at: Wed, 10 Sep 2025 15:07:05 GMT
+        Matsumoto (Matz) created the first version of **Ruby** and released it in
+        **1995**. This marked the official creation of the language. While Matsumoto
+        began developing Ruby in 1993, the first public release (Ruby 0.2) occurred
+        in **1995**, making that the year of its creation.","reasoning_content":"\nOkay,
+        the user just asked, \"What year did he create Ruby?\" So, I need to recall
+        the information from the previous conversation. Earlier, I mentioned that
+        Yukihiro Matsumoto, or Matz, created Ruby in the mid-1990s, with the first
+        version released in 1995. The user is now specifically asking for the year.\n\nWait,
+        the initial answer said the first version was released in 1995. But I should
+        double-check if that''s accurate. I remember that Ruby 0.2 was the first version,
+        and it was released in 1995. However, some sources might mention the year
+        as 1993 or 1994 when Matsumoto started working on it. But the official release
+        date is 1995. \n\nThe user might be looking for the exact year, so I need
+        to confirm. Let me think. Matsumoto started developing Ruby in 1993, but the
+        first public release was in 1995. So the answer should be 1995 as the year
+        of creation, even though development began earlier. \n\nAlso, the user might
+        be interested in the exact timeline, so it''s important to clarify that the
+        first version was released in 1995. I should make sure not to confuse the
+        start of development with the official release. \n\nAnother thing to consider:
+        the user might be a student or someone learning about programming languages,
+        so providing a clear and concise answer is key. They might not need the nuances
+        of development vs. release, but just the year. \n\nSo, the answer is 1995.
+        I should state that the first version of Ruby was released in 1995. Maybe
+        add a note about the development starting in 1993 if needed, but the user''s
+        question is specifically about the creation year, which is 1995. \n\nI need
+        to ensure that the answer is accurate and directly addresses the question
+        without unnecessary details. The user might be testing if I remember the exact
+        year, so confirming 1995 is crucial.\n","role":"assistant"}}],"created":1762113753,"id":"chatcmpl-pwkLB0Vn5M0mkSBSCozsbVdjmwCeY2xT","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":526,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":444,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":16},"prompt_tokens_per_second":4501.169134840218,"time_per_output_token_ms":8.320528517110265,"time_to_first_token_ms":51.32,"tokens_per_second":120.18467311825304,"total_tokens":757}}'
+  recorded_at: Sun, 02 Nov 2025 20:02:33 GMT
 recorded_with: VCR 6.3.1

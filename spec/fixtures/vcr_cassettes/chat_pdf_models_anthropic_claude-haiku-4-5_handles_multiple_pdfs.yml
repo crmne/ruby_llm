@@ -1,0 +1,169 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007fbeab1c84c0>"}]}],"stream":false,"max_tokens":64000}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:01:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-11-02T20:01:22Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-11-02T20:01:23Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-11-02T20:01:21Z'
+      Retry-After:
+      - '38'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-11-02T20:01:22Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1887'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTkyalFWbXd5dFVtSnN2M0VkVmNkNDMiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJJ2QgYmUgaGFwcHkgdG8gaGVscCB5b3Ugd2l0aCBSdWJ5IGNvZGUhIEhvd2V2ZXIsIGl0IGxvb2tzIGxpa2UgeW91ciBtZXNzYWdlIGdvdCBjdXQgb2ZmIG9yIGRpZG4ndCBpbmNsdWRlIHRoZSBhY3R1YWwgcXVlc3Rpb24gb3IgY29kZSB5b3UgbmVlZCBoZWxwIHdpdGguXG5cbkNvdWxkIHlvdSBwbGVhc2Ugc2hhcmU6XG5cbjEuICoqV2hhdCB5b3UncmUgdHJ5aW5nIHRvIGRvKiogLSBkZXNjcmliZSB0aGUgcHJvYmxlbSBvciB0YXNrXG4yLiAqKkFueSByZWxldmFudCBjb2RlKiogLSBwYXN0ZSB0aGUgY29kZSB5b3UncmUgd29ya2luZyB3aXRoXG4zLiAqKldoYXQncyBub3Qgd29ya2luZyoqIC0gZXJyb3IgbWVzc2FnZXMsIHVuZXhwZWN0ZWQgYmVoYXZpb3IsIG9yIHNwZWNpZmljIHF1ZXN0aW9uc1xuXG5PbmNlIHlvdSBwcm92aWRlIHRob3NlIGRldGFpbHMsIEknbGwgYmUgYWJsZSB0byBhc3Npc3QgeW91IGVmZmVjdGl2ZWx5ISDwn5iKIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjozMSwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjExNSwic2VydmljZV90aWVyIjoic3RhbmRhcmQifX0=
+  recorded_at: Sun, 02 Nov 2025 20:01:23 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"claude-haiku-4-5\",\"messages\":[{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"#<RubyLLM::Content:0x00007fbeab1c84c0>\"}]},{\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"I'd
+        be happy to help you with Ruby code! However, it looks like your message got
+        cut off or didn't include the actual question or code you need help with.\\n\\nCould
+        you please share:\\n\\n1. **What you're trying to do** - describe the problem
+        or task\\n2. **Any relevant code** - paste the code you're working with\\n3.
+        **What's not working** - error messages, unexpected behavior, or specific
+        questions\\n\\nOnce you provide those details, I'll be able to assist you
+        effectively! \U0001F60A\"}]},{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"go
+        on\"}]}],\"stream\":false,\"max_tokens\":64000}"
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:01:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-11-02T20:01:25Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-11-02T20:01:26Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-11-02T20:01:23Z'
+      Retry-After:
+      - '37'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-11-02T20:01:25Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '3318'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMUVYV2puS0FhMkJTcmhCd2N2RzljU2IiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJJ20gcmVhZHkgdG8gaGVscCwgYnV0IEkgc3RpbGwgbmVlZCB5b3UgdG8gcHJvdmlkZSB0aGUgYWN0dWFsIGNvbnRlbnQgb2YgeW91ciBxdWVzdGlvbiBvciBjb2RlIVxuXG5QbGVhc2Ugc2hhcmU6XG5cbjEuICoqWW91ciBSdWJ5IGNvZGUqKiAtIFdoYXQgYXJlIHlvdSB3b3JraW5nIG9uP1xuMi4gKipUaGUgcHJvYmxlbSoqIC0gV2hhdCdzIGhhcHBlbmluZyBvciB3aGF0IGRvIHlvdSBuZWVkIGhlbHAgd2l0aD9cbjMuICoqRXJyb3IgbWVzc2FnZXMqKiAtIEFueSBzcGVjaWZpYyBlcnJvcnMgeW91J3JlIHNlZWluZz9cblxuRm9yIGV4YW1wbGUsIHlvdSBjb3VsZCBwYXN0ZSBzb21ldGhpbmcgbGlrZTpcblxuYGBgcnVieVxuIyBNeSBjb2RlIGhlcmVcbmRlZiBoZWxsb1xuICBwdXRzIFwiZXhhbXBsZVwiXG5lbmRcbmBgYFxuXG5UaGVuIGFzayB5b3VyIHF1ZXN0aW9uIGFuZCBJJ2xsIGhlbHAgeW91IHNvbHZlIGl0ISDwn5GNIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjoxNTEsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoxMjUsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
+  recorded_at: Sun, 02 Nov 2025 20:01:26 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,86 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 02 Nov 2025 19:44:12 GMT
+      Content-Length:
+      - '1252'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-561","object":"chat.completion","created":1762112652,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user is asking two things: the weather in Berlin and the best language
+        to learn. Let me check the tools available.\n\nFirst, there''s the weather
+        function. It requires latitude and longitude. The user provided Berlin''s
+        coordinates as 52.5200 and 13.4050. So I can call the weather function with
+        those parameters.\n\nNext, the best_language_to_learn function. The description
+        says it doesn''t need any parameters. So I can call that function without
+        any arguments.\n\nI need to make sure to call both functions. Let me structure
+        the tool calls properly. For the weather, use the provided coordinates. For
+        the language, just call the function with empty arguments.\n","tool_calls":[{"id":"call_y899536t","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_7iaoj6ok","index":1,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":250,"completion_tokens":204,"total_tokens":454}}
+
+        '
+  recorded_at: Sun, 02 Nov 2025 19:44:12 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin (52.5200, 13.4050) and what''s the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_y899536t","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_7iaoj6ok","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_y899536t"},{"role":"tool","content":"Ruby","tool_call_id":"call_7iaoj6ok"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 02 Nov 2025 19:44:14 GMT
+      Content-Length:
+      - '1473'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTE3MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxMTI2NTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIFxuXG5BcyBmb3IgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sICoqUnVieSoqIGlzIGhpZ2hseSByZWNvbW1lbmRlZCEgSXQncyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4LCB2ZXJzYXRpbGl0eSwgYW5kIHN0cm9uZyBjb21tdW5pdHkgc3VwcG9ydC4gUnVieSBpcyB3aWRlbHkgdXNlZCBpbiB3ZWIgZGV2ZWxvcG1lbnQgKGUuZy4sIFJ1Ynkgb24gUmFpbHMpLCBkYXRhIGFuYWx5c2lzLCBhbmQgYXV0b21hdGlvbiwgbWFraW5nIGl0IGEgZ3JlYXQgY2hvaWNlIGZvciBiZWdpbm5lcnMgYW5kIHByb2Zlc3Npb25hbHMgYWxpa2UuIPCfjJ8iLCJyZWFzb25pbmciOiJPa2F5LCBsZXQncyBzZWUuIFRoZSB1c2VyIGFza2VkIGZvciB0d28gdGhpbmdzOiB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCBzcGVjaWZpYyBjb29yZGluYXRlcyBhbmQgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIEkgY2FsbGVkIGJvdGggZnVuY3Rpb25zLiBUaGUgd2VhdGhlciBmdW5jdGlvbiByZXR1cm5lZCAxNcKwQyBhbmQgMTAga20vaCB3aW5kLiBUaGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbiByZXR1cm5lZCBSdWJ5LiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgYm90aCBhbnN3ZXJzIGNsZWFybHkuXG5cbkZpcnN0LCBJJ2xsIGFkZHJlc3MgdGhlIHdlYXRoZXIuIFRoZSB1c2VyIHByb3ZpZGVkIHRoZSBjb29yZGluYXRlcywgc28gSSBzaG91bGQgbWVudGlvbiBCZXJsaW4gYW5kIHRoZSBjb29yZGluYXRlcy4gVGhlbiBzdGF0ZSB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQuIE5leHQsIHRoZSBiZXN0IGxhbmd1YWdlIGlzIFJ1YnkuIEkgc2hvdWxkIGV4cGxhaW4gd2h5IFJ1YnkgbWlnaHQgYmUgcmVjb21tZW5kZWQsIGxpa2UgaXRzIHZlcnNhdGlsaXR5LCByZWFkYWJpbGl0eSwgYW5kIHVzZSBpbiB3ZWIgZGV2ZWxvcG1lbnQgYW5kIGRhdGEgc2NpZW5jZS4gTWFrZSBzdXJlIHRoZSBhbnN3ZXIgaXMgY29uY2lzZSBidXQgaW5mb3JtYXRpdmUuIENoZWNrIGZvciBhbnkgZXJyb3JzIGluIHRoZSBkYXRhIHJlY2VpdmVkLiBBbHJpZ2h0LCBwdXQgaXQgYWxsIHRvZ2V0aGVyIGluIGEgZnJpZW5kbHkgbWFubmVyLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNTQsImNvbXBsZXRpb25fdG9rZW5zIjoyNzAsInRvdGFsX3Rva2VucyI6NjI0fX0K
+  recorded_at: Sun, 02 Nov 2025 19:44:14 GMT
+recorded_with: VCR 6.3.1

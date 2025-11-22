@@ -56,6 +56,10 @@ module RubyLLM
         modalities.input.include?('image')
       end
 
+      def supports_video?
+        modalities.input.include?('video')
+      end
+
       def supports_functions?
         function_calling?
       end
@@ -66,6 +70,10 @@ module RubyLLM
 
       def output_price_per_million
         pricing.text_tokens.output
+      end
+
+      def provider_class
+        RubyLLM::Provider.resolve provider
       end
 
       def type # rubocop:disable Metrics/PerceivedComplexity

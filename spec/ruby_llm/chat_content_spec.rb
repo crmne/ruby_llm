@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-
+require 'action_dispatch/http/upload'
 RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   include_context 'with configured RubyLLM'
 
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
+  let(:video_path) { File.expand_path('../fixtures/ruby.mp4', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
   let(:mp3_path) { File.expand_path('../fixtures/ruby.mp3', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
   let(:text_path) { File.expand_path('../fixtures/ruby.txt', __dir__) }
   let(:xml_path) { File.expand_path('../fixtures/ruby.xml', __dir__) }
   let(:image_url) { 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png' }
+  let(:video_url) { 'https://filesamples.com/samples/video/mp4/sample_640x360.mp4' }
   let(:audio_url) { 'https://commons.wikimedia.org/wiki/File:LL-Q1860_(eng)-AcpoKrane-ruby.wav' }
   let(:pdf_url) { 'https://pdfobject.com/pdf/sample.pdf' }
   let(:text_url) { 'https://www.ruby-lang.org/en/about/license.txt' }
@@ -93,6 +95,35 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       expect do
         chat.ask('What do you see in this image?', with: bad_image_path)
       end.to raise_error(Errno::ENOENT)
+    end
+  end
+
+  describe 'video models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    VIDEO_MODELS.each do |model_info|
+      provider = model_info[:provider]
+      model = model_info[:model]
+
+      it "#{provider}/#{model} can understand local videos" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What do you see in this video?', with: { video: video_path })
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.mp4')
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('video/mp4')
+      end
+
+      it "#{provider}/#{model} can understand remote videos without extension" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What do you see in this video?', with: video_url)
+
+        expect(response.content).to be_present
+        expect(response.content).not_to include('RubyLLM::Content')
+        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
+        expect(chat.messages.first.content.attachments.first.filename).to eq('sample_640x360.mp4')
+        expect(chat.messages.first.content.attachments.first.mime_type).to eq('video/mp4')
+      end
     end
   end
 
@@ -193,6 +224,104 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
       expect(attachment.mime_type).to eq('image/png')
       expect(attachment.send(:url?)).to be true
+    end
+  end
+
+  describe 'IO attachment handling' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    it 'handles StringIO objects' do
+      require 'stringio'
+      text_content = 'Hello, this is a test file'
+      string_io = StringIO.new(text_content)
+
+      attachment = RubyLLM::Attachment.new(string_io)
+
+      expect(attachment.io_like?).to be true
+      expect(attachment.content).to eq(text_content)
+      expect(attachment.filename).to eq('attachment')
+      expect(attachment.mime_type).to eq('application/octet-stream')
+    end
+
+    it 'handles StringIO objects with filename' do
+      require 'stringio'
+      text_content = 'Hello, this is a test file'
+      string_io = StringIO.new(text_content)
+
+      attachment = RubyLLM::Attachment.new(string_io, filename: 'test.txt')
+
+      expect(attachment.io_like?).to be true
+      expect(attachment.content).to eq(text_content)
+      expect(attachment.filename).to eq('test.txt')
+      expect(attachment.mime_type).to eq('text/plain')
+    end
+
+    it 'handles Tempfile objects' do
+      tempfile = Tempfile.new(['test', '.txt'])
+      tempfile.write('Tempfile content')
+      tempfile.rewind
+
+      attachment = RubyLLM::Attachment.new(tempfile)
+
+      expect(attachment.io_like?).to be true
+      expect(attachment.content).to eq('Tempfile content')
+      expect(attachment.filename).to be_present
+      expect(attachment.mime_type).to eq('text/plain')
+    end
+
+    it 'handles File objects' do
+      file = File.open(text_path, 'r')
+
+      attachment = RubyLLM::Attachment.new(file)
+
+      expect(attachment.io_like?).to be true
+      expect(attachment.content).to be_present
+      expect(attachment.filename).to eq('ruby.txt')
+      expect(attachment.mime_type).to eq('text/plain')
+
+      file.close
+    end
+
+    it 'handles ActionDispatch::Http::UploadedFile' do
+      tempfile = Tempfile.new(['ruby', '.png'])
+      tempfile.binmode
+      File.open(image_path, 'rb') { |f| tempfile.write(f.read) }
+      tempfile.rewind
+
+      uploaded_file = ActionDispatch::Http::UploadedFile.new(
+        tempfile: tempfile,
+        filename: 'ruby.png',
+        type: 'image/png'
+      )
+
+      attachment = RubyLLM::Attachment.new(uploaded_file)
+
+      expect(attachment.io_like?).to be true
+      expect(attachment.content).to be_present
+      expect(attachment.filename).to eq('ruby.png')
+      expect(attachment.mime_type).to eq('image/png')
+      expect(attachment.type).to eq(:image)
+    end
+
+    it 'rewinds IO objects before reading' do
+      require 'stringio'
+      string_io = StringIO.new('Initial content')
+      string_io.read # Move position to end
+
+      attachment = RubyLLM::Attachment.new(string_io, filename: 'test.txt')
+
+      expect(attachment.content).to eq('Initial content')
+    end
+
+    it 'creates content with IO attachments' do
+      require 'stringio'
+      string_io = StringIO.new('Test content')
+      content = RubyLLM::Content.new('Check this')
+      content.add_attachment(string_io, filename: 'test.txt')
+
+      expect(content.attachments).not_to be_empty
+      expect(content.attachments.first).to be_a(RubyLLM::Attachment)
+      expect(content.attachments.first.io_like?).to be true
+      expect(content.attachments.first.filename).to eq('test.txt')
+      expect(content.attachments.first.mime_type).to eq('text/plain')
     end
   end
 end
