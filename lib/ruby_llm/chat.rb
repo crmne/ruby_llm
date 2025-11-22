@@ -7,6 +7,26 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
 
+    # Stores multiple callbacks per key and invokes all of them
+    class CallbackFanout
+      def initialize
+        @callbacks = {}
+      end
+
+      def [](key)
+        callbacks = @callbacks[key]
+        return if callbacks.nil? || callbacks.empty?
+
+        ->(*args) { callbacks.each { |cb| cb.call(*args) } }
+      end
+
+      def []=(key, callable)
+        return unless callable
+
+        (@callbacks[key] ||= []) << callable
+      end
+    end
+
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
@@ -22,12 +42,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
-      @on = {
-        new_message: nil,
-        end_message: nil,
-        tool_call: nil,
-        tool_result: nil
-      }
+      @on = CallbackFanout.new
     end
 
     def ask(message = nil, with: nil, &)

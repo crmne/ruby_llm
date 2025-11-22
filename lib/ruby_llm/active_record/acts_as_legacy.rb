@@ -152,26 +152,12 @@ module RubyLLM
       end
 
       def on_new_message(&block)
-        to_llm
-
-        existing_callback = @chat.instance_variable_get(:@on)[:new_message]
-
-        @chat.on_new_message do
-          existing_callback&.call
-          block&.call
-        end
+        to_llm.on_new_message(&block)
         self
       end
 
       def on_end_message(&block)
-        to_llm
-
-        existing_callback = @chat.instance_variable_get(:@on)[:end_message]
-
-        @chat.on_end_message do |msg|
-          existing_callback&.call(msg)
-          block&.call(msg)
-        end
+        to_llm.on_end_message(&block)
         self
       end
 
