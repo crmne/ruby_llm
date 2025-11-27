@@ -766,71 +766,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'prompt method' do
-    describe 'basic functionality' do
-      it 'does not persist user message', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'does not persist assistant response', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'returns valid RubyLLM::Message', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'works with existing message records', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-    end
-
-    describe 'prompt_messages accessor' do
-      it 'provides prompt_messages accessor', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'includes user and assistant messages', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'includes tool call messages when tools are used', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'only includes messages from this prompt call', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-    end
-
-    describe 'streaming support' do
-      it 'supports streaming blocks', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-    end
-
-    describe 'configuration preservation' do
-      it 'preserves tools configuration', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'preserves temperature configuration', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'works with system instructions', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-    end
-
-    describe 'with file attachments' do
-      it 'supports with: parameter for attachments', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-
-      it 'works with pre-created message with attachments', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
-      end
-    end
+    # TODO: Add integration tests once VCR cassettes are recorded with real API credentials:
+    # - basic functionality (persistence, response format, existing message records)
+    # - prompt_messages accessor (user/assistant/tool messages, isolation)
+    # - streaming support
+    # - configuration preservation (tools, temperature, instructions)
+    # - file attachments (with: parameter, pre-created messages)
+    # - A/B testing use case
 
     describe 'error handling' do
       it 'does not leave orphaned messages on error' do
@@ -839,11 +781,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         initial_count = chat.messages.count
 
         # Mock the complete call to avoid API
-        allow_any_instance_of(RubyLLM::Chat).to receive(:complete).and_raise(StandardError, 'Simulated error')
+        llm_chat = chat.to_llm
+        allow(llm_chat).to receive(:complete).and_raise(StandardError, 'Simulated error')
+        allow(chat).to receive(:to_llm).and_return(llm_chat)
 
-        expect {
+        expect do
           chat.prompt('Test')
-        }.to raise_error(StandardError)
+        end.to raise_error(StandardError)
 
         # No messages should be persisted
         expect(chat.messages.reload.count).to eq(initial_count)
@@ -853,7 +797,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat = Chat.create!(model: model)
 
         # Mock to avoid API call
-        allow_any_instance_of(RubyLLM::Chat).to receive(:complete).and_raise(StandardError, 'Error')
+        llm_chat = chat.to_llm
+        allow(llm_chat).to receive(:complete).and_raise(StandardError, 'Error')
+        allow(chat).to receive(:to_llm).and_return(llm_chat)
 
         begin
           chat.prompt('Test')
@@ -862,16 +808,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         end
 
         # The key test: callbacks are restored (we can check this without API call)
-        llm_chat = chat.to_llm
-        on_hash = llm_chat.instance_variable_get(:@on)
+        llm_chat_after = chat.to_llm
+        on_hash = llm_chat_after.instance_variable_get(:@on)
         expect(on_hash[:new_message]).not_to be_nil
         expect(on_hash[:end_message]).not_to be_nil
-      end
-    end
-
-    describe 'A/B testing use case' do
-      it 'enables A/B testing by generating multiple responses', :pending_vcr do
-        skip 'Requires VCR cassette recording with real API credentials'
       end
     end
   end
