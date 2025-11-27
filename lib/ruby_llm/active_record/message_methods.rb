@@ -10,13 +10,13 @@ module RubyLLM
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
       end
 
-      def to_llm
+      def to_llm(include_attachments: true)
         cached = has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
         cache_creation = has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
 
         RubyLLM::Message.new(
           role: role.to_sym,
-          content: extract_content,
+          content: extract_content(include_attachments: include_attachments),
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
           input_tokens: input_tokens,
@@ -46,11 +46,12 @@ module RubyLLM
         parent_tool_call&.tool_call_id
       end
 
-      def extract_content
+      def extract_content(include_attachments: true)
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
         content_value = self[:content]
 
+        return content_value unless include_attachments
         return content_value unless respond_to?(:attachments) && attachments.attached?
 
         RubyLLM::Content.new(content_value).tap do |content_obj|
