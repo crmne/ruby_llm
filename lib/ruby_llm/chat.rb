@@ -36,13 +36,6 @@ module RubyLLM
     end
 
     alias say ask
-    
-    ##
-    # For memory-only chats, prompt behaves identically to ask.
-    # 
-    # Since there's no persistence layer, both methods add the message to the
-    # in-memory chat and call the LLM. ActiveRecord chats override this to
-    # provide non-persisting behavior.
     alias prompt ask
 
     def with_instructions(instructions, replace: false)
