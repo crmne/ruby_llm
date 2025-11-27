@@ -770,9 +770,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     # - basic functionality (persistence, response format, existing message records)
     # - prompt_messages accessor (user/assistant/tool messages, isolation)
     # - streaming support
-    # - configuration preservation (tools, temperature, instructions)
-    # - file attachments (with: parameter, pre-created messages)
-    # - A/B testing use case
 
     describe 'error handling' do
       it 'does not leave orphaned messages on error' do

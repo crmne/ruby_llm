@@ -279,7 +279,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           alias_method :__original_to_llm, :to_llm
 
           def to_llm(include_attachments: true)
-            include_attachments &&= @include_attachment_override != false
+            include_attachments &&= include_attachment_override != false
             __original_to_llm(include_attachments:)
           end
         end
