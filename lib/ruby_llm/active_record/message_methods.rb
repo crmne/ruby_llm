@@ -51,8 +51,7 @@ module RubyLLM
 
         content_value = self[:content]
 
-        return content_value unless include_attachments
-        return content_value unless respond_to?(:attachments) && attachments.attached?
+        return content_value unless include_attachments && respond_to?(:attachments) && attachments.attached?
 
         RubyLLM::Content.new(content_value).tap do |content_obj|
           @_tempfiles = []
