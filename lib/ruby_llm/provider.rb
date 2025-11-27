@@ -64,8 +64,8 @@ module RubyLLM
       parse_list_models_response response, slug, capabilities
     end
 
-    def embed(text, model:, dimensions:)
-      payload = render_embedding_payload(text, model:, dimensions:)
+    def embed(text, model:, image:, video:, dimensions:)
+      payload = render_embedding_payload(text, model:, image:, video:, dimensions:)
       response = @connection.post(embedding_url(model:), payload)
       parse_embedding_response(response, model:, text:)
     end

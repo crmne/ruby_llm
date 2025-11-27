@@ -12,6 +12,8 @@ module RubyLLM
     end
 
     def self.embed(text, # rubocop:disable Metrics/ParameterLists
+                   image: nil,
+                   video: nil,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
@@ -23,7 +25,7 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.embed(text, model: model_id, dimensions:)
+      provider_instance.embed(text, image:, video:, model: model_id, dimensions:)
     end
   end
 end
