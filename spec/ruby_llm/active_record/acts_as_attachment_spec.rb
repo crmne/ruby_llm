@@ -271,5 +271,44 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_message.content).to be_a(RubyLLM::Content::Raw)
       end
     end
+
+    describe 'custom overrides' do
+      around do |example|
+        Message.class_eval do
+          attr_accessor :include_attachment_override
+          alias_method :__original_to_llm, :to_llm
+
+          def to_llm(include_attachments: true)
+            include_attachments &&= @include_attachment_override != false
+            __original_to_llm(include_attachments:)
+          end
+        end
+
+        example.run
+      ensure
+        Message.class_eval do
+          alias_method :to_llm, :__original_to_llm
+          remove_method :__original_to_llm
+          remove_method :include_attachment_override
+          remove_method :include_attachment_override=
+        end
+      end
+
+      it 'allows message-level include_attachments customizations' do
+        chat = Chat.create!(model: model)
+        message = chat.messages.create!(role: 'user', content: 'Configurable')
+        message.attachments.attach(
+          io: File.open(image_path),
+          filename: 'ruby.png',
+          content_type: 'image/png'
+        )
+
+        message.include_attachment_override = false
+
+        llm_message = message.to_llm
+        expect(llm_message.content).to eq('Configurable')
+        expect(llm_message.content).not_to be_a(RubyLLM::Content)
+      end
+    end
   end
 end
