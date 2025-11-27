@@ -766,10 +766,53 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'prompt method' do
-    # TODO: Add integration tests once VCR cassettes are recorded with real API credentials:
-    # - basic functionality (persistence, response format, existing message records)
-    # - prompt_messages accessor (user/assistant/tool messages, isolation)
-    # - streaming support
+    describe 'integration behavior' do
+      let(:chat) { Chat.create!(model: model) }
+
+      it 'returns a response without persisting messages' do
+        response = chat.prompt('Say hello from prompt specs')
+
+        expect(response).to be_a(RubyLLM::Message)
+        expect(response.content).to be_present
+        expect(chat.messages.count).to eq(0)
+
+        roles = response.prompt_messages.map(&:role)
+        expect(roles).to include(:user, :assistant)
+      end
+
+      it 'works with existing message records' do
+        message = chat.messages.create!(role: :user, content: 'Use the persisted message for prompt')
+
+        response = chat.prompt(message)
+
+        expect(response.content).to be_present
+        expect(chat.messages.count).to eq(1)
+        expect(response.prompt_messages.first.role).to eq(:user)
+        expect(response.prompt_messages.last.role).to eq(:assistant)
+      end
+
+      it 'captures tool calls inside prompt_messages' do
+        chat.with_tool(Calculator)
+
+        response = chat.prompt('What is 7 * 8?')
+
+        expect(response.prompt_messages.any?(&:tool_call?)).to be true
+        expect(response.prompt_messages.map(&:role)).to include(:tool)
+        expect(chat.messages.count).to eq(0)
+      end
+
+      it 'supports streaming blocks' do
+        collected_chunks = []
+
+        response = chat.prompt('List three gemstones') do |chunk|
+          collected_chunks << chunk.content if chunk.content
+        end
+
+        expect(response.content).to be_present
+        expect(collected_chunks.join).to be_present
+        expect(chat.messages.count).to eq(0)
+      end
+    end
 
     describe 'error handling' do
       it 'does not leave orphaned messages on error' do
