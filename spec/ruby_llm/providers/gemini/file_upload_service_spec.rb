@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Providers::Gemini::FileUploadService do
 
   let(:connection) { instance_double(Faraday::Connection) }
   let(:config) { RubyLLM.config }
-  let(:service) { described_class.new(connection, config) }
+  let(:service) { described_class.new(config) }
 
   let(:attachment) do
     instance_double(
@@ -24,7 +24,6 @@ RSpec.describe RubyLLM::Providers::Gemini::FileUploadService do
       allow(File).to receive(:binread).and_return('file_content')
 
       # Create a test service to get access to @faraday
-      service = described_class.new(connection, config)
       faraday = service.instance_variable_get(:@faraday)
 
       # Mock first POST (initiate)

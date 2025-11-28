@@ -62,7 +62,7 @@ module RubyLLM
       end
 
       def upload_attachment(attachment)
-        service = FileUploadService.new(@connection, @config)
+        service = FileUploadService.new(@config)
         service.upload(attachment)
       end
 

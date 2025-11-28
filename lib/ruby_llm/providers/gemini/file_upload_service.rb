@@ -10,7 +10,7 @@ module RubyLLM
 
         attr_reader :config
 
-        def initialize(_connection, config)
+        def initialize(config)
           @config = config
           @faraday = Faraday.new(url: api_base) do |f|
             f.headers['x-goog-api-key'] = @config.gemini_api_key
