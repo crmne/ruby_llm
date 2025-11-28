@@ -30,12 +30,23 @@ module RubyLLM
         end
 
         def format_attachment(attachment)
-          {
-            inline_data: {
-              mime_type: attachment.mime_type,
-              data: attachment.encoded
+          # If attachment has a URI (from FileUploadService), use file_data
+          if attachment.url?
+            {
+              file_data: {
+                mime_type: attachment.mime_type,
+                file_uri: attachment.source.to_s
+              }
             }
-          }
+          else
+            # Use inline_data for path-based or IO-based attachments
+            {
+              inline_data: {
+                mime_type: attachment.mime_type,
+                data: attachment.encoded
+              }
+            }
+          end
         end
 
         def format_text_file(text_file)

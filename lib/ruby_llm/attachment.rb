@@ -118,6 +118,12 @@ module RubyLLM
       { type: type, source: @source }
     end
 
+    def size
+      return nil unless path?
+
+      File.size(@source)
+    end
+
     private
 
     def determine_mime_type

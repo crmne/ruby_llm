@@ -134,6 +134,10 @@ module RubyLLM
       nil
     end
 
+    def preprocess_message(message)
+      message
+    end
+
     class << self
       def name
         to_s.split('::').last

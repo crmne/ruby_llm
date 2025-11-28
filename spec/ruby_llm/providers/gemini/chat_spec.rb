@@ -490,4 +490,109 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     # Verify our implementation correctly sums both token types
     expect(response.output_tokens).to eq(candidates_tokens + thoughts_tokens)
   end
+
+  describe '#preprocess_message' do
+    include_context 'with configured RubyLLM'
+
+    let(:config) { RubyLLM.config }
+    let(:provider) { RubyLLM::Providers::Gemini.new(config) }
+
+    it 'returns message unchanged for non-Content' do
+      message = RubyLLM::Message.new(role: :user, content: 'hello')
+
+      result = provider.preprocess_message(message)
+
+      expect(result.content).to eq('hello')
+    end
+
+    it 'returns message unchanged when content has no attachments' do
+      content = RubyLLM::Content.new('hello')
+      message = RubyLLM::Message.new(role: :user, content: content)
+
+      result = provider.preprocess_message(message)
+
+      expect(result).to be(message)
+      expect(result.content).to eq('hello')
+    end
+
+    it 'returns message unchanged for small attachments' do
+      io = StringIO.new('fake data')
+      attachment = RubyLLM::Attachment.new(io, filename: 'image.jpg')
+      allow(attachment).to receive(:size).and_return(1_000_000)
+
+      content = RubyLLM::Content.new('hello', [attachment])
+      message = RubyLLM::Message.new(role: :user, content: content)
+
+      result = provider.preprocess_message(message)
+
+      expect(result).to be(message)
+      expect(result.content.attachments.size).to eq(1)
+    end
+
+    it 'transforms message with large attachment' do
+      # Create a real Attachment with StringIO to avoid file system
+      io = StringIO.new('fake video data')
+      attachment = RubyLLM::Attachment.new(io, filename: 'video.mp4')
+      allow(attachment).to receive(:size).and_return(25_000_000)
+
+      content = RubyLLM::Content.new('hello', [attachment])
+      message = RubyLLM::Message.new(role: :user, content: content)
+
+      # Stub size and filename on the ACTUAL attachment (after Content.new wraps it)
+      actual_attachment = message.content.attachments.first
+      allow(actual_attachment).to receive_messages(size: 25_000_000, filename: 'video.mp4')
+
+      # Mock the FileUploadService to avoid real HTTP calls
+      file_uri = 'https://files.googleapis.com/v1beta/files/abc123'
+      file_upload_service = instance_double(RubyLLM::Providers::Gemini::FileUploadService)
+      allow(RubyLLM::Providers::Gemini::FileUploadService).to receive(:new).and_return(file_upload_service)
+      allow(file_upload_service).to receive(:upload).and_return(file_uri)
+
+      # Stub create_attachment_from_uri to avoid file system access
+      new_attachment = instance_double(RubyLLM::Attachment)
+      allow(provider).to receive(:create_attachment_from_uri)
+        .with(file_uri, 'video.mp4')
+        .and_return(new_attachment)
+
+      result = provider.preprocess_message(message)
+
+      # Should return a different message object
+      expect(result).not_to be(message)
+    end
+
+    it 'uses configurable large file threshold' do
+      # Set custom threshold to 10MB
+      config.gemini_large_file_threshold = 10_000_000
+      provider_with_custom_threshold = RubyLLM::Providers::Gemini.new(config)
+
+      # Create attachment at 15MB (above 10MB custom threshold, below 20MB default)
+      io = StringIO.new('data')
+      attachment = RubyLLM::Attachment.new(io, filename: 'video.mp4')
+      allow(attachment).to receive(:size).and_return(15_000_000)
+
+      content = RubyLLM::Content.new('hello', [attachment])
+      message = RubyLLM::Message.new(role: :user, content: content)
+
+      # Stub size and filename on the ACTUAL attachment (after Content.new wraps it)
+      actual_attachment = message.content.attachments.first
+      allow(actual_attachment).to receive_messages(size: 15_000_000, filename: 'video.mp4')
+
+      # Mock the FileUploadService
+      file_uri = 'https://files.googleapis.com/v1beta/files/abc123'
+      file_upload_service = instance_double(RubyLLM::Providers::Gemini::FileUploadService)
+      allow(RubyLLM::Providers::Gemini::FileUploadService).to receive(:new).and_return(file_upload_service)
+      allow(file_upload_service).to receive(:upload).and_return(file_uri)
+
+      # Stub create_attachment_from_uri to avoid file system access
+      new_attachment = instance_double(RubyLLM::Attachment)
+      allow(provider_with_custom_threshold).to receive(:create_attachment_from_uri)
+        .with(file_uri, 'video.mp4')
+        .and_return(new_attachment)
+
+      result = provider_with_custom_threshold.preprocess_message(message)
+
+      # Should transform because it's above the custom threshold
+      expect(result).not_to be(message)
+    end
+  end
 end
