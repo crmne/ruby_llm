@@ -34,7 +34,6 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      puts "URL: #{url}"
       @connection.post url, payload do |req|
         req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
         yield req if block_given?
