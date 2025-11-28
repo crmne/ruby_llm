@@ -198,24 +198,13 @@ module RubyLLM
         llm_chat = to_llm
         messages_before_count = llm_chat.messages.count
 
-        # Temporarily disable persistence callbacks
-        on_hash = llm_chat.instance_variable_get(:@on)
-        original_new_message = on_hash[:new_message]
-        original_end_message = on_hash[:end_message]
-        on_hash[:new_message] = nil
-        on_hash[:end_message] = nil
-
-        # Prompt response and expose prompt_messages without persistence
-        add_prompt_message(llm_chat, message, with)
-        response = llm_chat.complete(&)
-        prompt_messages = llm_chat.messages[messages_before_count..].dup.freeze
-        response.define_singleton_method(:prompt_messages) { prompt_messages }
-
-        response
-      ensure
-        # Restore persistence callbacks for subsequent ask()/complete() calls
-        on_hash[:new_message] = original_new_message if on_hash
-        on_hash[:end_message] = original_end_message if on_hash
+        with_persistence_disabled(llm_chat) do
+          add_prompt_message(llm_chat, message, with)
+          response = llm_chat.complete(&)
+          prompt_messages = llm_chat.messages[messages_before_count..].dup.freeze
+          response.define_singleton_method(:prompt_messages) { prompt_messages }
+          response
+        end
       end
 
       def complete(...)
@@ -277,6 +266,20 @@ module RubyLLM
 
         @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
         @chat
+      end
+
+      def with_persistence_disabled(llm_chat)
+        on_hash = llm_chat.instance_variable_get(:@on)
+        original_new_message = on_hash[:new_message]
+        original_end_message = on_hash[:end_message]
+
+        on_hash[:new_message] = nil
+        on_hash[:end_message] = nil
+
+        yield
+      ensure
+        on_hash[:new_message] = original_new_message if on_hash
+        on_hash[:end_message] = original_end_message if on_hash
       end
 
       def persist_new_message
