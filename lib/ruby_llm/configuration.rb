@@ -11,6 +11,7 @@ module RubyLLM
                   :anthropic_api_key,
                   :gemini_api_key,
                   :gemini_api_base,
+                  :gemini_large_file_threshold,
                   :vertexai_project_id,
                   :vertexai_location,
                   :deepseek_api_key,
@@ -61,6 +62,8 @@ module RubyLLM
       @default_moderation_model = 'omni-moderation-latest'
       @default_image_model = 'gpt-image-1'
       @default_transcription_model = 'whisper-1'
+
+      @gemini_large_file_threshold = 20_000_000
 
       @model_registry_file = File.expand_path('models.json', __dir__)
       @model_registry_class = 'Model'
