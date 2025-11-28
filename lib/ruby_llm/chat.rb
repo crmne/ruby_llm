@@ -36,6 +36,7 @@ module RubyLLM
     end
 
     alias say ask
+    alias prompt ask
 
     def with_instructions(instructions, replace: false)
       @messages = @messages.reject { |msg| msg.role == :system } if replace
