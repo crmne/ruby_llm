@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:33:58 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1762115637-NLg5VkB1qdEK1DK0iD7s\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1762115637,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"2
+        + 2 = 4\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":16,\"completion_tokens\":13,\"total_tokens\":29}}"
+  recorded_at: Sun, 02 Nov 2025 20:33:58 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]},{"role":"assistant","content":[{"type":"text","text":"2 + 2 = 4"}]},{"role":"user","content":[{"type":"text","text":"and
+        4 + 4?"}]}],"max_tokens":4096}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20251102T203358Z
+      X-Amz-Content-Sha256:
+      - be9c4e5fed9d41f027850a17dfb96c038f39739c7c1634ccc766510f0b9e1ff6
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=08919fd6dfae9d84ec47128193948b91e338aed0b13dc078c9c82e12c655bd66
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 20:34:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 317c35cb-0849-4425-ab0d-a3278553c13d
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1019'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '13'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '40'
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01RSqtgEgMWnWRfetYjoBMQb","type":"message","role":"assistant","content":[{"type":"text","text":"4
+        + 4 = 8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":40,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":13}}'
+  recorded_at: Sun, 02 Nov 2025 20:34:00 GMT
+recorded_with: VCR 6.3.1

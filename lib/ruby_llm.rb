@@ -29,6 +29,7 @@ loader.inflector.inflect(
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
+loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.

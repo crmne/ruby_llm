@@ -393,6 +393,76 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
 
+    describe 'namespaced chat models with custom foreign keys' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_messages, force: true do |t|
+            t.references :conversation, foreign_key: { to_table: :support_conversations }
+            t.string :role
+            t.text :content
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.references :tool_call, foreign_key: { to_table: :support_tool_calls }
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_tool_calls, force: true do |t|
+            t.references :message, foreign_key: { to_table: :support_messages }
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
+            ActiveRecord::Migration.drop_table :support_tool_calls
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_messages)
+            ActiveRecord::Migration.drop_table :support_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_conversations)
+            ActiveRecord::Migration.drop_table :support_conversations
+          end
+        end
+      end
+
+      module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        def self.table_name_prefix
+          'support_'
+        end
+
+        class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat message_class: 'Support::Message'
+        end
+
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat: :conversation, chat_class: 'Support::Conversation', tool_call_class: 'Support::ToolCall'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message_class: 'Support::Message'
+        end
+      end
+
+      it 'creates messages successfully' do
+        conversation = Support::Conversation.create!(model: model)
+
+        expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
+        expect(conversation.messages.count).to eq(1)
+      end
+    end
+
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model: model)
@@ -688,9 +758,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'respects aliases' do
-      chat = Chat.create!(model: 'claude-3-5-sonnet', provider: 'bedrock')
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'bedrock')
 
-      expect(chat.model_id).to eq('anthropic.claude-3-5-sonnet-20240620-v1:0:200k')
+      expect(chat.model_id).to eq('us.anthropic.claude-haiku-4-5-20251001-v1:0')
       expect(chat.provider).to eq('bedrock')
     end
   end

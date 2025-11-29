@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Date:
-      - Mon, 20 Oct 2025 19:23:12 GMT
+      - Mon, 03 Nov 2025 14:01:29 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:12 GMT
+  recorded_at: Mon, 03 Nov 2025 14:01:29 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:23:12 GMT
+      - Mon, 03 Nov 2025 14:01:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,6 +106,10 @@ http_interactions:
           "predictions": [
             {
               "embeddings": {
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 3
+                },
                 "values": [
                   -0.018408726900815964,
                   -0.0079232519492506981,
@@ -875,11 +879,7 @@ http_interactions:
                   0.013569101691246033,
                   0.01743682287633419,
                   0.020694570615887642
-                ],
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 3
-                }
+                ]
               }
             }
           ],
@@ -887,5 +887,5 @@ http_interactions:
             "billableCharacterCount": 11
           }
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:12 GMT
+  recorded_at: Mon, 03 Nov 2025 14:01:29 GMT
 recorded_with: VCR 6.3.1

@@ -193,7 +193,8 @@ module RubyLLM
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
         @on[:tool_result]&.call(result)
-        content = content_like?(result) ? result : result.to_s
+        tool_payload = result.is_a?(Tool::Halt) ? result.content : result
+        content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
         message = add_message role: :tool, content:, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
 

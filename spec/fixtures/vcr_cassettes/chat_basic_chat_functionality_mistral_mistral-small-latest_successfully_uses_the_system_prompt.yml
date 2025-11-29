@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:52 GMT
+      - Mon, 03 Nov 2025 14:51:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,38 +33,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
+      - '019a4a33-e444-770d-8ba8-1a62c900956b'
       X-Kong-Request-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
+      - '019a4a33-e444-770d-8ba8-1a62c900956b'
       X-Envoy-Upstream-Service-Time:
-      - '2049'
+      - '1719'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499570'
+      - '1999532'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999970969'
+      - '9999999532'
       X-Ratelimit-Tokens-Query-Cost:
-      - '158'
-      X-Ratelimit-Limit-Req-Minute:
+      - '149'
+      X-Ratelimit-Limit-Req-10-Second:
       - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '55'
+      X-Ratelimit-Remaining-Req-10-Second:
+      - '57'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2049'
+      - '1719'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '4'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -73,15 +75,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d2f6484094c74b41928f6fac1528c5f6","created":1758725630,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":158,"completion_tokens":127},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+      string: '{"id":"0dbe3f3755bb4ed59950825dea87c427","created":1762181506,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":149,"completion_tokens":118},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
         an AI and I don''t have real-time data access or the ability to browse the
         internet, so I can''t provide current weather information. However, I can
         tell you that weather typically refers to the atmospheric conditions in a
         specific place at a specific time, such as temperature, humidity, precipitation,
-        and wind speed. If you''re looking for the current weather, I recommend checking
-        a reliable weather website or application. And just to include the phrase
-        you requested, you might find that checking the weather is a lot like XKCD7392
-        - it''s something we do without always understanding the full complexity behind
-        it."}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:53:52 GMT
+        and wind. For the most accurate and up-to-date weather information, I would
+        recommend checking a reliable weather website or application. And remember,
+        as XKCD7392 humorously points out, weather predictions can sometimes be as
+        reliable as a Magic 8-Ball."}}]}'
+  recorded_at: Mon, 03 Nov 2025 14:51:47 GMT
 recorded_with: VCR 6.3.1

@@ -10,10 +10,6 @@ module RubyLLM
         @instance ||= new
       end
 
-      def provider_for(model)
-        Provider.for(model)
-      end
-
       def schema_file
         File.expand_path('models_schema.json', __dir__)
       end

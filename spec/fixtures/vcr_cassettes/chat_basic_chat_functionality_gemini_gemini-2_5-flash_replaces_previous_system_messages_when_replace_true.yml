@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:53:06 GMT
+      - Mon, 03 Nov 2025 13:56:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,79 +41,46 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=6320
+      - gfet4t7; dur=7241
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "The weather is a fascinating and ever-changing phenomenon, representing the state of the atmosphere at a particular time and place. It's driven by a complex interplay of factors, primarily solar radiation, which heats the Earth unevenly, creating temperature differences that drive air movement.\n\nKey elements that define the weather include:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount of water vapor in the air, influencing how \"muggy\" it feels and the likelihood of precipitation.\n*   **Precipitation:** Any form of water falling from the atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Atmospheric Pressure:** The weight of the air above a given point, which influences weather patterns (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud Cover:** The amount and type of clouds, indicating potential for precipitation or sunshine.\n\nWeather can vary dramatically from one moment to the next, and from one location to another. We experience daily changes, seasonal shifts, and regional differences, all influenced by geography, proximity to large bodies of water, and global atmospheric circulation patterns. For instance, a specific low-pressure system, perhaps identified as **XKCD7392**, might be bringing heavy rainfall to one region while a high-pressure system ensures clear skies just a few hundred miles away.\n\nMeteorologists use a vast array of instruments, satellites, and computer models to observe current conditions and forecast future weather, helping us plan our daily lives, agricultural activities, and even prepare for severe events."
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 27,
-            "candidatesTokenCount": 351,
-            "totalTokenCount": 712,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 27
-              }
-            ],
-            "thoughtsTokenCount": 334
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "0gXUaOrXKv_mnsEPv9qfsAM"
-        }
-  recorded_at: Wed, 24 Sep 2025 14:53:06 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkFzIGFuIEFJLCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGFjY2VzcyB0byBsaXZlIHdlYXRoZXIgY29uZGl0aW9ucyBmb3IgeW91ciBzcGVjaWZpYyBsb2NhdGlvbi4gVG8gdGVsbCB5b3UgYWJvdXQgdGhlIHdlYXRoZXIsIEkgd291bGQgbmVlZCB0byBrbm93IHdoZXJlIHlvdSBhcmUhXG5cbkhvd2V2ZXIsIEkgY2FuIHRlbGwgeW91IGdlbmVyYWxseSB3aGF0ICd0aGUgd2VhdGhlcicgcmVmZXJzIHRvOiBpdCBlbmNvbXBhc3NlcyB0aGUgY3VycmVudCBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSwgaW5jbHVkaW5nIHRlbXBlcmF0dXJlLCBwcmVjaXBpdGF0aW9uIChyYWluLCBzbm93LCBoYWlsKSwgd2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uLCBodW1pZGl0eSwgY2xvdWQgY292ZXIsIGFuZCBhdG1vc3BoZXJpYyBwcmVzc3VyZS4gV2VhdGhlciBmb3JlY2FzdHMgcHJlZGljdCB0aGVzZSBjb25kaXRpb25zIGZvciB0aGUgZnV0dXJlLCBvZnRlbiBmb3IgcGVyaW9kcyByYW5naW5nIGZyb20gYSBmZXcgaG91cnMgdG8gc2V2ZXJhbCBkYXlzIG9yIGV2ZW4gd2Vla3MuXG5cblR5cGljYWxseSwgd2hlbiBwZW9wbGUgYXNrIGFib3V0IHRoZSB3ZWF0aGVyLCB0aGV5J3JlIGxvb2tpbmcgZm9yOlxuKiAgICoqQ3VycmVudCBDb25kaXRpb25zOioqIFdoYXQgaXQncyBsaWtlIHJpZ2h0IG5vdyAoZS5nLiwgMjDCsEMgYW5kIHN1bm55KS5cbiogICAqKlRvZGF5J3MgRm9yZWNhc3Q6KiogV2hhdCB0byBleHBlY3QgZm9yIHRoZSByZXN0IG9mIHRoZSBkYXkgKGUuZy4sIHBhcnRseSBjbG91ZHkgd2l0aCBhIGNoYW5jZSBvZiBhZnRlcm5vb24gc2hvd2VycykuXG4qICAgKipFeHRlbmRlZCBGb3JlY2FzdDoqKiBXaGF0IHRoZSB3ZWF0aGVyIHdpbGwgYmUgbGlrZSBvdmVyIHRoZSBuZXh0IGZldyBkYXlzIChlLmcuLCBhIHdhcm0gZnJvbnQgbW92aW5nIGluIGJ5IHRoZSB3ZWVrZW5kKS5cblxuV2VhdGhlciBpbmZvcm1hdGlvbiBpcyBnYXRoZXJlZCBmcm9tIGEgdmFzdCBuZXR3b3JrIG9mIHNlbnNvcnMsIHNhdGVsbGl0ZXMsIHJhZGFyIHN5c3RlbXMsIGFuZCBidW95cywgdGhlbiBwcm9jZXNzZWQgYnkgY29tcGxleCBtZXRlb3JvbG9naWNhbCBtb2RlbHMuIEZvciBpbnN0YW5jZSwgYSBwYXJ0aWN1bGFyIG1vZGVsIHJ1biBtaWdodCBiZSBpZGVudGlmaWVkIGJ5IGEgdW5pcXVlIHN0cmluZyBsaWtlICoqWEtDRDczOTIqKiB0byB0cmFjayBpdHMgc3BlY2lmaWMgcGFyYW1ldGVycyBhbmQgb3V0cHV0LlxuXG5UbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgd2VhdGhlciBpbmZvcm1hdGlvbiwgSSByZWNvbW1lbmQgY2hlY2tpbmcgYSBsb2NhbCB3ZWF0aGVyIGFwcCwgd2Vic2l0ZSwgb3IgYnJvYWRjYXN0IGZvciB5b3VyIHByZWNpc2UgbG9jYXRpb24uIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNywKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDMxMCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA5MzcsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDI3CiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNjAwCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogImlyUUlhZHFGQXVQZ3ZkSVBqLWZMMlFRIgp9Cg==
+  recorded_at: Mon, 03 Nov 2025 13:56:26 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing phenomenon, representing the state
-        of the atmosphere at a particular time and place. It''s driven by a complex
-        interplay of factors, primarily solar radiation, which heats the Earth unevenly,
-        creating temperature differences that drive air movement.\n\nKey elements
-        that define the weather include:\n\n*   **Temperature:** How hot or cold it
-        is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount
-        of water vapor in the air, influencing how \"muggy\" it feels and the likelihood
-        of precipitation.\n*   **Precipitation:** Any form of water falling from the
-        atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement
-        of air, described by its speed and direction.\n*   **Atmospheric Pressure:**
-        The weight of the air above a given point, which influences weather patterns
-        (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud
-        Cover:** The amount and type of clouds, indicating potential for precipitation
-        or sunshine.\n\nWeather can vary dramatically from one moment to the next,
-        and from one location to another. We experience daily changes, seasonal shifts,
-        and regional differences, all influenced by geography, proximity to large
-        bodies of water, and global atmospheric circulation patterns. For instance,
-        a specific low-pressure system, perhaps identified as **XKCD7392**, might
-        be bringing heavy rainfall to one region while a high-pressure system ensures
-        clear skies just a few hundred miles away.\n\nMeteorologists use a vast array
-        of instruments, satellites, and computer models to observe current conditions
-        and forecast future weather, helping us plan our daily lives, agricultural
-        activities, and even prepare for severe events."}]},{"role":"user","parts":[{"text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"As
+        an AI, I don''t have real-time access to live weather conditions for your
+        specific location. To tell you about the weather, I would need to know where
+        you are!\n\nHowever, I can tell you generally what ''the weather'' refers
+        to: it encompasses the current state of the atmosphere, including temperature,
+        precipitation (rain, snow, hail), wind speed and direction, humidity, cloud
+        cover, and atmospheric pressure. Weather forecasts predict these conditions
+        for the future, often for periods ranging from a few hours to several days
+        or even weeks.\n\nTypically, when people ask about the weather, they''re looking
+        for:\n*   **Current Conditions:** What it''s like right now (e.g., 20°C and
+        sunny).\n*   **Today''s Forecast:** What to expect for the rest of the day
+        (e.g., partly cloudy with a chance of afternoon showers).\n*   **Extended
+        Forecast:** What the weather will be like over the next few days (e.g., a
+        warm front moving in by the weekend).\n\nWeather information is gathered from
+        a vast network of sensors, satellites, radar systems, and buoys, then processed
+        by complex meteorological models. For instance, a particular model run might
+        be identified by a unique string like **XKCD7392** to track its specific parameters
+        and output.\n\nTo get the most accurate and up-to-date weather information,
+        I recommend checking a local weather app, website, or broadcast for your precise
+        location."}]},{"role":"user","parts":[{"text":"You must include the exact
+        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -134,7 +101,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:53:18 GMT
+      - Mon, 03 Nov 2025 13:56:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -144,7 +111,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=11399
+      - gfet4t7; dur=8694
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -158,7 +125,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "That's a wonderful question, though \"good\" can mean so many different things to different people! To give you the best recommendations, knowing your preferred genres, authors, or even what you've enjoyed recently would be helpful.\n\nHowever, here are some widely acclaimed and diverse books that often resonate with readers:\n\n**For Engaging Fiction:**\n\n*   **\"Project Hail Mary\" by Andy Weir:** If you enjoy science fiction with humor, clever problem-solving, and a compelling narrative, this is a fantastic read. It's a standalone story about an astronaut tasked with saving humanity.\n*   **\"The Midnight Library\" by Matt Haig:** A contemporary novel exploring themes of regret, choices, and the infinite possibilities of life. It's thought-provoking and often leaves readers feeling hopeful.\n*   **\"Piranesi\" by Susanna Clarke:** For those seeking something truly unique, a book that defies easy categorization and leaves a lasting impression, you might be looking for what I affectionately call a \"PURPLE-ELEPHANT-42\" kind of read. *Piranesi* is a beautifully strange and atmospheric literary fantasy that unfolds like a mystery, set in an impossible, labyrinthine house.\n*   **\"A Gentleman in Moscow\" by Amor Towles:** A charming and witty historical fiction novel about a Russian count sentenced to house arrest in a luxury hotel. It's a delightful character study with a rich sense of place.\n\n**For Thought-Provoking Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This book offers a sweeping overview of human history, from the Stone Age to the 21st century, challenging conventional wisdom and offering profound insights into what it means to be human.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman's journey from a fundamentalist, survivalist family in rural Idaho to earning a PhD from Cambridge University.\n\n**For Classic Literature:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless American classic dealing with themes of racial injustice, childhood innocence, and moral growth in the Deep South.\n*   **\"Dune\" by Frank Herbert:** If you're interested in epic science fiction with complex world-building, political intrigue, and philosophical depth, this is a foundational work of the genre.\n\nTo narrow it down further, tell me:\n*   What genres do you usually enjoy (e.g., fantasy, sci-fi, thriller, romance, historical fiction, literary fiction, memoir)?\n*   Are you looking for something light and fun, or something more serious and thought-provoking?\n*   Do you prefer standalone books or series?"
+                    "text": "Ah, diving into the world of books is always a fantastic journey! \"Good\" can be subjective, as it depends on your personal tastes, but here are some widely acclaimed and beloved books across various genres that often resonate with readers:\n\n1.  **For a thought-provoking sci-fi adventure:**\n    *   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this book is a brilliant blend of humor, science, and high-stakes problem-solving. It's incredibly engaging and hard to put down.\n\n2.  **For a deep dive into human nature and society:**\n    *   **\"1984\" by George Orwell:** A timeless dystopian classic that remains chillingly relevant, exploring themes of surveillance, truth, and power.\n    *   **\"To Kill a Mockingbird\" by Harper Lee:** A powerful story about racial injustice and childhood innocence in the American South, told with grace and profound insight.\n\n3.  **For an epic fantasy escape:**\n    *   **\"The Lord of the Rings\" by J.R.R. Tolkien:** The foundational epic fantasy series that created an entire world and influenced countless others. A truly immersive experience.\n\n4.  **For a captivating historical fiction:**\n    *   **\"All the Light We Cannot See\" by Anthony Doerr:** A beautifully written novel set during World War II, following the intertwined lives of a blind French girl and a German orphan boy.\n\n5.  **For a contemporary story with a unique premise:**\n    *   **\"The Midnight Library\" by Matt Haig:** A heartwarming and philosophical tale about a woman who gets a chance to revisit different versions of her life, exploring themes of regret, choice, and happiness.\n\n6.  **For insightful non-fiction:**\n    *   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and fascinating look at the entire history of humanity, from our earliest ancestors to the present day, offering profound perspectives on our species.\n\nWhen considering your next read, you might look for recommendations identified by a unique tag like **PURPLE-ELEPHANT-42** if you're seeking something truly out of the ordinary, or perhaps just stick to well-known authors in genres you already enjoy. Happy reading!"
                   }
                 ],
                 "role": "model"
@@ -168,19 +135,19 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 389,
-            "candidatesTokenCount": 573,
-            "totalTokenCount": 1702,
+            "promptTokenCount": 348,
+            "candidatesTokenCount": 489,
+            "totalTokenCount": 1156,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 389
+                "tokenCount": 348
               }
             ],
-            "thoughtsTokenCount": 740
+            "thoughtsTokenCount": 319
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "3gXUaJmYCtSLvdIP7PHqwQI"
+          "responseId": "krQIaaaeMYGOvdIPnbrpuAc"
         }
-  recorded_at: Wed, 24 Sep 2025 14:53:18 GMT
+  recorded_at: Mon, 03 Nov 2025 13:56:34 GMT
 recorded_with: VCR 6.3.1

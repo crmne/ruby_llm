@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 20 Oct 2025 19:22:55 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Sun, 02 Nov 2025 21:30:26 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:26 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:22:55 GMT
+      - Sun, 02 Nov 2025 21:30:27 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "Ct0BAePx/15+wAAsIxILv+6yniX+Xs35nVHBb3yUwal+RGIJlpPOPLqEaKigZehfhDF2irBGc0R8GZ9V0KgUcc7FrDnRHTbfRfWc3VNL6+z8bPq6pq400XKJbYm46QqhnGQjZ7tMvmiGNRkEkVSxOrCnxVCtdWPy1b0S0W7uB0n50V46DFFrkRM9GHQ4cp2w/5pc8VBzWtyzqUVC0oAlTOvw751iVM0qEo7urhygfYcf+Je3WKVDk2+0Xs9nmxP9YBiRSX8QHl5eByy4pETAv8W+tUEtVlMbaVL11vxaZjQ="
+                    "thoughtSignature": "CuoBAePx/16KZzYDasD62nSIBssdoTHltsrLcEOcBd8w68FGk+ZXtMYHJw00oxKzQKgtriuQ4dVOCn9urFveixwA2jVphSG8RolooUUEtTQL7U2q2Mz3i4BlhmJ5rZdljtFb/qD4konCqxekaX4GRZ9urIhaMAA6sE5CMhdo0q4llpgBYRxqY4GtPXIwB/9/niu5sBd0Y866RZuKu2sJm6z3lfr8C0zuRVMWpjNmSom739JTnIZwohK+Uym5lyoT3Cwf7o20MnklAdk/lreCHOfaV5jqbC1z7L2cL2yIeNzHKPuwPYq1fOeuvH8K"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.62592826570783344
+              "avgLogprobs": -0.82807193483625141
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 74,
+            "totalTokenCount": 77,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,13 +140,13 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 45
+            "thoughtsTokenCount": 48
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:22:55.159161Z",
-          "responseId": "D4z2aLnbCa-wmPUPuaKD-As"
+          "createTime": "2025-11-02T21:30:26.889767Z",
+          "responseId": "cs0HaaenNtObvdIPq5tr"
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -167,14 +167,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 20 Oct 2025 19:22:55 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Sun, 02 Nov 2025 21:30:27 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -199,18 +199,18 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:55 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"7aca0691-34e8-41a6-bb10-edcf8c83bdda","response":{"name":"7aca0691-34e8-41a6-bb10-edcf8c83bdda","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -235,7 +235,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:22:56 GMT
+      - Sun, 02 Nov 2025 21:30:27 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -263,18 +263,18 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.26087221503257751
+              "avgLogprobs": -0.12504205107688904
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 91,
+            "promptTokenCount": 47,
             "candidatesTokenCount": 8,
-            "totalTokenCount": 99,
+            "totalTokenCount": 55,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 91
+                "tokenCount": 47
               }
             ],
             "candidatesTokensDetails": [
@@ -285,8 +285,8 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:22:55.864694Z",
-          "responseId": "D4z2aLbjNK6ArNcPzaSx0QM"
+          "createTime": "2025-11-02T21:30:27.573909Z",
+          "responseId": "c80HadWDI4G2mPUP8JnfiAs"
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:56 GMT
+  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
 recorded_with: VCR 6.3.1

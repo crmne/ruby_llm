@@ -52,8 +52,10 @@ module RubyLLM
       def acts_as_chat_declaration
         params = []
 
-        add_association_params(params, :messages, message_table_name, message_model_name, plural: true)
-        add_association_params(params, :model, model_table_name, model_model_name)
+        add_association_params(params, :messages, message_table_name, message_model_name,
+                               owner_table: chat_table_name, plural: true)
+        add_association_params(params, :model, model_table_name, model_model_name,
+                               owner_table: chat_table_name)
 
         "acts_as_chat#{" #{params.join(', ')}" if params.any?}"
       end
@@ -61,9 +63,12 @@ module RubyLLM
       def acts_as_message_declaration
         params = []
 
-        add_association_params(params, :chat, chat_table_name, chat_model_name)
-        add_association_params(params, :tool_calls, tool_call_table_name, tool_call_model_name, plural: true)
-        add_association_params(params, :model, model_table_name, model_model_name)
+        add_association_params(params, :chat, chat_table_name, chat_model_name,
+                               owner_table: message_table_name)
+        add_association_params(params, :tool_calls, tool_call_table_name, tool_call_model_name,
+                               owner_table: message_table_name, plural: true)
+        add_association_params(params, :model, model_table_name, model_model_name,
+                               owner_table: message_table_name)
 
         "acts_as_message#{" #{params.join(', ')}" if params.any?}"
       end
@@ -71,7 +76,8 @@ module RubyLLM
       def acts_as_model_declaration
         params = []
 
-        add_association_params(params, :chats, chat_table_name, chat_model_name, plural: true)
+        add_association_params(params, :chats, chat_table_name, chat_model_name,
+                               owner_table: model_table_name, plural: true)
 
         "acts_as_model#{" #{params.join(', ')}" if params.any?}"
       end
@@ -79,7 +85,8 @@ module RubyLLM
       def acts_as_tool_call_declaration
         params = []
 
-        add_association_params(params, :message, message_table_name, message_model_name)
+        add_association_params(params, :message, message_table_name, message_model_name,
+                               owner_table: tool_call_table_name)
 
         "acts_as_tool_call#{" #{params.join(', ')}" if params.any?}"
       end
@@ -120,6 +127,12 @@ module RubyLLM
         false
       end
 
+      def mysql?
+        ::ActiveRecord::Base.connection.adapter_name.downcase.include?('mysql')
+      rescue StandardError
+        false
+      end
+
       def table_exists?(table_name)
         ::ActiveRecord::Base.connection.table_exists?(table_name)
       rescue StandardError
@@ -128,13 +141,21 @@ module RubyLLM
 
       private
 
-      def add_association_params(params, default_assoc, table_name, model_name, plural: false)
+      def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false) # rubocop:disable Metrics/ParameterLists
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
 
-        return if assoc == default_assoc
+        default_foreign_key = "#{default_assoc}_id"
+        # has_many/has_one: foreign key is on the associated table pointing back to owner
+        # belongs_to:       foreign key is on the owner table pointing to associated table
+        foreign_key = if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
+                        "#{owner_table.singularize}_id"
+                      else # belongs_to
+                        "#{table_name.singularize}_id"
+                      end
 
-        params << "#{default_assoc}: :#{assoc}"
+        params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
+        params << "#{default_assoc}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
 
       # Convert namespaced model names to proper table names

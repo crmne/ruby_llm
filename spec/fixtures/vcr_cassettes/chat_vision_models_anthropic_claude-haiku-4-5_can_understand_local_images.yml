@@ -1,0 +1,92 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"#<RubyLLM::Content:0x00007fdca4bbac78>"}]}],"stream":false,"max_tokens":64000}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 02 Nov 2025 19:48:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-11-02T19:48:29Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-11-02T19:48:31Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-11-02T19:48:29Z'
+      Retry-After:
+      - '32'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-11-02T19:48:29Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '2626'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_016Vk4MXDB7NLpQjHFEU2ex6","type":"message","role":"assistant","content":[{"type":"text","text":"I
+        see you''ve shared what appears to be a Ruby object reference. This looks
+        like an internal representation from RubyLLM (a Ruby-based language model
+        library).\n\nHowever, I''m not able to interact with or inspect actual Ruby
+        objects. What I can help with:\n\n1. **If you have a question about RubyLLM**
+        - I can help explain how to use it, troubleshoot issues, or discuss Ruby integration
+        with LLMs\n\n2. **If you want to debug this object** - You could:\n   - Call
+        `.inspect` or `.to_s` on it in your Ruby code to see its contents\n   - Print
+        its instance variables with `instance_variables`\n   - Check the RubyLLM documentation
+        for what `Content` objects contain\n\n3. **If you''re trying to share code**
+        - Feel free to paste the actual code or the contents of this object\n\nWhat
+        would you like help with?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":29,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":206,"service_tier":"standard"}}'
+  recorded_at: Sun, 02 Nov 2025 19:48:31 GMT
+recorded_with: VCR 6.3.1

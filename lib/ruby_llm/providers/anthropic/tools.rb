@@ -53,14 +53,13 @@ module RubyLLM
         end
 
         def function_for(tool)
+          input_schema = tool.params_schema ||
+                         RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
+
           declaration = {
             name: tool.name,
             description: tool.description,
-            input_schema: {
-              type: 'object',
-              properties: clean_parameters(tool.parameters),
-              required: required_parameters(tool.parameters)
-            }
+            input_schema: input_schema || default_input_schema
           }
 
           return declaration if tool.provider_params.empty?
@@ -95,17 +94,14 @@ module RubyLLM
           tool_calls.empty? ? nil : tool_calls
         end
 
-        def clean_parameters(parameters)
-          parameters.transform_values do |param|
-            {
-              type: param.type,
-              description: param.description
-            }.compact
-          end
-        end
-
-        def required_parameters(parameters)
-          parameters.select { |_, param| param.required }.keys
+        def default_input_schema
+          {
+            'type' => 'object',
+            'properties' => {},
+            'required' => [],
+            'additionalProperties' => false,
+            'strict' => true
+          }
         end
       end
     end

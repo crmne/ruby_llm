@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Execute
         the halting tool"}],"stream":false,"tools":[{"type":"function","function":{"name":"halting","description":"A
-        tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[]}}}]}'
+        tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:02:53 GMT
+      - Mon, 03 Nov 2025 14:01:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '452'
+      - '462'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '466'
+      - '496'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -79,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CJLJ6IFLsc1mG5KSxgiGgHNe4qgsg",
+          "id": "chatcmpl-CXpPFTgDxPzX1y5z5m9nMIb4TxogN",
           "object": "chat.completion",
-          "created": 1758726172,
+          "created": 1762178465,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -91,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_GRYIZOGVBbO4CYrCjMngeNzw",
+                    "id": "call_ECWCPLrLx23qXfpums3BhK9j",
                     "type": "function",
                     "function": {
                       "name": "halting",
@@ -122,7 +122,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_7c233bf9d1"
+          "system_fingerprint": "fp_438cf0ae7a"
         }
-  recorded_at: Wed, 24 Sep 2025 15:02:53 GMT
+  recorded_at: Mon, 03 Nov 2025 14:01:06 GMT
 recorded_with: VCR 6.3.1

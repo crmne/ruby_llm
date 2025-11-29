@@ -9,7 +9,7 @@ http_interactions:
         by step."}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -34,7 +34,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 24 Sep 2025 15:06:31 GMT
+      - Mon, 03 Nov 2025 14:04:33 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -44,23 +44,12 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3207
+      - gfet4t7; dur=2301
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
-      encoding: UTF-8
-      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"Let's
-        think step by step:\\n\\n1.  You have the number 2.\\n2.  You want to add
-        another 2 to it.\\n3.  If you count two items, and then count two more items,\"}],\"role\":
-        \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
-        50,\"totalTokenCount\": 209,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        13}],\"thoughtsTokenCount\": 146},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
-        \"9QjUaK6HEY6lkdUP0erwmA0\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
-        {\"parts\": [{\"text\": \" you will have a total of four items.\\n\\nSo, 2
-        + 2 = **4**.\"}],\"role\": \"model\"},\"finishReason\": \"STOP\",\"index\":
-        0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
-        71,\"totalTokenCount\": 230,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
-        13}],\"thoughtsTokenCount\": 146},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
-        \"9QjUaK6HEY6lkdUP0erwmA0\"}\r\n\r\n"
-  recorded_at: Wed, 24 Sep 2025 15:06:32 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ZGF0YTogeyJjYW5kaWRhdGVzIjogW3siY29udGVudCI6IHsicGFydHMiOiBbeyJ0ZXh0IjogIlRvIGNhbGN1bGF0ZSAyKzIsIHdlIGNhbiB0aGluayBvZiBpdCBpbiBhIGZldyB3YXlzOlxuXG4xLiAgKipDb3VudGluZzoqKlxuICAgICogICBTdGFydCB3aXRoIDIgaXRlbXMgKGxpa2Ug8J+NjiDwn42OKS5cbiAgICAqICAgQWRkIDIgbW9yZSBpdGVtcyAoIn1dLCJyb2xlIjogIm1vZGVsIn0sImluZGV4IjogMH1dLCJ1c2FnZU1ldGFkYXRhIjogeyJwcm9tcHRUb2tlbkNvdW50IjogMTMsImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNTAsInRvdGFsVG9rZW5Db3VudCI6IDIyMCwicHJvbXB0VG9rZW5zRGV0YWlscyI6IFt7Im1vZGFsaXR5IjogIlRFWFQiLCJ0b2tlbkNvdW50IjogMTN9XSwidGhvdWdodHNUb2tlbkNvdW50IjogMTU3fSwibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLCJyZXNwb25zZUlkIjogImI3WUlhYUt0TUxycWtkVVBoXzdsdUFZIn0NCg0KZGF0YTogeyJjYW5kaWRhdGVzIjogW3siY29udGVudCI6IHsicGFydHMiOiBbeyJ0ZXh0IjogImxpa2Ug8J+NjiDwn42OKS5cbiAgICAqICAgQ291bnQgYWxsIHRoZSBpdGVtcyB0b2dldGhlcjog8J+NjiDwn42OIPCfjY4g8J+Nji4gWW91IGhhdmUgNCBpdGVtcy5cblxuMi4gICoqTnVtYmVyIExpbmU6KipcbiAgICAqICAgU3RhcnQgYXQgdGhlIG51bWJlciAyIG9uIn1dLCJyb2xlIjogIm1vZGVsIn0sImluZGV4IjogMH1dLCJ1c2FnZU1ldGFkYXRhIjogeyJwcm9tcHRUb2tlbkNvdW50IjogMTMsImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMTAwLCJ0b3RhbFRva2VuQ291bnQiOiAyNzAsInByb21wdFRva2Vuc0RldGFpbHMiOiBbeyJtb2RhbGl0eSI6ICJURVhUIiwidG9rZW5Db3VudCI6IDEzfV0sInRob3VnaHRzVG9rZW5Db3VudCI6IDE1N30sIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwicmVzcG9uc2VJZCI6ICJiN1lJYWFLdE1McnFrZFVQaF83bHVBWSJ9DQoNCmRhdGE6IHsiY2FuZGlkYXRlcyI6IFt7ImNvbnRlbnQiOiB7InBhcnRzIjogW3sidGV4dCI6ICIgYSBudW1iZXIgbGluZS5cbiAgICAqICAgTW92ZSAyIHN0ZXBzIHRvIHRoZSByaWdodCAoYmVjYXVzZSB5b3UgYXJlIGFkZGluZykuXG4gICAgKiAgIFlvdSBsYW5kIG9uIDQuXG5cblRoZXJlZm9yZSwgMiArIDIgPSAqKjQqKi4ifV0sInJvbGUiOiAibW9kZWwifSwiZmluaXNoUmVhc29uIjogIlNUT1AiLCJpbmRleCI6IDB9XSwidXNhZ2VNZXRhZGF0YSI6IHsicHJvbXB0VG9rZW5Db3VudCI6IDEzLCJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDE0MywidG90YWxUb2tlbkNvdW50IjogMzEzLCJwcm9tcHRUb2tlbnNEZXRhaWxzIjogW3sibW9kYWxpdHkiOiAiVEVYVCIsInRva2VuQ291bnQiOiAxM31dLCJ0aG91Z2h0c1Rva2VuQ291bnQiOiAxNTd9LCJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsInJlc3BvbnNlSWQiOiAiYjdZSWFhS3RNTHJxa2RVUGhfN2x1QVkifQ0KDQo=
+  recorded_at: Mon, 03 Nov 2025 14:04:34 GMT
 recorded_with: VCR 6.3.1

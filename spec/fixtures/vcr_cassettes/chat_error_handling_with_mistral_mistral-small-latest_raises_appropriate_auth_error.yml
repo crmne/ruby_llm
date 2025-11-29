@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer invalid-key
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:48:55 GMT
+      - Mon, 03 Nov 2025 13:54:13 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -33,9 +33,9 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01997c32-ea0f-771e-9379-a6de14bd45ea'
+      - '019a49ff-33b5-74ae-9c86-569391cc6bb0'
       X-Kong-Request-Id:
-      - '01997c32-ea0f-771e-9379-a6de14bd45ea'
+      - '019a49ff-33b5-74ae-9c86-569391cc6bb0'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Response-Latency:
@@ -46,7 +46,9 @@ http_interactions:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Alt-Svc:
@@ -54,5 +56,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"detail":"Unauthorized"}'
-  recorded_at: Wed, 24 Sep 2025 14:48:55 GMT
+  recorded_at: Mon, 03 Nov 2025 13:54:13 GMT
 recorded_with: VCR 6.3.1

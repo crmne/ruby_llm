@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer invalid-key
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:48:55 GMT
+      - Mon, 03 Nov 2025 13:54:12 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 54a2897752c4ac366e93dc4713869c82
+      - 12baf8173cbc09d374f0814b663453d8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,11 +46,16 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=oV_pe3P1974._CiBqkmR2WFEvOZn7IGamgqPUAQuuNk-1762178052-1.0.1.1-z1jNzjEieT4Qf2QRLrhvquatJzkonWiUtS2JCIynE.7o2vTmwyFjc2V_3QgNmIRKRiHHD3mHFeFH4i4BCwIknbOkSw4SXxr6y7fPMuKQixO5PzPMx8aOpCEIgw7uAHQtIskCD5BO7RMKO0M3w1Eq12V9gksmJGCKQKLp0fw8priyzgYuRNNfr6LaC8IPQzcA"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=oV_pe3P1974._CiBqkmR2WFEvOZn7IGamgqPUAQuuNk-1762178052-1.0.1.1-z1jNzjEieT4Qf2QRLrhvquatJzkonWiUtS2JCIynE.7o2vTmwyFjc2V_3QgNmIRKRiHHD3mHFeFH4i4BCwIknbOkSw4SXxr6y7fPMuKQixO5PzPMx8aOpCEIgw7uAHQtIskCD5BO7RMKO0M3w1Eq12V9gksmJGCKQKLp0fw8priyzgYuRNNfr6LaC8IPQzcA;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Authentication Fails, Your api key: ****-key is
         invalid","type":"authentication_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Wed, 24 Sep 2025 14:48:55 GMT
+  recorded_at: Mon, 03 Nov 2025 13:54:12 GMT
 recorded_with: VCR 6.3.1

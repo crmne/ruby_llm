@@ -5,10 +5,11 @@ http_interactions:
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
+        the programming language Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:52:53 GMT
+      - Sun, 02 Nov 2025 20:02:23 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2618
+      - gfet4t7; dur=1401
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,7 +54,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The creator of the **Ruby programming language** is **Yukihiro \"Matz\" Matsumoto**."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**.\n\nHe is often referred to by his nickname, **Matz**."
                   }
                 ],
                 "role": "model"
@@ -63,32 +64,34 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 8,
-            "candidatesTokenCount": 20,
-            "totalTokenCount": 253,
+            "promptTokenCount": 11,
+            "candidatesTokenCount": 28,
+            "totalTokenCount": 133,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 8
+                "tokenCount": 11
               }
             ],
-            "thoughtsTokenCount": 225
+            "thoughtsTokenCount": 94
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "xQXUaOfINuqWvdIP7aSf4QY"
+          "responseId": "z7gHaYTzHNnRnsEPo7GLkAg"
         }
-  recorded_at: Wed, 24 Sep 2025 14:52:53 GMT
+  recorded_at: Sun, 02 Nov 2025 20:02:23 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"The
-        creator of the **Ruby programming language** is **Yukihiro \"Matz\" Matsumoto**."}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
+        the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
+        of the programming language Ruby is **Yukihiro Matsumoto**.\n\nHe is often
+        referred to by his nickname, **Matz**."}]},{"role":"user","parts":[{"text":"What
         year did he create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -109,7 +112,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:52:56 GMT
+      - Sun, 02 Nov 2025 20:02:24 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,7 +122,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2168
+      - gfet4t7; dur=901
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -133,7 +136,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto began designing Ruby in **1993**.\n\nThe first public release of Ruby, version 0.95, was in **December 1995**."
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**, but it was first released publicly in **December 1995**."
                   }
                 ],
                 "role": "model"
@@ -143,19 +146,19 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 37,
-            "candidatesTokenCount": 39,
-            "totalTokenCount": 213,
+            "promptTokenCount": 48,
+            "candidatesTokenCount": 34,
+            "totalTokenCount": 109,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 37
+                "tokenCount": 48
               }
             ],
-            "thoughtsTokenCount": 137
+            "thoughtsTokenCount": 27
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "yAXUaPvNCNHEsgLxzoa4DQ"
+          "responseId": "0LgHaYGdF7TkvdIP0dqimQk"
         }
-  recorded_at: Wed, 24 Sep 2025 14:52:56 GMT
+  recorded_at: Sun, 02 Nov 2025 20:02:24 GMT
 recorded_with: VCR 6.3.1

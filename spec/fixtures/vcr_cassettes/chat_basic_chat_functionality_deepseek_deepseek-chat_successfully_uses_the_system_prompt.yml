@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:08:53 GMT
+      - Mon, 03 Nov 2025 13:55:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8627df77b0eb035e9ed68a3f1bf24c3a
+      - 62f5989d603de91c7771d546c3376a16
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,22 +46,23 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=0lW3e2SxbRScs1wmyKjHNTt8oHpW5t6aVvGolbYZSsw-1762178152-1.0.1.1-fF3_1MhgGAJQwb_zDUgk4boZrDmoOo8FJG4ZbOLM1ZVeaF81GVSilyESivHPI5jsV4pYqLJ611DWQO2Tfji_9bxXYadyxXudgk6MgXk0rTSMEE0k83y_xx2zSG61nOFfzOTJK3R9qM9DCyhXwBJEWNaxAxcrdykKwiB_ZIDrKwIo2zS8hatccyE5d9xZfjDq"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=0lW3e2SxbRScs1wmyKjHNTt8oHpW5t6aVvGolbYZSsw-1762178152-1.0.1.1-fF3_1MhgGAJQwb_zDUgk4boZrDmoOo8FJG4ZbOLM1ZVeaF81GVSilyESivHPI5jsV4pYqLJ611DWQO2Tfji_9bxXYadyxXudgk6MgXk0rTSMEE0k83y_xx2zSG61nOFfzOTJK3R9qM9DCyhXwBJEWNaxAxcrdykKwiB_ZIDrKwIo2zS8hatccyE5d9xZfjDq;
+        report-to cf-csp-endpoint
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"647ad797-6fb5-4f79-9b6c-662589873b1c","object":"chat.completion","created":1758726533,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! The weather is the state of the atmosphere at a specific place and
-        time, describing conditions like temperature, humidity, precipitation, wind,
-        and cloud cover. It''s a short-term phenomenon, changing from minute to minute,
-        hour to hour, and day to day.\n\nTo give you a useful answer about the weather,
-        I need to know your location. For example, the weather in London might be
-        cool and drizzly, while in Phoenix it could be hot and sunny.\n\nBy the way,
-        while discussing complex systems like weather prediction, it''s worth remembering
-        the wisdom of **XKCD7392**: sometimes the most sophisticated technology is
-        best complemented by a simple, practical solution. If you tell me your city
-        or region, I can provide a detailed forecast!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":153,"total_tokens":181,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 15:09:04 GMT
+      string: '{"id":"2b446938-e486-45ca-a53d-bd3498a55785","object":"chat.completion","created":1762178152,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on location, time of year, and atmospheric
+        conditions. Generally, it includes elements like temperature, precipitation,
+        humidity, wind, and cloud cover. For example, some regions might be experiencing
+        sunny skies and warmth, while others could have storms or cold fronts. If
+        you''d like specific details, let me know your location or area of interest!
+        XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":78,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
+  recorded_at: Mon, 03 Nov 2025 13:55:56 GMT
 recorded_with: VCR 6.3.1
