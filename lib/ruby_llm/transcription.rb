@@ -3,7 +3,7 @@
 module RubyLLM
   # Represents a transcription of audio content.
   class Transcription
-    attr_reader :text, :model, :language, :duration, :segments, :input_tokens, :output_tokens
+    attr_reader :text, :model, :language, :duration, :segments, :words, :input_tokens, :output_tokens
 
     def initialize(text:, model:, **attributes)
       @text = text
@@ -11,6 +11,7 @@ module RubyLLM
       @language = attributes[:language]
       @duration = attributes[:duration]
       @segments = attributes[:segments]
+      @words = attributes[:words]
       @input_tokens = attributes[:input_tokens]
       @output_tokens = attributes[:output_tokens]
     end

@@ -23,25 +23,25 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:54:48 GMT
+      - Sat, 29 Nov 2025 17:50:25 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
-      - '427'
+      - '428'
       Connection:
       - keep-alive
       Vary:
       - Origin
       X-Ratelimit-Limit-Requests:
-      - '200'
+      - '500'
       X-Ratelimit-Limit-Tokens:
-      - '400000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '199'
+      - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '399999'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
-      - 300ms
+      - 120ms
       X-Ratelimit-Reset-Tokens:
       - 0s
       X-Request-Id:
@@ -70,11 +70,11 @@ http_interactions:
       string: |
         {
             "error": {
-                "message": "Request too large for gpt-4.1-nano-long-context in organization org-eLwBCUaB2ePnSi6dlToWtHZK on tokens per min (TPM): Limit 400000, Requested 2500013. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
+                "message": "Request too large for gpt-4.1-nano-long-context in organization org-GM8ZM18dht663WBAYqnFTc0t on tokens per min (TPM): Limit 1000000, Requested 2500013. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
                 "type": "tokens",
                 "param": null,
                 "code": "rate_limit_exceeded"
             }
         }
-  recorded_at: Mon, 03 Nov 2025 13:54:48 GMT
+  recorded_at: Sat, 29 Nov 2025 17:50:25 GMT
 recorded_with: VCR 6.3.1

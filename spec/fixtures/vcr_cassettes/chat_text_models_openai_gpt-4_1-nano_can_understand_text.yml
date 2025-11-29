@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:47:59 GMT
+      - Sat, 29 Nov 2025 17:49:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,25 +37,25 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '428'
+      - '201'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - proj_aOA91VEqh4zLCTLH6ZEONmZL
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '455'
+      - '383'
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '199975'
+      - '1999975'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -79,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpCYmgxOu00oaauiLrsIBAVTzw7p",
+          "id": "chatcmpl-ChJMzDbK2kYWjQu8Ein0QoyVkDaY4",
           "object": "chat.completion",
-          "created": 1762177678,
+          "created": 1764438597,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -112,9 +112,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_eb30fd4545"
         }
-  recorded_at: Mon, 03 Nov 2025 13:47:59 GMT
+  recorded_at: Sat, 29 Nov 2025 17:49:57 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -143,7 +143,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:48:00 GMT
+      - Sat, 29 Nov 2025 17:49:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,25 +155,25 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '832'
+      - '311'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - proj_aOA91VEqh4zLCTLH6ZEONmZL
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '866'
+      - '447'
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '199932'
+      - '1999932'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 20ms
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -197,16 +197,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpCZCqJx6ZH42SVelG9HCiG3L9eN",
+          "id": "chatcmpl-ChJMzc4Y6rrWGVe3uTgoClOgPuoD5",
           "object": "chat.completion",
-          "created": 1762177679,
+          "created": 1764438597,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file \"ruby.xml\" contains an XML structure with a true statement: \"<truism>Ruby is the best</truism>\".",
+                "content": "The file \"ruby.xml\" contains the following XML content:\n\n```xml\n<truism>Ruby is the best</truism>\n```",
                 "refusal": null,
                 "annotations": []
               },
@@ -216,8 +216,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 85,
-            "completion_tokens": 27,
-            "total_tokens": 112,
+            "completion_tokens": 28,
+            "total_tokens": 113,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -230,7 +230,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_eb30fd4545"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:00 GMT
+  recorded_at: Sat, 29 Nov 2025 17:49:58 GMT
 recorded_with: VCR 6.3.1

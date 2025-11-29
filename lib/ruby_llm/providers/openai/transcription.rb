@@ -54,7 +54,7 @@ module RubyLLM
 
           usage = data['usage'] || {}
 
-          RubyLLM::Transcription.new(
+          attributes = {
             text: data['text'],
             model: model,
             language: data['language'],
@@ -62,7 +62,10 @@ module RubyLLM
             segments: data['segments'],
             input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
             output_tokens: usage['output_tokens'] || usage['completion_tokens']
-          )
+          }
+          attributes[:words] = data['words'] if data.key?('words')
+
+          RubyLLM::Transcription.new(**attributes)
         end
       end
     end
