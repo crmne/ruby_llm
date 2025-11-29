@@ -35,4 +35,35 @@ RSpec.describe RubyLLM::Transcription do
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
   end
+
+  describe 'timestamp granularities' do
+    it 'openai/whisper-1 returns words when timestamp_granularities includes word' do
+      transcription = RubyLLM.transcribe(
+        audio_path,
+        model: 'whisper-1',
+        provider: :openai,
+        timestamp_granularities: ['word'],
+        response_format: 'verbose_json'
+      )
+
+      expect(transcription.text).to be_a(String)
+      expect(transcription.text).not_to be_empty
+      expect(transcription.words).to be_a(Array)
+      expect(transcription.words).not_to be_empty
+      expect(transcription.words.first).to have_key('word')
+      expect(transcription.words.first).to have_key('start')
+      expect(transcription.words.first).to have_key('end')
+    end
+
+    it 'openai/whisper-1 does not return words without timestamp_granularities' do
+      transcription = RubyLLM.transcribe(
+        audio_path,
+        model: 'whisper-1',
+        provider: :openai
+      )
+
+      expect(transcription.text).to be_a(String)
+      expect(transcription.words).to be_nil
+    end
+  end
 end

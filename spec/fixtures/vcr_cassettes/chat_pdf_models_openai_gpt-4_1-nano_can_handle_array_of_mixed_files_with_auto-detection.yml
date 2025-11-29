@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:53:43 GMT
+      - Sat, 29 Nov 2025 17:50:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,31 +36,31 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2247'
+      - '1029'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - proj_aOA91VEqh4zLCTLH6ZEONmZL
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '2267'
+      - '1048'
       X-Ratelimit-Limit-Input-Images:
       - '50000'
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '2000000'
       X-Ratelimit-Remaining-Input-Images:
       - '49999'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '198463'
+      - '1998463'
       X-Ratelimit-Reset-Input-Images:
       - 1ms
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 461ms
+      - 46ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -82,42 +82,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-CXpI4bx4M4PtKR8bP0bjFhIYnxBWm",
-          "object": "chat.completion",
-          "created": 1762178020,
-          "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The files contain a sample PDF document consisting mainly of placeholder text (Lorem ipsum), which is commonly used as filler text in documents to demonstrate layout and typography. The content on the single page shown (page 1) includes a variety of sentences describing general topics such as facilisis, volutpat, and cursus, but it does not provide specific information, data, or images beyond the textual filler.\n\nSince the file is largely composed of generic, nonspecific text, it appears to be a test or placeholder document rather than an informational or data-driven file. \n\nWould you like a more detailed analysis, such as extracting specific data, or additional assistance with other files or pages you might have?",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 1004,
-            "completion_tokens": 136,
-            "total_tokens": 1140,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": "fp_438cf0ae7a"
-        }
-  recorded_at: Mon, 03 Nov 2025 13:53:43 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DaEpOSW04a05kSkRyS3kySXV5eFhjeFZseElESyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2NDQzODYxNiwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIlRoZSBwcm92aWRlZCBmaWxlIGlzIGEgc2FtcGxlIFBERiBkb2N1bWVudCBjb250YWluaW5nIHBsYWNlaG9sZGVyIHRleHQsIGNvbW1vbmx5IGtub3duIGFzIFwiTG9yZW0gaXBzdW0sXCIgd2hpY2ggaXMgb2Z0ZW4gdXNlZCBmb3IgZGVtb25zdHJhdGlvbiBwdXJwb3Nlcy4gVGhlIHRleHQgZGlzY3Vzc2VzIHZhcmlvdXMgdG9waWNzIHJlbGF0ZWQgdG8gZm9ybWF0dGluZyBhbmQgbGF5b3V0LCBidXQgaXQgZG9lcyBub3QgY29udGFpbiBzcGVjaWZpYyBvciBtZWFuaW5nZnVsIGNvbnRlbnQgYmV5b25kIHNlcnZpbmcgYXMgYSB2aXN1YWwgZmlsbGVyLlxuXG5TaW5jZSB0aGlzIGlzIGEgc2FtcGxlIGRvY3VtZW50LCBpdCBhcHBlYXJzIHRvIGJlIHVzZWQgdG8gaWxsdXN0cmF0ZSBkb2N1bWVudCBsYXlvdXQgb3IgZGVzaWduIHJhdGhlciB0aGFuIGNvbnZleWluZyBhbnkgc3Vic3RhbnRpdmUgaW5mb3JtYXRpb24uXG5cbklmIHlvdSBuZWVkIGFuYWx5c2lzIG9yIGluc2lnaHRzIHJlbGF0ZWQgdG8gdGhpcyBmaWxlIHNwZWNpZmljYWxseSwgcGxlYXNlIHNwZWNpZnkgd2hhdCBhc3BlY3RzIHlvdSdyZSBpbnRlcmVzdGVkIGlu4oCUc3VjaCBhcyBsYXlvdXQsIHN0cnVjdHVyZSwgb3IgYW55IGVtYmVkZGVkIGltYWdlcyBvciBncmFwaGljcyB0aGF0IG1heSBiZSBwYXJ0IG9mIHRoZSBmdWxsIGZpbGUgY29udGVudCBub3QgdmlzaWJsZSBoZXJlLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJsb2dwcm9icyI6IG51bGwsCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDEwMDQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxMjQsCiAgICAidG90YWxfdG9rZW5zIjogMTEyOCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogImZwX2ViMzBmZDQ1NDUiCn0K
+  recorded_at: Sat, 29 Nov 2025 17:50:17 GMT
 recorded_with: VCR 6.3.1
