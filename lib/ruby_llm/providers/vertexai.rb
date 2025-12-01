@@ -41,7 +41,7 @@ module RubyLLM
       def initialize_authorizer
         require 'googleauth'
         @authorizer = ::Google::Auth.get_application_default(
-          scope: [
+          [
             'https://www.googleapis.com/auth/cloud-platform',
             'https://www.googleapis.com/auth/generative-language.retriever'
           ]
