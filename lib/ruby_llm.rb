@@ -23,6 +23,7 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'gpustack' => 'GPUStack',
   'mistral' => 'Mistral',
+  'togetherai' => 'TogetherAI',
   'vertexai' => 'VertexAI',
   'pdf' => 'PDF',
   'UI' => 'UI'
@@ -100,6 +101,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
+RubyLLM::Provider.register :togetherai, RubyLLM::Providers::TogetherAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
