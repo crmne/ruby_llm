@@ -212,25 +212,25 @@ RSpec.describe RubyLLM::Providers::TogetherAI::Capabilities do
   describe '.capabilities_for' do
     it 'returns appropriate capabilities for chat models' do
       result = described_class.capabilities_for('meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo')
-      expect(result).to include('chat', 'tools')
+      expect(result).to include('chat', 'streaming', 'tools', 'json_mode')
       expect(result).not_to include('embeddings', 'images')
     end
 
     it 'returns appropriate capabilities for embedding models' do
       result = described_class.capabilities_for('BAAI/bge-large-en-v1.5')
       expect(result).to include('embeddings')
-      expect(result).not_to include('chat', 'tools')
+      expect(result).not_to include('chat', 'tools', 'streaming')
     end
 
     it 'returns appropriate capabilities for image models' do
       result = described_class.capabilities_for('black-forest-labs/FLUX.1-schnell')
       expect(result).to include('images')
-      expect(result).not_to include('chat', 'embeddings')
+      expect(result).not_to include('chat', 'embeddings', 'streaming')
     end
 
     it 'returns appropriate capabilities for vision models' do
       result = described_class.capabilities_for('meta-llama/Llama-4-Scout-17B-16E-Instruct')
-      expect(result).to include('chat', 'vision', 'tools')
+      expect(result).to include('chat', 'streaming', 'tools', 'json_mode', 'vision')
     end
   end
 

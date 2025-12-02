@@ -72,17 +72,29 @@ module RubyLLM
         end
 
         def format_content(content)
-          # Together.ai expects simple string content for most cases
-          case content
-          when String
-            content
-          when Array
-            # For multimodal content, extract text parts
-            text_parts = content.select { |part| part.is_a?(Hash) && part['type'] == 'text' }
-            text_parts.map { |part| part['text'] }.join(' ')
-          else
-            content.to_s
+          return content.value if content.is_a?(RubyLLM::Content::Raw)
+          return content unless content.is_a?(Content)
+
+          # Together.ai expects simple string content for text-only messages
+          parts = []
+          parts << content.text if content.text
+
+          content.attachments.each do |attachment|
+            case attachment.type
+            when :text
+              # Include text file content inline
+              parts << format_text_file(attachment)
+            else
+              # Together.ai doesn't support other attachment types in the standard chat API
+              raise UnsupportedAttachmentError, attachment.type
+            end
           end
+
+          parts.join("\n")
+        end
+
+        def format_text_file(attachment)
+          "<file name='#{attachment.filename}' mime_type='#{attachment.mime_type}'>#{attachment.content}</file>"
         end
 
         def format_tool_calls(tool_calls)

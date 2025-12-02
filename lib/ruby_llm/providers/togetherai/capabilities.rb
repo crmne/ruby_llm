@@ -171,15 +171,34 @@ module RubyLLM
         end
 
         def self.capabilities_for(model_id)
-          capabilities = []
-          capabilities << 'chat' if supports_chat_for?(model_id)
-          capabilities << 'embeddings' if supports_embeddings_for?(model_id)
-          capabilities << 'tools' if supports_tools_for?(model_id)
-          capabilities << 'vision' if supports_vision_for?(model_id)
-          capabilities << 'images' if supports_images_for?(model_id)
-          capabilities << 'audio' if supports_audio_for?(model_id)
-          capabilities << 'moderation' if supports_moderation_for?(model_id)
+          capabilities = primary_capabilities(model_id)
+          capabilities.concat(chat_capabilities(model_id)) if supports_chat_for?(model_id)
+          capabilities.concat(specialized_capabilities(model_id))
           capabilities
+        end
+
+        def self.primary_capabilities(model_id)
+          [].tap do |caps|
+            caps << 'chat' if supports_chat_for?(model_id)
+            caps << 'embeddings' if supports_embeddings_for?(model_id)
+            caps << 'images' if supports_images_for?(model_id)
+          end
+        end
+
+        def self.chat_capabilities(model_id)
+          [].tap do |caps|
+            caps << 'streaming' if supports_streaming?(model_id)
+            caps << 'tools' if supports_tools_for?(model_id)
+            caps << 'json_mode' if supports_json_mode?(model_id)
+            caps << 'vision' if supports_vision_for?(model_id)
+          end
+        end
+
+        def self.specialized_capabilities(model_id)
+          [].tap do |caps|
+            caps << 'transcription' if supports_audio_for?(model_id)
+            caps << 'moderation' if supports_moderation_for?(model_id)
+          end
         end
 
         def self.supports_tools_for?(model_id)

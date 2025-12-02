@@ -14,22 +14,20 @@ RSpec.describe RubyLLM::Providers::TogetherAI::Models do
     let(:capabilities) { RubyLLM::Providers::TogetherAI::Capabilities }
 
     let(:response_body) do
-      {
-        'data' => [
-          {
-            'id' => 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
-            'object' => 'model',
-            'created' => 1_234_567_890,
-            'owned_by' => 'Meta'
-          },
-          {
-            'id' => 'Qwen/Qwen2.5-72B-Instruct-Turbo',
-            'object' => 'model',
-            'created' => 1_234_567_891,
-            'owned_by' => 'Alibaba'
-          }
-        ]
-      }
+      [
+        {
+          'id' => 'meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo',
+          'object' => 'model',
+          'created' => 1_234_567_890,
+          'owned_by' => 'Meta'
+        },
+        {
+          'id' => 'Qwen/Qwen2.5-72B-Instruct-Turbo',
+          'object' => 'model',
+          'created' => 1_234_567_891,
+          'owned_by' => 'Alibaba'
+        }
+      ]
     end
 
     let(:response) { instance_double(Faraday::Response, body: response_body) }
@@ -56,14 +54,14 @@ RSpec.describe RubyLLM::Providers::TogetherAI::Models do
     end
 
     it 'handles empty response data' do
-      empty_response = instance_double(Faraday::Response, body: { 'data' => [] })
+      empty_response = instance_double(Faraday::Response, body: [])
 
       models = described_class.parse_list_models_response(empty_response, slug, capabilities)
 
       expect(models).to be_empty
     end
 
-    it 'handles response with no data key' do
+    it 'handles response with non-array body' do
       no_data_response = instance_double(Faraday::Response, body: {})
 
       models = described_class.parse_list_models_response(no_data_response, slug, capabilities)

@@ -192,7 +192,7 @@ RSpec.describe RubyLLM::Providers::TogetherAI::Chat do
       expect(result).to eq('Hello world')
     end
 
-    it 'extracts text from multimodal content' do
+    it 'returns array content as-is when not Content object' do
       content = [
         { 'type' => 'text', 'text' => 'Hello' },
         { 'type' => 'image_url', 'image_url' => { 'url' => 'data:image/jpeg;base64,xyz' } },
@@ -200,12 +200,12 @@ RSpec.describe RubyLLM::Providers::TogetherAI::Chat do
       ]
 
       result = described_class.format_content(content)
-      expect(result).to eq('Hello world')
+      expect(result).to eq(content)
     end
 
-    it 'converts other content to string' do
+    it 'returns non-Content objects as-is' do
       result = described_class.format_content(123)
-      expect(result).to eq('123')
+      expect(result).to eq(123)
     end
   end
 
