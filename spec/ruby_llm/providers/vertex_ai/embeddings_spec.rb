@@ -23,9 +23,9 @@ RSpec.describe RubyLLM::Providers::VertexAI::Embeddings do
     )
   end
 
-  let(:embeddings) {
+  let(:embeddings) do
     test_class.new(config)
-  }
+  end
 
   describe '#embedding_url' do
     it 'constructs the correct URL' do
