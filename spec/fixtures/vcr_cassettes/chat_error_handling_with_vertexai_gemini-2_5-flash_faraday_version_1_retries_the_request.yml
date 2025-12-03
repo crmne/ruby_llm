@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://www.googleapis.com/oauth2/v4/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJsdWlnaS1zZXJ2ZXJsZXNzQGFjaG1lZC1rYy5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsImF1ZCI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92NC90b2tlbiIsImV4cCI6MTc2NDYwNjE4MywiaWF0IjoxNzY0NjA2MDYzLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0gaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9nZW5lcmF0aXZlLWxhbmd1YWdlLnJldHJpZXZlciJ9.FEAjh0sb7Dbyk-d8cEC1BBnITXID3zRpiMMgz2u7Fk3Gd_E0PAPbgPGGeRqQ6bWnxx2FvIQ1CePPbyDKaCue6EKcNshraXeSOpC3LpZ9m5chLQvfs2sc_JlI0_KzySkdM9bS09q3ceXYJkgWjFV7Fl_wodC5x8CSxnZ2HiFLoc_1pVug0TlNsqoKaiHrJ8T1K4fp72jjcGWB8McfLQkMPHOlFt8JaiB5cYDf_zM4swPcQZ76-qA64zJAx8WK3c-zE4ZxqRtWvIFx_4dYt4_VHalQ0BRTNZ0KeKT45gzbidD9d1TCpaXRe1fvR6GMVmKPBlaq_yrIhi3whM6lYMwgpQ
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 01 Dec 2025 16:22:03 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<GOOGLE_ACCESS_TOKEN>","expires_in":3599,"token_type":"Bearer"}'
+  recorded_at: Mon, 01 Dec 2025 16:22:03 GMT
+recorded_with: VCR 6.3.1

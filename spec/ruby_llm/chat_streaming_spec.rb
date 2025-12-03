@@ -88,6 +88,18 @@ RSpec.describe RubyLLM::Chat do
               end
             end.to raise_error(expected_error_for(provider))
           end
+
+          it 'retries the request' do
+            stub_error_response(provider, :chunk)
+
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
+
+            expect(WebMock).to have_requested(:post, expected_url_for(provider)).times(3)
+          end
         end
 
         describe 'Faraday version 2' do # rubocop:disable RSpec/NestedGroups
@@ -123,6 +135,18 @@ RSpec.describe RubyLLM::Chat do
                 chunks << chunk
               end
             end.to raise_error(expected_error_for(provider))
+          end
+
+          it 'retries the request' do
+            stub_error_response(provider, :chunk)
+
+            expect do
+              chat.ask('Count from 1 to 3') do |chunk|
+                chunks << chunk
+              end
+            end.to raise_error(expected_error_for(provider))
+
+            expect(WebMock).to have_requested(:post, expected_url_for(provider)).times(3)
           end
         end
       end

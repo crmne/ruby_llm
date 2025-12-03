@@ -77,7 +77,8 @@ module RubyLLM
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
         exceptions: retry_exceptions,
-        retry_statuses: [429, 500, 502, 503, 504, 529]
+        retry_statuses: [429, 500, 502, 503, 504, 529],
+        methods: %i[delete get head options patch post put]
       }
     end
 
