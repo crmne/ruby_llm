@@ -154,6 +154,10 @@ module StreamingErrorHelpers
     ERROR_HANDLING_CONFIGS[provider][:expected_error]
   end
 
+  def expected_url_for(provider)
+    ERROR_HANDLING_CONFIGS[provider][:url]
+  end
+
   def stub_error_response(provider, type)
     config = ERROR_HANDLING_CONFIGS[provider]
     return unless config
