@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     class Anthropic
-      # Chat methods of the OpenAI API integration
+      # Chat methods of the Anthropic API integration
       module Chat
         module_function
 
