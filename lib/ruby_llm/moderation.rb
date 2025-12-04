@@ -4,6 +4,8 @@ module RubyLLM
   # Identify potentially harmful content in text.
   # https://platform.openai.com/docs/guides/moderation
   class Moderation
+    extend Instrumentation
+
     attr_reader :id, :model, :results
 
     def initialize(id:, model:, results:)
@@ -23,7 +25,12 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.moderate(input, model: model_id)
+      instrument('moderate_content.ruby_llm',
+                 { provider: provider_instance.slug, model: model_id }) do |payload|
+        provider_instance.moderate(input, model: model_id).tap do |result|
+          payload[:flagged] = result.flagged? if payload && result.respond_to?(:flagged?)
+        end
+      end
     end
 
     # Convenience method to get content from moderation result

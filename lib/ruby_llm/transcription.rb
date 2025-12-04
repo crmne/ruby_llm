@@ -3,6 +3,8 @@
 module RubyLLM
   # Represents a transcription of audio content.
   class Transcription
+    extend Instrumentation
+
     attr_reader :text, :model, :language, :duration, :segments, :input_tokens, :output_tokens
 
     def initialize(text:, model:, **attributes)
@@ -29,7 +31,17 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.transcribe(audio_file, model: model_id, language:, **options)
+      instrument('transcribe_audio.ruby_llm',
+                 { provider: provider_instance.slug, model: model_id }) do |payload|
+        provider_instance.transcribe(audio_file, model: model_id, language:, **options).tap do |result|
+          if payload
+            %i[input_tokens output_tokens duration].each do |field|
+              value = result.public_send(field)
+              payload[field] = value unless value.nil?
+            end
+          end
+        end
+      end
     end
   end
 end

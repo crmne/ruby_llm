@@ -1,0 +1,34 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Test"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 04 Dec 2025 16:31:55 GMT
+      Content-Length:
+      - '790'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTk2OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjQ4NjU5MTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlbGxvISBJdCBzZWVtcyBsaWtlIHlvdSdyZSB0ZXN0aW5nIG9yIGp1c3Qgc2F5aW5nIGhlbGxvLiBIb3cgY2FuIEkgYXNzaXN0IHlvdSB0b2RheT8g8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIHNlbnQgXCJUZXN0IC90aGlua1wiLiBJIG5lZWQgdG8gZmlndXJlIG91dCB3aGF0IHRoZXkncmUgYXNraW5nLiBUaGV5IG1pZ2h0IGJlIHRlc3RpbmcgaWYgdGhlIEFJIGlzIHdvcmtpbmcgb3IgdHJ5aW5nIG91dCBhIGZlYXR1cmUuIFNpbmNlIHRoZXJlJ3Mgbm8gc3BlY2lmaWMgcXVlc3Rpb24sIEkgc2hvdWxkIHJlc3BvbmQgaW4gYSBmcmllbmRseSwgb3Blbi1lbmRlZCB3YXkuIE1heWJlIGFzayBob3cgSSBjYW4gYXNzaXN0IHRoZW0uIEtlZXAgaXQgc2ltcGxlIGFuZCBpbnZpdGluZy4gTGV0IHRoZW0ga25vdyBJJ20gaGVyZSB0byBoZWxwIHdpdGggYW55IHF1ZXN0aW9ucyB0aGV5IGhhdmUuIFRoYXQgc2hvdWxkIGNvdmVyIGl0IHdpdGhvdXQgYXNzdW1pbmcgdG9vIG11Y2guXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExLCJjb21wbGV0aW9uX3Rva2VucyI6MTE3LCJ0b3RhbF90b2tlbnMiOjEyOH19Cg==
+  recorded_at: Thu, 04 Dec 2025 16:31:55 GMT
+recorded_with: VCR 6.3.1

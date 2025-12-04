@@ -4,6 +4,7 @@ module RubyLLM
   # Represents a conversation with an AI model
   class Chat
     include Enumerable
+    include Instrumentation
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
 
@@ -122,35 +123,48 @@ module RubyLLM
     end
 
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        &wrap_streaming_block(&)
-      )
+      # rubocop:disable Metrics/BlockLength
+      instrument('complete_chat.ruby_llm',
+                 { provider: @provider.slug, model: @model.id, streaming: block_given? }) do |payload|
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          &wrap_streaming_block(&)
+        )
 
-      @on[:new_message]&.call unless block_given?
+        @on[:new_message]&.call unless block_given?
 
-      if @schema && response.content.is_a?(String)
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
+        if @schema && response.content.is_a?(String)
+          begin
+            response.content = JSON.parse(response.content)
+          rescue JSON::ParserError
+            # If parsing fails, keep content as string
+          end
+        end
+
+        add_message response
+        @on[:end_message]&.call(response)
+
+        if payload
+          %i[input_tokens output_tokens cached_tokens cache_creation_tokens].each do |field|
+            value = response.public_send(field)
+            payload[field] = value unless value.nil?
+          end
+          payload[:tool_calls] = response.tool_calls.size if response.tool_call?
+        end
+
+        if response.tool_call?
+          handle_tool_calls(response, &)
+        else
+          response
         end
       end
-
-      add_message response
-      @on[:end_message]&.call(response)
-
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
-      end
+      # rubocop:enable Metrics/BlockLength
     end
 
     def add_message(message_or_attributes)
@@ -207,7 +221,13 @@ module RubyLLM
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
-      tool.call(args)
+
+      instrument('execute_tool.ruby_llm',
+                 { tool_name: tool_call.name, arguments: args }) do |payload|
+        tool.call(args).tap do |result|
+          payload[:halted] = result.is_a?(Tool::Halt) if payload
+        end
+      end
     end
 
     def build_content(message, attachments)

@@ -31,6 +31,7 @@ After reading this guide, you will know:
 *   How to store raw provider payloads (Anthropic prompt caching, etc.)
 *   How to integrate streaming responses with Hotwire/Turbo Streams
 *   How to customize the persistence behavior for validation-focused scenarios
+*   How to use the built-in instrumentation to observe your messages
 
 ## Understanding the Persistence Flow
 
@@ -976,6 +977,149 @@ class Chat < ApplicationRecord
     # Custom logic
   end
 end
+```
+
+## Instrumentation
+
+RubyLLM automatically instruments all operations using `ActiveSupport::Notifications` when using within Rails. This enables monitoring, logging, and performance tracking without any configuration.
+
+### Available Events
+
+RubyLLM instruments six events:
+
+| Event Name                  | Operation           | When It Fires              |
+| --------------------------- | ------------------- | -------------------------- |
+| `complete_chat.ruby_llm`    | Chat completions    | Every chat API call        |
+| `embed_text.ruby_llm`       | Text embeddings     | Every embedding generation |
+| `paint_image.ruby_llm`      | Image generation    | Every image creation       |
+| `moderate_content.ruby_llm` | Content moderation  | Every moderation check     |
+| `transcribe_audio.ruby_llm` | Audio transcription | Every transcription        |
+| `execute_tool.ruby_llm`     | Tool execution      | Every tool call            |
+
+### Subscribing to Events
+
+Use `ActiveSupport::Notifications` to consume those events:
+
+```ruby
+# config/initializers/ruby_llm.rb or anywhere else
+
+# Subscribe to all RubyLLM events
+ActiveSupport::Notifications.subscribe(/\.ruby_llm$/) do |name, start, finish, id, payload|
+  duration = (finish - start) * 1000 # Convert to milliseconds
+
+  Rails.logger.info({
+    event: name,
+    duration_ms: duration.round(2),
+    provider: payload[:provider],
+    model: payload[:model],
+    timestamp: start
+  }.to_json)
+end
+
+# Subscribe to specific events
+ActiveSupport::Notifications.subscribe('complete_chat.ruby_llm') do |name, start, finish, id, payload|
+  duration = (finish - start) * 1000
+
+  # Track costs and usage
+  MetricsService.record(
+    event: 'llm_completion',
+    duration: duration,
+    input_tokens: payload[:input_tokens],
+    output_tokens: payload[:output_tokens],
+    cached_tokens: payload[:cached_tokens],
+    provider: payload[:provider],
+    model: payload[:model]
+  )
+end
+```
+
+### Event Payloads
+
+Each event includes relevant information in its payload:
+
+#### `complete_chat.ruby_llm`
+
+Fired for every chat completion request.
+
+```ruby
+{
+  provider: 'anthropic',           # Provider slug
+  model: 'claude-sonnet-4-5',      # Model ID
+  streaming: true,                 # Whether streaming was used
+  input_tokens: 150,               # Prompt tokens consumed
+  output_tokens: 250,              # Completion tokens generated
+  cached_tokens: 100,              # Cache read tokens (if supported)
+  cache_creation_tokens: 50,       # Cache write tokens (if supported)
+  tool_calls: 2                    # Number of tools called (if any)
+}
+```
+
+Token fields are populated from the provider's response and vary by provider capabilities.
+
+#### `execute_tool.ruby_llm`
+
+Fired for each tool executed during chat completions.
+
+```ruby
+{
+  tool_name: 'Weather',            # Tool class name
+  arguments: { city: 'Paris' },    # Arguments passed to tool
+  halted: false                    # Whether tool returned Tool::Halt
+}
+```
+
+The `halted` field indicates if the tool stopped the conversation loop.
+
+#### `embed_text.ruby_llm`
+
+Fired for embedding generation requests.
+
+```ruby
+{
+  provider: 'openai',              # Provider slug
+  model: 'text-embedding-3-large', # Model ID
+  dimensions: 1024,                # Embedding dimensions (if specified)
+  input_tokens: 45,                # Input tokens consumed
+  vector_count: 1                  # Number of vectors generated
+}
+```
+
+#### `paint_image.ruby_llm`
+
+Fired for image generation requests.
+
+```ruby
+{
+  provider: 'openai',              # Provider slug
+  model: 'dall-e-3',               # Model ID
+  size: '1024x1024'                # Image dimensions
+}
+```
+
+#### `moderate_content.ruby_llm`
+
+Fired for content moderation requests.
+
+```ruby
+{
+  provider: 'openai',              # Provider slug
+  model: 'text-moderation-latest', # Model ID
+  flagged: false                   # Whether content was flagged
+}
+```
+
+#### `transcribe_audio.ruby_llm`
+
+Fired for audio transcription requests.
+
+```ruby
+{
+  provider: 'openai',              # Provider slug
+  model: 'whisper-1',              # Model ID
+  input_tokens: 0,                 # Input tokens (if provider reports)
+  output_tokens: 120,              # Output tokens (if provider reports)
+  duration: 45.3                   # Audio duration in seconds (if available)
+}
 ```
 
 ## Next Steps

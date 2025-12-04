@@ -3,6 +3,8 @@
 module RubyLLM
   # Represents a generated image from an AI model.
   class Image
+    extend Instrumentation
+
     attr_reader :url, :data, :mime_type, :revised_prompt, :model_id
 
     def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil)
@@ -43,7 +45,10 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.paint(prompt, model: model_id, size:)
+      instrument('paint_image.ruby_llm',
+                 { provider: provider_instance.slug, model: model_id, size: size }) do |_payload|
+        provider_instance.paint(prompt, model: model_id, size:)
+      end
     end
   end
 end
