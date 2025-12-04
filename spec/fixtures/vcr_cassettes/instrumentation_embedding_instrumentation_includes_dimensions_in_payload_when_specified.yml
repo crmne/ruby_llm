@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/embeddings
+    body:
+      encoding: UTF-8
+      string: '{"model":"text-embedding-3-small","input":"Test","dimensions":512}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer test
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Date:
+      - Thu, 04 Dec 2025 16:32:01 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '254'
+      Connection:
+      - keep-alive
+      Vary:
+      - Origin
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |
+        {
+            "error": {
+                "message": "Incorrect API key provided: test. You can find your API key at https://platform.openai.com/account/api-keys.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+            }
+        }
+  recorded_at: Thu, 04 Dec 2025 16:32:01 GMT
+recorded_with: VCR 6.3.1

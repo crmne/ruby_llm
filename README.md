@@ -120,7 +120,9 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Tools:** Let AI call your Ruby methods
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
-* **Rails:** ActiveRecord integration with `acts_as_chat`
+* **Rails:**
+  * ActiveRecord integration with `acts_as_chat`
+  * Instrumentation with `ActiveSupport::Notifications` for observability
 * **Async:** Fiber-based concurrency
 * **Model registry:** 500+ models with capability detection and pricing
 * **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API

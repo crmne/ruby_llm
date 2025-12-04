@@ -3,6 +3,8 @@
 module RubyLLM
   # Core embedding interface.
   class Embedding
+    extend Instrumentation
+
     attr_reader :vectors, :model, :input_tokens
 
     def initialize(vectors:, model:, input_tokens: 0)
@@ -23,7 +25,15 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.embed(text, model: model_id, dimensions:)
+      instrument('embed_text.ruby_llm',
+                 { provider: provider_instance.slug, model: model_id, dimensions: dimensions }) do |payload|
+        provider_instance.embed(text, model: model_id, dimensions:).tap do |result|
+          if payload
+            payload[:input_tokens] = result.input_tokens unless result.input_tokens.nil?
+            payload[:vector_count] = result.vectors.is_a?(Array) ? result.vectors.length : 1
+          end
+        end
+      end
     end
   end
 end
