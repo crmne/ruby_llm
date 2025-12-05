@@ -2,6 +2,27 @@
 
 require 'spec_helper'
 
+RSpec.describe RubyLLM::Providers::Anthropic do
+  include_context 'with configured RubyLLM'
+
+  describe '#complete with structured outputs' do
+    let(:provider) { described_class.new(RubyLLM.config) }
+
+    describe '#add_structured_output_beta_header' do
+      it 'adds beta header when schema is provided' do
+        headers = provider.send(:add_structured_output_beta_header, {})
+        expect(headers['anthropic-beta']).to eq('structured-outputs-2025-11-13')
+      end
+
+      it 'appends to existing beta header' do
+        existing_headers = { 'anthropic-beta' => 'existing-beta' }
+        headers = provider.send(:add_structured_output_beta_header, existing_headers)
+        expect(headers['anthropic-beta']).to eq('existing-beta,structured-outputs-2025-11-13')
+      end
+    end
+  end
+end
+
 RSpec.describe RubyLLM::Providers::Anthropic::Chat do
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5', max_tokens: nil) }
@@ -26,6 +47,47 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
 
       expect(payload[:system]).to eq(system_raw.value)
       expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
+    end
+
+    it 'includes output_format when schema is provided' do
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+      schema = {
+        type: 'object',
+        properties: {
+          name: { type: 'string' }
+        },
+        required: ['name'],
+        additionalProperties: false
+      }
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema
+      )
+
+      expect(payload[:output_format]).to eq({
+                                              type: 'json_schema',
+                                              schema: schema
+                                            })
+    end
+
+    it 'does not include output_format when schema is nil' do
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: nil
+      )
+
+      expect(payload).not_to have_key(:output_format)
     end
   end
 

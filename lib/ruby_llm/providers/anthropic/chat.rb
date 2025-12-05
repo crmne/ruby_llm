@@ -11,12 +11,12 @@ module RubyLLM
           '/v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, model, stream).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, temperature:)
+            add_optional_fields(payload, system_content:, tools:, temperature:, schema:)
           end
         end
 
@@ -54,10 +54,18 @@ module RubyLLM
           }
         end
 
-        def add_optional_fields(payload, system_content:, tools:, temperature:)
+        def add_optional_fields(payload, system_content:, tools:, temperature:, schema: nil)
           payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
+          add_output_format(payload, schema) if schema
+        end
+
+        def add_output_format(payload, schema)
+          payload[:output_format] = {
+            type: 'json_schema',
+            schema: schema
+          }
         end
 
         def parse_completion_response(response)
