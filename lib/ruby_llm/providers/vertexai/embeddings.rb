@@ -12,7 +12,6 @@ module RubyLLM
         end
 
         def render_embedding_payload(text, model:, image: nil, video: nil, dimensions: nil) # rubocop:disable Lint/UnusedMethodArgument
-          # Edited here, changed content to text ****
           is_multimodal = image.present? || video.present?
 
           if is_multimodal
@@ -52,10 +51,8 @@ module RubyLLM
 
           require 'base64'
           if video.is_a?(String) && video.start_with?('gs://')
-            # GCS URI
             instance[:video] = { gcsUri: video }
           else
-            # Base64 encoded video
             video_data = video.respond_to?(:read) ? video.read : video
             instance[:video] = { bytesBase64Encoded: Base64.strict_encode64(video_data) }
           end
@@ -63,8 +60,6 @@ module RubyLLM
 
         def parse_embedding_response(response, model:, text:)
           predictions = response.body['predictions']
-
-          # Edited here to support multi-modal embeddings ****
 
           if model == 'multimodalembedding'
             vectors = parse_multimodal_embeddings(predictions)
