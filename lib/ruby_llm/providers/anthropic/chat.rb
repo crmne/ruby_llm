@@ -62,6 +62,7 @@ module RubyLLM
         end
 
         def add_output_format(payload, schema)
+          SchemaValidator.new(schema).validate!
           payload[:output_format] = {
             type: 'json_schema',
             schema: schema
