@@ -16,7 +16,7 @@ module RubyLLM
           is_multimodal = image.present? || video.present?
 
           if is_multimodal
-            render_multimodal_payload(text, image: image, video: video, dimensions: dimensions)
+            render_multimodal_payload(text:, image:, video:, dimensions:)
           else
             {
               instances: [text].flatten.map { |t| { text: t.to_s } }
@@ -26,7 +26,7 @@ module RubyLLM
           end
         end
 
-        def render_multimodal_payload(text, image:, video:, dimensions:)
+        def render_multimodal_payload(text:, image:, video:, dimensions:)
           instance = {}
           instance[:text] = text.to_s if text
           add_image_instance(instance, image: image)
