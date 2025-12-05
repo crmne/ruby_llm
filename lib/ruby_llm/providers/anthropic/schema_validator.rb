@@ -3,7 +3,20 @@
 module RubyLLM
   module Providers
     class Anthropic
-      # Validates JSON schemas for Anthropic structured outputs
+      # Validates JSON schemas for Anthropic structured outputs.
+      #
+      # Anthropic requires all object schemas to have `additionalProperties: false`.
+      # This constraint ensures the model produces deterministic, well-defined JSON
+      # without unexpected extra fields. The API will reject schemas that don't meet
+      # this requirement.
+      #
+      # This validator recursively checks all objects in the schema, including:
+      # - Top-level object schemas
+      # - Nested objects in `properties`
+      # - Objects in array `items`
+      # - Objects in `anyOf`, `oneOf`, and `allOf` combinators
+      #
+      # @see https://docs.anthropic.com/en/docs/build-with-claude/structured-outputs
       class SchemaValidator
         def initialize(schema)
           @schema = schema
