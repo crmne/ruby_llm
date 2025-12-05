@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable RSpec/MultipleDescribes
 RSpec.describe RubyLLM::Providers::Anthropic do
   include_context 'with configured RubyLLM'
 
@@ -115,3 +116,4 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 end
+# rubocop:enable RSpec/MultipleDescribes
