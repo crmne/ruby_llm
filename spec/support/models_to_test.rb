@@ -55,5 +55,6 @@ TRANSCRIPTION_MODELS = [
   { provider: :openai, model: 'whisper-1' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
-  { provider: :vertexai, model: 'gemini-2.5-flash' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :deepgram, model: 'nova-3-general' }
 ].freeze

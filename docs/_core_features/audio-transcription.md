@@ -69,6 +69,9 @@ RubyLLM.transcribe(
   model: "gemini-2.5-flash",
   prompt: "Return only the verbatim transcript."
 )
+
+# Deepgram Nova-3 (fast, accurate, many features)
+RubyLLM.transcribe("audio.mp3", model: "nova-3-general", provider: :deepgram)
 ```
 
 Configure the default globally:
@@ -151,6 +154,44 @@ RubyLLM.transcribe(
 ### Gemini prompt tips
 
 Gemini treats transcription requests like any other conversation. Use the `prompt:` argument to steer formatting (for example, "Respond with plain text only."), and combine it with `language:` when you want a specific locale in the final transcript. RubyLLM automatically adds the language hint to the Gemini request.
+
+## Deepgram
+
+Deepgram offers fast, accurate transcription with many advanced features:
+
+```ruby
+# Basic transcription
+RubyLLM.transcribe("audio.mp3", model: "nova-3-general", provider: :deepgram)
+
+# Transcribe from URL (no file upload needed)
+RubyLLM.transcribe(
+  "https://example.com/audio.mp3",
+  model: "nova-3-general",
+  provider: :deepgram
+)
+
+# With advanced features
+RubyLLM.transcribe(
+  "meeting.wav",
+  model: "nova-3-general",
+  provider: :deepgram,
+  diarize: true,           # Speaker identification
+  punctuate: true,         # Add punctuation
+  smart_format: true,      # Format numbers, dates, etc.
+  paragraphs: true,        # Split into paragraphs
+  utterances: true         # Segment by speaker turns
+)
+
+# Medical transcription
+RubyLLM.transcribe(
+  "consultation.wav",
+  model: "nova-3-medical",
+  provider: :deepgram,
+  language: "en"
+)
+```
+
+Available Deepgram options: `diarize`, `punctuate`, `smart_format`, `paragraphs`, `utterances`, `detect_language`, `filler_words`, `profanity_filter`, `numerals`, `measurements`, `dictation`, `redact`, `keywords`, `summarize`, `topics`, `sentiment`, `intents`, `detect_entities`.
 
 ## Segments and Timestamps
 

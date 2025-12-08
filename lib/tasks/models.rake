@@ -46,6 +46,7 @@ def configure_from_env
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.deepgram_api_key = ENV.fetch('DEEPGRAM_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
     configure_bedrock(config)
