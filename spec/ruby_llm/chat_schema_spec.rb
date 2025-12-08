@@ -18,9 +18,8 @@ RSpec.describe RubyLLM::Chat do
       }
     end
 
-    # Test OpenAI-compatible providers that support structured output
-    # Note: Only test models that have json_schema support, not just json_object
-    CHAT_MODELS.select { |model_info| %i[openai].include?(model_info[:provider]) }.each do |model_info|
+    # Test providers that support JSON Schema structured output
+    CHAT_MODELS.select { |m| %i[openai anthropic].include?(m[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 

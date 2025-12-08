@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 CHAT_MODELS = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-3-5-haiku' },
   { provider: :deepseek, model: 'deepseek-chat' },
