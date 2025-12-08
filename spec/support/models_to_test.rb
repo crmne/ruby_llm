@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 CHAT_MODELS = [
-  { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-3-5-haiku' },
   { provider: :deepseek, model: 'deepseek-chat' },
@@ -13,6 +12,13 @@ CHAT_MODELS = [
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'sonar' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
+].freeze
+
+CHAT_SCHEMA_MODELS = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :anthropic, model: 'claude-sonnet-4-5' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :openai, model: 'gpt-4.1-nano' }
 ].freeze
 
 PDF_MODELS = [

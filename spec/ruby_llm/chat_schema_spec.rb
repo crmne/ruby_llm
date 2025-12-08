@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     # Test providers that support JSON Schema structured output
-    CHAT_MODELS.select { |m| %i[openai anthropic].include?(m[:provider]) }.each do |model_info|
+    CHAT_SCHEMA_MODELS.reject { _1[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
@@ -27,7 +27,9 @@ RSpec.describe RubyLLM::Chat do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
         it 'accepts a JSON schema and returns structured output' do
-          skip 'Model does not support structured output' unless chat.model.structured_output?
+          # All models listed here should support structured output and the
+          # metadata should confirm that
+          raise 'Model returns false for structured_output?' unless chat.model.structured_output?
 
           response = chat
                      .with_schema(person_schema)
@@ -66,7 +68,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     # Test Gemini provider separately due to different schema format
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
+    CHAT_SCHEMA_MODELS.select { _1[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
