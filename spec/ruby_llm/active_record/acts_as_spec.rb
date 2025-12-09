@@ -159,6 +159,30 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(saved_message.role).to eq('assistant')
       expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
     end
+
+    it 'supports multi-turn conversations with structured responses' do
+      chat = Chat.create!(model: model)
+
+      schema = {
+        type: 'object',
+        properties: {
+          country: { type: 'string' }
+        },
+        required: %w[country],
+        additionalProperties: false
+      }
+
+      chat.with_schema(schema)
+
+      # First turn
+      chat.ask('What country is Paris in?')
+
+      # Second turn - this should not raise an error
+      response = chat.ask('What about Berlin?')
+
+      expect(response.content).to be_a(Hash)
+      expect(response.content['country']).to eq('Germany')
+    end
   end
 
   describe 'parameter passing' do
