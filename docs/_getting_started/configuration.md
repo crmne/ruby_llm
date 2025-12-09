@@ -93,7 +93,7 @@ These headers are optional and only needed for organization-specific billing or 
 
 ### Vertex AI Authentication Configuration
 
-Google Cloud disallows the creation of Vertex AI API keys for Service Accounts, by default. The recommended way to connect is by using a Service Account's JSON key with appropriate IAM roles or by using Application Default Credentials. 
+Google Cloud disallows the creation of Vertex AI API keys for Service Accounts, by default. The recommended way to connect is by using a Service Account's JSON key with appropriate IAM roles or by using Application Default Credentials.
 
 RubyLLM supports both methods of authenticating to Vertex AI and will only use a Service Account key if the key is provided in the `config.vertexai_service_account_key` configuration field. Otherwise, it will fallback to ADC.
 
