@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module AzureOpenAI
+    class AzureOpenAI
       # Chat methods of the Azure OpenAI API integration
       module Chat
         extend OpenAI::Chat

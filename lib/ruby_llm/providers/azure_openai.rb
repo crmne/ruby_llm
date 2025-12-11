@@ -4,13 +4,10 @@ module RubyLLM
   module Providers
     # Azure OpenAI API integration. Derived from OpenAI integration to support
     # OpenAI capabilities via Microsoft Azure endpoints.
-    module AzureOpenAI
-      extend OpenAI
-      extend AzureOpenAI::Chat
-      extend AzureOpenAI::Streaming
-      extend AzureOpenAI::Models
-
-      module_function
+    class AzureOpenAI < Provider
+      include AzureOpenAI::Chat
+      include AzureOpenAI::Streaming
+      include AzureOpenAI::Models
 
       def api_base(config)
         # https://<ENDPOINT>/openai/deployments/<MODEL>/chat/completions?api-version=<APIVERSION>

@@ -2,7 +2,7 @@
 
 module RubyLLM
   module Providers
-    module AzureOpenAI
+    class AzureOpenAI
       # Streaming methods of the Azure OpenAI API integration
       module Streaming
         extend OpenAI::Streaming
