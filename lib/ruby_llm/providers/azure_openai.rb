@@ -9,31 +9,29 @@ module RubyLLM
       include AzureOpenAI::Streaming
       include AzureOpenAI::Models
 
-      def api_base(config)
+      def api_base
         # https://<ENDPOINT>/openai/deployments/<MODEL>/chat/completions?api-version=<APIVERSION>
-        "#{config.azure_openai_api_base}/openai"
+        "#{@config.azure_openai_api_base}/openai"
       end
 
-      def headers(config)
+      def headers
         {
-          'Authorization' => "Bearer #{config.azure_openai_api_key}"
+          'Authorization' => "Bearer #{@config.azure_openai_api_key}"
         }.compact
       end
 
-      def capabilities
-        OpenAI::Capabilities
-      end
+      class << self
+        def capabilities
+          OpenAI::Capabilities
+        end
 
-      def slug
-        'azure_openai'
-      end
+        def slug
+          'azure_openai'
+        end
 
-      def configuration_requirements
-        %i[azure_openai_api_key azure_openai_api_base azure_openai_api_version]
-      end
-
-      def local?
-        false
+        def configuration_requirements
+          %i[azure_openai_api_key azure_openai_api_base azure_openai_api_version]
+        end
       end
     end
   end
