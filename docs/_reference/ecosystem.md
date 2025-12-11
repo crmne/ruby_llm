@@ -92,6 +92,45 @@ For detailed documentation and examples, visit the [RubyLLM::Schema repository](
 
 ---
 
+## RubyLLM::RedCandle
+
+**Local LLM Execution with Quantized Models**
+
+[RubyLLM::RedCandle](https://github.com/scientist-labs/ruby_llm-red_candle) enables local LLM execution using quantized GGUF models through the [Red Candle](https://github.com/scientist-labs/red-candle) gem. Unlike other RubyLLM providers that communicate via HTTP APIs, RedCandle runs models directly in your Ruby process using Rust's Candle library.
+
+### Why Run Models Locally?
+
+Running LLMs locally offers several advantages:
+
+- **Zero latency**: No network round-trips to external APIs
+- **No API costs**: Run unlimited inferences without usage fees
+- **Complete privacy**: Your data never leaves your machine
+- **Offline capable**: Works without an internet connection
+
+### Key Features
+
+- 🚀 Local inference with hardware acceleration (Metal on macOS, CUDA for NVIDIA GPUs, or CPU fallback)
+- 📦 Automatic model downloading from HuggingFace
+- 🔄 Streaming support for token-by-token output
+- 🎯 Structured JSON output with grammar-constrained generation
+- 💬 Multi-turn conversation support with automatic history management
+
+### Installation
+
+```bash
+gem install ruby_llm-red_candle
+```
+
+**Note**: The underlying red-candle gem requires a Rust toolchain for compiling native extensions.
+
+### Supported Models
+
+RedCandle supports various quantized models including TinyLlama, Qwen2.5, Gemma-3, Phi-3, and Mistral-7B. Models are automatically downloaded from HuggingFace on first use.
+
+For detailed documentation and examples, visit the [RubyLLM::RedCandle repository](https://github.com/scientist-labs/ruby_llm-red_candle).
+
+---
+
 ## Community Projects
 
 The RubyLLM ecosystem is growing! If you've built a library or tool that extends RubyLLM, we'd love to hear about it. Consider:
