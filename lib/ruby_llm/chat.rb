@@ -233,7 +233,7 @@ module RubyLLM
     end
 
     def scoped_messages
-       @messages_scope.present? ? @messages_scope.call(messages) : messages
+       @messages_scope ? @messages_scope.call(messages) : messages
     end
 
     def wrap_streaming_block(&block)
