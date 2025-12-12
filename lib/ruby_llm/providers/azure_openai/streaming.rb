@@ -5,15 +5,9 @@ module RubyLLM
     class AzureOpenAI
       # Streaming methods of the Azure OpenAI API integration
       module Streaming
-        extend OpenAI::Streaming
-
-        module_function
-
-        def stream_response(connection, payload, &)
-          # Hold config in instance variable for use in completion_url and stream_url
-          @config = connection.config
-          super
-        end
+        # Azure OpenAI uses the same streaming implementation as OpenAI.
+        # The completion_url override in AzureOpenAI::Chat handles the
+        # different endpoint format for Azure deployments.
       end
     end
   end

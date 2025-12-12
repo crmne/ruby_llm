@@ -19,6 +19,10 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
 
+      config.azure_openai_api_key = ENV.fetch('AZURE_OPENAI_API_KEY', 'test')
+      config.azure_openai_api_base = ENV.fetch('AZURE_OPENAI_API_BASE', 'test')
+      config.azure_openai_api_version = ENV.fetch('AZURE_OPENAI_API_VERSION', '2024-10-21')
+
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_region = 'us-west-2'

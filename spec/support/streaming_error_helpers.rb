@@ -2,6 +2,22 @@
 
 module StreamingErrorHelpers
   ERROR_HANDLING_CONFIGS = {
+    azure_openai: {
+      url: lambda {
+        api_base = ENV.fetch('AZURE_OPENAI_API_BASE', 'test')
+        api_version = ENV.fetch('AZURE_OPENAI_API_VERSION', '2024-10-21')
+        "#{api_base}/openai/deployments/gpt-4.1/chat/completions?api-version=#{api_version}"
+      }.call,
+      error_response: {
+        error: {
+          message: 'The server is temporarily overloaded. Please try again later.',
+          type: 'server_error',
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     anthropic: {
       url: 'https://api.anthropic.com/v1/messages',
       error_response: {

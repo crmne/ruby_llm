@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"developer","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1814'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 8f98f2ca-c4f7-492b-b1cd-b590d850c129
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '245'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249886'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:06:58 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImFubm90YXRpb25zIjpbXSwiY29udGVudCI6IlN1cmUhIFRoZSB3ZWF0aGVyIHJlZmVycyB0byB0aGUgZGF5LXRvLWRheSBhdG1vc3BoZXJpYyBjb25kaXRpb25zIGluIGEgcGFydGljdWxhciBwbGFjZSwgaW5jbHVkaW5nIGZhY3RvcnMgbGlrZSB0ZW1wZXJhdHVyZSwgaHVtaWRpdHksIHByZWNpcGl0YXRpb24sIHdpbmQgc3BlZWQsIGFuZCB2aXNpYmlsaXR5LiBJdCBjYW4gY2hhbmdlIHJhcGlkbHkgYW5kIGlzIGluZmx1ZW5jZWQgYnkgdmFyaW91cyBuYXR1cmFsIHBoZW5vbWVuYSBzdWNoIGFzIGFpciBwcmVzc3VyZSBzeXN0ZW1zLCBvY2VhbiBjdXJyZW50cywgYW5kIGdlb2dyYXBoaWMgZmVhdHVyZXMuXG5cbklmIHlvdSB3YW50IHRvIGtub3cgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgeW91ciBsb2NhdGlvbiwgeW91IGNhbiBjaGVjayBhIHdlYXRoZXIgYXBwIG9yIHdlYnNpdGUgZm9yIHJlYWwtdGltZSB1cGRhdGVzLiBBbmQganVzdCBmb3IgZnVuLCBpZiB5b3XigJlyZSBhIGZhbiBvZiBxdWlya3kgd2VhdGhlciBjb21pY3MsIHlvdSBtaWdodCBlbmpveSBYS0NENzM5Miwgd2hpY2ggaXMgYSBwbGF5ZnVsIG5vZCB0byBob3cgdW5wcmVkaWN0YWJsZSBhbmQgZmFzY2luYXRpbmcgd2VhdGhlciBjYW4gYmUhIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjU1NzM2MTcsImlkIjoiY2hhdGNtcGwtQ200ZGxsMmZMT2xnVEVOaDY4NEJ6M281TjRTWkQiLCJtb2RlbCI6ImdwdC00LjEtMjAyNS0wNC0xNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOTA0MWUxMGI0IiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjExOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjM1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiYXVkaW9fdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxNTR9fQo=
+  recorded_at: Fri, 12 Dec 2025 21:06:58 GMT
+recorded_with: VCR 6.3.1

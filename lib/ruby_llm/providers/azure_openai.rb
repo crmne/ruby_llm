@@ -5,7 +5,17 @@ module RubyLLM
     # Azure OpenAI API integration. Derived from OpenAI integration to support
     # OpenAI capabilities via Microsoft Azure endpoints.
     class AzureOpenAI < Provider
+      # Include OpenAI modules first for base functionality
+      include OpenAI::Chat
+      include OpenAI::Embeddings
+      include OpenAI::Tools
+      include OpenAI::Media
+      include OpenAI::Streaming
+      include OpenAI::Models
+
+      # Then include Azure overrides
       include AzureOpenAI::Chat
+      include AzureOpenAI::Embeddings
       include AzureOpenAI::Streaming
       include AzureOpenAI::Models
 

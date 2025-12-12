@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer invalid-key
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: PermissionDenied
+    headers:
+      Content-Length:
+      - '224'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 15bf0b18-c65b-455b-9a67-8a351da9a159
+      Date:
+      - Fri, 12 Dec 2025 21:08:24 GMT
+    body:
+      encoding: UTF-8
+      string: '{"error":{"code":"401","message":"Access denied due to invalid subscription
+        key or wrong API endpoint. Make sure to provide a valid key for an active
+        subscription and use a correct regional API endpoint for your resource."}}'
+  recorded_at: Fri, 12 Dec 2025 21:08:24 GMT
+recorded_with: VCR 6.3.1
