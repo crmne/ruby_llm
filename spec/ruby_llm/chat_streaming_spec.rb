@@ -10,8 +10,9 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} supports streaming responses" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
         chunks = []
 
         response = chat.ask('Count from 1 to 3') do |chunk|
@@ -30,14 +31,14 @@ RSpec.describe RubyLLM::Chat do
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists).with_temperature(0.0)
         chunks = []
 
         stream_message = chat.ask('Count from 1 to 3') do |chunk|
           chunks << chunk
         end
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists).with_temperature(0.0)
         sync_message = chat.ask('Count from 1 to 3')
 
         expect(sync_message.input_tokens).to be_within(1).of(stream_message.input_tokens)
@@ -50,9 +51,10 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
 
       context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
+        let(:chat) { RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists) }
 
         describe 'Faraday version 1' do # rubocop:disable RSpec/NestedGroups
           before do

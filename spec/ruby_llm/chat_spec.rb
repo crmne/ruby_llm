@@ -9,8 +9,9 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can have a basic conversation" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
         response = chat.ask("What's 2 + 2?")
 
         expect(response.content).to include('4')
@@ -20,7 +21,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} returns raw responses" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
         response = chat.ask('What is the capital of France?')
         expect(response.raw).to be_present
         expect(response.raw.headers).to be_present
@@ -31,7 +32,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} can handle multi-turn conversations" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
 
         first = chat.ask('Who is the creator of the programming language Ruby?')
         expect(first.content).to include('Matz')
@@ -41,7 +42,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} successfully uses the system prompt" do
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists).with_temperature(0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
@@ -59,7 +60,7 @@ RSpec.describe RubyLLM::Chat do
           skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
         end
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists).with_temperature(0.0)
         # Disable thinking mode for qwen models to avoid <think> tags in output
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
@@ -83,7 +84,9 @@ RSpec.describe RubyLLM::Chat do
   describe 'change model on the fly' do
     CHAT_MODELS.first(3).combination(2).each do |first, second|
       it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
-        chat = RubyLLM.chat(model: first[:model], provider: first[:provider])
+        first_assume_exists = first[:assume_model_exists] || false
+        second_assume_exists = second[:assume_model_exists] || false
+        chat = RubyLLM.chat(model: first[:model], provider: first[:provider], assume_model_exists: first_assume_exists)
         response = chat.ask("What's 2 + 2?")
 
         expect(response.content).to include('4')
@@ -91,7 +94,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.input_tokens).to be_positive
         expect(response.output_tokens).to be_positive
 
-        chat.with_model(second[:model], provider: second[:provider])
+        chat.with_model(second[:model], provider: second[:provider], assume_exists: second_assume_exists)
         response = chat.ask('and 4 + 4?')
 
         expect(response.content).to include('8')

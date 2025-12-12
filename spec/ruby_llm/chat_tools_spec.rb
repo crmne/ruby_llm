@@ -157,12 +157,13 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can use tools" do
         supports_functions? provider, model
 
         skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
@@ -176,12 +177,13 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
         supports_functions? provider, model
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tools(Weather, BestLanguageToLearn)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
@@ -197,12 +199,13 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
         supports_functions? provider, model
 
         skip 'Flaky test for deepseek' if provider == :deepseek
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
@@ -220,10 +223,11 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can use tools without parameters" do
         supports_functions? provider, model
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(BestLanguageToLearn)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
@@ -235,6 +239,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         supports_functions? provider, model
         if provider == :gpustack && model == 'qwen3'
@@ -243,7 +248,7 @@ RSpec.describe RubyLLM::Chat do
 
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
         # Disable thinking mode for qwen models
@@ -271,13 +276,14 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         supports_functions? provider, model
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
@@ -306,12 +312,13 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         supports_functions? provider, model
 
         skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(DiceRoll)
                       .with_instructions(
                         'You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.'
@@ -343,7 +350,7 @@ RSpec.describe RubyLLM::Chat do
       it "#{provider}/#{model} can handle with_params" do
         supports_functions? provider, model
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(ParamsTool)
                       .with_instructions('You must call the params tool.')
 
@@ -373,10 +380,11 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} handles array params" do
         supports_functions? provider, model
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(ArrayParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
@@ -398,10 +406,11 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} handles anyOf params" do
         supports_functions? provider, model
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(AnyOfParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
@@ -424,10 +433,11 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} handles object params" do
         supports_functions? provider, model
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(ObjectParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
@@ -503,13 +513,14 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} preserves Content objects returned from tools" do
         supports_functions? provider, model
 
         # Skip providers that don't support images in tool results
         skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
                       .with_tool(ContentReturningTool)
 
         chat.ask('Process this query: test data')
