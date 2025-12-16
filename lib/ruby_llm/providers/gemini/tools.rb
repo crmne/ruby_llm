@@ -21,22 +21,37 @@ module RubyLLM
             parts.concat(formatted_content.is_a?(Array) ? formatted_content : [formatted_content])
           end
 
+          first_call = true
           msg.tool_calls.each_value do |tool_call|
-            parts << {
+            part = {
               functionCall: {
                 name: tool_call.name,
                 args: tool_call.arguments
               }
             }
+            # Per Gemini docs: only the first functionCall has the thoughtSignature
+            if first_call && tool_call.thought_signature
+              part[:thoughtSignature] = tool_call.thought_signature
+              first_call = false
+            end
+            parts << part
           end
 
           parts
         end
 
-        def format_tool_result(msg, function_name = nil)
+        def format_tool_result(msg, function_metadata = nil)
+          if function_metadata.is_a?(Hash)
+            function_name = function_metadata[:name]
+            thought_signature = function_metadata[:thought_signature]
+          else
+            function_name = function_metadata
+            thought_signature = nil
+          end
+
           function_name ||= msg.tool_call_id
 
-          [{
+          response_part = {
             functionResponse: {
               name: function_name,
               response: {
@@ -44,7 +59,11 @@ module RubyLLM
                 content: Media.format_content(msg.content)
               }
             }
-          }]
+          }
+
+          response_part[:thoughtSignature] = thought_signature if thought_signature
+
+          [response_part]
         end
 
         def extract_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
@@ -65,7 +84,8 @@ module RubyLLM
             result[id] = ToolCall.new(
               id:,
               name: function_data['name'],
-              arguments: function_data['args'] || {}
+              arguments: function_data['args'] || {},
+              thought_signature: part['thoughtSignature']
             )
           end
 

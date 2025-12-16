@@ -216,8 +216,8 @@ module RubyLLM
 
             while tool_message?(@messages[index])
               tool_message = @messages[index]
-              tool_name = @tool_call_names.delete(tool_message.tool_call_id)
-              parts.concat(format_tool_result(tool_message, tool_name))
+              tool_metadata = @tool_call_names.delete(tool_message.tool_call_id)
+              parts.concat(format_tool_result(tool_message, tool_metadata))
               index += 1
             end
 
@@ -230,7 +230,10 @@ module RubyLLM
 
           def remember_tool_calls
             current_message.tool_calls.each do |tool_call_id, tool_call|
-              @tool_call_names[tool_call_id] = tool_call.name
+              @tool_call_names[tool_call_id] = {
+                name: tool_call.name,
+                thought_signature: tool_call.thought_signature
+              }
             end
           end
 
@@ -241,8 +244,8 @@ module RubyLLM
             }
           end
 
-          def format_tool_result(message, tool_name)
-            @format_tool_result.call(message, tool_name)
+          def format_tool_result(message, tool_metadata)
+            @format_tool_result.call(message, tool_metadata)
           end
         end
 
