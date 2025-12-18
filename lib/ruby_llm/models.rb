@@ -43,7 +43,13 @@ module RubyLLM
 
         RubyLLM.logger.info "Fetching models from providers: #{configured.map(&:name).join(', ')}"
 
-        configured.flat_map(&:list_models)
+        skipped_models = Provider
+                         .providers
+                         .reject { |_id, klass| configured_classes.include?(klass) }
+                         .keys
+                         .flat_map { |provider_id| by_provider(provider_id).all }
+
+        configured.flat_map(&:list_models) + skipped_models
       end
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity

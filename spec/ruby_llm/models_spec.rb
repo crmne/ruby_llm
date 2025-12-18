@@ -106,6 +106,15 @@ RSpec.describe RubyLLM::Models do
       # Verify singleton instance was updated
       expect(RubyLLM.models.all.size).to be_positive
     end
+
+    it 'preserves existing models when it cannot fetch models from source' do
+      allow(RubyLLM::Provider).to receive(:configured_providers).and_return([])
+      allow(described_class).to receive(:fetch_from_parsera).and_return([])
+
+      expect do
+        described_class.refresh!
+      end.not_to(change { RubyLLM.models.all.size })
+    end
   end
 
   describe '#embedding_models' do

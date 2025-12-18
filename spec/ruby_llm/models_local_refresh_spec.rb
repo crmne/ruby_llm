@@ -5,6 +5,11 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
 
+  before do
+    # Prevent state of Models singleton from leaking between specs
+    described_class.instance_variable_set(:@instance, nil)
+  end
+
   describe 'local provider model fetching' do
     describe '.refresh!' do
       context 'with default parameters' do # rubocop:disable RSpec/NestedGroups
@@ -45,6 +50,24 @@ RSpec.describe RubyLLM::Models do
         described_class.fetch_from_providers(remote_only: false)
 
         expect(RubyLLM::Provider).to have_received(:configured_providers)
+      end
+
+      it 'includes models from unremote and unconfigured providers with remote_only: true' do
+        allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
+        initial_count = described_class.all.size
+
+        list = described_class.fetch_from_providers(remote_only: true)
+
+        expect(list.size).to eq initial_count
+      end
+
+      it 'includes models from unconfigured providers with remote_only: false' do
+        allow(RubyLLM::Provider).to receive(:configured_providers).and_return([])
+        initial_count = described_class.all.size
+
+        list = described_class.fetch_from_providers(remote_only: false)
+
+        expect(list.size).to eq initial_count
       end
     end
 
