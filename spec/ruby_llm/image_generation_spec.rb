@@ -59,6 +59,31 @@ RSpec.describe RubyLLM::Image do
       save_and_verify_image image
     end
 
+    it 'gemini/gemini-2.5-flash-image can paint images' do
+      image = RubyLLM.paint('a siamese cat', model: 'gemini-2.5-flash-image')
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+
+      save_and_verify_image image
+    end
+
+    it 'gemini/gemini-2.5-flash-image can edit images with source image' do
+      attachment_path = File.expand_path('../fixtures/ruby.png', __dir__)
+      image = RubyLLM.paint(
+        'make the background blue',
+        model: 'gemini-2.5-flash-image',
+        with: attachment_path
+      )
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+
+      save_and_verify_image image
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.paint('a cat', model: 'invalid-model')
@@ -67,6 +92,22 @@ RSpec.describe RubyLLM::Image do
 
     it 'openai/gpt-image-1 can paint images' do
       image = RubyLLM.paint('a siamese cat', model: 'gpt-image-1')
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+      expect(image.model_id).to eq('gpt-image-1')
+
+      save_and_verify_image image
+    end
+
+    it 'openai/gpt-image-1 can edit images with source image' do
+      attachment_path = File.expand_path('../fixtures/ruby.png', __dir__)
+      image = RubyLLM.paint(
+        'make the background blue',
+        model: 'gpt-image-1',
+        with: attachment_path
+      )
 
       expect(image.base64?).to be(true)
       expect(image.data).to be_present

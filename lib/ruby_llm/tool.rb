@@ -186,7 +186,7 @@ module RubyLLM
       def resolve_direct_schema(schema)
         return extract_schema(schema.to_json_schema) if schema.respond_to?(:to_json_schema)
         return RubyLLM::Utils.deep_dup(schema) if schema.is_a?(Hash)
-        if schema.is_a?(Class) && schema.instance_methods.include?(:to_json_schema)
+        if schema.is_a?(Class) && schema.method_defined?(:to_json_schema)
           return extract_schema(schema.new.to_json_schema)
         end
 
