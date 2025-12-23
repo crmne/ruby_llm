@@ -24,6 +24,7 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to edit existing images with AI.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
@@ -61,6 +62,39 @@ puts "Model Used: #{image.model_id}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Image Editing
+
+Edit existing images by providing file attachments via the `with:` option along with your prompt. This feature is available for select models.
+
+```ruby
+RubyLLM.paint("Generate a happy birthday postcard, use the person in the attached file", with: "myfriend.png")
+RubyLLM.paint("Generate an illustration of a dog following the style of the attached images", with: ["illustration1.png", "illustration2.png"])
+
+# Edit an image with OpenAI GPT-Image-1
+edited_image = RubyLLM.paint(
+  "Make the background a sunny beach with palm trees",
+  model: "gpt-image-1",
+  with: "path/to/my_photo.png"
+)
+
+# Edit with Gemini Flash Image
+edited_image = RubyLLM.paint(
+  "Add a rainbow in the sky",
+  model: "gemini-2.5-flash-image",
+  with: "path/to/landscape.jpg"
+)
+```
+
+**Supported Models for Image Editing:**
+
+*   **OpenAI:** `gpt-image-*` models (gpt-image-1, gpt-image-1.5, etc.) and `dall-e-2`
+*   **Gemini:** `gemini-*-flash-image` models (gemini-2.5-flash-image, etc.)
+
+OpenAI image edits accept multiple attachments—pass an array to `with:` and RubyLLM will send repeated `image[]` fields for each file.
+
+> **Note:** Attempting to use `with:` attachments with unsupported models (like `dall-e-3` or `imagen-*`) will raise an error.
+{: .warning }
 
 ## Choosing Models
 
