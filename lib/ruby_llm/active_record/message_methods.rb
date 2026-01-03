@@ -11,23 +11,38 @@ module RubyLLM
       end
 
       def to_llm
-        cached = has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
-        cache_creation = has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
-
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content,
+          thinking: thinking_value,
+          thinking_signature: thinking_signature_value,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
           input_tokens: input_tokens,
           output_tokens: output_tokens,
-          cached_tokens: cached,
-          cache_creation_tokens: cache_creation,
+          cached_tokens: cached_value,
+          cache_creation_tokens: cache_creation_value,
           model_id: model_association&.model_id
         )
       end
 
       private
+
+      def thinking_value
+        has_attribute?(:thinking) ? self[:thinking] : nil
+      end
+
+      def thinking_signature_value
+        has_attribute?(:thinking_signature) ? self[:thinking_signature] : nil
+      end
+
+      def cached_value
+        has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
+      end
+
+      def cache_creation_value
+        has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
+      end
 
       def extract_tool_calls
         tool_calls_association.to_h do |tool_call|

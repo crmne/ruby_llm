@@ -18,6 +18,13 @@ module RubyLLM
   class ModelNotFoundError < StandardError; end
   class UnsupportedAttachmentError < StandardError; end
 
+  # Error raised when a feature is not supported by a model
+  class UnsupportedFeatureError < Error
+    def initialize(message)
+      super(nil, message)
+    end
+  end
+
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end
   class ForbiddenError < Error; end

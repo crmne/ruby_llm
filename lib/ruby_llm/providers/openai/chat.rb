@@ -11,7 +11,7 @@ module RubyLLM
 
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists
           payload = {
             model: model.id,
             messages: format_messages(messages),
@@ -34,8 +34,22 @@ module RubyLLM
             }
           end
 
+          payload[:reasoning_effort] = resolve_effort(thinking) if thinking && grok_model?(model)
+
           payload[:stream_options] = { include_usage: true } if stream
           payload
+        end
+
+        def grok_model?(model)
+          model.id.to_s.include?('grok')
+        end
+
+        def resolve_effort(thinking)
+          case thinking
+          when :low then 'low'
+          when Integer then thinking > 10_000 ? 'high' : 'low'
+          else 'high'
+          end
         end
 
         def parse_completion_response(response)
@@ -53,6 +67,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: message_data['content'],
+            thinking: message_data['reasoning_content'],
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: usage['prompt_tokens'],
             output_tokens: usage['completion_tokens'],

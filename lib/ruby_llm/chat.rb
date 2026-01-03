@@ -22,6 +22,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @thinking_budget = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -65,6 +66,16 @@ module RubyLLM
     def with_temperature(temperature)
       @temperature = temperature
       self
+    end
+
+    def with_thinking(budget: :medium)
+      validate_thinking_support!
+      @thinking_budget = budget
+      self
+    end
+
+    def thinking_enabled?
+      !@thinking_budget.nil?
     end
 
     def with_context(context)
@@ -130,6 +141,7 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        thinking: @thinking_budget,
         &wrap_streaming_block(&)
       )
 
@@ -168,6 +180,18 @@ module RubyLLM
     end
 
     private
+
+    def validate_thinking_support!
+      return if @model.supports?('reasoning')
+      return if gemini_thinking_model?
+
+      raise UnsupportedFeatureError,
+            "Model '#{@model.id}' does not support extended thinking"
+    end
+
+    def gemini_thinking_model?
+      @model.id.to_s.match?(/gemini-[23]|gemini-2\.\d-.*thinking/)
+    end
 
     def wrap_streaming_block(&block)
       return nil unless block_given?

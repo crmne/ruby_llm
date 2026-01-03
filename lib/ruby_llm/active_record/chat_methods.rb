@@ -124,6 +124,11 @@ module RubyLLM
         self
       end
 
+      def with_thinking(...)
+        to_llm.with_thinking(...)
+        self
+      end
+
       def with_params(...)
         to_llm.with_params(...)
         self
@@ -262,6 +267,8 @@ module RubyLLM
           if @message.has_attribute?(:cache_creation_tokens)
             attrs[:cache_creation_tokens] = message.cache_creation_tokens
           end
+          attrs[:thinking] = message.thinking if @message.has_attribute?(:thinking)
+          attrs[:thinking_signature] = Messages.signature_for(message) if @message.has_attribute?(:thinking_signature)
 
           # Add model association dynamically
           attrs[self.class.model_association_name] = model_association

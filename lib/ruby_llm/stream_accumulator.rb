@@ -3,10 +3,12 @@
 module RubyLLM
   # Assembles streaming responses from LLMs into complete messages.
   class StreamAccumulator
-    attr_reader :content, :model_id, :tool_calls
+    attr_reader :content, :model_id, :tool_calls, :thinking
 
     def initialize
       @content = +''
+      @thinking = +''
+      @thinking_signature = nil
       @tool_calls = {}
       @input_tokens = nil
       @output_tokens = nil
@@ -15,7 +17,7 @@ module RubyLLM
       @latest_tool_call_id = nil
     end
 
-    def add(chunk)
+    def add(chunk) # rubocop:disable Metrics/PerceivedComplexity
       RubyLLM.logger.debug chunk.inspect if RubyLLM.config.log_stream_debug
       @model_id ||= chunk.model_id
 
@@ -23,7 +25,10 @@ module RubyLLM
         accumulate_tool_calls chunk.tool_calls
       else
         @content << (chunk.content || '')
+        @thinking << (chunk.thinking || '')
       end
+
+      @thinking_signature = Messages.signature_for(chunk) || @thinking_signature
 
       count_tokens chunk
       RubyLLM.logger.debug inspect if RubyLLM.config.log_stream_debug
@@ -33,6 +38,8 @@ module RubyLLM
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
+        thinking: thinking.empty? ? nil : thinking,
+        thinking_signature: @thinking_signature,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         input_tokens: @input_tokens,

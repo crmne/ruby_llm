@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-opus-4-5-20251101","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 15 * 23? Think through this step by step."}]}],"stream":false,"max_tokens":9024,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 02 Jan 2026 21:47:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-01-02T21:47:10Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-01-02T21:47:13Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-01-02T21:47:08Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-01-02T21:47:10Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '4808'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1vcHVzLTQtNS0yMDI1MTEwMSIsImlkIjoibXNnXzAxMW5VQ2N5UG03RFd2cmU4UjhkVUgxSyIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiSSBuZWVkIHRvIGNhbGN1bGF0ZSAxNSAqIDIzIHN0ZXAgYnkgc3RlcC5cblxuSSBjYW4gYnJlYWsgdGhpcyBkb3duIGluIGEgZmV3IHdheXM6XG5cbk1ldGhvZCAxOiBCcmVhayBkb3duIDIzXG4xNSAqIDIzID0gMTUgKiAoMjAgKyAzKVxuPSAxNSAqIDIwICsgMTUgKiAzXG49IDMwMCArIDQ1XG49IDM0NVxuXG5NZXRob2QgMjogQnJlYWsgZG93biAxNVxuMTUgKiAyMyA9ICgxMCArIDUpICogMjNcbj0gMTAgKiAyMyArIDUgKiAyM1xuPSAyMzAgKyAxMTVcbj0gMzQ1XG5cbkJvdGggbWV0aG9kcyBnaXZlIDM0NS4iLCJzaWduYXR1cmUiOiJFcnNEQ2tZSUN4Z0NLa0RVM0VJY1dGOXI4QTEvSkJMNjYyZ3Y2eGwwQnZSSTVBVUZiOFd3QU1nbDlocmpOOGs2a0pic0hzQStxeG5pN0ZqS0Jpd3RKdS81NmRkdjh2eS8rWEl6RWd4RXpheDVtRUttZ2ZSbHMySWFEUFNDb3NJM3lVczlwa2YrVVNJd1RiQjhiQStQVjQ4UmNVUzZYVTN3SDNaeTNWMlhoOTlBMWx0M2dKL2lUbFZadTg2Q05neCtZbTJFa0Q0b1BselhLcUlDY3RjaUU1d1JSMkY5OU95OFU5YkpTZnN4MVBteGFxb2tlOW9VdVJOZ2RTK0VFbVZIWG5xVUlkbFRCcWpjRTlINXdJTkFMRTlFalphcTNpSEhRR1pZdWw2RE1QaXE1TWsvRGZZYVNlV2lCTkJtVXJBMHpoeVB1WjBlQW9OcUtxVmYvQko5MXN6YWE2M2tKMWVvWUhWTElhaXhVRUM2Tk1PMGVmRDB2NDJTaVdQZUpmVTZwelovbm94dEI4VUNadmZkamlKVjljeGNKTW1kWmMxNFdxTDIvbzd1eGxIbWh1UlYrYmdQRml1RXp4R1J4VWpLdU83NTQ3REVvWnBXMFpmT0IyTEErWjBCMGE3c3NLbUJ0QTVoVDVBS2VkSmg4NjUvbytPWmxMNGIzSG8rUGdtUmJYTDRwSnNFUGQ4NlZvUWE4azg2eWtVS1p3cjczVkFLaXBsM2VzcElqWDR6WUJ6MFNNMVVBalpkT1pXbDlwd1BzRExkVUl3aUZaQ3BlWXdKQWw4WUFRPT0ifSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IiMgQ2FsY3VsYXRpbmcgMTUgw5cgMjNcblxuSSdsbCBicmVhayB0aGlzIGRvd24gaW50byBzaW1wbGVyIHBhcnRzOlxuXG4qKlN0ZXAgMToqKiBCcmVhayAyMyBpbnRvIDIwICsgM1xuXG4qKlN0ZXAgMjoqKiBNdWx0aXBseSBlYWNoIHBhcnQgYnkgMTVcbi0gMTUgw5cgMjAgPSAzMDBcbi0gMTUgw5cgMyA9IDQ1XG5cbioqU3RlcCAzOioqIEFkZCB0aGUgcmVzdWx0c1xuLSAzMDAgKyA0NSA9ICoqMzQ1KipcblxuVGhlIGFuc3dlciBpcyAqKjM0NSoqLiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NTIsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoyNTgsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn19
+  recorded_at: Fri, 02 Jan 2026 21:47:13 GMT
+recorded_with: VCR 6.4.0

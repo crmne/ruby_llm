@@ -14,7 +14,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           @model = model.id
           payload = {
             contents: format_messages(messages),
@@ -25,8 +25,50 @@ module RubyLLM
 
           payload[:generationConfig].merge!(structured_output_config(schema, model)) if schema
 
+          payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking
+
           payload[:tools] = format_tools(tools) if tools.any?
           payload
+        end
+
+        def build_thinking_config(model, thinking)
+          config = { includeThoughts: true }
+
+          if gemini_3_model?(model)
+            config[:thinkingLevel] = resolve_effort_level(thinking)
+          else
+            config[:thinkingBudget] = resolve_budget(thinking)
+          end
+
+          config
+        end
+
+        # Gemini 3 uses thinkingLevel (string) while Gemini 2.5 uses thinkingBudget (integer).
+        # String matching is unavoidable until Google provides a capability flag or stabilizes
+        # their API versioning. This detection is confined to the Gemini provider where the
+        # coupling is appropriate.
+        def gemini_3_model?(model)
+          model.id.to_s.include?('gemini-3')
+        end
+
+        def resolve_effort_level(thinking)
+          case thinking
+          when :low then 'low'
+          when :medium then 'medium'
+          when :high then 'high'
+          when Integer then thinking > 16_000 ? 'high' : 'low'
+          else 'high' # rubocop:disable Lint/DuplicateBranch
+          end
+        end
+
+        def resolve_budget(thinking)
+          case thinking
+          when Integer then thinking
+          when :low then 1024
+          when :medium then 8192
+          when :high then 24_576
+          else 8192 # rubocop:disable Lint/DuplicateBranch
+          end
         end
 
         private
@@ -62,17 +104,34 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
+          parts = data.dig('candidates', 0, 'content', 'parts') || []
+
+          text_content = extract_text_parts(parts)
+          thinking_content = extract_thought_parts(parts)
           tool_calls = extract_tool_calls(data)
 
           Message.new(
             role: :assistant,
-            content: parse_content(data),
+            content: text_content,
+            thinking: thinking_content,
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )
+        end
+
+        def extract_text_parts(parts)
+          text_parts = parts.reject { |p| p['thought'] }
+          content = text_parts.filter_map { |p| p['text'] }.join
+          content.empty? ? nil : content
+        end
+
+        def extract_thought_parts(parts)
+          thought_parts = parts.select { |p| p['thought'] }
+          thoughts = thought_parts.filter_map { |p| p['text'] }.join
+          thoughts.empty? ? nil : thoughts
         end
 
         def convert_schema_to_gemini(schema)

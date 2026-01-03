@@ -1,0 +1,163 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-opus-4-5-20251101","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]}],"stream":false,"max_tokens":9024,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 02 Jan 2026 21:47:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-01-02T21:47:18Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-01-02T21:47:19Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-01-02T21:47:17Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-01-02T21:47:18Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '1398'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-opus-4-5-20251101","id":"msg_01719FsPNBYWetWpxFGoQiza","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"The
+        user is asking a simple arithmetic question: 5 + 3.\n\n5 + 3 = 8","signature":"EuoBCkYICxgCKkCuo1dP5TeGHNcxk0Hzj2E/ShHQQDMOH3/Rp6EgZxXJHGGPdkCNYyBQlS6utB5CbWIUlUJp0t6mK1l7UeGCNjIuEgzsIvdAoXSYZw0peVUaDGaOrx0au9UUwQWH1CIwHSqXMR2ewV1Ii79ncaszVQ6plNIpyykK67uRhee4FnU2EPQ5q0/JpfQI/gQo/PnVKlI7kAeiWcEdUvn+r1VonXc4Ermbj/YJ62IIr6VLEPnD4jOWODzLS2l07VhBjVdq+LPImscRTNh+gaKV6y11mxIiDceTlgplsgKv8lNLCNJML9ACGAE="},{"type":"text","text":"5
+        + 3 = 8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":46,"service_tier":"standard"}}'
+  recorded_at: Fri, 02 Jan 2026 21:47:19 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-opus-4-5-20251101","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]},{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user is asking a simple arithmetic question: 5 + 3.\n\n5 + 3 = 8","signature":"EuoBCkYICxgCKkCuo1dP5TeGHNcxk0Hzj2E/ShHQQDMOH3/Rp6EgZxXJHGGPdkCNYyBQlS6utB5CbWIUlUJp0t6mK1l7UeGCNjIuEgzsIvdAoXSYZw0peVUaDGaOrx0au9UUwQWH1CIwHSqXMR2ewV1Ii79ncaszVQ6plNIpyykK67uRhee4FnU2EPQ5q0/JpfQI/gQo/PnVKlI7kAeiWcEdUvn+r1VonXc4Ermbj/YJ62IIr6VLEPnD4jOWODzLS2l07VhBjVdq+LPImscRTNh+gaKV6y11mxIiDceTlgplsgKv8lNLCNJML9ACGAE="},{"type":"text","text":"5
+        + 3 = 8"}]},{"role":"user","content":[{"type":"text","text":"Now multiply
+        that by 2"}]}],"stream":false,"max_tokens":9024,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 02 Jan 2026 21:47:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-01-02T21:47:20Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-01-02T21:47:21Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-01-02T21:47:19Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-01-02T21:47:20Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '2657'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1vcHVzLTQtNS0yMDI1MTEwMSIsImlkIjoibXNnXzAxSlduM0M5Y2JzWDNpcG8xcFFHc0N3bSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgd2FudHMgbWUgdG8gdGFrZSB0aGUgcHJldmlvdXMgcmVzdWx0ICg4KSBhbmQgbXVsdGlwbHkgaXQgYnkgMi5cblxuOCDDlyAyID0gMTYiLCJzaWduYXR1cmUiOiJFdndCQ2tZSUN4Z0NLa0JKa1pCYjVlOVAySkZaL0tvYUQxT1R0Q2tsWmpGRzBUZVJrNExBdTBXNm9tWU5CWWtHK3h0eHpVVVlBVFZDTlZ3a0QzNFdnV1Jjb1I5RjFJaWgwMTh2RWd3V2RwRXFkazMvbi8wRGJIVWFETEJhM1FXei9OblZqeGlJbVNJdzJUQnJoSkZvWHgxN2pHUFZIZVd3MTY2Z1NGQjhYTDdyOTlmaEtBbnBTOVRzTFZ6UElhQmRhQ0ljSllwcUdlU2xLbVRQNkxacEV5NEdnUnhjWjFMelJuQ2dHekxiMVQ5b3lPaWJCTlM5Kzl0TE5teitXaVorMGd6RldBY1lQNUc2WUlZZ3RBYXNaWC94UE82a0IrM1ZVdmZaa3Ewb0NmR1pBZ1FyRXMrSjlJbUdsV01iTU5zT1c3RzdZZmxuTHFCUUwreUQvWkFNR0FFPSJ9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiOCDDlyAyID0gMTYifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjEwNywiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjQ5LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Fri, 02 Jan 2026 21:47:21 GMT
+recorded_with: VCR 6.4.0

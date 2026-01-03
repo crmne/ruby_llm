@@ -10,10 +10,13 @@ module RubyLLM
         end
 
         def build_chunk(data)
+          parts = data.dig('candidates', 0, 'content', 'parts') || []
+
           Chunk.new(
             role: :assistant,
             model_id: extract_model_id(data),
-            content: extract_content(data),
+            content: extract_text_content(parts),
+            thinking: extract_thought_content(parts),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
             tool_calls: extract_tool_calls(data)
@@ -24,6 +27,18 @@ module RubyLLM
 
         def extract_model_id(data)
           data['modelVersion']
+        end
+
+        def extract_text_content(parts)
+          text_parts = parts.reject { |p| p['thought'] }
+          text = text_parts.filter_map { |p| p['text'] }.join
+          text.empty? ? nil : text
+        end
+
+        def extract_thought_content(parts)
+          thought_parts = parts.select { |p| p['thought'] }
+          thoughts = thought_parts.filter_map { |p| p['text'] }.join
+          thoughts.empty? ? nil : thoughts
         end
 
         def extract_content(data)

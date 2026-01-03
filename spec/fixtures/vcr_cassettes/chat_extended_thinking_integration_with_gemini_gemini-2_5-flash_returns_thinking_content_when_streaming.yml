@@ -1,0 +1,134 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 8 * 7? Show your
+        work."}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingBudget":1024}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/event-stream
+      Content-Disposition:
+      - attachment
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Fri, 02 Jan 2026 21:49:27 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1508
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "data: {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"**Decomposing
+        the Problem**\\n\\nI've homed in on the core of this task: a simple multiplication
+        problem (8 * 7). The challenge is providing the \\\"work\\\" to solve it.
+        I've successfully recalled the answer: 56. Now, I'm brainstorming the best
+        way to demonstrate the steps, even for such a basic calculation.\\n\\n\\n\",\"thought\":
+        true}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        13,\"totalTokenCount\": 78,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 65},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \"**Exploring Work Solutions**\\n\\nI'm now zeroing
+        in on the best ways to present the \\\"work\\\" for this problem. While repeated
+        addition clearly defines multiplication, I also think I can effectively use
+        the distributive property to showcase a more complex method of thinking. I'm
+        focusing on the clarity of demonstration. I'm aiming for methods that convey
+        the steps a person might take to solve this problem, rather than just provide
+        the final answer.\\n\\n\\n\",\"thought\": true}],\"role\": \"model\"},\"index\":
+        0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"totalTokenCount\": 419,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\": 406},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"**Crafting the Final
+        Response**\\n\\nI've finalized my presentation. After exploring several options,
+        I've selected repeated addition and the distributive property as the strongest
+        ways to illustrate the process for the user's request. My emphasis is on clarity
+        and showing common mental math strategies. The \\\"work\\\" is now in the
+        final stages of the draft, and I'm ready to present my complete response.\\n\\n\\n\",\"thought\":
+        true}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        13,\"totalTokenCount\": 815,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 802},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \"**Formulating a Response**\\n\\nI'm now putting
+        together the complete answer, starting with the direct result (56). Next,
+        I'll present repeated addition and break-down methods, including explanations.
+        I'll make sure to clearly and accurately illustrate the steps I came up with.
+        I'm prioritizing providing a complete and helpful response that addresses
+        the core requirements.\\n\\n\\n\",\"thought\": true}],\"role\": \"model\"},\"index\":
+        0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"totalTokenCount\": 849,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\": 836},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \"To find 8 * 7, we
+        can use a few methods:\\n\\n**Method 1: Repeated Addition**\\nMultiplication
+        is essentially a quicker way of doing repeated addition.\\nYou can add the
+        number 7 to itself 8 times\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\":
+        {\"promptTokenCount\": 13,\"candidatesTokenCount\": 46,\"totalTokenCount\":
+        895,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\":
+        836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\": \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \":\\n7 + 7 + 7 +
+        7 + 7 + 7 + 7 + 7 = 56\\n\\nOr, you can add the number 8 to itself 7 times:\\n8
+        + 8 +\"}],\"role\": \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\":
+        13,\"candidatesTokenCount\": 96,\"totalTokenCount\": 945,\"promptTokensDetails\":
+        [{\"modality\": \"TEXT\",\"tokenCount\": 13}],\"thoughtsTokenCount\": 836},\"modelVersion\":
+        \"gemini-2.5-flash\",\"responseId\": \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata:
+        {\"candidates\": [{\"content\": {\"parts\": [{\"text\": \" 8 + 8 + 8 + 8 +
+        8 = 56\\n\\n**Method 2: Breaking Down One Number (Distributive Property)**\\nYou
+        can break one of the numbers into parts that are easier to multiply\"}],\"role\":
+        \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        143,\"totalTokenCount\": 992,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \". For example, let's break 7 into 5 + 2:\\n\\n8
+        * 7 = 8 * (5 + 2)\\nNow, distribute the 8 to each part:\\n= (8 * \"}],\"role\":
+        \"model\"},\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        191,\"totalTokenCount\": 1040,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \"5) + (8 * 2)\\n= 40 + 16\\n= 56\\n\\nAlternatively,
+        you could break 8 into 4 + 4:\\n8 * 7 = (4 + 4) *\"}],\"role\": \"model\"},\"index\":
+        0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        242,\"totalTokenCount\": 1091,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \" 7\\n= (4 * 7) + (4 * 7)\\n= 28 + 28\\n= 56\\n\\n---\\n\\nUsing
+        any of these methods, we find that:\\n\\n**8 * 7 =\"}],\"role\": \"model\"},\"index\":
+        0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        292,\"totalTokenCount\": 1141,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
+        {\"parts\": [{\"text\": \" 56**\"}],\"role\": \"model\"},\"finishReason\":
+        \"STOP\",\"index\": 0}],\"usageMetadata\": {\"promptTokenCount\": 13,\"candidatesTokenCount\":
+        295,\"totalTokenCount\": 1144,\"promptTokensDetails\": [{\"modality\": \"TEXT\",\"tokenCount\":
+        13}],\"thoughtsTokenCount\": 836},\"modelVersion\": \"gemini-2.5-flash\",\"responseId\":
+        \"Zj1Yae2KBcXrkdUPhdPckQg\"}\r\n\r\n"
+  recorded_at: Fri, 02 Jan 2026 21:49:31 GMT
+recorded_with: VCR 6.4.0

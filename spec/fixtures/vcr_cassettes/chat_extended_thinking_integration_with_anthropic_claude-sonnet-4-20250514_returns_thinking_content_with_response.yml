@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-sonnet-4-20250514","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 15 * 23? Think through this step by step."}]}],"stream":false,"max_tokens":9024,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 02 Jan 2026 12:40:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '399000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-01-02T12:40:17Z'
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-01-02T12:40:10Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '2400000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '2399000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-01-02T12:40:10Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '7485'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1zb25uZXQtNC0yMDI1MDUxNCIsImlkIjoibXNnXzAxOTZVUHVIRXRIZEt6SnJCSG9XSFA0TSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiSSBuZWVkIHRvIGNhbGN1bGF0ZSAxNSAqIDIzLiBMZXQgbWUgZG8gdGhpcyBzdGVwIGJ5IHN0ZXAgdXNpbmcgdGhlIHN0YW5kYXJkIG11bHRpcGxpY2F0aW9uIG1ldGhvZC5cblxuMTUgKiAyM1xuXG5JIGNhbiBicmVhayB0aGlzIGRvd24gYXM6XG4xNSAqIDIzID0gMTUgKiAoMjAgKyAzKSA9ICgxNSAqIDIwKSArICgxNSAqIDMpXG5cbkZpcnN0LCBsZXQgbWUgY2FsY3VsYXRlIDE1ICogMjA6XG4xNSAqIDIwID0gMTUgKiAyICogMTAgPSAzMCAqIDEwID0gMzAwXG5cblRoZW4sIGxldCBtZSBjYWxjdWxhdGUgMTUgKiAzOlxuMTUgKiAzID0gKDEwICsgNSkgKiAzID0gKDEwICogMykgKyAoNSAqIDMpID0gMzAgKyAxNSA9IDQ1XG5cblNvOiAxNSAqIDIzID0gMzAwICsgNDUgPSAzNDVcblxuTGV0IG1lIGRvdWJsZS1jaGVjayB0aGlzIHVzaW5nIHRoZSBzdGFuZGFyZCBtdWx0aXBsaWNhdGlvbiBhbGdvcml0aG06XG4gICAgMjNcbiAgw5cgMTVcbiAgLS0tLVxuICAgMTE1ICAoMjMgw5cgNSlcbiAgMjMwICAgKDIzIMOXIDEwLCBzaGlmdGVkIG9uZSBwbGFjZSlcbiAgLS0tLVxuICAzNDVcblxuMjMgw5cgNSA9IDExNVxuMjMgw5cgMSAoaW4gdGhlIHRlbnMgcGxhY2UpID0gMjMsIGJ1dCBzaW5jZSBpdCdzIGluIHRoZSB0ZW5zIHBsYWNlLCBpdCdzIGFjdHVhbGx5IDIzIMOXIDEwID0gMjMwXG5cbjExNSArIDIzMCA9IDM0NVxuXG5ZZXMsIHRoYXQncyBjb3JyZWN0LiIsInNpZ25hdHVyZSI6IkV0Y0dDa1lJQ3hnQ0trRCtaYnRLdWpYa0RMOEs2bGFFNHZMcFNvSy9aY0ZWMUMzVncvdzJpT0cwYUVFZkVORmhSNVVReTdTc1BtNXZUdmM0NHZ5Q3F1aHRoNmRJWmJJMnlTUlhFZ3dST2RVdk1iVHg5bWZyUkhJYURCTzBJTTYwZytKWktHKzNwQ0l3d2NpeUxrOVkyaVRyN3dtMnRXVmF1TVYzbi9ZTElZbzl4eWFZd1NGU3lPdk9oRG1pem5PMmR2KzMxZFJ0Z2NNdUtyNEZDbHVJczlDanJkblMrOFZzVVNyMWNYbTNRa3ozMVlYbUNveWtFZjUwc0xCRldITVZBWlA0L2tVMFhJbzd5TDdUa3lSWTNYWHBIVFVGQVpQQ3BBYW1OWEZCY2V6a1Z4Z0QycS9yMk5sN2hMcEsramhlZHQrbHZ6aFY5YWF4TERlLzhOR0krMnhLYk11cEw5YVNqa05vN1VpaVV0K3lFa1NMRDVPbWZldGNaU205V21uMk04NFdLUVVaTitXbUo2MEdHL3V0VTByYUQ5YXhkUjVmWEZBUnJPTTVVNEJYVHBZdzBySGRZZldlSjV3U052bTRzdERvd2ppMEpSK3dTcisybm5Eamd4NThkSDRUcmpUTFdhcXRoV1psRWRtcHhjekVKb1JYT0E1TmVDUm9MR1FjRlFkb3hSRnI2NHpDcjRDYnRiZmoyUjBibFN2M1gyc3ZYV1ZBWWtYWDlvSXR0Y2VRV0E4L0ZoZS82SDdZVlBxT3VKLysyUGVPZUdvekwxWkluaUcrcEFuem10a1NCK1JLVjU3SHYzczZMRmtGWDRONFo1aG1pUjQwMmxoWTlmVGUzdm5BNi9OaUlGYUtBdklhUk9VL0Frc1FZdW43Q3JSTkRWMkNtQ21UOXFEQlhvZWtuemQ4bDEzTi92MHQxVmlvK1RESjJlMFk1NGJmSHlZV0g3ZW5DUTVTbmlHL2FWUHBYZ3FuRGo3cWIwMml1b1oweTE1Mm9KbkVtZEVYSmovcHo0bjE5ck5zM2pYeThYQUFIQldJY01QU09CTHRkMWlFdmhDenZDT3krOTJZOUJXY1Z3TEYwNVFDSEZsMDV6MkJlY2VRM051U2czdGJheW1sWWNRZStReW9EREdXTWFyRHdibDhhdGFqbW45ZnpDSm9sSThMdDlaenB1T1FQdTVsL1EzNTQzUWZTTDBaOFdTbTdsMk1aaEtrRnVITVJDS0V4NktUNmlLNWo5OTV0RUord3hwNGZKTVpOYnlzTCtBV283MkxxUmEyd0dsNFNxcnZaY1Z5REZWU3RBMk5UVzFqUXQ2Q043VFk5RERDM1IzblVLODdTbEtmTllRd0U1eVFyRjhibkMvaTZoREtEbUhJVU96bUlLazRDZHBvMUpueVBLcHY0WlB0QTNEQVM2VkhpYzZZaTVGTFpBaHpBdzNUVi9Ta3JNZ3AyM2lRL2VYOUdhajhYUTU1eEJKcEp2Q3BRNmlwdVZYejRnL2VqMGpLdGxPVUl5Q2lHQUU9In0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJJJ2xsIHNvbHZlIDE1IMOXIDIzIHN0ZXAgYnkgc3RlcCB1c2luZyB0aGUgZGlzdHJpYnV0aXZlIHByb3BlcnR5LlxuXG4qKk1ldGhvZCAxOiBCcmVha2luZyBkb3duIDIzKipcbjE1IMOXIDIzID0gMTUgw5cgKDIwICsgMylcbj0gKDE1IMOXIDIwKSArICgxNSDDlyAzKVxuPSAzMDAgKyA0NVxuPSAqKjM0NSoqXG5cbioqTGV0IG1lIHZlcmlmeSB3aXRoIHRoZSBzdGFuZGFyZCBhbGdvcml0aG06KipcbmBgYFxuICAgIDIzXG4gIMOXIDE1XG4gIC0tLS1cbiAgIDExNSAgKDIzIMOXIDUpXG4gIDIzMCAgICgyMyDDlyAxMClcbiAgLS0tLVxuICAzNDVcbmBgYFxuXG4tIDIzIMOXIDUgPSAxMTVcbi0gMjMgw5cgMTAgPSAyMzAgIFxuLSAxMTUgKyAyMzAgPSAzNDVcblxuVGhlcmVmb3JlLCAxNSDDlyAyMyA9ICoqMzQ1KioifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjUyLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NTE2LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Fri, 02 Jan 2026 12:40:16 GMT
+recorded_with: VCR 6.4.0

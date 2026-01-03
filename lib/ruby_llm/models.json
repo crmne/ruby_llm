@@ -317,6 +317,43 @@
     "metadata": {}
   },
   {
+    "id": "claude-opus-4-5-20251101",
+    "name": "Claude Opus 4.5",
+    "provider": "anthropic",
+    "family": "claude-2",
+    "created_at": "2025-11-24 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 3.0,
+          "output_per_million": 15.0
+        },
+        "batch": {
+          "input_per_million": 1.5,
+          "output_per_million": 7.5
+        }
+      }
+    },
+    "metadata": {}
+  },
+  {
     "id": "claude-sonnet-4-20250514",
     "name": "Claude Sonnet 4",
     "provider": "anthropic",
@@ -2775,7 +2812,8 @@
     "capabilities": [
       "batch",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -31394,7 +31432,8 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {

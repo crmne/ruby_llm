@@ -14,12 +14,14 @@ module RubyLLM
         def build_chunk(data)
           usage = data['usage'] || {}
           cached_tokens = usage.dig('prompt_tokens_details', 'cached_tokens')
+          delta = data.dig('choices', 0, 'delta') || {}
 
           Chunk.new(
             role: :assistant,
             model_id: data['model'],
-            content: data.dig('choices', 0, 'delta', 'content'),
-            tool_calls: parse_tool_calls(data.dig('choices', 0, 'delta', 'tool_calls'), parse_arguments: false),
+            content: delta['content'],
+            thinking: delta['reasoning_content'],
+            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false),
             input_tokens: usage['prompt_tokens'],
             output_tokens: usage['completion_tokens'],
             cached_tokens: cached_tokens,
