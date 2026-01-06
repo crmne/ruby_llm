@@ -171,20 +171,8 @@ module RubyLLM
           metadata.each do |key, value|
             next if value.nil?
 
-            # Preserve native types that OTel supports (string, int, float, bool)
-            # Only stringify complex objects
-            attrs["#{prefix}.#{key}"] = otel_safe_value(value)
-          end
-        end
-
-        def otel_safe_value(value)
-          case value
-          when String, Integer, Float, TrueClass, FalseClass
-            value
-          when Hash, Array
-            JSON.generate(value)
-          else
-            value.to_s
+            # Let OTel SDK handle type coercion for supported types
+            attrs["#{prefix}.#{key}"] = value
           end
         end
 

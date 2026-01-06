@@ -446,7 +446,7 @@ RSpec.describe RubyLLM::Instrumentation do
     end
 
     describe '.build_metadata_attributes' do
-      it 'builds attributes with the given prefix preserving native types' do
+      it 'builds attributes with the given prefix' do
         attrs = {}
         RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
           attrs,
@@ -483,40 +483,20 @@ RSpec.describe RubyLLM::Instrumentation do
         expect(attrs).not_to have_key('test.empty')
       end
 
-      it 'stringifies complex objects' do
+      it 'passes values through for OTel SDK to handle' do
         attrs = {}
-        complex_obj = Object.new
-        def complex_obj.to_s = 'complex_value'
+        hash_value = { nested: 'value' }
+        array_value = %w[foo bar]
 
         RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
           attrs,
-          { data: complex_obj },
+          { config: hash_value, tags: array_value },
           prefix: 'test'
         )
 
-        expect(attrs['test.data']).to eq 'complex_value'
-      end
-
-      it 'JSON encodes Hash values' do
-        attrs = {}
-        RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
-          attrs,
-          { config: { nested: 'value', count: 42 } },
-          prefix: 'test'
-        )
-
-        expect(attrs['test.config']).to eq '{"nested":"value","count":42}'
-      end
-
-      it 'JSON encodes Array values' do
-        attrs = {}
-        RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
-          attrs,
-          { tags: %w[foo bar baz] },
-          prefix: 'test'
-        )
-
-        expect(attrs['test.tags']).to eq '["foo","bar","baz"]'
+        # Values passed through as-is; OTel SDK handles type coercion
+        expect(attrs['test.config']).to eq hash_value
+        expect(attrs['test.tags']).to eq array_value
       end
     end
   end
