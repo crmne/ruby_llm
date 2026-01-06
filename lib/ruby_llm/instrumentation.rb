@@ -16,16 +16,9 @@ module RubyLLM
         return false unless config.tracing_enabled
 
         unless otel_available?
-          raise RubyLLM::ConfigurationError, <<~MSG.strip
-            Tracing is enabled but OpenTelemetry is not available.
-            Please add the following gems to your Gemfile:
-
-              gem 'opentelemetry-sdk'
-              gem 'opentelemetry-exporter-otlp'
-
-            Then run `bundle install` and configure OpenTelemetry in an initializer.
-            See https://rubyllm.com/advanced/observability for setup instructions.
-          MSG
+          warn_otel_missing unless @otel_warning_issued
+          @otel_warning_issued = true
+          return false
         end
 
         true
@@ -34,14 +27,12 @@ module RubyLLM
       def tracer(config = RubyLLM.config)
         return NullTracer.instance unless enabled?(config)
 
-        @tracer ||= OpenTelemetry.tracer_provider.tracer(
-          'ruby_llm',
-          RubyLLM::VERSION
-        )
+        # Don't memoize - tracer_provider can be reconfigured after initial load
+        OpenTelemetry.tracer_provider.tracer('ruby_llm', RubyLLM::VERSION)
       end
 
       def reset!
-        @tracer = nil
+        @otel_warning_issued = false
       end
 
       private
@@ -50,6 +41,18 @@ module RubyLLM
         return false unless defined?(OpenTelemetry)
 
         !!OpenTelemetry.tracer_provider
+      end
+
+      def warn_otel_missing
+        RubyLLM.logger.warn <<~MSG.strip
+          [RubyLLM] Tracing is enabled but OpenTelemetry is not available.
+          Tracing will be disabled. To enable, add to your Gemfile:
+
+            gem 'opentelemetry-sdk'
+            gem 'opentelemetry-exporter-otlp'
+
+          See https://rubyllm.com/advanced/observability for setup instructions.
+        MSG
       end
     end
 
@@ -178,6 +181,8 @@ module RubyLLM
           case value
           when String, Integer, Float, TrueClass, FalseClass
             value
+          when Hash, Array
+            JSON.generate(value)
           else
             value.to_s
           end

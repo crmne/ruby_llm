@@ -45,6 +45,24 @@ RSpec.describe RubyLLM::Instrumentation do
       expect(config.tracing_metadata_prefix).to eq 'app.custom'
     end
 
+    it 'reverts tracing_metadata_prefix when disabling langsmith_compat' do
+      config = RubyLLM::Configuration.new
+      config.tracing_langsmith_compat = true
+      expect(config.tracing_metadata_prefix).to eq 'langsmith.metadata'
+
+      config.tracing_langsmith_compat = false
+      expect(config.tracing_metadata_prefix).to eq 'metadata'
+    end
+
+    it 'does not revert custom prefix when disabling langsmith_compat' do
+      config = RubyLLM::Configuration.new
+      config.tracing_langsmith_compat = true
+      config.tracing_metadata_prefix = 'app.custom'
+
+      config.tracing_langsmith_compat = false
+      expect(config.tracing_metadata_prefix).to eq 'app.custom'
+    end
+
     it 'allows configuration via block' do
       RubyLLM.configure do |config|
         config.tracing_enabled = true
@@ -73,14 +91,24 @@ RSpec.describe RubyLLM::Instrumentation do
         expect(described_class.enabled?).to be true
       end
 
-      it 'raises an error when tracing_enabled is true but OpenTelemetry is not available' do
+      it 'returns false and warns when tracing_enabled is true but OpenTelemetry is not available' do
         RubyLLM.configure { |c| c.tracing_enabled = true }
+        described_class.reset!
         allow(described_class).to receive(:otel_available?).and_return(false)
 
-        expect { described_class.enabled? }.to raise_error(
-          RubyLLM::ConfigurationError,
-          /OpenTelemetry is not available/
-        )
+        expect(RubyLLM.logger).to receive(:warn).with(/OpenTelemetry is not available/)
+        expect(described_class.enabled?).to be false
+      end
+
+      it 'only warns once per reset cycle' do
+        RubyLLM.configure { |c| c.tracing_enabled = true }
+        described_class.reset!
+        allow(described_class).to receive(:otel_available?).and_return(false)
+
+        expect(RubyLLM.logger).to receive(:warn).once
+        described_class.enabled?
+        described_class.enabled?
+        described_class.enabled?
       end
     end
 
@@ -467,6 +495,28 @@ RSpec.describe RubyLLM::Instrumentation do
         )
 
         expect(attrs['test.data']).to eq 'complex_value'
+      end
+
+      it 'JSON encodes Hash values' do
+        attrs = {}
+        RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
+          attrs,
+          { config: { nested: 'value', count: 42 } },
+          prefix: 'test'
+        )
+
+        expect(attrs['test.config']).to eq '{"nested":"value","count":42}'
+      end
+
+      it 'JSON encodes Array values' do
+        attrs = {}
+        RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
+          attrs,
+          { tags: %w[foo bar baz] },
+          prefix: 'test'
+        )
+
+        expect(attrs['test.tags']).to eq '["foo","bar","baz"]'
       end
     end
   end

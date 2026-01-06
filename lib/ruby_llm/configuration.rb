@@ -85,9 +85,14 @@ module RubyLLM
 
     def tracing_langsmith_compat=(value)
       @tracing_langsmith_compat = value
-      # Auto-set metadata prefix for LangSmith when enabling compat mode,
-      # but only if the user hasn't customized it
-      @tracing_metadata_prefix = 'langsmith.metadata' if value && @tracing_metadata_prefix == 'metadata'
+      if value
+        # Auto-set metadata prefix for LangSmith when enabling compat mode,
+        # but only if the user hasn't customized it
+        @tracing_metadata_prefix = 'langsmith.metadata' if @tracing_metadata_prefix == 'metadata'
+      elsif @tracing_metadata_prefix == 'langsmith.metadata'
+        # Revert to default when disabling compat mode (if still using langsmith prefix)
+        @tracing_metadata_prefix = 'metadata'
+      end
     end
 
     def instance_variables
