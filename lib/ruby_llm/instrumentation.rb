@@ -11,6 +11,7 @@ module RubyLLM
       CLIENT = :client
       INTERNAL = :internal
     end
+
     class << self
       def enabled?(config = RubyLLM.config)
         return false unless config.tracing_enabled
@@ -162,7 +163,10 @@ module RubyLLM
           }
           attrs['langsmith.span.kind'] = 'LLM' if config[:langsmith_compat]
           attrs['gen_ai.request.temperature'] = config[:temperature] if config[:temperature]
-          build_metadata_attributes(attrs, config[:metadata], prefix: config[:metadata_prefix]) if config[:metadata]
+          if config[:metadata]&.any?
+            build_metadata_attributes(attrs, config[:metadata],
+                                      prefix: config[:metadata_prefix])
+          end
           attrs
         end
 
