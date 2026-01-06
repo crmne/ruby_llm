@@ -45,7 +45,7 @@ module RubyLLM
 
       def initialize_authorizer
         require 'googleauth'
-        @authorizer = if @config.vertexai_service_account_hash
+        @authorizer = if @config.vertexai_service_account_key
           ::Google::Auth::ServiceAccountCredentials.make_creds(
             json_key_io: StringIO.new(@config.vertexai_service_account_key),
             scope: SCOPES
