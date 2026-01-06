@@ -285,16 +285,18 @@ RSpec.describe RubyLLM::Instrumentation do
     end
 
     describe '.build_metadata_attributes' do
-      it 'builds attributes with the given prefix' do
+      it 'builds attributes with the given prefix preserving native types' do
         attrs = {}
         RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
           attrs,
-          { user_id: 123, request_id: 'abc' },
+          { user_id: 123, request_id: 'abc', active: true, score: 0.95 },
           prefix: 'langsmith.metadata'
         )
 
-        expect(attrs['langsmith.metadata.user_id']).to eq '123'
+        expect(attrs['langsmith.metadata.user_id']).to eq 123
         expect(attrs['langsmith.metadata.request_id']).to eq 'abc'
+        expect(attrs['langsmith.metadata.active']).to be true
+        expect(attrs['langsmith.metadata.score']).to eq 0.95
       end
 
       it 'supports custom prefixes' do
@@ -305,7 +307,7 @@ RSpec.describe RubyLLM::Instrumentation do
           prefix: 'app.metadata'
         )
 
-        expect(attrs['app.metadata.user_id']).to eq '123'
+        expect(attrs['app.metadata.user_id']).to eq 123
       end
 
       it 'skips nil values' do
@@ -318,6 +320,20 @@ RSpec.describe RubyLLM::Instrumentation do
 
         expect(attrs).to have_key('test.user_id')
         expect(attrs).not_to have_key('test.empty')
+      end
+
+      it 'stringifies complex objects' do
+        attrs = {}
+        complex_obj = Object.new
+        def complex_obj.to_s = 'complex_value'
+
+        RubyLLM::Instrumentation::SpanBuilder.build_metadata_attributes(
+          attrs,
+          { data: complex_obj },
+          prefix: 'test'
+        )
+
+        expect(attrs['test.data']).to eq 'complex_value'
       end
     end
   end

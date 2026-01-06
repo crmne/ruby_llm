@@ -163,7 +163,20 @@ module RubyLLM
 
         def build_metadata_attributes(attrs, metadata, prefix: RubyLLM.config.tracing_metadata_prefix)
           metadata.each do |key, value|
-            attrs["#{prefix}.#{key}"] = value.to_s unless value.nil?
+            next if value.nil?
+
+            # Preserve native types that OTel supports (string, int, float, bool)
+            # Only stringify complex objects
+            attrs["#{prefix}.#{key}"] = otel_safe_value(value)
+          end
+        end
+
+        def otel_safe_value(value)
+          case value
+          when String, Integer, Float, TrueClass, FalseClass
+            value
+          else
+            value.to_s
           end
         end
 
