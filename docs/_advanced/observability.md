@@ -77,11 +77,13 @@ RubyLLM.configure do |config|
   config.tracing_enabled = true
   
   # Log prompt/completion content (default: false)
-  # Enable for full LangSmith functionality
   config.tracing_log_content = true
   
   # Max content length before truncation (default: 10000)
   config.tracing_max_content_length = 5000
+  
+  # Enable LangSmith-specific span attributes (default: false)
+  config.tracing_langsmith_compat = true
 end
 ```
 
@@ -106,11 +108,13 @@ chat = RubyLLM.chat
 chat.ask("Hello!")
 ```
 
-Metadata appears as `metadata.*` attributes by default. For LangSmith's metadata panel, set:
+Metadata appears as `metadata.*` attributes by default. When `tracing_langsmith_compat` is enabled, metadata uses the `langsmith.metadata.*` prefix for proper LangSmith panel integration.
+
+You can also set a custom prefix:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.tracing_metadata_prefix = 'langsmith.metadata'
+  config.tracing_metadata_prefix = 'app.metadata'
 end
 ```
 
@@ -127,7 +131,7 @@ LangSmith is LangChain's observability platform with specialized LLM debugging f
 RubyLLM.configure do |config|
   config.tracing_enabled = true
   config.tracing_log_content = true
-  config.tracing_metadata_prefix = 'langsmith.metadata'
+  config.tracing_langsmith_compat = true  # Adds LangSmith-specific span attributes
 end
 ```
 
@@ -152,6 +156,11 @@ end
 ```
 
 LangSmith uses the `Langsmith-Project` header (not `service_name`) to organize traces.
+
+When `tracing_langsmith_compat = true`, RubyLLM adds these additional attributes for LangSmith integration:
+- `langsmith.span.kind` - Identifies span type (LLM, TOOL)
+- `input.value` / `output.value` - Populates LangSmith's Input/Output panels
+- `langsmith.metadata.*` - Custom metadata appears in LangSmith's metadata panel
 
 ### Other Backends
 

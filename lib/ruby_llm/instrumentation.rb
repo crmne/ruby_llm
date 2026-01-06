@@ -121,7 +121,7 @@ module RubyLLM
           "[#{descriptions.join(', ')}]"
         end
 
-        def build_message_attributes(messages, max_length:)
+        def build_message_attributes(messages, max_length:, langsmith_compat: false)
           attrs = {}
           messages.each_with_index do |msg, idx|
             attrs["gen_ai.prompt.#{idx}.role"] = msg.role.to_s
@@ -129,39 +129,42 @@ module RubyLLM
             attrs["gen_ai.prompt.#{idx}.content"] = truncate_content(content, max_length)
           end
           # Set input.value for LangSmith Input panel (last user message)
-          last_user_msg = messages.reverse.find { |m| m.role.to_s == 'user' }
-          if last_user_msg
-            content = extract_content_text(last_user_msg.content)
-            attrs['input.value'] = truncate_content(content, max_length)
+          if langsmith_compat
+            last_user_msg = messages.reverse.find { |m| m.role.to_s == 'user' }
+            if last_user_msg
+              content = extract_content_text(last_user_msg.content)
+              attrs['input.value'] = truncate_content(content, max_length)
+            end
           end
           attrs
         end
 
-        def build_completion_attributes(message, max_length:)
+        def build_completion_attributes(message, max_length:, langsmith_compat: false)
           attrs = {}
           attrs['gen_ai.completion.0.role'] = message.role.to_s
           content = extract_content_text(message.content)
           truncated = truncate_content(content, max_length)
           attrs['gen_ai.completion.0.content'] = truncated
           # Set output.value for LangSmith Output panel
-          attrs['output.value'] = truncated
+          attrs['output.value'] = truncated if langsmith_compat
           attrs
         end
 
-        def build_request_attributes(model:, provider:, session_id:, temperature: nil, metadata: nil)
+        def build_request_attributes(model:, provider:, session_id:, temperature: nil, metadata: nil,
+                                     langsmith_compat: false, metadata_prefix: 'metadata')
           attrs = {
-            'langsmith.span.kind' => 'LLM',
             'gen_ai.system' => provider.to_s,
             'gen_ai.operation.name' => 'chat',
             'gen_ai.request.model' => model.id,
             'gen_ai.conversation.id' => session_id
           }
+          attrs['langsmith.span.kind'] = 'LLM' if langsmith_compat
           attrs['gen_ai.request.temperature'] = temperature if temperature
-          build_metadata_attributes(attrs, metadata) if metadata
+          build_metadata_attributes(attrs, metadata, prefix: metadata_prefix) if metadata
           attrs
         end
 
-        def build_metadata_attributes(attrs, metadata, prefix: RubyLLM.config.tracing_metadata_prefix)
+        def build_metadata_attributes(attrs, metadata, prefix: 'metadata')
           metadata.each do |key, value|
             next if value.nil?
 
@@ -188,33 +191,32 @@ module RubyLLM
           attrs
         end
 
-        def build_tool_attributes(tool_call:, session_id:)
-          {
-            'langsmith.span.kind' => 'TOOL',
+        def build_tool_attributes(tool_call:, session_id:, langsmith_compat: false)
+          attrs = {
             'gen_ai.operation.name' => 'tool',
             'gen_ai.tool.name' => tool_call.name.to_s,
             'gen_ai.tool.call.id' => tool_call.id,
             'gen_ai.conversation.id' => session_id
           }
+          attrs['langsmith.span.kind'] = 'TOOL' if langsmith_compat
+          attrs
         end
 
-        def build_tool_input_attributes(tool_call:, max_length:)
+        def build_tool_input_attributes(tool_call:, max_length:, langsmith_compat: false)
           args = tool_call.arguments
-          input = args.is_a?(String) ? args : args.to_json
+          input = args.is_a?(String) ? args : JSON.generate(args)
           truncated = truncate_content(input, max_length)
-          {
-            'input.value' => truncated, # LangSmith Input panel
-            'gen_ai.prompt' => truncated # GenAI convention fallback
-          }
+          attrs = { 'gen_ai.tool.input' => truncated }
+          attrs['input.value'] = truncated if langsmith_compat
+          attrs
         end
 
-        def build_tool_output_attributes(result:, max_length:)
+        def build_tool_output_attributes(result:, max_length:, langsmith_compat: false)
           output = result.is_a?(String) ? result : result.to_s
           truncated = truncate_content(output, max_length)
-          {
-            'output.value' => truncated,     # LangSmith Output panel
-            'gen_ai.completion' => truncated # GenAI convention fallback
-          }
+          attrs = { 'gen_ai.tool.output' => truncated }
+          attrs['output.value'] = truncated if langsmith_compat
+          attrs
         end
       end
     end

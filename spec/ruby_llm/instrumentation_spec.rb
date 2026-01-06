@@ -24,6 +24,27 @@ RSpec.describe RubyLLM::Instrumentation do
       expect(config.tracing_metadata_prefix).to eq 'metadata'
     end
 
+    it 'has tracing_langsmith_compat defaulting to false' do
+      config = RubyLLM::Configuration.new
+      expect(config.tracing_langsmith_compat).to be false
+    end
+
+    it 'auto-sets tracing_metadata_prefix when enabling langsmith_compat' do
+      config = RubyLLM::Configuration.new
+      expect(config.tracing_metadata_prefix).to eq 'metadata'
+
+      config.tracing_langsmith_compat = true
+      expect(config.tracing_metadata_prefix).to eq 'langsmith.metadata'
+    end
+
+    it 'does not override custom tracing_metadata_prefix when enabling langsmith_compat' do
+      config = RubyLLM::Configuration.new
+      config.tracing_metadata_prefix = 'app.custom'
+
+      config.tracing_langsmith_compat = true
+      expect(config.tracing_metadata_prefix).to eq 'app.custom'
+    end
+
     it 'allows configuration via block' do
       RubyLLM.configure do |config|
         config.tracing_enabled = true
@@ -178,6 +199,20 @@ RSpec.describe RubyLLM::Instrumentation do
         expect(attrs['gen_ai.tool.name']).to eq 'get_weather'
         expect(attrs['gen_ai.tool.call.id']).to eq 'call_123'
         expect(attrs['gen_ai.conversation.id']).to eq 'session-abc'
+        expect(attrs).not_to have_key('langsmith.span.kind')
+      end
+
+      it 'includes langsmith.span.kind when langsmith_compat is true' do
+        tool_call = instance_double(RubyLLM::ToolCall, name: 'get_weather', id: 'call_123',
+                                                       arguments: { location: 'NYC' })
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_tool_attributes(
+          tool_call: tool_call,
+          session_id: 'session-abc',
+          langsmith_compat: true
+        )
+
+        expect(attrs['langsmith.span.kind']).to eq 'TOOL'
       end
     end
 
@@ -190,7 +225,21 @@ RSpec.describe RubyLLM::Instrumentation do
           max_length: 50
         )
 
-        expect(attrs['input.value']).to include('[truncated]')
+        expect(attrs['gen_ai.tool.input']).to include('[truncated]')
+        expect(attrs).not_to have_key('input.value')
+      end
+
+      it 'includes input.value when langsmith_compat is true' do
+        tool_call = instance_double(RubyLLM::ToolCall, arguments: { query: 'test' })
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_tool_input_attributes(
+          tool_call: tool_call,
+          max_length: 100,
+          langsmith_compat: true
+        )
+
+        expect(attrs['gen_ai.tool.input']).to be_a(String)
+        expect(attrs['input.value']).to eq(attrs['gen_ai.tool.input'])
       end
     end
 
@@ -203,7 +252,21 @@ RSpec.describe RubyLLM::Instrumentation do
           max_length: 50
         )
 
-        expect(attrs['output.value']).to include('[truncated]')
+        expect(attrs['gen_ai.tool.output']).to include('[truncated]')
+        expect(attrs).not_to have_key('output.value')
+      end
+
+      it 'includes output.value when langsmith_compat is true' do
+        result = 'test output'
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_tool_output_attributes(
+          result: result,
+          max_length: 100,
+          langsmith_compat: true
+        )
+
+        expect(attrs['gen_ai.tool.output']).to eq('test output')
+        expect(attrs['output.value']).to eq('test output')
       end
     end
 
@@ -281,6 +344,76 @@ RSpec.describe RubyLLM::Instrumentation do
         attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 1000)
 
         expect(attrs['gen_ai.prompt.0.content']).to eq 'Describe this image'
+      end
+
+      it 'does not include input.value by default' do
+        messages = [RubyLLM::Message.new(role: :user, content: 'Hello')]
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 1000)
+
+        expect(attrs).not_to have_key('input.value')
+      end
+
+      it 'includes input.value when langsmith_compat is true' do
+        messages = [RubyLLM::Message.new(role: :user, content: 'Hello')]
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(
+          messages,
+          max_length: 1000,
+          langsmith_compat: true
+        )
+
+        expect(attrs['input.value']).to eq 'Hello'
+      end
+    end
+
+    describe '.build_completion_attributes' do
+      it 'does not include output.value by default' do
+        message = RubyLLM::Message.new(role: :assistant, content: 'Hi there!')
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_completion_attributes(message, max_length: 1000)
+
+        expect(attrs['gen_ai.completion.0.content']).to eq 'Hi there!'
+        expect(attrs).not_to have_key('output.value')
+      end
+
+      it 'includes output.value when langsmith_compat is true' do
+        message = RubyLLM::Message.new(role: :assistant, content: 'Hi there!')
+
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_completion_attributes(
+          message,
+          max_length: 1000,
+          langsmith_compat: true
+        )
+
+        expect(attrs['output.value']).to eq 'Hi there!'
+      end
+    end
+
+    describe '.build_request_attributes' do
+      let(:model) { instance_double(RubyLLM::Model, id: 'gpt-4') }
+
+      it 'does not include langsmith.span.kind by default' do
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_request_attributes(
+          model: model,
+          provider: :openai,
+          session_id: 'session-123'
+        )
+
+        expect(attrs['gen_ai.system']).to eq 'openai'
+        expect(attrs['gen_ai.request.model']).to eq 'gpt-4'
+        expect(attrs).not_to have_key('langsmith.span.kind')
+      end
+
+      it 'includes langsmith.span.kind when langsmith_compat is true' do
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_request_attributes(
+          model: model,
+          provider: :openai,
+          session_id: 'session-123',
+          langsmith_compat: true
+        )
+
+        expect(attrs['langsmith.span.kind']).to eq 'LLM'
       end
     end
 

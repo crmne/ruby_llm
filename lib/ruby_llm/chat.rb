@@ -159,6 +159,8 @@ module RubyLLM
     end
 
     def complete_with_span(span, &)
+      langsmith = @config.tracing_langsmith_compat
+
       # Set request attributes
       if span.recording?
         span.add_attributes(
@@ -167,7 +169,9 @@ module RubyLLM
             provider: @provider.slug,
             session_id: @session_id,
             temperature: @temperature,
-            metadata: @metadata
+            metadata: @metadata,
+            langsmith_compat: langsmith,
+            metadata_prefix: @config.tracing_metadata_prefix
           )
         )
 
@@ -176,7 +180,8 @@ module RubyLLM
           span.add_attributes(
             Instrumentation::SpanBuilder.build_message_attributes(
               messages,
-              max_length: @config.tracing_max_content_length
+              max_length: @config.tracing_max_content_length,
+              langsmith_compat: langsmith
             )
           )
         end
@@ -200,7 +205,8 @@ module RubyLLM
           span.add_attributes(
             Instrumentation::SpanBuilder.build_completion_attributes(
               response,
-              max_length: @config.tracing_max_content_length
+              max_length: @config.tracing_max_content_length,
+              langsmith_compat: langsmith
             )
           )
         end
@@ -304,12 +310,14 @@ module RubyLLM
     def execute_tool_with_span(tool_call, span)
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
+      langsmith = @config.tracing_langsmith_compat
 
       if span.recording?
         span.add_attributes(
           Instrumentation::SpanBuilder.build_tool_attributes(
             tool_call: tool_call,
-            session_id: @session_id
+            session_id: @session_id,
+            langsmith_compat: langsmith
           )
         )
 
@@ -317,7 +325,8 @@ module RubyLLM
           span.add_attributes(
             Instrumentation::SpanBuilder.build_tool_input_attributes(
               tool_call: tool_call,
-              max_length: @config.tracing_max_content_length
+              max_length: @config.tracing_max_content_length,
+              langsmith_compat: langsmith
             )
           )
         end
@@ -329,7 +338,8 @@ module RubyLLM
         span.add_attributes(
           Instrumentation::SpanBuilder.build_tool_output_attributes(
             result: result,
-            max_length: @config.tracing_max_content_length
+            max_length: @config.tracing_max_content_length,
+            langsmith_compat: langsmith
           )
         )
       end
