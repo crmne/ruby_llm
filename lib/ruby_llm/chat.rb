@@ -139,6 +139,20 @@ module RubyLLM
       end
     end
 
+    def add_message(message_or_attributes)
+      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      messages << message
+      message
+    end
+
+    def reset_messages!
+      @messages.clear
+    end
+
+    def instance_variables
+      super - %i[@connection @config]
+    end
+
     private
 
     def complete_with_span(span, &)
@@ -237,24 +251,6 @@ module RubyLLM
         response
       end
     end
-
-    public
-
-    def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
-      messages << message
-      message
-    end
-
-    def reset_messages!
-      @messages.clear
-    end
-
-    def instance_variables
-      super - %i[@connection @config]
-    end
-
-    private
 
     def wrap_streaming_block(&block)
       return nil unless block_given?
