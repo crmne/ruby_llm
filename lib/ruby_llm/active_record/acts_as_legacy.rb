@@ -88,11 +88,12 @@ module RubyLLM
 
       def to_llm(context: nil)
         # model_id is a string that RubyLLM can resolve
-        # session_id uses the AR record ID (as string) for tracing session grouping
+        # session_id namespaced with class name for uniqueness across models
+        session = "#{self.class.name}:#{id}"
         @chat ||= if context
-                    context.chat(model: model_id, session_id: id.to_s)
+                    context.chat(model: model_id, session_id: session)
                   else
-                    RubyLLM.chat(model: model_id, session_id: id.to_s)
+                    RubyLLM.chat(model: model_id, session_id: session)
                   end
         @chat.reset_messages!
 

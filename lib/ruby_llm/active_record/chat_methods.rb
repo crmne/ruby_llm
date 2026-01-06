@@ -80,7 +80,7 @@ module RubyLLM
         @chat ||= (context || RubyLLM).chat(
           model: model_record.model_id,
           provider: model_record.provider.to_sym,
-          session_id: id.to_s # Use AR record ID for tracing session grouping
+          session_id: "#{self.class.name}:#{id}" # Namespaced for uniqueness across models
         )
         @chat.reset_messages!
 
