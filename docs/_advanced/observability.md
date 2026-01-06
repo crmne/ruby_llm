@@ -178,7 +178,7 @@ RubyLLM follows the [OpenTelemetry Semantic Conventions for GenAI](https://opent
 
 ### Chat Completions
 
-Each call to `chat.ask()` creates a `ruby_llm.chat` span with:
+Each call to `chat.ask()` creates a `chat {model_id}` span (e.g., `chat gpt-4o`) with:
 
 | Attribute | Description |
 |-----------|-------------|
@@ -221,7 +221,7 @@ This follows the industry standard (LangSmith, Vercel AI SDK) where streaming op
 
 ### Tool Calls
 
-When tools are invoked, child `ruby_llm.tool` spans are created with:
+When tools are invoked, child `execute_tool {tool_name}` spans (e.g., `execute_tool get_weather`) are created with:
 
 | Attribute | Description |
 |-----------|-------------|
