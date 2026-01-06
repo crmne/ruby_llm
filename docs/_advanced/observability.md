@@ -241,14 +241,20 @@ When `tracing_langsmith_compat = true`, additional attributes are added:
 
 ### Content Logging
 
-When `tracing_log_content = true`, prompts and completions are logged:
+When `tracing_log_content = true`, prompts and completions are logged as JSON arrays following the OTEL GenAI spec:
 
 | Attribute | Description |
 |-----------|-------------|
-| `gen_ai.prompt.0.role` | Role of first message (user, system, assistant) |
-| `gen_ai.prompt.0.content` | Content of first message |
-| `gen_ai.completion.0.role` | Role of response |
-| `gen_ai.completion.0.content` | Response content |
+| `gen_ai.input.messages` | JSON array of input messages with role and parts |
+| `gen_ai.output.messages` | JSON array of output messages with role and parts |
+
+Example `gen_ai.input.messages`:
+```json
+[
+  {"role": "system", "parts": [{"type": "text", "content": "You are helpful"}]},
+  {"role": "user", "parts": [{"type": "text", "content": "Hello"}]}
+]
+```
 
 ---
 

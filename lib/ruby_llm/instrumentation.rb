@@ -128,11 +128,13 @@ module RubyLLM
 
         def build_message_attributes(messages, max_length:, langsmith_compat: false)
           attrs = {}
-          messages.each_with_index do |msg, idx|
-            attrs["gen_ai.prompt.#{idx}.role"] = msg.role.to_s
-            content = extract_content_text(msg.content)
-            attrs["gen_ai.prompt.#{idx}.content"] = truncate_content(content, max_length)
+
+          # Build OTEL GenAI spec-compliant input messages
+          input_messages = messages.map do |msg|
+            build_message_object(msg)
           end
+          attrs['gen_ai.input.messages'] = truncate_content(JSON.generate(input_messages), max_length)
+
           # Set input.value for LangSmith Input panel (last user message)
           if langsmith_compat
             last_user_msg = messages.reverse.find { |m| m.role.to_s == 'user' }
@@ -146,13 +148,39 @@ module RubyLLM
 
         def build_completion_attributes(message, max_length:, langsmith_compat: false)
           attrs = {}
-          attrs['gen_ai.completion.0.role'] = message.role.to_s
-          content = extract_content_text(message.content)
-          truncated = truncate_content(content, max_length)
-          attrs['gen_ai.completion.0.content'] = truncated
+
+          # Build OTEL GenAI spec-compliant output messages
+          output_messages = [build_message_object(message)]
+          attrs['gen_ai.output.messages'] = truncate_content(JSON.generate(output_messages), max_length)
+
           # Set output.value for LangSmith Output panel
-          attrs['output.value'] = truncated if langsmith_compat
+          if langsmith_compat
+            content = extract_content_text(message.content)
+            attrs['output.value'] = truncate_content(content, max_length)
+          end
           attrs
+        end
+
+        def build_message_object(message)
+          content = extract_content_text(message.content)
+          obj = {
+            role: message.role.to_s,
+            parts: [{ type: 'text', content: content }]
+          }
+
+          # Add tool calls if present
+          if message.respond_to?(:tool_calls) && message.tool_calls&.any?
+            message.tool_calls.each_value do |tc|
+              obj[:parts] << {
+                type: 'tool_call',
+                id: tc.id,
+                name: tc.name,
+                arguments: tc.arguments
+              }
+            end
+          end
+
+          obj
         end
 
         def build_request_attributes(model:, provider:, session_id:, config: {})

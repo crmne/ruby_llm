@@ -346,41 +346,46 @@ RSpec.describe RubyLLM::Instrumentation do
     end
 
     describe '.build_message_attributes' do
-      it 'builds indexed attributes for messages' do
+      it 'builds gen_ai.input.messages as JSON array' do
         messages = [
           RubyLLM::Message.new(role: :system, content: 'You are helpful'),
           RubyLLM::Message.new(role: :user, content: 'Hello')
         ]
 
-        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 1000)
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 10_000)
 
-        expect(attrs['gen_ai.prompt.0.role']).to eq 'system'
-        expect(attrs['gen_ai.prompt.0.content']).to eq 'You are helpful'
-        expect(attrs['gen_ai.prompt.1.role']).to eq 'user'
-        expect(attrs['gen_ai.prompt.1.content']).to eq 'Hello'
+        parsed = JSON.parse(attrs['gen_ai.input.messages'])
+        expect(parsed).to be_an(Array)
+        expect(parsed.length).to eq 2
+        expect(parsed[0]['role']).to eq 'system'
+        expect(parsed[0]['parts'][0]['content']).to eq 'You are helpful'
+        expect(parsed[1]['role']).to eq 'user'
+        expect(parsed[1]['parts'][0]['content']).to eq 'Hello'
       end
 
-      it 'truncates long content' do
+      it 'truncates long JSON content' do
         messages = [RubyLLM::Message.new(role: :user, content: 'a' * 100)]
 
         attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 50)
 
-        expect(attrs['gen_ai.prompt.0.content']).to eq "#{'a' * 50}... [truncated]"
+        expect(attrs['gen_ai.input.messages']).to include('[truncated]')
+        expect(attrs['gen_ai.input.messages'].length).to be <= 70 # 50 + "... [truncated]"
       end
 
       it 'handles Content objects with attachments' do
         content = RubyLLM::Content.new('Describe this image', ['spec/fixtures/ruby.png'])
         messages = [RubyLLM::Message.new(role: :user, content: content)]
 
-        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 1000)
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 10_000)
 
-        expect(attrs['gen_ai.prompt.0.content']).to eq 'Describe this image'
+        parsed = JSON.parse(attrs['gen_ai.input.messages'])
+        expect(parsed[0]['parts'][0]['content']).to eq 'Describe this image'
       end
 
       it 'does not include input.value by default' do
         messages = [RubyLLM::Message.new(role: :user, content: 'Hello')]
 
-        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 1000)
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(messages, max_length: 10_000)
 
         expect(attrs).not_to have_key('input.value')
       end
@@ -390,7 +395,7 @@ RSpec.describe RubyLLM::Instrumentation do
 
         attrs = RubyLLM::Instrumentation::SpanBuilder.build_message_attributes(
           messages,
-          max_length: 1000,
+          max_length: 10_000,
           langsmith_compat: true
         )
 
@@ -399,12 +404,16 @@ RSpec.describe RubyLLM::Instrumentation do
     end
 
     describe '.build_completion_attributes' do
-      it 'does not include output.value by default' do
+      it 'builds gen_ai.output.messages as JSON array' do
         message = RubyLLM::Message.new(role: :assistant, content: 'Hi there!')
 
-        attrs = RubyLLM::Instrumentation::SpanBuilder.build_completion_attributes(message, max_length: 1000)
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_completion_attributes(message, max_length: 10_000)
 
-        expect(attrs['gen_ai.completion.0.content']).to eq 'Hi there!'
+        parsed = JSON.parse(attrs['gen_ai.output.messages'])
+        expect(parsed).to be_an(Array)
+        expect(parsed.length).to eq 1
+        expect(parsed[0]['role']).to eq 'assistant'
+        expect(parsed[0]['parts'][0]['content']).to eq 'Hi there!'
         expect(attrs).not_to have_key('output.value')
       end
 
@@ -413,7 +422,7 @@ RSpec.describe RubyLLM::Instrumentation do
 
         attrs = RubyLLM::Instrumentation::SpanBuilder.build_completion_attributes(
           message,
-          max_length: 1000,
+          max_length: 10_000,
           langsmith_compat: true
         )
 
@@ -666,8 +675,12 @@ RSpec.describe RubyLLM::Instrumentation do
       expect(chat_span.attributes['gen_ai.provider.name']).to eq('openai')
       expect(chat_span.attributes['gen_ai.operation.name']).to eq('chat')
       expect(chat_span.attributes['gen_ai.conversation.id']).to be_a(String)
-      expect(chat_span.attributes['gen_ai.prompt.0.role']).to eq('user')
-      expect(chat_span.attributes['gen_ai.prompt.0.content']).to eq('Hello')
+
+      # Check gen_ai.input.messages is valid JSON with correct structure
+      input_messages = JSON.parse(chat_span.attributes['gen_ai.input.messages'])
+      expect(input_messages).to be_an(Array)
+      expect(input_messages.last['role']).to eq('user')
+      expect(input_messages.last['parts'][0]['content']).to eq('Hello')
     end
 
     it 'creates tool spans as children when tools are used' do
@@ -775,7 +788,8 @@ RSpec.describe RubyLLM::Instrumentation do
         spans = exporter.finished_spans
         chat_span = spans.find { |s| s.name == 'ruby_llm.chat' }
 
-        expect(chat_span.attributes['gen_ai.completion.0.content']).to eq('Streamed response content')
+        output_messages = JSON.parse(chat_span.attributes['gen_ai.output.messages'])
+        expect(output_messages[0]['parts'][0]['content']).to eq('Streamed response content')
       end
 
       it 'maintains session_id for streaming calls' do
