@@ -180,12 +180,21 @@ Each call to `chat.ask()` creates a `ruby_llm.chat` span with:
 | Attribute | Description |
 |-----------|-------------|
 | `gen_ai.system` | Provider name (openai, anthropic, etc.) |
+| `gen_ai.operation.name` | Set to `chat` |
 | `gen_ai.request.model` | Requested model ID |
 | `gen_ai.request.temperature` | Temperature setting (if specified) |
 | `gen_ai.response.model` | Actual model used |
 | `gen_ai.usage.input_tokens` | Input token count |
 | `gen_ai.usage.output_tokens` | Output token count |
 | `gen_ai.conversation.id` | Session ID for grouping conversations |
+
+When `tracing_langsmith_compat = true`, additional attributes are added:
+
+| Attribute | Description |
+|-----------|-------------|
+| `langsmith.span.kind` | Set to `LLM` |
+| `input.value` | Last user message (for LangSmith Input panel) |
+| `output.value` | Assistant response (for LangSmith Output panel) |
 
 ### Tool Calls
 
@@ -195,8 +204,17 @@ When tools are invoked, child `ruby_llm.tool` spans are created with:
 |-----------|-------------|
 | `gen_ai.tool.name` | Name of the tool |
 | `gen_ai.tool.call.id` | Unique call identifier |
-| `input.value` | Tool arguments (if content logging enabled) |
-| `output.value` | Tool result (if content logging enabled) |
+| `gen_ai.conversation.id` | Session ID for grouping |
+| `gen_ai.tool.input` | Tool arguments (if content logging enabled) |
+| `gen_ai.tool.output` | Tool result (if content logging enabled) |
+
+When `tracing_langsmith_compat = true`, additional attributes are added:
+
+| Attribute | Description |
+|-----------|-------------|
+| `langsmith.span.kind` | Set to `TOOL` |
+| `input.value` | Tool arguments (for LangSmith Input panel) |
+| `output.value` | Tool result (for LangSmith Output panel) |
 
 ### Content Logging
 
