@@ -132,7 +132,7 @@ module RubyLLM
       # Skip instrumentation for streaming (not supported yet)
       return complete_without_instrumentation(&) if block_given?
 
-      Instrumentation.tracer.in_span('ruby_llm.chat', kind: Instrumentation::SpanKind::CLIENT) do |span|
+      Instrumentation.tracer(@config).in_span('ruby_llm.chat', kind: Instrumentation::SpanKind::CLIENT) do |span|
         complete_with_span(span, &)
       end
     end
@@ -292,7 +292,7 @@ module RubyLLM
     end
 
     def execute_tool(tool_call)
-      Instrumentation.tracer.in_span('ruby_llm.tool', kind: Instrumentation::SpanKind::INTERNAL) do |span|
+      Instrumentation.tracer(@config).in_span('ruby_llm.tool', kind: Instrumentation::SpanKind::INTERNAL) do |span|
         execute_tool_with_span(tool_call, span)
       end
     end

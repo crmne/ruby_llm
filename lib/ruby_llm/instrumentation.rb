@@ -12,8 +12,8 @@ module RubyLLM
       INTERNAL = :internal
     end
     class << self
-      def enabled?
-        return false unless RubyLLM.config.tracing_enabled
+      def enabled?(config = RubyLLM.config)
+        return false unless config.tracing_enabled
 
         unless otel_available?
           raise RubyLLM::ConfigurationError, <<~MSG.strip
@@ -31,8 +31,8 @@ module RubyLLM
         true
       end
 
-      def tracer
-        return NullTracer.instance unless enabled?
+      def tracer(config = RubyLLM.config)
+        return NullTracer.instance unless enabled?(config)
 
         @tracer ||= OpenTelemetry.tracer_provider.tracer(
           'ruby_llm',
