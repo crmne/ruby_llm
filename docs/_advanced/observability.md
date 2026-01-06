@@ -174,13 +174,15 @@ RubyLLM works with any OpenTelemetry-compatible backend. Configure the `opentele
 
 ## What Gets Traced
 
+RubyLLM follows the [OpenTelemetry Semantic Conventions for GenAI](https://opentelemetry.io/docs/specs/semconv/gen-ai/) ([GitHub source](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/gen-ai)).
+
 ### Chat Completions
 
 Each call to `chat.ask()` creates a `ruby_llm.chat` span with:
 
 | Attribute | Description |
 |-----------|-------------|
-| `gen_ai.system` | Provider name (openai, anthropic, etc.) |
+| `gen_ai.provider.name` | Provider name (openai, anthropic, etc.) |
 | `gen_ai.operation.name` | Set to `chat` |
 | `gen_ai.request.model` | Requested model ID |
 | `gen_ai.request.temperature` | Temperature setting (if specified) |
@@ -226,8 +228,8 @@ When tools are invoked, child `ruby_llm.tool` spans are created with:
 | `gen_ai.tool.name` | Name of the tool |
 | `gen_ai.tool.call.id` | Unique call identifier |
 | `gen_ai.conversation.id` | Session ID for grouping |
-| `gen_ai.tool.input` | Tool arguments (if content logging enabled) |
-| `gen_ai.tool.output` | Tool result (if content logging enabled) |
+| `gen_ai.tool.call.arguments` | Tool arguments (if content logging enabled) |
+| `gen_ai.tool.call.result` | Tool result (if content logging enabled) |
 
 When `tracing_langsmith_compat = true`, additional attributes are added:
 

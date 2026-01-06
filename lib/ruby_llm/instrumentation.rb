@@ -156,7 +156,7 @@ module RubyLLM
 
         def build_request_attributes(model:, provider:, session_id:, config: {})
           attrs = {
-            'gen_ai.system' => provider.to_s,
+            'gen_ai.provider.name' => provider.to_s,
             'gen_ai.operation.name' => 'chat',
             'gen_ai.request.model' => model.id,
             'gen_ai.conversation.id' => session_id
@@ -189,7 +189,7 @@ module RubyLLM
 
         def build_tool_attributes(tool_call:, session_id:, langsmith_compat: false)
           attrs = {
-            'gen_ai.operation.name' => 'tool',
+            'gen_ai.operation.name' => 'execute_tool',
             'gen_ai.tool.name' => tool_call.name.to_s,
             'gen_ai.tool.call.id' => tool_call.id,
             'gen_ai.conversation.id' => session_id
@@ -202,7 +202,7 @@ module RubyLLM
           args = tool_call.arguments
           input = args.is_a?(String) ? args : JSON.generate(args)
           truncated = truncate_content(input, max_length)
-          attrs = { 'gen_ai.tool.input' => truncated }
+          attrs = { 'gen_ai.tool.call.arguments' => truncated }
           attrs['input.value'] = truncated if langsmith_compat
           attrs
         end
@@ -210,7 +210,7 @@ module RubyLLM
         def build_tool_output_attributes(result:, max_length:, langsmith_compat: false)
           output = result.is_a?(String) ? result : result.to_s
           truncated = truncate_content(output, max_length)
-          attrs = { 'gen_ai.tool.output' => truncated }
+          attrs = { 'gen_ai.tool.call.result' => truncated }
           attrs['output.value'] = truncated if langsmith_compat
           attrs
         end

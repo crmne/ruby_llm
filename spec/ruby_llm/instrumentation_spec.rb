@@ -226,7 +226,7 @@ RSpec.describe RubyLLM::Instrumentation do
           session_id: 'session-abc'
         )
 
-        expect(attrs['gen_ai.operation.name']).to eq 'tool'
+        expect(attrs['gen_ai.operation.name']).to eq 'execute_tool'
         expect(attrs['gen_ai.tool.name']).to eq 'get_weather'
         expect(attrs['gen_ai.tool.call.id']).to eq 'call_123'
         expect(attrs['gen_ai.conversation.id']).to eq 'session-abc'
@@ -256,7 +256,7 @@ RSpec.describe RubyLLM::Instrumentation do
           max_length: 50
         )
 
-        expect(attrs['gen_ai.tool.input']).to include('[truncated]')
+        expect(attrs['gen_ai.tool.call.arguments']).to include('[truncated]')
         expect(attrs).not_to have_key('input.value')
       end
 
@@ -269,8 +269,8 @@ RSpec.describe RubyLLM::Instrumentation do
           langsmith_compat: true
         )
 
-        expect(attrs['gen_ai.tool.input']).to be_a(String)
-        expect(attrs['input.value']).to eq(attrs['gen_ai.tool.input'])
+        expect(attrs['gen_ai.tool.call.arguments']).to be_a(String)
+        expect(attrs['input.value']).to eq(attrs['gen_ai.tool.call.arguments'])
       end
     end
 
@@ -283,7 +283,7 @@ RSpec.describe RubyLLM::Instrumentation do
           max_length: 50
         )
 
-        expect(attrs['gen_ai.tool.output']).to include('[truncated]')
+        expect(attrs['gen_ai.tool.call.result']).to include('[truncated]')
         expect(attrs).not_to have_key('output.value')
       end
 
@@ -296,7 +296,7 @@ RSpec.describe RubyLLM::Instrumentation do
           langsmith_compat: true
         )
 
-        expect(attrs['gen_ai.tool.output']).to eq('test output')
+        expect(attrs['gen_ai.tool.call.result']).to eq('test output')
         expect(attrs['output.value']).to eq('test output')
       end
     end
@@ -431,7 +431,7 @@ RSpec.describe RubyLLM::Instrumentation do
           session_id: 'session-123'
         )
 
-        expect(attrs['gen_ai.system']).to eq 'openai'
+        expect(attrs['gen_ai.provider.name']).to eq 'openai'
         expect(attrs['gen_ai.request.model']).to eq 'gpt-4'
         expect(attrs).not_to have_key('langsmith.span.kind')
       end
@@ -663,7 +663,7 @@ RSpec.describe RubyLLM::Instrumentation do
       chat_span = spans.find { |s| s.name == 'ruby_llm.chat' }
       expect(chat_span).not_to be_nil
       expect(chat_span.kind).to eq(:client)
-      expect(chat_span.attributes['gen_ai.system']).to eq('openai')
+      expect(chat_span.attributes['gen_ai.provider.name']).to eq('openai')
       expect(chat_span.attributes['gen_ai.operation.name']).to eq('chat')
       expect(chat_span.attributes['gen_ai.conversation.id']).to be_a(String)
       expect(chat_span.attributes['gen_ai.prompt.0.role']).to eq('user')
@@ -753,7 +753,7 @@ RSpec.describe RubyLLM::Instrumentation do
 
         expect(chat_span).not_to be_nil
         expect(chat_span.kind).to eq(:client)
-        expect(chat_span.attributes['gen_ai.system']).to eq('openai')
+        expect(chat_span.attributes['gen_ai.provider.name']).to eq('openai')
         expect(chat_span.attributes['gen_ai.usage.input_tokens']).to eq(8)
         expect(chat_span.attributes['gen_ai.usage.output_tokens']).to eq(3)
       end
