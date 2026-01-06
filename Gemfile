@@ -4,14 +4,14 @@ source 'https://rubygems.org'
 
 gemspec
 
-group :development do # rubocop:disable Metrics/BlockLength
+group :development, :test do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
   gem 'codecov'
   gem 'dotenv'
   gem 'ferrum'
-  gem 'flay'
+  gem 'flay', '< 2.14' # 2.14 switched from ruby_parser to prism, causing CI issues
   gem 'image_processing', '~> 1.2'
   gem 'irb'
   gem 'json-schema'
@@ -39,4 +39,7 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+
+  # OpenTelemetry for observability testing
+  gem 'opentelemetry-sdk'
 end

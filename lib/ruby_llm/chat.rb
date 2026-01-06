@@ -5,9 +5,9 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :params, :headers, :schema, :session_id, :metadata
 
-    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
+    def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil, session_id: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
       end
@@ -16,6 +16,8 @@ module RubyLLM
       @config = context&.config || RubyLLM.config
       model_id = model || @config.default_model
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
+      @session_id = session_id || SecureRandom.uuid
+      @metadata = {}
       @temperature = nil
       @messages = []
       @tools = {}
@@ -84,6 +86,11 @@ module RubyLLM
       self
     end
 
+    def with_metadata(**metadata)
+      @metadata = @metadata.merge(metadata)
+      self
+    end
+
     def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
@@ -121,7 +128,18 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
+    def complete(&)
+      # Skip instrumentation for streaming (not supported yet)
+      return complete_without_instrumentation(&) if block_given?
+
+      Instrumentation.tracer.in_span('ruby_llm.chat', kind: Instrumentation::SpanKind::CLIENT) do |span|
+        complete_with_span(span, &)
+      end
+    end
+
+    private
+
+    def complete_without_instrumentation(&)
       response = @provider.complete(
         messages,
         tools: @tools,
@@ -133,6 +151,73 @@ module RubyLLM
         &wrap_streaming_block(&)
       )
 
+      finalize_response(response, &)
+    end
+
+    def complete_with_span(span, &)
+      # Set request attributes
+      if span.recording?
+        span.add_attributes(
+          Instrumentation::SpanBuilder.build_request_attributes(
+            model: @model,
+            provider: @provider.slug,
+            session_id: @session_id,
+            temperature: @temperature,
+            metadata: @metadata
+          )
+        )
+
+        # Log message content if enabled
+        if @config.tracing_log_content
+          span.add_attributes(
+            Instrumentation::SpanBuilder.build_message_attributes(
+              messages,
+              max_length: @config.tracing_max_content_length
+            )
+          )
+        end
+      end
+
+      response = @provider.complete(
+        messages,
+        tools: @tools,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        headers: @headers,
+        schema: @schema
+      )
+
+      # Add response attributes
+      if span.recording?
+        span.add_attributes(Instrumentation::SpanBuilder.build_response_attributes(response))
+
+        if @config.tracing_log_content
+          span.add_attributes(
+            Instrumentation::SpanBuilder.build_completion_attributes(
+              response,
+              max_length: @config.tracing_max_content_length
+            )
+          )
+        end
+      end
+
+      finalize_response(response, &)
+    rescue StandardError => e
+      record_span_error(span, e)
+      raise
+    end
+
+    def record_span_error(span, exception)
+      return unless span.recording?
+
+      span.record_exception(exception)
+      return unless defined?(OpenTelemetry::Trace::Status)
+
+      span.status = OpenTelemetry::Trace::Status.error(exception.message)
+    end
+
+    def finalize_response(response, &) # rubocop:disable Metrics/PerceivedComplexity
       @on[:new_message]&.call unless block_given?
 
       if @schema && response.content.is_a?(String)
@@ -152,6 +237,8 @@ module RubyLLM
         response
       end
     end
+
+    public
 
     def add_message(message_or_attributes)
       message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
@@ -205,9 +292,48 @@ module RubyLLM
     end
 
     def execute_tool(tool_call)
+      Instrumentation.tracer.in_span('ruby_llm.tool', kind: Instrumentation::SpanKind::INTERNAL) do |span|
+        execute_tool_with_span(tool_call, span)
+      end
+    end
+
+    def execute_tool_with_span(tool_call, span)
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
-      tool.call(args)
+
+      if span.recording?
+        span.add_attributes(
+          Instrumentation::SpanBuilder.build_tool_attributes(
+            tool_call: tool_call,
+            session_id: @session_id
+          )
+        )
+
+        if @config.tracing_log_content
+          span.add_attributes(
+            Instrumentation::SpanBuilder.build_tool_input_attributes(
+              tool_call: tool_call,
+              max_length: @config.tracing_max_content_length
+            )
+          )
+        end
+      end
+
+      result = tool.call(args)
+
+      if span.recording? && @config.tracing_log_content
+        span.add_attributes(
+          Instrumentation::SpanBuilder.build_tool_output_attributes(
+            result: result,
+            max_length: @config.tracing_max_content_length
+          )
+        )
+      end
+
+      result
+    rescue StandardError => e
+      record_span_error(span, e)
+      raise
     end
 
     def build_content(message, attachments)

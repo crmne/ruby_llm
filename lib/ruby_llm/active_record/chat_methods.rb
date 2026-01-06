@@ -79,7 +79,8 @@ module RubyLLM
         model_record = model_association
         @chat ||= (context || RubyLLM).chat(
           model: model_record.model_id,
-          provider: model_record.provider.to_sym
+          provider: model_record.provider.to_sym,
+          session_id: id # Use AR record ID for tracing session grouping
         )
         @chat.reset_messages!
 
