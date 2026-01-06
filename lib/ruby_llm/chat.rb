@@ -133,9 +133,6 @@ module RubyLLM
     end
 
     def complete(&)
-      # Skip instrumentation for streaming (not supported yet)
-      return complete_without_instrumentation(&) if block_given?
-
       Instrumentation.tracer(@config).in_span('ruby_llm.chat', kind: Instrumentation::SpanKind::CLIENT) do |span|
         complete_with_span(span, &)
       end
@@ -143,7 +140,9 @@ module RubyLLM
 
     private
 
-    def complete_without_instrumentation(&)
+    def complete_with_span(span, &)
+      add_request_span_attributes(span)
+
       response = @provider.complete(
         messages,
         tools: @tools,
@@ -155,69 +154,57 @@ module RubyLLM
         &wrap_streaming_block(&)
       )
 
-      finalize_response(response, &)
-    end
-
-    def complete_with_span(span, &)
-      langsmith = @config.tracing_langsmith_compat
-
-      # Set request attributes
-      if span.recording?
-        span.add_attributes(
-          Instrumentation::SpanBuilder.build_request_attributes(
-            model: @model,
-            provider: @provider.slug,
-            session_id: @session_id,
-            config: {
-              temperature: @temperature,
-              metadata: @metadata,
-              langsmith_compat: langsmith,
-              metadata_prefix: @config.tracing_metadata_prefix
-            }
-          )
-        )
-
-        # Log message content if enabled
-        if @config.tracing_log_content
-          span.add_attributes(
-            Instrumentation::SpanBuilder.build_message_attributes(
-              messages,
-              max_length: @config.tracing_max_content_length,
-              langsmith_compat: langsmith
-            )
-          )
-        end
-      end
-
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema
-      )
-
-      # Add response attributes
-      if span.recording?
-        span.add_attributes(Instrumentation::SpanBuilder.build_response_attributes(response))
-
-        if @config.tracing_log_content
-          span.add_attributes(
-            Instrumentation::SpanBuilder.build_completion_attributes(
-              response,
-              max_length: @config.tracing_max_content_length,
-              langsmith_compat: langsmith
-            )
-          )
-        end
-      end
-
+      add_response_span_attributes(span, response)
       finalize_response(response, &)
     rescue StandardError => e
       record_span_error(span, e)
       raise
+    end
+
+    def add_request_span_attributes(span)
+      return unless span.recording?
+
+      langsmith = @config.tracing_langsmith_compat
+
+      span.add_attributes(
+        Instrumentation::SpanBuilder.build_request_attributes(
+          model: @model,
+          provider: @provider.slug,
+          session_id: @session_id,
+          config: {
+            temperature: @temperature,
+            metadata: @metadata,
+            langsmith_compat: langsmith,
+            metadata_prefix: @config.tracing_metadata_prefix
+          }
+        )
+      )
+
+      return unless @config.tracing_log_content
+
+      span.add_attributes(
+        Instrumentation::SpanBuilder.build_message_attributes(
+          messages,
+          max_length: @config.tracing_max_content_length,
+          langsmith_compat: langsmith
+        )
+      )
+    end
+
+    def add_response_span_attributes(span, response)
+      return unless span.recording?
+
+      span.add_attributes(Instrumentation::SpanBuilder.build_response_attributes(response))
+
+      return unless @config.tracing_log_content
+
+      span.add_attributes(
+        Instrumentation::SpanBuilder.build_completion_attributes(
+          response,
+          max_length: @config.tracing_max_content_length,
+          langsmith_compat: @config.tracing_langsmith_compat
+        )
+      )
     end
 
     def record_span_error(span, exception)

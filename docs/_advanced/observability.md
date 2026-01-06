@@ -25,6 +25,7 @@ After reading this guide, you will know:
 
 *   How to enable OpenTelemetry tracing in RubyLLM
 *   How to configure backends like LangSmith, DataDog, and Jaeger
+*   How streaming and non-streaming requests are traced
 *   How session tracking groups multi-turn conversations
 *   How to add custom metadata to traces
 *   What attributes are captured in spans
@@ -34,10 +35,10 @@ After reading this guide, you will know:
 | Feature | Status |
 |---------|--------|
 | Chat completions | ✅ Supported |
+| Streaming | ✅ Supported |
 | Tool calls | ✅ Supported |
 | Session tracking | ✅ Supported |
 | Content logging (opt-in) | ✅ Supported |
-| Streaming | ❌ Not yet supported |
 | Embeddings | ❌ Not yet supported |
 | Image generation | ❌ Not yet supported |
 | Transcription | ❌ Not yet supported |
@@ -195,6 +196,26 @@ When `tracing_langsmith_compat = true`, additional attributes are added:
 | `langsmith.span.kind` | Set to `LLM` |
 | `input.value` | Last user message (for LangSmith Input panel) |
 | `output.value` | Assistant response (for LangSmith Output panel) |
+
+### Streaming
+
+Streaming responses are traced identically to non-streaming responses. The span wraps the entire streaming operation:
+
+```ruby
+chat.ask("Write a poem") do |chunk|
+  print chunk.content  # Chunks stream in real-time
+end
+# Span completes here with full token counts
+```
+
+**How it works:**
+
+1. Span starts when `ask()` is called
+2. Chunks stream to your block as they arrive
+3. RubyLLM aggregates chunks internally
+4. When streaming completes, token counts and final content are recorded on the span
+
+This follows the industry standard (LangSmith, Vercel AI SDK) where streaming operations get a single span representing the full request, not per-chunk spans. Tool calls during streaming create child spans just like non-streaming.
 
 ### Tool Calls
 

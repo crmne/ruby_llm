@@ -730,5 +730,120 @@ RSpec.describe RubyLLM::Instrumentation do
       expect(chat_span.status.code).to eq(OpenTelemetry::Trace::Status::ERROR)
       expect(chat_span.events.any? { |e| e.name == 'exception' }).to be true
     end
+
+    describe 'Streaming' do
+      it 'creates spans for streaming responses' do
+        chat = RubyLLM.chat(model: 'gpt-4.1-nano', assume_model_exists: true, provider: :openai)
+
+        # Mock streaming response - provider.complete returns a Message even for streaming
+        mock_response = RubyLLM::Message.new(
+          role: :assistant,
+          content: 'Hello there!',
+          input_tokens: 8,
+          output_tokens: 3,
+          model_id: 'gpt-4.1-nano'
+        )
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(mock_response)
+
+        chunks = []
+        chat.ask('Hello') { |chunk| chunks << chunk }
+
+        spans = exporter.finished_spans
+        chat_span = spans.find { |s| s.name == 'ruby_llm.chat' }
+
+        expect(chat_span).not_to be_nil
+        expect(chat_span.kind).to eq(:client)
+        expect(chat_span.attributes['gen_ai.system']).to eq('openai')
+        expect(chat_span.attributes['gen_ai.usage.input_tokens']).to eq(8)
+        expect(chat_span.attributes['gen_ai.usage.output_tokens']).to eq(3)
+      end
+
+      it 'includes completion content in streaming spans when content logging enabled' do
+        chat = RubyLLM.chat(model: 'gpt-4.1-nano', assume_model_exists: true, provider: :openai)
+
+        mock_response = RubyLLM::Message.new(
+          role: :assistant,
+          content: 'Streamed response content',
+          input_tokens: 5,
+          output_tokens: 4,
+          model_id: 'gpt-4.1-nano'
+        )
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(mock_response)
+
+        chat.ask('Test') { |_chunk| nil }
+
+        spans = exporter.finished_spans
+        chat_span = spans.find { |s| s.name == 'ruby_llm.chat' }
+
+        expect(chat_span.attributes['gen_ai.completion.0.content']).to eq('Streamed response content')
+      end
+
+      it 'maintains session_id for streaming calls' do
+        chat = RubyLLM.chat(model: 'gpt-4.1-nano', assume_model_exists: true, provider: :openai)
+        session_id = chat.session_id
+
+        mock_response = RubyLLM::Message.new(
+          role: :assistant,
+          content: 'Response',
+          model_id: 'gpt-4.1-nano'
+        )
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(mock_response)
+
+        chat.ask('First') { |_| nil }
+        chat.ask('Second') { |_| nil }
+
+        spans = exporter.finished_spans
+        chat_spans = spans.select { |s| s.name == 'ruby_llm.chat' }
+
+        expect(chat_spans.count).to eq(2)
+        expect(chat_spans.all? { |s| s.attributes['gen_ai.conversation.id'] == session_id }).to be true
+      end
+
+      it 'creates tool spans as children during streaming with tools' do
+        chat = RubyLLM.chat(model: 'gpt-4.1-nano', assume_model_exists: true, provider: :openai)
+        chat.with_tool(weather_tool)
+
+        # First response triggers tool call
+        tool_call_response = RubyLLM::Message.new(
+          role: :assistant,
+          content: nil,
+          tool_calls: {
+            'call_123' => RubyLLM::ToolCall.new(
+              id: 'call_123',
+              name: 'weather',
+              arguments: { latitude: '52.52', longitude: '13.41' }
+            )
+          },
+          model_id: 'gpt-4.1-nano'
+        )
+
+        # Second response is final answer
+        final_response = RubyLLM::Message.new(
+          role: :assistant,
+          content: 'The weather in Berlin is nice!',
+          model_id: 'gpt-4.1-nano'
+        )
+
+        call_count = 0
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete) do
+          call_count += 1
+          call_count == 1 ? tool_call_response : final_response
+        end
+
+        chat.ask('Weather in Berlin?') { |_| nil }
+
+        spans = exporter.finished_spans
+        tool_span = spans.find { |s| s.name == 'ruby_llm.tool' }
+        chat_spans = spans.select { |s| s.name == 'ruby_llm.chat' }
+
+        expect(chat_spans.count).to eq(2) # Initial call + follow-up after tool
+        expect(tool_span).not_to be_nil
+        expect(tool_span.attributes['gen_ai.tool.name']).to eq('weather')
+
+        # Tool span should be child of first chat span
+        first_chat_span = chat_spans.min_by(&:start_timestamp)
+        expect(tool_span.parent_span_id).to eq(first_chat_span.span_id)
+      end
+    end
   end
 end
