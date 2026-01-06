@@ -153,17 +153,16 @@ module RubyLLM
           attrs
         end
 
-        def build_request_attributes(model:, provider:, session_id:, temperature: nil, metadata: nil,
-                                     langsmith_compat: false, metadata_prefix: 'metadata')
+        def build_request_attributes(model:, provider:, session_id:, config: {})
           attrs = {
             'gen_ai.system' => provider.to_s,
             'gen_ai.operation.name' => 'chat',
             'gen_ai.request.model' => model.id,
             'gen_ai.conversation.id' => session_id
           }
-          attrs['langsmith.span.kind'] = 'LLM' if langsmith_compat
-          attrs['gen_ai.request.temperature'] = temperature if temperature
-          build_metadata_attributes(attrs, metadata, prefix: metadata_prefix) if metadata
+          attrs['langsmith.span.kind'] = 'LLM' if config[:langsmith_compat]
+          attrs['gen_ai.request.temperature'] = config[:temperature] if config[:temperature]
+          build_metadata_attributes(attrs, config[:metadata], prefix: config[:metadata_prefix]) if config[:metadata]
           attrs
         end
 

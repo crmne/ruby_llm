@@ -51,8 +51,9 @@ module RubyLLM
                   :tracing_enabled,
                   :tracing_log_content,
                   :tracing_max_content_length,
-                  :tracing_metadata_prefix,
-                  :tracing_langsmith_compat
+                  :tracing_metadata_prefix
+
+    attr_reader :tracing_langsmith_compat
 
     def initialize
       @request_timeout = 300

@@ -95,20 +95,23 @@ RSpec.describe RubyLLM::Instrumentation do
         RubyLLM.configure { |c| c.tracing_enabled = true }
         described_class.reset!
         allow(described_class).to receive(:otel_available?).and_return(false)
+        allow(RubyLLM.logger).to receive(:warn)
 
-        expect(RubyLLM.logger).to receive(:warn).with(/OpenTelemetry is not available/)
         expect(described_class.enabled?).to be false
+        expect(RubyLLM.logger).to have_received(:warn).with(/OpenTelemetry is not available/)
       end
 
       it 'only warns once per reset cycle' do
         RubyLLM.configure { |c| c.tracing_enabled = true }
         described_class.reset!
         allow(described_class).to receive(:otel_available?).and_return(false)
+        allow(RubyLLM.logger).to receive(:warn)
 
-        expect(RubyLLM.logger).to receive(:warn).once
         described_class.enabled?
         described_class.enabled?
         described_class.enabled?
+
+        expect(RubyLLM.logger).to have_received(:warn).once
       end
     end
 
@@ -419,7 +422,7 @@ RSpec.describe RubyLLM::Instrumentation do
     end
 
     describe '.build_request_attributes' do
-      let(:model) { instance_double(RubyLLM::Model, id: 'gpt-4') }
+      let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-4') }
 
       it 'does not include langsmith.span.kind by default' do
         attrs = RubyLLM::Instrumentation::SpanBuilder.build_request_attributes(
@@ -438,10 +441,21 @@ RSpec.describe RubyLLM::Instrumentation do
           model: model,
           provider: :openai,
           session_id: 'session-123',
-          langsmith_compat: true
+          config: { langsmith_compat: true }
         )
 
         expect(attrs['langsmith.span.kind']).to eq 'LLM'
+      end
+
+      it 'includes temperature when provided' do
+        attrs = RubyLLM::Instrumentation::SpanBuilder.build_request_attributes(
+          model: model,
+          provider: :openai,
+          session_id: 'session-123',
+          config: { temperature: 0.7 }
+        )
+
+        expect(attrs['gen_ai.request.temperature']).to eq 0.7
       end
     end
 

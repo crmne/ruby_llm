@@ -168,10 +168,12 @@ module RubyLLM
             model: @model,
             provider: @provider.slug,
             session_id: @session_id,
-            temperature: @temperature,
-            metadata: @metadata,
-            langsmith_compat: langsmith,
-            metadata_prefix: @config.tracing_metadata_prefix
+            config: {
+              temperature: @temperature,
+              metadata: @metadata,
+              langsmith_compat: langsmith,
+              metadata_prefix: @config.tracing_metadata_prefix
+            }
           )
         )
 
