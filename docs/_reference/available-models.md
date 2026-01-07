@@ -23,7 +23,7 @@ redirect_from:
 
 ## Model Data Sources
 
-- **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/api-llm-specs))*
+- **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/llm-specs))*
 - **OpenRouter**: Direct API
 - **Others**: Local capabilities files
 
@@ -2752,4 +2752,3 @@ Models that generate embeddings:
 | text-embedding-ada-002 | openai | - | - | In: $0.10 |
 | text-moderation-latest | openai | - | 32768 | - |
 | text-moderation-stable | openai | - | 32768 | - |
-

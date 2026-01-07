@@ -156,7 +156,7 @@ def generate_models_markdown
 
     ## Model Data Sources
 
-    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/api-llm-specs))*
+    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/llm-specs))*
     - **OpenRouter**: Direct API
     - **Others**: Local capabilities files
 

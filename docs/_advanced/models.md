@@ -91,7 +91,7 @@ The method returns a chainable `Models` instance, allowing you to immediately qu
 chat_models = RubyLLM.models.refresh!.chat_models
 ```
 
-**Note:** We're grateful to [Parsera](https://parsera.org) for providing their free API service to the LLM developer community. They maintain comprehensive, up-to-date model information by scraping provider documentation, making it available to all developers in a standardized JSON format. If you encounter issues with model data, please [file issues with Parsera](https://github.com/parsera-labs/api-llm-specs/issues).
+**Note:** We're grateful to [Parsera](https://parsera.org) for providing their free API service to the LLM developer community. They maintain comprehensive, up-to-date model information by scraping provider documentation, making it available to all developers in a standardized JSON format. If you encounter issues with model data, please [file issues with Parsera](https://github.com/parsera-labs/llm-specs/issues).
 
 **Local Provider Models:**
 
