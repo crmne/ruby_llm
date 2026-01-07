@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:00:46 GMT
+      - Sat, 29 Nov 2025 17:50:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,25 +40,25 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1217'
+      - '359'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - proj_aOA91VEqh4zLCTLH6ZEONmZL
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1243'
+      - '378'
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '2000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '199973'
+      - '1999973'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -82,9 +82,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpOvJY1jiL3DnvusdUw7abHGx1z9",
+          "id": "chatcmpl-ChJNyWFQumCSpNucVyyTKtnGGxm2z",
           "object": "chat.completion",
-          "created": 1762178445,
+          "created": 1764438658,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -94,11 +94,11 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_OfiBXlBMR7QRavHWXe1ryUHs",
+                    "id": "call_aelsKTmW3B0mnOPbotFzSQCc",
                     "type": "function",
                     "function": {
                       "name": "object_params",
-                      "arguments": "{\"window\": {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"
+                      "arguments": "{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"
                     }
                   }
                 ],
@@ -111,8 +111,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 92,
-            "completion_tokens": 47,
-            "total_tokens": 139,
+            "completion_tokens": 30,
+            "total_tokens": 122,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -125,7 +125,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_ef015fa747"
         }
-  recorded_at: Mon, 03 Nov 2025 14:00:46 GMT
+  recorded_at: Sat, 29 Nov 2025 17:50:58 GMT
 recorded_with: VCR 6.3.1
