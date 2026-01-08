@@ -155,6 +155,7 @@ module RubyLLM
 
     def add_message(message_or_attributes)
       message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      message = @provider.preprocess_message(message)
       messages << message
       message
     end
