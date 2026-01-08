@@ -75,5 +75,21 @@ RSpec.describe RubyLLM::Image do
 
       save_and_verify_image image
     end
+
+    it 'openrouter/google/gemini-2.5-flash-image-preview can paint images' do
+      image = RubyLLM.paint(
+        'a siamese cat',
+        model: 'google/gemini-2.5-flash-image-preview',
+        provider: :openrouter,
+        assume_model_exists: true
+      )
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+      expect(image.model_id).to eq('google/gemini-2.5-flash-image-preview')
+
+      save_and_verify_image image
+    end
   end
 end
