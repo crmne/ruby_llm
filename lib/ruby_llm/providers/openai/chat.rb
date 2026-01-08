@@ -40,6 +40,8 @@ module RubyLLM
           payload
         end
 
+        # Grok models are accessed via OpenRouter, which inherits from OpenAI.
+        # They support the reasoning_effort parameter for extended thinking.
         def grok_model?(model)
           model.id.to_s.include?('grok')
         end
