@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     class Anthropic
-      # Chat methods of the OpenAI API integration
+      # Chat methods for the Anthropic API implementation
       module Chat
         module_function
 
@@ -155,7 +155,7 @@ module RubyLLM
           if msg.role == :assistant && thinking_enabled
             sig = Messages.signature_for(msg)
 
-            if msg.thinking.present?
+            if msg.thinking && !msg.thinking.empty?
               content_blocks << {
                 type: 'thinking',
                 thinking: msg.thinking,
@@ -180,7 +180,7 @@ module RubyLLM
         def format_tool_call_with_thinking(msg, thinking_enabled)
           content_blocks = []
 
-          if thinking_enabled && msg.thinking.present?
+          if thinking_enabled && msg.thinking && !msg.thinking.empty?
             sig = Messages.signature_for(msg)
             content_blocks << {
               type: 'thinking',
