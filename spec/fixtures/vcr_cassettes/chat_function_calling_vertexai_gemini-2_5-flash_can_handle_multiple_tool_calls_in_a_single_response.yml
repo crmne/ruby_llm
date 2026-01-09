@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Fri, 09 Jan 2026 14:17:43 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
+  recorded_at: Fri, 09 Jan 2026 14:17:43 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
+      - Fri, 09 Jan 2026 14:17:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,23 +116,23 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CoIBAePx/16zd6xJUF5JnkV06NXa5dxoK2cjXMQfK3o9BvVddK6dRCcyUBUprlHOJueTMtJbAVua47xEUIjtLGtEOO/xrdTaZvx4OyEQNIO0j8gDQ7ti5Wb4xkS8OjIJ+cCCt3RGggdA5dNNC4TQ/fl6zSYG1GVfoGZz8NqKaQ5CgTNZ/g=="
+                    "thoughtSignature": "CtABAY89a1+Pcy9RtAa3lBm81MIHH5uaJk7QkQeSOr/epo+g4+C8o0uNR5YfOrUJU4RkksOvyJmXtXTplbqDPzbpWUWv16csYjrNbkfV8xbYbrGJ1PW97JcXiVBq3L1FuIb+0caLFVUlIdA6lCQKcK2m4DIfK9SQRim1Tfw8+wrEroXzWpyNTBMO3Tlkgznj4O83MJ8Vyswf+nxoBf78Qw5wx9kFiu80uoDRheFJ/Zdu0jRmqh85GdMSMOUZ+op18Z+KTo1Mu/Wer6H/HNRLo9jwQA=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.7950762112935383
+              "avgLogprobs": -3.2457955678304038
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 41,
+            "promptTokenCount": 42,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 72,
+            "totalTokenCount": 89,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 41
+                "tokenCount": 42
               }
             ],
             "candidatesTokensDetails": [
@@ -141,70 +141,13 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 28
+            "thoughtsTokenCount": 44
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:46.174241Z",
-          "responseId": "hs0HaaHRCsGgmPUPjurOqAQ"
+          "createTime": "2026-01-09T14:17:43.415681Z",
+          "responseId": "Bw5hacGvGYmZmPUPrqj1wQg"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
+  recorded_at: Fri, 09 Jan 2026 14:17:43 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -238,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
+      - Fri, 09 Jan 2026 14:17:44 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -264,23 +207,24 @@ http_interactions:
                     "functionCall": {
                       "name": "dice_roll",
                       "args": {}
-                    }
+                    },
+                    "thoughtSignature": "CrABAY89a1+x9ShYAUeXVU92WrNvnYs7N63VVr55et9nM7Mynj5y2ry5FrWuJ5WC3zKsqJFe0W1OCrPtXunp2F/zf7Ox0HvnkVG9tOuf6f+rxlx97daCfqH7+ppZM37uu53vDugLNbMaqXB/Obb4PBoQ0gzeRfovaHT+2tXQDgIX+D3vu+TORZ7gIa+6z+49mnS5/NUtTXyjHh/7IgCas/Tw3+wndSxV0fGgf+mTvah0hbo="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -7.79092515585944e-05
+              "avgLogprobs": -2.0135529836018882
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 59,
+            "promptTokenCount": 60,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 62,
+            "totalTokenCount": 101,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 59
+                "tokenCount": 60
               }
             ],
             "candidatesTokensDetails": [
@@ -288,70 +232,14 @@ http_interactions:
                 "modality": "TEXT",
                 "tokenCount": 3
               }
-            ]
+            ],
+            "thoughtsTokenCount": 38
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:46.947414Z",
-          "responseId": "hs0HadbpOYG2mPUP8JnfiAs"
+          "createTime": "2026-01-09T14:17:44.119705Z",
+          "responseId": "CA5haZmnB6iKvdIP7-e-0A8"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
+  recorded_at: Fri, 09 Jan 2026 14:17:44 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -386,7 +274,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
+      - Fri, 09 Jan 2026 14:17:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -417,18 +305,18 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0012558770831674337
+              "avgLogprobs": -9.8400198618570958
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 77,
+            "promptTokenCount": 78,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 80,
+            "totalTokenCount": 131,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 77
+                "tokenCount": 78
               }
             ],
             "candidatesTokensDetails": [
@@ -436,70 +324,14 @@ http_interactions:
                 "modality": "TEXT",
                 "tokenCount": 3
               }
-            ]
+            ],
+            "thoughtsTokenCount": 50
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:47.403302Z",
-          "responseId": "h80HaebOGIG2mPUP8JnfiAs"
+          "createTime": "2026-01-09T14:17:44.997771Z",
+          "responseId": "CA5haYvzPN_XxN8P2fCzgAs"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
+  recorded_at: Fri, 09 Jan 2026 14:17:45 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -535,7 +367,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:48 GMT
+      - Fri, 09 Jan 2026 14:17:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -558,35 +390,37 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I rolled the dice 3 times. I got a 1, a 2, and a 3."
+                    "text": "I rolled the dice three times. Your rolls are: 1, 2, and 3.",
+                    "thoughtSignature": "CtMBAY89a1/s94Y2lMkqR2815/AAXW4iLQdGg7olkuheFmQ2v2bnLgbdBzW8HMdXrVEDZEZDCO1oDguuOejdFqmN1arDIatDqmPpxgBVqFI0I8/xQ44tSi4ucNogA+C3pPeAy8JwXtWs9cYlLct4z31E1I33RF2iRzuV6SG9z8nfeVnnKt3bBhFqVIV8s2SBVfzWF1bbWno0UUZSkNOK/LwFjO9ewF+DBBZbm5j3wTWTW57h8I60m+WnMvhGbxVrb1tVGnZ+O4Re2/b5ss67mXEZpGhm1w=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.1022966426351796
+              "avgLogprobs": -0.62446203685942148
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 95,
-            "candidatesTokenCount": 23,
-            "totalTokenCount": 118,
+            "promptTokenCount": 96,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 167,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 95
+                "tokenCount": 96
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 23
+                "tokenCount": 21
               }
-            ]
+            ],
+            "thoughtsTokenCount": 50
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:47.934565Z",
-          "responseId": "h80HaaWFOYDgz_IP7cq3mAs"
+          "createTime": "2026-01-09T14:17:45.927411Z",
+          "responseId": "CQ5habPNOIziz_IP7MSt4Qk"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:48 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:17:46 GMT
+recorded_with: VCR 6.4.0

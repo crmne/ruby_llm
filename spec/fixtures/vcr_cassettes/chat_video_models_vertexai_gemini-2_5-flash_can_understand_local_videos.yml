@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 09 Jan 2026 14:02:56 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Mon, 03 Nov 2025 13:49:38 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 13:49:38 GMT
+  recorded_at: Fri, 09 Jan 2026 14:02:56 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:49:50 GMT
+      - Fri, 09 Jan 2026 14:03:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,23 +110,20 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The video shows a serene beach scene on a clear, sunny day.\n\nIn the foreground, a person with long, dark hair (appearing to be female), wearing a light pink top and light-colored bottoms, is sitting on the golden-colored sand. Their back is to the camera, and they are looking out towards the ocean. Throughout the video, their hair gently blows in the breeze.\n\nThe ocean stretches across the midground and background, displaying shades of blue and turquoise with gentle ripples and small waves. The water appears calm and clear. In the far distance, a few indistinct figures can be seen in the water, suggesting other people enjoying the beach.\n\nAbove the ocean, the sky is a vibrant blue with scattered white, fluffy clouds. The overall impression is one of peace, relaxation, and natural beauty."
+                    "text": "In this video, I see a **serene beach scene** on a sunny day.\n\nHere's a breakdown of the elements:\n\n*   **Subject:** A person, seen from behind, is sitting directly on the golden-colored sand. They have long, dark hair which is gently blowing in the breeze. They are wearing a light-colored (possibly peach or light pink) sleeveless top.\n*   **Setting:** The person is facing an expansive ocean or sea. The water near the shore is a clear, light turquoise, gradually deepening to a darker blue further out. Gentle waves are visible along the shoreline.\n*   **Foreground:** The sandy beach has some scattered bits of debris, like small twigs or dried leaves.\n*   **Background:** The sky is bright blue with several fluffy white cumulus clouds scattered across it.\n*   **Atmosphere:** The overall impression is one of peace, relaxation, and natural beauty. The bright lighting suggests it's daytime, possibly late morning or early afternoon."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -2.18418112145849
+              "avgLogprobs": -1.7715505207554576
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 166,
-            "totalTokenCount": 4496,
+            "candidatesTokenCount": 209,
+            "totalTokenCount": 4467,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
-              {
-                "modality": "AUDIO"
-              },
               {
                 "modality": "TEXT",
                 "tokenCount": 8
@@ -139,14 +136,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 166
+                "tokenCount": 209
               }
             ],
-            "thoughtsTokenCount": 968
+            "thoughtsTokenCount": 896
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:49:38.722635Z",
-          "responseId": "8rIIacuNLOTitfAPuN3RgAQ"
+          "createTime": "2026-01-09T14:02:56.865529Z",
+          "responseId": "kAphafnpNIWOmLAPp4eY6Q8"
         }
-  recorded_at: Mon, 03 Nov 2025 13:49:50 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:03:07 GMT
+recorded_with: VCR 6.4.0

@@ -69,28 +69,34 @@ module RubyLLM
         end
 
         def model_id_with_region(model_id, model_data)
-          return model_id unless model_data['inferenceTypesSupported']&.include?('INFERENCE_PROFILE')
-          return model_id if model_data['inferenceTypesSupported']&.include?('ON_DEMAND')
-
-          desired_region_prefix = inference_profile_region_prefix
-
-          # Return unchanged if model already has the correct region prefix
-          return model_id if model_id.start_with?("#{desired_region_prefix}.")
-
-          # Remove any existing region prefix (e.g., "us.", "eu.", "ap.")
-          clean_model_id = model_id.sub(/^[a-z]{2}\./, '')
-
-          # Apply the desired region prefix
-          "#{desired_region_prefix}.#{clean_model_id}"
+          normalize_inference_profile_id(
+            model_id,
+            model_data['inferenceTypesSupported'],
+            @config.bedrock_region
+          )
         end
 
-        def inference_profile_region_prefix
-          # Extract region prefix from bedrock_region (e.g., "eu-west-3" -> "eu")
-          region = @config.bedrock_region.to_s
-          return 'us' if region.empty? # Default fallback
+        def region_prefix(region)
+          region = region.to_s
+          return 'us' if region.empty?
 
-          # Take first two characters as the region prefix
           region[0, 2]
+        end
+
+        def with_region_prefix(model_id, region)
+          desired_prefix = region_prefix(region)
+          return model_id if model_id.start_with?("#{desired_prefix}.")
+
+          clean_model_id = model_id.sub(/^[a-z]{2}\./, '')
+          "#{desired_prefix}.#{clean_model_id}"
+        end
+
+        def normalize_inference_profile_id(model_id, inference_types, region)
+          types = Array(inference_types)
+          return model_id unless types.include?('INFERENCE_PROFILE')
+          return model_id if types.include?('ON_DEMAND')
+
+          with_region_prefix(model_id, region)
         end
       end
     end

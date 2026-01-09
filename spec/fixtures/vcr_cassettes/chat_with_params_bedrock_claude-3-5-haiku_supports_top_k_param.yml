@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"max_tokens":4096,"top_k":5}'
+        is the square root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"type":"text","text":"{"}]}],"max_tokens":8192,"top_k":5}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T203337Z
+      - 20260109T140945Z
       X-Amz-Content-Sha256:
-      - c23e730dda66dc651d2c83f92fcdc8f1d184a78615ae0e71ea37657019ee9886
+      - '0966d9a3ba1fe24c9b4f3385331a711492454f0f9480c64804fdde5dd9848876'
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=8ffc51b17a15f7089be2481558a9df6d041a4ea77caea4f573b2a5245f9084a0
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260109/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=0b2e0a9c04f5b2002341aa8a0f36ad7a401b903b56fd662526d1d9a16165fab0
       Content-Type:
       - application/json
       Accept:
@@ -31,24 +31,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:33:39 GMT
+      - Fri, 09 Jan 2026 14:09:47 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '327'
+      - '325'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - ffe83900-f00a-45f3-b939-1b750b3ed3dc
+      - a6771ed6-4213-4681-a188-543b21e329b3
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1093'
+      - '1412'
       X-Amzn-Bedrock-Output-Token-Count:
       - '12'
       X-Amzn-Bedrock-Input-Token-Count:
       - '28'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01Vo7QdpaZyCdAxr6f4DixCu","type":"message","role":"assistant","content":[{"type":"text","text":"\n    \"result\":
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01FRL7rxSpgdePnDU2oPjNFU","type":"message","role":"assistant","content":[{"type":"text","text":"\n  \"result\":
         8\n}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":28,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":12}}'
-  recorded_at: Sun, 02 Nov 2025 20:33:39 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:09:47 GMT
+recorded_with: VCR 6.4.0
