@@ -66,7 +66,10 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     ollama: {
-      url: 'http://localhost:11434/v1/chat/completions',
+      url: lambda {
+        base = RubyLLM.config.ollama_api_base.to_s
+        "#{base.sub(%r{/+\z}, '')}/chat/completions"
+      },
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -90,7 +93,10 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     gpustack: {
-      url: 'http://localhost:11444/v1/chat/completions',
+      url: lambda {
+        base = RubyLLM.config.gpustack_api_base.to_s
+        "#{base.sub(%r{/+\z}, '')}/chat/completions"
+      },
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -133,7 +139,7 @@ module StreamingErrorHelpers
         project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
         location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
         "https://#{location}-aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/#{location}/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
-      }.call,
+      },
       error_response: {
         error: {
           code: 529,
@@ -158,6 +164,8 @@ module StreamingErrorHelpers
     config = ERROR_HANDLING_CONFIGS[provider]
     return unless config
 
+    url = config[:url].respond_to?(:call) ? config[:url].call : config[:url]
+
     body = case type
            when :chunk
              "#{config[:error_response].to_json}\n\n"
@@ -167,7 +175,7 @@ module StreamingErrorHelpers
 
     status = type == :chunk ? config[:chunk_status] : 200
 
-    stub_request(:post, config[:url])
+    stub_request(:post, url)
       .to_return(
         status: status,
         body: body,

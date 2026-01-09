@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T204032Z
+      - 20260109T162200Z
       X-Amz-Content-Sha256:
       - 7f05abb0b56bd895772676e0f4bfb90cd1322ca39cfbc7d23ffdf1d27541e82a
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=82bfe51d1e0e84bff623402104993476c897fd467161c8c7305ed8195db70b1b
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260109/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=15751d66d57a15e5ddee6cc7803cb29f289bf746140db09f4e5c1436d5c5320b
       Content-Type:
       - application/json
       Accept:
@@ -31,32 +31,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:40:38 GMT
+      - Fri, 09 Jan 2026 16:22:06 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1007'
+      - '1110'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 9c32c338-ed10-4129-a45a-af17d95353ec
+      - 0f1fac3f-800a-4731-a3ac-780b2d7ab5da
       X-Amzn-Bedrock-Invocation-Latency:
-      - '5509'
+      - '4999'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '146'
+      - '152'
       X-Amzn-Bedrock-Input-Token-Count:
       - '43'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-sonnet-4-5-20250929","id":"msg_bdrk_019aqYzrL73Q7HsUbBoJtPGj","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Ruby Programming Language Logo\n\nThis image shows the official logo of **Ruby**,
-        a dynamic, open-source programming language. The logo depicts a stylized red
-        gemstone (ruby) with faceted surfaces that create a three-dimensional appearance.
-        The gem has highlights and shading that give it a polished, reflective quality.\n\nRuby
-        is known for:\n- **Elegant syntax** that emphasizes simplicity and productivity\n-
-        **Object-oriented programming** paradigm\n- Being the language behind the
-        **Ruby on Rails** web framework\n- Focus on developer happiness and convention
-        over configuration\n\nThe gemstone design reflects the language''s name and
-        represents its value and refinement as a programming tool."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":43,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":146}}'
-  recorded_at: Sun, 02 Nov 2025 20:40:38 GMT
-recorded_with: VCR 6.3.1
+      string: '{"model":"claude-sonnet-4-5-20250929","id":"msg_bdrk_01MDBXPj4MW3eE6amkwv4Laf","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Ruby Gem Icon\n\nThis image shows the iconic **Ruby programming language logo**.
+        It depicts a stylized, three-dimensional red gemstone (ruby) with multiple
+        facets that create a shiny, polished appearance. The gem has highlights and
+        shadows that give it depth and a glossy, reflective surface. The color scheme
+        is primarily deep red with lighter red highlights where light reflects off
+        the faceted surfaces.\n\nThis logo is commonly used to represent:\n- The Ruby
+        programming language\n- Ruby gems (software packages/libraries for Ruby)\n-
+        Ruby-related development tools and documentation\n\nThe gemstone design is
+        a visual play on the language''s name, \"Ruby,\" connecting the precious stone
+        with the programming language."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":43,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":152}}'
+  recorded_at: Fri, 09 Jan 2026 16:22:06 GMT
+recorded_with: VCR 6.4.0

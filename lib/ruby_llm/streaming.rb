@@ -60,6 +60,8 @@ module RubyLLM
 
       if error_chunk?(chunk)
         handle_error_chunk(chunk, env)
+      elsif json_error_payload?(chunk)
+        handle_json_error_chunk(chunk, env)
       else
         yield handle_sse(chunk, parser, env, &)
       end
@@ -85,17 +87,24 @@ module RubyLLM
       chunk.start_with?('event: error')
     end
 
+    def json_error_payload?(chunk)
+      chunk.lstrip.start_with?('{') && chunk.include?('"error"')
+    end
+
+    def handle_json_error_chunk(chunk, env)
+      parsed_data = JSON.parse(chunk)
+      status, _message = parse_streaming_error(parsed_data.to_json)
+      error_response = build_stream_error_response(parsed_data, env, status)
+      ErrorMiddleware.parse_error(provider: self, response: error_response)
+    rescue JSON::ParserError => e
+      RubyLLM.logger.debug "Failed to parse JSON error chunk: #{e.message}"
+    end
+
     def handle_error_chunk(chunk, env)
       error_data = chunk.split("\n")[1].delete_prefix('data: ')
-      status, _message = parse_streaming_error(error_data)
       parsed_data = JSON.parse(error_data)
-
-      error_response = if faraday_1?
-                         Struct.new(:body, :status).new(parsed_data, status)
-                       else
-                         env.merge(body: parsed_data, status: status)
-                       end
-
+      status, _message = parse_streaming_error(parsed_data.to_json)
+      error_response = build_stream_error_response(parsed_data, env, status)
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error chunk: #{e.message}"
@@ -104,7 +113,8 @@ module RubyLLM
     def handle_failed_response(chunk, buffer, env)
       buffer << chunk
       error_data = JSON.parse(buffer)
-      error_response = env.merge(body: error_data)
+      status, _message = parse_streaming_error(error_data.to_json)
+      error_response = env.merge(body: error_data, status: status || env.status)
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError
       RubyLLM.logger.debug "Accumulating error chunk: #{chunk}"
@@ -116,27 +126,26 @@ module RubyLLM
         when :error
           handle_error_event(data, env)
         else
-          yield handle_data(data, &block) unless data == '[DONE]'
+          yield handle_data(data, env, &block) unless data == '[DONE]'
         end
       end
     end
 
-    def handle_data(data)
-      JSON.parse(data)
+    def handle_data(data, env)
+      parsed = JSON.parse(data)
+      return parsed unless parsed.is_a?(Hash) && parsed.key?('error')
+
+      status, _message = parse_streaming_error(parsed.to_json)
+      error_response = build_stream_error_response(parsed, env, status)
+      ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse data chunk: #{e.message}"
     end
 
     def handle_error_event(data, env)
-      status, _message = parse_streaming_error(data)
       parsed_data = JSON.parse(data)
-
-      error_response = if faraday_1?
-                         Struct.new(:body, :status).new(parsed_data, status)
-                       else
-                         env.merge(body: parsed_data, status: status)
-                       end
-
+      status, _message = parse_streaming_error(parsed_data.to_json)
+      error_response = build_stream_error_response(parsed_data, env, status)
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse error event: #{e.message}"
@@ -148,6 +157,16 @@ module RubyLLM
     rescue JSON::ParserError => e
       RubyLLM.logger.debug "Failed to parse streaming error: #{e.message}"
       [500, "Failed to parse error: #{data}"]
+    end
+
+    def build_stream_error_response(parsed_data, env, status)
+      error_status = status || env&.status || 500
+
+      if faraday_1?
+        Struct.new(:body, :status).new(parsed_data, error_status)
+      else
+        env.merge(body: parsed_data, status: error_status)
+      end
     end
   end
 end

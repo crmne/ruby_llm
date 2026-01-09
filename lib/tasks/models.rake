@@ -156,7 +156,7 @@ def generate_models_markdown
 
     ## Model Data Sources
 
-    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/llm-specs))*
+    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [models.dev](https://models.dev/) *([LLM metadata API](https://models.dev/api.json))*
     - **OpenRouter**: Direct API
     - **Others**: Local capabilities files
 
@@ -354,7 +354,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
 
   models['bedrock'].each do |bedrock_model|
     next unless bedrock_model.start_with?('anthropic.')
-    next unless bedrock_model =~ /anthropic\.(claude-[\d.]+-[a-z]+)/
+    next unless bedrock_model =~ /anthropic\.(claude-[a-z0-9.-]+)-\d{8}/
 
     base_name = Regexp.last_match(1)
     anthropic_name = base_name.tr('.', '-')

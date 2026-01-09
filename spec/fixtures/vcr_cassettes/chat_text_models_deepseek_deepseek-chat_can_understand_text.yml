@@ -24,39 +24,39 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:46:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 09 Jan 2026 14:00:55 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 82cdc5f6559438a5d59d233a18653945
+      - 69ea96fb76b2ca28be9d7b7270d15243
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 f4a725398913ef5065a5ddd258331ca6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - aaS8NJB3aNvXulelEFoxW6GgeP0PSOV_EN1Y9QFt7UvSz9Tq4OkgrQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9a36d9a5-c213-406f-9501-c0be8cef49c7","object":"chat.completion","created":1762177610,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```\n\nIt''s
-        a plain text file (MIME type: text/plain) with a simple statement praising
-        the Ruby programming language."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":43,"total_tokens":76,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:46:52 GMT
+      string: '{"id":"fcef0440-590c-4a73-a079-0a27c5b81f7a","object":"chat.completion","created":1767967255,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":18,"total_tokens":51,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 09 Jan 2026 14:00:56 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -65,10 +65,9 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the text:\n\n```\nRuby is the best.\n```\n\nIt''s a plain text file
-        (MIME type: text/plain) with a simple statement praising the Ruby programming
-        language."},{"role":"user","content":[{"type":"text","text":"and in this one?"},{"type":"text","text":"<file
-        name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby is the best</truism></file>"}]}],"stream":false}'
+        contains the text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -85,38 +84,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:46:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 09 Jan 2026 14:00:57 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e57e3adfa40dbd1eca020b78146acab9
+      - 4ccde8fb7b17693e111b96b59d76e087
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 bdd9bc79dc1b6d281d32deec57de395e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - ykUdo8S0t4H_nnxSyJIlzwbLbbYysrD0urRsYB_mDMfsUkEhdM7y4w==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b8501824-5f5c-4e63-9853-ff37449d36d7","object":"chat.completion","created":1762177613,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains XML data:\n\n```xml\n<truism>Ruby is the best</truism>\n```\n\nIt''s
-        an XML file (MIME type: application/xml) with a root element called `<truism>`
-        that contains the text \"Ruby is the best\". This structures the same statement
-        in a machine-readable XML format rather than plain text."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":117,"completion_tokens":78,"total_tokens":195,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":53},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:46:57 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"e55639ec-3499-4a6b-80a3-0702a78978f5","object":"chat.completion","created":1767967257,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains XML data with the content:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":31,"total_tokens":123,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 09 Jan 2026 14:00:59 GMT
+recorded_with: VCR 6.4.0
