@@ -67,7 +67,15 @@ module RubyLLM
         end
 
         # Model family patterns for capability lookup
+        # Note: More specific patterns must come before less specific ones
         MODEL_FAMILIES = {
+          # Claude 4.x families
+          /anthropic\.claude-opus-4-5/ => :claude_opus_4_5,
+          /anthropic\.claude-opus-4/ => :claude_opus_4,
+          /anthropic\.claude-sonnet-4-5/ => :claude_sonnet_4_5,
+          /anthropic\.claude-sonnet-4/ => :claude_sonnet_4,
+          /anthropic\.claude-haiku-4-5/ => :claude_haiku_4_5,
+          # Claude 3.x families
           /anthropic\.claude-3-opus/ => :claude3_opus,
           /anthropic\.claude-3-sonnet/ => :claude3_sonnet,
           /anthropic\.claude-3-5-sonnet/ => :claude3_sonnet,
@@ -84,6 +92,13 @@ module RubyLLM
 
         # Pricing information for Bedrock models (per million tokens)
         PRICES = {
+          # Claude 4.x pricing
+          claude_opus_4: { input: 15.0, output: 75.0 },
+          claude_opus_4_5: { input: 5.0, output: 25.0 },
+          claude_sonnet_4: { input: 3.0, output: 15.0 },
+          claude_sonnet_4_5: { input: 3.0, output: 15.0 },
+          claude_haiku_4_5: { input: 1.0, output: 5.0 },
+          # Claude 3.x pricing
           claude3_opus: { input: 15.0, output: 75.0 },
           claude3_sonnet: { input: 3.0, output: 15.0 },
           claude3_haiku: { input: 0.25, output: 1.25 },
