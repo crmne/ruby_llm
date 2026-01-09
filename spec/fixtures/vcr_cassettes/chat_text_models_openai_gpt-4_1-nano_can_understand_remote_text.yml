@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 28 Oct 2025 04:56:13 GMT
+      - Tue, 06 Jan 2026 22:18:04 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69004ced-9c6"
+      - W/"695d8a1c-9c6"
       Expires:
-      - Mon, 03 Nov 2025 09:55:43 GMT
+      - Fri, 09 Jan 2026 10:09:04 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 5FE6:2C85A1:1EDEB8E:1F598A8:690879C5
+      - 0CCA:2847CC:59B0FD:5BA24F:6960D167
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 03 Nov 2025 13:48:00 GMT
+      - Fri, 09 Jan 2026 14:01:30 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '63'
+      - '529'
       X-Served-By:
-      - cache-fra-etou8220020-FRA
+      - cache-fra-etou8220076-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1762177680.376469,VS0,VE2
+      - S1767967290.479603,VS0,VE4
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 27b02462077848382f28582e5af943f366df9a2e
+      - 8329ccd16520889dabb34125b4d4e33235953d37
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 03 Nov 2025 13:48:00 GMT
+  recorded_at: Fri, 09 Jan 2026 14:01:30 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:48:01 GMT
+      - Fri, 09 Jan 2026 14:01:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,13 +167,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1181'
+      - '1340'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '1200'
+      - '1358'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -207,16 +209,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpCaGxmrF6TzOz0m64XkpNOsqbpb",
+          "id": "chatcmpl-Cw7LOgvkZPwByGhd36ZEZnXq7pqdb",
           "object": "chat.completion",
-          "created": 1762177680,
+          "created": 1767967290,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "This file contains the license information for Ruby, a programming language created by Yukihiro Matsumoto. It details the terms under which Ruby can be redistributed, modified, and used. The license allows for free copying and modification of the software, provided certain conditions are met, such as preserving notices, making modifications public, or following specific distribution rules. It also includes disclaimers of warranties, stating that the software is provided \"as is\" without any guarantees of suitability or fitness for a particular purpose.",
+                "content": "The file 'license.txt' contains the licensing information for the Ruby programming language. It states that Ruby is free software created by Yukihiro Matsumoto and can be redistributed or modified under certain conditions. The license offers two options for redistribution: the 2-clause Berkeley Software Distribution License (BSDL) or the detailed conditions outlined in the document itself. \n\nKey points include:\n- Permission to copy, modify, and distribute Ruby.\n- Conditions regarding proper notices and restrictions on distribution of modified versions.\n- Allowances for binary and object code distribution with certain requirements.\n- Clarifications about software parts not authored by the creator and script/library files created as input/output.\n- The software is provided \"as is\" without warranties.",
                 "refusal": null,
                 "annotations": []
               },
@@ -226,8 +228,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 540,
-            "completion_tokens": 100,
-            "total_tokens": 640,
+            "completion_tokens": 146,
+            "total_tokens": 686,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -240,7 +242,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_7f8eb7d1f9"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:01 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:01:32 GMT
+recorded_with: VCR 6.4.0

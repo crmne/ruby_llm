@@ -26,22 +26,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:27 GMT
+      - Fri, 09 Jan 2026 16:04:44 GMT
       Content-Length:
-      - '1095'
+      - '1340'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-769","object":"chat.completion","created":1762178427,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-301","object":"chat.completion","created":1767974684,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
-        and combine them. Let me check the function definition. The function requires
-        an array of strings under the \"tags\" parameter. Since the user provided
-        exactly that, I just need to structure the tool call correctly. The combined
-        tags would be the array elements joined, maybe with a separator? Wait, the
-        function''s description says it uses the params DSL array support, so maybe
-        it''s just passing the array as is. The user probably expects the output to
-        be \"red, blue\" or similar. I''ll make sure to format the JSON arguments
-        properly with the tags array.\n","tool_calls":[{"id":"call_jps0v70w","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":168,"completion_tokens":163,"total_tokens":331}}
+        and combine them. Let me check the function definition.\n\nThe function array_params
+        takes an object with a required \"tags\" array. The tags should be a list
+        of strings. The user provided exactly that: an array with \"red\" and \"blue\".
+        \n\nI need to structure the tool call correctly. The function name is array_params,
+        and the arguments should include the tags array. Since the function''s purpose
+        is to combine the tags, I just need to pass the array as specified.\n\nNo
+        other parameters are needed because the function only requires \"tags\". So
+        the correct tool call is to use the function with the given tags. The response
+        should then indicate the combined tags, but the actual combining logic is
+        handled by the function. \n\nI''ll format the tool call in JSON inside the
+        XML tags as instructed.\n","tool_calls":[{"id":"call_ab9idayh","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":168,"completion_tokens":211,"total_tokens":379}}
 
         '
-  recorded_at: Mon, 03 Nov 2025 14:00:27 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 16:04:44 GMT
+recorded_with: VCR 6.4.0
