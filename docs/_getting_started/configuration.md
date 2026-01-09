@@ -261,6 +261,7 @@ RubyLLM.configure do |config|
 
   # Show detailed streaming chunks
   config.log_stream_debug = true  # Or set RUBYLLM_STREAM_DEBUG=true
+  config.log_request_bodies = true # Or set RUBYLLM_LOG_REQUEST_BODIES=true
 end
 ```
 
@@ -428,6 +429,7 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+  config.log_request_bodies = Boolean
 end
 ```
 
