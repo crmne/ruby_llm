@@ -5,17 +5,21 @@ require 'securerandom'
 module RubyLLM
   module AgentSDK
     class Session
-      attr_reader :id, :created_at, :messages, :parent_id
+      DEFAULT_MAX_MESSAGES = 1000
 
-      def initialize(id: nil, parent_id: nil)
+      attr_reader :id, :created_at, :messages, :parent_id, :max_messages
+
+      def initialize(id: nil, parent_id: nil, max_messages: DEFAULT_MAX_MESSAGES)
         @id = id || generate_id
         @parent_id = parent_id
         @created_at = Time.now
         @messages = []
+        @max_messages = max_messages
       end
 
       def add_message(message)
         @messages << message
+        @messages.shift if @messages.size > @max_messages
       end
 
       def last_message
@@ -37,13 +41,13 @@ module RubyLLM
       end
 
       # Resume a previous session
-      def self.resume(session_id)
-        new(id: session_id)
+      def self.resume(session_id, max_messages: DEFAULT_MAX_MESSAGES)
+        new(id: session_id, max_messages: max_messages)
       end
 
       # Fork from an existing session (creates new session that continues from another)
       def fork
-        self.class.new(parent_id: @id).tap do |new_session|
+        self.class.new(parent_id: @id, max_messages: @max_messages).tap do |new_session|
           @messages.each { |msg| new_session.add_message(msg.dup) }
         end
       end

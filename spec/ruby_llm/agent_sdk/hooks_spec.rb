@@ -392,9 +392,140 @@ RSpec.describe RubyLLM::AgentSDK::Hooks do
         }
       end
 
-      it 'times out and approves by default' do
+      it 'times out and blocks by default (fail-closed)' do
+        expect { runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' }) }
+          .to output(/Hook failed/).to_stderr
         result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
-        expect(result.approved?).to be true
+        expect(result.blocked?).to be true
+        expect(result.reason).to eq('Hook timed out')
+      end
+
+      context 'with fail_mode: :open' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { sleep 2 }, timeout: 0.1, fail_mode: :open }
+            ]
+          }
+        end
+
+        it 'times out and approves (backwards compatible)' do
+          result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+          expect(result.approved?).to be true
+        end
+      end
+    end
+
+    describe 'fail-closed security behavior' do
+      describe 'when hook raises StandardError' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { raise 'Unexpected error' } }
+            ]
+          }
+        end
+
+        it 'blocks the operation (fail-closed)' do
+          result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+          expect(result.blocked?).to be true
+          expect(result.reason).to match(/Hook failed: RuntimeError/)
+        end
+
+        it 'logs the error' do
+          expect { runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' }) }
+            .to output(/Hook failed.*RuntimeError.*Unexpected error/).to_stderr
+        end
+      end
+
+      describe 'when hook raises ArgumentError' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { raise ArgumentError, 'bad argument' } }
+            ]
+          }
+        end
+
+        it 'blocks the operation with error class in reason' do
+          result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+          expect(result.blocked?).to be true
+          expect(result.reason).to eq('Hook failed: ArgumentError')
+        end
+      end
+
+      describe 'with fail_mode: :open (backwards compatibility)' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { raise 'Error' }, fail_mode: :open }
+            ]
+          }
+        end
+
+        it 'approves despite error (insecure but backwards compatible)' do
+          result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+          expect(result.approved?).to be true
+        end
+      end
+
+      describe 'runner-level fail_mode configuration' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { raise 'Error' } }
+            ]
+          }
+        end
+
+        context 'with fail_mode: :open on runner' do
+          let(:runner) { described_class.new(hooks, fail_mode: :open) }
+
+          it 'approves on error' do
+            result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+            expect(result.approved?).to be true
+          end
+        end
+
+        context 'hook fail_mode overrides runner fail_mode' do
+          let(:hooks) do
+            {
+              pre_tool_use: [
+                { handler: ->(_ctx) { raise 'Error' }, fail_mode: :closed }
+              ]
+            }
+          end
+          let(:runner) { described_class.new(hooks, fail_mode: :open) }
+
+          it 'blocks because hook specifies :closed' do
+            result = runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+            expect(result.blocked?).to be true
+          end
+        end
+      end
+
+      describe 'custom logger' do
+        let(:hooks) do
+          {
+            pre_tool_use: [
+              { handler: ->(_ctx) { raise 'Test error' } }
+            ]
+          }
+        end
+        let(:logger) { double('Logger') }
+
+        before do
+          RubyLLM::AgentSDK::Hooks.logger = logger
+        end
+
+        after do
+          RubyLLM::AgentSDK::Hooks.logger = nil
+        end
+
+        it 'logs to custom logger when configured' do
+          expect(logger).to receive(:warn).with(/Hook failed.*RuntimeError.*Test error/)
+          runner.run(:pre_tool_use, tool_name: 'Bash', tool_input: { command: 'ls' })
+        end
       end
     end
 

@@ -267,9 +267,27 @@ module RubyLLM
         end
       end
 
+      # Default fail mode for hook errors - :closed blocks operations, :open approves
+      DEFAULT_FAIL_MODE = :closed
+
+      # Logger for hook failures (can be configured)
+      class << self
+        attr_accessor :logger
+
+        def log_hook_failure(error, hook, context)
+          message = "Hook failed for #{context.event}/#{context.tool_name}: #{error.class.name}: #{error.message}"
+          if logger
+            logger.warn(message)
+          else
+            warn "[RubyLLM::AgentSDK::Hooks] #{message}"
+          end
+        end
+      end
+
       class Runner
-        def initialize(hooks = {})
+        def initialize(hooks = {}, fail_mode: DEFAULT_FAIL_MODE)
           @hooks = hooks
+          @fail_mode = fail_mode
           @cache = {} # Cache compiled matchers for O(1) lookup
         end
 
@@ -352,12 +370,26 @@ module RubyLLM
           end
 
           normalize_result(result, context)
-        rescue Timeout::Error
-          # Timeout - approve by default
-          Result.approve(context.tool_input)
-        rescue StandardError
-          # Log error but don't halt chain
-          Result.approve(context.tool_input)
+        rescue Timeout::Error => e
+          handle_hook_error(e, hook, context, 'Hook timed out')
+        rescue StandardError => e
+          handle_hook_error(e, hook, context, "Hook failed: #{e.class.name}")
+        end
+
+        def handle_hook_error(error, hook, context, reason)
+          # Log the error
+          Hooks.log_hook_failure(error, hook, context)
+
+          # Determine fail mode: hook-specific > runner default
+          fail_mode = hook[:fail_mode] || @fail_mode
+
+          if fail_mode == :open
+            # Backwards compatibility: approve on error (INSECURE - use with caution)
+            Result.approve(context.tool_input)
+          else
+            # Fail-closed: block operation when hook errors (SECURE default)
+            Result.block(reason)
+          end
         end
 
         def normalize_result(result, context)

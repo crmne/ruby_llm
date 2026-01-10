@@ -19,7 +19,7 @@ module RubyLLM
                      end
 
       def self.parse(line)
-        return nil if line.nil? || line.empty?
+        return nil if line.nil? || line.strip.empty?
 
         json = if OJ_AVAILABLE
                  Oj.load(line, JSON_OPTIONS)

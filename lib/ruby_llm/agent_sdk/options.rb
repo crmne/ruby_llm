@@ -2,6 +2,39 @@
 
 module RubyLLM
   module AgentSDK
+    # Configuration options for Agent SDK sessions.
+    #
+    # There are two ways to configure options:
+    #
+    # == Preferred: Constructor keyword arguments
+    #
+    # The simplest approach is to pass all options directly to the constructor:
+    #
+    #   options = Options.new(
+    #     prompt: "Analyze this codebase",
+    #     model: "claude-sonnet-4-20250514",
+    #     cwd: "/path/to/project",
+    #     max_turns: 5,
+    #     permission_mode: :plan
+    #   )
+    #
+    # == Alternative: Fluent builder pattern
+    #
+    # For method chaining scenarios or when building options incrementally,
+    # use the with_* methods:
+    #
+    #   options = Options.new(prompt: "Analyze this codebase")
+    #     .with_model("claude-sonnet-4-20250514")
+    #     .with_cwd("/path/to/project")
+    #     .with_max_turns(5)
+    #     .with_permission_mode(:plan)
+    #
+    # The fluent API is useful when:
+    # - Building options conditionally across multiple code paths
+    # - Matching RubyLLM::Chat's with_* pattern for consistency
+    # - Porting code from the TypeScript SDK
+    #
+    # @see Agent#run for executing with these options
     class Options
       # Schema for introspection (agent-native) - mirrors TypeScript SDK Options
       SCHEMA = {
@@ -72,7 +105,19 @@ module RubyLLM
         end
       end
 
-      # Fluent builder methods (match Chat's with_* pattern)
+      # Fluent builder methods for method chaining.
+      #
+      # These methods return +self+ to enable chaining. While constructor kwargs
+      # are preferred for simple cases, these are useful for:
+      # - Conditional option building across multiple code paths
+      # - Consistency with RubyLLM::Chat's fluent API
+      # - Incremental configuration building
+      #
+      # @note Some methods provide conveniences beyond simple assignment:
+      #   - with_cwd/with_cli_path expand paths via File.expand_path
+      #   - with_tools/without_tools flatten arrays and convert to strings
+      #   - with_output_format wraps the schema in the expected structure
+
       def with_tools(*tools)
         @allowed_tools = tools.flatten.map(&:to_s)
         self

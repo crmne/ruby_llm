@@ -55,6 +55,7 @@ RubyLLM fixes all that. One beautiful API for everything. One consistent format.
 - 🔧 **Tools** that let AI use your Ruby code
 - 🚂 **Rails integration** to persist chats and messages with ActiveRecord
 - 🌊 **Streaming** responses with proper Ruby patterns
+- 🤖 **Agent SDK** for building autonomous AI agents with Claude Code
 
 ## What makes it great
 
@@ -189,6 +190,7 @@ end
 
 - [Installation]({% link installation.md %})
 - [Guides]({% link guides/index.md %})
+- [Agent SDK]({% link agent_sdk/index.md %}) - Build autonomous AI agents
 
 ## License
 

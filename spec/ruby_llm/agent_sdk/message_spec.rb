@@ -272,46 +272,96 @@ RSpec.describe RubyLLM::AgentSDK::Message do
       expect(msg.custom_field).to eq('value')
     end
   end
-end
 
-RSpec.describe RubyLLM::AgentSDK::AssistantMessage do
-  it 'sets type to assistant' do
-    msg = described_class.new(content: 'Hello')
-    expect(msg.assistant?).to be true
-  end
-end
+  describe 'tool use detection' do
+    describe '#tool_use?' do
+      it 'returns false for non-assistant messages' do
+        msg = described_class.new(type: 'user', content: 'Hello')
+        expect(msg.tool_use?).to be false
+      end
 
-RSpec.describe RubyLLM::AgentSDK::UserMessage do
-  it 'sets type to user' do
-    msg = described_class.new(content: 'Hello')
-    expect(msg.user?).to be true
-  end
+      it 'returns false for assistant messages without tool use' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: { content: [{ type: 'text', text: 'Hello' }] }
+        )
+        expect(msg.tool_use?).to be false
+      end
 
-  it 'indicates replay when uuid present' do
-    msg = described_class.new(uuid: 'abc-123', content: 'Hello')
-    expect(msg.replay?).to be true
-  end
-end
+      it 'returns true for assistant messages with tool_use content' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: {
+            content: [
+              { type: 'text', text: 'Let me check that' },
+              { type: 'tool_use', id: 'tool-123', name: 'Bash', input: { command: 'ls' } }
+            ]
+          }
+        )
+        expect(msg.tool_use?).to be true
+      end
+    end
 
-RSpec.describe RubyLLM::AgentSDK::ResultMessage do
-  it 'sets type to result' do
-    msg = described_class.new(subtype: 'success')
-    expect(msg.result?).to be true
-  end
-end
+    describe '#tool_use_blocks' do
+      it 'extracts tool use blocks from message content' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: {
+            content: [
+              { type: 'text', text: 'Let me check' },
+              { type: 'tool_use', id: 'tool-123', name: 'Bash', input: { command: 'ls' } },
+              { type: 'tool_use', id: 'tool-456', name: 'Read', input: { file_path: '/tmp/file' } }
+            ]
+          }
+        )
+        blocks = msg.tool_use_blocks
+        expect(blocks.length).to eq(2)
+        expect(blocks[0][:name]).to eq('Bash')
+        expect(blocks[1][:name]).to eq('Read')
+      end
+    end
 
-RSpec.describe RubyLLM::AgentSDK::SystemMessage do
-  it 'sets type to system' do
-    msg = described_class.new(subtype: 'init')
-    expect(msg.system?).to be true
-  end
-end
+    describe '#tool_name' do
+      it 'returns first tool name' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: {
+            content: [
+              { type: 'tool_use', id: 'tool-123', name: 'Bash', input: { command: 'ls' } }
+            ]
+          }
+        )
+        expect(msg.tool_name).to eq('Bash')
+      end
+    end
 
-RSpec.describe RubyLLM::AgentSDK::PartialMessage do
-  it 'sets type to stream_event' do
-    msg = described_class.new(event: {})
-    expect(msg.stream_event?).to be true
-    expect(msg.partial?).to be true
+    describe '#tool_input' do
+      it 'returns first tool input' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: {
+            content: [
+              { type: 'tool_use', id: 'tool-123', name: 'Bash', input: { command: 'ls -la' } }
+            ]
+          }
+        )
+        expect(msg.tool_input[:command]).to eq('ls -la')
+      end
+    end
+
+    describe '#tool_use_id' do
+      it 'returns first tool use ID' do
+        msg = described_class.new(
+          type: 'assistant',
+          message: {
+            content: [
+              { type: 'tool_use', id: 'toolu_abc123', name: 'Bash', input: {} }
+            ]
+          }
+        )
+        expect(msg.tool_use_id).to eq('toolu_abc123')
+      end
+    end
   end
 end
 

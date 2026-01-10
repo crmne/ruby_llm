@@ -21,12 +21,32 @@ RSpec.describe RubyLLM::AgentSDK::Session do
       expect(session.created_at).to be_a(Time)
       expect(session.created_at).to be_within(1).of(Time.now)
     end
+
+    it 'uses default max_messages of 1000' do
+      session = described_class.new
+      expect(session.max_messages).to eq(1000)
+    end
+
+    it 'accepts custom max_messages' do
+      session = described_class.new(max_messages: 50)
+      expect(session.max_messages).to eq(50)
+    end
   end
 
   describe '.resume' do
     it 'creates session with existing ID' do
       session = described_class.resume('existing-session-123')
       expect(session.id).to eq('existing-session-123')
+    end
+
+    it 'uses default max_messages' do
+      session = described_class.resume('existing-session-123')
+      expect(session.max_messages).to eq(1000)
+    end
+
+    it 'accepts custom max_messages' do
+      session = described_class.resume('existing-session-123', max_messages: 100)
+      expect(session.max_messages).to eq(100)
     end
   end
 
@@ -53,6 +73,12 @@ RSpec.describe RubyLLM::AgentSDK::Session do
       expect(original.messages.size).to eq(1)
       expect(forked.messages.size).to eq(2)
     end
+
+    it 'inherits max_messages from original session' do
+      original = described_class.new(max_messages: 50)
+      forked = original.fork
+      expect(forked.max_messages).to eq(50)
+    end
   end
 
   describe '#forked?' do
@@ -78,6 +104,53 @@ RSpec.describe RubyLLM::AgentSDK::Session do
       original = described_class.new
       forked = original.fork
       expect(forked.parent_id).to eq(original.id)
+    end
+  end
+
+  describe '#add_message' do
+    it 'adds message to session' do
+      session = described_class.new
+      session.add_message({ role: 'user', content: 'Hello' })
+      expect(session.messages.size).to eq(1)
+      expect(session.messages.first[:content]).to eq('Hello')
+    end
+
+    it 'evicts oldest message when limit is exceeded' do
+      session = described_class.new(max_messages: 3)
+      session.add_message({ role: 'user', content: 'Message 1' })
+      session.add_message({ role: 'assistant', content: 'Message 2' })
+      session.add_message({ role: 'user', content: 'Message 3' })
+      session.add_message({ role: 'assistant', content: 'Message 4' })
+
+      expect(session.messages.size).to eq(3)
+      expect(session.messages.first[:content]).to eq('Message 2')
+      expect(session.messages.last[:content]).to eq('Message 4')
+    end
+
+    it 'maintains exactly max_messages after multiple evictions' do
+      session = described_class.new(max_messages: 2)
+      10.times { |i| session.add_message({ role: 'user', content: "Message #{i}" }) }
+
+      expect(session.messages.size).to eq(2)
+      expect(session.messages.first[:content]).to eq('Message 8')
+      expect(session.messages.last[:content]).to eq('Message 9')
+    end
+
+    it 'does not evict when under limit' do
+      session = described_class.new(max_messages: 5)
+      3.times { |i| session.add_message({ role: 'user', content: "Message #{i}" }) }
+
+      expect(session.messages.size).to eq(3)
+      expect(session.messages.first[:content]).to eq('Message 0')
+    end
+
+    it 'handles max_messages of 1' do
+      session = described_class.new(max_messages: 1)
+      session.add_message({ role: 'user', content: 'First' })
+      session.add_message({ role: 'assistant', content: 'Second' })
+
+      expect(session.messages.size).to eq(1)
+      expect(session.messages.first[:content]).to eq('Second')
     end
   end
 

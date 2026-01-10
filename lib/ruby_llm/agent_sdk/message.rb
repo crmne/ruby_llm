@@ -78,7 +78,52 @@ module RubyLLM
       end
 
       def tool_calls
-        @data[:tool_use] || @data[:tool_calls] || []
+        @data[:tool_use] || @data[:tool_calls] || extract_tool_use_blocks || []
+      end
+
+      # Check if this message contains tool use (for hook triggering)
+      def tool_use?
+        return false unless assistant?
+
+        tool_calls.any? || has_tool_use_content?
+      end
+
+      # Extract all tool use blocks from the message
+      def tool_use_blocks
+        return [] unless tool_use?
+
+        blocks = []
+
+        # From tool_calls/tool_use array
+        tool_calls.each do |tc|
+          blocks << normalize_tool_block(tc)
+        end
+
+        # From message.content array
+        if @data[:message]&.[](:content).is_a?(Array)
+          @data[:message][:content].each do |block|
+            next unless block[:type] == 'tool_use'
+
+            blocks << normalize_tool_block(block)
+          end
+        end
+
+        blocks.uniq { |b| b[:id] }
+      end
+
+      # Get the first tool name (convenience for single-tool messages)
+      def tool_name
+        tool_use_blocks.first&.[](:name)
+      end
+
+      # Get the first tool input (convenience for single-tool messages)
+      def tool_input
+        tool_use_blocks.first&.[](:input) || {}
+      end
+
+      # Get the first tool use ID
+      def tool_use_id
+        tool_use_blocks.first&.[](:id)
       end
 
       # Result message fields
@@ -191,38 +236,30 @@ module RubyLLM
 
         nil
       end
-    end
 
-    # Specialized message types for type safety
-    class AssistantMessage < Message
-      def initialize(json)
-        super(json.merge(type: :assistant))
-      end
-    end
+      def extract_tool_use_blocks
+        content = @data.dig(:message, :content)
+        return nil unless content.is_a?(Array)
 
-    class UserMessage < Message
-      def initialize(json)
-        super(json.merge(type: :user))
+        tool_blocks = content.select { |c| c[:type] == 'tool_use' }
+        return nil if tool_blocks.empty?
+
+        tool_blocks
       end
 
-      def replay? = !uuid.nil?
-    end
+      def has_tool_use_content?
+        content = @data.dig(:message, :content)
+        return false unless content.is_a?(Array)
 
-    class ResultMessage < Message
-      def initialize(json)
-        super(json.merge(type: :result))
+        content.any? { |c| c[:type] == 'tool_use' }
       end
-    end
 
-    class SystemMessage < Message
-      def initialize(json)
-        super(json.merge(type: :system))
-      end
-    end
-
-    class PartialMessage < Message
-      def initialize(json)
-        super(json.merge(type: :stream_event))
+      def normalize_tool_block(block)
+        {
+          id: block[:id] || block['id'],
+          name: block[:name] || block['name'],
+          input: block[:input] || block['input'] || {}
+        }
       end
     end
 
