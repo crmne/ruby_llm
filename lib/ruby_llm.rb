@@ -15,7 +15,10 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'openai' => 'OpenAI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek'
+  'deepseek' => 'DeepSeek',
+  'agent_sdk' => 'AgentSDK',
+  'mcp' => 'MCP',
+  'cli' => 'CLI'
 )
 loader.ignore("#{__dir__}/ruby_llm/railtie")
 loader.ignore("#{__dir__}/ruby_llm/active_record")
