@@ -3,24 +3,62 @@
 module RubyLLM
   module AgentSDK
     class Options
-      # Schema for introspection (agent-native)
+      # Schema for introspection (agent-native) - mirrors TypeScript SDK Options
       SCHEMA = {
+        # Core
         prompt: { type: String, required: true },
+        cwd: { type: String, default: nil },
+
+        # Model configuration
+        model: { type: String, default: nil },
+        fallback_model: { type: String, default: nil },
+        max_turns: { type: Integer, default: nil },
+        max_thinking_tokens: { type: Integer, default: nil },
+        max_budget_usd: { type: Float, default: nil },
+
+        # Permission & security
+        permission_mode: { type: Symbol, default: :default, enum: Permissions::MODES },
+        allow_dangerously_skip_permissions: { type: :boolean, default: false },
+
+        # Tools
+        tools: { type: Array, default: nil }, # nil = all tools, or array of names, or { type: 'preset', preset: 'claude_code' }
         allowed_tools: { type: Array, default: [] },
         disallowed_tools: { type: Array, default: [] },
-        permission_mode: { type: Symbol, default: :default, enum: Permissions::MODES },
-        model: { type: Symbol, default: nil },
-        max_turns: { type: Integer, default: nil },
-        cwd: { type: String, default: nil },
+
+        # Session management
         resume: { type: String, default: nil },
-        system_prompt: { type: String, default: nil },
+        resume_session_at: { type: String, default: nil },
+        fork_session: { type: :boolean, default: false },
+        continue: { type: :boolean, default: false },
+
+        # System prompt
+        system_prompt: { type: [String, Hash], default: nil }, # String or { type: 'preset', preset: 'claude_code', append: '...' }
+
+        # MCP & Hooks
         mcp_servers: { type: Hash, default: {} },
         hooks: { type: Hash, default: {} },
         can_use_tool: { type: Proc, default: nil },
+
+        # Directories & Settings
+        additional_directories: { type: Array, default: [] },
+        setting_sources: { type: Array, default: [] }, # [:user, :project, :local]
+
+        # Streaming & Output
+        include_partial_messages: { type: :boolean, default: false },
+        output_format: { type: Hash, default: nil }, # { type: 'json_schema', schema: {...} }
+        stderr: { type: Proc, default: nil },
+
+        # Advanced
         env: { type: Hash, default: {} },
         timeout: { type: Integer, default: nil },
         cli_path: { type: String, default: nil },
-        fork_session: { type: :boolean, default: false }
+        agents: { type: Hash, default: {} }, # Programmatic subagent definitions
+        plugins: { type: Array, default: [] }, # [{ type: 'local', path: '...' }]
+        betas: { type: Array, default: [] }, # ['context-1m-2025-08-07']
+        sandbox: { type: Hash, default: nil },
+        strict_mcp_config: { type: :boolean, default: false },
+        enable_file_checkpointing: { type: :boolean, default: false },
+        extra_args: { type: Hash, default: {} }
       }.freeze
 
       attr_accessor(*SCHEMA.keys)
@@ -46,7 +84,12 @@ module RubyLLM
       end
 
       def with_model(model)
-        @model = model.to_sym
+        @model = model.to_s
+        self
+      end
+
+      def with_fallback_model(model)
+        @fallback_model = model.to_s
         self
       end
 
@@ -55,8 +98,18 @@ module RubyLLM
         self
       end
 
+      def with_dangerous_permissions(enabled = true)
+        @allow_dangerously_skip_permissions = enabled
+        self
+      end
+
       def with_cwd(path)
         @cwd = File.expand_path(path)
+        self
+      end
+
+      def with_additional_directories(*dirs)
+        @additional_directories = dirs.flatten.map { |d| File.expand_path(d) }
         self
       end
 
@@ -80,6 +133,16 @@ module RubyLLM
         self
       end
 
+      def with_max_thinking_tokens(tokens)
+        @max_thinking_tokens = tokens
+        self
+      end
+
+      def with_max_budget_usd(budget)
+        @max_budget_usd = budget.to_f
+        self
+      end
+
       def with_timeout(seconds)
         @timeout = seconds
         self
@@ -92,6 +155,62 @@ module RubyLLM
 
       def with_fork_session(enabled = true)
         @fork_session = enabled
+        self
+      end
+
+      def with_continue(enabled = true)
+        @continue = enabled
+        self
+      end
+
+      def with_resume(session_id, at: nil)
+        @resume = session_id
+        @resume_session_at = at
+        self
+      end
+
+      def with_output_format(schema)
+        @output_format = { type: 'json_schema', schema: schema }
+        self
+      end
+
+      def with_partial_messages(enabled = true)
+        @include_partial_messages = enabled
+        self
+      end
+
+      def with_agents(agents)
+        @agents = agents
+        self
+      end
+
+      def with_plugins(*plugins)
+        @plugins = plugins.flatten
+        self
+      end
+
+      def with_betas(*betas)
+        @betas = betas.flatten
+        self
+      end
+
+      def with_sandbox(config)
+        @sandbox = config
+        self
+      end
+
+      def with_setting_sources(*sources)
+        @setting_sources = sources.flatten.map(&:to_sym)
+        self
+      end
+
+      def with_file_checkpointing(enabled = true)
+        @enable_file_checkpointing = enabled
+        self
+      end
+
+      def with_stderr(&block)
+        @stderr = block
         self
       end
 
@@ -118,8 +237,7 @@ module RubyLLM
       end
 
       def to_cli_args
-        # Convert to CLI arguments
-        {
+        args = {
           cwd: @cwd,
           model: @model,
           max_turns: @max_turns,
@@ -129,8 +247,22 @@ module RubyLLM
           allowed_tools: @allowed_tools,
           disallowed_tools: @disallowed_tools,
           cli_path: @cli_path,
-          fork_session: @fork_session
+          fork_session: @fork_session,
+          continue: @continue,
+          additional_directories: @additional_directories,
+          max_thinking_tokens: @max_thinking_tokens,
+          max_budget_usd: @max_budget_usd,
+          fallback_model: @fallback_model,
+          include_partial_messages: @include_partial_messages,
+          resume_session_at: @resume_session_at,
+          enable_file_checkpointing: @enable_file_checkpointing,
+          betas: @betas,
+          output_format: @output_format
         }.compact
+
+        # Remove empty arrays
+        args.delete_if { |_, v| v.is_a?(Array) && v.empty? }
+        args
       end
     end
   end

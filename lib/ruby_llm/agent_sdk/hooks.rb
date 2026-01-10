@@ -5,26 +5,40 @@ require 'timeout'
 module RubyLLM
   module AgentSDK
     module Hooks
-      # Event constants (agent-native introspection)
+      # Event constants - mirrors TypeScript SDK HookEvent
       EVENTS = %i[
-        pre_tool_use post_tool_use stop subagent_stop
-        session_start session_end user_prompt_submit
-        pre_compact notification
+        pre_tool_use
+        post_tool_use
+        post_tool_use_failure
+        notification
+        user_prompt_submit
+        session_start
+        session_end
+        stop
+        subagent_start
+        subagent_stop
+        pre_compact
+        permission_request
       ].freeze
 
       # Result decisions
       DECISIONS = %i[approve block modify skip].freeze
 
-      # Hook result value object with advanced output fields
+      # Permission decisions for PreToolUse hooks
+      PERMISSION_DECISIONS = %i[allow deny ask].freeze
+
+      # Hook result value object - mirrors TypeScript SDK HookJSONOutput
       Result = Struct.new(
         :decision, :payload, :reason,
         :additional_context, :system_message,
-        :continue, :stop_reason,
+        :continue, :stop_reason, :suppress_output,
+        :hook_specific_output, :async, :async_timeout,
         keyword_init: true
       ) do
         def approved? = decision == :approve
         def blocked? = decision == :block
         def modified? = decision == :modify
+        def async? = async == true
 
         def self.approve(payload = nil)
           new(decision: :approve, payload: payload, continue: true)
@@ -56,9 +70,160 @@ module RubyLLM
         def self.with_system_message(message)
           new(decision: :approve, system_message: message, continue: true)
         end
+
+        # Suppress output from being shown
+        def self.suppress
+          new(decision: :approve, continue: true, suppress_output: true)
+        end
+
+        # Async hook result
+        def self.async(timeout: nil)
+          new(async: true, async_timeout: timeout, continue: true)
+        end
+
+        # PreToolUse specific: allow/deny/ask permission
+        def self.permission(decision, reason: nil, updated_input: nil)
+          new(
+            decision: :approve,
+            continue: true,
+            hook_specific_output: {
+              hook_event_name: :pre_tool_use,
+              permission_decision: decision,
+              permission_decision_reason: reason,
+              updated_input: updated_input
+            }
+          )
+        end
       end
 
-      # Context passed through hook chain
+      # Base input for all hooks - mirrors TypeScript SDK BaseHookInput
+      BaseInput = Struct.new(:session_id, :transcript_path, :cwd, :permission_mode, keyword_init: true)
+
+      # PreToolUse hook input
+      PreToolUseInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :tool_name, :tool_input,
+        keyword_init: true
+      ) do
+        def hook_event_name = :pre_tool_use
+      end
+
+      # PostToolUse hook input
+      PostToolUseInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :tool_name, :tool_input, :tool_response,
+        keyword_init: true
+      ) do
+        def hook_event_name = :post_tool_use
+      end
+
+      # PostToolUseFailure hook input
+      PostToolUseFailureInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :tool_name, :tool_input, :error, :is_interrupt,
+        keyword_init: true
+      ) do
+        def hook_event_name = :post_tool_use_failure
+      end
+
+      # Notification hook input
+      NotificationInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :message, :title,
+        keyword_init: true
+      ) do
+        def hook_event_name = :notification
+      end
+
+      # UserPromptSubmit hook input
+      UserPromptSubmitInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :prompt,
+        keyword_init: true
+      ) do
+        def hook_event_name = :user_prompt_submit
+      end
+
+      # SessionStart hook input
+      SessionStartInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :source, # 'startup' | 'resume' | 'clear' | 'compact'
+        keyword_init: true
+      ) do
+        def hook_event_name = :session_start
+      end
+
+      # SessionEnd hook input
+      SessionEndInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :reason,
+        keyword_init: true
+      ) do
+        def hook_event_name = :session_end
+      end
+
+      # Stop hook input
+      StopInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :stop_hook_active,
+        keyword_init: true
+      ) do
+        def hook_event_name = :stop
+      end
+
+      # SubagentStart hook input
+      SubagentStartInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :agent_id, :agent_type,
+        keyword_init: true
+      ) do
+        def hook_event_name = :subagent_start
+      end
+
+      # SubagentStop hook input
+      SubagentStopInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :stop_hook_active,
+        keyword_init: true
+      ) do
+        def hook_event_name = :subagent_stop
+      end
+
+      # PreCompact hook input
+      PreCompactInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :trigger, :custom_instructions, # trigger: 'manual' | 'auto'
+        keyword_init: true
+      ) do
+        def hook_event_name = :pre_compact
+      end
+
+      # PermissionRequest hook input
+      PermissionRequestInput = Struct.new(
+        :session_id, :transcript_path, :cwd, :permission_mode,
+        :tool_name, :tool_input, :permission_suggestions,
+        keyword_init: true
+      ) do
+        def hook_event_name = :permission_request
+      end
+
+      # Input type mapping
+      INPUT_TYPES = {
+        pre_tool_use: PreToolUseInput,
+        post_tool_use: PostToolUseInput,
+        post_tool_use_failure: PostToolUseFailureInput,
+        notification: NotificationInput,
+        user_prompt_submit: UserPromptSubmitInput,
+        session_start: SessionStartInput,
+        session_end: SessionEndInput,
+        stop: StopInput,
+        subagent_start: SubagentStartInput,
+        subagent_stop: SubagentStopInput,
+        pre_compact: PreCompactInput,
+        permission_request: PermissionRequestInput
+      }.freeze
+
+      # Context passed through hook chain (legacy compatibility)
       Context = Struct.new(:event, :tool_name, :tool_input, :original_input, :metadata, keyword_init: true) do
         def [](key) = metadata&.[](key)
         def []=(key, value)
@@ -89,6 +254,16 @@ module RubyLLM
           when Proc then @pattern.call(tool_name)
           else @pattern === tool_name
           end
+        end
+      end
+
+      # HookCallbackMatcher - mirrors TypeScript SDK
+      class CallbackMatcher
+        attr_reader :matcher, :hooks
+
+        def initialize(matcher: nil, hooks: [])
+          @matcher = matcher
+          @hooks = hooks
         end
       end
 
@@ -150,11 +325,22 @@ module RubyLLM
 
           case matcher
           when Matcher then matcher.matches?(tool_name)
+          when CallbackMatcher then matcher.matcher.nil? || matches_pattern?(matcher.matcher, tool_name)
           when Regexp then matcher.match?(tool_name.to_s)
           when String then matcher == tool_name.to_s
           when Array then matcher.include?(tool_name.to_s)
           when Proc then matcher.call(tool_name)
           else matcher === tool_name
+          end
+        end
+
+        def matches_pattern?(pattern, tool_name)
+          case pattern
+          when Regexp then pattern.match?(tool_name.to_s)
+          when String then pattern == tool_name.to_s
+          when Array then pattern.include?(tool_name.to_s)
+          when Proc then pattern.call(tool_name)
+          else pattern === tool_name
           end
         end
 
