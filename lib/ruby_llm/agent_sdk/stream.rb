@@ -2,14 +2,6 @@
 
 require 'json'
 
-# Try to load Oj for better performance (5-6x faster than stdlib JSON)
-begin
-  require 'oj'
-  OJ_AVAILABLE = true
-rescue LoadError
-  OJ_AVAILABLE = false
-end
-
 module RubyLLM
   module AgentSDK
     # JSON-LD stream parser for Claude CLI output
@@ -22,6 +14,14 @@ module RubyLLM
     #   message.type # => :assistant
     #   message.content # => "Hello"
     class Stream
+      # Try to load Oj for better performance
+      begin
+        require 'oj'
+        OJ_AVAILABLE = true
+      rescue LoadError
+        OJ_AVAILABLE = false
+      end
+
       # JSON parsing options optimized for each parser
       OJ_OPTIONS = { mode: :compat, symbol_keys: true }.freeze
       JSON_OPTIONS = { symbolize_names: true }.freeze

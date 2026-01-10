@@ -14,12 +14,19 @@ module RubyLLM
     #     input_schema: {
     #       type: :object,
     #       properties: {
-    #         expression: { type: :string, description: 'Math expression' }
+    #         a: { type: :number, description: 'First number' },
+    #         b: { type: :number, description: 'Second number' },
+    #         op: { type: :string, description: 'Operation: add, sub, mul, div' }
     #       },
-    #       required: [:expression]
+    #       required: %i[a b op]
     #     }
     #   ) do |input|
-    #     eval(input[:expression]).to_s
+    #     case input[:op]
+    #     when 'add' then input[:a] + input[:b]
+    #     when 'sub' then input[:a] - input[:b]
+    #     when 'mul' then input[:a] * input[:b]
+    #     when 'div' then input[:a] / input[:b]
+    #     end.to_s
     #   end
     class Tool
       attr_reader :name, :description, :input_schema, :handler

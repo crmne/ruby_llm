@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+require 'time'
+require 'json'
+
 module RubyLLM
   module AgentSDK
     # Session management for agent conversations
