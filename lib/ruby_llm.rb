@@ -15,13 +15,11 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'openai' => 'OpenAI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek',
-  'agent_sdk' => 'AgentSDK',
-  'mcp' => 'MCP',
-  'cli' => 'CLI'
+  'deepseek' => 'DeepSeek'
 )
 loader.ignore("#{__dir__}/ruby_llm/railtie")
 loader.ignore("#{__dir__}/ruby_llm/active_record")
+loader.ignore("#{__dir__}/ruby_llm/agent") # Explicitly required
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -33,6 +31,19 @@ module RubyLLM
   class << self
     def chat(model: nil, provider: nil)
       Chat.new(model: model, provider: provider)
+    end
+
+    # Create an autonomous agent with built-in tools
+    #
+    # Example:
+    #   agent = RubyLLM.agent
+    #     .with_tools(RubyLLM::Agent::Tools::Read, RubyLLM::Agent::Tools::Edit)
+    #     .with_max_turns(5)
+    #
+    #   agent.run("Fix the bug in auth.rb") { |e| puts e.data }
+    def agent(model: nil, provider: nil, max_turns: 10)
+      require_relative 'ruby_llm/agent'
+      Agent.new(model: model, provider: provider, max_turns: max_turns)
     end
 
     def embed(...)
