@@ -18,7 +18,9 @@ module RubyLLM
         hooks: { type: Hash, default: {} },
         can_use_tool: { type: Proc, default: nil },
         env: { type: Hash, default: {} },
-        timeout: { type: Integer, default: nil }
+        timeout: { type: Integer, default: nil },
+        cli_path: { type: String, default: nil },
+        fork_session: { type: :boolean, default: false }
       }.freeze
 
       attr_accessor(*SCHEMA.keys)
@@ -83,6 +85,16 @@ module RubyLLM
         self
       end
 
+      def with_cli_path(path)
+        @cli_path = File.expand_path(path)
+        self
+      end
+
+      def with_fork_session(enabled = true)
+        @fork_session = enabled
+        self
+      end
+
       # Class methods for introspection (agent-native)
       class << self
         def schema
@@ -115,7 +127,9 @@ module RubyLLM
           resume: @resume,
           system_prompt: @system_prompt,
           allowed_tools: @allowed_tools,
-          disallowed_tools: @disallowed_tools
+          disallowed_tools: @disallowed_tools,
+          cli_path: @cli_path,
+          fork_session: @fork_session
         }.compact
       end
     end

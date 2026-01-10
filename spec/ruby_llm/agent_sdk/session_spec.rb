@@ -1,0 +1,108 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+require 'ruby_llm/agent_sdk'
+
+RSpec.describe RubyLLM::AgentSDK::Session do
+  describe '#initialize' do
+    it 'generates unique session ID' do
+      session = described_class.new
+      expect(session.id).to be_a(String)
+      expect(session.id.length).to be > 20
+    end
+
+    it 'accepts explicit session ID' do
+      session = described_class.new(id: 'custom-session-id')
+      expect(session.id).to eq('custom-session-id')
+    end
+
+    it 'tracks creation time' do
+      session = described_class.new
+      expect(session.created_at).to be_a(Time)
+      expect(session.created_at).to be_within(1).of(Time.now)
+    end
+  end
+
+  describe '.resume' do
+    it 'creates session with existing ID' do
+      session = described_class.resume('existing-session-123')
+      expect(session.id).to eq('existing-session-123')
+    end
+  end
+
+  describe '#fork' do
+    it 'creates new session with copied messages' do
+      original = described_class.new
+      original.add_message({ role: 'user', content: 'Hello' })
+      original.add_message({ role: 'assistant', content: 'Hi!' })
+
+      forked = original.fork
+
+      expect(forked.id).not_to eq(original.id)
+      expect(forked.messages.size).to eq(2)
+      expect(forked.messages).to eq(original.messages)
+    end
+
+    it 'creates independent message array' do
+      original = described_class.new
+      original.add_message({ role: 'user', content: 'Hello' })
+
+      forked = original.fork
+      forked.add_message({ role: 'assistant', content: 'New message' })
+
+      expect(original.messages.size).to eq(1)
+      expect(forked.messages.size).to eq(2)
+    end
+  end
+
+  describe '#forked?' do
+    it 'returns false for new session' do
+      session = described_class.new
+      expect(session.forked?).to be false
+    end
+
+    it 'returns true for forked session' do
+      original = described_class.new
+      forked = original.fork
+      expect(forked.forked?).to be true
+    end
+  end
+
+  describe '#parent_id' do
+    it 'returns nil for new session' do
+      session = described_class.new
+      expect(session.parent_id).to be_nil
+    end
+
+    it 'returns original session ID for forked session' do
+      original = described_class.new
+      forked = original.fork
+      expect(forked.parent_id).to eq(original.id)
+    end
+  end
+
+  describe '#to_h' do
+    it 'includes all session info' do
+      session = described_class.new(id: 'test-123')
+      session.add_message({ role: 'user', content: 'Hi' })
+
+      hash = session.to_h
+
+      expect(hash[:id]).to eq('test-123')
+      expect(hash[:created_at]).to be_a(String)
+      expect(hash[:message_count]).to eq(1)
+      expect(hash[:forked]).to be false
+      expect(hash[:parent_id]).to be_nil
+    end
+
+    it 'includes fork info for forked session' do
+      original = described_class.new(id: 'original-123')
+      forked = original.fork
+
+      hash = forked.to_h
+
+      expect(hash[:forked]).to be true
+      expect(hash[:parent_id]).to eq('original-123')
+    end
+  end
+end

@@ -11,6 +11,7 @@ module RubyLLM
 
       def initialize(options = {})
         @options = options
+        @cli_path = options[:cli_path] || COMMAND
         @pid = nil
         @mutex = Mutex.new
         @shutdown = false
@@ -22,7 +23,7 @@ module RubyLLM
         stderr_lines = []
 
         # CRITICAL: Use array form to prevent command injection
-        Open3.popen3(COMMAND, *args) do |stdin, stdout, stderr, wait_thread|
+        Open3.popen3(@cli_path, *args) do |stdin, stdout, stderr, wait_thread|
           @mutex.synchronize { @pid = wait_thread.pid }
           stdin.close
 
@@ -92,6 +93,7 @@ module RubyLLM
         end
         args.push('--resume', @options[:resume]) if @options[:resume]
         args.push('--system-prompt', @options[:system_prompt]) if @options[:system_prompt]
+        args.push('--fork-session') if @options[:fork_session]
 
         # Allowed/disallowed tools
         if @options[:allowed_tools]&.any?

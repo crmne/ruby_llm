@@ -21,6 +21,20 @@ module RubyLLM
       end
     end
 
+    class CLIConnectionError < Error
+      attr_reader :host, :port
+
+      def initialize(message = 'Connection failed', host: nil, port: nil)
+        @host = host
+        @port = port
+        super(message, error_code: :connection_error)
+      end
+
+      def to_h
+        super.merge(host: host, port: port)
+      end
+    end
+
     class ProcessError < Error
       attr_reader :exit_code, :stderr
 

@@ -9,8 +9,9 @@ module RubyLLM
       DONT_ASK = :dont_ask
       BYPASS = :bypass_permissions
       PLAN = :plan
+      DELEGATE = :delegate
 
-      MODES = [DEFAULT, ACCEPT_EDITS, DONT_ASK, BYPASS, PLAN].freeze
+      MODES = [DEFAULT, ACCEPT_EDITS, DONT_ASK, BYPASS, PLAN, DELEGATE].freeze
 
       # CLI format mapping (camelCase required by claude CLI)
       CLI_MODES = {
@@ -18,7 +19,8 @@ module RubyLLM
         accept_edits: 'acceptEdits',
         dont_ask: 'dontAsk',
         bypass_permissions: 'bypassPermissions',
-        plan: 'plan'
+        plan: 'plan',
+        delegate: 'delegate'
       }.freeze
 
       # Tools auto-approved in accept_edits mode

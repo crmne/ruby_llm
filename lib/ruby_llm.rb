@@ -15,11 +15,13 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'openai' => 'OpenAI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek'
+  'deepseek' => 'DeepSeek',
+  'agent_sdk' => 'AgentSDK'
 )
 loader.ignore("#{__dir__}/ruby_llm/railtie")
 loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/ruby_llm/agent") # Explicitly required
+loader.ignore("#{__dir__}/ruby_llm/agent_sdk") # Explicitly required
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -44,6 +46,20 @@ module RubyLLM
     def agent(model: nil, provider: nil, max_turns: 10)
       require_relative 'ruby_llm/agent'
       Agent.new(model: model, provider: provider, max_turns: max_turns)
+    end
+
+    # Access the Agent SDK for programmatic Claude Code control
+    #
+    # Example:
+    #   # One-off query
+    #   RubyLLM.agent_sdk.query("What is 2+2?").each { |msg| puts msg.content }
+    #
+    #   # Multi-turn client
+    #   client = RubyLLM.agent_sdk.client(permission_mode: :bypass_permissions)
+    #   client.query("Hello").each { |msg| puts msg.content }
+    def agent_sdk
+      require_relative 'ruby_llm/agent_sdk'
+      AgentSDK
     end
 
     def embed(...)
