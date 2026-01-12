@@ -31,11 +31,25 @@ module RubyLLM
         end
 
         def supports_functions?(model_id)
-          model_id.match?(/claude-3/)
+          claude3_or_newer?(model_id)
         end
 
         def supports_json_mode?(model_id)
-          model_id.match?(/claude-3/)
+          claude3_or_newer?(model_id)
+        end
+
+        def supports_structured_output?(model_id)
+          # Structured outputs supported on Claude 4+ (Sonnet 4.5, Opus 4.1, etc.)
+          # https://docs.anthropic.com/en/docs/build-with-claude/structured-outputs
+          claude4_or_newer?(model_id)
+        end
+
+        def claude3_or_newer?(model_id)
+          model_id.match?(/claude-[34]|claude-(sonnet|opus|haiku)-[4-9]/)
+        end
+
+        def claude4_or_newer?(model_id)
+          model_id.match?(/claude-[4-9]|claude-(sonnet|opus|haiku)-[4-9]/)
         end
 
         def supports_extended_thinking?(model_id)
@@ -92,12 +106,13 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          if model_id.match?(/claude-3/)
+          if claude3_or_newer?(model_id)
             capabilities << 'function_calling'
             capabilities << 'batch'
           end
 
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7|-4/)
+          capabilities << 'structured_output' if supports_structured_output?(model_id)
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7|claude-[4-9]|claude-(sonnet|opus)-[4-9]/)
           capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7/)
           capabilities
         end

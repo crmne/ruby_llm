@@ -14,6 +14,13 @@ CHAT_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+CHAT_SCHEMA_MODELS = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :anthropic, model: 'claude-sonnet-4-5' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :openai, model: 'gpt-4.1-nano' }
+].freeze
+
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-3-7-sonnet' },
