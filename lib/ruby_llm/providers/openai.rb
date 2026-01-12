@@ -30,6 +30,32 @@ module RubyLLM
         OpenAI::Capabilities.normalize_temperature(temperature, model.id)
       end
 
+      # Override to format payload according to OpenAI's batch request API
+      # https://platform.openai.com/docs/guides/batch
+      def render_payload_for_batch_request(messages, tools:, temperature:, model:, params: {}, schema: nil) # rubocop:disable Metrics/ParameterLists
+        normalized_temperature = maybe_normalize_temperature(temperature, model)
+
+        payload = Utils.deep_merge(
+          params,
+          render_payload(
+            messages,
+            tools: tools,
+            temperature: normalized_temperature,
+            model: model,
+            stream: false,
+            schema: schema
+          )
+        )
+
+        # Format according to OpenAI's batch request API
+        {
+          custom_id: "request-#{SecureRandom.uuid}",
+          method: 'POST',
+          url: '/v1/chat/completions',
+          body: payload
+        }
+      end
+
       class << self
         def capabilities
           OpenAI::Capabilities
