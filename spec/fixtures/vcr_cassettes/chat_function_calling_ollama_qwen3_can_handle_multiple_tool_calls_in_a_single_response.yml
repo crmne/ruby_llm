@@ -26,21 +26,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:17 GMT
+      - Fri, 09 Jan 2026 16:04:40 GMT
       Content-Length:
-      - '1035'
+      - '1109'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-321","object":"chat.completion","created":1762178417,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-908","object":"chat.completion","created":1767974680,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a dice_roll function that rolls a single six-sided die. Since they
-        need it done three times, I should call that function three separate times.
+        There''s a function called dice_roll that rolls a single six-sided die. Since
+        they need it three times, I should call that function three separate times.
         Each call doesn''t require any parameters, so I''ll just make three individual
-        tool calls. I need to make sure each is in its own tool_call tags. Let me
-        structure that properly.\n","tool_calls":[{"id":"call_w0bozstb","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":161,"completion_tokens":141,"total_tokens":302}}
+        tool calls. I need to make sure each is in the correct JSON format within
+        the tool_call tags. Let me structure each one properly and ensure there are
+        exactly three calls.\n","tool_calls":[{"id":"call_5olvmthc","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_0odez6yy","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_pvh9577c","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":158,"completion_tokens":153,"total_tokens":311}}
 
         '
-  recorded_at: Mon, 03 Nov 2025 14:00:17 GMT
+  recorded_at: Fri, 09 Jan 2026 16:04:40 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -48,9 +49,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w0bozstb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_w0bozstb"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_kcmeiwr8"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_5tigxxqv"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_5olvmthc","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_0odez6yy","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_pvh9577c","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_5olvmthc"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_0odez6yy"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_pvh9577c"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -69,12 +70,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:19 GMT
+      - Fri, 09 Jan 2026 16:04:42 GMT
       Content-Length:
-      - '1161'
+      - '1062'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUyNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzg0MTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHdlcmUgcm9sbGVkIHRocmVlIHRpbWVzLCBhbmQgdGhlIHJlc3VsdHMgd2VyZTpcblxuMS4g8J+OsiBSb2xsIDE6ICoqMSoqXG4yLiDwn46yIFJvbGwgMjogKioyKipcbjMuIPCfjrIgUm9sbCAzOiAqKjMqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBuZWVkIHRvIGNhbGwgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiBleGFjdGx5IHRocmVlIHRpbWVzLiBMZXQgbWUgY2hlY2sgaWYgSSBkaWQgdGhhdCBjb3JyZWN0bHkuXG5cbkZpcnN0IGNhbGw6IGRpY2Vfcm9sbCB3aXRoIG5vIGFyZ3VtZW50cywgZ290IGEgMS4gU2Vjb25kIGNhbGw6IHNhbWUgZnVuY3Rpb24sIGdvdCBhIDIuIFRoaXJkIGNhbGw6IGRpY2Vfcm9sbCBhZ2FpbiwgcmVzdWx0IGlzIDMuIEVhY2ggdGltZSwgdGhlIGZ1bmN0aW9uIHdhcyBjYWxsZWQgcHJvcGVybHkuIFRoZSByZXNwb25zZXMgZnJvbSB0aGUgdG9vbCBhcmUgdGhlIG51bWJlcnMgMSwgMiwgMy4gTm93LCBJIHNob3VsZCBjb21waWxlIHRoZXNlIHJlc3VsdHMgaW50byBhIGNsZWFyIGFuc3dlciBmb3IgdGhlIHVzZXIuIExldCBtZSBsaXN0IGVhY2ggcm9sbCBpbiBvcmRlciBhbmQgdGhlbiBtYXliZSBtZW50aW9uIHRoZSB0b3RhbCBvciBqdXN0IHByZXNlbnQgdGhlIHNlcXVlbmNlLiBUaGUgdXNlciBtaWdodCB3YW50IHRvIHNlZSBlYWNoIGluZGl2aWR1YWwgcmVzdWx0LiBTbywgSSdsbCBzdGF0ZSBlYWNoIHJvbGwgYXMgc2VwYXJhdGUgZW50cmllcyBhbmQgY29uZmlybSB0aGF0IHRocmVlIGRpY2Ugd2VyZSByb2xsZWQgYXMgcmVxdWVzdGVkLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNDcsImNvbXBsZXRpb25fdG9rZW5zIjoyMjQsInRvdGFsX3Rva2VucyI6NDcxfX0K
-  recorded_at: Mon, 03 Nov 2025 14:00:19 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-708","object":"chat.completion","created":1767974682,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        dice rolls resulted in: 1, 2, and 3.","reasoning":"Okay, the user asked to
+        roll the dice three times, and I called the dice_roll function three times.
+        Each time, the response was a roll value. The first roll was 1, then 2, then
+        3. Now I need to present these results to the user in a clear way.\n\nLet
+        me check if I should summarize the results or just list them. The user probably
+        wants to know each outcome of the three rolls. So I''ll mention each roll
+        in order. Maybe say something like \"The first roll was 1, the second was
+        2, and the third was 3.\" That''s straightforward and answers the query accurately.
+        No need for extra analysis since the user just wanted the results of three
+        dice rolls. I should make sure the response is concise and matches what was
+        requested.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":244,"completion_tokens":184,"total_tokens":428}}
+
+        '
+  recorded_at: Fri, 09 Jan 2026 16:04:42 GMT
+recorded_with: VCR 6.4.0

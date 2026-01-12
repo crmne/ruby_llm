@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:02:43 GMT
+      - Fri, 09 Jan 2026 14:11:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '649'
+      - '330'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '850'
+      - '575'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -78,16 +78,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXYZewU8gj1w0jsbiQFpi7lEwPv8h",
+          "id": "chatcmpl-Cw7VGLqzlbt0cbztVndYBUbLXF38f",
           "object": "chat.completion",
-          "created": 1762113762,
+          "created": 1767967902,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The programming language Ruby was created by Yukihiro Matsumoto, also known as \"Matz,\" in the mid-1990s.",
+                "content": "The programming language Ruby was created by Yukihiro Matsumoto, often referred to as \"Matz.\"",
                 "refusal": null,
                 "annotations": []
               },
@@ -97,8 +97,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 17,
-            "completion_tokens": 29,
-            "total_tokens": 46,
+            "completion_tokens": 22,
+            "total_tokens": 39,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -111,9 +111,9 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_7f8eb7d1f9"
         }
-  recorded_at: Sun, 02 Nov 2025 20:02:43 GMT
+  recorded_at: Fri, 09 Jan 2026 14:11:42 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -121,9 +121,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Who is
         the creator of the programming language Ruby?"},{"role":"assistant","content":"The
-        programming language Ruby was created by Yukihiro Matsumoto, also known as
-        \"Matz,\" in the mid-1990s."},{"role":"user","content":"What year did he create
-        Ruby?"}],"stream":false}'
+        programming language Ruby was created by Yukihiro Matsumoto, often referred
+        to as \"Matz.\""},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -141,7 +140,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:02:44 GMT
+      - Fri, 09 Jan 2026 14:11:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -153,13 +152,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '382'
+      - '308'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '405'
+      - '325'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -167,11 +166,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199949'
+      - '199952'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 15ms
+      - 14ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -195,9 +194,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXYZfuRDsnFAJ8KyD2PgKAWzbbCCP",
+          "id": "chatcmpl-Cw7VGNX23XTguA6fkVHoElGI2AMpD",
           "object": "chat.completion",
-          "created": 1762113763,
+          "created": 1767967902,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -213,9 +212,9 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 61,
+            "prompt_tokens": 54,
             "completion_tokens": 21,
-            "total_tokens": 82,
+            "total_tokens": 75,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -228,7 +227,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": "fp_7f8eb7d1f9"
         }
-  recorded_at: Sun, 02 Nov 2025 20:02:44 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:11:43 GMT
+recorded_with: VCR 6.4.0
