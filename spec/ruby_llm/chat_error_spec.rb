@@ -33,8 +33,9 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
+        let(:chat) { RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists) }
 
         before do
           # Sabotage the API key after initialization
@@ -68,8 +69,9 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
+        let(:chat) { RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists) }
 
         it 'handles context length exceeded errors' do
           if RubyLLM::Provider.providers[provider]&.local?

@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1365'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 2285d0e1-3825-4faa-8f07-67b11c38d434
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '247'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249974'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:06:55 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"The
+        creator of the programming language **Ruby** is **Yukihiro Matsumoto**, who
+        is often known as **\"Matz\"**. He released the first version of Ruby in 1995.","refusal":null,"role":"assistant"}}],"created":1765573615,"id":"chatcmpl-Cm4djNZTQU0H9vYTbj0EZACBe9Pi9","model":"gpt-4.1-2025-04-14","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":44,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":17,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":61}}
+
+        '
+  recorded_at: Fri, 12 Dec 2025 21:06:56 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the programming language **Ruby** is **Yukihiro Matsumoto**, who
+        is often known as **\"Matz\"**. He released the first version of Ruby in 1995."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1251'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 0c6a1074-ff30-4ab0-ba4a-64b6b5b21bb8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '246'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249912'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:06:56 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"Yukihiro
+        Matsumoto created Ruby in **1995**.","refusal":null,"role":"assistant"}}],"created":1765573616,"id":"chatcmpl-Cm4dkydfWIptSfmnqpm8K6JNN9fGQ","model":"gpt-4.1-2025-04-14","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":16,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":75,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":91}}
+
+        '
+  recorded_at: Fri, 12 Dec 2025 21:06:57 GMT
+recorded_with: VCR 6.3.1

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 CHAT_MODELS = [
+  { provider: :azure_openai, model: 'gpt-4.1', assume_model_exists: true },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-3-5-haiku' },
   { provider: :deepseek, model: 'deepseek-chat' },
@@ -45,6 +46,7 @@ AUDIO_MODELS = [
 ].freeze
 
 EMBEDDING_MODELS = [
+  { provider: :azure_openai, model: 'text-embedding-3-small', assume_model_exists: true },
   { provider: :gemini, model: 'text-embedding-004' },
   { provider: :openai, model: 'text-embedding-3-small' },
   { provider: :mistral, model: 'mistral-embed' },

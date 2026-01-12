@@ -16,6 +16,7 @@ loader.inflector.inflect(
   'ruby_llm' => 'RubyLLM',
   'llm' => 'LLM',
   'openai' => 'OpenAI',
+  'azure_openai' => 'AzureOpenAI',
   'api' => 'API',
   'deepseek' => 'DeepSeek',
   'perplexity' => 'Perplexity',
@@ -100,6 +101,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
+RubyLLM::Provider.register :azure_openai, RubyLLM::Providers::AzureOpenAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

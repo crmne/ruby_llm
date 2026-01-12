@@ -25,8 +25,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
+      assume_exists = model_info[:assume_model_exists] || false
       it "#{provider}/#{model} can understand text" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
         response = chat.ask("What's in this file?", with: text_path)
 
         expect(response.content).to be_present
@@ -45,7 +46,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       end
 
       it "#{provider}/#{model} can understand remote text" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: model, provider: provider, assume_model_exists: assume_exists)
         response = chat.ask("What's in this file?", with: text_url)
 
         expect(response.content).to be_present

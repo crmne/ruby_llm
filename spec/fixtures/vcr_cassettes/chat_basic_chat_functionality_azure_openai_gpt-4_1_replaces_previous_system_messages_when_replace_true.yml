@@ -1,0 +1,138 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"developer","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1814'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 7d54ec3e-279a-40bb-ac45-1282a8402b2e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '244'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249860'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:06:59 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImFubm90YXRpb25zIjpbXSwiY29udGVudCI6IlN1cmUhIFRoZSB3ZWF0aGVyIHJlZmVycyB0byB0aGUgZGF5LXRvLWRheSBhdG1vc3BoZXJpYyBjb25kaXRpb25zIGluIGEgcGFydGljdWxhciBwbGFjZSwgaW5jbHVkaW5nIGZhY3RvcnMgbGlrZSB0ZW1wZXJhdHVyZSwgaHVtaWRpdHksIHByZWNpcGl0YXRpb24sIHdpbmQgc3BlZWQsIGFuZCB2aXNpYmlsaXR5LiBJdCBjYW4gY2hhbmdlIHJhcGlkbHkgYW5kIGlzIGluZmx1ZW5jZWQgYnkgdmFyaW91cyBuYXR1cmFsIHBoZW5vbWVuYSBzdWNoIGFzIGFpciBwcmVzc3VyZSBzeXN0ZW1zLCBvY2VhbiBjdXJyZW50cywgYW5kIGdlb2dyYXBoaWMgZmVhdHVyZXMuXG5cbklmIHlvdSB3YW50IHRvIGtub3cgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgeW91ciBsb2NhdGlvbiwgeW91IGNhbiBjaGVjayBhIHdlYXRoZXIgYXBwIG9yIHdlYnNpdGUgZm9yIHJlYWwtdGltZSB1cGRhdGVzLiBBbmQganVzdCBmb3IgZnVuLCBpZiB5b3XigJlyZSBhIGZhbiBvZiBxdWlya3kgd2VhdGhlciBjb21pY3MsIHlvdSBtaWdodCBlbmpveSBYS0NENzM5Miwgd2hpY2ggaXMgYSBwbGF5ZnVsIG5vZCB0byBob3cgdW5wcmVkaWN0YWJsZSBhbmQgZmFzY2luYXRpbmcgd2VhdGhlciBjYW4gYmUhIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjU1NzM2MTgsImlkIjoiY2hhdGNtcGwtQ200ZG1CVnRlR0p2TXVUWnV5OGx1QmI3R3hLU0UiLCJtb2RlbCI6ImdwdC00LjEtMjAyNS0wNC0xNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOTA0MWUxMGI0IiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjExOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjM1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiYXVkaW9fdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjowfSwidG90YWxfdG9rZW5zIjoxNTR9fQo=
+  recorded_at: Fri, 12 Dec 2025 21:07:00 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Tell me about
+        the weather."},{"role":"assistant","content":"Sure! The weather refers to
+        the day-to-day atmospheric conditions in a particular place, including factors
+        like temperature, humidity, precipitation, wind speed, and visibility. It
+        can change rapidly and is influenced by various natural phenomena such as
+        air pressure systems, ocean currents, and geographic features.\n\nIf you want
+        to know the current weather for your location, you can check a weather app
+        or website for real-time updates. And just for fun, if you’re a fan of quirky
+        weather comics, you might enjoy XKCD7392, which is a playful nod to how unpredictable
+        and fascinating weather can be!"},{"role":"developer","content":"You must
+        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1971'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 8f72bf88-f0b4-4a07-bff3-d4286a21e35c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '243'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249674'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:07:01 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImFubm90YXRpb25zIjpbXSwiY29udGVudCI6IkFic29sdXRlbHkhIFRoZXJlIGFyZSBtYW55IGdyZWF0IGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzLiBIZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbjEuICoqRmljdGlvbjoqKiAgXG4gICAtICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUgIFxuICAgLSAqMTk4NCogYnkgR2VvcmdlIE9yd2VsbCAgXG4gICAtICpUaGUgR3JlYXQgR2F0c2J5KiBieSBGLiBTY290dCBGaXR6Z2VyYWxkICBcblxuMi4gKipOb24tRmljdGlvbjoqKiAgXG4gICAtICpTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiBieSBZdXZhbCBOb2FoIEhhcmFyaSAgXG4gICAtICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlciAgXG4gICAtICpCZWNvbWluZyogYnkgTWljaGVsbGUgT2JhbWEgIFxuXG4zLiAqKlNjaWVuY2UgRmljdGlvbiBcdTAwMjYgRmFudGFzeToqKiAgXG4gICAtICpEdW5lKiBieSBGcmFuayBIZXJiZXJ0ICBcbiAgIC0gKlRoZSBIb2JiaXQqIGJ5IEouUi5SLiBUb2xraWVuICBcbiAgIC0gKlRoZSBMZWZ0IEhhbmQgb2YgRGFya25lc3MqIGJ5IFVyc3VsYSBLLiBMZSBHdWluICBcblxuSWYgeW914oCZcmUgbG9va2luZyBmb3Igc29tZXRoaW5nIHVuaXF1ZSwgdHJ5IHNlYXJjaGluZyBmb3IgYm9va3Mgd2l0aCB1bnVzdWFsIHRpdGxlc+KAlHNvbWV0aW1lcyB5b3XigJlsbCBmaW5kIGhpZGRlbiBnZW1zIHdpdGggbmFtZXMgYXMgbWVtb3JhYmxlIGFzIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIhIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjU1NzM2MjAsImlkIjoiY2hhdGNtcGwtQ200ZG9UU1NwZHJpeEJ4dXNTTEVZck14WEdMNFMiLCJtb2RlbCI6ImdwdC00LjEtMjAyNS0wNC0xNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOTA0MWUxMGI0IiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE5NywiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sInByb21wdF90b2tlbnMiOjE3MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImF1ZGlvX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6MH0sInRvdGFsX3Rva2VucyI6MzY3fX0K
+  recorded_at: Fri, 12 Dec 2025 21:07:02 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,148 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Count from
+        1 to 3"}],"stream":true,"temperature":0.0,"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Apim-Request-Id:
+      - ed95c146-a7a2-4899-8f0f-96befef2a35e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '239'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249656'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:07:16 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"choices":[],"created":0,"id":"","model":"","object":"","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}]}
+
+        data: {"choices":[{"content_filter_results":{},"delta":{"content":"","refusal":null,"role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"1gGjpS","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"delta":{"content":"1"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"OTMRenu","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"delta":{"content":"  \n"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"wvfX","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"delta":{"content":"2"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"JZrRNF3","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"delta":{"content":"  \n"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"ywET","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"delta":{"content":"3"},"finish_reason":null,"index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"6wr1Ydi","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[{"content_filter_results":{},"delta":{},"finish_reason":"stop","index":0,"logprobs":null}],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"Cq","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":null}
+
+        data: {"choices":[],"created":1765573636,"id":"chatcmpl-Cm4e4zfj5IPc1jhBkntjTN9Hlkaqk","model":"gpt-4.1-2025-04-14","obfuscation":"pkt85MJ4","object":"chat.completion.chunk","system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":6,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":14,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":20}}
+
+        data: [DONE]
+
+  recorded_at: Fri, 12 Dec 2025 21:07:16 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":"Count from
+        1 to 3"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1217'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - eb896af0-f679-4462-aa60-ef85178ad422
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '238'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249651'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:07:17 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"1  \n2  \n3","refusal":null,"role":"assistant"}}],"created":1765573637,"id":"chatcmpl-Cm4e5ejSK2pOJwKVEizpvSazPMYOo","model":"gpt-4.1-2025-04-14","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":6,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":14,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":20}}
+
+        '
+  recorded_at: Fri, 12 Dec 2025 21:07:17 GMT
+recorded_with: VCR 6.3.1
+...

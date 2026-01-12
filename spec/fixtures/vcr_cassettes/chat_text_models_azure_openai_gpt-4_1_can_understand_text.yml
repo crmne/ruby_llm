@@ -1,0 +1,137 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1274'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - e684d5a8-69cd-4f38-8b78-7752f45dd73c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '224'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '246175'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:08:17 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"The
+        file ruby.txt contains the following text:\n\nRuby is the best.","refusal":null,"role":"assistant"}}],"created":1765573697,"id":"chatcmpl-Cm4f32vbWdQFbHZeWTTa5nguSS1yb","model":"gpt-4.1-2025-04-14","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":15,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":31,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":46}}
+
+        '
+  recorded_at: Fri, 12 Dec 2025 21:08:17 GMT
+- request:
+    method: post
+    uri: "<AZURE_OPENAI_API_BASE>/openai/deployments/gpt-4.1/chat/completions?api-version=<AZURE_OPENAI_API_VERSION>"
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4.1","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":"The file ruby.txt contains
+        the following text:\n\nRuby is the best."},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <AZURE_OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1318'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - f466e333-07aa-4f01-8ad5-46b278cbe823
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - East US
+      X-Ratelimit-Remaining-Requests:
+      - '224'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '246111'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d027-20251208220348
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - Not-Set
+      X-Ms-Deployment-Name:
+      - gpt-4.1
+      Date:
+      - Fri, 12 Dec 2025 21:08:18 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"The
+        file ruby.xml contains the following XML content:\n\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e","refusal":null,"role":"assistant"}}],"created":1765573697,"id":"chatcmpl-Cm4f3H74SwFCDAwcsYcNKjVpIxUSd","model":"gpt-4.1-2025-04-14","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":"fp_b9041e10b4","usage":{"completion_tokens":23,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"prompt_tokens":83,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":106}}
+
+        '
+  recorded_at: Fri, 12 Dec 2025 21:08:18 GMT
+recorded_with: VCR 6.3.1

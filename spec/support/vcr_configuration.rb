@@ -30,6 +30,10 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GPUSTACK_API_BASE>') { ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1') }
   config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', nil) }
 
+  config.filter_sensitive_data('<AZURE_OPENAI_API_KEY>') { ENV.fetch('AZURE_OPENAI_API_KEY', nil) }
+  config.filter_sensitive_data('<AZURE_OPENAI_API_BASE>') { ENV.fetch('AZURE_OPENAI_API_BASE', nil) }
+  config.filter_sensitive_data('<AZURE_OPENAI_API_VERSION>') { ENV.fetch('AZURE_OPENAI_API_VERSION', nil) }
+
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
   config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }

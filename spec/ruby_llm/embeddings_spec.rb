@@ -13,8 +13,9 @@ RSpec.describe RubyLLM::Embedding do
     EMBEDDING_MODELS.each do |config|
       provider = config[:provider]
       model = config[:model]
+      assume_exists = config[:assume_model_exists] || false
       it "#{provider}/#{model} can handle a single text" do
-        embedding = RubyLLM.embed(test_text, model: model, provider: provider)
+        embedding = RubyLLM.embed(test_text, model: model, provider: provider, assume_model_exists: assume_exists)
         expect(embedding.vectors).to be_an(Array)
         expect(embedding.vectors.first).to be_a(Float)
         expect(embedding.model).to eq(model)
@@ -24,13 +25,15 @@ RSpec.describe RubyLLM::Embedding do
       it "#{provider}/#{model} can handle a single text with custom dimensions" do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
 
-        embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: test_dimensions)
+        embedding = RubyLLM.embed(test_text,
+                                  model: model, provider: provider, dimensions: test_dimensions,
+                                  assume_model_exists: assume_exists)
         expect(embedding.vectors).to be_an(Array)
         expect(embedding.vectors.length).to eq(test_dimensions)
       end
 
       it "#{provider}/#{model} can handle multiple texts" do
-        embeddings = RubyLLM.embed(test_texts, model: model)
+        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, assume_model_exists: assume_exists)
         expect(embeddings.vectors).to be_an(Array)
         expect(embeddings.vectors.size).to eq(3)
         expect(embeddings.vectors.first).to be_an(Array)
@@ -41,7 +44,9 @@ RSpec.describe RubyLLM::Embedding do
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
 
-        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: test_dimensions)
+        embeddings = RubyLLM.embed(test_texts,
+                                   model: model, provider: provider, dimensions: test_dimensions,
+                                   assume_model_exists: assume_exists)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|
           expect(vector.length).to eq(test_dimensions)
@@ -49,7 +54,8 @@ RSpec.describe RubyLLM::Embedding do
       end
 
       it "#{provider}/#{model} handles single-string arrays consistently" do
-        embeddings = RubyLLM.embed(['Ruby is great'], model: model, provider: provider)
+        embeddings = RubyLLM.embed(['Ruby is great'],
+                                   model: model, provider: provider, assume_model_exists: assume_exists)
         expect(embeddings.vectors).to be_an(Array)
         expect(embeddings.vectors.size).to eq(1)
         expect(embeddings.vectors.first).to be_an(Array)
