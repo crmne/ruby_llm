@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 03 Nov 2025 14:05:08 GMT
+      - Fri, 09 Jan 2026 14:23:57 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 14:05:08 GMT
+  recorded_at: Fri, 09 Jan 2026 14:23:57 GMT
 - request:
     method: post
     uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 14:05:12 GMT
+      - Fri, 09 Jan 2026 14:23:59 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Whoop."
+                    "text": "gregory"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -6.7658443450927734
+              "avgLogprobs": -4.0936975479125977
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 44,
+            "promptTokenCount": 69,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 69,
+            "totalTokenCount": 97,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -130,7 +130,7 @@ http_interactions:
               },
               {
                 "modality": "AUDIO",
-                "tokenCount": 25
+                "tokenCount": 50
               }
             ],
             "candidatesTokensDetails": [
@@ -139,11 +139,11 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 22
+            "thoughtsTokenCount": 25
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T14:05:09.033052Z",
-          "responseId": "lbYIaZyCAqKhmPUP17XSmAw"
+          "createTime": "2026-01-09T14:23:57.352170Z",
+          "responseId": "fQ9haaq_FcOR6APR7uehBw"
         }
-  recorded_at: Mon, 03 Nov 2025 14:05:12 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 09 Jan 2026 14:23:59 GMT
+recorded_with: VCR 6.4.0

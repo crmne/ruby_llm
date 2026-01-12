@@ -82,7 +82,8 @@ RSpec.describe RubyLLM::Models do
   describe 'refresh models output structure' do
     before do
       # Mock the API responses to ensure consistent test results
-      allow(described_class).to receive_messages(fetch_from_providers: mock_provider_models, fetch_from_parsera: [])
+      allow(described_class).to receive_messages(fetch_from_providers: mock_provider_models,
+                                                 fetch_from_models_dev: [])
     end
 
     let(:mock_provider_models) do
