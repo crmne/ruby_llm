@@ -65,7 +65,7 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
-  # AWS Bedrock (uses standard AWS credential chain if not set)
+  # AWS Bedrock - Static credentials
   config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
@@ -89,6 +89,37 @@ end
 ```
 
 These headers are optional and only needed for organization-specific billing or project tracking.
+
+### AWS Bedrock Credential Provider
+
+For dynamic credential management (IAM roles, assume role, credential
+rotation), use an AWS SDK credential provider instead of static keys:
+
+```ruby
+require 'aws-sdk-core'
+
+RubyLLM.configure do |config|
+  config.bedrock_region = 'us-east-1'  # Required
+
+  # Use EC2 instance profile or ECS task role
+  config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new
+
+  # Or assume a role
+  config.bedrock_credential_provider = Aws::AssumeRoleCredentials.new(
+    role_arn: 'arn:aws:iam::123456789012:role/MyBedrockRole',
+    role_session_name: 'ruby-llm-session'
+  )
+
+  # Or use shared credentials from ~/.aws/credentials
+  config.bedrock_credential_provider = Aws::SharedCredentials.new(
+    profile_name: 'my-profile'
+  )
+end
+```
+
+When `bedrock_credential_provider` is set, it takes precedence over static
+credentials (`bedrock_api_key`, `bedrock_secret_key`, `bedrock_session_token`).
+The provider handles credential refresh automatically.
 
 ## Custom Endpoints
 
@@ -405,6 +436,7 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = String
   config.bedrock_region = String
   config.bedrock_session_token = String
+  config.bedrock_credential_provider = Object  # Aws::CredentialProvider
 
   # Default Models
   config.default_model = String
