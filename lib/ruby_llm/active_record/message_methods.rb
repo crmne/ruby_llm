@@ -14,10 +14,7 @@ module RubyLLM
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content,
-          thinking: RubyLLM::Thinking.build(
-            text: thinking_text_value,
-            signature: thinking_signature_value
-          ),
+          thinking: thinking,
           tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
