@@ -27,15 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 15:56:02 GMT
-      - Fri, 09 Jan 2026 15:56:02 GMT
+      - Tue, 13 Jan 2026 15:44:27 GMT
+      - Tue, 13 Jan 2026 15:44:27 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1626'
+      - '1467'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -47,16 +47,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
-        the user wants me to call the any_of_params function for a task called \"Review
-        PR\" with status \"pending\". Let me check the function''s parameters.\n\nThe
-        function requires \"task\" and \"status\". The task is given as \"Review PR\".
-        The status has an enum of \"pending\" or \"done\", and it can also be null.
-        Since the user specified \"pending\", that''s valid. \n\nI need to structure
-        the JSON arguments with task and status. The function''s parameters are strict,
-        so I must include both. No other parameters are allowed. \n\nSo the tool call
-        should have name \"any_of_params\" and arguments { \"task\": \"Review PR\",
-        \"status\": \"pending\" }. That should work. Let me make sure there''s no
-        typo. Yep, looks good. No need for explanations, just the tool call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call-6S7t4EBLlVE9IwEx245y1gBNi5yRF4cV","type":"function"}]}}],"created":1767974164,"id":"chatcmpl-WdGEWi6K23QAH6uOnUDhO8WJuSjTaQk2","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":205,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":176,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5253.623188405797,"time_per_output_token_ms":8.283990243902439,"time_to_first_token_ms":49.68,"tokens_per_second":120.71477277946646,"total_tokens":466}}'
-  recorded_at: Fri, 09 Jan 2026 15:56:04 GMT
+        let''s see. The user wants me to call the any_of_params function for a task
+        called \"Review PR\" with status \"pending\". First, I need to check the function''s
+        parameters. The function requires both ''task'' and ''status''. The ''status''
+        can be either \"pending\", \"done\", or null. Since the user provided \"pending\",
+        that''s valid. The task is \"Review PR\", which is a string. So I should structure
+        the JSON with these values. Make sure to use the exact parameter names and
+        correct enum values. No need for extra fields. Just pass task and status as
+        specified. Let me format that into the tool_call JSON.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call-mrg0eQn1rAKluWktaNwhOP1JNYbWgmXp","type":"function"}]}}],"created":1768319069,"id":"chatcmpl-NOaAL18KpoasRaQGavF0RKCjWwQpFIYI","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":169,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":140,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5073.576579903972,"time_per_output_token_ms":8.538402366863906,"time_to_first_token_ms":51.443,"tokens_per_second":117.11792874517495,"total_tokens":430}}'
+  recorded_at: Tue, 13 Jan 2026 15:44:29 GMT
 recorded_with: VCR 6.4.0

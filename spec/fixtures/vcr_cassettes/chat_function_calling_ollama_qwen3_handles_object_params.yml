@@ -28,20 +28,20 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 09 Jan 2026 16:04:48 GMT
+      - Tue, 13 Jan 2026 15:44:47 GMT
       Content-Length:
-      - '1014'
+      - '977'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-527","object":"chat.completion","created":1767974688,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-572","object":"chat.completion","created":1768319087,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the object_params function with a window that starts
-        on 2025-01-01 and ends on 2025-01-02. Let me check the function''s parameters.
-        The function requires a \"window\" object with \"start\" and \"end\" in ISO
-        format. The dates provided are already in the correct format. So I need to
-        structure the arguments as a JSON object inside the tool_call tags. Let me
-        make sure the keys are correct and the dates are properly formatted. Everything
-        looks good. Time to include the result within the tool_call.\n","tool_calls":[{"id":"call_39bukk2d","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":204,"completion_tokens":180,"total_tokens":384}}
+        on 2025-01-01 and ends on 2025-01-02. Let me check the function''s parameters
+        again. The function requires a \"window\" object with \"start\" and \"end\"
+        as ISO strings. The dates provided are in the correct format, so I just need
+        to structure them into the parameters. I''ll make sure the keys are exactly
+        as specified and the dates are strings. Then, I''ll format the tool_call correctly
+        within the XML tags.\n","tool_calls":[{"id":"call_ho7mdkz9","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":204,"completion_tokens":175,"total_tokens":379}}
 
         '
-  recorded_at: Fri, 09 Jan 2026 16:04:47 GMT
+  recorded_at: Tue, 13 Jan 2026 15:44:47 GMT
 recorded_with: VCR 6.4.0

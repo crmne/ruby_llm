@@ -582,6 +582,21 @@ RSpec.describe RubyLLM::Chat do
 
     it 'returns sub-agent result through halt' do
       chat = RubyLLM.chat.with_tool(HandoffTool)
+      provider = chat.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'handoff',
+        arguments: { 'query' => 'Please handle this query: What is Ruby?' }
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
       response = chat.ask('Please handle this query: What is Ruby?')
 
       expect(response).to be_a(RubyLLM::Tool::Halt)
