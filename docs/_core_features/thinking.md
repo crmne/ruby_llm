@@ -74,8 +74,8 @@ chat = RubyLLM.chat(model: 'claude-opus-4.5')
   .with_thinking(effort: :medium)
 
 chat.ask("Solve this step by step: What is 127 * 43?") do |chunk|
-  print chunk.thinking&.text.to_s
-  print chunk.content.to_s
+  print chunk.thinking&.text
+  print chunk.content
 end
 ```
 
