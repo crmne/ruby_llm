@@ -145,7 +145,7 @@ module RubyLLM
       end
 
       def capabilities
-        raise NotImplementedError
+        nil
       end
 
       def configuration_requirements
