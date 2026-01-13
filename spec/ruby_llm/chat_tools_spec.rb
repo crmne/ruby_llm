@@ -173,7 +173,32 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+    describe 'thought signatures' do
+      [
+        { provider: :gemini, model: 'gemini-3-pro-preview' },
+        { provider: :vertexai, model: 'gemini-3-pro-preview' }
+      ].each do |model_info|
+        provider = model_info[:provider]
+        model = model_info[:model]
+
+        it "#{provider}/#{model} includes thought signatures for tool calls" do
+          supports_functions? provider, model
+
+          chat = RubyLLM.chat(model: model, provider: provider)
+                        .with_thinking(effort: :low)
+                        .with_tool(Weather)
+
+          response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+          expect(response.content).to include('15')
+
+          tool_message = chat.messages.find { |message| message.tool_calls&.any? }
+          tool_call = tool_message&.tool_calls&.values&.first # rubocop:disable Style/SafeNavigationChainLength
+          expect(tool_call&.thought_signature).to be_present
+        end
+      end
+    end
+
+    CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
       model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls

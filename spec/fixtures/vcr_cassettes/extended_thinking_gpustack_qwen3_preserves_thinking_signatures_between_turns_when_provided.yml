@@ -1,0 +1,159 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 12 Jan 2026 20:05:02 GMT
+      - Mon, 12 Jan 2026 20:05:02 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '2039'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        sum of 5 and 3 is calculated by adding the two numbers together. \n\n**Step-by-Step
+        Explanation:**\n1. Start with the number 5.\n2. Add 3 to it: $5 + 3$.\n3.
+        Count forward 3 steps from 5: $5 \\rightarrow 6 \\rightarrow 7 \\rightarrow
+        8$.\n\n**Answer:**  \n$5 + 3 = \\boxed{8}$","reasoning_content":"\nOkay, let''s
+        see. The user is asking, \"What is 5 + 3?\" Hmm, that''s a basic arithmetic
+        question. Let me think. So, adding 5 and 3. I know that when you add numbers,
+        you combine their values. So 5 plus 3... Let me count. Starting from 5, if
+        I add 3 more, that would be 5, 6, 7, 8. Wait, no. Wait, 5 plus 1 is 6, plus
+        1 is 7, plus 1 is 8. So that''s three steps. So 5 + 3 equals 8. But wait,
+        maybe I should double-check. Let me use another method. If I have 5 objects
+        and add 3 more, how many do I have in total? 5 + 3 is 8. Yeah, that makes
+        sense. Alternatively, I can think of it as 5 + 2 + 1, which is 7 + 1 = 8.
+        Or maybe using a number line. Starting at 5 and moving 3 units to the right:
+        5 to 6 is one, 6 to 7 is two, 7 to 8 is three. So that''s 8. Okay, seems consistent.
+        I don''t think there''s any trick here. The user just wants the sum of 5 and
+        3. So the answer should be 8. I should make sure there''s no alternative interpretation.
+        Like, maybe they meant something else, but the question is straightforward.
+        Yeah, 5 + 3 is definitely 8. So I can confidently say the answer is 8.\n","role":"assistant"}}],"created":1768248306,"id":"chatcmpl-DADFQXazVDKwFBRADdWzCfDsZ4r60tnG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":446,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":351,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1060.7969236889212,"time_per_output_token_ms":7.969058295964125,"time_to_first_token_ms":15.083,"tokens_per_second":125.48534128636544,"total_tokens":462}}'
+  recorded_at: Mon, 12 Jan 2026 20:05:06 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"},{"role":"assistant","content":"\n\nThe sum of 5 and 3 is calculated by
+        adding the two numbers together. \n\n**Step-by-Step Explanation:**\n1. Start
+        with the number 5.\n2. Add 3 to it: $5 + 3$.\n3. Count forward 3 steps from
+        5: $5 \\rightarrow 6 \\rightarrow 7 \\rightarrow 8$.\n\n**Answer:**  \n$5
+        + 3 = \\boxed{8}$","reasoning":"\nOkay, let''s see. The user is asking, \"What
+        is 5 + 3?\" Hmm, that''s a basic arithmetic question. Let me think. So, adding
+        5 and 3. I know that when you add numbers, you combine their values. So 5
+        plus 3... Let me count. Starting from 5, if I add 3 more, that would be 5,
+        6, 7, 8. Wait, no. Wait, 5 plus 1 is 6, plus 1 is 7, plus 1 is 8. So that''s
+        three steps. So 5 + 3 equals 8. But wait, maybe I should double-check. Let
+        me use another method. If I have 5 objects and add 3 more, how many do I have
+        in total? 5 + 3 is 8. Yeah, that makes sense. Alternatively, I can think of
+        it as 5 + 2 + 1, which is 7 + 1 = 8. Or maybe using a number line. Starting
+        at 5 and moving 3 units to the right: 5 to 6 is one, 6 to 7 is two, 7 to 8
+        is three. So that''s 8. Okay, seems consistent. I don''t think there''s any
+        trick here. The user just wants the sum of 5 and 3. So the answer should be
+        8. I should make sure there''s no alternative interpretation. Like, maybe
+        they meant something else, but the question is straightforward. Yeah, 5 +
+        3 is definitely 8. So I can confidently say the answer is 8.\n","reasoning_content":"\nOkay,
+        let''s see. The user is asking, \"What is 5 + 3?\" Hmm, that''s a basic arithmetic
+        question. Let me think. So, adding 5 and 3. I know that when you add numbers,
+        you combine their values. So 5 plus 3... Let me count. Starting from 5, if
+        I add 3 more, that would be 5, 6, 7, 8. Wait, no. Wait, 5 plus 1 is 6, plus
+        1 is 7, plus 1 is 8. So that''s three steps. So 5 + 3 equals 8. But wait,
+        maybe I should double-check. Let me use another method. If I have 5 objects
+        and add 3 more, how many do I have in total? 5 + 3 is 8. Yeah, that makes
+        sense. Alternatively, I can think of it as 5 + 2 + 1, which is 7 + 1 = 8.
+        Or maybe using a number line. Starting at 5 and moving 3 units to the right:
+        5 to 6 is one, 6 to 7 is two, 7 to 8 is three. So that''s 8. Okay, seems consistent.
+        I don''t think there''s any trick here. The user just wants the sum of 5 and
+        3. So the answer should be 8. I should make sure there''s no alternative interpretation.
+        Like, maybe they meant something else, but the question is straightforward.
+        Yeah, 5 + 3 is definitely 8. So I can confidently say the answer is 8.\n"},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 12 Jan 2026 20:05:05 GMT
+      - Mon, 12 Jan 2026 20:05:05 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1788'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nTo
+        solve the problem, we start with the result of the previous calculation:\n\n$$\n5
+        + 3 = 8\n$$\n\nNow, we multiply this result by 2:\n\n$$\n8 \\times 2 = 16\n$$\n\n**Final
+        Answer:**  \n$$\n\\boxed{16}\n$$","reasoning_content":"\nOkay, let me see.
+        The user previously asked for 5 + 3, and I answered 8. Now they want to multiply
+        that result by 2. So first, I need to take the previous answer, which is 8,
+        and multiply it by 2.\n\nLet me double-check the multiplication to make sure
+        I don''t make a mistake. 8 times 2... Well, 8 + 8 is 16. So 8 multiplied by
+        2 equals 16. \n\nWait, is there any chance I misread the question? Let me
+        confirm. The user said, \"Now multiply that by 2.\" The \"that\" refers to
+        the result of 5 + 3, which was 8. So yes, multiplying 8 by 2 gives 16. \n\nI
+        should present the answer clearly, probably in a box as before. Let me make
+        sure there are no other steps or hidden parts to this problem. The user seems
+        to be testing basic arithmetic, so the answer should be straightforward. \n\nNo,
+        there''s nothing else here. Just a simple multiplication. I think that''s
+        all. Alright, time to write the final answer.\n","role":"assistant"}}],"created":1768248309,"id":"chatcmpl-yGcuBVnbkq8nPyMa34gxA4T7WFNKsSAO","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":312,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":244,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":124,"prompt_tokens_details":{"cached_tokens":14},"prompt_tokens_per_second":3539.9240629192955,"time_per_output_token_ms":7.960685897435897,"time_to_first_token_ms":35.029,"tokens_per_second":125.6173165081285,"total_tokens":436}}'
+  recorded_at: Mon, 12 Jan 2026 20:05:09 GMT
+recorded_with: VCR 6.4.0

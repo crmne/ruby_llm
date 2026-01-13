@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Tue, 06 Jan 2026 22:18:04 GMT
+      - Sun, 11 Jan 2026 14:52:19 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"695d8a1c-9c6"
+      - W/"6963b923-9c6"
       Expires:
-      - Fri, 09 Jan 2026 10:09:04 GMT
+      - Mon, 12 Jan 2026 10:29:58 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 0CCA:2847CC:59B0FD:5BA24F:6960D167
+      - C788:3CAE0C:38FFF88:39F26DD:6964CACE
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Fri, 09 Jan 2026 14:00:49 GMT
+      - Mon, 12 Jan 2026 10:29:02 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '488'
       X-Served-By:
-      - cache-fra-etou8220078-FRA
+      - cache-fra-etou8220062-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1767967250.825723,VS0,VE2
+      - S1768213743.548249,VS0,VE106
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 1972d5c2b50a70fa61ea1024b59ce7372e0022ad
+      - 4edf4172baefb5d670943e0b0d97df900894a37d
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,13 +97,13 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 09 Jan 2026 14:00:49 GMT
+  recorded_at: Mon, 12 Jan 2026 10:29:02 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
@@ -137,19 +137,19 @@ http_interactions:
         aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
         IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
         LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"max_tokens":8192}'
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"max_tokens":8192,"anthropic_version":"bedrock-2023-05-31"}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260109T140049Z
+      - 20260112T102902Z
       X-Amz-Content-Sha256:
-      - c3066a357c457ff11fbb748c686908dc3417662b25cd101330126ed6a79a9735
+      - 424249caee0fbf8a02ffc3f27a1ce23699a75f48fe64367f06810d526f2cfb58
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260109/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1360a44426f47f6d4105dfa9884386c1e7a8dab38f5371e83a41c08fc93ab737
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260112/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d5be7621ba5bee1ee3e333cc3c2ee114e67468999088d0dc16a80127a9022c14
       Content-Type:
       - application/json
       Accept:
@@ -162,36 +162,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:00:54 GMT
+      - Mon, 12 Jan 2026 10:29:06 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1286'
+      - '1109'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b729daca-597a-4f3e-8bfd-1263e3fcce22
+      - c91b7469-4f0f-46e9-b5d8-e2d3236f047e
       X-Amzn-Bedrock-Invocation-Latency:
-      - '4346'
+      - '3821'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '196'
+      - '168'
       X-Amzn-Bedrock-Input-Token-Count:
       - '588'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01VUFB6hr3F1y8FYsw54Eb2x","type":"message","role":"assistant","content":[{"type":"text","text":"This
-        file is a license text for Ruby, the programming language. Specifically, it
-        appears to be the Ruby license (sometimes referred to as the Ruby License
-        or Ruby Distribution License), which allows for free redistribution and modification
-        of the software with certain conditions. \n\nKey points of the license include:\n-
-        Copyright by Yukihiro Matsumoto (Matz)\n- Allows redistribution and modification
-        under 2-clause BSD License or the conditions specified in this document\n-
-        Permits making copies, modifying the software, and distributing it with various
-        requirements\n- Includes disclaimers and limitations of liability\n- Allows
-        incorporation into other software\n- Specifies that scripts and library files
-        generated using Ruby do not automatically fall under Ruby''s copyright\n\nThe
-        license is similar to permissive open-source software licenses, giving users
-        significant freedom to use and distribute the software while providing some
-        protections for the original author."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":196}}'
-  recorded_at: Fri, 09 Jan 2026 14:00:54 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01QWhePY45tKBoCNPqiCymz1","type":"message","role":"assistant","content":[{"type":"text","text":"This
+        file is a license.txt file for the Ruby programming language. It details the
+        terms and conditions for redistributing and modifying Ruby software. The license
+        appears to be a custom license that has some similarities to the BSD license,
+        written by Ruby''s creator Yukihiro Matsumoto. \n\nKey points of the license
+        include:\n1. You can redistribute and modify the software with certain conditions\n2.
+        You can make copies of the source code\n3. Modifications can be made with
+        specific distribution requirements\n4. The software is provided \"as is\"
+        with no warranties\n5. Some files may have different licensing terms (referenced
+        in LEGAL file)\n\nThis is essentially a permissive open-source software license
+        that allows for wide use and modification of Ruby, with some restrictions
+        on distribution."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":168}}'
+  recorded_at: Mon, 12 Jan 2026 10:29:07 GMT
 recorded_with: VCR 6.4.0

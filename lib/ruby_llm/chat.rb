@@ -22,6 +22,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @thinking = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -64,6 +65,13 @@ module RubyLLM
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_thinking(effort: nil, budget: nil)
+      raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
+
+      @thinking = Thinking::Config.new(effort: effort, budget: budget)
       self
     end
 
@@ -130,6 +138,7 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        thinking: @thinking,
         &wrap_streaming_block(&)
       )
 

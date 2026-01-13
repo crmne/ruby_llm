@@ -44,6 +44,30 @@ Among other features:
 - [Raw Content Blocks]({% link _core_features/chat.md %}#raw-content-blocks) to pass content verbatim to an LLM, e.g. useful to enable Anthropic Prompt Caching.
 - Cached token tracking to accurately track costs given cache hits
 
+# Upgrade to 1.10
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+rails generate ruby_llm:upgrade_to_v1_10
+
+# Run migrations
+rails db:migrate
+```
+
+That's it! The generator:
+- Adds `thinking_text` and `thinking_signature` for storing extended thinking output
+- Adds `thinking_tokens` for tracking thinking token usage
+- Adds `thought_signature` to tool calls for Gemini 3 Pro function calling
+
+## What's New in 1.10
+
+Among other features:
+
+- Extended thinking support across providers with optional persistence
+- Thinking token tracking when providers report it
+
 # Upgrade to 1.7
 
 Upgrade to the DB-backed model registry for better data integrity and rich model metadata.

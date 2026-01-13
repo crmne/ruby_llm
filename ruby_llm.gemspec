@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    Upgrading from RubyLLM <= 1.8.x? Check the upgrade guide for new features and migration instructions
+    Upgrading from RubyLLM < 1.10.x? Check the upgrade guide for new features and migration instructions
     --> https://rubyllm.com/upgrading/
   MESSAGE
 

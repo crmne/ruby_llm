@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 12 Jan 2026 21:40:15 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 98973fe5e3255c12a21b42891e03c5a5
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 bb72e3b71c64099edd81bafe5ceefcf2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - ZcsCW0X5P1HJyNd6TOgT2mEQ2C6J5vV0seYow6TBjlnAQ51AHNheWA==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"0a16a682-8a4d-4558-a1eb-4b5096ef5887","object":"chat.completion","created":1768254015,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 = 8.","reasoning_content":"We are asked: \"What is 5 + 3?\" This is a
+        simple arithmetic question. The answer is 8. We should respond directly and
+        clearly."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":42,"total_tokens":54,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":33},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Mon, 12 Jan 2026 21:40:17 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8.","reasoning":"We are
+        asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
+        is 8. We should respond directly and clearly.","reasoning_content":"We are
+        asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
+        is 8. We should respond directly and clearly."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 12 Jan 2026 21:40:17 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 38577461e58e872cfa24bf23fad3c3b2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 e1f830ecc47fb90176664a66bea2c9de.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P3
+      X-Amz-Cf-Id:
+      - bDTpT81iwLBqxQfozRm6Ad6YZYT1zCaW-PtVzqNXYtEMMBeFbh0lOw==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjI2NGE1MGI1LTc3NWUtNDU4OC04OGYwLThkZDIyZmM5MjMwYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgyNTQwMTcsIm1vZGVsIjoiZGVlcHNlZWstcmVhc29uZXIiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IllvdSBzYWlkICoqXCJ0aGF0XCIqKiByZWZlcnMgdG8gOCwgc286XG5cblxcW1xuOCBcXHRpbWVzIDIgPSAxNlxuXFxdIiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyLlwiIExldCBtZSBzdGFydCBieSByZWNhbGxpbmcgdGhlIHByZXZpb3VzIGNvbnRleHQuIFRoZSBlYXJsaWVyIHF1ZXN0aW9uIHdhcyBhYm91dCA1ICsgMywgd2hpY2ggSSBhbnN3ZXJlZCBhcyA4LiBTbyBcInRoYXRcIiBoZXJlIHJlZmVycyB0byB0aGUgcmVzdWx0IG9mIHRoZSBhZGRpdGlvbi5cblxuTmV4dCwgSSBuZWVkIHRvIHBlcmZvcm0gdGhlIG11bHRpcGxpY2F0aW9uOiA4IHRpbWVzIDIuIFRoYXTigJlzIHN0cmFpZ2h0Zm9yd2FyZOKAlDggbXVsdGlwbGllZCBieSAyIGVxdWFscyAxNi4gXG5cbldhaXQsIHNob3VsZCBJIGRvdWJsZS1jaGVjaz8gWWVhaCwgOCBtdWx0aXBsaWVkIGJ5IDIgaXMgaW5kZWVkIDE2LiBObyBleHRyYSBzdGVwcyBuZWVkZWQgaGVyZSBzaW5jZSBpdOKAmXMgYSBzaW1wbGUgYXJpdGhtZXRpYyBvcGVyYXRpb24uIFxuXG5BbHJpZ2h0LCBzbyB0aGUgcmVzcG9uc2Ugc2hvdWxkIGp1c3Qgc3RhdGUgdGhlIHJlc3VsdCBjbGVhcmx5LiBObyBuZWVkIGZvciBmdXJ0aGVyIGV4cGxhbmF0aW9uIHVubGVzcyB0aGUgdXNlciBhc2tzIGZvciBpdC4gSnVzdCBjb25maXJtIHRoZSBjYWxjdWxhdGlvbiBhbmQgcHJlc2VudCB0aGUgYW5zd2VyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwLCJjb21wbGV0aW9uX3Rva2VucyI6MTc5LCJ0b3RhbF90b2tlbnMiOjIwOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjE1Mn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjMwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWFhYjhkMTE0Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Mon, 12 Jan 2026 21:40:24 GMT
+recorded_with: VCR 6.4.0

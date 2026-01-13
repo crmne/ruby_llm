@@ -137,8 +137,7 @@ module StreamingErrorHelpers
     vertexai: {
       url: lambda {
         project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
-        location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
-        "https://#{location}-aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/#{location}/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
+        "https://aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/global/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
       },
       error_response: {
         error: {

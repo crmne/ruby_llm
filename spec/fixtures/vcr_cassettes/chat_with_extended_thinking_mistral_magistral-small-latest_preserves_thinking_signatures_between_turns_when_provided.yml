@@ -1,0 +1,166 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 12 Jan 2026 21:41:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019bb428-7e75-7603-a2be-b2be180a9733'
+      X-Kong-Request-Id:
+      - '019bb428-7e75-7603-a2be-b2be180a9733'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '75000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '71897'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '50000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '49999952752'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '87'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '97'
+      X-Envoy-Upstream-Service-Time:
+      - '624'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '625'
+      X-Kong-Proxy-Latency:
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"e971132e65b8428a9d641920e5d50cbe","created":1768254111,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":87,"completion_tokens":76},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        question is asking for the sum of 5 and 3. Let me recall the basic addition
+        facts. 5 plus 3 is the same as 3 plus 5, and I remember that 5 + 3 equals
+        8.\n\nNow, to present the answer clearly, I''ll write it in a simple format."}]},{"type":"text","text":"The
+        answer is 8."}]}}]}'
+  recorded_at: Mon, 12 Jan 2026 21:41:52 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        question is asking for the sum of 5 and 3. Let me recall the basic addition
+        facts. 5 plus 3 is the same as 3 plus 5, and I remember that 5 + 3 equals
+        8.\n\nNow, to present the answer clearly, I''ll write it in a simple format."}]},{"type":"text","text":"The
+        answer is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 12 Jan 2026 21:41:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019bb428-81bb-7a65-8379-f6bc1bb20227'
+      X-Kong-Request-Id:
+      - '019bb428-81bb-7a65-8379-f6bc1bb20227'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '75000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '71742'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '50000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '49999952597'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '155'
+      X-Ratelimit-Limit-Req-Minute:
+      - '100'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '96'
+      X-Envoy-Upstream-Service-Time:
+      - '434'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '435'
+      X-Kong-Proxy-Latency:
+      - '9'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ac077316a6e0492aa4b9b5790813d2f6","created":1768254112,"model":"magistral-small-latest","usage":{"prompt_tokens":95,"total_tokens":155,"completion_tokens":60},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
+        the previous answer was 8. Now we need to multiply that by 2. Let me recall
+        that 8 times 2 is 16.\n\nNow, to present the answer clearly, I''ll write it
+        in a simple format."}]},{"type":"text","text":"The answer is 16."}]}}]}'
+  recorded_at: Mon, 12 Jan 2026 21:41:52 GMT
+recorded_with: VCR 6.4.0

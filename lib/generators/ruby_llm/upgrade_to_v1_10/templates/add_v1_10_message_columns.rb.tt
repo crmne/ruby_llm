@@ -1,0 +1,19 @@
+class AddRubyLlmV110Columns < ActiveRecord::Migration<%= migration_version %>
+  def change
+    unless column_exists?(:<%= message_table_name %>, :thinking_text)
+      add_column :<%= message_table_name %>, :thinking_text, :text
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :thinking_signature)
+      add_column :<%= message_table_name %>, :thinking_signature, :text
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :thinking_tokens)
+      add_column :<%= message_table_name %>, :thinking_tokens, :integer
+    end
+
+    unless column_exists?(:<%= tool_call_table_name %>, :thought_signature)
+      add_column :<%= tool_call_table_name %>, :thought_signature, :string
+    end
+  end
+end
