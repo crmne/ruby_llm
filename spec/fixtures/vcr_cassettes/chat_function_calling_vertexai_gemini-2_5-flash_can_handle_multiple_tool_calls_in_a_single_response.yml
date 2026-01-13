@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Fri, 09 Jan 2026 14:17:43 GMT
+      - Mon, 12 Jan 2026 10:38:29 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 09 Jan 2026 14:17:43 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:29 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:17:43 GMT
+      - Mon, 12 Jan 2026 10:38:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,18 +116,18 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CtABAY89a1+Pcy9RtAa3lBm81MIHH5uaJk7QkQeSOr/epo+g4+C8o0uNR5YfOrUJU4RkksOvyJmXtXTplbqDPzbpWUWv16csYjrNbkfV8xbYbrGJ1PW97JcXiVBq3L1FuIb+0caLFVUlIdA6lCQKcK2m4DIfK9SQRim1Tfw8+wrEroXzWpyNTBMO3Tlkgznj4O83MJ8Vyswf+nxoBf78Qw5wx9kFiu80uoDRheFJ/Zdu0jRmqh85GdMSMOUZ+op18Z+KTo1Mu/Wer6H/HNRLo9jwQA=="
+                    "thoughtSignature": "CpoBAY89a1+cOEs4hqXMktwKniPi9YJMO8freouX44rZ0V45LoH0kSnaTnst5NtGdUsQhlxUjOKH6ROOtvMjs8kjjy0cX6vJSaipYPmCwvcTL2rFn5de0b+BJjY6ZK7hQKn2Ch4Ya1dOhWBBGFPqn1rdypLU6gbIc1i/yngY4puOhjY2B+ywqb5GBsKejnBOidz6ZQzvOM0PAOEs2g=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -3.2457955678304038
+              "avgLogprobs": -1.8978743553161621
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 42,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 89,
+            "totalTokenCount": 75,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,16 +141,16 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 44
+            "thoughtsTokenCount": 30
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:17:43.415681Z",
-          "responseId": "Bw5hacGvGYmZmPUPrqj1wQg"
+          "createTime": "2026-01-12T10:38:29.602337Z",
+          "responseId": "Jc9kaeHhJIGE2fMPyIreyA0"
         }
-  recorded_at: Fri, 09 Jan 2026 14:17:43 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:30 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -181,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:17:44 GMT
+      - Mon, 12 Jan 2026 10:38:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -208,18 +208,18 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CrABAY89a1+x9ShYAUeXVU92WrNvnYs7N63VVr55et9nM7Mynj5y2ry5FrWuJ5WC3zKsqJFe0W1OCrPtXunp2F/zf7Ox0HvnkVG9tOuf6f+rxlx97daCfqH7+ppZM37uu53vDugLNbMaqXB/Obb4PBoQ0gzeRfovaHT+2tXQDgIX+D3vu+TORZ7gIa+6z+49mnS5/NUtTXyjHh/7IgCas/Tw3+wndSxV0fGgf+mTvah0hbo="
+                    "thoughtSignature": "CpABAY89a19xrKf44dOv+Oq8vv221wxcstOR0Cg6IB+EGxlaDu/8K6L44UllAUmGWRSLml1AFofSUWy+1xkvk2oLXkJVLxfoOUX24RdSM0eMH1NVEU2/YigYjORxDat0s5N+0kaEiwQULb7UQWWiRDFn4QBr56u63+YoVbkUEWYU35sCjypgMJjvZAhHvlXNm6/U"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -2.0135529836018882
+              "avgLogprobs": -1.0614644686381023
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 60,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 101,
+            "totalTokenCount": 91,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -233,16 +233,16 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 38
+            "thoughtsTokenCount": 28
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:17:44.119705Z",
-          "responseId": "CA5haZmnB6iKvdIP7-e-0A8"
+          "createTime": "2026-01-12T10:38:30.380415Z",
+          "responseId": "Js9kaf-bF-LImLAPo9W3GA"
         }
-  recorded_at: Fri, 09 Jan 2026 14:17:44 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:30 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -274,7 +274,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:17:45 GMT
+      - Mon, 12 Jan 2026 10:38:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -300,18 +300,19 @@ http_interactions:
                     "functionCall": {
                       "name": "dice_roll",
                       "args": {}
-                    }
+                    },
+                    "thoughtSignature": "Co0BAY89a19FV+df0msgAlQVjV9iM9WKd1Q583d4LgBw2QRX5bh5HKB7NQ3Uqkg5zviIOqIjquzw2+Bo2nkfR9FbrpnKoCSHwP/Q6l+sU5kA32qItmR616BBVSwFoDoFjfHNKJPw4JPx5ZcJf7beFE6DnYEbNTEKqiC24H/P5ym0CazM/1GKXGgixSmAVyNb"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -9.8400198618570958
+              "avgLogprobs": -0.83807428677876794
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 78,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 131,
+            "totalTokenCount": 109,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -325,16 +326,16 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 50
+            "thoughtsTokenCount": 28
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:17:44.997771Z",
-          "responseId": "CA5haYvzPN_XxN8P2fCzgAs"
+          "createTime": "2026-01-12T10:38:30.888034Z",
+          "responseId": "Js9kaeKZNrWNkbwP0MO5iQ0"
         }
-  recorded_at: Fri, 09 Jan 2026 14:17:45 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:31 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -367,7 +368,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:17:46 GMT
+      - Mon, 12 Jan 2026 10:38:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -390,19 +391,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I rolled the dice three times. Your rolls are: 1, 2, and 3.",
-                    "thoughtSignature": "CtMBAY89a1/s94Y2lMkqR2815/AAXW4iLQdGg7olkuheFmQ2v2bnLgbdBzW8HMdXrVEDZEZDCO1oDguuOejdFqmN1arDIatDqmPpxgBVqFI0I8/xQ44tSi4ucNogA+C3pPeAy8JwXtWs9cYlLct4z31E1I33RF2iRzuV6SG9z8nfeVnnKt3bBhFqVIV8s2SBVfzWF1bbWno0UUZSkNOK/LwFjO9ewF+DBBZbm5j3wTWTW57h8I60m+WnMvhGbxVrb1tVGnZ+O4Re2/b5ss67mXEZpGhm1w=="
+                    "text": "I rolled the dice three times and got 1, 2, and 3."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.62446203685942148
+              "avgLogprobs": -0.24395126766628689
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 96,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 167,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 114,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -413,14 +413,13 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 21
+                "tokenCount": 18
               }
-            ],
-            "thoughtsTokenCount": 50
+            ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:17:45.927411Z",
-          "responseId": "CQ5habPNOIziz_IP7MSt4Qk"
+          "createTime": "2026-01-12T10:38:31.414475Z",
+          "responseId": "J89kaYumGeLImLAPo9W3GA"
         }
-  recorded_at: Fri, 09 Jan 2026 14:17:46 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:31 GMT
 recorded_with: VCR 6.4.0

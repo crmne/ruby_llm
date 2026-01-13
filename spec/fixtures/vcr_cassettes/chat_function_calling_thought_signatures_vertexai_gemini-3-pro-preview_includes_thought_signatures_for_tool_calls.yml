@@ -1,0 +1,210 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 13 Jan 2026 11:50:33 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Tue, 13 Jan 2026 11:50:33 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 13 Jan 2026 11:50:37 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "**Checking for Tools Available**\n\nI'm currently processing the user's request. I've identified the need to find a weather tool. Good news: I have a `weather` tool that seems perfect. It takes latitude and longitude, which the user helpfully provided. I'm ready to proceed with calling the weather tool now!\n\n\n",
+                    "thought": true
+                  },
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
+                      }
+                    },
+                    "thoughtSignature": "CrkDAY89a18ZjRTbBvuIrxGJyuMZjF9LyYINBXsIum5tsMjXaQRo+AM0nr/JN3Nw5a0ZzrzScyaw7H7PbbXCXtRIPpRLBlSWZSWb6+gHKlT6xPblRwTXu5jxjxZsUsgsjxlEeAmR9rEm8Pm+/yOf2mnkTWvQBqxTYcXfClZoHEMYnU8HwLRd4n2ZPBAW9hs4PJquv+dUH6vE3qL7wg0EVOSTv85SxG8Z0P5I9LR/sHJDTJ1cd+oP7kw4IRlbJJF2ooQyy9wT5ZUjlaNGpI5gUIKMNtXuBkQMeWhD7CDNaBfIX764zDkv7EvigcFva0y/VhbSVVSGNIdevUCTNJ9bXByeD+g1XYJZ/5LrbcThBSEbREDcoMeU9ztm/8awbQQdtREWvbz+QtVe+S3JT3qUUo04NP4YA8Z5wPhiTwQrA18lNlB9pyoelvgjDtA4lzj8aC3Sei0LFfJdyKvf9vCfnM2kp7Tq6EKslm3/igY2+01UatgA55FIplAXyldAEvt7Nbz6kR1c5CEAzFwqo3EIybdnzkT2SsR63Lo/B815rchuhbmb5fTlq+ZdGC1+iFxc+vjOzTAzQ3xuV69b"
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 70,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 201,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 70
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 21
+              }
+            ],
+            "thoughtsTokenCount": 110
+          },
+          "modelVersion": "gemini-3-pro-preview",
+          "createTime": "2026-01-13T11:50:33.287671Z",
+          "responseId": "iTFmabfHEaD9hcIPoPjNuA4"
+        }
+  recorded_at: Tue, 13 Jan 2026 11:50:37 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CrkDAY89a18ZjRTbBvuIrxGJyuMZjF9LyYINBXsIum5tsMjXaQRo+AM0nr/JN3Nw5a0ZzrzScyaw7H7PbbXCXtRIPpRLBlSWZSWb6+gHKlT6xPblRwTXu5jxjxZsUsgsjxlEeAmR9rEm8Pm+/yOf2mnkTWvQBqxTYcXfClZoHEMYnU8HwLRd4n2ZPBAW9hs4PJquv+dUH6vE3qL7wg0EVOSTv85SxG8Z0P5I9LR/sHJDTJ1cd+oP7kw4IRlbJJF2ooQyy9wT5ZUjlaNGpI5gUIKMNtXuBkQMeWhD7CDNaBfIX764zDkv7EvigcFva0y/VhbSVVSGNIdevUCTNJ9bXByeD+g1XYJZ/5LrbcThBSEbREDcoMeU9ztm/8awbQQdtREWvbz+QtVe+S3JT3qUUo04NP4YA8Z5wPhiTwQrA18lNlB9pyoelvgjDtA4lzj8aC3Sei0LFfJdyKvf9vCfnM2kp7Tq6EKslm3/igY2+01UatgA55FIplAXyldAEvt7Nbz6kR1c5CEAzFwqo3EIybdnzkT2SsR63Lo/B815rchuhbmb5fTlq+ZdGC1+iFxc+vjOzTAzQ3xuV69b"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 13 Jan 2026 11:50:40 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoYXQgY29vcmRpbmF0ZXMgNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC4iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTI3LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNDQsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTcxLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDEyNwogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDQKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1wcm8tcHJldmlldyIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wMS0xM1QxMTo1MDozNy41MDQ0ODRaIiwKICAicmVzcG9uc2VJZCI6ICJqVEZtYWFUbEhvYS1pQWFPajRIZ0R3Igp9Cg==
+  recorded_at: Tue, 13 Jan 2026 11:50:40 GMT
+recorded_with: VCR 6.4.0

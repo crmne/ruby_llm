@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Chat do
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         # Disable thinking mode for qwen models to avoid <think> tags in output
-        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
+        chat = chat.with_thinking(effort: :none) if model == 'qwen3'
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'

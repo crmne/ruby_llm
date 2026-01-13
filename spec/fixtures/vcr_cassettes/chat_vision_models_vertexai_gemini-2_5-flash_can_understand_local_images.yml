@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Fri, 09 Jan 2026 14:02:25 GMT
+      - Mon, 12 Jan 2026 10:35:00 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 09 Jan 2026 14:02:25 GMT
+  recorded_at: Mon, 12 Jan 2026 10:35:00 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What do you see in this
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:02:31 GMT
+      - Mon, 12 Jan 2026 10:35:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This is an image of a **stylized red ruby gemstone**.\n\nHere are some details:\n*   **Color:** It's a deep, rich red, with variations in shade due to lighting and faceting, ranging from bright crimson to darker, more shadowed areas.\n*   **Shape:** It's a faceted gemstone, meaning it has multiple flat surfaces (facets) that reflect light. The overall shape is somewhat oval or teardrop-like from the top, but cut with sharp angles.\n*   **Lighting:** There are prominent white highlights on the edges and surfaces, especially on the upper left side, giving it a shiny, polished, and three-dimensional appearance. This suggests a light source hitting it from the front-left.\n*   **Context:** This particular image is widely recognized as the **logo for the Ruby programming language**."
+                    "text": "I see a stylized **red gemstone**, specifically designed to resemble a **ruby**.\n\nHere are some details:\n*   **Color:** It's a vibrant, deep red, with gradients ranging from bright scarlet and crimson in the highlighted areas to darker, more saturated reds in the shadows.\n*   **Shape:** It's a multifaceted, irregularly shaped gem, characteristic of a cut precious stone. The top portion is somewhat rounded or oval-like, while the bottom displays distinct, angular facets (triangular and trapezoidal shapes).\n*   **Luster:** It has a highly polished and reflective surface. There are prominent bright white or very light red highlights, especially along its upper-left edge and near the center, which give it a glowing, three-dimensional appearance and suggest it's catching light.\n*   **Style:** The image is a graphic representation, likely a logo or icon, rather than a photograph of a real ruby. It has a clean, vector-like aesthetic.\n\nThis image is widely recognized as the **logo for the Ruby programming language**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.6840626109730115
+              "avgLogprobs": -2.0959279840642755
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 176,
-            "totalTokenCount": 1100,
+            "candidatesTokenCount": 220,
+            "totalTokenCount": 1365,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "IMAGE",
                 "tokenCount": 258
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 176
+                "tokenCount": 220
               }
             ],
-            "thoughtsTokenCount": 658
+            "thoughtsTokenCount": 879
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:02:26.142181Z",
-          "responseId": "cgphaeXWCMS8rNcPkKjCgQc"
+          "createTime": "2026-01-12T10:35:00.553735Z",
+          "responseId": "VM5kaYfmIdnCmLAPm-75oA4"
         }
-  recorded_at: Fri, 09 Jan 2026 14:02:31 GMT
+  recorded_at: Mon, 12 Jan 2026 10:35:08 GMT
 recorded_with: VCR 6.4.0

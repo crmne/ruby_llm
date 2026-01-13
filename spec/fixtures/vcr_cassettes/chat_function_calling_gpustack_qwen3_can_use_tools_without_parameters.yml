@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 15:55:56 GMT
-      - Fri, 09 Jan 2026 15:55:56 GMT
+      - Tue, 13 Jan 2026 15:42:18 GMT
+      - Tue, 13 Jan 2026 15:42:18 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1630'
+      - '1963'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -50,20 +50,54 @@ http_interactions:
         a function called best_language_to_learn that doesn''t require any parameters.
         Since the user is asking for the best language, this function might provide
         the answer. \n\nBut wait, the function''s description says it gets the best
-        language to learn. So if I call this function, it should return the appropriate
-        answer. Since there are no parameters needed, I can directly invoke the function
-        without any arguments. \n\nI should check if there''s any other information
-        needed, but the function doesn''t require any. So the correct step is to call
-        best_language_to_learn with empty arguments. That should give the user the
-        answer they''re looking for.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-LL8oAyPXsmSbK1C9bZQxCC2VnOCMpN7m","type":"function"}]}}],"created":1767974158,"id":"chatcmpl-kxRLgFLoSL6DV9wVRmXONnIoieGWD9xI","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":184,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":165,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5540.239635245468,"time_per_output_token_ms":8.179842391304348,"time_to_first_token_ms":37.724,"tokens_per_second":122.2517442466934,"total_tokens":393}}'
-  recorded_at: Fri, 09 Jan 2026 15:55:58 GMT
+        language to learn, so calling it makes sense. However, I should check if there
+        are any parameters needed. The parameters section shows that additionalProperties
+        is false, and there are no required properties. So the function doesn''t need
+        any arguments. \n\nI should call the function to retrieve the answer. There''s
+        no need to ask for more information since the function is designed to give
+        the best language directly. Let me make sure I''m not missing any hidden parameters
+        or requirements. The strict type is true, but since there are no required
+        parameters, it''s safe to call it without arguments.\n\nSo the correct step
+        is to invoke the best_language_to_learn function with no arguments. That should
+        give the user the answer they''re looking for.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-D6hlAxLR6R3AxtP5zZ2lSaUFxAMWA4Cz","type":"function"}]}}],"created":1768318943,"id":"chatcmpl-qFByA0TLqXqfZBS9kUaJuzj0VQEIX4wj","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":248,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":229,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4890.490453013853,"time_per_output_token_ms":17.54932258064516,"time_to_first_token_ms":42.736,"tokens_per_second":56.98225646059309,"total_tokens":457}}'
+  recorded_at: Tue, 13 Jan 2026 15:42:23 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-LL8oAyPXsmSbK1C9bZQxCC2VnOCMpN7m","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-LL8oAyPXsmSbK1C9bZQxCC2VnOCMpN7m"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-D6hlAxLR6R3AxtP5zZ2lSaUFxAMWA4Cz","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the tools available. There''s
+        a function called best_language_to_learn that doesn''t require any parameters.
+        Since the user is asking for the best language, this function might provide
+        the answer. \n\nBut wait, the function''s description says it gets the best
+        language to learn, so calling it makes sense. However, I should check if there
+        are any parameters needed. The parameters section shows that additionalProperties
+        is false, and there are no required properties. So the function doesn''t need
+        any arguments. \n\nI should call the function to retrieve the answer. There''s
+        no need to ask for more information since the function is designed to give
+        the best language directly. Let me make sure I''m not missing any hidden parameters
+        or requirements. The strict type is true, but since there are no required
+        parameters, it''s safe to call it without arguments.\n\nSo the correct step
+        is to invoke the best_language_to_learn function with no arguments. That should
+        give the user the answer they''re looking for.\n","reasoning_content":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the tools available. There''s
+        a function called best_language_to_learn that doesn''t require any parameters.
+        Since the user is asking for the best language, this function might provide
+        the answer. \n\nBut wait, the function''s description says it gets the best
+        language to learn, so calling it makes sense. However, I should check if there
+        are any parameters needed. The parameters section shows that additionalProperties
+        is false, and there are no required properties. So the function doesn''t need
+        any arguments. \n\nI should call the function to retrieve the answer. There''s
+        no need to ask for more information since the function is designed to give
+        the best language directly. Let me make sure I''m not missing any hidden parameters
+        or requirements. The strict type is true, but since there are no required
+        parameters, it''s safe to call it without arguments.\n\nSo the correct step
+        is to invoke the best_language_to_learn function with no arguments. That should
+        give the user the answer they''re looking for.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-D6hlAxLR6R3AxtP5zZ2lSaUFxAMWA4Cz"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
@@ -82,15 +116,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 15:55:57 GMT
-      - Fri, 09 Jan 2026 15:55:58 GMT
+      - Tue, 13 Jan 2026 15:42:22 GMT
+      - Tue, 13 Jan 2026 15:42:23 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1435'
+      - '1202'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -105,12 +139,10 @@ http_interactions:
         best language to learn is Ruby.","reasoning_content":"\nOkay, the user asked,
         \"What''s the best language to learn?\" I checked the available tools and
         saw there''s a function called best_language_to_learn. Since the user wants
-        the best language, I called that function. The function doesn''t require any
-        parameters, so I just triggered it. The response came back as \"Ruby\". Now
-        I need to present that answer. Wait, is Ruby really the best? I should consider
-        if there''s any context I''m missing. But according to the function''s response,
-        Ruby is the answer. Maybe the function is based on certain criteria like popularity,
-        ease of learning, or job market. Since the user didn''t specify any particular
-        goals, Ruby is the best language to learn. I''ll just state that as the answer.\n","role":"assistant"}}],"created":1767974159,"id":"chatcmpl-sb2d3pz35B72pyXJuCoMDZeO6vIgqW4k","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":167,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":156,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":14629.894789267262,"time_per_output_token_ms":8.179868263473054,"time_to_first_token_ms":16.063,"tokens_per_second":122.25135757570433,"total_tokens":402}}'
-  recorded_at: Fri, 09 Jan 2026 15:55:59 GMT
+        the best language, I should call that function. The function doesn''t require
+        any parameters, so I just need to trigger it. The response from the function
+        was \"Ruby\", so I should present that as the answer. No further steps needed
+        here. Just confirm that Ruby is the recommended language based on the function''s
+        output.\n","role":"assistant"}}],"created":1768318945,"id":"chatcmpl-tVyNo1clqESA4NdygLPeQK4kK5gtCCAD","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":114,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":103,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":7382.972038956959,"time_per_output_token_ms":17.51672807017544,"time_to_first_token_ms":31.83,"tokens_per_second":57.088287035901025,"total_tokens":349}}'
+  recorded_at: Tue, 13 Jan 2026 15:42:25 GMT
 recorded_with: VCR 6.4.0

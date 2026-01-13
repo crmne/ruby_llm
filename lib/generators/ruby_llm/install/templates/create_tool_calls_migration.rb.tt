@@ -4,6 +4,7 @@ class Create<%= tool_call_model_name.gsub('::', '').pluralize %> < ActiveRecord:
     create_table :<%= tool_call_table_name %> do |t|
       t.string :tool_call_id, null: false
       t.string :name, null: false
+      t.string :thought_signature
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
 <% elsif mysql? %>

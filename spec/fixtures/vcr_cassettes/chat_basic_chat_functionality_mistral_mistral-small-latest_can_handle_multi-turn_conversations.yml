@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:11:36 GMT
+      - Tue, 13 Jan 2026 15:39:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,114 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ba319-2e21-7130-b972-ca8852678bac'
+      - '019bb802-d99d-764a-a0b3-d50d70b63a62'
       X-Kong-Request-Id:
-      - '019ba319-2e21-7130-b972-ca8852678bac'
+      - '019bb802-d99d-764a-a0b3-d50d70b63a62'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999692'
+      - '1999736'
       X-Ratelimit-Limit-Tokens-Month:
       - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '9999996024'
+      - '9999988860'
       X-Ratelimit-Tokens-Query-Cost:
-      - '133'
+      - '124'
       X-Ratelimit-Limit-Req-60-Second:
       - '360'
       X-Ratelimit-Remaining-Req-60-Second:
       - '357'
       X-Envoy-Upstream-Service-Time:
-      - '1335'
+      - '4439'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1335'
+      - '4440'
+      X-Kong-Proxy-Latency:
+      - '14'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijg1ZDVhOWYyZmM3MzQ4NDdiYTgwMDVhYjExNWJiNGEyIiwiY3JlYXRlZCI6MTc2ODMxODc1MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzLCJ0b3RhbF90b2tlbnMiOjEyNCwiY29tcGxldGlvbl90b2tlbnMiOjExMX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3JlYXRvciBvZiB0aGUgKipSdWJ5KiogcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgaXMgKipZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8qKiwgYSBKYXBhbmVzZSBjb21wdXRlciBzY2llbnRpc3QgYW5kIHNvZnR3YXJlIHByb2dyYW1tZXIuXG5cbk1hdHogZGVzaWduZWQgUnVieSBpbiB0aGUgbWlkLTE5OTBzIHdpdGggdGhlIGdvYWwgb2YgY3JlYXRpbmcgYSBsYW5ndWFnZSB0aGF0IGJhbGFuY2VzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eSB3aGlsZSBiZWluZyBmdW4gdG8gdXNlLiBSdWJ5IGVtcGhhc2l6ZXMgZGV2ZWxvcGVyIGhhcHBpbmVzcyBhbmQgcmVhZGFiaWxpdHksIG1ha2luZyBpdCBhIHBvcHVsYXIgY2hvaWNlIGZvciB3ZWIgZGV2ZWxvcG1lbnQgKGVzcGVjaWFsbHkgd2l0aCB0aGUgKipSdWJ5IG9uIFJhaWxzKiogZnJhbWV3b3JrKS5cblxuTWF0eiByZW1haW5zIGFjdGl2ZWx5IGludm9sdmVkIGluIHRoZSBSdWJ5IGNvbW11bml0eSBhbmQgY29udGludWVzIHRvIGd1aWRlIHRoZSBldm9sdXRpb24gb2YgdGhlIGxhbmd1YWdlLiDwn5qAIn19XX0=
+  recorded_at: Tue, 13 Jan 2026 15:39:17 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"mistral-small-latest\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
+        is the creator of the programming language Ruby?\"},{\"role\":\"assistant\",\"content\":\"The
+        creator of the **Ruby** programming language is **Yukihiro \\\"Matz\\\" Matsumoto**,
+        a Japanese computer scientist and software programmer.\\n\\nMatz designed
+        Ruby in the mid-1990s with the goal of creating a language that balances simplicity
+        and productivity while being fun to use. Ruby emphasizes developer happiness
+        and readability, making it a popular choice for web development (especially
+        with the **Ruby on Rails** framework).\\n\\nMatz remains actively involved
+        in the Ruby community and continues to guide the evolution of the language.
+        \U0001F680\"},{\"role\":\"user\",\"content\":\"What year did he create Ruby?\"}],\"stream\":false}"
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jan 2026 15:39:19 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019bb802-eb8b-777e-a301-3b5b4275cb90'
+      X-Kong-Request-Id:
+      - '019bb802-eb8b-777e-a301-3b5b4275cb90'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1999502'
+      X-Ratelimit-Limit-Tokens-Month:
+      - '10000000000'
+      X-Ratelimit-Remaining-Tokens-Month:
+      - '9999988626'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '234'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '356'
+      X-Envoy-Upstream-Service-Time:
+      - '1217'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '1218'
       X-Kong-Proxy-Latency:
       - '9'
       Cf-Cache-Status:
@@ -75,92 +160,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImQ1M2UyNGEzNzg1YzRiNTVhOGUyODMyNjRmNGUzNjU2IiwiY3JlYXRlZCI6MTc2Nzk2Nzg5NSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzLCJ0b3RhbF90b2tlbnMiOjEzMywiY29tcGxldGlvbl90b2tlbnMiOjEyMH0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3JlYXRvciBvZiB0aGUgKipSdWJ5KiogcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgaXMgKipZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8qKiwgYSBKYXBhbmVzZSBjb21wdXRlciBzY2llbnRpc3QgYW5kIHNvZnR3YXJlIHByb2dyYW1tZXIuXG5cbk1hdHogZGVzaWduZWQgUnVieSBpbiB0aGUgbWlkLTE5OTBzLCB3aXRoIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSBpbiAqKjE5OTUqKi4gSGUgYWltZWQgdG8gY3JlYXRlIGEgbGFuZ3VhZ2UgdGhhdCBiYWxhbmNlcyBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkgd2hpbGUgYmVpbmcgZnVuIHRvIHVzZS4gUnVieSdzIHBoaWxvc29waHkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIGFuZCBlbGVnYW50IHN5bnRheCwgd2hpY2ggbGF0ZXIgaW5mbHVlbmNlZCB0aGUgcG9wdWxhcml0eSBvZiBmcmFtZXdvcmtzIGxpa2UgKipSdWJ5IG9uIFJhaWxzKiouXG5cbk1hdHogcmVtYWlucyBhY3RpdmVseSBpbnZvbHZlZCBpbiBSdWJ5J3MgZGV2ZWxvcG1lbnQgYW5kIGlzIGEga2V5IGZpZ3VyZSBpbiB0aGUgUnVieSBjb21tdW5pdHkuIPCfmoAifX1dfQ==
-  recorded_at: Fri, 09 Jan 2026 14:11:36 GMT
-- request:
-    method: post
-    uri: https://api.mistral.ai/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: "{\"model\":\"mistral-small-latest\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
-        is the creator of the programming language Ruby?\"},{\"role\":\"assistant\",\"content\":\"The
-        creator of the **Ruby** programming language is **Yukihiro \\\"Matz\\\" Matsumoto**,
-        a Japanese computer scientist and software programmer.\\n\\nMatz designed
-        Ruby in the mid-1990s, with the first public release in **1995**. He aimed
-        to create a language that balances simplicity and productivity while being
-        fun to use. Ruby's philosophy emphasizes developer happiness and elegant syntax,
-        which later influenced the popularity of frameworks like **Ruby on Rails**.\\n\\nMatz
-        remains actively involved in Ruby's development and is a key figure in the
-        Ruby community. \U0001F680\"},{\"role\":\"user\",\"content\":\"What year did
-        he create Ruby?\"}],\"stream\":false}"
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Authorization:
-      - Bearer <MISTRAL_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Fri, 09 Jan 2026 14:11:38 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Mistral-Correlation-Id:
-      - '019ba319-33c9-7520-9625-b3e488fb8b64'
-      X-Kong-Request-Id:
-      - '019ba319-33c9-7520-9625-b3e488fb8b64'
-      X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
-      X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999424'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999995756'
-      X-Ratelimit-Tokens-Query-Cost:
-      - '268'
-      X-Ratelimit-Limit-Req-60-Second:
-      - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
-      - '356'
-      X-Envoy-Upstream-Service-Time:
-      - '2126'
-      Access-Control-Allow-Origin:
-      - "*"
-      X-Kong-Upstream-Latency:
-      - '2127'
-      X-Kong-Proxy-Latency:
-      - '8'
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijg5NDZmZTE2MjQ3MzQ3MGVhNzUyODRlYTcyNzBkNjI4IiwiY3JlYXRlZCI6MTc2Nzk2Nzg5NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE0MiwidG90YWxfdG9rZW5zIjoyNjgsImNvbXBsZXRpb25fdG9rZW5zIjoxMjZ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqY3JlYXRlZCBSdWJ5IGluIDE5OTMqKiBhbmQgcHVibGljbHkgcmVsZWFzZWQgaXQgaW4gKioxOTk1KiouXG5cbi0gKioxOTkzKio6IE1hdHogYmVnYW4gZGV2ZWxvcGluZyBSdWJ5IGFzIGEgcGVyc29uYWwgcHJvamVjdC5cbi0gKioxOTk1Kio6IFRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSBvZiBSdWJ5ICh2ZXJzaW9uIDAuOTUpIHdhcyBhbm5vdW5jZWQgb24gKipEZWNlbWJlciAyMSwgMTk5NSoqLCBpbiBhIEphcGFuZXNlIG5ld3Nncm91cC5cblxuUnVieSdzIGRlc2lnbiB3YXMgaW5mbHVlbmNlZCBieSBsYW5ndWFnZXMgbGlrZSAqKlBlcmwsIFNtYWxsdGFsaywgTGlzcCwgYW5kIEFkYSoqLCB3aXRoIGEgZm9jdXMgb24gc2ltcGxpY2l0eSBhbmQgZGV2ZWxvcGVyIHByb2R1Y3Rpdml0eS4g8J+agCJ9fV19
-  recorded_at: Fri, 09 Jan 2026 14:11:38 GMT
+        eyJpZCI6ImM0ODZjNWJlZDlmZDQ5MTY5NzgwNWE2NzAwMjYwMzkxIiwiY3JlYXRlZCI6MTc2ODMxODc1NywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzMywidG90YWxfdG9rZW5zIjoyMzQsImNvbXBsZXRpb25fdG9rZW5zIjoxMDF9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvICoqc3RhcnRlZCBkZXZlbG9waW5nIFJ1YnkgaW4gMTk5MyoqIGFuZCAqKm9mZmljaWFsbHkgcmVsZWFzZWQgdmVyc2lvbiAwLjk1IGluIERlY2VtYmVyIDE5OTUqKi5cblxuU28sIHdoaWxlIHRoZSBpbml0aWFsIHdvcmsgYmVnYW4gaW4gKioxOTkzKiosIFJ1Ynkgd2FzIHB1YmxpY2x5IGludHJvZHVjZWQgaW4gKioxOTk1KiouXG5cbkZ1biBmYWN0OiBNYXR6IGhhcyBzYWlkIGhlIHdhbnRlZCBhIGxhbmd1YWdlIHRoYXQgd2FzIG1vcmUgKipwcm9kdWN0aXZlIGFuZCBlbmpveWFibGUqKiB0aGFuIFBlcmwsIHdoaWNoIHdhcyBwb3B1bGFyIGF0IHRoZSB0aW1lLiDwn5iKIn19XX0=
+  recorded_at: Tue, 13 Jan 2026 15:39:18 GMT
 recorded_with: VCR 6.4.0

@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 15:56:00 GMT
-      - Fri, 09 Jan 2026 15:56:01 GMT
+      - Tue, 13 Jan 2026 15:44:14 GMT
+      - Tue, 13 Jan 2026 15:44:14 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1420'
+      - '1541'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -47,12 +47,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
         the user wants me to call the array_params function with the tags [\"red\",
-        \"blue\"] and get the combined tags. Let me check the function''s parameters.
-        The function requires an array of tags, and the items are strings. The user
-        provided exactly that: an array with \"red\" and \"blue\". So I just need
-        to structure the JSON correctly. The function name is array_params, and the
-        arguments should be a JSON object with a \"tags\" key whose value is the array.
-        I''ll make sure to format it properly without any extra explanations. Let
-        me double-check the syntax to avoid errors.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-sReiyM05G7cJzkqO82v6sR85qOBYyF2T","type":"function"}]}}],"created":1767974162,"id":"chatcmpl-DGNBCJK3RaFN5whCgrV6eESrN6u6pQbY","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":152,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":127,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5537.641945885322,"time_per_output_token_ms":8.174690789473685,"time_to_first_token_ms":42.798,"tokens_per_second":122.3287859753266,"total_tokens":389}}'
-  recorded_at: Fri, 09 Jan 2026 15:56:02 GMT
+        \"blue\"] and get the combined tags. Let me check the function definition.
+        The function takes an object with a property \"tags\" which is an array of
+        strings. The required parameter is \"tags\", and it''s strictly typed. So
+        I need to structure the arguments correctly. The user provided the array [\"red\",
+        \"blue\"], so I should pass that as the value for the \"tags\" key. Since
+        the function is supposed to combine the tags, maybe it just returns them as
+        a single array. I don''t need to do anything else except call the function
+        with those parameters. Let me make sure the JSON is formatted properly with
+        the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rgb7azRGWxf3woxY3Dc9rVtqkMovI3cp","type":"function"}]}}],"created":1768319058,"id":"chatcmpl-wIQP56h4OLp6HdM8gRtM8eFhZP06hMlk","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":177,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":152,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3120.3918264166846,"time_per_output_token_ms":17.2873615819209,"time_to_first_token_ms":75.952,"tokens_per_second":57.8457270799379,"total_tokens":414}}'
+  recorded_at: Tue, 13 Jan 2026 15:44:18 GMT
 recorded_with: VCR 6.4.0

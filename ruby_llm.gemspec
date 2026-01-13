@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    Upgrading from RubyLLM <= 1.8.x? Check the upgrade guide for new features and migration instructions
+    Upgrading from RubyLLM < 1.10.x? Check the upgrade guide for new features and migration instructions
     --> https://rubyllm.com/upgrading/
   MESSAGE
 
@@ -42,10 +42,15 @@ Gem::Specification.new do |spec|
   # Runtime dependencies
   spec.add_dependency 'base64'
   spec.add_dependency 'event_stream_parser', '~> 1'
-  spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
+  if Gem::Version.new(Gem.ruby_version) >= Gem::Version.new('4.0')
+    spec.add_dependency 'faraday', '>= 2.0'
+    spec.add_dependency 'faraday-retry', '>= 2.0'
+  else
+    spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
+    spec.add_dependency 'faraday-retry', '>= 1'
+  end
   spec.add_dependency 'faraday-multipart', '>= 1'
   spec.add_dependency 'faraday-net_http', '>= 1'
-  spec.add_dependency 'faraday-retry', '>= 1'
   spec.add_dependency 'marcel', '~> 1.0'
   spec.add_dependency 'ruby_llm-schema', '~> 0.2.1'
   spec.add_dependency 'zeitwerk', '~> 2'

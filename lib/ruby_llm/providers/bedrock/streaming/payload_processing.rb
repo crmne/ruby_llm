@@ -57,10 +57,15 @@ module RubyLLM
               role: :assistant,
               model_id: extract_model_id(data),
               content: extract_streaming_content(data),
+              thinking: Thinking.build(
+                text: extract_thinking_delta(data),
+                signature: extract_signature_delta(data)
+              ),
               input_tokens: extract_input_tokens(data),
               output_tokens: extract_output_tokens(data),
               cached_tokens: extract_cached_tokens(data),
               cache_creation_tokens: extract_cache_creation_tokens(data),
+              thinking_tokens: extract_thinking_tokens(data),
               tool_calls: extract_tool_calls(data)
             }
           end

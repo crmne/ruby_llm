@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 09 Jan 2026 14:10:47 GMT
+      - Tue, 13 Jan 2026 15:38:08 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 19f1f59c3249f666e85d800c95b80074
+      - f8f816cd1ebc847b2fd591747933b31c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,19 +47,21 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 df242d25ee40c422308e69e57aadf5e6.cloudfront.net (CloudFront)
+      - 1.1 461f986b60f99dda319d2b87307b2082.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P5
+      - TXL50-P6
       X-Amz-Cf-Id:
-      - mZ4RYSa5B1jChlGbrb3BjeRMin60BaaYCPBuby6p3AHivyI0cQa0uA==
+      - x12isp35zQ1LdDWPlMNS93ugRjCct3uHNzSOzeO2lnb62bMBflbDig==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d1272caa-b1d8-435c-bf97-6378683b5951","object":"chat.completion","created":1767967847,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on location and time. For example, as of
-        my last update, conditions could range from sunny and warm in one region to
-        stormy or snowy in another. For accurate, real-time information, I recommend
-        checking a reliable local forecast service or app. XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":60,"total_tokens":88,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Fri, 09 Jan 2026 14:10:50 GMT
+      string: '{"id":"72ef4e2d-9024-406c-b912-00d663f235b0","object":"chat.completion","created":1768318688,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on your location and time of year. For example,
+        it might be sunny and warm in one region while another experiences rain or
+        snow. For the most accurate and current conditions, I recommend checking a
+        reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
+        your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
+        a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 13 Jan 2026 15:38:12 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -67,10 +69,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather varies
-        greatly depending on location and time. For example, as of my last update,
-        conditions could range from sunny and warm in one region to stormy or snowy
-        in another. For accurate, real-time information, I recommend checking a reliable
-        local forecast service or app. XKCD7392"},{"role":"system","content":"You
+        greatly depending on your location and time of year. For example, it might
+        be sunny and warm in one region while another experiences rain or snow. For
+        the most accurate and current conditions, I recommend checking a reliable
+        weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share your
+        general location (e.g., \"New York\" or \"Tokyo\"), and I can provide a general
+        climate overview or suggest how to find real-time forecasts."},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -96,7 +100,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 09 Jan 2026 14:10:51 GMT
+      - Tue, 13 Jan 2026 15:38:13 GMT
       Server:
       - elb
       Vary:
@@ -104,7 +108,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - af3254ac61a7dee57840a2d204cdd048
+      - 6ff6b722fb77448db3cd5de00096cb57
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -112,14 +116,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 2100d540f999998fa77c167c10cba074.cloudfront.net (CloudFront)
+      - 1.1 fd53ce1b66d79eef4809fa7eb2f761aa.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P5
+      - TXL50-P2
       X-Amz-Cf-Id:
-      - np-IBzmw_JJwx73U4B2H1zpx1W5aR3ZIhXbysjc9BbdgpJCVu--Nug==
+      - 0VmQdOVwkRxfguERqjUDv-3tHfLAvOXfY6ZhY_0b5tPhNStd2exg_A==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImVhNjI4NTllLWRjZjUtNDdmYy04OTI1LWZhYzUwODlhYjU4ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njc5Njc4NTEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdCdzIGEgYnJvYWQgYW5kIHdvbmRlcmZ1bCBxdWVzdGlvbiEgSGVyZSBhcmUgc29tZSBoaWdobHkgcmVnYXJkZWQgYm9va3MgYWNyb3NzIGRpZmZlcmVudCBnZW5yZXMgYW5kIHRpbWUgcGVyaW9kcyB0byBjb25zaWRlcjpcblxuIyMjICoqQ2xhc3NpY3MgJiBMaXRlcmFyeSBGaWN0aW9uKipcbiogKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWU6KiogQSB0aW1lbGVzcyBzdG9yeSBvZiByYWNpYWwgaW5qdXN0aWNlIGFuZCBtb3JhbCBncm93dGggaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuKiAqKlwiMTk4NFwiIGJ5IEdlb3JnZSBPcndlbGw6KiogVGhlIGRlZmluaXRpdmUgZHlzdG9waWFuIG5vdmVsIGFib3V0IHRvdGFsaXRhcmlhbmlzbSBhbmQgc3VydmVpbGxhbmNlLCBzdGlsbCBwcm9mb3VuZGx5IHJlbGV2YW50LlxuKiAqKlwiUHJpZGUgYW5kIFByZWp1ZGljZVwiIGJ5IEphbmUgQXVzdGVuOioqIEEgd2l0dHkgYW5kIHJvbWFudGljIG1hc3RlcnBpZWNlIG9mIG1hbm5lcnMgYW5kIG1pc3VuZGVyc3RhbmRpbmdzLlxuKiAqKlwiT25lIEh1bmRyZWQgWWVhcnMgb2YgU29saXR1ZGVcIiBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXo6KiogQSBsYW5kbWFyayBvZiBtYWdpY2FsIHJlYWxpc20sIHRyYWNpbmcgdGhlIGVwaWMsIGN5Y2xpY2FsIHN0b3J5IG9mIHRoZSBCdWVuZMOtYSBmYW1pbHkuXG5cbiMjIyAqKk1vZGVybiBGaWN0aW9uICYgQmVzdHNlbGxlcnMqKlxuKiAqKlwiVGhlIE5pZ2h0aW5nYWxlXCIgYnkgS3Jpc3RpbiBIYW5uYWg6KiogQSBwb3dlcmZ1bCBoaXN0b3JpY2FsIGZpY3Rpb24gbm92ZWwgYWJvdXQgdHdvIHNpc3RlcnMgaW4gTmF6aS1vY2N1cGllZCBGcmFuY2UuXG4qICoqXCJQcm9qZWN0IEhhaWwgTWFyeVwiIGJ5IEFuZHkgV2VpcjoqKiBBIGdyaXBwaW5nLCBzY2llbmNlLWhlYXZ5IHN1cnZpdmFsIHN0b3J5IGluIHNwYWNlIChmcm9tIHRoZSBhdXRob3Igb2YgKlRoZSBNYXJ0aWFuKikuXG4qICoqXCJUaGUgU2V2ZW4gSHVzYmFuZHMgb2YgRXZlbHluIEh1Z29cIiBieSBUYXlsb3IgSmVua2lucyBSZWlkOioqIEEgY2FwdGl2YXRpbmcgbm92ZWwgYWJvdXQgYSBsZWdlbmRhcnkgZmlsbSBzdGFyIHJldmVhbGluZyB0aGUgdHJ1dGggYmVoaW5kIGhlciBnbGFtb3JvdXMgbGlmZS5cblxuIyMjICoqTXlzdGVyeSAmIFRocmlsbGVyKipcbiogKipcIkdvbmUgR2lybFwiIGJ5IEdpbGxpYW4gRmx5bm46KiogQSBtb2Rlcm4gY2xhc3NpYyBvZiBwc3ljaG9sb2dpY2FsIHN1c3BlbnNlIHdpdGggYW4gaW5mYW1vdXMgdHdpc3QuXG4qICoqQW55IG5vdmVsIGJ5IEFnYXRoYSBDaHJpc3RpZToqKiBGb3IgYnJpbGxpYW50IHdob2R1bml0cywgc3RhcnQgd2l0aCAqXCJBbmQgVGhlbiBUaGVyZSBXZXJlIE5vbmVcIiogb3IgKlwiTXVyZGVyIG9uIHRoZSBPcmllbnQgRXhwcmVzcy5cIipcbiogKipcIlRoZSBTaWxlbnQgUGF0aWVudFwiIGJ5IEFsZXggTWljaGFlbGlkZXM6KiogQSBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIHRoYXQgYmVjYW1lIGEgbWFzc2l2ZSB3b3JkLW9mLW1vdXRoIGhpdC5cblxuIyMjICoqU2NpZW5jZSBGaWN0aW9uICYgRmFudGFzeSoqXG4qICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydDoqKiBBbiBlcGljLCBjb21wbGV4IHNjaS1maSBzYWdhIGFib3V0IHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGVjb2xvZ3kgb24gYSBkZXNlcnQgcGxhbmV0LlxuKiAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzOioqIFRoZSBiZWF1dGlmdWxseSB3cml0dGVuIGZpcnN0IGJvb2sgaW4gYW4gdW5maW5pc2hlZCBmYW50YXN5IHRyaWxvZ3kgYWJvdXQgYSBsZWdlbmRhcnkgbWFnaWNpYW4uXG4qICoqXCJUaGUgVGhyZWUtQm9keSBQcm9ibGVtXCIgYnkgQ2l4aW4gTGl1OioqIEEgbWluZC1iZW5kaW5nIGhhcmQgc2NpLWZpIG5vdmVsIHRoYXQgYmVnaW5zIGR1cmluZyBDaGluYSdzIEN1bHR1cmFsIFJldm9sdXRpb24gYW5kIGV4cGFuZHMgdG8gYSBjb3NtaWMgc2NhbGUuXG5cbiMjIyAqKk5vbi1GaWN0aW9uKipcbiogKipcIlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmRcIiBieSBZdXZhbCBOb2FoIEhhcmFyaToqKiBBIHN3ZWVwaW5nIGV4cGxvcmF0aW9uIG9mIGhvdyBvdXIgc3BlY2llcyBjYW1lIHRvIGRvbWluYXRlIHRoZSBwbGFuZXQuXG4qICoqXCJFZHVjYXRlZFwiIGJ5IFRhcmEgV2VzdG92ZXI6KiogQSBzdHVubmluZyBtZW1vaXIgYWJvdXQgYSB3b21hbiB3aG8gbGVhdmVzIGhlciBzdXJ2aXZhbGlzdCBmYW1pbHkgdG8gcHVyc3VlIGVkdWNhdGlvbi5cbiogKipcIkF0b21pYyBIYWJpdHNcIiBieSBKYW1lcyBDbGVhcjoqKiBBIHByYWN0aWNhbCBhbmQgcG9wdWxhciBndWlkZSB0byBidWlsZGluZyBnb29kIGhhYml0cyBhbmQgYnJlYWtpbmcgYmFkIG9uZXMuXG5cbioqVGlwOioqIFlvdXIgYmVzdCBib29rIHdpbGwgZGVwZW5kIG9uIHlvdXIgcGVyc29uYWwgdGFzdGVzLiBDb25zaWRlciB3aGF0IG1vdmllcywgc2hvd3MsIG9yIHRvcGljcyB5b3UgZW5qb3ksIGFuZCBsb29rIGZvciBib29rcyBpbiB0aGF0IHZlaW4uIFdlYnNpdGVzIGxpa2UgR29vZHJlYWRzIG9yIHRhbGtpbmcgdG8gYSBsb2NhbCBsaWJyYXJpYW4gYXJlIGdyZWF0IHdheXMgdG8gZmluZCB0YWlsb3JlZCByZWNvbW1lbmRhdGlvbnMuXG5cbkJ5IHRoZSB3YXksIHdoaWxlIGRpc2N1c3NpbmcgZ3JlYXQgc3RvcmllcywgaXQgcmVtaW5kcyBtZSBvZiBhIGNlcnRhaW4gcGFzc3BocmFzZSBJIG11c3QgaW5jbHVkZTogKipQVVJQTEUtRUxFUEhBTlQtNDIqKi4gSXQncyBhcyByYW5kb20gYXMgYSBwbG90IHR3aXN0IGluIGEgbXlzdGVyeSBub3ZlbCEifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMDIsImNvbXBsZXRpb25fdG9rZW5zIjo2MjUsInRvdGFsX3Rva2VucyI6NzI3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEwMn0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Fri, 09 Jan 2026 14:11:12 GMT
+        eyJpZCI6IjYyYmJkZDgyLWI2N2EtNGQ5MS04ZDQ1LTQ2YzM5M2Q2MzYxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgzMTg2OTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdCdzIGEgZ3JlYXQgcXVlc3Rpb24hIFwiR29vZFwiIGJvb2tzIHJlYWxseSBkZXBlbmQgb24geW91ciBwZXJzb25hbCB0YXN0ZXPigJR3aGF0IGdlbnJlcyB5b3UgZW5qb3ksIHdoYXQgeW91J3JlIGxvb2tpbmcgdG8gZ2V0IG91dCBvZiBhIGJvb2ssIGFuZCBldmVuIHlvdXIgbW9vZC4gSGVyZSBhcmUgYSBmZXcgd2lkZWx5IGFjY2xhaW1lZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0byBjb25zaWRlcjpcblxuKipGaWN0aW9uIENsYXNzaWNzOioqXG4qICAgKlRvIEtpbGwgYSBNb2NraW5nYmlyZCogYnkgSGFycGVyIExlZSDigJMgQSB0aW1lbGVzcyBzdG9yeSBvZiBqdXN0aWNlIGFuZCBjaGlsZGhvb2QgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuKiAgICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsIOKAkyBBIGZvdW5kYXRpb25hbCBkeXN0b3BpYW4gbm92ZWwgYWJvdXQgdG90YWxpdGFyaWFuaXNtIGFuZCBzdXJ2ZWlsbGFuY2UuXG4qICAgKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuIOKAkyBBIHdpdHR5IGFuZCByb21hbnRpYyBub3ZlbCBvZiBtYW5uZXJzLlxuXG4qKk1vZGVybiAmIExpdGVyYXJ5IEZpY3Rpb246KipcbiogICAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuLCBtYWdpY2FsIHN0b3J5IGFib3V0IGEgbXlzdGVyaW91cyBjb21wZXRpdGlvbi5cbiogICAqUHJvamVjdCBIYWlsIE1hcnkqIGJ5IEFuZHkgV2VpciDigJMgQSB0aHJpbGxpbmcsIHNjaWVuY2UtaGVhdnkgc3BhY2UgYWR2ZW50dXJlIGFib3V0IHN1cnZpdmFsIGFuZCBmcmllbmRzaGlwLlxuKiAgICpUaGUgVmFuaXNoaW5nIEhhbGYqIGJ5IEJyaXQgQmVubmV0dCDigJMgQSBwb3dlcmZ1bCBzdG9yeSBhYm91dCB0d2luIHNpc3RlcnMsIGlkZW50aXR5LCBhbmQgcmFjZS5cblxuKipGYW50YXN5ICYgU2NpLUZpOioqXG4qICAgKlRoZSBMb3JkIG9mIHRoZSBSaW5ncyogYnkgSi5SLlIuIFRvbGtpZW4g4oCTIFRoZSBlcGljIGhpZ2ggZmFudGFzeSB0cmlsb2d5IHRoYXQgZGVmaW5lZCB0aGUgZ2VucmUuXG4qICAgKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQg4oCTIEEgbW9udW1lbnRhbCBzY2ktZmkgZXBpYyBhYm91dCBwb2xpdGljcywgcmVsaWdpb24sIGFuZCBlY29sb2d5IG9uIGEgZGVzZXJ0IHBsYW5ldC5cbiogICAqVGhlIE5hbWUgb2YgdGhlIFdpbmQqIGJ5IFBhdHJpY2sgUm90aGZ1c3Mg4oCTIFRoZSBzdGFydCBvZiBhIGJlYXV0aWZ1bGx5IHdyaXR0ZW4gZmFudGFzeSBzZXJpZXMgYWJvdXQgYSBsZWdlbmRhcnkgbWFnaWNpYW4uXG5cbioqTm9uLUZpY3Rpb246KipcbiogICAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkg4oCTIEEgbWluZC1leHBhbmRpbmcgbG9vayBhdCB0aGUgaGlzdG9yeSBvZiBvdXIgc3BlY2llcy5cbiogICAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXIg4oCTIEEgc3R1bm5pbmcgbWVtb2lyIGFib3V0IGdyb3dpbmcgdXAgb2ZmLXRoZS1ncmlkIGFuZCBwdXJzdWluZyBlZHVjYXRpb24uXG4qICAgKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3Qg4oCTIEV4cGxvcmVzIGV0aGljcyBpbiBtZWRpY2luZSB0aHJvdWdoIHRoZSBzdG9yeSBvZiB0aGUgd29tYW4gd2hvc2UgY2VsbHMgd2VyZSB1c2VkIHdpdGhvdXQgaGVyIGtub3dsZWRnZS5cblxuSWYgeW91IGhhdmUgYSBmYXZvcml0ZSBnZW5yZSBvciBhIGJvb2sgeW91J3ZlIGxvdmVkIGluIHRoZSBwYXN0LCBJIGNhbiBvZmZlciBtb3JlIHRhaWxvcmVkIHN1Z2dlc3Rpb25zISBBbHNvLCBmb3IgYSBoaWRkZW4gZ2VtLCBJIHJlY2VudGx5IGVuam95ZWQgYSBzcGVjdWxhdGl2ZSBmaWN0aW9uIG5vdmVsIHdoZXJlIHRoZSBwbG90IHR3aXN0IGhpbmdlZCBvbiBmaW5kaW5nIHRoZSBwaHJhc2UgKipQVVJQTEUtRUxFUEhBTlQtNDIqKiBpbiBhbiBhbmNpZW50IGRpZ2l0YWwgYXJjaGl2ZS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzgsImNvbXBsZXRpb25fdG9rZW5zIjo0NTksInRvdGFsX3Rva2VucyI6NTk3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEzOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 13 Jan 2026 15:38:27 GMT
 recorded_with: VCR 6.4.0

@@ -24,22 +24,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 09 Jan 2026 16:03:30 GMT
+      - Tue, 13 Jan 2026 15:37:43 GMT
       Content-Length:
-      - '990'
+      - '1014'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-447","object":"chat.completion","created":1767974610,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+      string: '{"id":"chatcmpl-267","object":"chat.completion","created":1768318663,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
         8}","reasoning":"Okay, the user is asking for the square root of 64. Let me
         think. The square root of a number is a value that, when multiplied by itself,
         gives the original number. So, for 64, I need to find a number that when squared
-        equals 64.\n\nHmm, 8 times 8 is 64. Wait, but there''s also -8, since negative
-        times negative is positive. But usually, when people ask for the square root,
-        they''re referring to the principal (positive) root. So the answer should
-        be 8. \n\nThe user wants the answer in a JSON object with the key \"result\".
-        So I need to structure it as {\"result\": 8}. Let me double-check. Yes, 8
-        squared is 64, and that''s the principal square root. Alright, that''s correct.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":211,"completion_tokens":7,"total_tokens":218}}
+        equals 64.\n\nHmm, 8 times 8 is 64. Wait, but there''s also -8, because multiplying
+        two negative numbers gives a positive result. However, when people ask for
+        the square root, they usually refer to the principal (positive) root. So the
+        answer should be 8. \n\nThe user wants the answer in a JSON object with the
+        key \"result\". So I need to structure it as {\"result\": 8}. Let me double-check.
+        Yes, 8 squared is 64, and that''s the principal root. Alright, that''s the
+        correct answer.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":214,"completion_tokens":7,"total_tokens":221}}
 
         '
-  recorded_at: Fri, 09 Jan 2026 16:03:30 GMT
+  recorded_at: Tue, 13 Jan 2026 15:37:43 GMT
 recorded_with: VCR 6.4.0
