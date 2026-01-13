@@ -181,15 +181,9 @@ module RubyLLM
     def wrap_streaming_block(&block)
       return nil unless block_given?
 
-      first_chunk_received = false
+      @on[:new_message]&.call
 
       proc do |chunk|
-        # Create message on first content chunk
-        unless first_chunk_received
-          first_chunk_received = true
-          @on[:new_message]&.call
-        end
-
         block.call chunk
       end
     end
