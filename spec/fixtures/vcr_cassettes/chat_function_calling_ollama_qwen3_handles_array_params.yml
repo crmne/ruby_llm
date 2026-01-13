@@ -26,25 +26,19 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 09 Jan 2026 16:04:44 GMT
+      - Tue, 13 Jan 2026 15:44:20 GMT
       Content-Length:
-      - '1340'
+      - '897'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-301","object":"chat.completion","created":1767974684,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-936","object":"chat.completion","created":1768319060,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
-        and combine them. Let me check the function definition.\n\nThe function array_params
-        takes an object with a required \"tags\" array. The tags should be a list
-        of strings. The user provided exactly that: an array with \"red\" and \"blue\".
-        \n\nI need to structure the tool call correctly. The function name is array_params,
-        and the arguments should include the tags array. Since the function''s purpose
-        is to combine the tags, I just need to pass the array as specified.\n\nNo
-        other parameters are needed because the function only requires \"tags\". So
-        the correct tool call is to use the function with the given tags. The response
-        should then indicate the combined tags, but the actual combining logic is
-        handled by the function. \n\nI''ll format the tool call in JSON inside the
-        XML tags as instructed.\n","tool_calls":[{"id":"call_ab9idayh","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":168,"completion_tokens":211,"total_tokens":379}}
+        and combine them. Let me check the function definition. The function requires
+        an array of strings under the \"tags\" parameter. Since the user provided
+        exactly that, I just need to structure the tool call correctly. I''ll make
+        sure the JSON is properly formatted with the tags as an array. No other parameters
+        are needed. Alright, time to put it all together.\n","tool_calls":[{"id":"call_4n9r82y9","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":168,"completion_tokens":122,"total_tokens":290}}
 
         '
-  recorded_at: Fri, 09 Jan 2026 16:04:44 GMT
+  recorded_at: Tue, 13 Jan 2026 15:44:20 GMT
 recorded_with: VCR 6.4.0

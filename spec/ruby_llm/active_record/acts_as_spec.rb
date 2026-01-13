@@ -764,4 +764,56 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.provider).to eq('bedrock')
     end
   end
+
+  describe 'extended thinking persistence' do
+    def thinking_config_for(provider)
+      case provider
+      when :anthropic, :bedrock
+        { budget: 1024 }
+      when :gemini
+        { effort: :low }
+      when :ollama, :mistral
+        nil
+      else
+        { effort: :medium }
+      end
+    end
+
+    question = <<~QUESTION.strip
+      If a magic mirror shows your future self, but only if you ask a question it cannot answer truthfully, what question do you ask to see your future, and what would the mirror reveal about the answer it gives?
+    QUESTION
+
+    THINKING_MODELS.each do |model_info|
+      provider = model_info[:provider]
+      model = model_info[:model]
+
+      it "#{provider}/#{model} persists thinking data and replays it across turns" do
+        chat = Chat.create!(model: model, provider: provider)
+        config = thinking_config_for(provider)
+        chat = chat.with_thinking(**config) if config
+
+        chunks = []
+        response = chat.ask(question) { |chunk| chunks << chunk }
+
+        expect(response.content).to be_present
+        expect(chunks).not_to be_empty
+
+        message_record = chat.messages.order(:id).last
+        expect(message_record.thinking_text).to eq(response.thinking.text) if response.thinking&.text
+        expect(message_record.thinking_signature).to eq(response.thinking.signature) if response.thinking&.signature
+        expect(message_record.thinking_tokens).to eq(response.thinking_tokens) if response.thinking_tokens
+
+        followup = chat.ask('tell me more')
+        expect(followup.content).to be_present
+
+        replayed_messages = chat.to_llm.messages
+        if response.thinking&.text
+          expect(replayed_messages.filter_map { |msg| msg.thinking&.text }).to include(response.thinking.text)
+        end
+        if response.thinking&.signature
+          expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
+        end
+      end
+    end
+  end
 end
