@@ -20,7 +20,7 @@ module RubyLLM
             {
               instances: [text].flatten.map { |t| { text: t.to_s } }
             }.tap do |payload|
-              payload[:parameters] = { outputDimensionality: dimensions } if dimensions
+              payload[:parameters] = { dimension: dimensions } if dimensions
             end
           end
         end
@@ -34,7 +34,7 @@ module RubyLLM
           {
             instances: [instance]
           }.tap do |payload|
-            payload[:parameters] = { outputDimensionality: dimensions } if dimensions
+            payload[:parameters] = { dimension: dimensions } if dimensions
           end
         end
 
