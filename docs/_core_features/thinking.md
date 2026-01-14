@@ -98,7 +98,8 @@ response.thinking_tokens
 
 ### Upgrading Existing Installations
 
-Add the columns to your message table:
+For 1.10 upgrades, consider using the [upgrade guide]({% link _advanced/upgrading.md %}#upgrade-to-1-10) to run the generator.
+If you prefer manual migrations, add the columns to your message and tool calls tables:
 
 ```ruby
 class AddThinkingToMessages < ActiveRecord::Migration[7.1]
@@ -106,6 +107,7 @@ class AddThinkingToMessages < ActiveRecord::Migration[7.1]
     add_column :messages, :thinking_text, :text
     add_column :messages, :thinking_signature, :text
     add_column :messages, :thinking_tokens, :integer
+    add_column :tool_calls, :thought_signature, :string
   end
 end
 ```
