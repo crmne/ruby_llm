@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Embeddings do
           model: 'multimodalembedding',
           dimensions: 512
         )
-        expect(payload[:parameters]).to eq({ outputDimensionality: 512 })
+        expect(payload[:parameters]).to eq({ dimension: 512 })
       end
     end
   end
