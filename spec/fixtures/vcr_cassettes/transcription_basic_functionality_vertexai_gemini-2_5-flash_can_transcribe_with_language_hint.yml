@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Date:
+      - Mon, 12 Jan 2026 10:39:39 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Mon, 03 Nov 2025 14:05:08 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 14:05:08 GMT
+  recorded_at: Mon, 12 Jan 2026 10:39:39 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Transcribe the provided
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 14:05:12 GMT
+      - Mon, 12 Jan 2026 10:39:41 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Whoop."
+                    "text": "Groovy."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -6.7658443450927734
+              "avgLogprobs": -3.7229267756144204
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 44,
+            "promptTokenCount": 69,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 69,
+            "totalTokenCount": 102,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -130,7 +130,7 @@ http_interactions:
               },
               {
                 "modality": "AUDIO",
-                "tokenCount": 25
+                "tokenCount": 50
               }
             ],
             "candidatesTokensDetails": [
@@ -139,11 +139,11 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 22
+            "thoughtsTokenCount": 30
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T14:05:09.033052Z",
-          "responseId": "lbYIaZyCAqKhmPUP17XSmAw"
+          "createTime": "2026-01-12T10:39:40.144583Z",
+          "responseId": "bM9kacfpCJ_skbwPjcui4Q0"
         }
-  recorded_at: Mon, 03 Nov 2025 14:05:12 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:39:41 GMT
+recorded_with: VCR 6.4.0

@@ -26,37 +26,39 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 14:00:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 13 Jan 2026 15:44:23 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e8d4684f05a49d6605c0a4dd17890449
+      - 95a0b048d7a6980aa490970577e0c79e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 b22f104a676a3f4e13adba34eb669b5c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - 5N5RoQr5ArVft_-w_ULFnbbu68E_M6ghSLdtptGosZSE1uEMm1-fcg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"db31ae02-5579-4e62-8e6c-e55a41da1204","object":"chat.completion","created":1762178428,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the any-of params tool with the task \"Review PR\" and status \"pending\"
-        as requested.","tool_calls":[{"index":0,"id":"call_00_otxSER6nAdYcBwGn36q0dsTf","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":227,"completion_tokens":44,"total_tokens":271,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":227},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 14:00:30 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"b6eb60af-b26c-4ba0-922b-8fea405815ca","object":"chat.completion","created":1768319063,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the any_of_params tool with the specified parameters for task \"Review
+        PR\" and status \"pending\".","tool_calls":[{"index":0,"id":"call_00_8HYdojbZkkSi7pNDfX2jfKUF","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":380,"completion_tokens":83,"total_tokens":463,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":188},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 13 Jan 2026 15:44:26 GMT
+recorded_with: VCR 6.4.0

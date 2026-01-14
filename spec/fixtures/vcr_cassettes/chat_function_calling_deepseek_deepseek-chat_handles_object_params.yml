@@ -27,36 +27,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 14:00:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 13 Jan 2026 15:44:35 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 523027df1cb65d00ea0fbd36091b735f
+      - 7c8d51e80a00f2fdc21cc843f48b78b0
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 56d45ca72c110eb4c3736727b5f5040a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - kueD4vfYgRwkse4FPKfZMCophF-SZZfUhBJZof0TMSwlgH7F52jQXA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0d00cf0b-ca30-41f1-918a-1913b46cc29f","object":"chat.completion","created":1762178435,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the object_params tool with the specified window parameters.","tool_calls":[{"index":0,"id":"call_00_5t699MB9SQWwCwEBCh1H8Gb3","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":243,"completion_tokens":46,"total_tokens":289,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":243},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 14:00:39 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"3a775303-8726-4cb0-af43-3a19431b335e","object":"chat.completion","created":1768319075,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the object_params tool with the specified window parameters.","tool_calls":[{"index":0,"id":"call_00_o1APaDRKS580KnFdgWsPIhNg","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":396,"completion_tokens":76,"total_tokens":472,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":204},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 13 Jan 2026 15:44:38 GMT
+recorded_with: VCR 6.4.0

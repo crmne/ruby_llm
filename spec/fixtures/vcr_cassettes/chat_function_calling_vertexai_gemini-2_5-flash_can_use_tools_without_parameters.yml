@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 02 Nov 2025 21:30:26 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 12 Jan 2026 10:37:53 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:26 GMT
+  recorded_at: Mon, 12 Jan 2026 10:37:53 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
+      - Mon, 12 Jan 2026 10:37:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "CuoBAePx/16KZzYDasD62nSIBssdoTHltsrLcEOcBd8w68FGk+ZXtMYHJw00oxKzQKgtriuQ4dVOCn9urFveixwA2jVphSG8RolooUUEtTQL7U2q2Mz3i4BlhmJ5rZdljtFb/qD4konCqxekaX4GRZ9urIhaMAA6sE5CMhdo0q4llpgBYRxqY4GtPXIwB/9/niu5sBd0Y866RZuKu2sJm6z3lfr8C0zuRVMWpjNmSom739JTnIZwohK+Uym5lyoT3Cwf7o20MnklAdk/lreCHOfaV5jqbC1z7L2cL2yIeNzHKPuwPYq1fOeuvH8K"
+                    "thoughtSignature": "CoEDAY89a19I54ubrLwdKcw+RYaBONwB9QfycMWehZ3B+lPFNqQ5wNCI7L1EIx/eHVS/xq6sdV8evNcaTDuwU36NZfw8Gr9Erjp6Rf9CcZnzrf5hjEBAfaO/Zxfn85O//F7oeqoFxvwXmKDQcY//ujCIsay+LZR+e7s34qYORmmqf40mBOEExKmK3xpOK2QRW/6BN/Yx2J8DyUKL2XOvx+/aHxFsC0InOCNLC2vxTAPiGmoYCpZ3mNf/0COFHFjCM4/u7wZU7mHF2J3CSFjuQ/w60VrbVfpvdvBD8sxMlVYf9sit+fP5FZiga5pNuXtPsQ+PtNQv0FkWpwWVDzysHvwoH7xePK1Z+AudwPOx8KSxJDW+Rwo6xHiw4bi1DnsUqMf+nxVrfS2NYHt5nQS88vZD9LAdUN0plGMQ934COPKnFrrCk/doovraRgH43zlCLio/t0UNu9tKWHyWwAFD79+fO7FeC0UZ3GplCxKkJdq1Iu/jHjQ29k+gJYjI7jfAYHoA9w=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.82807193483625141
+              "avgLogprobs": -2.3280677795410156
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 77,
+            "totalTokenCount": 109,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,73 +140,16 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 48
+            "thoughtsTokenCount": 80
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:26.889767Z",
-          "responseId": "cs0HaaenNtObvdIPq5tr"
+          "createTime": "2026-01-12T10:37:53.772916Z",
+          "responseId": "Ac9kabSWL_y-hcIPqM_4sA4"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
+  recorded_at: Mon, 12 Jan 2026 10:37:54 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
@@ -235,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
+      - Mon, 12 Jan 2026 10:37:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -263,7 +206,7 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.12504205107688904
+              "avgLogprobs": -0.33827725052833557
             }
           ],
           "usageMetadata": {
@@ -285,8 +228,8 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:27.573909Z",
-          "responseId": "c80HadWDI4G2mPUP8JnfiAs"
+          "createTime": "2026-01-12T10:37:54.834540Z",
+          "responseId": "As9kaez3MuLImLAPo9W3GA"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:37:55 GMT
+recorded_with: VCR 6.4.0

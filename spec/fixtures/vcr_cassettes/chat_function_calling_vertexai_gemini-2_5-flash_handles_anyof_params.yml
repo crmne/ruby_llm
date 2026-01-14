@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
-      Date:
-      - Sun, 02 Nov 2025 21:30:53 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 12 Jan 2026 10:38:36 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:53 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:36 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call the any-of params
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:53 GMT
+      - Mon, 12 Jan 2026 10:38:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "any_of_params",
                       "args": {
-                        "status": "pending",
-                        "task": "Review PR"
+                        "task": "Review PR",
+                        "status": "pending"
                       }
                     },
-                    "thoughtSignature": "CoUCAePx/17KxNVB9n+lFSD24RuHQwSsafLTjQ3rZI0HR2J743LgEtQqFfGeAEGntV+VE4yfcvrVl4A1lcFol7mEs9oQUE+0R6/jesJ4DISbvhA+IIJ7n1vwPgPCqZxcKSJtTahF9dITlpJlgLYss3+j08zZTN8TxJ4N2QukRtuUrP86tloRjFjf2OTyqb+RNg2ZWX6BgcqwQLtA4G5MW0dqBmyMAPFNhWePpPlIawCx3vFEv5PxPZFmdT39AwQICH9CYm9jMLWgkcqiYq7fjM6aDYlyiXkuBBEA1Ivm6RraMsiAqjjyucAs6mxUU0uT3gSZl5KNev87BzaiMbpUQa3MklwIsuSc"
+                    "thoughtSignature": "CuMBAY89a1+LAWswZ+WFRMEvecx37KO+oJJK4X2nEeVzwo0/EjqUzw1QjH+52ofJG+0myBmk8iF186Y+oHd8mOsrH9AB9nJl7s0Ml+d2e5vrY14XYEWNb/FyahrcklGfnGkkb4/4rm56VEgecDvRJAIjmdYHbP7HK20BTkWIhLCtedGH+EOTO8/LXw4LNJ48/QnMEB2PUaWdWv4+rY1ZAueVdUB8Vd7CgaKx9CYYhyxqGThn8XZ/MBIYj8V9Q6TwGtU+/H+dtfJHS15+a0ROMr/LzrvulBO3DHggsSNE0/jha1gNqlA="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.87484760284423824
+              "avgLogprobs": -0.82695646286010738
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 50,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 128,
+            "totalTokenCount": 115,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,11 +144,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 68
+            "thoughtsTokenCount": 55
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:53.295836Z",
-          "responseId": "jc0HaZyHEpu9vdIPmvPVgAc"
+          "createTime": "2026-01-12T10:38:36.825532Z",
+          "responseId": "LM9kabyxMrOB2fMPjcrW4Q4"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:53 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:38:37 GMT
+recorded_with: VCR 6.4.0

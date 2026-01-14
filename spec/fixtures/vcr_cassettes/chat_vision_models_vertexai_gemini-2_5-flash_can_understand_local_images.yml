@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Date:
-      - Mon, 03 Nov 2025 13:48:54 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - Mon, 12 Jan 2026 10:35:00 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:54 GMT
+  recorded_at: Mon, 12 Jan 2026 10:35:00 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What do you see in this
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:49:02 GMT
+      - Mon, 12 Jan 2026 10:35:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The image displays a stylized, faceted **red gemstone**, most likely a **ruby**.\n\nHere are the details:\n*   **Color:** It's a rich, deep red, with variations in shade from darker maroon in some areas to brighter, more vibrant red where light hits.\n*   **Shape:** It's cut with many geometric facets, typical of a polished gemstone. It has a broad top surface (table) that tapers down to a point or smaller base.\n*   **Highlights & Reflections:** There are prominent, bright white highlights and reflections, particularly a large, crescent-shaped or elongated oval on its upper surface, giving it a strong sense of shine and luminescence. Smaller sharp white lines also outline the edges of many facets.\n*   **Texture/Appearance:** The facets create a sense of depth and three-dimensionality, making it appear sparkling and real despite its somewhat idealized or iconic look.\n\nIt strongly resembles the **logo for the Ruby programming language**."
+                    "text": "I see a stylized **red gemstone**, specifically designed to resemble a **ruby**.\n\nHere are some details:\n*   **Color:** It's a vibrant, deep red, with gradients ranging from bright scarlet and crimson in the highlighted areas to darker, more saturated reds in the shadows.\n*   **Shape:** It's a multifaceted, irregularly shaped gem, characteristic of a cut precious stone. The top portion is somewhat rounded or oval-like, while the bottom displays distinct, angular facets (triangular and trapezoidal shapes).\n*   **Luster:** It has a highly polished and reflective surface. There are prominent bright white or very light red highlights, especially along its upper-left edge and near the center, which give it a glowing, three-dimensional appearance and suggest it's catching light.\n*   **Style:** The image is a graphic representation, likely a logo or icon, rather than a photograph of a real ruby. It has a clean, vector-like aesthetic.\n\nThis image is widely recognized as the **logo for the Ruby programming language**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -2.0734462364047181
+              "avgLogprobs": -2.0959279840642755
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 204,
-            "totalTokenCount": 1315,
+            "candidatesTokenCount": 220,
+            "totalTokenCount": 1365,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "IMAGE",
                 "tokenCount": 258
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 204
+                "tokenCount": 220
               }
             ],
-            "thoughtsTokenCount": 845
+            "thoughtsTokenCount": 879
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:48:54.802772Z",
-          "responseId": "xrIIadT_MM3Mt_gP_fnekAw"
+          "createTime": "2026-01-12T10:35:00.553735Z",
+          "responseId": "VM5kaYfmIdnCmLAPm-75oA4"
         }
-  recorded_at: Mon, 03 Nov 2025 13:49:02 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:35:08 GMT
+recorded_with: VCR 6.4.0

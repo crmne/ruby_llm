@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Mon, 12 Jan 2026 10:38:29 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:29 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
+      - Mon, 12 Jan 2026 10:38:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,23 +116,23 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CoIBAePx/16zd6xJUF5JnkV06NXa5dxoK2cjXMQfK3o9BvVddK6dRCcyUBUprlHOJueTMtJbAVua47xEUIjtLGtEOO/xrdTaZvx4OyEQNIO0j8gDQ7ti5Wb4xkS8OjIJ+cCCt3RGggdA5dNNC4TQ/fl6zSYG1GVfoGZz8NqKaQ5CgTNZ/g=="
+                    "thoughtSignature": "CpoBAY89a1+cOEs4hqXMktwKniPi9YJMO8freouX44rZ0V45LoH0kSnaTnst5NtGdUsQhlxUjOKH6ROOtvMjs8kjjy0cX6vJSaipYPmCwvcTL2rFn5de0b+BJjY6ZK7hQKn2Ch4Ya1dOhWBBGFPqn1rdypLU6gbIc1i/yngY4puOhjY2B+ywqb5GBsKejnBOidz6ZQzvOM0PAOEs2g=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.7950762112935383
+              "avgLogprobs": -1.8978743553161621
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 41,
+            "promptTokenCount": 42,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 72,
+            "totalTokenCount": 75,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 41
+                "tokenCount": 42
               }
             ],
             "candidatesTokensDetails": [
@@ -141,73 +141,16 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 28
+            "thoughtsTokenCount": 30
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:46.174241Z",
-          "responseId": "hs0HaaHRCsGgmPUPjurOqAQ"
+          "createTime": "2026-01-12T10:38:29.602337Z",
+          "responseId": "Jc9kaeHhJIGE2fMPyIreyA0"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:30 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Date:
-      - Sun, 02 Nov 2025 21:30:46 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:46 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -238,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
+      - Mon, 12 Jan 2026 10:38:30 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -264,23 +207,24 @@ http_interactions:
                     "functionCall": {
                       "name": "dice_roll",
                       "args": {}
-                    }
+                    },
+                    "thoughtSignature": "CpABAY89a19xrKf44dOv+Oq8vv221wxcstOR0Cg6IB+EGxlaDu/8K6L44UllAUmGWRSLml1AFofSUWy+1xkvk2oLXkJVLxfoOUX24RdSM0eMH1NVEU2/YigYjORxDat0s5N+0kaEiwQULb7UQWWiRDFn4QBr56u63+YoVbkUEWYU35sCjypgMJjvZAhHvlXNm6/U"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -7.79092515585944e-05
+              "avgLogprobs": -1.0614644686381023
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 59,
+            "promptTokenCount": 60,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 62,
+            "totalTokenCount": 91,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 59
+                "tokenCount": 60
               }
             ],
             "candidatesTokensDetails": [
@@ -288,73 +232,17 @@ http_interactions:
                 "modality": "TEXT",
                 "tokenCount": 3
               }
-            ]
+            ],
+            "thoughtsTokenCount": 28
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:46.947414Z",
-          "responseId": "hs0HadbpOYG2mPUP8JnfiAs"
+          "createTime": "2026-01-12T10:38:30.380415Z",
+          "responseId": "Js9kaf-bF-LImLAPo9W3GA"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:30 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -386,7 +274,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
+      - Mon, 12 Jan 2026 10:38:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -412,23 +300,24 @@ http_interactions:
                     "functionCall": {
                       "name": "dice_roll",
                       "args": {}
-                    }
+                    },
+                    "thoughtSignature": "Co0BAY89a19FV+df0msgAlQVjV9iM9WKd1Q583d4LgBw2QRX5bh5HKB7NQ3Uqkg5zviIOqIjquzw2+Bo2nkfR9FbrpnKoCSHwP/Q6l+sU5kA32qItmR616BBVSwFoDoFjfHNKJPw4JPx5ZcJf7beFE6DnYEbNTEKqiC24H/P5ym0CazM/1GKXGgixSmAVyNb"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0012558770831674337
+              "avgLogprobs": -0.83807428677876794
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 77,
+            "promptTokenCount": 78,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 80,
+            "totalTokenCount": 109,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 77
+                "tokenCount": 78
               }
             ],
             "candidatesTokensDetails": [
@@ -436,73 +325,17 @@ http_interactions:
                 "modality": "TEXT",
                 "tokenCount": 3
               }
-            ]
+            ],
+            "thoughtsTokenCount": 28
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:47.403302Z",
-          "responseId": "h80HaebOGIG2mPUP8JnfiAs"
+          "createTime": "2026-01-12T10:38:30.888034Z",
+          "responseId": "Js9kaeKZNrWNkbwP0MO5iQ0"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
+  recorded_at: Mon, 12 Jan 2026 10:38:31 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Sun, 02 Nov 2025 21:30:47 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:47 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -535,7 +368,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:48 GMT
+      - Mon, 12 Jan 2026 10:38:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -558,35 +391,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I rolled the dice 3 times. I got a 1, a 2, and a 3."
+                    "text": "I rolled the dice three times and got 1, 2, and 3."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.1022966426351796
+              "avgLogprobs": -0.24395126766628689
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 95,
-            "candidatesTokenCount": 23,
-            "totalTokenCount": 118,
+            "promptTokenCount": 96,
+            "candidatesTokenCount": 18,
+            "totalTokenCount": 114,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 95
+                "tokenCount": 96
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 23
+                "tokenCount": 18
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:47.934565Z",
-          "responseId": "h80HaaWFOYDgz_IP7cq3mAs"
+          "createTime": "2026-01-12T10:38:31.414475Z",
+          "responseId": "J89kaYumGeLImLAPo9W3GA"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:48 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:38:31 GMT
+recorded_with: VCR 6.4.0

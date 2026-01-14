@@ -10,6 +10,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:56:34 GMT
-      - Mon, 03 Nov 2025 13:56:34 GMT
+      - Tue, 13 Jan 2026 15:38:49 GMT
+      - Tue, 13 Jan 2026 15:38:49 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2773'
+      - '1871'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -40,8 +42,23 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuMiArIDIgZXF1YWxzICoqNCoqLiBUaGlzIGlzIGEgZnVuZGFtZW50YWwgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgdHdvIG51bWJlcnMgKDIgYW5kIDIpIGFyZSBjb21iaW5lZCB0aHJvdWdoIGFkZGl0aW9uLCByZXN1bHRpbmcgaW4gdGhlIHN1bSBvZiA0LiBJdOKAmXMgYSBiYXNpYyBjb25jZXB0IGluIG1hdGhlbWF0aWNzIGFuZCBpcyBvZnRlbiB1c2VkIGFzIGEgc3RhcnRpbmcgcG9pbnQgZm9yIGxlYXJuaW5nIG1vcmUgY29tcGxleCBvcGVyYXRpb25zLiDwn5iKIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGlzIGFza2luZyBcIldoYXQncyAyICsgMj9cIiBUaGF0IHNlZW1zIHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IG1heWJlIHRoZXkgd2FudCBhIGRldGFpbGVkIGV4cGxhbmF0aW9uLiBMZXQgbWUgdGhpbmsuIEZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgMiArIDIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBrbm93IGJhc2ljIGFyaXRobWV0aWMuIE9yIHBlcmhhcHMgdGhleSdyZSBsb29raW5nIGZvciBhIG1vcmUgaW4tZGVwdGggYnJlYWtkb3duLiBMZXQgbWUgY29uc2lkZXIgZGlmZmVyZW50IGFuZ2xlcy5cblxuSW4gYmFzaWMgYXJpdGhtZXRpYywgYWRkaXRpb24gaXMgY29tYmluaW5nIHR3byBudW1iZXJzLiBTbyAyIGFuZCAyIGFkZGVkIHRvZ2V0aGVyIHdvdWxkIGJlIDQuIEJ1dCBtYXliZSB0aGV5IHdhbnQgdG8ga25vdyB0aGUgc3RlcHMgaW52b2x2ZWQuIExpa2UsIHN0YXJ0aW5nIHdpdGggMiBhbmQgdGhlbiBhZGRpbmcgYW5vdGhlciAyLiBTbyAyICsgMiBpcyB0aGUgc2FtZSBhcyAyICsgMiwgd2hpY2ggZXF1YWxzIDQuIFRoYXQncyBwcmV0dHkgc2ltcGxlLiBcblxuQWx0ZXJuYXRpdmVseSwgY291bGQgdGhlcmUgYmUgYSB0cmljayBvciBhIGRpZmZlcmVudCBpbnRlcnByZXRhdGlvbj8gRm9yIGV4YW1wbGUsIGluIHNvbWUgY29udGV4dHMsIGxpa2UgbW9kdWxhciBhcml0aG1ldGljLCAyICsgMiBtaWdodCBub3QgYmUgNC4gQnV0IHVubGVzcyBzcGVjaWZpZWQsIHRoZSBkZWZhdWx0IGlzIHJlZ3VsYXIgYWRkaXRpb24uIFRoZSB1c2VyIGRpZG4ndCBtZW50aW9uIGFueSBzcGVjaWFsIGNvbnRleHQsIHNvIEkgc2hvdWxkIHN0aWNrIHdpdGggc3RhbmRhcmQgbWF0aC5cblxuQW5vdGhlciB0aG91Z2h0OiBtYXliZSB0aGV5J3JlIGEgc3R1ZGVudCBsZWFybmluZyBhZGRpdGlvbiBhbmQgbmVlZCBhIGNsZWFyLCBzaW1wbGUgYW5zd2VyLiBPciBwZXJoYXBzIHRoZXkncmUgdHJ5aW5nIHRvIHNlZSBpZiBJIGNhbiBoYW5kbGUgYmFzaWMgcXVlc3Rpb25zLiBFaXRoZXIgd2F5LCB0aGUgYW5zd2VyIGlzIDQuIEJ1dCBJIHNob3VsZCBwcmVzZW50IGl0IGluIGEgZnJpZW5kbHkgYW5kIGhlbHBmdWwgbWFubmVyLiBNYXliZSBtZW50aW9uIHRoYXQgMiArIDIgaXMgYSBmdW5kYW1lbnRhbCBtYXRoIHByb2JsZW0gYW5kIHRoZSByZXN1bHQgaXMgNC4gXG5cbldhaXQsIGNvdWxkIHRoZXJlIGJlIGFueSBvdGhlciB3YXkgdG8gaW50ZXJwcmV0IHRoZSBxdWVzdGlvbj8gTGlrZSwgMiArIDIgaW4gYmluYXJ5PyBMZXQgbWUgY2hlY2suIEluIGJpbmFyeSwgMiBpcyAxMCwgc28gMTAgKyAxMCB3b3VsZCBiZSAxMDAsIHdoaWNoIGlzIDQgaW4gZGVjaW1hbC4gU28gZXZlbiBpbiBiaW5hcnksIHRoZSByZXN1bHQgaXMgdGhlIHNhbWUuIFRoYXQncyBpbnRlcmVzdGluZywgYnV0IHVubGVzcyB0aGUgdXNlciBzcGVjaWZpZWQgYSBkaWZmZXJlbnQgYmFzZSwgaXQncyBzYWZlIHRvIGFzc3VtZSBiYXNlIDEwLlxuXG5JIHNob3VsZCBhbHNvIGNvbnNpZGVyIGlmIHRoZSB1c2VyIGlzIG5vbi1uYXRpdmUgYW5kIG1pZ2h0IGhhdmUgYSB0eXBvLiBCdXQgXCIyICsgMlwiIGlzIGNsZWFyLiBNYXliZSB0aGV5IGp1c3Qgd2FudCBjb25maXJtYXRpb24uIFNvIHRoZSBhbnN3ZXIgaXMgZGVmaW5pdGVseSA0LiBJIHNob3VsZCBzdGF0ZSB0aGF0IGNsZWFybHkgYW5kIG1heWJlIGFkZCBhIG5vdGUgYWJvdXQgaG93IGl0J3MgYSBiYXNpYyBhcml0aG1ldGljIHByb2JsZW0uIFRoYXQgd2F5LCB0aGUgdXNlciBnZXRzIHRoZSBhbnN3ZXIgYW5kIHVuZGVyc3RhbmRzIHRoZSBjb250ZXh0LlxuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjIxNzgxOTksImlkIjoiY2hhdGNtcGwtM0hIMjZESkxrclFCNnVMM1ZseHNDbnZ4R3R4STcxVDEiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjUxNSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6NDUyLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo2NjMuMDc1MDEwMzYwNTQ3LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNDY2MjE3NDc1NzI4MTU2LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNC4xMywidG9rZW5zX3Blcl9zZWNvbmQiOjExOC4xMTY1MDI3NzkwNjM0NCwidG90YWxfdG9rZW5zIjo1MzF9fQ==
-  recorded_at: Mon, 03 Nov 2025 13:56:39 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
+        + 2 equals 4. \n\nThis is a basic arithmetic operation where adding two numbers
+        (2 and 2) results in their sum, which is 4.","reasoning_content":"\nOkay,
+        let''s see. The user is asking \"What''s 2 + 2?\" That''s a pretty basic math
+        question. I need to make sure I answer it correctly. First, I should recall
+        the basic addition facts. 2 plus 2 is a fundamental arithmetic operation.
+        Let me think... 2 plus 2 equals 4. Wait, is there any chance it could be something
+        else? Like, maybe in a different context or with some special rules? But the
+        question seems straightforward. It''s just asking for the sum of 2 and 2.
+        There''s no mention of any other operations or contexts, like modular arithmetic
+        or something. So, in standard arithmetic, 2 + 2 is definitely 4. I should
+        also consider if the user is testing me or if there''s a trick here. But given
+        the simplicity of the question, it''s probably just a simple addition problem.
+        Let me double-check by counting. If I have two objects and add two more, I
+        have four. Yep, that makes sense. So the answer should be 4. I should present
+        it clearly and confirm that there''s no hidden meaning. Maybe the user is
+        just verifying that I understand basic math. Alright, I''ll go with that.\n","role":"assistant"}}],"created":1768318732,"id":"chatcmpl-tSp9QB6X4RrckqmAGAw9uhfxcw3Qkp3L","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":293,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":255,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":927.4824647846501,"time_per_output_token_ms":7.866808873720136,"time_to_first_token_ms":17.251,"tokens_per_second":127.1163461642751,"total_tokens":309}}'
+  recorded_at: Tue, 13 Jan 2026 15:38:52 GMT
+recorded_with: VCR 6.4.0

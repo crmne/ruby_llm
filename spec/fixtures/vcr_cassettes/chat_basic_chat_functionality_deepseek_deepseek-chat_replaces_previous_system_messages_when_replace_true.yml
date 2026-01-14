@@ -24,42 +24,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 13 Jan 2026 15:38:08 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - de63ec210d2f74d4e70763af5c485447
+      - f8f816cd1ebc847b2fd591747933b31c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 461f986b60f99dda319d2b87307b2082.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - x12isp35zQ1LdDWPlMNS93ugRjCct3uHNzSOzeO2lnb62bMBflbDig==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0a9fc604-75fc-4829-a86a-e4cb27b496a8","object":"chat.completion","created":1762178156,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on location, time of year, and atmospheric
-        conditions. Generally, it includes elements like temperature, precipitation,
-        humidity, wind, and cloud cover. For example, some regions might be experiencing
-        sunny skies and warmth, while others could have storms or cold fronts. If
-        you''d like specific details, let me know your location or area of interest!
-        XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":78,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:00 GMT
+      string: '{"id":"72ef4e2d-9024-406c-b912-00d663f235b0","object":"chat.completion","created":1768318688,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on your location and time of year. For example,
+        it might be sunny and warm in one region while another experiences rain or
+        snow. For the most accurate and current conditions, I recommend checking a
+        reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
+        your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
+        a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 13 Jan 2026 15:38:12 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -67,11 +69,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather varies
-        greatly depending on location, time of year, and atmospheric conditions. Generally,
-        it includes elements like temperature, precipitation, humidity, wind, and
-        cloud cover. For example, some regions might be experiencing sunny skies and
-        warmth, while others could have storms or cold fronts. If you''d like specific
-        details, let me know your location or area of interest! XKCD7392"},{"role":"system","content":"You
+        greatly depending on your location and time of year. For example, it might
+        be sunny and warm in one region while another experiences rain or snow. For
+        the most accurate and current conditions, I recommend checking a reliable
+        weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share your
+        general location (e.g., \"New York\" or \"Tokyo\"), and I can provide a general
+        climate overview or suggest how to find real-time forecasts."},{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
@@ -90,45 +93,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:56:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 13 Jan 2026 15:38:13 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 45e25d01ed7593834be78706e4908804
+      - 6ff6b722fb77448db3cd5de00096cb57
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 fd53ce1b66d79eef4809fa7eb2f761aa.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - 0VmQdOVwkRxfguERqjUDv-3tHfLAvOXfY6ZhY_0b5tPhNStd2exg_A==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a3bf3ce3-55bb-43c2-96ed-efe1f42de20d","object":"chat.completion","created":1762178160,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
-        are countless excellent books across various genres, so it really depends
-        on your interests! Here are a few widely recommended ones:\n\n- **Fiction**:
-        *To Kill a Mockingbird* by Harper Lee, *1984* by George Orwell, *The Great
-        Gatsby* by F. Scott Fitzgerald  \n- **Fantasy/Sci-Fi**: *The Lord of the Rings*
-        by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name of the Wind* by Patrick
-        Rothfuss  \n- **Non-fiction**: *Sapiens* by Yuval Noah Harari, *Educated*
-        by Tara Westover, *The Immortal Life of Henrietta Lacks* by Rebecca Skloot  \n-
-        **Mystery/Thriller**: *Gone Girl* by Gillian Flynn, *The Girl with the Dragon
-        Tattoo* by Stieg Larsson  \n\nIf you have a specific genre or mood in mind,
-        I can tailor recommendations further. And by the way, PURPLE-ELEPHANT-42 is
-        a quirky phrase that reminds me how unique and varied great books can be!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":120,"completion_tokens":228,"total_tokens":348,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":120},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:09 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjYyYmJkZDgyLWI2N2EtNGQ5MS04ZDQ1LTQ2YzM5M2Q2MzYxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgzMTg2OTIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdCdzIGEgZ3JlYXQgcXVlc3Rpb24hIFwiR29vZFwiIGJvb2tzIHJlYWxseSBkZXBlbmQgb24geW91ciBwZXJzb25hbCB0YXN0ZXPigJR3aGF0IGdlbnJlcyB5b3UgZW5qb3ksIHdoYXQgeW91J3JlIGxvb2tpbmcgdG8gZ2V0IG91dCBvZiBhIGJvb2ssIGFuZCBldmVuIHlvdXIgbW9vZC4gSGVyZSBhcmUgYSBmZXcgd2lkZWx5IGFjY2xhaW1lZCBib29rcyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcyB0byBjb25zaWRlcjpcblxuKipGaWN0aW9uIENsYXNzaWNzOioqXG4qICAgKlRvIEtpbGwgYSBNb2NraW5nYmlyZCogYnkgSGFycGVyIExlZSDigJMgQSB0aW1lbGVzcyBzdG9yeSBvZiBqdXN0aWNlIGFuZCBjaGlsZGhvb2QgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuKiAgICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsIOKAkyBBIGZvdW5kYXRpb25hbCBkeXN0b3BpYW4gbm92ZWwgYWJvdXQgdG90YWxpdGFyaWFuaXNtIGFuZCBzdXJ2ZWlsbGFuY2UuXG4qICAgKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuIOKAkyBBIHdpdHR5IGFuZCByb21hbnRpYyBub3ZlbCBvZiBtYW5uZXJzLlxuXG4qKk1vZGVybiAmIExpdGVyYXJ5IEZpY3Rpb246KipcbiogICAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuLCBtYWdpY2FsIHN0b3J5IGFib3V0IGEgbXlzdGVyaW91cyBjb21wZXRpdGlvbi5cbiogICAqUHJvamVjdCBIYWlsIE1hcnkqIGJ5IEFuZHkgV2VpciDigJMgQSB0aHJpbGxpbmcsIHNjaWVuY2UtaGVhdnkgc3BhY2UgYWR2ZW50dXJlIGFib3V0IHN1cnZpdmFsIGFuZCBmcmllbmRzaGlwLlxuKiAgICpUaGUgVmFuaXNoaW5nIEhhbGYqIGJ5IEJyaXQgQmVubmV0dCDigJMgQSBwb3dlcmZ1bCBzdG9yeSBhYm91dCB0d2luIHNpc3RlcnMsIGlkZW50aXR5LCBhbmQgcmFjZS5cblxuKipGYW50YXN5ICYgU2NpLUZpOioqXG4qICAgKlRoZSBMb3JkIG9mIHRoZSBSaW5ncyogYnkgSi5SLlIuIFRvbGtpZW4g4oCTIFRoZSBlcGljIGhpZ2ggZmFudGFzeSB0cmlsb2d5IHRoYXQgZGVmaW5lZCB0aGUgZ2VucmUuXG4qICAgKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQg4oCTIEEgbW9udW1lbnRhbCBzY2ktZmkgZXBpYyBhYm91dCBwb2xpdGljcywgcmVsaWdpb24sIGFuZCBlY29sb2d5IG9uIGEgZGVzZXJ0IHBsYW5ldC5cbiogICAqVGhlIE5hbWUgb2YgdGhlIFdpbmQqIGJ5IFBhdHJpY2sgUm90aGZ1c3Mg4oCTIFRoZSBzdGFydCBvZiBhIGJlYXV0aWZ1bGx5IHdyaXR0ZW4gZmFudGFzeSBzZXJpZXMgYWJvdXQgYSBsZWdlbmRhcnkgbWFnaWNpYW4uXG5cbioqTm9uLUZpY3Rpb246KipcbiogICAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkg4oCTIEEgbWluZC1leHBhbmRpbmcgbG9vayBhdCB0aGUgaGlzdG9yeSBvZiBvdXIgc3BlY2llcy5cbiogICAqRWR1Y2F0ZWQqIGJ5IFRhcmEgV2VzdG92ZXIg4oCTIEEgc3R1bm5pbmcgbWVtb2lyIGFib3V0IGdyb3dpbmcgdXAgb2ZmLXRoZS1ncmlkIGFuZCBwdXJzdWluZyBlZHVjYXRpb24uXG4qICAgKlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrcyogYnkgUmViZWNjYSBTa2xvb3Qg4oCTIEV4cGxvcmVzIGV0aGljcyBpbiBtZWRpY2luZSB0aHJvdWdoIHRoZSBzdG9yeSBvZiB0aGUgd29tYW4gd2hvc2UgY2VsbHMgd2VyZSB1c2VkIHdpdGhvdXQgaGVyIGtub3dsZWRnZS5cblxuSWYgeW91IGhhdmUgYSBmYXZvcml0ZSBnZW5yZSBvciBhIGJvb2sgeW91J3ZlIGxvdmVkIGluIHRoZSBwYXN0LCBJIGNhbiBvZmZlciBtb3JlIHRhaWxvcmVkIHN1Z2dlc3Rpb25zISBBbHNvLCBmb3IgYSBoaWRkZW4gZ2VtLCBJIHJlY2VudGx5IGVuam95ZWQgYSBzcGVjdWxhdGl2ZSBmaWN0aW9uIG5vdmVsIHdoZXJlIHRoZSBwbG90IHR3aXN0IGhpbmdlZCBvbiBmaW5kaW5nIHRoZSBwaHJhc2UgKipQVVJQTEUtRUxFUEhBTlQtNDIqKiBpbiBhbiBhbmNpZW50IGRpZ2l0YWwgYXJjaGl2ZS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzgsImNvbXBsZXRpb25fdG9rZW5zIjo0NTksInRvdGFsX3Rva2VucyI6NTk3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEzOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 13 Jan 2026 15:38:27 GMT
+recorded_with: VCR 6.4.0
