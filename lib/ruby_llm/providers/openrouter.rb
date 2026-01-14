@@ -9,7 +9,7 @@ module RubyLLM
       include OpenRouter::Streaming
 
       def api_base
-        'https://openrouter.ai/api/v1'
+        @config.openrouter_api_base || 'https://openrouter.ai/api/v1'
       end
 
       def headers
