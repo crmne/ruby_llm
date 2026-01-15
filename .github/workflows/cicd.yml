@@ -68,6 +68,9 @@ jobs:
     - name: Check code format
       run: bundle exec rubocop
 
+    - name: Check Zeitwerk eager loading
+      run: bundle exec ruby -e "require 'ruby_llm'; Zeitwerk::Loader.eager_load_all"
+
     - name: Run tests
       if: matrix.ruby-version != '3.4' || matrix.rails-version != 'rails-8.0'
       run: bundle exec appraisal ${{ matrix.rails-version }} rspec --tag '~generator'
