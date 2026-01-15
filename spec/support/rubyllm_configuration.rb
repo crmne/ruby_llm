@@ -14,6 +14,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
+      config.togetherai_api_key = ENV.fetch('TOGETHERAI_API_KEY', nil)
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
