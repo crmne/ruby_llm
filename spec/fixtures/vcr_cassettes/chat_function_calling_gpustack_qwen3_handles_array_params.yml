@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:44:14 GMT
-      - Tue, 13 Jan 2026 15:44:14 GMT
+      - Fri, 16 Jan 2026 17:10:26 GMT
+      - Fri, 16 Jan 2026 17:10:26 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1541'
+      - '1966'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -49,12 +49,17 @@ http_interactions:
         the user wants me to call the array_params function with the tags [\"red\",
         \"blue\"] and get the combined tags. Let me check the function definition.
         The function takes an object with a property \"tags\" which is an array of
-        strings. The required parameter is \"tags\", and it''s strictly typed. So
-        I need to structure the arguments correctly. The user provided the array [\"red\",
-        \"blue\"], so I should pass that as the value for the \"tags\" key. Since
-        the function is supposed to combine the tags, maybe it just returns them as
-        a single array. I don''t need to do anything else except call the function
-        with those parameters. Let me make sure the JSON is formatted properly with
-        the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rgb7azRGWxf3woxY3Dc9rVtqkMovI3cp","type":"function"}]}}],"created":1768319058,"id":"chatcmpl-wIQP56h4OLp6HdM8gRtM8eFhZP06hMlk","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":177,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":152,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3120.3918264166846,"time_per_output_token_ms":17.2873615819209,"time_to_first_token_ms":75.952,"tokens_per_second":57.8457270799379,"total_tokens":414}}'
-  recorded_at: Tue, 13 Jan 2026 15:44:18 GMT
+        strings. The required parameter is \"tags\", and it''s an array. So I need
+        to structure the arguments correctly. The user provided the tags as [\"red\",
+        \"blue\"], so I should pass those exactly. The function''s purpose is to combine
+        the tags, so the output should be those two tags combined, maybe as a single
+        string separated by commas or something. But the function''s description says
+        \"uses params DSL array support,\" so maybe it just returns the array as is.
+        But the user says \"tell me the combined tags,\" so perhaps the function combines
+        them into a single string. Wait, the function''s parameters are set up to
+        accept an array, so when I call it, the arguments should be {\"tags\": [\"red\",
+        \"blue\"]}. Then, the function might process them. Since the user wants the
+        combined result, I need to make sure the function is called correctly. I''ll
+        generate the tool call with the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-tiPvqJCAXRexctegCkSikkKKBlu7KxfH","type":"function"}]}}],"created":1768583428,"id":"chatcmpl-snWLjna0ZEz9oP0qiRLMY7u3u2ML3M9v","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":268,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":243,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4507.502995492497,"time_per_output_token_ms":8.248149253731343,"time_to_first_token_ms":52.579,"tokens_per_second":121.23931917788885,"total_tokens":505}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:28 GMT
 recorded_with: VCR 6.4.0

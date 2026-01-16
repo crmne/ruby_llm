@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 09:41:59 GMT
+      - Fri, 16 Jan 2026 16:43:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3944'
+      - '5513'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '3965'
+      - '5534'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -77,43 +77,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-Cx8ip8FjK2YaHYMnqkkACYGuvbeL2",
-          "object": "chat.completion",
-          "created": 1768210915,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The file ruby.txt contains the plain text: \"Ruby is the best.\"\n\n- One line\n- 17 characters total (including the period)",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 30,
-            "completion_tokens": 422,
-            "total_tokens": 452,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 384,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Mon, 12 Jan 2026 09:41:59 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhDbklDem8wbWtROFBVWjQ4YnczeXc0NzJHUCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MTc5NywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJUaGUgZmlsZSBydWJ5LnR4dCBjb250YWlucyB0aGUgcGxhaW4gdGV4dDogXCJSdWJ5IGlzIHRoZSBiZXN0LlwiIEl04oCZcyBhIHNpbmdsZSBsaW5lLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDMwLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogNjA2LAogICAgInRvdGFsX3Rva2VucyI6IDYzNiwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA1NzYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Fri, 16 Jan 2026 16:43:22 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -122,8 +88,7 @@ http_interactions:
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file ruby.txt contains
-        the plain text: \"Ruby is the best.\"\n\n- One line\n- 17 characters total
-        (including the period)"},{"role":"user","content":[{"type":"text","text":"and
+        the plain text: \"Ruby is the best.\" It’s a single line."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -143,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 09:42:09 GMT
+      - Fri, 16 Jan 2026 16:43:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,13 +120,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '10320'
+      - '3602'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '10337'
+      - '3627'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -169,11 +134,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199917'
+      - '199926'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 24ms
+      - 22ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -197,16 +162,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cx8itUEPhmu9ET09NCNbVntN0jkep",
+          "id": "chatcmpl-CyhCtOeEGaZYqwooOZKp86Pv0bsdF",
           "object": "chat.completion",
-          "created": 1768210919,
+          "created": 1768581803,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file ruby.xml contains a small XML snippet:\n- Content: a single element <truism>Ruby is the best</truism>\n- Inner text: \"Ruby is the best\" (16 characters)\n- One line\n- Total file length (including tags): 33 characters\n- No XML declaration present",
+                "content": "The file ruby.xml contains an XML document with a single element named truism containing the text \"Ruby is the best\".\n\nExact content:\n<truism>Ruby is the best</truism>",
                 "refusal": null,
                 "annotations": []
               },
@@ -214,15 +179,15 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 99,
-            "completion_tokens": 1032,
-            "total_tokens": 1131,
+            "prompt_tokens": 91,
+            "completion_tokens": 432,
+            "total_tokens": 523,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 960,
+              "reasoning_tokens": 384,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -231,5 +196,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 12 Jan 2026 09:42:09 GMT
+  recorded_at: Fri, 16 Jan 2026 16:43:26 GMT
 recorded_with: VCR 6.4.0

@@ -5,20 +5,20 @@ http_interactions:
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
-      string: '{"messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"max_tokens":8192,"anthropic_version":"bedrock-2023-05-31"}'
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]}],"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260112T102946Z
+      - 20260116T165000Z
       X-Amz-Content-Sha256:
-      - 7a77811b731c350413a74515fbfdf94d11ddb2b95f54f710aa3d191d3a82af49
+      - '0880ffefab958357117f2e7d905fa1f9474d7a7fed497a9ef570e276f443ef62'
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260112/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d053f35e77c6ac3be005979247d8c57609891690504c2499364b4a856096db0e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2e56b85612bd13497d5b7862bdaaa06f5aca44debd7092fca6184fbb9b65bf55
       Content-Type:
       - application/json
       Accept:
@@ -31,24 +31,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 10:29:47 GMT
+      - Fri, 16 Jan 2026 16:50:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '314'
+      - '305'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - de17a040-80e9-4abf-ad29-a89c7e5e2aee
+      - 2ed2c418-b3fd-4b98-a2fd-0b9706c5a8c8
       X-Amzn-Bedrock-Invocation-Latency:
-      - '649'
+      - '512'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '13'
+      - '5'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01PnXodbRsx2eoDkSnMN4f1X","type":"message","role":"assistant","content":[{"type":"text","text":"2
-        + 2 = 4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":13}}'
-  recorded_at: Mon, 12 Jan 2026 10:29:47 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01AzUTVoTGHgaa6CwUwZB4nM","type":"message","role":"assistant","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
+  recorded_at: Fri, 16 Jan 2026 16:50:01 GMT
 recorded_with: VCR 6.4.0

@@ -66,7 +66,7 @@ module RubyLLM
             content_blocks << thinking_block if thinking_block
           end
 
-          Anthropic::Chat.append_formatted_content(content_blocks, msg.content)
+          append_formatted_content(content_blocks, msg.content)
 
           {
             role: Anthropic::Chat.convert_role(msg.role),
@@ -99,6 +99,15 @@ module RubyLLM
             role: 'assistant',
             content: content_blocks
           }
+        end
+
+        def append_formatted_content(content_blocks, content)
+          formatted_content = Media.format_content(content)
+          if formatted_content.is_a?(Array)
+            content_blocks.concat(formatted_content)
+          else
+            content_blocks << formatted_content
+          end
         end
       end
     end
