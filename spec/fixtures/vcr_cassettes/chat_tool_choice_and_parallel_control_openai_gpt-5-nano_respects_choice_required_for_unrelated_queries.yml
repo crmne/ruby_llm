@@ -1,0 +1,212 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"When was
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 21:36:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '4451'
+      Openai-Project:
+      - proj_CT47WB5LbNTGaasdAh4lTjTl
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '4471'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199540'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 137ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-CylmcbVdMFQEoKilHC8s0w6xn4UHK",
+          "object": "chat.completion",
+          "created": 1768599394,
+          "model": "gpt-5-nano-2025-08-07",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_eq1ve5lekFoxzf77LQ9Pp1Tg",
+                    "type": "function",
+                    "function": {
+                      "name": "weather",
+                      "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 158,
+            "completion_tokens": 480,
+            "total_tokens": 638,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 448,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: Fri, 16 Jan 2026 21:36:38 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"When was
+        the fall of Rome?"},{"role":"assistant","tool_calls":[{"id":"call_eq1ve5lekFoxzf77LQ9Pp1Tg","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_eq1ve5lekFoxzf77LQ9Pp1Tg"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 21:36:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '6347'
+      Openai-Project:
+      - proj_CT47WB5LbNTGaasdAh4lTjTl
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '6498'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199975'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 7ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DeWxtaEY4RUZRbElId3FWMFNJa2ZVcWg0MjFpYSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU5OTM5OSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJNb3N0IGhpc3RvcmlhbnMgZGF0ZSB0aGUgZmFsbCBvZiBSb21lIGFzIHRoZSBlbmQgb2YgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlIGluIDQ3NiBDRSwgd2hlbiBSb211bHVzIEF1Z3VzdHVsdXMgd2FzIGRlcG9zZWQgYnkgT2RvYWNlci4gU29tZSBzY2hvbGFycyBhbHNvIGNpdGUgZWFybGllciBtYXJrZXJzLCBzdWNoIGFzIHRoZSBzYWNrIG9mIFJvbWUgaW4gNDEwIENFIG9yIDQ1NSBDRS5cblxuVGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlICh0aGUgQnl6YW50aW5lIEVtcGlyZSkgY29udGludWVkIGZvciBuZWFybHkgYW5vdGhlciB0aG91c2FuZCB5ZWFycywgdW50aWwgMTQ1MyBDRSB3aGVuIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW5zLiBUaGUg4oCcZmFsbCBvZiBSb21l4oCdIGNhbiB0aHVzIHJlZmVyIHRvIGRpZmZlcmVudCBldmVudHMgZGVwZW5kaW5nIG9uIHdoZXRoZXIgeW91IG1lYW4gdGhlIFdlc3Rlcm4gRW1waXJlIG9yIHRoZSBlbnRpcmUgUm9tYW4gc3RhdGUuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMjE5LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogNjk3LAogICAgInRvdGFsX3Rva2VucyI6IDkxNiwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA1NzYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Fri, 16 Jan 2026 21:36:45 GMT
+recorded_with: VCR 6.4.0

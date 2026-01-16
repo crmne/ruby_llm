@@ -11,8 +11,9 @@ module RubyLLM
 
         module_function
 
-        # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil, thinking: nil)
+        # rubocop:disable Metrics/ParameterLists,Complexity/PerceivedComplexity
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil)
           payload = {
             model: model.id,
             messages: format_messages(messages),
@@ -45,7 +46,7 @@ module RubyLLM
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
-        # rubocop:enable Metrics/ParameterLists
+        # rubocop:enable Metrics/ParameterLists,Complexity/PerceivedComplexity
 
         def parse_completion_response(response)
           data = response.body
