@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.perplexity.ai/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"}],"stream":false}'
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:54:53 GMT
+      - Tue, 13 Jan 2026 15:40:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,86 +43,29 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "556763b7-83d4-468a-a8d5-f3e05bc51cb7", "model": "sonar", "created":
-        1758725693, "usage": {"prompt_tokens": 6, "completion_tokens": 172, "total_tokens":
-        178, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "https://evrone.com/blog/yukihiro-matsumoto-interview-2021", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "https://auth0.com/blog/a-brief-history-of-ruby/", "https://www.ruby-lang.org/en/about/",
-        "https://evrone.com/blog/yukihiro-matsumoto-interview", "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "https://en.wikipedia.org/wiki/Yukihiro_Matsumoto", "https://www.youtube.com/watch?v=Xa08hqK7ozs"],
-        "search_results": [{"title": "At 30 years old, is Ruby in a mid-life crisis
-        or a renaissance? - TNW", "url": "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "date": "2024-11-11", "last_updated": "2025-09-14", "snippet": "Ruby''s creator,
-        Yukihiro Matsumoto (Matz), released the first public version of the programming
-        language in December 1995, making Ruby just shy of its 30th ..."}, {"title":
-        "Ruby Creator Yukihiro Matsumoto Interview - Evrone", "url": "https://evrone.com/blog/yukihiro-matsumoto-interview-2021",
-        "date": "2021-03-03", "last_updated": "2025-08-29", "snippet": "Yukihiro Matsumoto,
-        creator of Ruby, discusses new features in Ruby 3.0, his approach to improving
-        Ruby, and the language''s future. He likes pattern matching ..."}, {"title":
-        "Ruby (programming language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-09-19", "snippet": "It was developed
-        in the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan. Ruby. Paradigm \u00b7
-        Multi-paradigm: functional, imperative, object-oriented, reflective."}, {"title":
-        "A Brief History of Ruby - Auth0", "url": "https://auth0.com/blog/a-brief-history-of-ruby/",
-        "date": "2023-04-12", "last_updated": "2025-09-22", "snippet": "Ruby is an
-        object-oriented and interpreted programming language created by Yukihiro Matsumoto
-        in 1993. Ruby was quickly adopted in Japan and ..."}, {"title": "About Ruby",
-        "url": "https://www.ruby-lang.org/en/about/", "date": "2003-12-22", "last_updated":
-        "2025-09-16", "snippet": "Ruby is a language of careful balance. Its creator,
-        Yukihiro \u201cMatz\u201d Matsumoto, blended parts of his favorite languages
-        (Perl, Smalltalk, Eiffel, Ada, and Lisp)"}, {"title": "Yukihiro Matsumoto:
-        \"Ruby is designed for humans, not machines\"", "url": "https://evrone.com/blog/yukihiro-matsumoto-interview",
-        "date": "2019-12-09", "last_updated": "2025-09-21", "snippet": "Yukihiro Matsumoto,
-        creator of the Ruby programming language, has been able to join us at RubyRussia
-        2019 as a speaker for the second time."}, {"title": "The Ruby Story - Two-Bit
-        History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "date": "2017-11-19", "last_updated": "2025-09-22", "snippet": "Ruby was created
-        by Yukihiro Matsumoto (Matz) in 1993, aiming for programmer happiness and
-        a better, object-oriented scripting language. It was ..."}, {"title": "Yukihiro
-        Matsumoto - Wikipedia", "url": "https://en.wikipedia.org/wiki/Yukihiro_Matsumoto",
-        "date": "2002-02-25", "last_updated": "2025-09-14", "snippet": "He is best
-        known as the chief designer of the Ruby programming language and its original
-        reference implementation, Matz''s Ruby Interpreter (MRI)."}, {"title": "An
-        Introduction to mRuby | Ruby Creator Yukihiro \"Matz\" Matsumoto", "url":
-        "https://www.youtube.com/watch?v=Xa08hqK7ozs", "date": "2016-01-11", "last_updated":
-        "2025-07-12", "snippet": "... Ruby programming language and its reference
-        implementation, Matz''s Ruby Interpreter (MRI). His demeanor has brought about
-        a motto in the Ruby ..."}], "object": "chat.completion", "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "**Ruby''s
-        creator is Yukihiro \"Matz\" Matsumoto**. He developed Ruby in the mid-1990s
-        in Japan, releasing its first public version in December 1995[1][3]. Matsumoto
-        designed Ruby by blending aspects of his favorite programming languages such
-        as Perl, Smalltalk, Eiffel, Ada, and Lisp, aiming for a balance between functional
-        and imperative programming[5]. His goal was to create a simple, object-oriented,
-        and easy-to-use scripting language focused on human productivity rather than
-        machine performance[6].\n\nRuby\u2019s name was chosen by Matsumoto and a
-        colleague in early 1993, as a short, beautiful name reflecting the language''s
-        desire to be elegant and practical[4]. Ruby has since grown into a popular
-        language worldwide, notably boosted by the Ruby on Rails framework[5]."},
-        "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:54:53 GMT
+      string: !binary |-
+        eyJpZCI6IjdkYTQ4YjEzLWVjNDctNDQ4Ni05NTE4LWNiNDI0YzIxNjkwMCIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzY4MzE4ODA0LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMCwiY29tcGxldGlvbl90b2tlbnMiOjE1MiwidG90YWxfdG9rZW5zIjoxNjIsInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJjb3N0Ijp7ImlucHV0X3Rva2Vuc19jb3N0IjowLjAsIm91dHB1dF90b2tlbnNfY29zdCI6MC4wLCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNX19LCJjaXRhdGlvbnMiOlsiaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvWXVraWhpcm9fTWF0c3Vtb3RvIiwiaHR0cHM6Ly9hdXRoMC5jb20vYmxvZy9hLWJyaWVmLWhpc3Rvcnktb2YtcnVieS8iLCJodHRwczovL3RoZW5leHR3ZWIuY29tL25ld3MvYXQtMzAteWVhcnMtb2xkLWlzLXJ1YnktaW4tYS1taWQtbGlmZS1jcmlzaXMtb3ItYS1yZW5haXNzYW5jZSIsImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9WGEwOGhxSzdvenMiLCJodHRwczovL3R3b2JpdGhpc3Rvcnkub3JnLzIwMTcvMTEvMTkvdGhlLXJ1Ynktc3RvcnkuaHRtbCJdLCJzZWFyY2hfcmVzdWx0cyI6W3sidGl0bGUiOiJZdWtpaGlybyBNYXRzdW1vdG8gLSBXaWtpcGVkaWEiLCJ1cmwiOiJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9ZdWtpaGlyb19NYXRzdW1vdG8iLCJkYXRlIjoiMjAwMi0wMi0yNSIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMTItMTMiLCJzbmlwcGV0IjoiSGUgaXMgYmVzdCBrbm93biBhcyB0aGUgY2hpZWYgZGVzaWduZXIgb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgYW5kIGl0cyBvcmlnaW5hbCByZWZlcmVuY2UgaW1wbGVtZW50YXRpb24sIE1hdHoncyBSdWJ5IEludGVycHJldGVyIChNUkkpLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJBIEJyaWVmIEhpc3Rvcnkgb2YgUnVieSAtIEF1dGgwIiwidXJsIjoiaHR0cHM6Ly9hdXRoMC5jb20vYmxvZy9hLWJyaWVmLWhpc3Rvcnktb2YtcnVieS8iLCJkYXRlIjoiMjAyMy0wNC0xMiIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDEtMDgiLCJzbmlwcGV0IjoiUnVieSBpcyBhbiBvYmplY3Qtb3JpZW50ZWQgYW5kIGludGVycHJldGVkIHByb2dyYW1taW5nIGxhbmd1YWdlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIGluIDE5OTMuIFJ1Ynkgd2FzIHF1aWNrbHkgYWRvcHRlZCBpbiBKYXBhbiBhbmQgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkF0IDMwIHllYXJzIG9sZCwgaXMgUnVieSBpbiBhIG1pZC1saWZlIGNyaXNpcyBvciBhIHJlbmFpc3NhbmNlPyAtIFROVyIsInVybCI6Imh0dHBzOi8vdGhlbmV4dHdlYi5jb20vbmV3cy9hdC0zMC15ZWFycy1vbGQtaXMtcnVieS1pbi1hLW1pZC1saWZlLWNyaXNpcy1vci1hLXJlbmFpc3NhbmNlIiwiZGF0ZSI6IjIwMjQtMTEtMTEiLCJsYXN0X3VwZGF0ZWQiOiIyMDI1LTEyLTE3Iiwic25pcHBldCI6IlJ1YnkncyBjcmVhdG9yLCBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopLCByZWxlYXNlZCB0aGUgZmlyc3QgcHVibGljIHZlcnNpb24gb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIGluIERlY2VtYmVyIDE5OTUsIG1ha2luZyBSdWJ5IGp1c3Qgc2h5IG9mIGl0cyAzMHRoIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJBbiBJbnRyb2R1Y3Rpb24gdG8gbVJ1YnkgfCBSdWJ5IENyZWF0b3IgWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvIiwidXJsIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1YYTA4aHFLN296cyIsImRhdGUiOiIyMDE2LTAxLTExIiwibGFzdF91cGRhdGVkIjoiMjAyNS0wNy0xMiIsInNuaXBwZXQiOiIuLi4gUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSBhbmQgaXRzIHJlZmVyZW5jZSBpbXBsZW1lbnRhdGlvbiwgTWF0eidzIFJ1YnkgSW50ZXJwcmV0ZXIgKE1SSSkuIEhpcyAuLi4gRm91bmRlZCBieSBiaWxsaW9uYWlyZSB2ZW50dXJlIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJUaGUgUnVieSBTdG9yeSAtIFR3by1CaXQgSGlzdG9yeSIsInVybCI6Imh0dHBzOi8vdHdvYml0aGlzdG9yeS5vcmcvMjAxNy8xMS8xOS90aGUtcnVieS1zdG9yeS5odG1sIiwiZGF0ZSI6IjIwMTctMTEtMTkiLCJsYXN0X3VwZGF0ZWQiOiIyMDI1LTEyLTIzIiwic25pcHBldCI6Ill1a2loaXJvIE1hdHN1bW90bywgYWxzbyBrbm93biBhcyDigJxNYXR6LOKAnSBncmFkdWF0ZWQgZnJvbSB0aGUgVW5pdmVyc2l0eSBvZiBUc3VrdWJhIGluIDE5OTAuIFRzdWt1YmEgaXMgYSBzbWFsbCB0b3duIGp1c3Qgbm9ydGhlYXN0IG9mIFRva3lvLCAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiKipZdWtpaGlybyBNYXRzdW1vdG8qKiwgYWxzbyBrbm93biBhcyAqKk1hdHoqKiwgaXMgdGhlIGNyZWF0b3Igb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuWzFdWzJdWzNdWzVdXG5cbkhlIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiAxOTkzIGFzIGEgc2NyaXB0aW5nIGxhbmd1YWdlIGJsZW5kaW5nIGZlYXR1cmVzIGhlIGFkbWlyZWQgZnJvbSBQZXJsLCBTbWFsbHRhbGssIGFuZCBvdGhlcnMsIGFpbWluZyBmb3IgYW4gb2JqZWN0LW9yaWVudGVkIGRlc2lnbiB0aGF0IGVtcGhhc2l6ZWQgcHJvZ3JhbW1lciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eS5bMl1bNV0gVGhlIGZpcnN0IHZlcnNpb24gd2FzIHJlbGVhc2VkIHB1YmxpY2x5IG9uIERlY2VtYmVyIDIxLCAxOTk1LCBhbmQgTWF0c3Vtb3RvIGRldmVsb3BlZCBpdHMgb3JpZ2luYWwgcmVmZXJlbmNlIGltcGxlbWVudGF0aW9uLCBNYXR6J3MgUnVieSBJbnRlcnByZXRlciAoTVJJKS5bMV1bM10gSGUgY29udGludWVzIHRvIGxlYWQgUnVieSdzIGRldmVsb3BtZW50IGFuZCBoYXMgY3JlYXRlZCByZWxhdGVkIHByb2plY3RzIGxpa2UgbXJ1YnkgYW5kIHN0cmVlbS5bMV1bNF0gUnVieSBnYWluZWQgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4gcG9wdWxhcml0eSBwYXJ0bHkgdGhyb3VnaCBmcmFtZXdvcmtzIGxpa2UgUnVieSBvbiBSYWlscy5bMl1bM11bNV0ifSwiZGVsdGEiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV19
+  recorded_at: Tue, 13 Jan 2026 15:40:04 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"sonar","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"**Ruby''s creator is Yukihiro \"Matz\"
-        Matsumoto**. He developed Ruby in the mid-1990s in Japan, releasing its first
-        public version in December 1995[1][3]. Matsumoto designed Ruby by blending
-        aspects of his favorite programming languages such as Perl, Smalltalk, Eiffel,
-        Ada, and Lisp, aiming for a balance between functional and imperative programming[5].
-        His goal was to create a simple, object-oriented, and easy-to-use scripting
-        language focused on human productivity rather than machine performance[6].\n\nRuby’s
-        name was chosen by Matsumoto and a colleague in early 1993, as a short, beautiful
-        name reflecting the language''s desire to be elegant and practical[4]. Ruby
-        has since grown into a popular language worldwide, notably boosted by the
-        Ruby on Rails framework[5]."},{"role":"user","content":"What year did he create
-        Ruby?"}],"stream":false}'
+      string: '{"model":"sonar","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"role":"assistant","content":"**Yukihiro
+        Matsumoto**, also known as **Matz**, is the creator of the Ruby programming
+        language.[1][2][3][5]\n\nHe began developing Ruby in 1993 as a scripting language
+        blending features he admired from Perl, Smalltalk, and others, aiming for
+        an object-oriented design that emphasized programmer happiness and productivity.[2][5]
+        The first version was released publicly on December 21, 1995, and Matsumoto
+        developed its original reference implementation, Matz''s Ruby Interpreter
+        (MRI).[1][3] He continues to lead Ruby''s development and has created related
+        projects like mruby and streem.[1][4] Ruby gained <GOOGLE_CLOUD_LOCATION>
+        popularity partly through frameworks like Ruby on Rails.[2][3][5]"},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -137,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:54:56 GMT
+      - Tue, 13 Jan 2026 15:40:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -156,57 +99,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "b039008d-279c-4185-a677-9d6cd6a3b221", "model": "sonar", "created":
-        1758725696, "usage": {"prompt_tokens": 185, "completion_tokens": 98, "total_tokens":
-        283, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://railsformers.com/the-language-that-changed-the-world-of-programming-celebrates-29-years",
-        "https://pwrteams.com/content-hub/blog/29-years-ruby", "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "https://sumatosoft.com/blog/everything-you-should-know-about-ruby", "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "https://www.tutorialspoint.com/ruby/ruby_overview.htm", "https://www.ruby-lang.org/en/about/",
-        "https://twobithistory.org/2017/11/19/the-ruby-story.html", "https://simple.wikipedia.org/wiki/Ruby_(programming_language)"],
-        "search_results": [{"title": "The language that changed the world of programming
-        celebrates 29 ...", "url": "https://railsformers.com/the-language-that-changed-the-world-of-programming-celebrates-29-years",
-        "date": "2024-12-21", "last_updated": "2025-09-13", "snippet": "On 21 December
-        2024, it will be 29 years since the first public version of the Ruby programming
-        language saw the light of day."}, {"title": "Celebrating Ruby: a journey through
-        29 years of programming ...", "url": "https://pwrteams.com/content-hub/blog/29-years-ruby",
-        "date": "2024-12-20", "last_updated": "2025-09-18", "snippet": "Ruby, created
-        in 1995, is a powerful language known for its elegance, simplicity, and the
-        Ruby on Rails framework, which revolutionized web ..."}, {"title": "Ruby (programming
-        language) - Wikipedia", "url": "https://en.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2001-10-17", "last_updated": "2025-09-19", "snippet": "It was developed
-        in the mid-1990s by Yukihiro \"Matz\" Matsumoto in Japan. Ruby. Paradigm \u00b7
-        Multi-paradigm: functional, imperative, object-oriented, reflective."}, {"title":
-        "Complete Guide: Everything You Should Know About Ruby Use", "url": "https://sumatosoft.com/blog/everything-you-should-know-about-ruby",
-        "date": "2023-03-09", "last_updated": "2025-09-23", "snippet": "Ruby programming
-        language was created in Japan in the mid-1990s by Yukihiro \u201cMatz\u201d
-        Matsumoto. Matsumoto began designing Ruby in 1993 as a hobby ..."}, {"title":
-        "At 30 years old, is Ruby in a mid-life crisis or a renaissance?", "url":
-        "https://thenextweb.com/news/at-30-years-old-is-ruby-in-a-mid-life-crisis-or-a-renaissance",
-        "date": "2024-11-11", "last_updated": "2025-09-14", "snippet": "Ruby''s creator,
-        Yukihiro Matsumoto (Matz), released the first public version of the programming
-        language in December 1995, making Ruby just shy of its 30th ..."}, {"title":
-        "Ruby - Overview - Tutorials Point", "url": "https://www.tutorialspoint.com/ruby/ruby_overview.htm",
-        "date": "2019-03-01", "last_updated": "2025-09-23", "snippet": "Ruby is a
-        pure object-oriented programming language. It was created in 1993 by Yukihiro
-        Matsumoto of Japan."}, {"title": "About Ruby", "url": "https://www.ruby-lang.org/en/about/",
-        "date": "2003-12-22", "last_updated": "2025-09-16", "snippet": "Since its
-        public release in 1995, Ruby has drawn devoted coders worldwide. In 2006,
-        Ruby achieved mass acceptance. With active user groups formed in the world''s
-        ..."}, {"title": "The Ruby Story - Two-Bit History", "url": "https://twobithistory.org/2017/11/19/the-ruby-story.html",
-        "date": "2017-11-19", "last_updated": "2025-09-22", "snippet": "Ruby was created
-        by Yukihiro Matsumoto (Matz) in 1993, aiming for programmer happiness and
-        a better, object-oriented scripting language. It was ..."}, {"title": "Ruby
-        (programming language) - Simple English Wikipedia, the free ...", "url": "https://simple.wikipedia.org/wiki/Ruby_(programming_language)",
-        "date": "2013-04-22", "last_updated": "2025-09-21", "snippet": "Ruby is the
-        name of a programming language that was created in the mid-1990s by Yukihiro
-        \"Matz\" Matsumoto in Japan."}], "object": "chat.completion", "choices": [{"index":
-        0, "finish_reason": "stop", "message": {"role": "assistant", "content": "Yukihiro
-        \"Matz\" Matsumoto began creating Ruby in **1993**, with the first public
-        release of the language (version 0.95) occurring on **December 21, 1995**[1][2][3][4][5][6].
-        He conceived the idea and started designing Ruby in 1993, inspired by a desire
-        for a true object-oriented scripting language, but it was officially released
-        to the public two years later in 1995."}, "delta": {"role": "assistant", "content":
-        ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:54:56 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjQyYTA1NDlmLWE2NDgtNDQ0YS1iODkwLWZiN2MzNzU5ZGQwOSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzY4MzE4ODA3LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNjksImNvbXBsZXRpb25fdG9rZW5zIjoxNDgsInRvdGFsX3Rva2VucyI6MzE3LCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wLCJvdXRwdXRfdG9rZW5zX2Nvc3QiOjAuMCwicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDV9fSwiY2l0YXRpb25zIjpbImh0dHBzOi8vd3d3LjxHT09HTEVfQ0xPVURfTE9DQVRJT04+dGVjaGNvdW5jaWwub3JnL2Jsb2dzL3doYXQtaXMtcnVieS8iLCJodHRwczovL3JhaWxzZm9ybWVycy5jb20vdGhlLWxhbmd1YWdlLXRoYXQtY2hhbmdlZC10aGUtd29ybGQtb2YtcHJvZ3JhbW1pbmctY2VsZWJyYXRlcy0yOS15ZWFycyIsImh0dHBzOi8vd3d3LnByb2draWRzLmNvbS9lbi9ibG9nL2ludGVydnl1LXMtaXp2ZXN0bnltaS1wcm9ncmFtbWlzdGFtaS15dWtpaGlyby1tYWN1bW90by1pLXJ1YnkiLCJodHRwczovL2F1dGgwLmNvbS9ibG9nL2EtYnJpZWYtaGlzdG9yeS1vZi1ydWJ5LyIsImh0dHBzOi8vcHdydGVhbXMuY29tL2NvbnRlbnQtaHViL2Jsb2cvMjkteWVhcnMtcnVieSIsImh0dHBzOi8vdGhlbmV4dHdlYi5jb20vbmV3cy9hdC0zMC15ZWFycy1vbGQtaXMtcnVieS1pbi1hLW1pZC1saWZlLWNyaXNpcy1vci1hLXJlbmFpc3NhbmNlIiwiaHR0cHM6Ly90d29iaXRoaXN0b3J5Lm9yZy8yMDE3LzExLzE5L3RoZS1ydWJ5LXN0b3J5Lmh0bWwiLCJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Fib3V0LyJdLCJzZWFyY2hfcmVzdWx0cyI6W3sidGl0bGUiOiJXaGF0IGlzIFJ1Ynk/IC0gR2xvYmFsIFRlY2ggQ291bmNpbCIsInVybCI6Imh0dHBzOi8vd3d3LjxHT09HTEVfQ0xPVURfTE9DQVRJT04+dGVjaGNvdW5jaWwub3JnL2Jsb2dzL3doYXQtaXMtcnVieS8iLCJkYXRlIjoiMjAyNC0wNS0xNCIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMTItMjMiLCJzbmlwcGV0IjoiUnVieSwgYSBmcmVlIGFuZCB1c2VyLWZyaWVuZGx5IGxhbmd1YWdlLCB3YXMgZGV2ZWxvcGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byBpbiAxOTk1IGZvciBzaW1wbGljaXR5IGFuZCBwcm9kdWN0aXZpdHkuIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlRoZSBsYW5ndWFnZSB0aGF0IGNoYW5nZWQgdGhlIHdvcmxkIG9mIHByb2dyYW1taW5nIGNlbGVicmF0ZXMgMjkgLi4uIiwidXJsIjoiaHR0cHM6Ly9yYWlsc2Zvcm1lcnMuY29tL3RoZS1sYW5ndWFnZS10aGF0LWNoYW5nZWQtdGhlLXdvcmxkLW9mLXByb2dyYW1taW5nLWNlbGVicmF0ZXMtMjkteWVhcnMiLCJkYXRlIjoiMjAyNC0xMi0yMSIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMTItMTMiLCJzbmlwcGV0IjoiUnVieSB3YXMgYm9ybiBpbiAxOTk1LCB3aGVuIGl0cyBmaXJzdCBwdWJsaWMgdmVyc2lvbiB3YXMgcmVsZWFzZWQuIEZyb20gdGhlIGJlZ2lubmluZywgTWF0eiBidWlsdCB0aGUgbGFuZ3VhZ2Ugb24gYSBmZXcgZnVuZGFtZW50YWwgcGlsbGFyczogdGhlIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJZdWtpaGlybyBNYXRzdW1vdG8gYW5kIFJ1YnkgLSBQcm9nS2lkcyIsInVybCI6Imh0dHBzOi8vd3d3LnByb2draWRzLmNvbS9lbi9ibG9nL2ludGVydnl1LXMtaXp2ZXN0bnltaS1wcm9ncmFtbWlzdGFtaS15dWtpaGlyby1tYWN1bW90by1pLXJ1YnkiLCJkYXRlIjoiMjAyNC0wOC0xOSIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDEtMDQiLCJzbmlwcGV0IjoiUnVieSBpcyBhbiBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBpbiAxOTk1IGJ5IEphcGFuZXNlIHByb2dyYW1tZXIgWXVraWhpcm8gTWF0c3Vtb3RvLiBSdWJ5IGlzIGVsZWdhbnQgYW5kIGZsZXhpYmxlLCB3aGljaCAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiQSBCcmllZiBIaXN0b3J5IG9mIFJ1YnkgLSBBdXRoMCIsInVybCI6Imh0dHBzOi8vYXV0aDAuY29tL2Jsb2cvYS1icmllZi1oaXN0b3J5LW9mLXJ1YnkvIiwiZGF0ZSI6IjIwMjMtMDQtMTIiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAxLTA4Iiwic25pcHBldCI6IlJ1YnkgaXMgYW4gb2JqZWN0LW9yaWVudGVkIGFuZCBpbnRlcnByZXRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBjcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byBpbiAxOTkzLiBSdWJ5IHdhcyBxdWlja2x5IGFkb3B0ZWQgaW4gSmFwYW4gYW5kIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJDZWxlYnJhdGluZyBSdWJ5OiBhIGpvdXJuZXkgdGhyb3VnaCAyOSB5ZWFycyBvZiBwcm9ncmFtbWluZyAuLi4iLCJ1cmwiOiJodHRwczovL3B3cnRlYW1zLmNvbS9jb250ZW50LWh1Yi9ibG9nLzI5LXllYXJzLXJ1YnkiLCJkYXRlIjoiMjAyNC0xMi0yMCIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMTItMTYiLCJzbmlwcGV0IjoiV2hlbiBZdWtpaGlybyBNYXRzdW1vdG8gYmVnYW4gd29ya2luZyBvbiBSdWJ5IGluIDE5OTMsIGhlIGVudmlzaW9uZWQgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSB0aGF0IHByaW9yaXRpc2VkIGRldmVsb3BlciBoYXBwaW5lc3MgYW5kIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJBdCAzMCB5ZWFycyBvbGQsIGlzIFJ1YnkgaW4gYSBtaWQtbGlmZSBjcmlzaXMgb3IgYSByZW5haXNzYW5jZT8gLSBUTlciLCJ1cmwiOiJodHRwczovL3RoZW5leHR3ZWIuY29tL25ld3MvYXQtMzAteWVhcnMtb2xkLWlzLXJ1YnktaW4tYS1taWQtbGlmZS1jcmlzaXMtb3ItYS1yZW5haXNzYW5jZSIsImRhdGUiOiIyMDI0LTExLTExIiwibGFzdF91cGRhdGVkIjoiMjAyNS0xMi0xNyIsInNuaXBwZXQiOiJSdWJ5J3MgY3JlYXRvciwgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSwgcmVsZWFzZWQgdGhlIGZpcnN0IHB1YmxpYyB2ZXJzaW9uIG9mIHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBpbiBEZWNlbWJlciAxOTk1LCBtYWtpbmcgUnVieSBqdXN0IHNoeSBvZiBpdHMgMzB0aCAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiVGhlIFJ1YnkgU3RvcnkgLSBUd28tQml0IEhpc3RvcnkiLCJ1cmwiOiJodHRwczovL3R3b2JpdGhpc3Rvcnkub3JnLzIwMTcvMTEvMTkvdGhlLXJ1Ynktc3RvcnkuaHRtbCIsImRhdGUiOiIyMDE3LTExLTE5IiwibGFzdF91cGRhdGVkIjoiMjAyNS0xMi0yMyIsInNuaXBwZXQiOiJNYXRzdW1vdG8gc3RhcnRlZCB3b3JraW5nIG9uIFJ1YnkgaW4gMTk5Mywgb25seSBhIGZldyB5ZWFycyBhZnRlciBncmFkdWF0aW5nLiBIZSBiZWdhbiB3b3JraW5nIG9uIFJ1YnkgYmVjYXVzZSBoZSB3YXMgbG9va2luZyBmb3IgYSBzY3JpcHRpbmcgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkFib3V0IFJ1YnkiLCJ1cmwiOiJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuL2Fib3V0LyIsImRhdGUiOiIyMDAzLTEyLTIyIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMS0xMiIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgbGFuZ3VhZ2Ugb2YgY2FyZWZ1bCBiYWxhbmNlLiBJdHMgY3JlYXRvciwgWXVraWhpcm8g4oCcTWF0euKAnSBNYXRzdW1vdG8sIGJsZW5kZWQgcGFydHMgb2YgaGlzIGZhdm9yaXRlIGxhbmd1YWdlcyAoUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgYW5kIExpc3ApIiwic291cmNlIjoid2ViIn1dLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IioqWXVraWhpcm8gTWF0c3Vtb3RvIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiAxOTkzLCB3aXRoIGl0cyBmaXJzdCBwdWJsaWMgcmVsZWFzZSBvbiBEZWNlbWJlciAyMSwgMTk5NS4qKlsxXVsyXVs0XVs1XVs2XVs3XVxuXG5EZXZlbG9wbWVudCBzdGFydGVkIGluICoqMTk5MyoqIHdoZW4gTWF0c3Vtb3RvIHNvdWdodCBhIG1vcmUgaW50dWl0aXZlLCBvYmplY3Qtb3JpZW50ZWQgc2NyaXB0aW5nIGxhbmd1YWdlIGluc3BpcmVkIGJ5IFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgYW5kIG90aGVycy5bMV1bNF1bNV1bN10gVGhlIGluaXRpYWwgcHVibGljIHZlcnNpb24sIDAuOTUsIHdhcyBhbm5vdW5jZWQgaW4gKioxOTk1Kiogb24gSmFwYW5lc2UgbmV3c2dyb3VwcywgbWFya2luZyBSdWJ5J3Mgb2ZmaWNpYWwgZGVidXQuWzFdWzJdWzVdWzZdIFdoaWxlIHNvbWUgc291cmNlcyBicm9hZGx5IHN0YXRlIFwiY3JlYXRlZCBpbiAxOTk1LFwiIHRoZSB0aW1lbGluZSBkaXN0aW5ndWlzaGVzIGNvbmNlcHRpb24gYW5kIGluaXRpYWwgd29yayBmcm9tIHB1YmxpYyBhdmFpbGFiaWxpdHkuWzNdWzRdIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
+  recorded_at: Tue, 13 Jan 2026 15:40:07 GMT
+recorded_with: VCR 6.4.0

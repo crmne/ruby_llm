@@ -1,0 +1,92 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Call the any-of params
+        tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"OBJECT","properties":{"task":{"type":"STRING","description":"Task
+        description"},"status":{"type":"STRING","description":"Optional task status","enum":["pending","done"],"nullable":true}},"required":["task","status"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 13 Jan 2026 15:44:28 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1269
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "any_of_params",
+                      "args": {
+                        "status": "pending",
+                        "task": "Review PR"
+                      }
+                    },
+                    "thoughtSignature": "CuUEAXLI2nxvUtsQUMyR8rWlob7t9wtutB3x+XLxzBpmsHf5fAtG6LCbsvw2wWDi+MkZ/AMDaP5Ek17vBjYVo/1ydmgRQuw80zxV0xW+sOmpvEhNsBttIn5ntO8dJ6FfKx9QN8iJ7NOMYnr06SYT0RMZwBwVmg944NqJMN8ZWFxztwiSEgp+ffr0zQBgyUQmbTjJyTjQAr26oNQAmSMhgie0hY4E/m3HxB61hUKS2hHZGVdYu0iCoaE/+ewxoOLap6hPaS1D8QbUhEkSCKGiKzPJUxnYrPMpmeA9cag3RxAsKG6DriEUV0bcmw/DT2rTBd+MwLpCDCovKnJw7E7fCMgarZGOvCHK1a7qvQkdBXFef/JsNXI+pEEa4UfXWxy7SzjNfXdMr1VGzhlQf+uoc6vLQpTru+/JHJxWZZoG9QqYI+i4XckzWkjWZeQ4JcEFBsvUbbVJFco0Ryljb3uJuDaOwx0ok8yJR1HNkAIRLbkP1jI2tV/sKAE2vSEzC+UrIy/l+4zA/w7O0Au9h7AvanEPrZSb1d/3TMjXZjeG+w2+oIYxDU45o5S4ShUXfgf4olSvA+QcWeg10go9mtn+vXIf5bRD9plD8/ndvPfs6D9YN+i63NA8lhSx9yJoMUTxZLbeFbjPO8CIe4+WWFyZ6Tx/ueSOKix34/YlFr4a9frjfg4QzWItrnh/gp8b3PI0k6nlholvEWCOEVG/JEbiSyjJ0v42CmoKCFwPpGRBwVHxNqX6uzZ9NyMgWYEuErv1aQmSAzGBJ0vHzOQVJCfNJtxjpdAbN5FfkC7Desf3eXa2jwuEAZ1X1w=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 84,
+            "candidatesTokenCount": 23,
+            "totalTokenCount": 268,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 84
+              }
+            ],
+            "thoughtsTokenCount": 161
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "XGhmaemaAtKfvdIPwtjRwAs"
+        }
+  recorded_at: Tue, 13 Jan 2026 15:44:28 GMT
+recorded_with: VCR 6.4.0

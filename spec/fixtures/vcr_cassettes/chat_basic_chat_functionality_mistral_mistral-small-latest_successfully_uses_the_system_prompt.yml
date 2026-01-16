@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:52 GMT
+      - Tue, 13 Jan 2026 15:39:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,38 +33,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
+      - '019bb802-f0db-735f-bf6c-ebb20ce0e0b0'
       X-Kong-Request-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
-      X-Envoy-Upstream-Service-Time:
-      - '2049'
+      - '019bb802-f0db-735f-bf6c-ebb20ce0e0b0'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499570'
+      - '1999391'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999970969'
+      - '9999988515'
       X-Ratelimit-Tokens-Query-Cost:
-      - '158'
-      X-Ratelimit-Limit-Req-Minute:
-      - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '55'
+      - '111'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '356'
+      X-Envoy-Upstream-Service-Time:
+      - '2896'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2049'
+      - '2897'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -73,15 +75,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d2f6484094c74b41928f6fac1528c5f6","created":1758725630,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":158,"completion_tokens":127},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
-        an AI and I don''t have real-time data access or the ability to browse the
-        internet, so I can''t provide current weather information. However, I can
-        tell you that weather typically refers to the atmospheric conditions in a
-        specific place at a specific time, such as temperature, humidity, precipitation,
-        and wind speed. If you''re looking for the current weather, I recommend checking
-        a reliable weather website or application. And just to include the phrase
-        you requested, you might find that checking the weather is a lot like XKCD7392
-        - it''s something we do without always understanding the full complexity behind
-        it."}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:53:52 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"195201cb387c41b0a14b9975ee8ad4af","created":1768318759,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":111,"completion_tokens":80},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+        an AI and don''t have real-time capabilities, so I can''t provide current
+        weather updates. However, I can tell you that weather is a fascinating topic
+        that has been explored in various ways, including in the comic XKCD7392, which
+        humorously depicts different weather conditions. To get the current weather,
+        you might want to check a reliable weather website or application."}}]}'
+  recorded_at: Tue, 13 Jan 2026 15:39:22 GMT
+recorded_with: VCR 6.4.0

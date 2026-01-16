@@ -9,7 +9,9 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:43 GMT
-      - Wed, 24 Sep 2025 15:09:43 GMT
+      - Tue, 13 Jan 2026 15:38:51 GMT
+      - Tue, 13 Jan 2026 15:38:52 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '791'
+      - '1740'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,7 +44,20 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        capital of France is **Paris**. It is the largest city in France and serves
-        as the political, economic, and cultural center of the country.","role":"assistant"}}],"created":1758726586,"id":"chatcmpl-NkQmxUwXtzbzG3kiocc96BlG7CDcLRdf","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":232,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":197,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":876.4241893076249,"time_per_output_token_ms":9.124987068965517,"time_to_first_token_ms":17.115,"tokens_per_second":109.58919639470439,"total_tokens":247}}'
-  recorded_at: Wed, 24 Sep 2025 15:09:46 GMT
-recorded_with: VCR 6.3.1
+        capital of France is **Paris**. It is the largest city in the country and
+        has been the political, cultural, and economic center of France for centuries.
+        Famous landmarks like the Eiffel Tower, the Louvre Museum, and Notre-Dame
+        Cathedral make Paris a <GOOGLE_CLOUD_LOCATION>ly recognized hub of art, history,
+        and innovation.","reasoning_content":"\nOkay, the user is asking for the capital
+        of France. I need to make sure I have the correct answer. I remember that
+        France''s capital is Paris. Let me confirm that. Paris is the largest city
+        in France and has been the capital since the 13th century. It''s also known
+        for its landmarks like the Eiffel Tower and the Louvre Museum. I should state
+        that clearly. The user might be a student or someone just curious. Maybe they
+        need this for a test or a conversation. I should keep the answer straightforward
+        but also mention a bit about why Paris is significant. No need to overcomplicate
+        it. Just the main point: Paris is the capital. Double-checking to avoid any
+        mistakes. Yep, that''s right. No other cities are considered the capital.
+        So the answer is Paris.\n","role":"assistant"}}],"created":1768318734,"id":"chatcmpl-WB6RTkez58pgD16fjDMb2cbP4Uuomkeb","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":238,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":169,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":1051.6721587323846,"time_per_output_token_ms":7.814079831932773,"time_to_first_token_ms":14.263,"tokens_per_second":127.97412126677173,"total_tokens":253}}'
+  recorded_at: Tue, 13 Jan 2026 15:38:54 GMT
+recorded_with: VCR 6.4.0

@@ -22,6 +22,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @thinking = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -31,7 +32,7 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: Content.new(message, with)
+      add_message role: :user, content: build_content(message, with)
       complete(&)
     end
 
@@ -64,6 +65,13 @@ module RubyLLM
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_thinking(effort: nil, budget: nil)
+      raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
+
+      @thinking = Thinking::Config.new(effort: effort, budget: budget)
       self
     end
 
@@ -130,6 +138,7 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        thinking: @thinking,
         &wrap_streaming_block(&)
       )
 
@@ -172,15 +181,9 @@ module RubyLLM
     def wrap_streaming_block(&block)
       return nil unless block_given?
 
-      first_chunk_received = false
+      @on[:new_message]&.call
 
       proc do |chunk|
-        # Create message on first content chunk
-        unless first_chunk_received
-          first_chunk_received = true
-          @on[:new_message]&.call
-        end
-
         block.call chunk
       end
     end
@@ -193,7 +196,8 @@ module RubyLLM
         @on[:tool_call]&.call(tool_call)
         result = execute_tool tool_call
         @on[:tool_result]&.call(result)
-        content = result.is_a?(Content) ? result : result.to_s
+        tool_payload = result.is_a?(Tool::Halt) ? result.content : result
+        content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
         message = add_message role: :tool, content:, tool_call_id: tool_call.id
         @on[:end_message]&.call(message)
 
@@ -207,6 +211,16 @@ module RubyLLM
       tool = tools[tool_call.name.to_sym]
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def build_content(message, attachments)
+      return message if content_like?(message)
+
+      Content.new(message, attachments)
+    end
+
+    def content_like?(object)
+      object.is_a?(Content) || object.is_a?(Content::Raw)
     end
   end
 end

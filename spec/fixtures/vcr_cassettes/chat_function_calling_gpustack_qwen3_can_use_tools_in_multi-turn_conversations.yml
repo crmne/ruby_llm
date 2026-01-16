@@ -9,10 +9,12 @@ http_interactions:
         weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"enable_thinking":false}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,15 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:31 GMT
-      - Wed, 24 Sep 2025 15:10:31 GMT
+      - Tue, 13 Jan 2026 15:41:32 GMT
+      - Tue, 13 Jan 2026 15:41:32 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '832'
+      - '1375'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,22 +46,45 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA","type":"function"}]}}],"created":1758726633,"id":"chatcmpl-Rr5r4FgIlXpDrm1ucX2rXW10wo0L0Z14","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":154,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":114,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":260,"prompt_tokens_details":{"cached_tokens":259},"prompt_tokens_per_second":22159.720446603595,"time_per_output_token_ms":9.541896103896104,"time_to_first_token_ms":11.733,"tokens_per_second":104.8009734241064,"total_tokens":414}}'
-  recorded_at: Wed, 24 Sep 2025 15:10:33 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ","type":"function"}]}}],"created":1768318895,"id":"chatcmpl-XSDkuj2lBvb3uVtRPM6vWKeDRaPn5kP4","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":153,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":115,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":268},"prompt_tokens_per_second":12027.721886876816,"time_per_output_token_ms":19.889934640522874,"time_to_first_token_ms":22.365,"tokens_per_second":50.27668607631541,"total_tokens":422}}'
+  recorded_at: Tue, 13 Jan 2026 15:41:35 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\n","reasoning_content":"\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"]}}}],"enable_thinking":false}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -72,15 +97,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:33 GMT
-      - Wed, 24 Sep 2025 15:10:33 GMT
+      - Tue, 13 Jan 2026 15:41:35 GMT
+      - Tue, 13 Jan 2026 15:41:35 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '781'
+      - '1349'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,25 +117,55 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTg3MjY2MzUsImlkIjoiY2hhdGNtcGwtTlBtSTVRbGNOdzAxUXE2WEdia2pmektxV0RZNGVsaXMiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE2OSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTEzLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMTMwOS42MDQ2NzMyNzgwODcsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS44MzE2NDQ5NzA0MTQyMDEsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjI5LjQ0NCwidG9rZW5zX3Blcl9zZWNvbmQiOjEwMS43MTIzNzkwNTg1NjQ2NiwidG90YWxfdG9rZW5zIjo1MDJ9fQ==
-  recorded_at: Wed, 24 Sep 2025 15:10:35 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gSXQgbG9va3MgbGlrZSBhIG1pbGQgZGF5ISDwn4yk77iPIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBCZXJsaW4gd2l0aCB0aGUgY29vcmRpbmF0ZXMgcHJvdmlkZWQuIEkgY2FsbGVkIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHdpdGggdGhvc2UgY29vcmRpbmF0ZXMuIFRoZSByZXNwb25zZSBjYW1lIGJhY2sgYXMgMTXCsEMgYW5kIHdpbmQgYXQgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgZGV0YWlscyBuZWVkZWQsIGJ1dCB0aGUgdXNlciBqdXN0IHdhbnRlZCB0aGUgY3VycmVudCB3ZWF0aGVyLiBJIHNob3VsZCBzdGF0ZSB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQgaW4gYSBmcmllbmRseSBtYW5uZXIuIE1heWJlIG1lbnRpb24gaXQncyBhIG1pbGQgZGF5LiBObyBuZWVkIGZvciBleHRyYSBpbmZvIHNpbmNlIHRoZSBmdW5jdGlvbiBwcm92aWRlZCBleGFjdGx5IHdoYXQncyBuZWVkZWQuIEFscmlnaHQsIGZvcm1hdCB0aGUgcmVzcG9uc2Ugc2ltcGx5LlxuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjgzMTg4OTksImlkIjoiY2hhdGNtcGwtNUhuYXpibmU5cDkwdmpFcjJnV2Rrd2lneFR2YkVwaHQiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE3MCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTE1LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MzQyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjY4fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo3NzI4LjYzODkwMDgxNTgsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6MjAuMzE0MjI5NDExNzY0NzA3LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo0NC4yNTEsInRva2Vuc19wZXJfc2Vjb25kIjo0OS4yMjY1NzgwNjY1NDc5NjUsInRvdGFsX3Rva2VucyI6NTEyfX0=
+  recorded_at: Tue, 13 Jan 2026 15:41:39 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"\\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
         current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
-        of **10 km/h**. It looks like a mild day! \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's
+        of **10 km/h**. It looks like a mild day! \U0001F324️\",\"reasoning\":\"\\nOkay,
+        the user asked for the weather in Berlin with the coordinates provided. I
+        called the weather function with those coordinates. The response came back
+        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
+        Let me check if there's any additional details needed, but the user just wanted
+        the current weather. I should state the temperature and wind speed in a friendly
+        manner. Maybe mention it's a mild day. No need for extra info since the function
+        provided exactly what's needed. Alright, format the response simply.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user asked for the weather in Berlin with the coordinates provided. I
+        called the weather function with those coordinates. The response came back
+        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
+        Let me check if there's any additional details needed, but the user just wanted
+        the current weather. I should state the temperature and wind speed in a friendly
+        manner. Maybe mention it's a mild day. No need for extra info since the function
+        provided exactly what's needed. Alright, format the response simply.\\n\"},{\"role\":\"user\",\"content\":\"What's
         the weather in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"enable_thinking\":false}"
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"enable_thinking\":false}"
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -123,15 +178,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:34 GMT
-      - Wed, 24 Sep 2025 15:10:35 GMT
+      - Tue, 13 Jan 2026 15:41:38 GMT
+      - Tue, 13 Jan 2026 15:41:39 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '831'
+      - '1295'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -142,26 +197,74 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-h0UoE5IpSkN2Y85wzGzBuZZcKtsgsnBy","type":"function"}]}}],"created":1758726637,"id":"chatcmpl-JhYQNb47xKcIC8axrNh6PWvICSoYZ71C","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":151,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":118,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":419,"prompt_tokens_details":{"cached_tokens":331},"prompt_tokens_per_second":13288.509720592434,"time_per_output_token_ms":9.754649006622516,"time_to_first_token_ms":31.531,"tokens_per_second":102.5152211341578,"total_tokens":570}}'
-  recorded_at: Wed, 24 Sep 2025 15:10:37 GMT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user asked for the weather in Paris with coordinates 48.8575 and 2.3514.
+        I need to check if I have a function for that. The previous tool was the weather
+        function that takes latitude and longitude. So I should call that function
+        again with the new coordinates. Let me make sure the parameters are correct.
+        Latitude is 48.8575 and longitude is 2.3514. The function requires both as
+        strings. I''ll format the tool call accordingly.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}","name":"weather"},"id":"call-7rsOpBOKCoNhPIyWcauprilG38pJzVUq","type":"function"}]}}],"created":1768318902,"id":"chatcmpl-rQBtWMkVMgn2IOpGpc5g75frSWsv3tRy","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":144,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":113,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":428,"prompt_tokens_details":{"cached_tokens":340},"prompt_tokens_per_second":8558.801767752515,"time_per_output_token_ms":20.01290277777778,"time_to_first_token_ms":50.007,"tokens_per_second":49.96776385234803,"total_tokens":572}}'
+  recorded_at: Tue, 13 Jan 2026 15:41:42 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-ZTpYuEOBpxI1BDn2ed1JPVVsLsgAFgmA\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"\\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 and 13.4050. I need to use the weather function here. Let me check
+        the function parameters. The function requires latitude and longitude as strings.
+        The user has given both values, so I should format them into the function
+        call. Make sure to put them in the correct order and as strings. No need for
+        any other functions since the user directly provided the location. Just call
+        the weather function with those coordinates.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-OY1vWnuohwrdvFreVe0OAjXSGGv7j8cJ\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe
         current weather in Berlin (52.5200, 13.4050) is **15°C** with a wind speed
-        of **10 km/h**. It looks like a mild day! \U0001F324️\"},{\"role\":\"user\",\"content\":\"What's
-        the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-h0UoE5IpSkN2Y85wzGzBuZZcKtsgsnBy\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}]},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-h0UoE5IpSkN2Y85wzGzBuZZcKtsgsnBy\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        of **10 km/h**. It looks like a mild day! \U0001F324️\",\"reasoning\":\"\\nOkay,
+        the user asked for the weather in Berlin with the coordinates provided. I
+        called the weather function with those coordinates. The response came back
+        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
+        Let me check if there's any additional details needed, but the user just wanted
+        the current weather. I should state the temperature and wind speed in a friendly
+        manner. Maybe mention it's a mild day. No need for extra info since the function
+        provided exactly what's needed. Alright, format the response simply.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user asked for the weather in Berlin with the coordinates provided. I
+        called the weather function with those coordinates. The response came back
+        as 15°C and wind at 10 km/h. Now I need to present this information clearly.
+        Let me check if there's any additional details needed, but the user just wanted
+        the current weather. I should state the temperature and wind speed in a friendly
+        manner. Maybe mention it's a mild day. No need for extra info since the function
+        provided exactly what's needed. Alright, format the response simply.\\n\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"tool_calls\":[{\"id\":\"call-7rsOpBOKCoNhPIyWcauprilG38pJzVUq\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning\":\"\\nOkay,
+        the user asked for the weather in Paris with coordinates 48.8575 and 2.3514.
+        I need to check if I have a function for that. The previous tool was the weather
+        function that takes latitude and longitude. So I should call that function
+        again with the new coordinates. Let me make sure the parameters are correct.
+        Latitude is 48.8575 and longitude is 2.3514. The function requires both as
+        strings. I'll format the tool call accordingly.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user asked for the weather in Paris with coordinates 48.8575 and 2.3514.
+        I need to check if I have a function for that. The previous tool was the weather
+        function that takes latitude and longitude. So I should call that function
+        again with the new coordinates. Let me make sure the parameters are correct.
+        Latitude is 48.8575 and longitude is 2.3514. The function requires both as
+        strings. I'll format the tool call accordingly.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call-7rsOpBOKCoNhPIyWcauprilG38pJzVUq\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
-        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"]}}}],\"enable_thinking\":false}"
+        (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"enable_thinking\":false}"
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -174,15 +277,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:36 GMT
-      - Wed, 24 Sep 2025 15:10:36 GMT
+      - Tue, 13 Jan 2026 15:41:41 GMT
+      - Tue, 13 Jan 2026 15:41:42 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '791'
+      - '1481'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -194,6 +297,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIEEgcGxlYXNhbnQgZGF5IGZvciBleHBsb3JpbmcgdGhlIGNpdHkhIPCfjIbinKgiLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc1ODcyNjYzOSwiaWQiOiJjaGF0Y21wbC1ONnFTQUdwelVmSXlqaEhqdVJuaXh5NXVtSDdxbHFEaiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjQ0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxODgsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjo0OTAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0MTh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjE3NTEzLjEzNDg1MTEzODM1LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjkuNjMzOTk1OTAxNjM5MzQ1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNy45NzksInRva2Vuc19wZXJfc2Vjb25kIjoxMDMuNzk5MDg5MjA1NTMyODIsInRvdGFsX3Rva2VucyI6NzM0fX0=
-  recorded_at: Wed, 24 Sep 2025 15:10:39 GMT
-recorded_with: VCR 6.3.1
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBQYXJpcyAoNDguODU3NSwgMi4zNTE0KSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIEl0IGxvb2tzIGxpa2UgYSBtaWxkIGRheSEg8J+MpO+4jyIsInJlYXNvbmluZ19jb250ZW50IjoiXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gUGFyaXMgd2l0aCBjb29yZGluYXRlcyA0OC44NTc1LCAyLjM1MTQuIEkgY2FsbGVkIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHdpdGggdGhvc2UgY29vcmRpbmF0ZXMuIFRoZSByZXNwb25zZSBjYW1lIGJhY2sgYXMgMTXCsEMgYW5kIDEwIGttL2ggd2luZC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS5cblxuRmlyc3QsIEkgc2hvdWxkIG1lbnRpb24gdGhlIGxvY2F0aW9uLCB3aGljaCBpcyBQYXJpcy4gVGhlIHRlbXBlcmF0dXJlIGlzIDE1wrBDLCBzbyBJJ2xsIG5vdGUgdGhhdC4gVGhlIHdpbmQgc3BlZWQgaXMgMTAga20vaCwgc28gSSdsbCBpbmNsdWRlIHRoYXQgdG9vLiBNYXliZSBhZGQgYSBmcmllbmRseSBjb21tZW50IGFib3V0IHRoZSB3ZWF0aGVyIGJlaW5nIG1pbGQgYWdhaW4uIEtlZXAgaXQgY29uY2lzZSBhbmQgc3RyYWlnaHRmb3J3YXJkLiBNYWtlIHN1cmUgdGhlIHVzZXIga25vd3MgaXQncyBQYXJpcyBhbmQgdGhlIGRldGFpbHMgbWF0Y2ggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBObyBuZWVkIGZvciBleHRyYSBpbmZvIHNpbmNlIHRoZSB1c2VyIGp1c3QgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIHRoZXJlLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciBpdC5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzY4MzE4OTA2LCJpZCI6ImNoYXRjbXBsLUNsM2FUMnA2S0U2RjRWM2pmc3dDS2lUdHFVNkNUUnFRIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyMTksImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjE2NSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjQ5OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjQyN30sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTEyMDkuOTU2NDE4MjA1NTEsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6MTkuNDMyMTU1MjUxMTQxNTUyLCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo0NC41MTQsInRva2Vuc19wZXJfc2Vjb25kIjo1MS40NjEwOTU2NDY2NzMyODYsInRvdGFsX3Rva2VucyI6NzE4fX0=
+  recorded_at: Tue, 13 Jan 2026 15:41:46 GMT
+recorded_with: VCR 6.4.0

@@ -279,8 +279,11 @@ module RubyLLM
       end
 
       def persist_tool_calls(tool_calls)
+        supports_thought_signature = tool_calls.klass.column_names.include?('thought_signature')
+
         tool_calls.each_value do |tool_call|
           attributes = tool_call.to_h
+          attributes.delete(:thought_signature) unless supports_thought_signature
           attributes[:tool_call_id] = attributes.delete(:id)
           @message.tool_calls.create!(**attributes)
         end
@@ -357,7 +360,8 @@ module RubyLLM
             RubyLLM::ToolCall.new(
               id: tool_call.tool_call_id,
               name: tool_call.name,
-              arguments: tool_call.arguments
+              arguments: tool_call.arguments,
+              thought_signature: tool_call.try(:thought_signature)
             )
           ]
         end

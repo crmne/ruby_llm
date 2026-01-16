@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -21,11 +21,11 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:55:06 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Mon, 12 Jan 2026 10:36:45 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,20 +52,21 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 24 Sep 2025 14:55:06 GMT
+  recorded_at: Mon, 12 Jan 2026 10:36:46 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]}],"generationConfig":{}}'
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
+        the programming language Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -86,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:55:07 GMT
+      - Mon, 12 Jan 2026 10:36:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,179 +110,125 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ruby was created by **Yukihiro \"Matz\" Matsumoto**."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**.\n\nHe is often referred to by his nickname, **Matz**. He started working on Ruby in 1993 and released the first public version in 1995."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -2.5191107529860277
+              "avgLogprobs": -1.0360305492694561
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 7,
-            "candidatesTokenCount": 13,
+            "promptTokenCount": 10,
+            "candidatesTokenCount": 52,
+            "totalTokenCount": 250,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 10
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 52
+              }
+            ],
+            "thoughtsTokenCount": 188
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-01-12T10:36:46.104526Z",
+          "responseId": "vs5kac6wBoGE2fMPyIreyA0"
+        }
+  recorded_at: Mon, 12 Jan 2026 10:36:48 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
+        the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
+        of the programming language Ruby is **Yukihiro Matsumoto**.\n\nHe is often
+        referred to by his nickname, **Matz**. He started working on Ruby in 1993
+        and released the first public version in 1995."}]},{"role":"user","parts":[{"text":"What
+        year did he create Ruby?"}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 12 Jan 2026 10:36:48 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.446358228984632
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 69,
+            "candidatesTokenCount": 19,
             "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 7
+                "tokenCount": 69
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 13
+                "tokenCount": 19
               }
             ],
-            "thoughtsTokenCount": 100
+            "thoughtsTokenCount": 32
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:55:06.962592Z",
-          "responseId": "SgbUaKDgOvi0mPUP3frG-Qs"
+          "createTime": "2026-01-12T10:36:48.453329Z",
+          "responseId": "wM5kadHVG9nCmLAPm-75oA4"
         }
-  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 24 Sep 2025 14:55:07 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Wed, 24 Sep 2025 14:55:07 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Who was Ruby''s creator?"}]},{"role":"model","parts":[{"text":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto**."}]},{"role":"user","parts":[{"text":"What
-        year did he create Ruby?"}]}],"generationConfig":{}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Wed, 24 Sep 2025 14:55:09 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "Yukihiro Matsumoto began working on Ruby in **1993**.\n\nThe first public release, Ruby 0.95, was made in **1995**."
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.81434265772501624
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 27,
-            "candidatesTokenCount": 36,
-            "totalTokenCount": 105,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 27
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 36
-              }
-            ],
-            "thoughtsTokenCount": 42
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-24T14:55:08.128137Z",
-          "responseId": "TAbUaInpB7iIt_gP3oai0AY"
-        }
-  recorded_at: Wed, 24 Sep 2025 14:55:09 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 12 Jan 2026 10:36:49 GMT
+recorded_with: VCR 6.4.0

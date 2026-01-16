@@ -26,7 +26,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
-      config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
+      config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
 
       config.request_timeout = 240
       config.max_retries = 10

@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the object
+        params tool with window start 2025-01-01 and end 2025-01-02 and include the
+        result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 13 Jan 2026 15:44:47 GMT
+      Content-Length:
+      - '977'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-572","object":"chat.completion","created":1768319087,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the object_params function with a window that starts
+        on 2025-01-01 and ends on 2025-01-02. Let me check the function''s parameters
+        again. The function requires a \"window\" object with \"start\" and \"end\"
+        as ISO strings. The dates provided are in the correct format, so I just need
+        to structure them into the parameters. I''ll make sure the keys are exactly
+        as specified and the dates are strings. Then, I''ll format the tool_call correctly
+        within the XML tags.\n","tool_calls":[{"id":"call_ho7mdkz9","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":204,"completion_tokens":175,"total_tokens":379}}
+
+        '
+  recorded_at: Tue, 13 Jan 2026 15:44:47 GMT
+recorded_with: VCR 6.4.0

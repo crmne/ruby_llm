@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jan 2026 15:39:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Vary:
+      - Accept-Encoding
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc2ODMxODc4NC1rWWtQbEhzWUl2VUkxWUJJNjJyTyIsInByb3ZpZGVyIjoiQW1hem9uIEJlZHJvY2siLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc2ODMxODc4NCwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIjIFdlYXRoZXIgT3ZlcnZpZXdcblxuSSdkIGJlIGhhcHB5IHRvIHRlbGwgeW91IGFib3V0IHdlYXRoZXIgaW4gZ2VuZXJhbCFcblxuV2VhdGhlciByZWZlcnMgdG8gdGhlIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMgYXQgYSBzcGVjaWZpYyBwbGFjZSBhbmQgdGltZSwgaW5jbHVkaW5nOlxuXG4tICoqVGVtcGVyYXR1cmUqKiAtIGhvdyBob3Qgb3IgY29sZCBpdCBpc1xuLSAqKlByZWNpcGl0YXRpb24qKiAtIHJhaW4sIHNub3csIHNsZWV0LCBvciBoYWlsXG4tICoqV2luZCoqIC0gc3BlZWQgYW5kIGRpcmVjdGlvbiBvZiBhaXIgbW92ZW1lbnRcbi0gKipIdW1pZGl0eSoqIC0gbW9pc3R1cmUgY29udGVudCBpbiB0aGUgYWlyXG4tICoqQXRtb3NwaGVyaWMgcHJlc3N1cmUqKiAtIHdoaWNoIGFmZmVjdHMgd2VhdGhlciBwYXR0ZXJuc1xuLSAqKkNsb3VkIGNvdmVyKiogLSB0eXBlcyBhbmQgYW1vdW50cyBvZiBjbG91ZHNcblxuV2VhdGhlciBpcyBkcml2ZW4gYnkgdGhlIHN1bidzIGVuZXJneSBhbmQgRWFydGgncyByb3RhdGlvbiwgY3JlYXRpbmcgcGF0dGVybnMgdGhhdCBtZXRlb3JvbG9naXN0cyBzdHVkeSBhbmQgZm9yZWNhc3QuIFNob3J0LXRlcm0gd2VhdGhlciBjYW4gY2hhbmdlIHJhcGlkbHksIHdoaWxlIGNsaW1hdGUgcmVmZXJzIHRvIGxvbmctdGVybSBhdG1vc3BoZXJpYyBwYXR0ZXJucyBvdmVyIHllYXJzIG9yIGRlY2FkZXMuXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciAqKmN1cnJlbnQgd2VhdGhlciBpbmZvcm1hdGlvbioqLCBJJ2QgcmVjb21tZW5kIGNoZWNraW5nOlxuLSBXZWF0aGVyLmNvbVxuLSBZb3VyIGxvY2FsIG5ld3Ncbi0gV2VhdGhlciBhcHBzIG9uIHlvdXIgcGhvbmVcbi0gTmF0aW9uYWwgd2VhdGhlciBzZXJ2aWNlc1xuXG5Gb3IgYSBodW1vcm91cyB0YWtlIG9uIHdlYXRoZXIgdW5wcmVkaWN0YWJpbGl0eSwgeW91IG1pZ2h0IGVuam95IHRoZSBYS0NEIGNvbWljIHN0cmlw4oCUaW4gZmFjdCwgdGhlcmUncyBhIGZhbW91cyBvbmUgcmVmZXJlbmNlZCBhcyBYS0NENzM5MiB0aGF0IHBsYXlzIHdpdGggd2VhdGhlciBmb3JlY2FzdGluZyBhYnN1cmRpdHkhXG5cbklzIHRoZXJlIGEgc3BlY2lmaWMgbG9jYXRpb24ncyB3ZWF0aGVyIHlvdSdkIGxpa2UgdG8ga25vdyBhYm91dCwgb3Igd291bGQgeW91IGxpa2UgbW9yZSBkZXRhaWxzIGFib3V0IHdlYXRoZXIgcGF0dGVybnMgYW5kIGZvcmVjYXN0aW5nPyIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzIsImNvbXBsZXRpb25fdG9rZW5zIjoyNzQsInRvdGFsX3Rva2VucyI6MzA2LCJjb3N0IjowLjAwMTQwMiwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjpudWxsLCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwMDMyLCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDEzN30sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowfX19
+  recorded_at: Tue, 13 Jan 2026 15:39:47 GMT
+recorded_with: VCR 6.4.0

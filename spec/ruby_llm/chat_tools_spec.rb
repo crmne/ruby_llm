@@ -2,6 +2,13 @@
 
 require 'spec_helper'
 
+def supports_functions?(provider, model)
+  return false if RubyLLM::Provider.providers[provider]&.local?
+
+  model_info = RubyLLM.models.find(model)
+  skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+end
+
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
@@ -69,15 +76,89 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Has provider-specific params'
+    with_params cache_control: { type: 'ephemeral' }
+
+    def execute(**)
+      'ok'
+    end
+  end
+
+  class ArrayParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Uses params DSL array support'
+
+    params do
+      array :tags, of: :string, description: 'List of tags to combine'
+    end
+
+    def execute(tags:)
+      halt "Combined tags: #{tags.join(', ')}"
+    end
+  end
+
+  class AnyOfParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Uses params DSL any_of support'
+
+    params do
+      string :task, description: 'Task description'
+      any_of :status, description: 'Optional task status' do
+        string enum: %w[pending done]
+        null
+      end
+    end
+
+    def execute(task:, status:)
+      halt "Task \"#{task}\" status #{status}"
+    end
+  end
+
+  class ObjectParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Uses params DSL object support'
+
+    params do
+      object :window, description: 'Time window to schedule' do
+        string :start, description: 'ISO start'
+        string :end, description: 'ISO end'
+      end
+    end
+
+    def execute(window:)
+      halt "Window from #{window['start']} to #{window['end']}"
+    end
+  end
+
+  def assistant_tool_call_messages(chat)
+    chat.messages.select { |message| message.role == :assistant && message.tool_call? }
+  end
+
+  def last_tool_call(chat)
+    message = assistant_tool_call_messages(chat).last
+    return [nil, nil] unless message
+
+    [message, message.tool_calls.values.last]
+  end
+
+  def stringified_arguments(arguments)
+    return {} unless arguments
+
+    arguments.respond_to?(:transform_keys) ? arguments.transform_keys(&:to_s) : arguments
+  end
+
+  def tool_result_message_for(chat, tool_call)
+    return nil unless tool_call
+
+    chat.messages.reverse.find do |message|
+      message.role == :tool && message.tool_call_id == tool_call.id
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        supports_functions? provider, model
 
         skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
 
@@ -92,14 +173,57 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    describe 'thought signatures' do
+      [
+        { provider: :gemini, model: 'gemini-3-pro-preview' },
+        { provider: :vertexai, model: 'gemini-3-pro-preview' }
+      ].each do |model_info|
+        provider = model_info[:provider]
+        model = model_info[:model]
+
+        it "#{provider}/#{model} includes thought signatures for tool calls" do
+          supports_functions? provider, model
+
+          chat = RubyLLM.chat(model: model, provider: provider)
+                        .with_thinking(effort: :low)
+                        .with_tool(Weather)
+
+          response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+          expect(response.content).to include('15')
+
+          tool_message = chat.messages.find { |message| message.tool_calls&.any? }
+          tool_call = tool_message&.tool_calls&.values&.first # rubocop:disable Style/SafeNavigationChainLength
+          expect(tool_call&.thought_signature).to be_present
+        end
+      end
+    end
+
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+      model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
+      it "#{provider}/#{model} can use parallel tool calls" do
+        supports_functions? provider, model
+        skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tools(Weather, BestLanguageToLearn)
+        # Disable thinking mode for qwen models
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
+
+        response = chat.ask("What's the weather in Berlin (52.5200, 13.4050) and what's the best language to learn?")
+        expect(response.content).to include('15')
+        expect(response.content).to include('10')
+        expect(response.content).to include('Ruby')
+        expect(chat.messages.count).to be(5)
+      end
+    end
+
     CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        supports_functions? provider, model
 
         skip 'Flaky test for deepseek' if provider == :deepseek
 
@@ -122,10 +246,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        supports_functions? provider, model
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
@@ -140,21 +261,13 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
+        supports_functions? provider, model
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
 
         skip 'Mistral has a bug with tool arguments in multi-turn streaming' if provider == :mistral
 
-        if provider == :xai
-          skip 'xAI model infinitely loops calling tools when tool has no parameters' \
-               'and always provides the same result in multi-turn streaming conversations'
-        end
-
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
                       .with_instructions('You must use tools whenever possible.')
@@ -184,14 +297,11 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
+        supports_functions? provider, model
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
 
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
         # Disable thinking mode for qwen models
@@ -222,10 +332,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        supports_functions? provider, model
 
         skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
 
@@ -256,6 +363,114 @@ RSpec.describe RubyLLM::Chat do
         # Verify the response contains some dice roll results
         expect(response.content).to match(/\d+/) # Contains at least one number
         expect(response.content.downcase).to match(/roll|dice|result/) # Mentions rolling or results
+      end
+
+      it "#{provider}/#{model} can handle with_params" do
+        supports_functions? provider, model
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(ParamsTool)
+                      .with_instructions('You must call the params tool.')
+
+        provider_instance = chat.instance_variable_get(:@provider)
+        captured_payload = nil
+
+        allow(provider_instance).to receive(:sync_response) do |_connection, payload, _|
+          captured_payload = payload
+          RubyLLM::Message.new(role: :assistant, content: 'ok')
+        end
+
+        chat.ask('Call the params tool for me')
+
+        expect(captured_payload).not_to be_nil
+
+        extracted = case provider
+                    when :gemini, :vertexai
+                      captured_payload.dig(:tools, 0, :functionDeclarations, 0, :cache_control)
+                    else
+                      captured_payload.dig(:tools, 0, :cache_control)
+                    end
+
+        expect(extracted).to eq(type: 'ephemeral')
+      end
+    end
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} handles array params" do
+        supports_functions? provider, model
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(ArrayParamsTool)
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
+
+        response = chat.ask(
+          'Call the array params tool with tags ["red","blue"] and tell me the combined tags.'
+        )
+
+        expect(response).to be_a(RubyLLM::Tool::Halt)
+
+        _message, tool_call = last_tool_call(chat)
+        expect(tool_call).not_to be_nil
+        expect(tool_call.name).to eq('array_params')
+
+        arguments = stringified_arguments(tool_call.arguments)
+        expect(arguments['tags']).to match_array(%w[red blue])
+      end
+    end
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} handles anyOf params" do
+        supports_functions? provider, model
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(AnyOfParamsTool)
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
+
+        response = chat.ask(
+          'Call the any-of params tool for task "Review PR" with status "pending" and report the result.'
+        )
+
+        expect(response).to be_a(RubyLLM::Tool::Halt)
+
+        _message, tool_call = last_tool_call(chat)
+        expect(tool_call).not_to be_nil
+        expect(tool_call.name).to eq('any_of_params')
+
+        arguments = stringified_arguments(tool_call.arguments)
+        expect(arguments['task']).to eq('Review PR')
+        expect(arguments['status']).to eq('pending')
+      end
+    end
+
+    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+      model = model_info[:model]
+      provider = model_info[:provider]
+      it "#{provider}/#{model} handles object params" do
+        supports_functions? provider, model
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(ObjectParamsTool)
+        chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
+
+        response = chat.ask(
+          'Call the object params tool with window start 2025-01-01 and end 2025-01-02 and include the result.'
+        )
+
+        expect(response).to be_a(RubyLLM::Tool::Halt)
+
+        _message, tool_call = last_tool_call(chat)
+        expect(tool_call).not_to be_nil
+        expect(tool_call.name).to eq('object_params')
+
+        arguments = stringified_arguments(tool_call.arguments)
+        expect(arguments['window']).to include(
+          'start' => '2025-01-01',
+          'end' => '2025-01-02'
+        )
       end
     end
   end
@@ -314,13 +529,10 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} preserves Content objects returned from tools" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        supports_functions? provider, model
 
         # Skip providers that don't support images in tool results
-        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock xai])
+        skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ContentReturningTool)
@@ -370,6 +582,21 @@ RSpec.describe RubyLLM::Chat do
 
     it 'returns sub-agent result through halt' do
       chat = RubyLLM.chat.with_tool(HandoffTool)
+      provider = chat.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'handoff',
+        arguments: { 'query' => 'Please handle this query: What is Ruby?' }
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
       response = chat.ask('Please handle this query: What is Ruby?')
 
       expect(response).to be_a(RubyLLM::Tool::Halt)

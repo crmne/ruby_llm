@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:58:48 GMT
+      - Tue, 13 Jan 2026 15:42:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=769
+      - gfet4t7; dur=837
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -59,42 +59,43 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "Ct0BAdHtim9+HXHSTpvIWrbJ4KI7pgfRvxgaapHWtCDFOq4x8oKi3uBgnBUH19PTUgRR/AhWn2MlkpNIA83++PeUzap6ckyN1TQ3I99oOlmant8cAiLaH1M7lEsdVz2O09MogbNm51lp2rzmz6iqW9sFw4ofSGJcTZ8+jmCfkMdtB1vh4594LnvMflnhTxvzvOKqJlxijz7/2oKM84BXXMfJ/IbJcG5jtlJEOgI97kcIQTF6hHSNgdGWeWEqdHMKY+g2lYr+hm9qMij0fdKRz+zRVr+EMVoyc/bJJMg2KuY="
+                    "thoughtSignature": "CrwDAXLI2ny8QkoXS6pHIN3tS1vE7vhRFAGz/WurUEpkfMIp24uUTV59EBzOI3B85BgDyr8hpVgad8QgpyPYu7bDveikdKmg2bmbXfzTdlIql66lg6yWOV1sVW4WHBc7a3sEUEkMzSbOgBZ75E43QZ0dKBbEUtgj3ArQgtNVhCF6VUSZTXvGhWL2xZ6P5M+BZxS1QnzMhoXJ93uHGQwETcaJM0qB+4DDGTcF16q+0osBQm5yENy1XSzRkAxVezeFWtQZnm+gpA0rRbFOcqZ/jfw6D/LMiSnYxZT4oFGE5d8KbZTvrpDr4nZLkLIZDJ1zpkKjqEDJBoazfWnJkBFnQaktKEnmaiKq2MDVAHegZ5xW+t3xIkfBg0RfwbNaPrtWRslGYVCBiZ9A5m97FT8W0fFceJAEehli02i1G02IMVUW52IL6BVYpzlLS9U9L1zr60ukozd8y+HbD9+Mtb5CGxhCDT1RqChUMcVp/A4WWVaw/UploUO3TtM7eN29Jn/8DmljBaYfZIPhvZu9Mt5PSrkDa/3fZefoLq5ix2imjwquu0nzxMqIwW+dl1mB8qaEByqyddUXXlVa/jGqQlOS"
                   }
                 ],
                 "role": "model"
               },
               "finishReason": "STOP",
-              "index": 0
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 41,
             "candidatesTokenCount": 14,
-            "totalTokenCount": 100,
+            "totalTokenCount": 147,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 41
               }
             ],
-            "thoughtsTokenCount": 45
+            "thoughtsTokenCount": 92
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "KAfUaNzdE9LZkdUP9qXvqQM"
+          "responseId": "2WdmaaN4gLWewQ-XxNXZBQ"
         }
-  recorded_at: Wed, 24 Sep 2025 14:58:48 GMT
+  recorded_at: Tue, 13 Jan 2026 15:42:17 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"f894f0f2-6e03-476c-ad31-900f095540a0","response":{"name":"f894f0f2-6e03-476c-ad31-900f095540a0","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"CrwDAXLI2ny8QkoXS6pHIN3tS1vE7vhRFAGz/WurUEpkfMIp24uUTV59EBzOI3B85BgDyr8hpVgad8QgpyPYu7bDveikdKmg2bmbXfzTdlIql66lg6yWOV1sVW4WHBc7a3sEUEkMzSbOgBZ75E43QZ0dKBbEUtgj3ArQgtNVhCF6VUSZTXvGhWL2xZ6P5M+BZxS1QnzMhoXJ93uHGQwETcaJM0qB+4DDGTcF16q+0osBQm5yENy1XSzRkAxVezeFWtQZnm+gpA0rRbFOcqZ/jfw6D/LMiSnYxZT4oFGE5d8KbZTvrpDr4nZLkLIZDJ1zpkKjqEDJBoazfWnJkBFnQaktKEnmaiKq2MDVAHegZ5xW+t3xIkfBg0RfwbNaPrtWRslGYVCBiZ9A5m97FT8W0fFceJAEehli02i1G02IMVUW52IL6BVYpzlLS9U9L1zr60ukozd8y+HbD9+Mtb5CGxhCDT1RqChUMcVp/A4WWVaw/UploUO3TtM7eN29Jn/8DmljBaYfZIPhvZu9Mt5PSrkDa/3fZefoLq5ix2imjwquu0nzxMqIwW+dl1mB8qaEByqyddUXXlVa/jGqQlOS"}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -115,7 +116,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:58:49 GMT
+      - Tue, 13 Jan 2026 15:42:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -125,7 +126,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=664
+      - gfet4t7; dur=1759
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -139,7 +140,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Ruby is the best language to learn."
+                    "text": "The best language to learn is Ruby."
                   }
                 ],
                 "role": "model"
@@ -149,18 +150,18 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 146,
+            "promptTokenCount": 90,
             "candidatesTokenCount": 8,
-            "totalTokenCount": 154,
+            "totalTokenCount": 98,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 146
+                "tokenCount": 90
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "KQfUaN37CIvpvdIPkIjf2QI"
+          "responseId": "2mdmac-7MaPOvdIPm-q6gA8"
         }
-  recorded_at: Wed, 24 Sep 2025 14:58:49 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Tue, 13 Jan 2026 15:42:18 GMT
+recorded_with: VCR 6.4.0

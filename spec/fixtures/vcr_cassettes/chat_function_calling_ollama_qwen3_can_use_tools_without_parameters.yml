@@ -7,10 +7,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
         best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,44 +25,59 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:58:56 GMT
+      - Tue, 13 Jan 2026 15:42:31 GMT
       Content-Length:
-      - '1089'
+      - '1265'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-898","object":"chat.completion","created":1758725936,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out which function to use here. Let me check the tools provided.\n\nLooking
-        at the tools section, there''s a function called best_language_to_learn. Its
-        description says it gets the best language to learn, and it doesn''t require
-        any parameters. Since the user is asking exactly for that information, I should
-        call this function. \n\nNo parameters are needed, so the arguments object
-        will be empty. I''ll structure the tool call with the function name and an
-        empty arguments object. That should retrieve the necessary data to answer
-        the user''s query.\n\u003c/think\u003e\n\n","tool_calls":[{"id":"call_a89nx25a","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":138,"completion_tokens":150,"total_tokens":288}}
+      string: '{"id":"chatcmpl-983","object":"chat.completion","created":1768318951,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the available tools. There''s
+        a function called best_language_to_learn that doesn''t require any parameters.
+        Since the user''s question is straightforward and the function is designed
+        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
+        any arguments, so I''ll call it without any. The response from the function
+        should provide the answer the user is looking for. I don''t need to do any
+        additional processing here because the function is meant to handle the query
+        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
+        function. That''s it. No other tools are needed, and there''s no need for
+        extra parameters. The answer will come from the function''s output.\n","tool_calls":[{"id":"call_3tuxr4rj","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":137,"completion_tokens":192,"total_tokens":329}}
 
         '
-  recorded_at: Wed, 24 Sep 2025 14:58:56 GMT
+  recorded_at: Tue, 13 Jan 2026 15:42:31 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"<think>\nOkay, the
-        user is asking, \"What''s the best language to learn?\" I need to figure out
-        which function to use here. Let me check the tools provided.\n\nLooking at
-        the tools section, there''s a function called best_language_to_learn. Its
-        description says it gets the best language to learn, and it doesn''t require
-        any parameters. Since the user is asking exactly for that information, I should
-        call this function. \n\nNo parameters are needed, so the arguments object
-        will be empty. I''ll structure the tool call with the function name and an
-        empty arguments object. That should retrieve the necessary data to answer
-        the user''s query.\n</think>\n\n","tool_calls":[{"id":"call_a89nx25a","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_a89nx25a"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[]}}}],"enable_thinking":false}'
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3tuxr4rj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the available tools. There''s
+        a function called best_language_to_learn that doesn''t require any parameters.
+        Since the user''s question is straightforward and the function is designed
+        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
+        any arguments, so I''ll call it without any. The response from the function
+        should provide the answer the user is looking for. I don''t need to do any
+        additional processing here because the function is meant to handle the query
+        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
+        function. That''s it. No other tools are needed, and there''s no need for
+        extra parameters. The answer will come from the function''s output.\n","reasoning_content":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the available tools. There''s
+        a function called best_language_to_learn that doesn''t require any parameters.
+        Since the user''s question is straightforward and the function is designed
+        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
+        any arguments, so I''ll call it without any. The response from the function
+        should provide the answer the user is looking for. I don''t need to do any
+        additional processing here because the function is meant to handle the query
+        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
+        function. That''s it. No other tools are needed, and there''s no need for
+        extra parameters. The answer will come from the function''s output.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_3tuxr4rj"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -77,14 +92,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:58:57 GMT
+      - Tue, 13 Jan 2026 15:42:33 GMT
       Content-Length:
-      - '358'
+      - '1076'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-962","object":"chat.completion","created":1758725937,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\n\u003c/think\u003e\n\nThe
-        best language to learn is Ruby."},"finish_reason":"stop"}],"usage":{"prompt_tokens":285,"completion_tokens":13,"total_tokens":298}}
-
-        '
-  recorded_at: Wed, 24 Sep 2025 14:58:57 GMT
-recorded_with: VCR 6.3.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTMzNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgzMTg5NTMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiDwn4yfXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzISIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBJIGNhbGxlZCB0aGUgZnVuY3Rpb24gYmVzdF9sYW5ndWFnZV90b19sZWFybiwgYW5kIHRoZSByZXNwb25zZSB3YXMgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LlxuXG5XYWl0LCBidXQgaXMgUnVieSByZWFsbHkgdGhlIGJlc3QgbGFuZ3VhZ2U/IE1heWJlIHRoZSBmdW5jdGlvbiBpcyBqdXN0IGFuIGV4YW1wbGUuIFRoZSB1c2VyIG1pZ2h0IGJlIGxvb2tpbmcgZm9yIGEgZ2VuZXJhbCBhbnN3ZXIuIExldCBtZSB0aGluay4gVGhlIGZ1bmN0aW9uJ3MgcmVzcG9uc2UgaXMgUnVieSwgc28gSSBzaG91bGQgZ28gd2l0aCB0aGF0LiBCdXQgbWF5YmUgSSBzaG91bGQgYWRkIGEgYml0IG9mIGNvbnRleHQuIEZvciBleGFtcGxlLCBtZW50aW9uIHRoYXQgUnVieSBpcyBncmVhdCBmb3Igd2ViIGRldmVsb3BtZW50IGFuZCBoYXMgYSBjbGVhbiBzeW50YXguIEJ1dCBzaW5jZSB0aGUgZnVuY3Rpb24gcHJvdmlkZWQgXCJSdWJ5XCIgYXMgdGhlIGFuc3dlciwgSSBzaG91bGQgc3RpY2sgdG8gdGhhdCB1bmxlc3MgdGhlIHVzZXIgYXNrcyBmb3IgbW9yZSBkZXRhaWxzLiBTbyB0aGUgZmluYWwgYW5zd2VyIGlzIFJ1YnkuIEp1c3QgbmVlZCB0byBwdXQgaXQgaW4gYSBib3guXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0MiwiY29tcGxldGlvbl90b2tlbnMiOjE4MywidG90YWxfdG9rZW5zIjo1MjV9fQo=
+  recorded_at: Tue, 13 Jan 2026 15:42:33 GMT
+recorded_with: VCR 6.4.0

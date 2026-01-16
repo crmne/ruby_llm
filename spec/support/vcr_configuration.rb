@@ -37,7 +37,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<AWS_SESSION_TOKEN>') { ENV.fetch('AWS_SESSION_TOKEN', nil) }
 
   config.filter_sensitive_data('<GOOGLE_CLOUD_PROJECT>') { ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project') }
-  config.filter_sensitive_data('<GOOGLE_CLOUD_LOCATION>') { ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1') }
+  config.filter_sensitive_data('<GOOGLE_CLOUD_LOCATION>') { ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global') }
 
   # Filter Google OAuth tokens and credentials
   config.filter_sensitive_data('<GOOGLE_REFRESH_TOKEN>') do |interaction|

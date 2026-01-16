@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the any-of
+        params tool for task \"Review PR\" with status \"pending\" and report the
+        result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 13 Jan 2026 15:44:32 GMT
+      Content-Length:
+      - '1311'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-760","object":"chat.completion","created":1768319072,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let me tackle this user query. The user wants me to call the any_of_params
+        function for the task \"Review PR\" with status \"pending\" and report the
+        result.\n\nFirst, I need to check the function''s parameters. The function
+        requires \"task\" and \"status\". The \"status\" field has an anyOf condition:
+        it can be a string from the enum [\"pending\", \"done\"] or null. Since the
+        user provided \"pending\", which is valid, that''s acceptable.\n\nSo, I should
+        structure the arguments with task as \"Review PR\" and status as \"pending\".
+        The function should process these parameters correctly. I''ll make sure the
+        JSON is properly formatted with the right keys and values. No other parameters
+        are needed here. Let me double-check the required fields to ensure both task
+        and status are included. Yep, that''s all. Time to make the tool call.\n","tool_calls":[{"id":"call_7owunytb","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":193,"completion_tokens":213,"total_tokens":406}}
+
+        '
+  recorded_at: Tue, 13 Jan 2026 15:44:32 GMT
+recorded_with: VCR 6.4.0

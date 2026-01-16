@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,35 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 15:08:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 13 Jan 2026 15:37:48 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 89ab82eed11e1dcdf4a5ffaa86d76fe4
+      - 53ef03714ee2b4bdda269fa7b3307ad8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5038943a1aa22e482096fb08b4c66b96.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - RIIo9lJ1Ce8pc-JvmSxCwp99te9YXWI0xhfZuxem3Cwyvq_HgytI_g==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"349f50c0-4cc0-4b8b-8aa4-0a900333f9a4","object":"chat.completion","created":1758726501,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
-        a classic!  \n\n2 + 2 = **4**"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":14,"total_tokens":26,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 15:08:25 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjQ1M2M5NjRlLTk4NmEtNGU1Ni1hMTc1LTYxMmEwNWUxMWQzZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgzMTg2NjgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdOKAmXMgYSBjbGFzc2ljISAgXG5cblxcW1xuMiArIDIgPSA0XG5cXF0ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMiwiY29tcGxldGlvbl90b2tlbnMiOjE4LCJ0b3RhbF90b2tlbnMiOjMwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWFhYjhkMTE0Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Tue, 13 Jan 2026 15:37:50 GMT
+recorded_with: VCR 6.4.0

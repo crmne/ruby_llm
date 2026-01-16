@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:48 GMT
+      - Tue, 13 Jan 2026 15:39:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,38 +32,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-617b-75bb-9f92-e2777deafd55'
+      - '019bb802-d5c6-76b4-9cae-e422a1b921bf'
       X-Kong-Request-Id:
-      - '01997c37-617b-75bb-9f92-e2777deafd55'
-      X-Envoy-Upstream-Service-Time:
-      - '669'
+      - '019bb802-d5c6-76b4-9cae-e422a1b921bf'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499860'
+      - '1999860'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999971259'
+      - '9999988984'
       X-Ratelimit-Tokens-Query-Cost:
-      - '75'
-      X-Ratelimit-Limit-Req-Minute:
-      - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '61'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '894'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '670'
+      - '895'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -72,7 +74,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjJmZjMzOWU2MmZlNjRiMDc4MThmZWIxMTFlYmQ2MGIxIiwiY3JlYXRlZCI6MTc1ODcyNTYyOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJ0b3RhbF90b2tlbnMiOjc1LCJjb21wbGV0aW9uX3Rva2VucyI6NjV9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi5cblxuUGFyaXMgaXMga25vd24gZm9yIGl0cyBpY29uaWMgbGFuZG1hcmtzIHN1Y2ggYXMgdGhlIEVpZmZlbCBUb3dlciwgTm90cmUtRGFtZSBDYXRoZWRyYWwsIGFuZCB0aGUgTG91dnJlIE11c2V1bS4gSXQgaXMgYWxzbyBhIG1ham9yIGdsb2JhbCBjZW50ZXIgZm9yIGFydCwgZmFzaGlvbiwgZ2FzdHJvbm9teSwgYW5kIGN1bHR1cmUuXG5cbldvdWxkIHlvdSBsaWtlIHRvIGtub3cgbW9yZSBhYm91dCBQYXJpcyBvciBGcmFuY2U/IPCfmIoifX1dfQ==
-  recorded_at: Wed, 24 Sep 2025 14:53:48 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"bcefe39fbc304c3aa39e0a2c4ee249b5","created":1768318752,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":61,"completion_tokens":51},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**.\n\nParis is known for its iconic landmarks
+        such as the Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum. It
+        is also a major <GOOGLE_CLOUD_LOCATION> center for art, fashion, gastronomy,
+        and culture."}}]}'
+  recorded_at: Tue, 13 Jan 2026 15:39:13 GMT
+recorded_with: VCR 6.4.0

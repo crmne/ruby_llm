@@ -127,6 +127,23 @@ end
 
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
 
+### Gemini API Versions
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyLLM defaults to `v1beta` for access to the latest features, but you can switch to `v1` to support older models:
+
+```ruby
+RubyLLM.configure do |config|
+  config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.gemini_api_base = 'https://generativelanguage.googleapis.com/v1'
+end
+```
+
+Some models are only available on specific API versions. For example, `gemini-1.5-flash-8b` requires `v1`. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
+
 ## Default Models
 
 Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`):
@@ -143,6 +160,28 @@ Defaults if not configured:
 - Chat: `{{ site.models.default_chat }}`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
+
+## Model Registry File
+
+By default, RubyLLM reads model information from the bundled `models.json` file. If your gem directory is read-only, you can configure a writable location:
+
+```ruby
+# First time: save to writable location
+RubyLLM.models.save_to_json('/var/app/models.json')
+
+# Configure to use new location (Available in v1.9.0+)
+RubyLLM.configure do |config|
+  config.model_registry_file = '/var/app/models.json'
+end
+```
+
+After this one-time setup, RubyLLM will read from your configured path automatically.
+
+> `RubyLLM.models.refresh!` updates the in-memory registry only. To persist changes, call `RubyLLM.models.save_to_json`.
+{: .note }
+
+> If you're using the ActiveRecord integration, model data is stored in the database. This configuration doesn't apply.
+{: .note }
 
 ## Connection Settings
 
@@ -303,6 +342,36 @@ RubyLLM.configure do |config|
 end
 ```
 
+### Initializer Load Timing Issue with `use_new_acts_as`
+
+**Important**: If you're using `use_new_acts_as = true` (from upgrading to 1.7+), you **cannot** set it in an initializer. Rails loads models before initializers run, so the legacy `acts_as` module will already be included by the time your initializer executes.
+
+Instead, configure it in `config/application.rb` **before** the `Application` class:
+
+```ruby
+# config/application.rb
+require_relative "boot"
+require "rails/all"
+
+# Configure RubyLLM before Rails::Application is inherited
+RubyLLM.configure do |config|
+  config.use_new_acts_as = true
+end
+
+module YourApp
+  class Application < Rails::Application
+    # ...
+  end
+end
+```
+
+This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
+
+> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
+{: .note }
+
+See the [Upgrading guide]({% link _advanced/upgrading.md %}#troubleshooting) for more details.
+
 ## Configuration Reference
 
 Here's a complete reference of all configuration options:
@@ -323,6 +392,7 @@ RubyLLM.configure do |config|
 
   # Provider Endpoints
   config.openai_api_base = String
+  config.gemini_api_base = String  # v1.9.0+
   config.ollama_api_base = String
   config.gpustack_api_base = String
 
@@ -341,6 +411,10 @@ RubyLLM.configure do |config|
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
+  config.default_moderation_model = String
+
+  # Model Registry
+  config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
 
   # Connection Settings
   config.request_timeout = Integer

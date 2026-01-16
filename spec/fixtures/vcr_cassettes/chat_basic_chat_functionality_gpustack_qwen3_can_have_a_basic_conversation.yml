@@ -9,7 +9,9 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:39 GMT
-      - Wed, 24 Sep 2025 15:09:39 GMT
+      - Tue, 13 Jan 2026 15:38:49 GMT
+      - Tue, 13 Jan 2026 15:38:49 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '756'
+      - '1871'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -40,8 +42,23 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuMiArIDIgZXF1YWxzICoqNCoqLiBcblxuSWYgeW91IGhhdmUgYW55IG1vcmUgcXVlc3Rpb25zIG9yIG5lZWQgZnVydGhlciBjbGFyaWZpY2F0aW9uLCBmZWVsIGZyZWUgdG8gYXNrISDwn5iKIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTg3MjY1ODMsImlkIjoiY2hhdGNtcGwtYUlxOXFmdjFWTFRkY25kb2FMVWVOSG9hSlpzd0UzajAiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjQxOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6Mzg3LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo0NTQuMDU1MjgxMjMwNDg5OCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjMyMDk3ODUyMDI4NjM5NiwidGltZV90b19maXJzdF90b2tlbl9tcyI6MzUuMjM4LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA3LjI4NDg3MzM0NDk1Nzk5LCJ0b3RhbF90b2tlbnMiOjQzNX19
-  recorded_at: Wed, 24 Sep 2025 15:09:43 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
+        + 2 equals 4. \n\nThis is a basic arithmetic operation where adding two numbers
+        (2 and 2) results in their sum, which is 4.","reasoning_content":"\nOkay,
+        let''s see. The user is asking \"What''s 2 + 2?\" That''s a pretty basic math
+        question. I need to make sure I answer it correctly. First, I should recall
+        the basic addition facts. 2 plus 2 is a fundamental arithmetic operation.
+        Let me think... 2 plus 2 equals 4. Wait, is there any chance it could be something
+        else? Like, maybe in a different context or with some special rules? But the
+        question seems straightforward. It''s just asking for the sum of 2 and 2.
+        There''s no mention of any other operations or contexts, like modular arithmetic
+        or something. So, in standard arithmetic, 2 + 2 is definitely 4. I should
+        also consider if the user is testing me or if there''s a trick here. But given
+        the simplicity of the question, it''s probably just a simple addition problem.
+        Let me double-check by counting. If I have two objects and add two more, I
+        have four. Yep, that makes sense. So the answer should be 4. I should present
+        it clearly and confirm that there''s no hidden meaning. Maybe the user is
+        just verifying that I understand basic math. Alright, I''ll go with that.\n","role":"assistant"}}],"created":1768318732,"id":"chatcmpl-tSp9QB6X4RrckqmAGAw9uhfxcw3Qkp3L","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":293,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":255,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":927.4824647846501,"time_per_output_token_ms":7.866808873720136,"time_to_first_token_ms":17.251,"tokens_per_second":127.1163461642751,"total_tokens":309}}'
+  recorded_at: Tue, 13 Jan 2026 15:38:52 GMT
+recorded_with: VCR 6.4.0

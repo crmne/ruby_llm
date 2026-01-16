@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the array
+        params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 13 Jan 2026 15:44:14 GMT
+      - Tue, 13 Jan 2026 15:44:14 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1541'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the array_params function with the tags [\"red\",
+        \"blue\"] and get the combined tags. Let me check the function definition.
+        The function takes an object with a property \"tags\" which is an array of
+        strings. The required parameter is \"tags\", and it''s strictly typed. So
+        I need to structure the arguments correctly. The user provided the array [\"red\",
+        \"blue\"], so I should pass that as the value for the \"tags\" key. Since
+        the function is supposed to combine the tags, maybe it just returns them as
+        a single array. I don''t need to do anything else except call the function
+        with those parameters. Let me make sure the JSON is formatted properly with
+        the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rgb7azRGWxf3woxY3Dc9rVtqkMovI3cp","type":"function"}]}}],"created":1768319058,"id":"chatcmpl-wIQP56h4OLp6HdM8gRtM8eFhZP06hMlk","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":177,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":152,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3120.3918264166846,"time_per_output_token_ms":17.2873615819209,"time_to_first_token_ms":75.952,"tokens_per_second":57.8457270799379,"total_tokens":414}}'
+  recorded_at: Tue, 13 Jan 2026 15:44:18 GMT
+recorded_with: VCR 6.4.0
