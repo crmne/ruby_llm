@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 16 Jan 2026 15:18:50 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Mon, 12 Jan 2026 21:46:55 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 12 Jan 2026 21:46:55 GMT
+  recorded_at: Fri, 16 Jan 2026 15:18:50 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:46:57 GMT
+      - Fri, 16 Jan 2026 15:18:52 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -101,18 +101,59 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkFuYWx5emluZyBOdW1lcmljYWwgSW5wdXQqKlxuXG5JJ3ZlIHN1Y2Nlc3NmdWxseSBpZGVudGlmaWVkIHRoZSBjb3JlIG9wZXJhdGlvbjogYWRkaXRpb24uIFRoZSBjaGFsbGVuZ2Ugd2FzIHN0cmFpZ2h0Zm9yd2FyZCDigJMgYSByZXF1ZXN0IGZvciB0aGUgc3VtIG9mIHR3byBudW1iZXJzLiBUaGUgY29tcHV0YXRpb24geWllbGRlZCA4LCB3aGljaCBpcyB0aGUgY29ycmVjdCByZXN1bHQgb2YgNSBwbHVzIDMuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI1ICsgMyA9IDgiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJDbTBCanoxclg3T0JwMzczUWhvYU1JL2kxcEptOHBTZlZSbVd3TTU5RDdDaTBweVF3eW1kbVBzWDljSXhZbGFFNE03RDhSZGhIelRYeU9xRnVUbXRIdkNGTG4wbVc1WUFXckRwN1A5bnY5L2VKVk5FVTdLUnh3SUtIcGQyd3VXRnptQWpJK2d3MExCSTk3NWxKS09FIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDgsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDQ0LAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAyOQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTAxLTEyVDIxOjQ2OjU2LjAxMTA0OFoiLAogICJyZXNwb25zZUlkIjogIjBHdGxhYWhXLThMczhnLUxyZXp3RHciCn0K
-  recorded_at: Mon, 12 Jan 2026 21:46:57 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "**Analyzing the Summation**\n\nI've successfully identified the task as a simple addition problem. The user is indeed requesting the sum. I've calculated the answer by adding 5 and 3, and the result, of course, is 8.\n\n\n",
+                    "thought": true
+                  },
+                  {
+                    "text": "5 + 3 = 8",
+                    "thoughtSignature": "CmABjz1rX28vyJCW+8b/Mj7oj/ZYrL5Hc8O8Ykkde1eskpGTMTQX8TdjzUNf+DoaqMG2hMQAnbseMP8UCZBX0/rOZpHR4C7mvmzbEpbqSbcp9RDMOSxmBdg57FEU+y1i/cY="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 8,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 41,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ],
+            "thoughtsTokenCount": 26
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-01-16T15:18:50.325784Z",
+          "responseId": "2lZqaZjxE7me7PIPwMKb0Ac"
+        }
+  recorded_at: Fri, 16 Jan 2026 15:18:52 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Analyzing
-        Numerical Input**\n\nI''ve successfully identified the core operation: addition.
-        The challenge was straightforward – a request for the sum of two numbers.
-        The computation yielded 8, which is the correct result of 5 plus 3.\n\n\n","thoughtSignature":"Cm0Bjz1rX7OBp373QhoaMI/i1pJm8pSfVRmWwM59D7Ci0pyQwymdmPsX9cIxYlaE4M7D8RdhHzTXyOqFuTmtHvCFLn0mW5YAWrDp7P9nv9/eJVNEU7KRxwIKHpd2wuWFzmAjI+gw0LBI975lJKOE"},{"text":"5
+        the Summation**\n\nI''ve successfully identified the task as a simple addition
+        problem. The user is indeed requesting the sum. I''ve calculated the answer
+        by adding 5 and 3, and the result, of course, is 8.\n\n\n","thoughtSignature":"CmABjz1rX28vyJCW+8b/Mj7oj/ZYrL5Hc8O8Ykkde1eskpGTMTQX8TdjzUNf+DoaqMG2hMQAnbseMP8UCZBX0/rOZpHR4C7mvmzbEpbqSbcp9RDMOSxmBdg57FEU+y1i/cY="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
@@ -137,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:46:59 GMT
+      - Fri, 16 Jan 2026 15:18:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -153,6 +194,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ3ZlIGdvdCB0aGUgcHJldmlvdXMgcmVzdWx0LCB3aGljaCB3YXMgOC4gTm93LCBJIG5lZWQgdG8gbXVsdGlwbHkgdGhhdCBieSAyLiBUaGlua2luZyB0aHJvdWdoIHRoZSBjYWxjdWxhdGlvbjogOCB0aW1lcyAyLiBUaGUgb3V0Y29tZSBzaG91bGQgYmUgYSBzdHJhaWdodGZvcndhcmQgMTYuIFRoYXQncyB0aGUgc29sdXRpb24uXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkNvZ0JBWTg5YTErSWtmY1M5ZWdqbmI4Yis5UU5JcVFESE84Y3FBVzA3TzJBSGU2R2VlcllBQTdaMklMOVBYOUR2YVozL0RNdGZjejZFLy9ObysyN2Z0blNJbW04NVBsb0d0MElQeWZoZy9rVzNMaFp1cWVQM0lnOEpsZUszTFJqbXdyQTZIR0RqNUEvNGN6bGxselhBdWJqNFR6akorbm5NU2VXUGlHOUkyL1l5NWhhSXA3cWJBaU5NUT09IgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIgogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDcxLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAxMTQsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNzEKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDgKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAzNQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTAxLTEyVDIxOjQ2OjU3LjcyMzg2OVoiLAogICJyZXNwb25zZUlkIjogIjBXdGxhWjJYTE5HN3hmY1B2cERaLUFvIgp9Cg==
-  recorded_at: Mon, 12 Jan 2026 21:47:00 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ3ZlIGdvdCB0aGUgcHJldmlvdXMgcmVzdWx0IOKAkyA4IOKAkyBhbmQgbm93IEkgbmVlZCB0byBtdWx0aXBseSBpdCBieSAyLiBUaGlzIGlzIHN0cmFpZ2h0Zm9yd2FyZDsgdGhlIG1hdGggaXMgc2ltcGxlLiBUaGUgY2FsY3VsYXRpb24gaXMgOCB0aW1lcyAyLCBhbmQgdGhlIGV4cGVjdGVkIHJlc3VsdCBpcyAxNi5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiQ29nQkFZODlhMStGMG1YM2dxbXR4dVFOQlhKNkk2Z21ja1kzZ1JxVGVBZHFQZDZqanY2bytyWDVjTlBJM1I1ZHhzK0JQMS9oSXcrejJFVXZIVnFEZWlvazFvOFhPZ0R3Z1JJR3pZNXdCRmZ5MTIzWGJ0Q3BqN1RYb0tUbXE2ZmdrSGlkMEFYbnNISC9LRzJmTitHVG1QR3lDc1RaS3lJNk02MXZqc3JDWmttamZhaGVQUHRDNWNhWmVRPT0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNzUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDExOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA3NQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDM1CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDEtMTZUMTU6MTg6NTIuODA4NzQ5WiIsCiAgInJlc3BvbnNlSWQiOiAiM0ZacWFhMnVNYlhFaHUwUHRyT1MyUVkiCn0K
+  recorded_at: Fri, 16 Jan 2026 15:18:54 GMT
 recorded_with: VCR 6.4.0

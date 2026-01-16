@@ -13,19 +13,19 @@ require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
-  'ruby_llm' => 'RubyLLM',
-  'llm' => 'LLM',
-  'openai' => 'OpenAI',
-  'api' => 'API',
-  'deepseek' => 'DeepSeek',
-  'perplexity' => 'Perplexity',
-  'bedrock' => 'Bedrock',
-  'openrouter' => 'OpenRouter',
-  'gpustack' => 'GPUStack',
-  'mistral' => 'Mistral',
-  'vertexai' => 'VertexAI',
-  'pdf' => 'PDF',
   'UI' => 'UI',
+  'api' => 'API',
+  'bedrock' => 'Bedrock',
+  'deepseek' => 'DeepSeek',
+  'gpustack' => 'GPUStack',
+  'llm' => 'LLM',
+  'mistral' => 'Mistral',
+  'openai' => 'OpenAI',
+  'openrouter' => 'OpenRouter',
+  'pdf' => 'PDF',
+  'perplexity' => 'Perplexity',
+  'ruby_llm' => 'RubyLLM',
+  'vertexai' => 'VertexAI',
   'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")

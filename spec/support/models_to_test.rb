@@ -11,7 +11,7 @@ CHAT_MODELS = [
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'sonar' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
-  { provider: :xai, model: 'grok-3-mini' }
+  { provider: :xai, model: 'grok-4-fast-non-reasoning' }
 ].freeze
 
 THINKING_MODELS = [
@@ -25,7 +25,8 @@ THINKING_MODELS = [
   { provider: :openai, model: 'gpt-5' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'sonar-reasoning-pro' },
-  { provider: :vertexai, model: 'gemini-3-flash-preview' }
+  { provider: :vertexai, model: 'gemini-3-flash-preview' },
+  { provider: :xai, model: 'grok-3-mini' }
 ].freeze
 
 PDF_MODELS = [
@@ -45,7 +46,8 @@ VISION_MODELS = [
   { provider: :ollama, model: 'granite3.2-vision' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
-  { provider: :vertexai, model: 'gemini-2.5-flash' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :xai, model: 'grok-2-vision-1212' }
 ].freeze
 
 VIDEO_MODELS = [

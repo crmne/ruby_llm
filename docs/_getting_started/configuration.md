@@ -59,7 +59,6 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
-  config.xai_api_key = ENV['XAI_API_KEY']
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'
@@ -126,6 +125,18 @@ end
 ```
 
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
+
+### xAI
+
+Use xAI's OpenAI-compatible endpoint with the dedicated provider:
+
+```ruby
+RubyLLM.configure do |config|
+  config.xai_api_key = ENV['XAI_API_KEY']
+end
+
+chat = RubyLLM.chat(model: 'grok-4-fast')
+```
 
 ### Gemini API Versions
 {: .d-inline-block }
@@ -389,12 +400,14 @@ RubyLLM.configure do |config|
   config.perplexity_api_key = String
   config.openrouter_api_key = String
   config.gpustack_api_key = String
+  config.xai_api_key = String
 
   # Provider Endpoints
   config.openai_api_base = String
   config.gemini_api_base = String  # v1.9.0+
   config.ollama_api_base = String
   config.gpustack_api_base = String
+  config.xai_api_base = String
 
   # OpenAI Options
   config.openai_organization_id = String

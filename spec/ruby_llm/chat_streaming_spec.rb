@@ -34,11 +34,12 @@ RSpec.describe RubyLLM::Chat do
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         chunks = []
 
-        prompt = 'Count from 1 to 3, respond with a comma-delimited list of integers with no spaces.'
-        stream_message = chat.ask(prompt) { |chunk| chunks << chunk }
+        stream_message = chat.ask('Count from 1 to 3') do |chunk|
+          chunks << chunk
+        end
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-        sync_message = chat.ask(prompt)
+        sync_message = chat.ask('Count from 1 to 3')
 
         expect(sync_message.input_tokens).to be_within(1).of(stream_message.input_tokens)
         expect(sync_message.output_tokens).to be_within(1).of(stream_message.output_tokens)

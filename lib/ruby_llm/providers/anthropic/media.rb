@@ -44,7 +44,7 @@ module RubyLLM
               type: 'image',
               source: {
                 type: 'url',
-                url: image.source
+                url: image.source.to_s
               }
             }
           else
