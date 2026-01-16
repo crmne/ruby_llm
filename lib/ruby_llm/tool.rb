@@ -63,16 +63,20 @@ module RubyLLM
     end
 
     # Initialize with optional instance-level overrides
+    # @param name [String, nil] Override the computed tool name (useful for unique identification)
     # @param description [String, nil] Override the class-level description
     # @param parameters [Hash, nil] Override the class-level parameters
     # @param provider_params [Hash, nil] Override the class-level provider_params
-    def initialize(description: nil, parameters: nil, provider_params: nil)
+    def initialize(name: nil, description: nil, parameters: nil, provider_params: nil)
+      @instance_name = name
       @instance_description = description
       @instance_parameters = parameters
       @instance_provider_params = provider_params
     end
 
     def name
+      return @instance_name if @instance_name
+
       klass_name = self.class.name
       normalized = klass_name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
       normalized.encode('ASCII', replace: '')
@@ -96,6 +100,10 @@ module RubyLLM
     end
 
     # Instance-level setters for customization after initialization
+    def name=(value)
+      @instance_name = value
+    end
+
     def description=(value)
       @instance_description = value
     end

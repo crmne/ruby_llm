@@ -654,6 +654,17 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tools[:weather].description).to eq('Gets Paris weather by arrondissement')
     end
 
+    it 'allows multiple instances of the same class with unique names' do
+      berlin_tool = Weather.new(name: 'berlin_weather', description: 'Berlin weather')
+      paris_tool = Weather.new(name: 'paris_weather', description: 'Paris weather')
+
+      chat = RubyLLM.chat.with_tools(berlin_tool, paris_tool)
+
+      expect(chat.tools.keys).to contain_exactly(:berlin_weather, :paris_weather)
+      expect(chat.tools[:berlin_weather].description).to eq('Berlin weather')
+      expect(chat.tools[:paris_weather].description).to eq('Paris weather')
+    end
+
     it 'uses customized provider_params from instance' do
       custom_tool = Weather.new(provider_params: { cache_control: { type: 'ephemeral' } })
 

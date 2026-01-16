@@ -52,10 +52,33 @@ RSpec.describe RubyLLM::Tool do
       allow(tool_class).to receive(:name).and_return(ascii_8bit_name)
       expect(tool_class.new.name).to eq('sample')
     end
+
+    context 'with instance-level override' do
+      it 'uses instance name when provided in initialize' do
+        tool = TestWeatherTool.new(name: 'custom_weather')
+        expect(tool.name).to eq('custom_weather')
+      end
+
+      it 'allows setting name after initialization' do
+        tool = TestWeatherTool.new
+        tool.name = 'renamed_weather'
+        expect(tool.name).to eq('renamed_weather')
+      end
+
+      it 'falls back to computed name when not overridden' do
+        tool = TestWeatherTool.new
+        expect(tool.name).to eq('test_weather')
+      end
+    end
   end
 
   describe 'instance-level customization' do
     describe '#initialize' do
+      it 'accepts optional name parameter' do
+        tool = TestWeatherTool.new(name: 'custom_weather_name')
+        expect(tool.name).to eq('custom_weather_name')
+      end
+
       it 'accepts optional description parameter' do
         tool = TestWeatherTool.new(description: 'Custom weather description')
         expect(tool.description).to eq('Custom weather description')
@@ -79,11 +102,13 @@ RSpec.describe RubyLLM::Tool do
           city: RubyLLM::Parameter.new(:city, type: 'string', desc: 'City name', required: true)
         }
         tool = TestWeatherTool.new(
+          name: 'custom_tool_name',
           description: 'Custom description',
           parameters: custom_params,
           provider_params: { timeout: 30 }
         )
 
+        expect(tool.name).to eq('custom_tool_name')
         expect(tool.description).to eq('Custom description')
         expect(tool.parameters).to eq(custom_params)
         expect(tool.provider_params).to eq({ timeout: 30 })
@@ -109,6 +134,12 @@ RSpec.describe RubyLLM::Tool do
     end
 
     describe 'instance setters' do
+      it 'allows setting name after initialization' do
+        tool = TestWeatherTool.new
+        tool.name = 'updated_tool_name'
+        expect(tool.name).to eq('updated_tool_name')
+      end
+
       it 'allows setting description after initialization' do
         tool = TestWeatherTool.new
         tool.description = 'Updated description'
