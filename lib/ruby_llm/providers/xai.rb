@@ -6,6 +6,7 @@ module RubyLLM
     class XAI < OpenAI
       include XAI::Chat
       include XAI::Models
+
       def api_base
         'https://api.x.ai/v1'
       end
