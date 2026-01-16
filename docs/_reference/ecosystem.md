@@ -90,6 +90,53 @@ gem install ruby_llm-schema
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
 
+## RubyLLM::Instrumentation
+
+**ActiveSupport::Notifications instrumentation for RubyLLM**
+
+[RubyLLM::Instrumentation](https://github.com/sinaptia/ruby_llm-instrumentation) is a Rails plugin that instruments RubyLLM events with the built-in [ActiveSupport::Notifications](https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html) instrumentation API.
+
+### Why instrumenting RubyLLM?
+
+You might need to build custom monitoring, analytics, or logging from your RubyLLM calls (see below).
+
+### Supported events
+
+- `complete_chat.ruby_llm`: Triggered when `RubyLLM::Chat#ask` is called.
+- `execute_tool.ruby_llm`: Triggered when a tool call is executed.
+- `embed_text.ruby_llm`: Triggered when `RubyLLM::Embedding.embed` is called.
+- `paint_image.ruby_llm`: Triggered when `RubyLLM::Image.paint` is called.
+- `moderate_text.ruby_llm`: Triggered when `RubyLLM::Moderation.moderate` is called.
+- `transcribe_audio.ruby_llm`: Triggered when `RubyLLM::Transcription.transcribe` is called.
+
+### Installation
+
+```bash
+gem install ruby_llm-instrumentation
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Instrumentation repository](https://github.com/sinaptia/ruby_llm-instrumentation).
+
+## RubyLLM::Monitoring
+
+**RubyLLM monitoring within your Rails application**
+
+[RubyLLM::Monitoring](https://github.com/sinaptia/ruby_llm-monitoring) is a Rails engine that provides a dashboard where you can see cost, throughput, response time, and error aggregations. On top of it, you can set up alerts so that when something interesting to you happens, you receive an email or a Slack notification.
+
+### Features
+
+- Captures events with RubyLLM::Instrumentation
+- Dashboard with metrics: cost, throughput, response time, error rate
+- Alert system: configurable, rule-based
+
+### Installation
+
+```bash
+gem install ruby_llm-monitoring
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Monitoring repository](https://github.com/sinaptia/ruby_llm-monitoring).
+
 ---
 
 ## Community Projects
@@ -98,6 +145,6 @@ The RubyLLM ecosystem is growing! If you've built a library or tool that extends
 
 - Opening a PR to add your project to this page
 - Sharing it in our GitHub Discussions
-- Using the `ruby_llm` topic on your GitHub repository
+- Using the `ruby-llm` topic on your GitHub repository
 
 Together, we're building a comprehensive ecosystem for LLM-powered Ruby applications.
