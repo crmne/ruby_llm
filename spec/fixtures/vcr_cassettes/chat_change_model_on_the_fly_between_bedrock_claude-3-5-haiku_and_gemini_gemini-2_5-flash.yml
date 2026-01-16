@@ -13,12 +13,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20260112T164944Z
+      - 20260116T172103Z
       X-Amz-Content-Sha256:
       - '0880ffefab958357117f2e7d905fa1f9474d7a7fed497a9ef570e276f443ef62'
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260112/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=638d210b24b91a34442a3e3e4be5e80e2b2feb75e1ab4e534ebf133809b71e28
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=05248fb517c3e73f0de5efde53cff78c2bd76188af0ad69c11458568f9f88a76
       Content-Type:
       - application/json
       Accept:
@@ -31,31 +31,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 16:49:45 GMT
+      - Fri, 16 Jan 2026 17:21:04 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '305'
+      - '306'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '09a58f86-5ce0-4390-8821-1592423c2218'
+      - 66c624ac-4dde-401c-b3f9-17c5d552e6e0
       X-Amzn-Bedrock-Invocation-Latency:
-      - '825'
+      - '586'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '5'
+      - '6'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01EqhMpEWqM96bnn2tusCzpE","type":"message","role":"assistant","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Mon, 12 Jan 2026 16:49:45 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01RwNrovJ9NPyRAbTiTJWMPh","type":"message","role":"assistant","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":6}}'
+  recorded_at: Fri, 16 Jan 2026 17:21:04 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]},{"role":"model","parts":[{"text":"4"}]},{"role":"user","parts":[{"text":"and
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]},{"role":"model","parts":[{"text":"4."}]},{"role":"user","parts":[{"text":"and
         4 + 4?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
@@ -80,7 +80,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 16:49:46 GMT
+      - Fri, 16 Jan 2026 17:21:05 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -90,7 +90,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=573
+      - gfet4t7; dur=470
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -104,7 +104,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "8"
+                    "text": "8."
                   }
                 ],
                 "role": "model"
@@ -114,19 +114,19 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 20,
-            "candidatesTokenCount": 1,
-            "totalTokenCount": 42,
+            "promptTokenCount": 21,
+            "candidatesTokenCount": 2,
+            "totalTokenCount": 44,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 20
+                "tokenCount": 21
               }
             ],
             "thoughtsTokenCount": 21
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "KiZlacqtHvywxN8PgrT06AI"
+          "responseId": "gXNqaf6dB4XwnsEPgK_qyQE"
         }
-  recorded_at: Mon, 12 Jan 2026 16:49:46 GMT
+  recorded_at: Fri, 16 Jan 2026 17:21:05 GMT
 recorded_with: VCR 6.4.0

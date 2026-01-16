@@ -28,15 +28,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:44:38 GMT
-      - Tue, 13 Jan 2026 15:44:39 GMT
+      - Fri, 16 Jan 2026 17:10:56 GMT
+      - Fri, 16 Jan 2026 17:10:57 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1669'
+      - '1487'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -49,15 +49,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
         the user wants me to call the object_params function with a window starting
-        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.\n\nThe
-        function requires a \"window\" object with \"start\" and \"end\" properties.
-        Both are ISO strings, which the user provided. The parameters are strict,
-        so I need to make sure the format is correct. The start is 2025-01-01 and
-        end is 2025-01-02. Those look like valid ISO dates. \n\nI should structure
-        the arguments as a JSON object inside the tool_call tags. The function name
-        is object_params, and the arguments should include the window with start and
-        end. No other parameters are needed since the function''s required fields
-        are covered. Let me make sure there are no typos in the JSON structure. Alright,
-        that should do it.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-MXX6TNRLvBmlWLWerQ2It80FC9SajEFy","type":"function"}]}}],"created":1768319084,"id":"chatcmpl-cFP1eBgzHzX1nVAn61JH1w9AUG8WXogQ","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":252,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":203,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3352.337783443701,"time_per_output_token_ms":16.804924603174605,"time_to_first_token_ms":84.717,"tokens_per_second":59.506366354722644,"total_tokens":536}}'
-  recorded_at: Tue, 13 Jan 2026 15:44:44 GMT
+        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.
+        The function requires a \"window\" object with \"start\" and \"end\" as required
+        fields. Both should be ISO strings. The user provided the dates in the correct
+        format, so I''ll structure the JSON accordingly. I need to make sure the parameters
+        are correctly nested under \"window\". No additional properties are allowed,
+        so I''ll keep it simple. Alright, the tool call should include the name \"object_params\"
+        and the arguments with the window details.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-BXIjcVltGvmpx33n9RjzW9bwjVvAluRj","type":"function"}]}}],"created":1768583459,"id":"chatcmpl-itiGacVIklwliNuMHd2rTv2CAGmuwn93","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":194,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":145,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5453.044296384478,"time_per_output_token_ms":8.261726804123711,"time_to_first_token_ms":52.081,"tokens_per_second":121.04007112663973,"total_tokens":478}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:59 GMT
 recorded_with: VCR 6.4.0
