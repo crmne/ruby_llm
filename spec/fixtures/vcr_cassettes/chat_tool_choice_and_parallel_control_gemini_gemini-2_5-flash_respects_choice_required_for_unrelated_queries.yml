@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 31 Aug 2025 01:13:11 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1105
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "41.9028",
+                        "longitude": "12.4964"
+                      }
+                    },
+                    "thoughtSignature": "Cs4DAVSoXO53TlvSfkoZtfOs1kr3m/jnqUSZ9EZW6ineU7jP/nlxvnB/ZKjBzX/uZr3n/SmsaP0Gp0CMp3Scm3fQ1+xkXZSyaH+mFXJxc2Le8aC8Eq4l2XBf0EoAfkorm8d9UkJarQo7M27gEzzFNHXR7UVLjOXUCY74/jYSwxk2d4GIWP/HJDZq4mbwhYJGOP0clkDg1Bli/Yk1+VBZ1Hu9GgO+tJWYkB4Rju0+fZDUHHV4KEr1MtShX7cWy8b7iWAUts7X/pQj++M5HGqfrzTi9mBwgQNqzVVbQVxWPs0MnT1qzVY6UXLITk7mSsAHu2OWQthkvylP5VlHaqKoV2UvsEDbk5XLYX5b4qUtQqgcWpd4DwsSCYPCb0W4iKGh4tSdX+WT0S+1EtwyolT37qP0OZGY9s0ors3yhDjU/7qS2vBxV/ZcKk2n5eKstzcYcS94twoM+QyZClsOtsBaIHoDcj/LTkMGHX9/xsqWx1L800nUDrgHPf5jYUJ4oWfgc6gBLESB/ej7PhTAgXLPfTPqpndWGexyLTmQRYE9CXSxBUlJJnZ+aIKr49tyU9rHLwrvnbw4XahMKXt6FtuHI9ZV7Pk019houe63ZHSqDxFM"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 84,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 197,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 84
+              }
+            ],
+            "thoughtsTokenCount": 83
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "p6GzaMKhIPvjz7IPi77gaA"
+        }
+  recorded_at: Sun, 31 Aug 2025 01:13:11 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"02cb43ec-9176-435c-b8d5-17b875acebfe","response":{"name":"02cb43ec-9176-435c-b8d5-17b875acebfe","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Sun, 31 Aug 2025 01:13:12 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=698
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkkgY2FuJ3QgdGVsbCB5b3Ugd2hlbiB0aGUgZmFsbCBvZiBSb21lIHdhcywgYnV0IEkgY2FuIHRlbGwgeW91IHRoYXQgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBSb21lLCBJdGFseSBpcyAxNcKwQyB3aXRoIGEgd2luZCBvZiAxMCBrbS9oLlxuIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyMzEsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA0MywKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyNzQsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDIzMQogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogInFLR3phTGZVSGJyT3o3SVBodUt4c0FZIgp9Cg==
+  recorded_at: Sun, 31 Aug 2025 01:13:12 GMT
+recorded_with: VCR 6.3.1

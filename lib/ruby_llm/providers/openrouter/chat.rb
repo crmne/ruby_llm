@@ -7,7 +7,9 @@ module RubyLLM
       module Chat
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists
+        # rubocop:disable Metrics/ParameterLists,Complexity/PerceivedComplexity
+        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil)
           payload = {
             model: model.id,
             messages: format_messages(messages),
@@ -15,7 +17,11 @@ module RubyLLM
           }
 
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) } if tools.any?
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) }
+            payload[:tool_choice] = OpenAI::Tools.build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+            payload[:parallel_tool_calls] = tool_prefs[:parallel] unless tool_prefs[:parallel].nil?
+          end
 
           if schema
             strict = schema[:strict] != false
@@ -35,6 +41,7 @@ module RubyLLM
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Complexity/PerceivedComplexity
 
         def parse_completion_response(response)
           data = response.body

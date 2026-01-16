@@ -276,6 +276,38 @@ puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
+### Tool Choice Control
+
+Control when and how tools are called using `choice` and `parallel` options.
+
+```ruby
+chat = RubyLLM.chat(model: 'gpt-4o')
+
+# Basic usage with defaults
+chat.with_tools(Weather, Calculator)  # uses provider defaults
+
+# Force tool usage, one at a time
+chat.with_tools(Weather, Calculator, choice: :required, parallel: false)
+
+# Force specific tool
+chat.with_tool(Weather, choice: :weather, parallel: true)
+```
+
+**Parameter Values:**
+- **`choice`**: Controls tool choice behavior
+  - `:auto` Model decides whether to use any tools
+  - `:required` - Model must use one of the provided tools
+  - `:none` - Disable all tools
+  - `"tool_name"` - Force a specific tool (e.g., `:weather` for `Weather` tool)
+- **`parallel`**: Controls parallel tool calls
+  - `true` Allow multiple tool calls simultaneously
+  - `false` - One at a time
+
+If not provided, RubyLLM will use the provider's default behavior for tool choice and parallel tool calls.
+
+> With `:required` or specific tool choices, the tool_choice is automatically reset to `nil` after tool execution to prevent infinite loops.
+{: .note }
+
 ### Model Compatibility
 
 RubyLLM will attempt to use tools with any model. If the model doesn't support function calling, the provider will return an appropriate error when you call `ask`.
