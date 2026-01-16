@@ -75,6 +75,9 @@ RSpec.describe RubyLLM::Chat do
           if RubyLLM::Provider.providers[provider]&.local?
             skip('Local providers do not throw an error for context length exceeded')
           end
+          if provider == :xai && model == 'grok-4-fast-non-reasoning'
+            skip('xAI grok-4-fast-non-reasoning does not reliably error on context length exceeded')
+          end
 
           # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)
           Psych::Parser.code_point_limit = 20_000_000 if Psych::Parser.respond_to?(:code_point_limit=)

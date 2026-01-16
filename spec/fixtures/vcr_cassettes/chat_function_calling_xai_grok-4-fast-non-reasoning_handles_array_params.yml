@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"user","content":"Call
+        the array params tool with tags [\"red\",\"blue\"] and tell me the combined
+        tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 16:26:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '3363468'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '480'
+      X-Ratelimit-Remaining-Requests:
+      - '450'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"98fa0570-3817-55f1-0197-0f589d82ea03","object":"chat.completion","created":1768580772,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_65662371","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":397,"completion_tokens":29,"total_tokens":426,"prompt_tokens_details":{"text_tokens":397,"audio_tokens":0,"image_tokens":0,"cached_tokens":314},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":468000},"system_fingerprint":"fp_4616e76413"}'
+  recorded_at: Fri, 16 Jan 2026 16:26:13 GMT
+recorded_with: VCR 6.4.0
