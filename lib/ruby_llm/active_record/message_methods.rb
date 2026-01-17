@@ -11,9 +11,6 @@ module RubyLLM
       end
 
       def to_llm(include_attachments: true)
-        cached = has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
-        cache_creation = has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
-
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content(include_attachments: include_attachments),
