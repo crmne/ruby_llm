@@ -765,7 +765,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
   
-   describe 'extended thinking persistence' do
+  describe 'extended thinking persistence' do
     def thinking_config_for(provider)
       case provider
       when :anthropic, :bedrock
@@ -814,8 +814,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
         end
       end
-   end
-end
+    end
+  end
 
   describe 'prompt method' do
     describe 'integration behavior' do
