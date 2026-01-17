@@ -61,6 +61,7 @@ module RubyLLM
         template 'views/messages/_tool_calls.html.erb',
                  "app/views/#{message_view_path}/_tool_calls.html.erb"
         template 'views/messages/_content.html.erb', "app/views/#{message_view_path}/_content.html.erb"
+        template 'views/messages/_content_raw.html.erb', "app/views/#{message_view_path}/_content_raw.html.erb"
         template 'views/messages/_form.html.erb', "app/views/#{message_view_path}/_form.html.erb"
         template 'views/messages/create.turbo_stream.erb', "app/views/#{message_view_path}/create.turbo_stream.erb"
 

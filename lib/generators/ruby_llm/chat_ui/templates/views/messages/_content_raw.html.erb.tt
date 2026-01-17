@@ -1,0 +1,28 @@
+<details style="font-family: monospace;">
+  <summary style="cursor: pointer; user-select: none;">
+    <span style="color:#666;">
+      <%%= begin
+            keys = content.keys
+            shown = keys.first(4).map do |k|
+              v = content[k]
+              pv =
+                case v
+                when Hash  then "{…}"
+                when Array then v.all? { |e| e.is_a?(Hash) } ? "[{…}, …]" : "[…]"
+                when NilClass then "nil"
+                when String then v.length > 30 ? %("#{v.truncate(30, omission: "…")}") : v.inspect
+                else v.to_s
+                end
+              "#{k}: #{pv}"
+            end
+            shown << "…" if keys.size > 4
+            "{ " + shown.join(", ") + " }"
+          rescue StandardError => e
+            "{…}"
+          end
+      %>
+    </span>
+  </summary>
+
+  <pre style="padding: 8px; border-radius: 4px; background: #eee; overflow: auto;"><%%= JSON.pretty_generate(content) -%></pre>
+</details>
