@@ -26,35 +26,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 14:00:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 17:10:22 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 377814e329ded274cde519b76009710c
+      - 6c19123738909aeccee9b6f67abde960
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 9b6e9f2240cca7d20b3706c9cf8cfd42.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - Vt2rCVoIzKINFo2Q7VarF_HAqldVNnyESQYaJZ7mcsszYCiPf_xN_A==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3abaf91d-3868-4489-b722-f252e5a65954","object":"chat.completion","created":1762178421,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_mrkUUaWIiBx2a2vBPCjKX1kj","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":193,"completion_tokens":17,"total_tokens":210,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":193},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 14:00:23 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"c1718830-b2ae-47a3-be75-b4c03db62e8e","object":"chat.completion","created":1768583422,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the array params tool with the tags [\"red\", \"blue\"] as you requested.","tool_calls":[{"index":0,"id":"call_00_mJnsNzmR9JVUv1kBRRbq8c9c","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":346,"completion_tokens":67,"total_tokens":413,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":154},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 17:10:25 GMT
+recorded_with: VCR 6.4.0

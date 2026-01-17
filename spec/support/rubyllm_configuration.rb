@@ -13,6 +13,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
       config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
+      config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
 
@@ -25,7 +26,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
 
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
-      config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
+      config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
 
       config.request_timeout = 240
       config.max_retries = 10

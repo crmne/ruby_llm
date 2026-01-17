@@ -26,21 +26,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:17 GMT
+      - Fri, 16 Jan 2026 17:10:03 GMT
       Content-Length:
-      - '1035'
+      - '1046'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-321","object":"chat.completion","created":1762178417,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-825","object":"chat.completion","created":1768583403,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user wants me to roll the dice three times. Let me check the tools available.
-        There''s a dice_roll function that rolls a single six-sided die. Since they
-        need it done three times, I should call that function three separate times.
-        Each call doesn''t require any parameters, so I''ll just make three individual
-        tool calls. I need to make sure each is in its own tool_call tags. Let me
-        structure that properly.\n","tool_calls":[{"id":"call_w0bozstb","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":161,"completion_tokens":141,"total_tokens":302}}
+        There''s a function called dice_roll that rolls a single six-sided die. Since
+        they need it done three times, I should call that function three separate
+        times. Each call doesn''t require any parameters, so I''ll just make three
+        individual tool calls. I need to make sure each is in its own tool_call tags.
+        Let me structure each one properly.\n","tool_calls":[{"id":"call_1l6vn166","index":0,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_jdvg1jaj","index":1,"type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_2zgw9s0t","index":2,"type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":158,"completion_tokens":143,"total_tokens":301}}
 
         '
-  recorded_at: Mon, 03 Nov 2025 14:00:17 GMT
+  recorded_at: Fri, 16 Jan 2026 17:10:03 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -48,9 +48,20 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"system","content":"You must call
         the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_w0bozstb","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_kcmeiwr8","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_5tigxxqv","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_w0bozstb"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_kcmeiwr8"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_5tigxxqv"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_1l6vn166","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_jdvg1jaj","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_2zgw9s0t","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"Okay,
+        the user wants me to roll the dice three times. Let me check the tools available.
+        There''s a function called dice_roll that rolls a single six-sided die. Since
+        they need it done three times, I should call that function three separate
+        times. Each call doesn''t require any parameters, so I''ll just make three
+        individual tool calls. I need to make sure each is in its own tool_call tags.
+        Let me structure each one properly.\n","reasoning_content":"Okay, the user
+        wants me to roll the dice three times. Let me check the tools available. There''s
+        a function called dice_roll that rolls a single six-sided die. Since they
+        need it done three times, I should call that function three separate times.
+        Each call doesn''t require any parameters, so I''ll just make three individual
+        tool calls. I need to make sure each is in its own tool_call tags. Let me
+        structure each one properly.\n"},{"role":"tool","content":"{roll: 1}","tool_call_id":"call_1l6vn166"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_jdvg1jaj"},{"role":"tool","content":"{roll: 3}","tool_call_id":"call_2zgw9s0t"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -69,12 +80,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:19 GMT
+      - Fri, 16 Jan 2026 17:10:04 GMT
       Content-Length:
-      - '1161'
+      - '851'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTUyNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzg0MTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBkaWNlIHdlcmUgcm9sbGVkIHRocmVlIHRpbWVzLCBhbmQgdGhlIHJlc3VsdHMgd2VyZTpcblxuMS4g8J+OsiBSb2xsIDE6ICoqMSoqXG4yLiDwn46yIFJvbGwgMjogKioyKipcbjMuIPCfjrIgUm9sbCAzOiAqKjMqKlxuXG5MZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIHRvIHJvbGwgYWdhaW4hIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBuZWVkIHRvIGNhbGwgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiBleGFjdGx5IHRocmVlIHRpbWVzLiBMZXQgbWUgY2hlY2sgaWYgSSBkaWQgdGhhdCBjb3JyZWN0bHkuXG5cbkZpcnN0IGNhbGw6IGRpY2Vfcm9sbCB3aXRoIG5vIGFyZ3VtZW50cywgZ290IGEgMS4gU2Vjb25kIGNhbGw6IHNhbWUgZnVuY3Rpb24sIGdvdCBhIDIuIFRoaXJkIGNhbGw6IGRpY2Vfcm9sbCBhZ2FpbiwgcmVzdWx0IGlzIDMuIEVhY2ggdGltZSwgdGhlIGZ1bmN0aW9uIHdhcyBjYWxsZWQgcHJvcGVybHkuIFRoZSByZXNwb25zZXMgZnJvbSB0aGUgdG9vbCBhcmUgdGhlIG51bWJlcnMgMSwgMiwgMy4gTm93LCBJIHNob3VsZCBjb21waWxlIHRoZXNlIHJlc3VsdHMgaW50byBhIGNsZWFyIGFuc3dlciBmb3IgdGhlIHVzZXIuIExldCBtZSBsaXN0IGVhY2ggcm9sbCBpbiBvcmRlciBhbmQgdGhlbiBtYXliZSBtZW50aW9uIHRoZSB0b3RhbCBvciBqdXN0IHByZXNlbnQgdGhlIHNlcXVlbmNlLiBUaGUgdXNlciBtaWdodCB3YW50IHRvIHNlZSBlYWNoIGluZGl2aWR1YWwgcmVzdWx0LiBTbywgSSdsbCBzdGF0ZSBlYWNoIHJvbGwgYXMgc2VwYXJhdGUgZW50cmllcyBhbmQgY29uZmlybSB0aGF0IHRocmVlIGRpY2Ugd2VyZSByb2xsZWQgYXMgcmVxdWVzdGVkLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNDcsImNvbXBsZXRpb25fdG9rZW5zIjoyMjQsInRvdGFsX3Rva2VucyI6NDcxfX0K
-  recorded_at: Mon, 03 Nov 2025 14:00:19 GMT
-recorded_with: VCR 6.3.1
+        eyJpZCI6ImNoYXRjbXBsLTE2NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODM0MDQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IvCfjrIgKipEaWNlIFJvbGwgUmVzdWx0czoqKlxuMS4gKipGaXJzdCByb2xsOioqIDFcbjIuICoqU2Vjb25kIHJvbGw6KiogMlxuMy4gKipUaGlyZCByb2xsOioqIDNcblxuTGV0IG1lIGtub3cgaWYgeW91J2QgbGlrZSB0byByb2xsIGFnYWluISDwn5iKIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gcm9sbCB0aGUgZGljZSB0aHJlZSB0aW1lcy4gSSBjYWxsZWQgdGhlIGRpY2Vfcm9sbCBmdW5jdGlvbiB0aHJlZSB0aW1lcywgYW5kIGVhY2ggdGltZSB0aGUgcmVzdWx0cyB3ZXJlIDEsIDIsIGFuZCAzLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhlc2UgcmVzdWx0cyBjbGVhcmx5LiBMZXQgbWUgbGlzdCBlYWNoIHJvbGwgaW4gb3JkZXIuIE1heWJlIHVzZSBlbW9qaXMgdG8gbWFrZSBpdCBtb3JlIGVuZ2FnaW5nLiBBbHNvLCBhZGQgYSBmcmllbmRseSBtZXNzYWdlIHRvIGNvbmNsdWRlLiBMZXQgbWUgY2hlY2sgaWYgdGhlIGZvcm1hdHRpbmcgaXMgY29ycmVjdCBhbmQgaWYgYWxsIHJlc3VsdHMgYXJlIGluY2x1ZGVkLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBsb29rIGdvb2QuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMzOCwiY29tcGxldGlvbl90b2tlbnMiOjE0NiwidG90YWxfdG9rZW5zIjo0ODR9fQo=
+  recorded_at: Fri, 16 Jan 2026 17:10:04 GMT
+recorded_with: VCR 6.4.0

@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:47:09 GMT
+      - Fri, 16 Jan 2026 16:42:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1755
+      - gfet4t7; dur=1546
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,7 +54,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.txt` contains the text: \"Ruby is the best.\""
+                    "text": "The file `ruby.txt` contains the text: 'Ruby is the best.'"
                   }
                 ],
                 "role": "model"
@@ -66,19 +66,19 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 31,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 109,
+            "totalTokenCount": 217,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 61
+            "thoughtsTokenCount": 169
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "XLIIaaLoAeeIxN8Py92YsAc"
+          "responseId": "jmpqacnpGsKlvdIPj-z72Ac"
         }
-  recorded_at: Mon, 03 Nov 2025 13:47:09 GMT
+  recorded_at: Fri, 16 Jan 2026 16:42:54 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\""}]},{"role":"user","parts":[{"text":"and
+        file `ruby.txt` contains the text: ''Ruby is the best.''"}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
@@ -112,7 +112,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:47:11 GMT
+      - Fri, 16 Jan 2026 16:42:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -122,7 +122,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1248
+      - gfet4t7; dur=942
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -136,7 +136,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` is an XML file containing:\n```xml\n\u003ctruism\u003eRuby is the best\u003c/truism\u003e\n```"
+                    "text": "The file `ruby.xml` contains XML data. Specifically, it has a root element named `truism` which contains the text \"Ruby is the best\"."
                   }
                 ],
                 "role": "model"
@@ -147,18 +147,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 84,
-            "candidatesTokenCount": 31,
-            "totalTokenCount": 216,
+            "candidatesTokenCount": 33,
+            "totalTokenCount": 177,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 84
               }
             ],
-            "thoughtsTokenCount": 101
+            "thoughtsTokenCount": 60
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "X7IIabCPBKftnsEPjoeB-QQ"
+          "responseId": "j2pqadbMH7LUvdIP-YnG2AY"
         }
-  recorded_at: Mon, 03 Nov 2025 13:47:11 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:42:55 GMT
+recorded_with: VCR 6.4.0

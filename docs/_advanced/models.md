@@ -80,8 +80,8 @@ If your gem directory is read-only, configure a writable location with `config.m
 The `refresh!` method performs the following steps:
 
 1. **Fetches from configured providers**: Queries the APIs of all configured providers (OpenAI, Anthropic, Ollama, etc.) to get their current list of available models.
-2. **Fetches from Parsera API**: Retrieves comprehensive model metadata from [Parsera](https://parsera.org), a free service that aggregates LLM documentation across providers. Parsera provides detailed information about model capabilities, pricing, context windows, and more.
-3. **Merges the data**: Combines provider-specific data with Parsera's metadata. Provider data takes precedence for availability, while Parsera enriches models with additional details.
+2. **Fetches from models.dev API**: Retrieves comprehensive model metadata from [models.dev](https://models.dev), which aggregates LLM documentation across providers. It provides details about model capabilities, pricing, context windows, and more.
+3. **Merges the data**: Combines provider-specific data with models.dev metadata. Provider data takes precedence for availability, while models.dev enriches models with additional details.
 4. **Updates the in-memory registry**: Replaces the current registry with the refreshed data.
 
 The method returns a chainable `Models` instance, allowing you to immediately query the updated registry:
@@ -91,7 +91,7 @@ The method returns a chainable `Models` instance, allowing you to immediately qu
 chat_models = RubyLLM.models.refresh!.chat_models
 ```
 
-**Note:** We're grateful to [Parsera](https://parsera.org) for providing their free API service to the LLM developer community. They maintain comprehensive, up-to-date model information by scraping provider documentation, making it available to all developers in a standardized JSON format. If you encounter issues with model data, please [file issues with Parsera](https://github.com/parsera-labs/api-llm-specs/issues).
+**Note:** models.dev is the upstream registry for RubyLLM metadata. If you encounter issues with model data, please report them via the models.dev site or repo.
 
 **Local Provider Models:**
 

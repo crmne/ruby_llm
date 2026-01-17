@@ -1,0 +1,109 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]}],"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20260116T165505Z
+      X-Amz-Content-Sha256:
+      - 03e49cede90f887a053ce922f238ec3b24c8087e4286ab8999c75341b2de127e
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d794f2f4a3d8ec6ec11d269c8fd0c4161f65a97f8ef5ad041036adee4ff35751
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 16:55:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '790'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b9858681-f023-485a-b261-c26ca3b32eed
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1610'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '38'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '45'
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_bdrk_0154QyDgUc643cLinjyVVBVK","type":"message","role":"assistant","content":[{"type":"thinking","thinking":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EtoBCkgICxABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDHze4xUNnkQOHhAn+hoMezxvDUkZEyymDgilIjDzNPV614+HAjjxxr5MxNDyC2I+AIFvbp/vFwJria+R2vVjuwPJyvipX2HG0HLGQRoqQJ5xKhnWKGvlFJsB798AK9K/LmjeJfIuK4kY0qZM1Chc/Mu2O11fXNG45L1K+s5k2h1HhAMvMcWGYBOVK5bWnZIYAQ=="},{"type":"text","text":"5
+        + 3 = 8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":45,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":38}}'
+  recorded_at: Fri, 16 Jan 2026 16:55:08 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]},{"role":"assistant","content":[{"type":"thinking","thinking":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EtoBCkgICxABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDHze4xUNnkQOHhAn+hoMezxvDUkZEyymDgilIjDzNPV614+HAjjxxr5MxNDyC2I+AIFvbp/vFwJria+R2vVjuwPJyvipX2HG0HLGQRoqQJ5xKhnWKGvlFJsB798AK9K/LmjeJfIuK4kY0qZM1Chc/Mu2O11fXNG45L1K+s5k2h1HhAMvMcWGYBOVK5bWnZIYAQ=="},{"type":"text","text":"5
+        + 3 = 8"}]},{"role":"user","content":[{"type":"text","text":"Now multiply
+        that by 2"}]}],"max_tokens":64000,"thinking":{"type":"enabled","budget_tokens":1024}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20260116T165508Z
+      X-Amz-Content-Sha256:
+      - f4387c10b202cf7398ec26f91a4d8e26f60d4ab324166e630136937a23f15568
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=36077e4f85d41dd91c02a01aa39600ff88bda11a3ff19e6df3284dc2734316eb
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 16:55:10 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '858'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - dd8ed9be-54ef-4c8f-84fa-abb408ea8fcb
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1532'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '47'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '67'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ19iZHJrXzAxUnZiNHN0ZTIzQktYV2hnWHM3NngyayIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgaXMgYXNraW5nIG1lIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgKDgpIGJ5IDIuXG5cbjggw5cgMiA9IDE2Iiwic2lnbmF0dXJlIjoiRXZZQkNrZ0lDeEFCR0FJcVFPbTRkd0dzNDBpWlRmQ0lJajBpU1pqNTN2dFZDR2l4R2FQaGtLNEY0N1ByREo0SUtnMUhDNDVSQW9mM0EwNjdCODg0UUFmV01RZWZ0QllQd1VMOTA2OFNERFNoM01pSUZIVU1OYldrQ0JvTTNFZnNIbm96K1dURVZFNVhJakMxRit4UWlJOGtMZUNyMzYxb05yWWVxb2pkcHg4SllrU1BXN014MXBGenVORVdNQ1JMZUZjUVZ0SXN6WUh0aGJZcVhFdlIxUDVqNDQvcTdyaENEeCs3aVE1VTRFVTErazZzUlRGNytzcU12blNOSTlNY1ZoeHJnSjluT1VBMVIvODFpV1haS2xqZ2drQnVqWWsvcmlmUm1HcVQxYnppeSttN3VXSFFXRVVmVXpUWlpXZ2JsOExPT0NONzdJNkFHQUU9In0seyJ0eXBlIjoidGV4dCIsInRleHQiOiI4IMOXIDIgPSAxNiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NjcsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo0N319
+  recorded_at: Fri, 16 Jan 2026 16:55:10 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5","messages":[{"role":"user","content":"If a magic mirror
+        shows your future self, but only if you ask a question it cannot answer truthfully,
+        what question do you ask to see your future, and what would the mirror reveal
+        about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 17:03:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '49560'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '49806'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '500000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '499946'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 6ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhWQ1RROWlIQjJZVlRvTGVtdE9yUEJQUkU5SCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjkzOCwKICAibW9kZWwiOiAiZ3B0LTUtMjAyNS0wOC0wNyIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiQXNrOiDigJxXaWxsIHlvdXIgYW5zd2VyIHRvIHRoaXMgcXVlc3Rpb24gYmUg4oCYbm/igJk/4oCdXG5cbldoeSBpdCB3b3Jrczpcbi0gSWYgdGhlIG1pcnJvciBhbnN3ZXJzIOKAnHllcyzigJ0gdGhlbiBpdOKAmXMgc2F5aW5nIGl0IHdpbGwgYW5zd2VyIOKAnG5vLOKAnSB3aGljaCBpcyBmYWxzZS5cbi0gSWYgaXQgYW5zd2VycyDigJxubyzigJ0gdGhlbiBpdCBoYXMgaW5kZWVkIGFuc3dlcmVkIOKAnG5vLOKAnSBtYWtpbmcgdGhlIHF1ZXN0aW9uIHRydWXigJRzbyDigJxub+KAnSB3b3VsZCBiZSBhIGZhbHNlIGFuc3dlci5cbi0gRWl0aGVyIHdheSwgYW55IHRydXRoZnVsIHJlcGx5IGlzIGltcG9zc2libGUsIHNvIHRoZSBtaXJyb3IgbXVzdCBzaG93IHlvdXIgZnV0dXJlIHNlbGYuXG5cbldoYXQgdGhlIG1pcnJvciByZXZlYWxzOlxuLSBZb3VyIGZ1dHVyZSBzZWxmIGV4cGxhaW5zIHRoYXQgYW55IHNwb2tlbiBhbnN3ZXIgd291bGQgaGF2ZSBiZWVuIGZhbHNl4oCUYm90aCDigJx5ZXPigJ0gYW5kIOKAnG5v4oCdIGNvbnRyYWRpY3QgdGhlbXNlbHZlc+KAlHNvIHRoZSBtaXJyb3IgY291bGQgbm90IGFuc3dlciB0cnV0aGZ1bGx5IGFuZCB0aHVzIHNob3dlZCB5b3VyIGZ1dHVyZSBpbnN0ZWFkLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDUwLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTg3MSwKICAgICJ0b3RhbF90b2tlbnMiOiAxOTIxLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDE3MjgsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Fri, 16 Jan 2026 17:03:08 GMT
+recorded_with: VCR 6.4.0

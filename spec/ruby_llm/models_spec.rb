@@ -87,6 +87,10 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe '#refresh!' do
+    before do
+      allow(described_class).to receive(:fetch_from_models_dev).and_return([])
+    end
+
     it 'updates models and returns a chainable Models instance' do
       # Refresh and chain immediately
       chat_models = RubyLLM.models.refresh!.chat_models

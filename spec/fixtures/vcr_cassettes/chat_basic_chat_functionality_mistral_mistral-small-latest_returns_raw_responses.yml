@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:41:01 GMT
+      - Fri, 16 Jan 2026 16:51:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019a4a2a-08a9-7aa6-b3e2-48a67629af76'
+      - '019bc7b8-4a0e-75a1-99ec-4fc83288a06d'
       X-Kong-Request-Id:
-      - '019a4a2a-08a9-7aa6-b3e2-48a67629af76'
-      X-Envoy-Upstream-Service-Time:
-      - '1295'
+      - '019bc7b8-4a0e-75a1-99ec-4fc83288a06d'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '498879'
+      - '1999870'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999987265'
+      - '9999981685'
       X-Ratelimit-Tokens-Query-Cost:
-      - '70'
-      X-Ratelimit-Limit-Req-Minute:
-      - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '53'
+      - '57'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '406'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1296'
+      - '407'
       X-Kong-Proxy-Latency:
       - '5'
       Cf-Cache-Status:
@@ -74,10 +74,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2970779985844a259e5a97a1364bea23","created":1762180860,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":70,"completion_tokens":60},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"f9c4cbbb6e924657be8c118f3be4c8db","created":1768582302,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":57,"completion_tokens":47},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         capital of France is **Paris**. It is known for iconic landmarks such as the
-        Eiffel Tower, the Louvre Museum, and Notre-Dame Cathedral. Paris is also a
-        major global hub for culture, fashion, and cuisine.\n\nWould you like to know
-        more about Paris or France in general?"}}]}'
-  recorded_at: Mon, 03 Nov 2025 14:41:01 GMT
-recorded_with: VCR 6.3.1
+        Eiffel Tower, Notre-Dame Cathedral, and the Louvre Museum. Paris is also a
+        major <GOOGLE_CLOUD_LOCATION> center for art, fashion, and culture."}}]}'
+  recorded_at: Fri, 16 Jan 2026 16:51:42 GMT
+recorded_with: VCR 6.4.0

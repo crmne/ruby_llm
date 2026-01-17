@@ -21,13 +21,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:57:31 GMT
+      - Fri, 16 Jan 2026 15:17:00 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 13:57:31 GMT
+  recorded_at: Fri, 16 Jan 2026 15:17:00 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:57:36 GMT
+      - Fri, 16 Jan 2026 15:17:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,18 +111,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing aspect of our planet, driven by complex interactions within the atmosphere. Generally speaking, when we talk about the weather, we're referring to the current state of the atmosphere at a particular time and location. This includes several key elements:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:** The amount of moisture or water vapor in the air.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air, which influences weather patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight now, without knowing your specific location, I can't give you a precise forecast. However, across the globe, you'll find a vast array of weather conditions. Some places are experiencing warm, sunny days, while others are battling cold fronts, heavy rain, or even blizzards. Weather patterns are influenced by everything from ocean currents and mountain ranges to the tilt of the Earth's axis and the amount of solar radiation received.\n\nFor the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news broadcast. They can provide details like the current temperature, \"feels like\" temperature, wind chill, heat index, chance of precipitation, and any active weather warnings. It's always a good idea to stay informed, especially if you have outdoor plans or need to prepare for significant weather events.\n\nAnd remember, even on the most unpredictable days, there's always something interesting happening in the sky, a concept that XKCD7392 might find amusingly complex."
+                    "text": "The weather is a constantly changing and incredibly diverse phenomenon, varying dramatically depending on your location and the time of year!\n\nSince I don't have access to real-time, location-specific data, I can't tell you exactly what the weather is like *right where you are* at this very moment. However, I can tell you about the general elements that make up a weather report:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Whether it's raining, snowing, hailing, or if the skies are clear.\n*   **Wind:** Its speed and direction.\n*   **Humidity:** The amount of moisture in the air.\n*   **Cloud Cover:** How much of the sky is obscured by clouds.\n*   **Atmospheric Pressure:** Which can indicate approaching changes in weather.\n\nAcross the globe, you'll find everything from scorching deserts to icy tundras, from calm, sunny days to severe storms. To get the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news channel. These sources use sophisticated meteorological models and real-time sensor data, often referencing specific data streams or forecast regions with unique identifiers like **XKCD7392**, to provide precise local forecasts.\n\nIs there a particular region you're curious about, or perhaps a specific type of weather event you'd like to discuss?"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.25946357781938512
+              "avgLogprobs": -0.763321217233345
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 25,
-            "candidatesTokenCount": 417,
-            "totalTokenCount": 572,
+            "candidatesTokenCount": 311,
+            "totalTokenCount": 1077,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -133,14 +133,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 417
+                "tokenCount": 311
               }
             ],
-            "thoughtsTokenCount": 130
+            "thoughtsTokenCount": 741
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:57:31.720771Z",
-          "responseId": "y7QIaYP_K9ObvdIPq5tr"
+          "createTime": "2026-01-16T15:17:00.514467Z",
+          "responseId": "bFZqaaOzH6Sr7PIPtpOriAw"
         }
-  recorded_at: Mon, 03 Nov 2025 13:57:36 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 15:17:07 GMT
+recorded_with: VCR 6.4.0

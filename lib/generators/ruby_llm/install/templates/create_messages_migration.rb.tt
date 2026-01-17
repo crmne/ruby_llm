@@ -4,6 +4,9 @@ class Create<%= message_model_name.gsub('::', '').pluralize %> < ActiveRecord::M
       t.string :role, null: false
       t.text :content
       t.json :content_raw
+      t.text :thinking_text
+      t.text :thinking_signature
+      t.integer :thinking_tokens
       t.integer :input_tokens
       t.integer :output_tokens
       t.integer :cached_tokens

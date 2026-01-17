@@ -12,13 +12,9 @@ module GeneratorTestHelpers
     Bundler.with_unbundled_env do
       Dir.chdir(Dir.tmpdir) do
         ENV['RUBYLLM_PATH'] = File.expand_path('../..', __dir__)
-        output = `rails new #{name} --skip-bootsnap -m #{template_file} 2>&1`
+        `rails new #{name} --skip-bootsnap -m #{template_file} 2>&1`
         success = $CHILD_STATUS.success?
-        unless success
-          puts 'Rails new failed with output:'
-          puts output
-          raise "Failed to create test app #{name}"
-        end
+        raise "Failed to create test app #{name}" unless success
       end
     end
   end

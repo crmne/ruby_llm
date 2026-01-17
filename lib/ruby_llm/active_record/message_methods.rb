@@ -17,17 +17,52 @@ module RubyLLM
         RubyLLM::Message.new(
           role: role.to_sym,
           content: extract_content(include_attachments: include_attachments),
+          thinking: thinking,
+          tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
-          input_tokens: input_tokens,
-          output_tokens: output_tokens,
-          cached_tokens: cached,
-          cache_creation_tokens: cache_creation,
           model_id: model_association&.model_id
         )
       end
 
+      def thinking
+        RubyLLM::Thinking.build(
+          text: thinking_text_value,
+          signature: thinking_signature_value
+        )
+      end
+
+      def tokens
+        RubyLLM::Tokens.build(
+          input: input_tokens,
+          output: output_tokens,
+          cached: cached_value,
+          cache_creation: cache_creation_value,
+          thinking: thinking_tokens_value
+        )
+      end
+
       private
+
+      def thinking_text_value
+        has_attribute?(:thinking_text) ? self[:thinking_text] : nil
+      end
+
+      def thinking_signature_value
+        has_attribute?(:thinking_signature) ? self[:thinking_signature] : nil
+      end
+
+      def cached_value
+        has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
+      end
+
+      def cache_creation_value
+        has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
+      end
+
+      def thinking_tokens_value
+        has_attribute?(:thinking_tokens) ? self[:thinking_tokens] : nil
+      end
 
       def extract_tool_calls
         tool_calls_association.to_h do |tool_call|
@@ -36,7 +71,8 @@ module RubyLLM
             RubyLLM::ToolCall.new(
               id: tool_call.tool_call_id,
               name: tool_call.name,
-              arguments: tool_call.arguments
+              arguments: tool_call.arguments,
+              thought_signature: tool_call.try(:thought_signature)
             )
           ]
         end

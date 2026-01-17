@@ -45,6 +45,7 @@ def configure_from_env
     config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
@@ -61,7 +62,8 @@ def configure_bedrock(config)
 end
 
 def refresh_models
-  initial_count = RubyLLM.models.all.size
+  existing_models = RubyLLM::Models.read_from_json
+  initial_count = existing_models.size
   puts "Refreshing models (#{initial_count} cached)..."
 
   models = RubyLLM.models.refresh!
@@ -69,17 +71,27 @@ def refresh_models
   if models.all.empty? && initial_count.zero?
     puts 'Error: Failed to fetch models.'
     exit(1)
-  elsif models.all.size == initial_count && initial_count.positive?
-    puts 'Warning: Model list unchanged.'
   else
-    puts 'Validating models...'
-    validate_models!(models)
+    existing_data = sorted_models_data(existing_models)
+    new_data = sorted_models_data(models.all)
 
-    puts "Saving models.json (#{models.all.size} models)"
-    models.save_to_json
+    if new_data == existing_data && initial_count.positive?
+      puts 'Warning: Model list unchanged.'
+    else
+      puts 'Validating models...'
+      validate_models!(models)
+
+      puts "Saving models.json (#{models.all.size} models)"
+      models.save_to_json
+    end
   end
 
   @models = models
+end
+
+def sorted_models_data(models)
+  models.map(&:to_h)
+        .sort_by { |model| [model[:provider].to_s, model[:id].to_s] }
 end
 
 def validate_models!(models)
@@ -154,11 +166,7 @@ def generate_models_markdown
 
     ---
 
-    ## Model Data Sources
-
-    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/api-llm-specs))*
-    - **OpenRouter**: Direct API
-    - **Others**: Local capabilities files
+    _Model information enriched by [models.dev](https://models.dev) and our custom code._
 
     ## Last Updated
     {: .d-inline-block }
@@ -354,7 +362,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
 
   models['bedrock'].each do |bedrock_model|
     next unless bedrock_model.start_with?('anthropic.')
-    next unless bedrock_model =~ /anthropic\.(claude-[\d.]+-[a-z]+)/
+    next unless bedrock_model =~ /anthropic\.(claude-[a-z0-9.-]+)-\d{8}/
 
     base_name = Regexp.last_match(1)
     anthropic_name = base_name.tr('.', '-')

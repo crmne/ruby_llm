@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
-      Date:
-      - Mon, 03 Nov 2025 13:48:17 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 16 Jan 2026 15:14:27 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:17 GMT
+  recorded_at: Fri, 16 Jan 2026 15:14:27 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:48:18 GMT
+      - Fri, 16 Jan 2026 15:14:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,13 +115,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.65510027749197819
+              "avgLogprobs": -0.62393152146112352
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
             "candidatesTokenCount": 21,
-            "totalTokenCount": 91,
+            "totalTokenCount": 79,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,73 +135,16 @@ http_interactions:
                 "tokenCount": 21
               }
             ],
-            "thoughtsTokenCount": 40
+            "thoughtsTokenCount": 28
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:48:17.759055Z",
-          "responseId": "obIIaY-qLrX02fMPmaGE-Qs"
+          "createTime": "2026-01-16T15:14:27.271375Z",
+          "responseId": "01VqaY_IEKSr7PIPtpOriAw"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:18 GMT
+  recorded_at: Fri, 16 Jan 2026 15:14:28 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Date:
-      - Mon, 03 Nov 2025 13:48:18 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Mon, 03 Nov 2025 13:48:18 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
@@ -232,7 +175,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:48:19 GMT
+      - Fri, 16 Jan 2026 15:14:29 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -260,13 +203,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.33183857702439828
+              "avgLogprobs": -0.3114851367089056
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 85,
             "candidatesTokenCount": 31,
-            "totalTokenCount": 148,
+            "totalTokenCount": 143,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -280,11 +223,11 @@ http_interactions:
                 "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 32
+            "thoughtsTokenCount": 27
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:48:18.525899Z",
-          "responseId": "orIIacuMIJySrNcP3IbT-AQ"
+          "createTime": "2026-01-16T15:14:28.362837Z",
+          "responseId": "1FVqadWSFtCBn9kP3PaPyQc"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:19 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 15:14:29 GMT
+recorded_with: VCR 6.4.0

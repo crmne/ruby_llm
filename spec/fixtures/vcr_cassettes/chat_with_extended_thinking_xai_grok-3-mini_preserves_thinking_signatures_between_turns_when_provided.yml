@@ -1,0 +1,167 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:26:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709545011'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '180'
+      X-Ratelimit-Remaining-Requests:
+      - '177'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5c7cc03c-4cb7-7e37-62a2-8515fed94e76","object":"chat.completion","created":1768577172,"model":"grok-3-mini-high","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 equals 8.","reasoning_content":"First, the user asked: \"What is 5 + 3?\"
+        This is a simple arithmetic question.\n\nMy role is to be helpful and honest.
+        I should provide a direct and accurate answer.\n\nThe answer to 5 + 3 is 8.
+        That''s straightforward.\n\nI should ensure my response is clear and engaging.
+        Since this might be a test or simple query, I''ll keep it simple.\n\nPossible
+        reasons for this question:\n- It could be a test of my basic functionality.\n-
+        Or just a straightforward math question.\n\nI''ll respond directly: \"5 +
+        3 equals 8.\"\n\nTo make it more conversational, I could add: \"That''s an
+        easy one! 5 plus 3 is 8.\"\n\nBut I should stick to being helpful without
+        unnecessary fluff.\n\nFinally, structure my response:\n- Start with the answer.\n-
+        Keep it concise.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":15,"completion_tokens":8,"total_tokens":194,"prompt_tokens_details":{"text_tokens":15,"audio_tokens":0,"image_tokens":0,"cached_tokens":10},"completion_tokens_details":{"reasoning_tokens":171,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":917500},"system_fingerprint":"fp_793587c50c"}'
+  recorded_at: Fri, 16 Jan 2026 15:26:13 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        5 + 3?"},{"role":"assistant","content":"5 + 3 equals 8.","reasoning":"First,
+        the user asked: \"What is 5 + 3?\" This is a simple arithmetic question.\n\nMy
+        role is to be helpful and honest. I should provide a direct and accurate answer.\n\nThe
+        answer to 5 + 3 is 8. That''s straightforward.\n\nI should ensure my response
+        is clear and engaging. Since this might be a test or simple query, I''ll keep
+        it simple.\n\nPossible reasons for this question:\n- It could be a test of
+        my basic functionality.\n- Or just a straightforward math question.\n\nI''ll
+        respond directly: \"5 + 3 equals 8.\"\n\nTo make it more conversational, I
+        could add: \"That''s an easy one! 5 plus 3 is 8.\"\n\nBut I should stick to
+        being helpful without unnecessary fluff.\n\nFinally, structure my response:\n-
+        Start with the answer.\n- Keep it concise.","reasoning_content":"First, the
+        user asked: \"What is 5 + 3?\" This is a simple arithmetic question.\n\nMy
+        role is to be helpful and honest. I should provide a direct and accurate answer.\n\nThe
+        answer to 5 + 3 is 8. That''s straightforward.\n\nI should ensure my response
+        is clear and engaging. Since this might be a test or simple query, I''ll keep
+        it simple.\n\nPossible reasons for this question:\n- It could be a test of
+        my basic functionality.\n- Or just a straightforward math question.\n\nI''ll
+        respond directly: \"5 + 3 equals 8.\"\n\nTo make it more conversational, I
+        could add: \"That''s an easy one! 5 plus 3 is 8.\"\n\nBut I should stick to
+        being helpful without unnecessary fluff.\n\nFinally, structure my response:\n-
+        Start with the answer.\n- Keep it concise."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:26:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709545011'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '180'
+      X-Ratelimit-Remaining-Requests:
+      - '177'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=oUNAeb0SlkkwvQk4iJvyoLeZZ6yrFYbh0.9B4S7gdOA-1768577174-1.0.1.1-RSoHYN.pcaciLMuldlUPqADsmGZE3dQEsPlN0mXZ6VSsQGC4pgDW77YlznFoJEEmYYVf_j.m6MuTSmPJ63vvqD4ZMI_n4Uv4kNG7.y0YkDNdC5375zBMCPNC3Ce3U3S3DRCNZXjBAYl2deqe0x7q6zLW3CiB13X3ZCejuBUrKRU"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=oUNAeb0SlkkwvQk4iJvyoLeZZ6yrFYbh0.9B4S7gdOA-1768577174-1.0.1.1-RSoHYN.pcaciLMuldlUPqADsmGZE3dQEsPlN0mXZ6VSsQGC4pgDW77YlznFoJEEmYYVf_j.m6MuTSmPJ63vvqD4ZMI_n4Uv4kNG7.y0YkDNdC5375zBMCPNC3Ce3U3S3DRCNZXjBAYl2deqe0x7q6zLW3CiB13X3ZCejuBUrKRU;
+        report-to cf-csp-endpoint
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA2NDYxY2FmLTAzMjktNWRlMi1hNmUyLTFmN2Y2NTY0YTIzZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1NzcxNzMsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiMTYuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgc2FpZCwgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyLlwiIFRoZSBcInRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBmcm9tIHRoZSBwcmV2aW91cyBxdWVzdGlvbi4gSW4gdGhlIHByZXZpb3VzIGludGVyYWN0aW9uLCBJIGFuc3dlcmVkIHRoYXQgNSArIDMgaXMgOC5cblxuU28sIEkgbmVlZCB0byBtdWx0aXBseSA4IGJ5IDIuXG5cbjggw5cgMiA9IDE2LlxuXG5JIHNob3VsZCBwcmVzZW50IHRoaXMgY2xlYXJseSBhbmQga2VlcCBpdCBjb25jaXNlLCBqdXN0IGxpa2UgaW4gdGhlIGZpcnN0IHJlc3BvbnNlLlxuXG5GaW5hbGx5LCBlbmQgd2l0aCB0aGUgYW5zd2VyIGluIGEgYm94IGFzIGluc3RydWN0ZWQuXG5cblJlc3BvbnNlOiAxNi4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM4LCJjb21wbGV0aW9uX3Rva2VucyI6MiwidG90YWxfdG9rZW5zIjoxMzgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MzgsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo5OCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6NjAyNzUwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNzkzNTg3YzUwYyJ9
+  recorded_at: Fri, 16 Jan 2026 15:26:14 GMT
+recorded_with: VCR 6.4.0

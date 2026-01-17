@@ -23,35 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:49:25 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3d9041931a192fa0dc00c70ead723994
+      - 4273f445e08f2b04d5d336ab87a611dc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5bab9b28b9df8c7c6cb942e5654e9558.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - AyKYa3m23YDYCR08fblabE9xBRlUqxsT_oQPrXb359htqdUgmXCZIA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"05401a34-23c7-4c0b-aa25-39ebdf152792","object":"chat.completion","created":1762178142,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"{\n    \"result\":
-        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":13,"total_tokens":57,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:55:44 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"4487c495-a7a5-4f6d-a7ca-53d29b262d17","object":"chat.completion","created":1768582165,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"{\n    \"result\":
+        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":13,"total_tokens":57,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:49:26 GMT
+recorded_with: VCR 6.4.0

@@ -10,6 +10,8 @@ http_interactions:
     headers:
       User-Agent:
       - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:56:34 GMT
-      - Mon, 03 Nov 2025 13:56:34 GMT
+      - Fri, 16 Jan 2026 16:51:19 GMT
+      - Fri, 16 Jan 2026 16:51:19 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2773'
+      - '1918'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -40,8 +42,23 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuMiArIDIgZXF1YWxzICoqNCoqLiBUaGlzIGlzIGEgZnVuZGFtZW50YWwgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgdHdvIG51bWJlcnMgKDIgYW5kIDIpIGFyZSBjb21iaW5lZCB0aHJvdWdoIGFkZGl0aW9uLCByZXN1bHRpbmcgaW4gdGhlIHN1bSBvZiA0LiBJdOKAmXMgYSBiYXNpYyBjb25jZXB0IGluIG1hdGhlbWF0aWNzIGFuZCBpcyBvZnRlbiB1c2VkIGFzIGEgc3RhcnRpbmcgcG9pbnQgZm9yIGxlYXJuaW5nIG1vcmUgY29tcGxleCBvcGVyYXRpb25zLiDwn5iKIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGlzIGFza2luZyBcIldoYXQncyAyICsgMj9cIiBUaGF0IHNlZW1zIHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IG1heWJlIHRoZXkgd2FudCBhIGRldGFpbGVkIGV4cGxhbmF0aW9uLiBMZXQgbWUgdGhpbmsuIEZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoYXQgMiArIDIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBrbm93IGJhc2ljIGFyaXRobWV0aWMuIE9yIHBlcmhhcHMgdGhleSdyZSBsb29raW5nIGZvciBhIG1vcmUgaW4tZGVwdGggYnJlYWtkb3duLiBMZXQgbWUgY29uc2lkZXIgZGlmZmVyZW50IGFuZ2xlcy5cblxuSW4gYmFzaWMgYXJpdGhtZXRpYywgYWRkaXRpb24gaXMgY29tYmluaW5nIHR3byBudW1iZXJzLiBTbyAyIGFuZCAyIGFkZGVkIHRvZ2V0aGVyIHdvdWxkIGJlIDQuIEJ1dCBtYXliZSB0aGV5IHdhbnQgdG8ga25vdyB0aGUgc3RlcHMgaW52b2x2ZWQuIExpa2UsIHN0YXJ0aW5nIHdpdGggMiBhbmQgdGhlbiBhZGRpbmcgYW5vdGhlciAyLiBTbyAyICsgMiBpcyB0aGUgc2FtZSBhcyAyICsgMiwgd2hpY2ggZXF1YWxzIDQuIFRoYXQncyBwcmV0dHkgc2ltcGxlLiBcblxuQWx0ZXJuYXRpdmVseSwgY291bGQgdGhlcmUgYmUgYSB0cmljayBvciBhIGRpZmZlcmVudCBpbnRlcnByZXRhdGlvbj8gRm9yIGV4YW1wbGUsIGluIHNvbWUgY29udGV4dHMsIGxpa2UgbW9kdWxhciBhcml0aG1ldGljLCAyICsgMiBtaWdodCBub3QgYmUgNC4gQnV0IHVubGVzcyBzcGVjaWZpZWQsIHRoZSBkZWZhdWx0IGlzIHJlZ3VsYXIgYWRkaXRpb24uIFRoZSB1c2VyIGRpZG4ndCBtZW50aW9uIGFueSBzcGVjaWFsIGNvbnRleHQsIHNvIEkgc2hvdWxkIHN0aWNrIHdpdGggc3RhbmRhcmQgbWF0aC5cblxuQW5vdGhlciB0aG91Z2h0OiBtYXliZSB0aGV5J3JlIGEgc3R1ZGVudCBsZWFybmluZyBhZGRpdGlvbiBhbmQgbmVlZCBhIGNsZWFyLCBzaW1wbGUgYW5zd2VyLiBPciBwZXJoYXBzIHRoZXkncmUgdHJ5aW5nIHRvIHNlZSBpZiBJIGNhbiBoYW5kbGUgYmFzaWMgcXVlc3Rpb25zLiBFaXRoZXIgd2F5LCB0aGUgYW5zd2VyIGlzIDQuIEJ1dCBJIHNob3VsZCBwcmVzZW50IGl0IGluIGEgZnJpZW5kbHkgYW5kIGhlbHBmdWwgbWFubmVyLiBNYXliZSBtZW50aW9uIHRoYXQgMiArIDIgaXMgYSBmdW5kYW1lbnRhbCBtYXRoIHByb2JsZW0gYW5kIHRoZSByZXN1bHQgaXMgNC4gXG5cbldhaXQsIGNvdWxkIHRoZXJlIGJlIGFueSBvdGhlciB3YXkgdG8gaW50ZXJwcmV0IHRoZSBxdWVzdGlvbj8gTGlrZSwgMiArIDIgaW4gYmluYXJ5PyBMZXQgbWUgY2hlY2suIEluIGJpbmFyeSwgMiBpcyAxMCwgc28gMTAgKyAxMCB3b3VsZCBiZSAxMDAsIHdoaWNoIGlzIDQgaW4gZGVjaW1hbC4gU28gZXZlbiBpbiBiaW5hcnksIHRoZSByZXN1bHQgaXMgdGhlIHNhbWUuIFRoYXQncyBpbnRlcmVzdGluZywgYnV0IHVubGVzcyB0aGUgdXNlciBzcGVjaWZpZWQgYSBkaWZmZXJlbnQgYmFzZSwgaXQncyBzYWZlIHRvIGFzc3VtZSBiYXNlIDEwLlxuXG5JIHNob3VsZCBhbHNvIGNvbnNpZGVyIGlmIHRoZSB1c2VyIGlzIG5vbi1uYXRpdmUgYW5kIG1pZ2h0IGhhdmUgYSB0eXBvLiBCdXQgXCIyICsgMlwiIGlzIGNsZWFyLiBNYXliZSB0aGV5IGp1c3Qgd2FudCBjb25maXJtYXRpb24uIFNvIHRoZSBhbnN3ZXIgaXMgZGVmaW5pdGVseSA0LiBJIHNob3VsZCBzdGF0ZSB0aGF0IGNsZWFybHkgYW5kIG1heWJlIGFkZCBhIG5vdGUgYWJvdXQgaG93IGl0J3MgYSBiYXNpYyBhcml0aG1ldGljIHByb2JsZW0uIFRoYXQgd2F5LCB0aGUgdXNlciBnZXRzIHRoZSBhbnN3ZXIgYW5kIHVuZGVyc3RhbmRzIHRoZSBjb250ZXh0LlxuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NjIxNzgxOTksImlkIjoiY2hhdGNtcGwtM0hIMjZESkxrclFCNnVMM1ZseHNDbnZ4R3R4STcxVDEiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjUxNSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6NDUyLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo0fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo2NjMuMDc1MDEwMzYwNTQ3LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNDY2MjE3NDc1NzI4MTU2LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNC4xMywidG9rZW5zX3Blcl9zZWNvbmQiOjExOC4xMTY1MDI3NzkwNjM0NCwidG90YWxfdG9rZW5zIjo1MzF9fQ==
-  recorded_at: Mon, 03 Nov 2025 13:56:39 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        sum of 2 and 2 is **4**. \n\nIn basic arithmetic, adding two numbers means
+        combining their quantities. So, 2 + 2 equals 4. This is a fundamental concept
+        in mathematics and applies in standard base-10 numbering systems unless specified
+        otherwise (e.g., modular arithmetic or other contexts). \n\n**Answer:** 4.","reasoning_content":"\nOkay,
+        let''s see. The user is asking \"What''s 2 + 2?\" That seems straightforward.
+        I know that 2 plus 2 is 4. But wait, maybe they want a more detailed explanation?
+        Let me think. Sometimes people might be testing if I understand basic arithmetic,
+        or they might be looking for a different answer. But in standard math, 2 +
+        2 equals 4. Is there any context where this might not be the case? Like in
+        modular arithmetic or some other system? For example, in modulo 3, 2 + 2 would
+        be 1, but the question doesn''t specify that. So I should assume it''s in
+        the usual base 10 system. Also, the user might just be checking if I can answer
+        a simple question. I should make sure to explain it clearly, maybe even break
+        it down. Let me confirm: 2 plus 2 is 4. Yes, that''s correct. I should also
+        consider if there''s any trick or if they''re using a different notation.
+        But no, the question is pretty direct. So the answer is 4. I''ll go with that.\n","role":"assistant"}}],"created":1768582282,"id":"chatcmpl-hS26r6wouAPJnrWiFLXGP6wvrNWqbQre","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":316,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":239,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":223.38880822070817,"time_per_output_token_ms":7.893575949367088,"time_to_first_token_ms":71.624,"tokens_per_second":126.68529528498179,"total_tokens":332}}'
+  recorded_at: Fri, 16 Jan 2026 16:51:22 GMT
+recorded_with: VCR 6.4.0

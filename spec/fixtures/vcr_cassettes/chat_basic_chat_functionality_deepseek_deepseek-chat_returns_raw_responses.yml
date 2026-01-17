@@ -23,35 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:21 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 96ffc1a4ae5739c427f0182178947244
+      - a3d3b696ab246581658e267ca7b97977
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 138c5da513bf886df833184db08dc3f0.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - FLlpCd_n764ADsZR9DE1xr399Nz2ZAAJpkBnxjnDW3aQ1a9l8PVWWw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"301d17fc-9473-4323-b72c-1ed1c236ff96","object":"chat.completion","created":1762178150,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":8,"total_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:55:52 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"bdec417a-3df4-49f1-86ab-94adc6566bcf","object":"chat.completion","created":1768582221,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":8,"total_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:22 GMT
+recorded_with: VCR 6.4.0

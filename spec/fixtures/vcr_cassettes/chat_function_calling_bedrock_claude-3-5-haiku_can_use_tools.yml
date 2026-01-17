@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"}]}],"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T203706Z
+      - 20260116T170513Z
       X-Amz-Content-Sha256:
-      - 7bfa5cf8077291310e0b896d8f0d7691d412b24073796dcaf23b84c3f5c79a98
+      - 1cbb04c9499643b93e960c1e2989b90e309131fa16a7edec09cd16b0cb2a601b
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=28add461594d058bd771ccef21468068d8637e519dc51ac19deb69e9d5733def
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3353c9843e3f6e64755dbf4954887e125dd1207430b87de69c63cc66cd3cc2ce
       Content-Type:
       - application/json
       Accept:
@@ -34,35 +34,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:37:08 GMT
+      - Fri, 16 Jan 2026 17:05:15 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '514'
+      - '523'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 905308cb-43c4-46ab-aecf-c471cdf0946b
+      - 59f3133d-1377-45de-bba1-c9a937bb5dd8
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1509'
+      - '1768'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '88'
+      - '90'
       X-Amzn-Bedrock-Input-Token-Count:
       - '401'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01AHWDdXRaWSgyJrh5Q12nrA","type":"message","role":"assistant","content":[{"type":"text","text":"Let
-        me check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_019nPtnYWK6Xo7L2pBu23JgF","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":401,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":88}}'
-  recorded_at: Sun, 02 Nov 2025 20:37:08 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01FViJGLuyMMYut6Ku6PoFyE","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        help you retrieve the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01Kiu2VCEmUsj1r5mtVZ3sfA","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":401,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":90}}'
+  recorded_at: Fri, 16 Jan 2026 17:05:15 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"Let
-        me check the current weather for Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_019nPtnYWK6Xo7L2pBu23JgF","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_019nPtnYWK6Xo7L2pBu23JgF","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you retrieve the current weather in Berlin using the provided coordinates."},{"type":"tool_use","id":"toolu_bdrk_01Kiu2VCEmUsj1r5mtVZ3sfA","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01Kiu2VCEmUsj1r5mtVZ3sfA","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
@@ -72,12 +72,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T203708Z
+      - 20260116T170515Z
       X-Amz-Content-Sha256:
-      - 33e53831260f9cac14752a82a654c742d3ae5b91ec38e3ccebb44c8a264a084b
+      - 74b2c56788409722f5bab56de38267baec23e0610050a71340f78e6c6458fd23
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c01dfd62f15b1a5df3a98c709659be805586da6e200fe9a3bd4bad69b8adba6b
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=36505e1ac425041136df7c6e3a786e72154b16749b7e97c0161e7bedbbda3b79
       Content-Type:
       - application/json
       Accept:
@@ -90,24 +90,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:37:10 GMT
+      - Fri, 16 Jan 2026 17:05:18 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '593'
+      - '558'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e1533433-ff83-48ba-a22f-3de3f598c356
+      - 6e118912-a7a1-4197-8447-c3b0d88ce5e7
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1980'
+      - '1992'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '75'
+      - '65'
       X-Amzn-Bedrock-Input-Token-Count:
-      - '528'
+      - '530'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJpZCI6Im1zZ19iZHJrXzAxTHVqY0hhNzU3OGt3TjlrVXRGMkJOQSIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkJhc2VkIG9uIHRoZSBjdXJyZW50IHdlYXRoZXIgZGF0YSwgaW4gQmVybGluOlxuLSBUZW1wZXJhdHVyZTogMTXCsEMgKDU5wrBGKVxuLSBXaW5kIFNwZWVkOiAxMCBrbS9oXG5cbkl0IHNlZW1zIGxpa2UgYSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBhIG1vZGVyYXRlIGJyZWV6ZS4gVGhlIHRlbXBlcmF0dXJlIGlzIGNvbWZvcnRhYmxlLCBzdWdnZXN0aW5nIGxpZ2h0IGphY2tldCBvciBzd2VhdGVyIHdlYXRoZXIuIFBlcmZlY3QgZm9yIHdhbGtpbmcgYXJvdW5kIGFuZCBleHBsb3JpbmcgdGhlIGNpdHkhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo1MjgsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsIm91dHB1dF90b2tlbnMiOjc1fX0=
-  recorded_at: Sun, 02 Nov 2025 20:37:11 GMT
-recorded_with: VCR 6.3.1
+        eyJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJpZCI6Im1zZ19iZHJrXzAxSm5wV0dXYkNUSzVNVHpNZmJHN3FtMiIsInR5cGUiOiJtZXNzYWdlIiwicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkJhc2VkIG9uIHRoZSB3ZWF0aGVyIHRvb2wncyByZXNwb25zZSwgaGVyZSdzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluOlxuLSBUZW1wZXJhdHVyZTogMTXCsENcbi0gV2luZCBTcGVlZDogMTAga20vaFxuXG5JdCBzZWVtcyBsaWtlIGEgbWlsZCBkYXkgaW4gQmVybGluIHdpdGggYSBtb2RlcmF0ZSBicmVlemUuIFRoZSB0ZW1wZXJhdHVyZSBpcyBjb21mb3J0YWJsZSwgcGVyZmVjdCBmb3IgbGlnaHQgb3V0ZG9vciBhY3Rpdml0aWVzLiJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NTMwLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJvdXRwdXRfdG9rZW5zIjo2NX19
+  recorded_at: Fri, 16 Jan 2026 17:05:18 GMT
+recorded_with: VCR 6.4.0
