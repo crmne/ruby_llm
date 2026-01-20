@@ -14,6 +14,7 @@ module RubyLLM
                   :vertexai_project_id,
                   :vertexai_location,
                   :deepseek_api_key,
+                  :deepseek_api_base,
                   :perplexity_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
