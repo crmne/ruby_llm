@@ -52,6 +52,27 @@
       return;
     }
 
+    function stripFrontMatter(markdown) {
+      var lines = markdown.split('\n');
+      if (lines.length < 3 || lines[0].trim() !== '---') {
+        return markdown;
+      }
+
+      var endIndex = -1;
+      for (var i = 1; i < lines.length; i += 1) {
+        if (lines[i].trim() === '---') {
+          endIndex = i;
+          break;
+        }
+      }
+
+      if (endIndex === -1) {
+        return markdown;
+      }
+
+      return lines.slice(endIndex + 1).join('\n').replace(/^\n+/, '');
+    }
+
     window.fetch(sourceUrl, { cache: 'no-store' })
       .then(function (response) {
         if (!response.ok) {
@@ -60,7 +81,7 @@
         return response.text();
       })
       .then(function (markdown) {
-        button.dataset.markdownSource = markdown;
+        button.dataset.markdownSource = stripFrontMatter(markdown);
       })
       .catch(function () {
         button.dataset.markdownSource = '';
@@ -86,8 +107,9 @@
             return response.text();
           })
           .then(function (markdown) {
-            button.dataset.markdownSource = markdown;
-            return window.navigator.clipboard.writeText(markdown);
+            var strippedMarkdown = stripFrontMatter(markdown);
+            button.dataset.markdownSource = strippedMarkdown;
+            return window.navigator.clipboard.writeText(strippedMarkdown);
           });
 
       copyPromise
