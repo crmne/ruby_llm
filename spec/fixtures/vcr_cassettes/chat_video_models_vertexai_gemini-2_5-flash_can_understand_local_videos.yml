@@ -23,11 +23,11 @@ http_interactions:
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 12 Jan 2026 10:35:19 GMT
-      Pragma:
-      - no-cache
+      - Fri, 16 Jan 2026 15:15:18 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 12 Jan 2026 10:35:19 GMT
+  recorded_at: Fri, 16 Jan 2026 15:15:18 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:35:23 GMT
+      - Fri, 16 Jan 2026 15:15:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "In this video, a person with long, dark hair, wearing a pink top and white bottoms, is seen sitting on a sandy beach with their back to the camera. They are looking out at the calm, blue ocean under a clear sky with scattered white clouds. The person remains seated throughout the video, and their hair occasionally blows in the wind. The sand in the foreground has some debris like small sticks and leaves. The overall scene depicts a peaceful beach setting."
+                    "text": "The video shows a serene beach scene from a static, wide shot perspective.\n\nHere's what I see:\n*   **A person:** A individual with long, dark hair (likely female) is sitting on the golden-colored sand with their back to the camera. They are wearing a light-colored top (appears to be light pink or coral) and possibly light-colored shorts or bottoms. Their hair gently blows in the breeze throughout the clip.\n*   **The ocean:** In front of the person is a vast expanse of clear, blue-green ocean water. Gentle waves are visible, with white foam near the shore. The ocean stretches out to a clear horizon.\n*   **The sky:** The sky is bright blue with scattered white, fluffy clouds, indicating a sunny day.\n*   **The beach:** The sand is light golden brown, and there are a few scattered twigs or dried leaves on it, suggesting a natural beach environment.\n\nThe overall impression is one of peace and tranquility, with the person enjoying the view of the sea on a beautiful day."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0289834955687165
+              "avgLogprobs": -1.9550266179563773
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 93,
-            "totalTokenCount": 3623,
+            "candidatesTokenCount": 221,
+            "totalTokenCount": 4687,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -136,14 +136,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 93
+                "tokenCount": 221
               }
             ],
-            "thoughtsTokenCount": 168
+            "thoughtsTokenCount": 1104
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:35:19.529146Z",
-          "responseId": "Z85kafqlIIGE2fMPyIreyA0"
+          "createTime": "2026-01-16T15:15:18.748942Z",
+          "responseId": "BlZqaY7bLbme7PIPwMKb0Ac"
         }
-  recorded_at: Mon, 12 Jan 2026 10:35:23 GMT
+  recorded_at: Fri, 16 Jan 2026 15:15:28 GMT
 recorded_with: VCR 6.4.0

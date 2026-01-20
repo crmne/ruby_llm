@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 16 Jan 2026 15:17:08 GMT
       Pragma:
       - no-cache
-      Date:
-      - Mon, 12 Jan 2026 10:36:57 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 12 Jan 2026 10:36:57 GMT
+  recorded_at: Fri, 16 Jan 2026 15:17:08 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:37:03 GMT
+      - Fri, 16 Jan 2026 15:17:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -139,10 +139,10 @@ http_interactions:
             "thoughtsTokenCount": 741
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:36:57.476894Z",
-          "responseId": "yc5kad6NHeSy2fMPlMOTSA"
+          "createTime": "2026-01-16T15:17:08.919413Z",
+          "responseId": "dFZqafWOOIyK7PIP447pwAc"
         }
-  recorded_at: Mon, 12 Jan 2026 10:37:03 GMT
+  recorded_at: Fri, 16 Jan 2026 15:17:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -192,7 +192,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:37:07 GMT
+      - Fri, 16 Jan 2026 15:17:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -243,8 +243,8 @@ http_interactions:
             "thoughtsTokenCount": 136
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:37:03.337374Z",
-          "responseId": "z85kad7LFOSy2fMPlMOTSA"
+          "createTime": "2026-01-16T15:17:16.812965Z",
+          "responseId": "fFZqaaXPMdCBn9kP3PaPyQc"
         }
-  recorded_at: Mon, 12 Jan 2026 10:37:07 GMT
+  recorded_at: Fri, 16 Jan 2026 15:17:23 GMT
 recorded_with: VCR 6.4.0
