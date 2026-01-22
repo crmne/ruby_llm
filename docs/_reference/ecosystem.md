@@ -92,6 +92,40 @@ For detailed documentation and examples, visit the [RubyLLM::Schema repository](
 
 ---
 
+## RubyLLM::Template
+
+**Organize Prompts into Reusable Templates**
+
+[RubyLLM::Template](https://github.com/danielfriis/ruby_llm-template) enables developers to organize prompts into reusable templates for RubyLLM. It provides a structured approach to managing AI prompts, eliminating the need to manage prompt strings directly in code.
+
+### Why Use RubyLLM::Template?
+
+When working with LLMs, managing prompts effectively becomes crucial as your application grows. RubyLLM::Template helps you:
+
+- Organize prompts in a structured folder hierarchy
+- Keep prompts separate from application logic
+- Reuse prompt patterns across your application
+- Maintain consistency across different AI interactions
+
+### Key Features
+
+- 🎯 Organized Templates: Structure prompts in folders with separate files for system, user, assistant, and schema messages
+- 🔄 ERB Templating: Full ERB support with context variables and Ruby logic
+- ⚙️ Configurable: Custom template directories per environment
+- 🚀 Rails Integration: Seamless Rails setup with generators
+- 🧪 Well Tested: Comprehensive test suite
+- 📦 Minimal Dependencies: Only requires RubyLLM and standard libraries
+
+### Installation
+
+```bash
+gem install ruby_llm-template
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Template repository](https://github.com/danielfriis/ruby_llm-template).
+
+---
+
 ## Community Projects
 
 The RubyLLM ecosystem is growing! If you've built a library or tool that extends RubyLLM, we'd love to hear about it. Consider:
