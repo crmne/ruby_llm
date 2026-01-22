@@ -5,7 +5,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :params, :headers, :schema, :image_config
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -23,6 +23,7 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @image_config = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -72,6 +73,14 @@ module RubyLLM
       raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
 
       @thinking = Thinking::Config.new(effort: effort, budget: budget)
+      self
+    end
+
+    def with_image_config(aspect_ratio: nil, image_size: nil)
+      config = {}
+      config[:aspectRatio] = aspect_ratio if aspect_ratio
+      config[:imageSize] = image_size if image_size
+      @image_config = config.empty? ? nil : config
       self
     end
 
@@ -135,7 +144,7 @@ module RubyLLM
         tools: @tools,
         temperature: @temperature,
         model: @model,
-        params: @params,
+        params: effective_params,
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
@@ -221,6 +230,12 @@ module RubyLLM
 
     def content_like?(object)
       object.is_a?(Content) || object.is_a?(Content::Raw)
+    end
+
+    def effective_params
+      return @params unless @image_config
+
+      Utils.deep_merge(@params, { generationConfig: { imageConfig: @image_config } })
     end
   end
 end

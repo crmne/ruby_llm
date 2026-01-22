@@ -448,6 +448,27 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
         required: %w[score]
       )
     end
+
+    context 'with image_config via params deep merge' do
+      it 'includes imageConfig when merged via params' do
+        model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash', metadata: {})
+        base_payload = test_obj.send(:render_payload, messages, tools:, temperature: 1.0, model:)
+
+        # Simulate what Provider#complete does with params
+        image_config_params = { generationConfig: { imageConfig: { aspectRatio: '16:9', imageSize: '2K' } } }
+        merged_payload = RubyLLM::Utils.deep_merge(base_payload, image_config_params)
+
+        expect(merged_payload[:generationConfig][:imageConfig]).to eq({ aspectRatio: '16:9', imageSize: '2K' })
+        expect(merged_payload[:generationConfig][:temperature]).to eq(1.0)
+      end
+
+      it 'omits imageConfig when params do not include it' do
+        model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash', metadata: {})
+        payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:)
+
+        expect(payload[:generationConfig]).not_to have_key(:imageConfig)
+      end
+    end
   end
 
   describe '#format_messages' do
