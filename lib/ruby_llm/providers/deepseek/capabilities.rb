@@ -41,6 +41,14 @@ module RubyLLM
           model_id.match?(/deepseek-chat/)
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          false
+        end
+
         def supports_json_mode?(_model_id)
           false
         end

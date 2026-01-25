@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"none"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 21:36:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - b336cd0cc8edc43b2c612390c10b590e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImFlYmMwZjFkLWFiZTEtNGZjZC05YWFiLTU1ZGZjYTZmYjQwYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTg2NjM0MTAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBjYW4ndCBwcm92aWRlIHJlYWwtdGltZSB3ZWF0aGVyIGluZm9ybWF0aW9uLCBidXQgSSBjYW4gc3VnZ2VzdCBhIGZldyB3YXlzIGZvciB5b3UgdG8gY2hlY2sgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG5cbioqUXVpY2sgd2F5cyB0byBjaGVjazoqKlxuLSBTZWFyY2ggXCJ3ZWF0aGVyIEJlcmxpblwiIG9uIEdvb2dsZSBvciB5b3VyIHByZWZlcnJlZCBzZWFyY2ggZW5naW5lXG4tIFVzZSBhIHdlYXRoZXIgYXBwIG9uIHlvdXIgcGhvbmUgKFdlYXRoZXIsIEFjY3VXZWF0aGVyLCBldGMuKVxuLSBBc2sgeW91ciBwaG9uZSdzIHZvaWNlIGFzc2lzdGFudCAoXCJIZXkgU2lyaSwgd2hhdCdzIHRoZSB3ZWF0aGVyIGluIEJlcmxpbj9cIiBvciBcIk9rYXkgR29vZ2xlLCB3ZWF0aGVyIGluIEJlcmxpblwiKVxuXG4qKldlYXRoZXIgd2Vic2l0ZXM6Kipcbi0gV2VhdGhlci5jb21cbi0gQWNjdVdlYXRoZXIuY29tXG4tIFdlYXRoZXIuZ292IChpZiB5b3UgcHJlZmVyIGdvdmVybm1lbnQgc291cmNlcylcblxuVGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZCAoNTIuNTIwMMKwIE4sIDEzLjQwNTDCsCBFKSBjb25maXJtIHlvdSdyZSBsb29raW5nIGZvciBjZW50cmFsIEJlcmxpbidzIHdlYXRoZXIuIFdvdWxkIHlvdSBsaWtlIG1lIHRvIGhlbHAgeW91IHdpdGggYW55dGhpbmcgZWxzZSBhYm91dCBCZXJsaW4sIGxpa2UgdHlwaWNhbCBzZWFzb25hbCB3ZWF0aGVyIHBhdHRlcm5zIG9yIHRoaW5ncyB0byBkbyBiYXNlZCBvbiB3ZWF0aGVyIGNvbmRpdGlvbnM/In0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjMsImNvbXBsZXRpb25fdG9rZW5zIjoxNzQsInRvdGFsX3Rva2VucyI6MTk3LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjIzfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZjI1M2ZjMTlkMV9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Tue, 23 Sep 2025 21:37:00 GMT
+recorded_with: VCR 6.3.1

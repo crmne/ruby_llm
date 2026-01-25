@@ -1,0 +1,183 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"When
+        was the fall of Rome?"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":{"type":"any"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 31 Aug 2025 01:12:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-31T01:12:55Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-31T01:12:55Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-31T01:12:54Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-31T01:12:55Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1151'
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_011ZXkF13Ept7roaZ7uy8S2Z","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"tool_use","id":"toolu_01T7eCvB7yP2hayppNh61uW3","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":468,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard"}}'
+  recorded_at: Sun, 31 Aug 2025 01:12:55 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"When
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01T7eCvB7yP2hayppNh61uW3","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01T7eCvB7yP2hayppNh61uW3","content":[{"type":"text","text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 31 Aug 2025 01:13:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-31T01:12:56Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-31T01:13:01Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-31T01:12:55Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-31T01:12:56Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '5158'
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01FJYoxLea1LN4z76aqyH2gX","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but the weather tool is not appropriate for answering a historical
+        question about the fall of Rome. Let me provide a historical answer instead.\n\nThe
+        fall of Rome is typically dated to 476 CE, when the last Roman Emperor in
+        the West, Romulus Augustulus, was deposed by the Germanic king Odoacer. This
+        marked the end of the Western Roman Empire, though the Eastern Roman Empire
+        (Byzantine Empire) continued to exist for nearly another thousand years until
+        Constantinople fell to the Ottoman Turks in 1453.\n\nHowever, historians debate
+        the exact moment of \"fall,\" as the decline of the Roman Empire was a gradual
+        process that occurred over several centuries. Some key events in this decline
+        include:\n\n1. The division of the Empire into Western and Eastern halves
+        in 285 CE\n2. The sack of Rome by the Visigoths in 410 CE\n3. The final deposition
+        of Romulus Augustulus in 476 CE\n4. The end of the Western Roman Empire''s
+        political structures\n\nThe fall of Rome marked the beginning of the Medieval
+        period in European history and had profound implications for the political,
+        social, and cultural landscape of Europe."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":491,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":258,"service_tier":"standard"}}'
+  recorded_at: Sun, 31 Aug 2025 01:13:01 GMT
+recorded_with: VCR 6.3.1

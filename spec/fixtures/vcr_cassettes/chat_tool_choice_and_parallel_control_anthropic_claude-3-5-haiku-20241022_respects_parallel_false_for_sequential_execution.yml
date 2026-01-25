@@ -1,0 +1,272 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin and what''s the best programming language?"}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}],"system":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 31 Aug 2025 01:13:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-31T01:13:01Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-31T01:13:03Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-31T01:13:01Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-31T01:13:01Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1923'
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01JnHdgM7UnVJrDWEAy51pZs","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I''ll
+        help you find out the weather in Berlin and the best programming language
+        to learn. I''ll use the available tools to get this information for you.\n\nFirst,
+        let''s check the weather in Berlin:"},{"type":"tool_use","id":"toolu_01MgneaQ2SYw3piJ14QaVaNi","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":460,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":117,"service_tier":"standard"}}'
+  recorded_at: Sun, 31 Aug 2025 01:13:03 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin and what''s the best programming language?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you find out the weather in Berlin and the best programming language
+        to learn. I''ll use the available tools to get this information for you.\n\nFirst,
+        let''s check the weather in Berlin:"},{"type":"tool_use","id":"toolu_01MgneaQ2SYw3piJ14QaVaNi","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MgneaQ2SYw3piJ14QaVaNi","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}],"system":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 31 Aug 2025 01:13:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-31T01:13:03Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-31T01:13:04Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-31T01:13:03Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-31T01:13:03Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '1081'
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msg_01GysMofP1j2yodwkPx3HrCw","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"Now,
+        let''s find out the best programming language to learn:"},{"type":"tool_use","id":"toolu_01A7KoRqUe7Y3BrthnxUGbAo","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":616,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":55,"service_tier":"standard"}}'
+  recorded_at: Sun, 31 Aug 2025 01:13:04 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin and what''s the best programming language?"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
+        help you find out the weather in Berlin and the best programming language
+        to learn. I''ll use the available tools to get this information for you.\n\nFirst,
+        let''s check the weather in Berlin:"},{"type":"tool_use","id":"toolu_01MgneaQ2SYw3piJ14QaVaNi","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MgneaQ2SYw3piJ14QaVaNi","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"assistant","content":[{"type":"text","text":"Now,
+        let''s find out the best programming language to learn:"},{"type":"tool_use","id":"toolu_01A7KoRqUe7Y3BrthnxUGbAo","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01A7KoRqUe7Y3BrthnxUGbAo","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":8192,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}},{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[]}}],"system":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 31 Aug 2025 01:13:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '400000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2025-08-31T01:13:05Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '80000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2025-08-31T01:13:07Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '4000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '3999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2025-08-31T01:13:04Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '480000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2025-08-31T01:13:05Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      X-Envoy-Upstream-Service-Time:
+      - '2376'
+      Via:
+      - 1.1 google
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Im1zZ18wMVN6OFVHTnhRdHdSRlJqQ01yQXRaZm4iLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJtb2RlbCI6ImNsYXVkZS0zLTUtaGFpa3UtMjAyNDEwMjIiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSBhc2tlZCBmb3I6XG4xLiBXZWF0aGVyIGluIEJlcmxpbjogSXQncyBjdXJyZW50bHkgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC5cbjIuIEJlc3QgUHJvZ3JhbW1pbmcgTGFuZ3VhZ2UgdG8gTGVhcm46IFJ1YnlcblxuVGhlIHdlYXRoZXIgc2VlbXMgbWlsZCBhbmQgcGxlYXNhbnQsIGFuZCBSdWJ5IGlzIHJlY29tbWVuZGVkIGFzIGEgZ3JlYXQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgdG8gbGVhcm4uIFJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eSwgbWFraW5nIGl0IGEgZ29vZCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS5cblxuSXMgdGhlcmUgYW55dGhpbmcgZWxzZSBJIGNhbiBoZWxwIHlvdSB3aXRoPyJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NjgzLCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MTAzLCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9fQ==
+  recorded_at: Sun, 31 Aug 2025 01:13:07 GMT
+recorded_with: VCR 6.3.1

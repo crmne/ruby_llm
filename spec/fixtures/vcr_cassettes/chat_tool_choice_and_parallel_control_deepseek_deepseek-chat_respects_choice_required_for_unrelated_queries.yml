@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 21:45:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - e0a19c7bfd2c3f1c6f3fa8b483e0f44b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"b5f392ce-53f9-4ca7-9375-030a3a7ed319","object":"chat.completion","created":1758663913,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_NgmrCKiPiEh4skLW1XvR7nZ1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":199,"completion_tokens":24,"total_tokens":223,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":199},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 23 Sep 2025 21:45:17 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_NgmrCKiPiEh4skLW1XvR7nZ1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_NgmrCKiPiEh4skLW1XvR7nZ1"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 21:45:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 1fc7a13eb30636f4afa14977e919218b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjMzZTA4Mjk0LWE3MTUtNGI2NS04ZjQwLWI2MjVmNmNiYjY4ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTg2NjM5MTcsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBub3RpY2UgeW91IGFza2VkIGFib3V0IHRoZSBmYWxsIG9mIFJvbWUsIGJ1dCBJIG9ubHkgaGF2ZSBhY2Nlc3MgdG8gd2VhdGhlciBpbmZvcm1hdGlvbi4gQmFzZWQgb24gaGlzdG9yaWNhbCBrbm93bGVkZ2UsIHRoZSB0cmFkaXRpb25hbCBkYXRlIGZvciB0aGUgZmFsbCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgaXMgNDc2IEFELCB3aGVuIHRoZSBsYXN0IFJvbWFuIGVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgd2FzIGRlcG9zZWQgYnkgdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyLlxuXG5Ib3dldmVyLCBpdCdzIGltcG9ydGFudCB0byBub3RlIHRoYXQgdGhpcyBpcyBhIHNpbXBsaWZpZWQgdmlldyAtIHRoZSBcImZhbGxcIiB3YXMgYWN0dWFsbHkgYSBncmFkdWFsIHByb2Nlc3MgdGhhdCB0b29rIHBsYWNlIG92ZXIgc2V2ZXJhbCBjZW50dXJpZXMsIGFuZCB0aGUgRWFzdGVybiBSb21hbiAoQnl6YW50aW5lKSBFbXBpcmUgY29udGludWVkIGZvciBuZWFybHkgYW5vdGhlciB0aG91c2FuZCB5ZWFycyB1bnRpbCAxNDUzLlxuXG5TaW5jZSBJIGNhbiBvbmx5IHByb3ZpZGUgd2VhdGhlciBpbmZvcm1hdGlvbiwgSSd2ZSBpbmNsdWRlZCB0aGUgY3VycmVudCB3ZWF0aGVyIGluIFJvbWUgKDE1wrBDIHdpdGggMTAga20vaCB3aW5kcykgYXMgdGhhdCdzIHdoYXQgbXkgdG9vbHMgYWxsb3cgbWUgdG8gYWNjZXNzLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI0OSwiY29tcGxldGlvbl90b2tlbnMiOjE1NCwidG90YWxfdG9rZW5zIjo0MDMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxOTJ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MTkyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjU3fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZjI1M2ZjMTlkMV9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Tue, 23 Sep 2025 21:45:27 GMT
+recorded_with: VCR 6.3.1

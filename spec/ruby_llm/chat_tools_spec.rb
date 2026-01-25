@@ -615,6 +615,108 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'tool choice and parallel control' do
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      it "#{provider}/#{model} respects choice: :none" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        skip "Bedrock doesn't support :none tool choice" if provider == :bedrock
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :none)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+        expect(tool_called).to be(false)
+        expect(response.content).not_to include('15°C') # Should not contain tool result
+      end
+
+      it "#{provider}/#{model} respects choice: :required for unrelated queries" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :required)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        # Ask about Roman history - completely unrelated to weather
+        chat.ask('When was the fall of Rome?')
+
+        expect(tool_called).to be(true) # Tool should be forced to run
+      end
+
+      it "#{provider}/#{model} respects specific tool choice" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :weather)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        # Ask about Roman history - completely unrelated to weather
+        chat.ask("What's the fall of Rome?")
+
+        expect(tool_called).to be(true)
+      end
+
+      it "#{provider}/#{model} respects parallel: false for sequential execution" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        unless provider_class&.capabilities&.supports_tool_parallel_control?(model)
+          skip "#{provider} doesn't support tool parallel control"
+        end
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tools(Weather, BestLanguageToLearn, parallel: false)
+                      .with_instructions(
+                        'You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.'
+                      )
+
+        chat.on_end_message do |message|
+          expect(message.tool_calls.length).to eq(1) if message.tool_call?
+        end
+
+        chat.ask("What's the weather in Berlin and what's the best programming language?")
+      end
+    end
+  end
+
   describe 'error handling' do
     it 'raises an error when tool execution fails' do
       chat = RubyLLM.chat.with_tool(BrokenTool)
