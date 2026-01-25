@@ -85,6 +85,15 @@ end
 > ```
 {: .note }
 
+> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
+>
+> 1. Returning an error message to the model indicating which tool it tried to call
+> 2. Listing the actually available tools
+> 3. Allowing the conversation to continue so the model can correct itself
+>
+> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
+{: .note }
+
 ## Declaring Parameters
 
 RubyLLM ships with two complementary approaches:
