@@ -1,0 +1,132 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:59:55 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 6e185a42f008523742aaaa4133d6e2f7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 cb643617ee4bca09492409ac12401bfc.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - ah4wRiBdQl-nOmCGIN-55E3hetNTj5xFLqMjGBUhU8cdJvWlu4iOSw==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"7f0968ca-fe07-4be6-8369-af1a5a522ed5","object":"chat.completion","created":1768582795,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 = 8.","reasoning_content":"We are asked: \"What is 5 + 3?\" This is a
+        simple arithmetic addition. 5 plus 3 equals 8. So the answer is 8.\n\nWe should
+        respond in a helpful manner. Since it''s a straightforward question, we can
+        just answer: 8.\n\nHowever, the user might expect a response that is not just
+        the number but perhaps a sentence. But the instruction is to be helpful, so
+        we can answer directly.\n\nLet''s output: 5 + 3 = 8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":114,"total_tokens":126,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":105},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:59:59 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8.","reasoning":"We are
+        asked: \"What is 5 + 3?\" This is a simple arithmetic addition. 5 plus 3 equals
+        8. So the answer is 8.\n\nWe should respond in a helpful manner. Since it''s
+        a straightforward question, we can just answer: 8.\n\nHowever, the user might
+        expect a response that is not just the number but perhaps a sentence. But
+        the instruction is to be helpful, so we can answer directly.\n\nLet''s output:
+        5 + 3 = 8.","reasoning_content":"We are asked: \"What is 5 + 3?\" This is
+        a simple arithmetic addition. 5 plus 3 equals 8. So the answer is 8.\n\nWe
+        should respond in a helpful manner. Since it''s a straightforward question,
+        we can just answer: 8.\n\nHowever, the user might expect a response that is
+        not just the number but perhaps a sentence. But the instruction is to be helpful,
+        so we can answer directly.\n\nLet''s output: 5 + 3 = 8."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:59:59 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 3463c5312375fa07a8611ea94c9947ed
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 d2182626bf7a31d463bb4b9335724f24.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P3
+      X-Amz-Cf-Id:
+      - ynxoVZflUaoIfT2HcKPyOqtG2PjVzj2A-2faFSDY0eFiCYxFMVO1Lg==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImU4OWM0MGYwLTg2NzktNDQ3NS04MDA2LTYxN2FhOWQzYjI2OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODI3OTksIm1vZGVsIjoiZGVlcHNlZWstcmVhc29uZXIiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBwcmV2aW91cyByZXN1bHQgd2FzIDguIE11bHRpcGx5aW5nIHRoYXQgYnkgMiBnaXZlczpcblxuOCDDlyAyID0gMTYiLCJyZWFzb25pbmdfY29udGVudCI6IldlIGFyZSBhc2tlZDogXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyXCIuIFwiVGhhdFwiIHJlZmVycyB0byB0aGUgcHJldmlvdXMgYW5zd2VyLCB3aGljaCB3YXMgOC5cbiBTbyB3ZSBtdWx0aXBseSA4IGJ5IDI6IDggKiAyID0gMTYuXG5cbiBGaW5hbCBhbnN3ZXI6IDE2LiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwLCJjb21wbGV0aW9uX3Rva2VucyI6NzIsInRvdGFsX3Rva2VucyI6MTAyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjozMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Fri, 16 Jan 2026 17:00:02 GMT
+recorded_with: VCR 6.4.0

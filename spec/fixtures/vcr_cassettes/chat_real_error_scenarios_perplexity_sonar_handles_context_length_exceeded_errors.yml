@@ -23,11 +23,11 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:54:59 GMT
+      - Fri, 16 Jan 2026 16:49:23 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '112'
+      - '107'
       Connection:
       - keep-alive
       Cf-Ray:
@@ -42,6 +42,6 @@ http_interactions:
       - cloudflare
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"The total length of all messages is too long.","type":"too_many_prompt_tokens","code":400}}'
-  recorded_at: Mon, 03 Nov 2025 13:54:59 GMT
-recorded_with: VCR 6.3.1
+      string: '{"error":{"message":"User input tokens exceeds 200000 tokens.","type":"too_many_prompt_tokens","code":400}}'
+  recorded_at: Fri, 16 Jan 2026 16:49:23 GMT
+recorded_with: VCR 6.4.0

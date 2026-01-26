@@ -24,42 +24,42 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:38 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - de63ec210d2f74d4e70763af5c485447
+      - 0ea462c73d3285411c4cd20cc690cb7a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 1a620bb236f3df5588fc787c47ccfafa.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - EndAo4R_k75_9V5hlSaWl2xWec9m1qnRU3_6KzVci7ZMxQfOV599lg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0a9fc604-75fc-4829-a86a-e4cb27b496a8","object":"chat.completion","created":1762178156,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on location, time of year, and atmospheric
-        conditions. Generally, it includes elements like temperature, precipitation,
-        humidity, wind, and cloud cover. For example, some regions might be experiencing
-        sunny skies and warmth, while others could have storms or cold fronts. If
-        you''d like specific details, let me know your location or area of interest!
-        XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":78,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:00 GMT
+      string: '{"id":"dbce79be-31ac-4dc5-887d-08757c1dea16","object":"chat.completion","created":1768582238,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on your location and time of year. For example,
+        it might be sunny and warm in one region while another experiences rain or
+        snow. For the most accurate and up-to-date information, I recommend checking
+        a reliable weather service or app. XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":57,"total_tokens":85,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:41 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -67,12 +67,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather varies
-        greatly depending on location, time of year, and atmospheric conditions. Generally,
-        it includes elements like temperature, precipitation, humidity, wind, and
-        cloud cover. For example, some regions might be experiencing sunny skies and
-        warmth, while others could have storms or cold fronts. If you''d like specific
-        details, let me know your location or area of interest! XKCD7392"},{"role":"system","content":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        greatly depending on your location and time of year. For example, it might
+        be sunny and warm in one region while another experiences rain or snow. For
+        the most accurate and up-to-date information, I recommend checking a reliable
+        weather service or app. XKCD7392"},{"role":"system","content":"You must include
+        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
@@ -90,45 +89,68 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:56:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:41 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 45e25d01ed7593834be78706e4908804
+      - dacb51b9575ba94b1ad77fc0e25b6779
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 74fead7a0ce668f068b10e0d165145d6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - pdLMZmQSYCKuW59pDmmQLo7_gh8CNXxw4OtLElq1XhJCpsEVbApd3w==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a3bf3ce3-55bb-43c2-96ed-efe1f42de20d","object":"chat.completion","created":1762178160,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
-        are countless excellent books across various genres, so it really depends
-        on your interests! Here are a few widely recommended ones:\n\n- **Fiction**:
-        *To Kill a Mockingbird* by Harper Lee, *1984* by George Orwell, *The Great
-        Gatsby* by F. Scott Fitzgerald  \n- **Fantasy/Sci-Fi**: *The Lord of the Rings*
-        by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name of the Wind* by Patrick
-        Rothfuss  \n- **Non-fiction**: *Sapiens* by Yuval Noah Harari, *Educated*
-        by Tara Westover, *The Immortal Life of Henrietta Lacks* by Rebecca Skloot  \n-
-        **Mystery/Thriller**: *Gone Girl* by Gillian Flynn, *The Girl with the Dragon
-        Tattoo* by Stieg Larsson  \n\nIf you have a specific genre or mood in mind,
-        I can tailor recommendations further. And by the way, PURPLE-ELEPHANT-42 is
-        a quirky phrase that reminds me how unique and varied great books can be!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":120,"completion_tokens":228,"total_tokens":348,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":120},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:09 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"a6d80319-4425-4672-a786-98718139ed25","object":"chat.completion","created":1768582241,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a broad and wonderful question! The \"best\" books really depend on your personal
+        tastes, but here are some widely acclaimed and beloved books across various
+        genres to consider:\n\n### **Fiction Classics**\n*   **\"To Kill a Mockingbird\"
+        by Harper Lee:** A profound story of racial injustice and moral growth in
+        the American South.\n*   **\"1984\" by George Orwell:** The definitive dystopian
+        novel about totalitarianism and surveillance.\n*   **\"Pride and Prejudice\"
+        by Jane Austen:** A witty and romantic masterpiece of manners.\n\n### **Modern
+        & Literary Fiction**\n*   **\"The Road\" by Cormac McCarthy:** A bleak, beautiful,
+        and moving post-apocalyptic journey of a father and son.\n*   **\"The Night
+        Circus\" by Erin Morgenstern:** A magical, atmospheric tale of a mysterious
+        competition between two illusionists.\n*   **\"Pachinko\" by Min Jin Lee:**
+        A sweeping multi-generational saga of a Korean family in Japan.\n\n### **Science
+        Fiction & Fantasy**\n*   **\"Dune\" by Frank Herbert:** An epic sci-fi novel
+        about politics, religion, and ecology on a desert planet.\n*   **\"The Hobbit\"
+        and \"The Lord of the Rings\" by J.R.R. Tolkien:** The foundational works
+        of modern fantasy.\n*   **\"The Left Hand of Darkness\" by Ursula K. Le Guin:**
+        A groundbreaking exploration of gender and society on a distant world.\n\n###
+        **Mystery & Thriller**\n*   **\"Gone Girl\" by Gillian Flynn:** A razor-sharp
+        and twisty psychological thriller.\n*   **The Sherlock Holmes stories by Arthur
+        Conan Doyle:** The iconic detective who defined the genre.\n*   **\"The Girl
+        with the Dragon Tattoo\" by Stieg Larsson:** A gripping blend of financial
+        intrigue, murder mystery, and revenge.\n\n### **Non-Fiction**\n*   **\"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari:** A compelling look at
+        the history of our species.\n*   **\"Educated\" by Tara Westover:** A powerful
+        memoir about self-invention and the pursuit of knowledge.\n*   **\"The Immortal
+        Life of Henrietta Lacks\" by Rebecca Skloot:** Explores ethics in medicine
+        through the story of the woman whose cells were used for countless scientific
+        breakthroughs.\n\nA great way to find your next read is to think of a book
+        you loved and search for \"read-alikes\" or ask for recommendations at your
+        local bookstore or library. Also, as a final note, remember that the best
+        book is often the one that speaks directly to you at a particular moment in
+        your life. PURPLE-ELEPHANT-42"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":99,"completion_tokens":559,"total_tokens":658,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":99},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:57 GMT
+recorded_with: VCR 6.4.0

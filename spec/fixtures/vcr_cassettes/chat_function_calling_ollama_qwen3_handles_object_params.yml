@@ -28,30 +28,20 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 14:00:44 GMT
+      - Fri, 16 Jan 2026 17:11:01 GMT
       Content-Length:
-      - '1758'
+      - '971'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-32","object":"chat.completion","created":1762178444,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let''s tackle this user query. The user wants me to call the object_params
-        tool with a window starting on 2025-01-01 and ending on 2025-01-02. First,
-        I need to check the function''s parameters. The function requires a \"window\"
-        object, which should have start and end dates.\n\nLooking at the tool''s definition,
-        the \"window\" is an object with a description about the time window. The
-        parameters for the function are in the \"properties\" section, specifying
-        that \"window\" is required. So, I need to structure the arguments correctly.\n\nThe
-        user provided start and end dates, so I''ll create a JSON object with those
-        dates. The start is \"2025-01-01\" and the end is \"2025-01-02\". I''ll format
-        the arguments as a JSON object inside the tool_call tags. Let me make sure
-        the keys are correct, like \"start\" and \"end\" under the \"window\" object.
-        \n\nWait, the function''s parameters are under the \"window\" property. So
-        the arguments should be {\"window\": {\"start\": \"2025-01-01\", \"end\":
-        \"2025-01-02\"}}. That should match the required structure. I''ll double-check
-        the function''s required parameters to ensure I''m not missing anything. Yep,
-        \"window\" is required, and the example seems correct. Alright, time to put
-        it all together in the tool_call format.\n","tool_calls":[{"id":"call_uecnc144","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":179,"completion_tokens":378,"total_tokens":557}}
+      string: '{"id":"chatcmpl-2","object":"chat.completion","created":1768583461,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the object_params function with a window that starts
+        on 2025-01-01 and ends on 2025-01-02. Let me check the function''s parameters.
+        The function requires a \"window\" object with \"start\" and \"end\" as ISO
+        strings. The dates provided are in the correct format, so I''ll structure
+        the arguments accordingly. I''ll make sure to include both parameters within
+        the window object. Then, I''ll return the tool call in the specified JSON
+        format inside the XML tags.\n","tool_calls":[{"id":"call_bcyfc0uf","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":204,"completion_tokens":172,"total_tokens":376}}
 
         '
-  recorded_at: Mon, 03 Nov 2025 14:00:44 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 17:11:01 GMT
+recorded_with: VCR 6.4.0

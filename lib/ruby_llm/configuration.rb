@@ -20,6 +20,7 @@ module RubyLLM
                   :bedrock_region,
                   :bedrock_session_token,
                   :openrouter_api_key,
+                  :xai_api_key,
                   :ollama_api_base,
                   :gpustack_api_base,
                   :gpustack_api_key,
@@ -57,7 +58,7 @@ module RubyLLM
       @retry_interval_randomness = 0.5
       @http_proxy = nil
 
-      @default_model = 'gpt-4.1-nano'
+      @default_model = 'gpt-5-nano'
       @default_embedding_model = 'text-embedding-3-small'
       @default_moderation_model = 'omni-moderation-latest'
       @default_image_model = 'gpt-image-1'

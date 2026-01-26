@@ -24,45 +24,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:34 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 62f5989d603de91c7771d546c3376a16
+      - 21aa2795d94b510873e4831c20fe712e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Report-To:
-      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=0lW3e2SxbRScs1wmyKjHNTt8oHpW5t6aVvGolbYZSsw-1762178152-1.0.1.1-fF3_1MhgGAJQwb_zDUgk4boZrDmoOo8FJG4ZbOLM1ZVeaF81GVSilyESivHPI5jsV4pYqLJ611DWQO2Tfji_9bxXYadyxXudgk6MgXk0rTSMEE0k83y_xx2zSG61nOFfzOTJK3R9qM9DCyhXwBJEWNaxAxcrdykKwiB_ZIDrKwIo2zS8hatccyE5d9xZfjDq"}],"group":"cf-csp-endpoint","max_age":86400}'
-      Content-Security-Policy-Report-Only:
-      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=0lW3e2SxbRScs1wmyKjHNTt8oHpW5t6aVvGolbYZSsw-1762178152-1.0.1.1-fF3_1MhgGAJQwb_zDUgk4boZrDmoOo8FJG4ZbOLM1ZVeaF81GVSilyESivHPI5jsV4pYqLJ611DWQO2Tfji_9bxXYadyxXudgk6MgXk0rTSMEE0k83y_xx2zSG61nOFfzOTJK3R9qM9DCyhXwBJEWNaxAxcrdykKwiB_ZIDrKwIo2zS8hatccyE5d9xZfjDq;
-        report-to cf-csp-endpoint
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5f2bb43f258333f4156847ce1f482ee6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - ejYXc4CegP1vmRDBYHqVtwC1OTBgg2mZLepR7AA2b3LuSI_mxWPerA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2b446938-e486-45ca-a53d-bd3498a55785","object":"chat.completion","created":1762178152,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on location, time of year, and atmospheric
-        conditions. Generally, it includes elements like temperature, precipitation,
-        humidity, wind, and cloud cover. For example, some regions might be experiencing
-        sunny skies and warmth, while others could have storms or cold fronts. If
-        you''d like specific details, let me know your location or area of interest!
-        XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":78,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:55:56 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjNmYWU0Y2Y3LWNmNTgtNDU0NS1iOTBhLTQ2NGQzZTkxYzE3ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODIyMzQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgdmFyaWVzIGdyZWF0bHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24gYW5kIHRpbWUgb2YgeWVhci4gRm9yIGV4YW1wbGUsIGl0IG1pZ2h0IGJlIHN1bm55IGFuZCB3YXJtIGluIG9uZSByZWdpb24gd2hpbGUgYW5vdGhlciBleHBlcmllbmNlcyByYWluIG9yIHNub3cuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgY3VycmVudCBjb25kaXRpb25zLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZSBvciBhcHAuXG5cbklmIHlvdSdkIGxpa2UsIHlvdSBjYW4gcHJvdmlkZSB5b3VyIGNpdHkgb3IgZ2VuZXJhbCBhcmVhLCBhbmQgSSBjYW4gdHJ5IHRvIGdpdmUgYSBnZW5lcmFsIHNlYXNvbmFsIG92ZXJ2aWV34oCUdGhvdWdoIHJlbWVtYmVyLCBmb3IgcmVhbC10aW1lIGZvcmVjYXN0cywgb2ZmaWNpYWwgc291cmNlcyBhcmUgYmVzdC4gWEtDRDczOTIifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyOCwiY29tcGxldGlvbl90b2tlbnMiOjkzLCJ0b3RhbF90b2tlbnMiOjEyMSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Fri, 16 Jan 2026 16:50:38 GMT
+recorded_with: VCR 6.4.0

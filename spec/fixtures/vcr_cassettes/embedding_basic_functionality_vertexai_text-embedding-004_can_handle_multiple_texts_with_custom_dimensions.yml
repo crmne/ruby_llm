@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 14:01:28 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 16 Jan 2026 15:20:49 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 14:01:28 GMT
+  recorded_at: Fri, 16 Jan 2026 15:20:49 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
     body:
       encoding: UTF-8
       string: '{"instances":[{"content":"Ruby"},{"content":"Python"},{"content":"JavaScript"}],"parameters":{"outputDimensionality":768}}'
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 14:01:28 GMT
+      - Fri, 16 Jan 2026 15:21:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -884,10 +884,6 @@ http_interactions:
             },
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                },
                 "values": [
                   0.020355613902211189,
                   -0.049273330718278885,
@@ -1657,7 +1653,11 @@ http_interactions:
                   0.0027606498915702105,
                   0.018295800313353539,
                   -0.034528099000453949
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                }
               }
             },
             {
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Mon, 03 Nov 2025 14:01:28 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 15:21:00 GMT
+recorded_with: VCR 6.4.0

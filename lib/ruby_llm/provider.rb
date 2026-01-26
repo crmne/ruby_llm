@@ -37,7 +37,7 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil, &) # rubocop:disable Metrics/ParameterLists
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
@@ -47,7 +47,8 @@ module RubyLLM
           temperature: normalized_temperature,
           model: model,
           stream: block_given?,
-          schema: schema
+          schema: schema,
+          thinking: thinking
         ),
         params
       )
@@ -107,10 +108,14 @@ module RubyLLM
       body = try_parse_json(response.body)
       case body
       when Hash
+        error = body['error']
+        return error if error.is_a?(String)
+
         body.dig('error', 'message')
       when Array
         body.map do |part|
-          part.dig('error', 'message')
+          error = part['error']
+          error.is_a?(String) ? error : part.dig('error', 'message')
         end.join('. ')
       else
         body
@@ -144,7 +149,7 @@ module RubyLLM
       end
 
       def capabilities
-        raise NotImplementedError
+        nil
       end
 
       def configuration_requirements

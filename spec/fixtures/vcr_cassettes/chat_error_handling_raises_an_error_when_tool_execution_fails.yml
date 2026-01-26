@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What
-        is the weather?"}],"stream":false,"tools":[{"type":"function","function":{"name":"broken","description":"Gets
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What is
+        the weather?"}],"stream":false,"tools":[{"type":"function","function":{"name":"broken","description":"Gets
         current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:01:09 GMT
+      - Fri, 16 Jan 2026 17:12:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '429'
+      - '3042'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '439'
+      - '3080'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -79,10 +79,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpPIEZQx5M2kZM6tJfCbLigllr81",
+          "id": "chatcmpl-CyheoMLJVyOCUtctaeLS1D8CvTJPZ",
           "object": "chat.completion",
-          "created": 1762178468,
-          "model": "gpt-4.1-nano-2025-04-14",
+          "created": 1768583534,
+          "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
@@ -91,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_OiUNfScXKhcGtRN3yVNcFbkE",
+                    "id": "call_xyqwfZQ8lMJA8rDdNy8bVNPK",
                     "type": "function",
                     "function": {
                       "name": "broken",
@@ -102,27 +102,26 @@ http_interactions:
                 "refusal": null,
                 "annotations": []
               },
-              "logprobs": null,
               "finish_reason": "tool_calls"
             }
           ],
           "usage": {
-            "prompt_tokens": 39,
-            "completion_tokens": 10,
-            "total_tokens": 49,
+            "prompt_tokens": 120,
+            "completion_tokens": 275,
+            "total_tokens": 395,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 0,
+              "reasoning_tokens": 256,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_950f36939b"
+          "system_fingerprint": null
         }
-  recorded_at: Mon, 03 Nov 2025 14:01:09 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 17:12:17 GMT
+recorded_with: VCR 6.4.0

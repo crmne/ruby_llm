@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 28 Oct 2025 04:56:13 GMT
+      - Fri, 16 Jan 2026 00:22:16 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69004ced-9c6"
+      - W/"696984b8-9c6"
       Expires:
-      - Mon, 03 Nov 2025 09:55:43 GMT
+      - Fri, 16 Jan 2026 13:08:39 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 5FE6:2C85A1:1EDEB8E:1F598A8:690879C5
+      - 52FA:2ED8A3:342651:34DD0D:696A35FF
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Mon, 03 Nov 2025 13:48:19 GMT
+      - Fri, 16 Jan 2026 15:14:29 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '82'
       X-Served-By:
-      - cache-fra-etou8220180-FRA
+      - cache-fra-etou8220020-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1762177699.349139,VS0,VE2
+      - S1768576469.337939,VS0,VE107
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - ad9c547c883ff99778521b310c3fbebda87bfbef
+      - 41da7256fe36ad9fea8860296330c1f24c65aca6
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 03 Nov 2025 13:48:19 GMT
+  recorded_at: Fri, 16 Jan 2026 15:14:29 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -116,14 +118,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Mon, 03 Nov 2025 13:48:20 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 16 Jan 2026 15:14:30 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -148,14 +150,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:20 GMT
+  recorded_at: Fri, 16 Jan 2026 15:14:30 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
@@ -215,7 +217,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 03 Nov 2025 13:48:28 GMT
+      - Fri, 16 Jan 2026 15:14:42 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -238,36 +240,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This file contains the **license for the Ruby programming language**, authored by Yukihiro Matsumoto (Matz).\n\nIt outlines the terms under which Ruby can be redistributed and modified. Key points include:\n\n*   **Dual Licensing:** Ruby can be used under either the 2-clause BSDL license (referenced by a file named \"BSDL\") or the specific conditions detailed in this document.\n*   **Verbatim Copies:** Verbatim source copies can be distributed freely, provided all original copyright notices and disclaimers are included.\n*   **Modifications:** If you modify the software, you must meet one of several conditions:\n    *   Place modifications in the Public Domain or make them Freely Available.\n    *   Use the modified software only within your organization.\n    *   Give non-standard binaries non-standard names with instructions for the original distribution.\n    *   Make other distribution arrangements with the author.\n*   **Binary Distribution:** Distributing the software in object code or binary form also has specific requirements, such as providing instructions to get the source, including the source, using non-standard binary names, or making arrangements with the author.\n*   **Commercial Use/Integration:** You can modify and include parts of Ruby in other software, even commercial applications. However, it notes that some files in the distribution are not under these terms and refers to a `LEGAL` file for their specific conditions.\n*   **Generated Files:** Scripts and library files *produced by* or *supplied as input to* Ruby do not automatically fall under this copyright; they belong to whoever generated them and can be sold commercially.\n*   **No Warranty:** The software is provided \"AS IS,\" without any express or implied warranties, including merchantability or fitness for a particular purpose."
+                    "text": "This file is the **license.txt** for the **Ruby programming language**.\n\nIt states that:\n*   Ruby is **copyrighted free software** by **Yukihiro Matsumoto (Matz)**.\n*   It is **dual-licensed**, meaning you can redistribute and/or modify it under either:\n    *   The terms of the **2-clause BSDL** (Berkeley Software Distribution License) (referenced in a file named `BSDL`).\n    *   **The specific conditions outlined in this document.**\n\nThe conditions outlined in *this* document allow you to:\n1.  **Redistribute verbatim copies** of the source form without restriction, provided you duplicate all original copyright notices and disclaimers.\n2.  **Modify the software**, but you must do *one* of the following:\n    *   Place your modifications in the Public Domain or make them freely available.\n    *   Use the modified software only within your corporation or organization.\n    *   Give non-standard binaries non-standard names and provide instructions for the original distribution.\n    *   Make other distribution arrangements with the author.\n3.  **Distribute the software in object code or binary form**, provided you do *one* of the following:\n    *   Include instructions on where to get the original source distribution.\n    *   Accompany the distribution with the machine-readable source code.\n    *   Give non-standard binaries non-standard names and provide instructions for the original distribution.\n    *   Make other distribution arrangements with the author.\n4.  **Modify and include parts of the software into other software** (including commercial). However, it notes that some files in the distribution are *not* under these terms and refers to a `LEGAL` file for their specific copying conditions.\n5.  **Scripts and library files** generated by or for the software are *not* automatically covered by this copyright; they belong to whoever generated them, can be sold commercially, and aggregated with Ruby.\n6.  It includes a standard **\"AS IS\" warranty disclaimer**, meaning there are no express or implied warranties of merchantability or fitness for a particular purpose."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.845935624042064
+              "avgLogprobs": -0.68807514926843472
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 564,
-            "candidatesTokenCount": 367,
-            "totalTokenCount": 2126,
+            "promptTokenCount": 567,
+            "candidatesTokenCount": 456,
+            "totalTokenCount": 2543,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 564
+                "tokenCount": 567
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 367
+                "tokenCount": 456
               }
             ],
-            "thoughtsTokenCount": 1195
+            "thoughtsTokenCount": 1520
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-03T13:48:20.308874Z",
-          "responseId": "pLIIaYrtEvu9rNcPuZntcA"
+          "createTime": "2026-01-16T15:14:30.465548Z",
+          "responseId": "1lVqaYy1HLme7PIPwMKb0Ac"
         }
-  recorded_at: Mon, 03 Nov 2025 13:48:28 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 15:14:42 GMT
+recorded_with: VCR 6.4.0

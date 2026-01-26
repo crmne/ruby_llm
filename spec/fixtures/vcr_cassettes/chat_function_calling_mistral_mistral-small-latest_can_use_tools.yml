@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:51:49 GMT
+      - Fri, 16 Jan 2026 17:05:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,31 +35,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019a4a33-ee9a-7742-9fe5-764b2c91f5df'
+      - '019bc7c4-d4c9-7023-ab2e-a4d1ef9247f5'
       X-Kong-Request-Id:
-      - '019a4a33-ee9a-7742-9fe5-764b2c91f5df'
-      X-Envoy-Upstream-Service-Time:
-      - '508'
+      - '019bc7c4-d4c9-7023-ab2e-a4d1ef9247f5'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999303'
+      - '1999825'
       X-Ratelimit-Limit-Tokens-Month:
       - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '9999999303'
+      - '9999980878'
       X-Ratelimit-Tokens-Query-Cost:
       - '175'
-      X-Ratelimit-Limit-Req-10-Second:
-      - '60'
-      X-Ratelimit-Remaining-Req-10-Second:
-      - '54'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '359'
+      X-Envoy-Upstream-Service-Time:
+      - '580'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '508'
+      - '581'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -77,17 +77,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d90fa9a9dda34718a4bc097c79ade086","created":1762181508,"model":"mistral-small-latest","usage":{"prompt_tokens":147,"total_tokens":175,"completion_tokens":28},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"us2x9FRbD","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"af18ffbc1f4f445db56ab8dfdc7eb9ec","created":1768583124,"model":"mistral-small-latest","usage":{"prompt_tokens":147,"total_tokens":175,"completion_tokens":28},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"FFW8layvB","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Mon, 03 Nov 2025 14:51:49 GMT
+  recorded_at: Fri, 16 Jan 2026 17:05:24 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"us2x9FRbD","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"us2x9FRbD"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"FFW8layvB","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"FFW8layvB"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -108,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:51:49 GMT
+      - Fri, 16 Jan 2026 17:05:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,31 +116,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019a4a33-f0f1-72da-bb7e-97684a50cee1'
+      - '019bc7c4-d75d-7822-bf03-9d2bb7ba72ce'
       X-Kong-Request-Id:
-      - '019a4a33-f0f1-72da-bb7e-97684a50cee1'
-      X-Envoy-Upstream-Service-Time:
-      - '350'
+      - '019bc7c4-d75d-7822-bf03-9d2bb7ba72ce'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999055'
+      - '1999579'
       X-Ratelimit-Limit-Tokens-Month:
       - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '9999999055'
+      - '9999980632'
       X-Ratelimit-Tokens-Query-Cost:
-      - '248'
-      X-Ratelimit-Limit-Req-10-Second:
-      - '60'
-      X-Ratelimit-Remaining-Req-10-Second:
-      - '53'
+      - '246'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '276'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '351'
+      - '277'
       X-Kong-Proxy-Latency:
-      - '5'
+      - '13'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -159,6 +159,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjYxN2FjNzljMTgxODRhN2RiMWE2Yzk1OTkwYzU1ODJhIiwiY3JlYXRlZCI6MTc2MjE4MTUwOSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyNiwidG90YWxfdG9rZW5zIjoyNDgsImNvbXBsZXRpb25fdG9rZW5zIjoyMn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9fV19
-  recorded_at: Mon, 03 Nov 2025 14:51:49 GMT
-recorded_with: VCR 6.3.1
+        eyJpZCI6IjMxZTBlODZjN2YxMjRlMTlhNDdmMWNmZGU4NDcwNTQyIiwiY3JlYXRlZCI6MTc2ODU4MzEyNCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyNCwidG90YWxfdG9rZW5zIjoyNDYsImNvbXBsZXRpb25fdG9rZW5zIjoyMn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9fV19
+  recorded_at: Fri, 16 Jan 2026 17:05:25 GMT
+recorded_with: VCR 6.4.0

@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the any-of params tool for task \"Review PR\" with status \"pending\" and
-        report the result."}]}],"max_tokens":4096,"tools":[{"name":"any_of_params","description":"Uses
+        report the result."}]}],"max_tokens":8192,"tools":[{"name":"any_of_params","description":"Uses
         params DSL any_of support","input_schema":{"type":"object","properties":{"task":{"type":"string","description":"Task
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}]}'
     headers:
@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T204110Z
+      - 20260116T171034Z
       X-Amz-Content-Sha256:
-      - 305d58171d157878f02c5dbd62b2a5c16ac486319519f59f521533c99d838ed9
+      - 6f49df9e2566685852938a6a0b75444ecc4ae42ffb99da03138e4b8b5dd4b395
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=6a8f6baa7855b4dbae36d750e3c561f1bf057059f4cd35082ff273123cad4141
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=31b400933112eaa5e283ee51900d4f7b7def78b83be55185b0d24e02ef168cce
       Content-Type:
       - application/json
       Accept:
@@ -34,25 +34,26 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:41:12 GMT
+      - Fri, 16 Jan 2026 17:10:37 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '524'
+      - '533'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 6157a01e-16b0-4b36-aaeb-b3c69f8b07e7
+      - 32ab6c14-1bb0-450a-8222-b990296bd050
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1488'
+      - '1803'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '96'
+      - '98'
       X-Amzn-Bedrock-Input-Token-Count:
       - '414'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01VhCBBWw78HBZTEjBZwD3qf","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        call the any_of_params tool with the task \"Review PR\" and status \"pending\"."},{"type":"tool_use","id":"toolu_bdrk_014dMr3Zwn2msVHhqEnmjAcr","name":"any_of_params","input":{"task":"Review
-        PR","status":"pending"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":414,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":96}}'
-  recorded_at: Sun, 02 Nov 2025 20:41:12 GMT
-recorded_with: VCR 6.3.1
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_012LAEJX8icxktEGNrSFXpss","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        help you call the any_of_params tool with the task \"Review PR\" and status
+        \"pending\"."},{"type":"tool_use","id":"toolu_bdrk_01VV1fSRcUphk1zsq4vvfdLX","name":"any_of_params","input":{"task":"Review
+        PR","status":"pending"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":414,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":98}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:37 GMT
+recorded_with: VCR 6.4.0

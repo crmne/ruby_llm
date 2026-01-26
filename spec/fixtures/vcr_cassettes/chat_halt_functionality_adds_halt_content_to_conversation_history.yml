@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Execute
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Execute
         the halting tool"}],"stream":false,"tools":[{"type":"function","function":{"name":"halting","description":"A
         tool that halts conversation continuation","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:01:08 GMT
+      - Fri, 16 Jan 2026 17:12:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '418'
+      - '6837'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
       X-Envoy-Upstream-Service-Time:
-      - '431'
+      - '6854'
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -79,10 +79,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CXpPIoGiBd7lN4rKx97zLbUXT7Ke1",
+          "id": "chatcmpl-CyhehUnCXxlRY4JYOZ6vgS3kcbJy8",
           "object": "chat.completion",
-          "created": 1762178468,
-          "model": "gpt-4.1-nano-2025-04-14",
+          "created": 1768583527,
+          "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
@@ -91,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_ixFbJP3kPZndVJr4RvYl9yhd",
+                    "id": "call_A93OqIoN2iWjsBhUzRBOjXny",
                     "type": "function",
                     "function": {
                       "name": "halting",
@@ -102,27 +102,26 @@ http_interactions:
                 "refusal": null,
                 "annotations": []
               },
-              "logprobs": null,
               "finish_reason": "tool_calls"
             }
           ],
           "usage": {
-            "prompt_tokens": 44,
-            "completion_tokens": 11,
-            "total_tokens": 55,
+            "prompt_tokens": 125,
+            "completion_tokens": 660,
+            "total_tokens": 785,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 0,
+              "reasoning_tokens": 640,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_438cf0ae7a"
+          "system_fingerprint": null
         }
-  recorded_at: Mon, 03 Nov 2025 14:01:08 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 17:12:13 GMT
+recorded_with: VCR 6.4.0

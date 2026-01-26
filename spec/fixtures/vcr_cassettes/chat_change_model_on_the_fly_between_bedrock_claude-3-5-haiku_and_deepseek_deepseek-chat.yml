@@ -6,19 +6,19 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"max_tokens":4096}'
+        2 + 2?"}]}],"max_tokens":8192}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T203400Z
+      - 20260116T165346Z
       X-Amz-Content-Sha256:
-      - 01ab27c7d96d3a8fdf4610e6a4bc3a862f94de194536525920292dfaa9df20f2
+      - '0880ffefab958357117f2e7d905fa1f9474d7a7fed497a9ef570e276f443ef62'
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b3fa90fa3bfc00a7d83f5ba9d39960ded919da5e61c749756dee5ad0313bf607
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2601f000ea3f8a375e531bf56af4387e93ecf19f7a85802c1373fbf1fa1dec38
       Content-Type:
       - application/json
       Accept:
@@ -31,32 +31,32 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:34:01 GMT
+      - Fri, 16 Jan 2026 16:53:47 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '305'
+      - '306'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f48b756f-de69-4360-baf3-9ab8cd36242e
+      - 0213bd00-a8e3-4301-8ea9-8c05e7d62e3d
       X-Amzn-Bedrock-Invocation-Latency:
-      - '968'
+      - '469'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '5'
+      - '6'
       X-Amzn-Bedrock-Input-Token-Count:
       - '16'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_012QZTXiYcrbKmuaBBMHNuPh","type":"message","role":"assistant","content":[{"type":"text","text":"4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":5}}'
-  recorded_at: Sun, 02 Nov 2025 20:34:02 GMT
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01Vcr1idowCRCtYyhnGMMgDT","type":"message","role":"assistant","content":[{"type":"text","text":"4."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":6}}'
+  recorded_at: Fri, 16 Jan 2026 16:53:47 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        2 + 2?"},{"role":"assistant","content":"4"},{"role":"user","content":"and
+        2 + 2?"},{"role":"assistant","content":"4."},{"role":"user","content":"and
         4 + 4?"}],"stream":false}'
     headers:
       User-Agent:
@@ -74,34 +74,36 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 02 Nov 2025 20:34:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:53:48 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 4d8d720cb80eca62f882964d326eb501
+      - 760510aef86075875ddeb5e0617701d9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 74fead7a0ce668f068b10e0d165145d6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - _XkoY_RzO6rF7MfFzKipMqWBKvIMe19P257aFOOdLmgRbgKs5T2_tw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bccb29c1-c4e0-4736-adff-9eaf85d9399b","object":"chat.completion","created":1762115642,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":1,"total_tokens":25,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":24},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 02 Nov 2025 20:34:03 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"c77c48d0-31f3-485b-b4ae-a1bcd0f5423d","object":"chat.completion","created":1768582427,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":25,"completion_tokens":2,"total_tokens":27,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":25},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:53:48 GMT
+recorded_with: VCR 6.4.0

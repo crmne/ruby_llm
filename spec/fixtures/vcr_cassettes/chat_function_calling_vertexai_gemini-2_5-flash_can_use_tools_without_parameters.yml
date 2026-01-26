@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Fri, 16 Jan 2026 15:19:37 GMT
       Pragma:
       - no-cache
-      Date:
-      - Sun, 02 Nov 2025 21:30:26 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:26 GMT
+  recorded_at: Fri, 16 Jan 2026 15:19:37 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
+      - Fri, 16 Jan 2026 15:19:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "CuoBAePx/16KZzYDasD62nSIBssdoTHltsrLcEOcBd8w68FGk+ZXtMYHJw00oxKzQKgtriuQ4dVOCn9urFveixwA2jVphSG8RolooUUEtTQL7U2q2Mz3i4BlhmJ5rZdljtFb/qD4konCqxekaX4GRZ9urIhaMAA6sE5CMhdo0q4llpgBYRxqY4GtPXIwB/9/niu5sBd0Y866RZuKu2sJm6z3lfr8C0zuRVMWpjNmSom739JTnIZwohK+Uym5lyoT3Cwf7o20MnklAdk/lreCHOfaV5jqbC1z7L2cL2yIeNzHKPuwPYq1fOeuvH8K"
+                    "thoughtSignature": "CtcBAY89a1/nLHH5x8Ia+H9psSfNNbIYzamljQTusGS5bFsYHkOSwjGo4qUjDlpPeMbPzZX8ssPyyeOJI1xtp7ivr2a912/9tjlo8OvNa+gph1Hgozk73EnK1tMcWk0jpltVfIbz/n9obbtm89bxCz4Ne9RQihMNn34GaDhkCqHB1vqX1PdLb6rjSZPFBHiM7gYMfb7JLsLd/A4JVGt4RWv3CatqyaE3nlN1XcXUq+QKi2m/+Lghx3TRDSRmjG7SWfmZu6nv4fYJxH5H0TmT3yIqfRtrl+ZFnAg="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.82807193483625141
+              "avgLogprobs": -0.59111690521240234
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 77,
+            "totalTokenCount": 71,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,77 +140,20 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 48
+            "thoughtsTokenCount": 42
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:26.889767Z",
-          "responseId": "cs0HaaenNtObvdIPq5tr"
+          "createTime": "2026-01-16T15:19:37.634969Z",
+          "responseId": "CVdqadngJqSr7PIPtpOriAw"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
+  recorded_at: Fri, 16 Jan 2026 15:19:38 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"CtcBAY89a1/nLHH5x8Ia+H9psSfNNbIYzamljQTusGS5bFsYHkOSwjGo4qUjDlpPeMbPzZX8ssPyyeOJI1xtp7ivr2a912/9tjlo8OvNa+gph1Hgozk73EnK1tMcWk0jpltVfIbz/n9obbtm89bxCz4Ne9RQihMNn34GaDhkCqHB1vqX1PdLb6rjSZPFBHiM7gYMfb7JLsLd/A4JVGt4RWv3CatqyaE3nlN1XcXUq+QKi2m/+Lghx3TRDSRmjG7SWfmZu6nv4fYJxH5H0TmT3yIqfRtrl+ZFnAg="}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -235,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Sun, 02 Nov 2025 21:30:27 GMT
+      - Fri, 16 Jan 2026 15:19:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -258,35 +201,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The best language to learn is Ruby."
+                    "text": "I recommend learning Ruby."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.12504205107688904
+              "avgLogprobs": -1.0001420974731445
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 47,
-            "candidatesTokenCount": 8,
-            "totalTokenCount": 55,
+            "promptTokenCount": 89,
+            "candidatesTokenCount": 5,
+            "totalTokenCount": 94,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 47
+                "tokenCount": 89
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 8
+                "tokenCount": 5
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-11-02T21:30:27.573909Z",
-          "responseId": "c80HadWDI4G2mPUP8JnfiAs"
+          "createTime": "2026-01-16T15:19:38.255548Z",
+          "responseId": "CldqabzMD9CBn9kP3PaPyQc"
         }
-  recorded_at: Sun, 02 Nov 2025 21:30:27 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 15:19:38 GMT
+recorded_with: VCR 6.4.0

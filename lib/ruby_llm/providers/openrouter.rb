@@ -4,7 +4,9 @@ module RubyLLM
   module Providers
     # OpenRouter API integration.
     class OpenRouter < OpenAI
+      include OpenRouter::Chat
       include OpenRouter::Models
+      include OpenRouter::Streaming
 
       def api_base
         'https://openrouter.ai/api/v1'

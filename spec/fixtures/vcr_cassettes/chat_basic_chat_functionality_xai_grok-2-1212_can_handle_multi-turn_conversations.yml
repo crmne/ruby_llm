@@ -1,0 +1,136 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-2-1212","messages":[{"role":"user","content":"Who is
+        the creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:25:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709550305'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '900'
+      X-Ratelimit-Remaining-Requests:
+      - '894'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"cfa34b1c-f83f-e651-18e1-e7fd0f3419af","object":"chat.completion","created":1768577115,"model":"grok-2-1212","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        creator of the programming language Ruby is Yukihiro Matsumoto, also known
+        as \"Matz.\" He began working on Ruby in 1993 and released it to the public
+        in 1995.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":16,"completion_tokens":44,"total_tokens":60,"prompt_tokens_details":{"text_tokens":16,"audio_tokens":0,"image_tokens":0,"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":4720000},"system_fingerprint":"fp_fced99f24f"}'
+  recorded_at: Fri, 16 Jan 2026 15:25:16 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-2-1212","messages":[{"role":"user","content":"Who is
+        the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the programming language Ruby is Yukihiro Matsumoto, also known
+        as \"Matz.\" He began working on Ruby in 1993 and released it to the public
+        in 1995."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:25:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709550225'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '900'
+      X-Ratelimit-Remaining-Requests:
+      - '892'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"3accd4c8-5ed5-1596-85db-a667102000c6","object":"chat.completion","created":1768577116,"model":"grok-2-1212","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
+        Matsumoto began working on Ruby in 1993 and released it to the public in 1995.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":75,"completion_tokens":27,"total_tokens":102,"prompt_tokens_details":{"text_tokens":75,"audio_tokens":0,"image_tokens":0,"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":4200000},"system_fingerprint":"fp_fced99f24f"}'
+  recorded_at: Fri, 16 Jan 2026 15:25:17 GMT
+recorded_with: VCR 6.4.0

@@ -22,36 +22,38 @@ http_interactions:
       code: 400
       message: Bad Request
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:54:25 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '294'
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
+      Date:
+      - Fri, 16 Jan 2026 16:48:40 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 266d988aebc684f41e540264042e5b24
+      - 40d5eefbcfec8231308940730b6a0745
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 89cfaf7130b791496ae5b9cd16f7eb0a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - C13ojeOnSMcSFlu0PiUPTglQ_Ey3tC8RrlAh7EJLRu5NNX5Ew8bGqA==
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This model''s maximum context length is 131072
         tokens. However, you requested 1250025 tokens (1250025 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Mon, 03 Nov 2025 13:54:25 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:48:40 GMT
+recorded_with: VCR 6.4.0

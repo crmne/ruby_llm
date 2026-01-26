@@ -27,39 +27,39 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Last-Modified:
-      - Tue, 28 Oct 2025 04:56:13 GMT
+      - Fri, 16 Jan 2026 00:22:16 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69004ced-9c6"
+      - W/"696984b8-9c6"
       Expires:
-      - Sun, 02 Nov 2025 19:58:16 GMT
+      - Fri, 16 Jan 2026 16:34:17 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - ED69:3E3D9A:29E806C:2A80F80:6907B580
+      - CAA8:CA0BF:61D6EC:632DE0:696A6631
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Sun, 02 Nov 2025 19:48:16 GMT
+      - Fri, 16 Jan 2026 16:43:42 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '68'
       X-Served-By:
-      - cache-fra-etou8220143-FRA
+      - cache-fra-etou8220040-FRA
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1762112896.312126,VS0,VE96
+      - S1768581823.574109,VS0,VE4
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 93ac04787f868cb854b85d26a17e020fc919ca49
+      - b83a000710a2490d5e26d0c5b2e2378375138c59
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Sun, 02 Nov 2025 19:48:16 GMT
+  recorded_at: Fri, 16 Jan 2026 16:43:42 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -153,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 19:48:19 GMT
+      - Fri, 16 Jan 2026 16:43:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -179,23 +179,24 @@ http_interactions:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
         \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n{\"id\":\"gen-1762112896-1q5SVBGPqDdwcIXxVjbs\",\"provider\":\"Amazon
-        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1762112897,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Contents of license.txt\\n\\nThis file contains the **Ruby programming language
-        license** - specifically, the license terms for Ruby copyrighted by Yukihiro
-        Matsumoto (Ruby's creator).\\n\\n## Key Points:\\n\\n**License Options:**\\n-
-        Ruby can be used under either the **2-clause BSD License (BSDL)** or the custom
-        terms outlined in this document\\n\\n**Main Permissions:**\\n1. **Free redistribution**
-        of source code (must preserve copyright notices)\\n2. **Modification rights**
-        with conditions (make modifications public, use privately within organization,
-        give non-standard names, or arrange with author)\\n3. **Binary distribution**
-        allowed if source availability is ensured or instructions to get original
-        are provided\\n4. **Integration into other software** is permitted (even commercial)\\n5.
-        **Scripts and output** generated from Ruby don't automatically inherit its
-        copyright\\n\\n**Important Disclaimer:**\\n- The software is provided **\\\"AS
-        IS\\\"** with no warranties (liability disclaimer)\\n- Some files in Ruby's
-        distribution may have different licenses (see LEGAL file)\\n\\nThis is essentially
-        a **permissive, developer-friendly open-source license** that allows broad
-        use while protecting the original author's rights.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":265,\"total_tokens\":853}}"
-  recorded_at: Sun, 02 Nov 2025 19:48:23 GMT
-recorded_with: VCR 6.3.1
+        \        \n{\"id\":\"gen-1768581822-RtriihUutz50MVonXHqB\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1768581823,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"#
+        License File Contents\\n\\nThis is the **Ruby programming language license**
+        file. It outlines the licensing terms for Ruby, which is copyrighted free
+        software created by Yukihiro Matsumoto.\\n\\n## Key Points:\\n\\n**License
+        Options:**\\n- Ruby can be used under either the 2-clause BSD License (BSDL)
+        OR the custom conditions listed in this file\\n\\n**Main Permissions:**\\n1.
+        **Source distribution** - Can freely copy the original source code\\n2. **Modifications**
+        - Can modify Ruby if you either:\\n   - Release modifications publicly\\n
+        \  - Use them only within your organization\\n   - Rename non-standard binaries\\n
+        \  - Make other arrangements with the author\\n\\n3. **Binary distribution**
+        - Can distribute compiled versions if you:\\n   - Include instructions on
+        getting the original source\\n   - Provide the source code with the binaries\\n
+        \  - Use non-standard names\\n   - Arrange with the author\\n\\n4. **Incorporation**
+        - Can include Ruby in other software (even commercial)\\n\\n5. **Scripts/Output**
+        - Programs you write using Ruby belong to you, not the Ruby copyright holder\\n\\n6.
+        **Disclaimer** - The software comes \\\"AS IS\\\" with no warranties\\n\\nThis
+        is a fairly permissive open-source license that allows commercial use while
+        maintaining attribution to the original author.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":291,\"total_tokens\":879,\"cost\":0.002043,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":null,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.001455},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0}}}"
+  recorded_at: Fri, 16 Jan 2026 16:43:48 GMT
+recorded_with: VCR 6.4.0

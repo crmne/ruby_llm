@@ -23,37 +23,48 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 02 Nov 2025 20:02:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:22 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 51eb693537ae95cedd733f6999ea9a23
+      - 363b360fe4514189baed8b319d1e5284
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4257eeab27601f991562127463de27ee.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - DmhoYGn7izC2upnsxqYc-M4BNlUen989_xjG-iHx2N0HzQOOaPWFng==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImJkYjk0MjdhLTFiN2YtNDE1Zi1iYzQ1LTNjNDJkM2MzZjBlNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxMTM3MzAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlICoqUnVieSoqIGlzICoqWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvKiouXG5cbkhlcmUgYXJlIHNvbWUga2V5IGRldGFpbHMgYWJvdXQgaGltIGFuZCB0aGUgbGFuZ3VhZ2UncyBjcmVhdGlvbjpcblxuKiAgICoqTmFtZToqKiBZdWtpaGlybyBNYXRzdW1vdG8gKOadvuacrCDooYzlvJgpXG4qICAgKipOaWNrbmFtZToqKiBNYXR6XG4qICAgKipDb3VudHJ5OioqIEphcGFuXG4qICAgKipJbml0aWFsIFJlbGVhc2U6KiogMTk5NVxuXG5NYXR6IGRlc2lnbmVkIFJ1YnkgaW4gdGhlIG1pZC0xOTkwcyB3aXRoIHRoZSBwcmltYXJ5IGdvYWwgb2YgbWFraW5nIHByb2dyYW1tZXJzIGhhcHB5IGFuZCBwcm9kdWN0aXZlLiBIZSBibGVuZGVkIHBhcnRzIG9mIGhpcyBmYXZvcml0ZSBsYW5ndWFnZXMgKGxpa2UgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgYW5kIExpc3ApIHRvIGNyZWF0ZSBhIG5ldyBsYW5ndWFnZSB0aGF0IHdhcyBib3RoICoqbmF0dXJhbCB0byByZWFkKiogYW5kICoqZWFzeSB0byB3cml0ZSoqLlxuXG5IZSBpcyBvZnRlbiBxdW90ZWQgZm9yIGhpcyBndWlkaW5nIHBoaWxvc29waHkgZm9yIFJ1YnkncyBkZXNpZ246XG5cbj4gXCJSdWJ5IGlzIGRlc2lnbmVkIHRvIG1ha2UgcHJvZ3JhbW1lcnMgaGFwcHkuXCJcblxuVGhpcyBwcmluY2lwbGUgb2YgcHJpb3JpdGl6aW5nIGh1bWFuIG5lZWRzIG92ZXIgdGhvc2Ugb2YgdGhlIG1hY2hpbmUgaXMgYSBjb3JuZXJzdG9uZSBvZiB0aGUgbGFuZ3VhZ2UgYW5kIGlzIG9mdGVuIHJlZmVycmVkIHRvIGFzIHRoZSAqKlwiUHJpbmNpcGxlIG9mIExlYXN0IEFzdG9uaXNobWVudFwiKiogKFBPTEEpLCBtZWFuaW5nIHRoZSBsYW5ndWFnZSBzaG91bGQgYmVoYXZlIGluIGEgd2F5IHRoYXQgbWluaW1pemVzIGNvbmZ1c2lvbiBmb3IgZXhwZXJpZW5jZWQgdXNlcnMuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQsImNvbXBsZXRpb25fdG9rZW5zIjoyMjEsInRvdGFsX3Rva2VucyI6MjM1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE0fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZmZjNzI4MWQ0OF9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Sun, 02 Nov 2025 20:02:18 GMT
+      string: '{"id":"f1e9fdf5-585f-4370-b4f9-42ff73f5de83","object":"chat.completion","created":1768582222,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**
+        (often referred to simply as \"Matz\").\n\nHe began developing Ruby in Japan
+        in **1993** and released the first public version (Ruby 0.95) in **1995**.
+        His key design philosophy was to create a language that emphasized **developer
+        happiness and productivity**, blending parts of his favorite languages (like
+        Perl, Smalltalk, Eiffel, Ada, and Lisp) into a simple, object-oriented, and
+        easy-to-use scripting language.\n\nA famous motto associated with Ruby and
+        Matz is:\n> **\"Ruby is designed to make programmers happy.\"**\n\nMatz continues
+        to be the chief designer and lead developer of the language, and he remains
+        a highly respected figure in the <GOOGLE_CLOUD_LOCATION> programming community."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":14,"completion_tokens":167,"total_tokens":181,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":14},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:28 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -61,18 +72,16 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
-        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**.\n\nHere
-        are some key details about him and the language''s creation:\n\n*   **Name:**
-        Yukihiro Matsumoto (松本 行弘)\n*   **Nickname:** Matz\n*   **Country:** Japan\n*   **Initial
-        Release:** 1995\n\nMatz designed Ruby in the mid-1990s with the primary goal
-        of making programmers happy and productive. He blended parts of his favorite
-        languages (like Perl, Smalltalk, Eiffel, Ada, and Lisp) to create a new language
-        that was both **natural to read** and **easy to write**.\n\nHe is often quoted
-        for his guiding philosophy for Ruby''s design:\n\n> \"Ruby is designed to
-        make programmers happy.\"\n\nThis principle of prioritizing human needs over
-        those of the machine is a cornerstone of the language and is often referred
-        to as the **\"Principle of Least Astonishment\"** (POLA), meaning the language
-        should behave in a way that minimizes confusion for experienced users."},{"role":"user","content":"What
+        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**
+        (often referred to simply as \"Matz\").\n\nHe began developing Ruby in Japan
+        in **1993** and released the first public version (Ruby 0.95) in **1995**.
+        His key design philosophy was to create a language that emphasized **developer
+        happiness and productivity**, blending parts of his favorite languages (like
+        Perl, Smalltalk, Eiffel, Ada, and Lisp) into a simple, object-oriented, and
+        easy-to-use scripting language.\n\nA famous motto associated with Ruby and
+        Matz is:\n> **\"Ruby is designed to make programmers happy.\"**\n\nMatz continues
+        to be the chief designer and lead developer of the language, and he remains
+        a highly respected figure in the <GOOGLE_CLOUD_LOCATION> programming community."},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
@@ -90,38 +99,45 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 02 Nov 2025 20:02:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:28 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fad7a3c9b8f63d6ec28992420a479480
+      - 0a90f22b0433a0254cc3ef47650859b0
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 a78f8078f85de402de93ba5387c94df8.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - UzX2tfSAm8Sa5Sy4jSDu5C84GVFJDYqzS6lgxWT3w7y8yT1KcG63-A==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b886ec45-79f9-4c96-83b6-8ad7801a5c62","object":"chat.completion","created":1762113738,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        \"Matz\" Matsumoto began working on Ruby in **1993** and released the first
-        public version, **Ruby 0.95**, in **1995**.\n\nSo, while he started the project
-        in 1993, the creation of Ruby is officially marked by its first public release
-        in **1995**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":68,"total_tokens":314,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":118},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 02 Nov 2025 20:02:22 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"c70081e1-9174-4096-8d5c-03e1d9980ec0","object":"chat.completion","created":1768582228,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"**Yukihiro
+        \"Matz\" Matsumoto began designing Ruby in 1993, and the first public release
+        (version 0.95) was in 1995.**\n\nHere''s a quick timeline:\n\n*   **1993:**
+        Matz starts working on Ruby as a personal project.\n*   **December 21, 1995:**
+        He releases **Ruby 0.95** to Japanese domestic newsgroups. This is considered
+        the official birth year of the language.\n*   **1996:** Ruby gains popularity
+        within Japan.\n*   **Late 1990s:** Documentation in English begins to appear,
+        leading to its <GOOGLE_CLOUD_LOCATION> spread.\n\nSo, while the development
+        started in **1993**, the language was effectively \"born\" and shared with
+        the world in **1995**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":160,"total_tokens":352,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":64},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:34 GMT
+recorded_with: VCR 6.4.0

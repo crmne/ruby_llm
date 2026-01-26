@@ -7,7 +7,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
-        tags."}]}],"max_tokens":4096,"tools":[{"name":"array_params","description":"Uses
+        tags."}]}],"max_tokens":8192,"tools":[{"name":"array_params","description":"Uses
         params DSL array support","input_schema":{"type":"object","properties":{"tags":{"type":"array","description":"List
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}]}'
     headers:
@@ -16,12 +16,12 @@ http_interactions:
       Host:
       - bedrock-runtime.<AWS_REGION>.amazonaws.com
       X-Amz-Date:
-      - 20251102T203749Z
+      - 20260116T171019Z
       X-Amz-Content-Sha256:
-      - 61ca67ff0dbb4856287bdb8830b549445be033151a9db5a3655917b84f18ef37
+      - 64f5939ca5df2ba235c4e7c44b7b7dcba3f5a7686781dc599bac68ee4ff17158
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20251102/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=2a4401f2979bd207abe4e7e4a610e5b96d3fea0c377dbba6faae4cbbc27059be
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260116/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=48f06b717e205270f5ce31963758f880001151e1c94854d6ab55ebc2105ae173
       Content-Type:
       - application/json
       Accept:
@@ -34,24 +34,24 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 02 Nov 2025 20:37:51 GMT
+      - Fri, 16 Jan 2026 17:10:21 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '488'
+      - '483'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 203fd049-9803-448d-87ed-a2bfe921a5ac
+      - 3bced481-fbeb-49de-bd10-c53a58aa60bd
       X-Amzn-Bedrock-Invocation-Latency:
-      - '1239'
+      - '1515'
       X-Amzn-Bedrock-Output-Token-Count:
-      - '74'
+      - '72'
       X-Amzn-Bedrock-Input-Token-Count:
       - '376'
     body:
       encoding: UTF-8
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01BdrdtZRsXCzRJqNpXJi86v","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        help you call the array_params tool with the specified tags."},{"type":"tool_use","id":"toolu_bdrk_01JNA1xNDAGoUBF5izQQm48B","name":"array_params","input":{"tags":["red","blue"]}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":376,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":74}}'
-  recorded_at: Sun, 02 Nov 2025 20:37:51 GMT
-recorded_with: VCR 6.3.1
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01XJb66ktxFrirz6rmpacQjG","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
+        call the array_params tool with the tags you specified."},{"type":"tool_use","id":"toolu_bdrk_0111ZDWLRj5hodTdRyWRhmpL","name":"array_params","input":{"tags":["red","blue"]}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":376,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":72}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:22 GMT
+recorded_with: VCR 6.4.0
