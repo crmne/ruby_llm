@@ -27,6 +27,7 @@ module RubyLLM
           text-embedding-005
           text-embedding-004
           text-multilingual-embedding-002
+          multimodalembedding
         ].freeze
 
         def list_models
@@ -70,14 +71,12 @@ module RubyLLM
               provider: slug,
               family: determine_model_family(model_id),
               created_at: nil,
-              context_window: nil,
-              max_output_tokens: nil,
-              modalities: nil,
-              capabilities: %w[streaming function_calling],
-              pricing: nil,
-              metadata: {
-                source: 'known_models'
-              }
+              context_window: Capabilities.context_window_for(model_id),
+              max_output_tokens: Capabilities.max_tokens_for(model_id),
+              modalities: Capabilities.modalities_for(model_id),
+              capabilities: Capabilities.capabilities_for(model_id),
+              pricing: Capabilities.pricing_for(model_id),
+              metadata: Capabilities.determine_metadata(model_id)
             )
           end
         end
@@ -114,6 +113,7 @@ module RubyLLM
           when /^gemini-1\.\d+/ then 'gemini-1.5'
           when /^text-embedding/ then 'text-embedding'
           when /bison/ then 'palm'
+          when /multimodalembedding/ then 'multimodalembedding'
           else 'gemini'
           end
         end
