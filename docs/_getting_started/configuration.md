@@ -59,6 +59,7 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'
@@ -388,6 +389,7 @@ RubyLLM.configure do |config|
   config.perplexity_api_key = String
   config.openrouter_api_key = String
   config.gpustack_api_key = String
+  config.xai_api_key = String
 
   # Provider Endpoints
   config.openai_api_base = String
@@ -411,9 +413,11 @@ RubyLLM.configure do |config|
   config.default_embedding_model = String
   config.default_image_model = String
   config.default_moderation_model = String
+  config.default_transcription_model = String
 
   # Model Registry
   config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
+  config.model_registry_class = String
 
   # Connection Settings
   config.request_timeout = Integer
@@ -428,6 +432,9 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+
+  # Rails integration
+  config.use_new_acts_as = Boolean
 end
 ```
 

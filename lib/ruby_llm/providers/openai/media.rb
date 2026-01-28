@@ -37,7 +37,7 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : image.for_llm
+              url: image.url? ? image.source.to_s : image.for_llm
             }
           }
         end

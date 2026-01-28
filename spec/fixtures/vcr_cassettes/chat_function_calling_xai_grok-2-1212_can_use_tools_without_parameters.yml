@@ -1,0 +1,147 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-2-1212","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:38:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709548443'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '900'
+      X-Ratelimit-Remaining-Requests:
+      - '891'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=W5UHoxvJ5ccpoff_u44B5zqJxSVCbz3SJyXPwHdIpKk-1768577892-1.0.1.1-ToZN7UHWymtgPrEMjM4Ho8fmSUOtzkJJB2aurN3mAZdmWA2oBYKLkaBw1wNGW8_uvCkfCNsYMhLBzan2oTib2rrMyJijRXKwhaQCMHtUzUN4qIrPn0odVWPg.Q8O4gHX6xLHBLYyT0M6uEmLEHlgatjvh94AIEYSJOIYhv4QGFo"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=W5UHoxvJ5ccpoff_u44B5zqJxSVCbz3SJyXPwHdIpKk-1768577892-1.0.1.1-ToZN7UHWymtgPrEMjM4Ho8fmSUOtzkJJB2aurN3mAZdmWA2oBYKLkaBw1wNGW8_uvCkfCNsYMhLBzan2oTib2rrMyJijRXKwhaQCMHtUzUN4qIrPn0odVWPg.Q8O4gHX6xLHBLYyT0M6uEmLEHlgatjvh94AIEYSJOIYhv4QGFo;
+        report-to cf-csp-endpoint
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ee4ae479-de8a-8267-1206-8909246f1281","object":"chat.completion","created":1768577891,"model":"grok-2-1212","choices":[{"index":0,"message":{"role":"assistant","content":"<has_function_call>I
+        am calling the ''best_language_to_learn'' function to find out the best language
+        for you to learn.","tool_calls":[{"id":"call_22691505","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":125,"completion_tokens":53,"total_tokens":178,"prompt_tokens_details":{"text_tokens":125,"audio_tokens":0,"image_tokens":0,"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":7800000},"system_fingerprint":"fp_fced99f24f"}'
+  recorded_at: Fri, 16 Jan 2026 15:38:12 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-2-1212","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":"<has_function_call>I
+        am calling the ''best_language_to_learn'' function to find out the best language
+        for you to learn.","tool_calls":[{"id":"call_22691505","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_22691505"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 15:38:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '18446744073709551615'
+      X-Ratelimit-Remaining-Tokens:
+      - '18446744073709548443'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '900'
+      X-Ratelimit-Remaining-Requests:
+      - '889'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=PQdgerE74.EIed_sYie5UFE3Nyjk0pbg8.pJAi.pxBw-1768577893-1.0.1.1-c7DpVPBerRZ315zhjLFFc25bCJt5xz_LnJgodD2cHmNv5RVBNcjohwMYjBnj1bZInPB_UI7mAxuNRHTfMzMY04gqqutTMWyE.Y_OuXeh5AlCQfNuJ9sZAML6lo1dFgtmBZObbFFTW81eo2x3HsMT0QQcKG7mTctKMl0C3aajtqw"}],"group":"cf-csp-endpoint","max_age":86400}'
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=PQdgerE74.EIed_sYie5UFE3Nyjk0pbg8.pJAi.pxBw-1768577893-1.0.1.1-c7DpVPBerRZ315zhjLFFc25bCJt5xz_LnJgodD2cHmNv5RVBNcjohwMYjBnj1bZInPB_UI7mAxuNRHTfMzMY04gqqutTMWyE.Y_OuXeh5AlCQfNuJ9sZAML6lo1dFgtmBZObbFFTW81eo2x3HsMT0QQcKG7mTctKMl0C3aajtqw;
+        report-to cf-csp-endpoint
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"d7f47ebd-7de1-aed3-4866-e8f58377c2c3","object":"chat.completion","created":1768577892,"model":"grok-2-1212","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        best language for you to learn is Ruby. Is there anything else you''d like
+        to know?","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":185,"completion_tokens":20,"total_tokens":205,"prompt_tokens_details":{"text_tokens":185,"audio_tokens":0,"image_tokens":0,"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":5700000},"system_fingerprint":"fp_fced99f24f"}'
+  recorded_at: Fri, 16 Jan 2026 15:38:13 GMT
+recorded_with: VCR 6.4.0
