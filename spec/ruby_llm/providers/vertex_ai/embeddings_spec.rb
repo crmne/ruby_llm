@@ -360,7 +360,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Embeddings do
               {
                 'textEmbedding' => ['0.1,....'],
                 'imageEmbedding' => ['0.2,....'],
-                'videoEmbedding' => ['0.3,....']
+                'videoEmbeddings' => ['0.3,....']
               }
             ]
           }

@@ -83,7 +83,14 @@ module RubyLLM
           return unless image.present?
 
           require 'base64'
-          image_data = image.respond_to?(:read) ? image.read : image
+          image_data = if image.respond_to?(:read)
+                         image.read
+                       elsif image.is_a?(String) && File.exist?(image)
+                         File.binread(image)
+                       else
+                         image
+                       end
+
           instance[:image] = { bytesBase64Encoded: Base64.strict_encode64(image_data) }
         end
 
@@ -93,10 +100,17 @@ module RubyLLM
           require 'base64'
           if video.is_a?(String) && video.start_with?('gs://')
             instance[:video] = { gcsUri: video }
-          else
-            video_data = video.respond_to?(:read) ? video.read : video
-            instance[:video] = { bytesBase64Encoded: Base64.strict_encode64(video_data) }
+            return
           end
+
+          video_data = if video.respond_to?(:read)
+                         video.read
+                       elsif video.is_a?(String) && File.exist?(video)
+                         File.binread(video)
+                       else
+                         video
+                       end
+          instance[:video] = { bytesBase64Encoded: Base64.strict_encode64(video_data) }
         end
 
         def parse_embedding_response(response, model:, text:)
@@ -114,7 +128,7 @@ module RubyLLM
         def parse_multimodal_embeddings(predictions)
           text_embedding = predictions&.dig(0, 'textEmbedding')
           image_embedding = predictions&.dig(0, 'imageEmbedding')
-          video_embedding = predictions&.dig(0, 'videoEmbedding')
+          video_embedding = predictions&.dig(0, 'videoEmbeddings')
 
           vectors = {}
           vectors[:text] = text_embedding if text_embedding
