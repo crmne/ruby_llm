@@ -29,6 +29,12 @@ end
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  before do
+    RubyLLM.configure do |config|
+      config.max_retries = 0
+    end
+  end
+
   describe 'error handling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
