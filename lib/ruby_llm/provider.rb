@@ -65,9 +65,9 @@ module RubyLLM
       parse_list_models_response response, slug, capabilities
     end
 
-    def embed(model:, text: nil, image: nil, video: nil, dimensions: nil)
-      payload = if image || video
-                  render_embedding_payload(text, model:, image:, video:, dimensions:)
+    def embed(model:, text: nil, dimensions: nil, with: nil)
+      payload = if with
+                  render_embedding_payload(text, model:, dimensions:, with:)
                 else
                   render_embedding_payload(text, model:, dimensions:)
                 end
