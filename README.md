@@ -67,6 +67,9 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
+
+# Create multimodal embeddings (with supported models)
+RubyLLM.embed "Ruby is elegant and expressive", with: ["image.png", "video.mp4"], model: multimodalembedding
 ```
 
 ```ruby
