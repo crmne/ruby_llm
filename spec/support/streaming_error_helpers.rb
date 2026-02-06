@@ -161,6 +161,22 @@ module StreamingErrorHelpers
       },
       chunk_status: 529,
       expected_error: RubyLLM::OverloadedError
+    },
+    azure: {
+      url: lambda {
+        base = RubyLLM.config.azure_api_base.to_s
+        "#{base.sub(%r{/+\z}, '')}/models/chat/completions?api-version=2024-05-01-preview"
+      },
+      error_response: {
+        error: {
+          message: 'The server is temporarily overloaded. Please try again later.',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
     }
   }.freeze
 

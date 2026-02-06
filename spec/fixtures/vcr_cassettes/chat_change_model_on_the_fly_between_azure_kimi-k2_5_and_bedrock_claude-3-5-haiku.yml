@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '15'
+      Sampling-Token-Len:
+      - '74'
+      Apim-Request-Id:
+      - 1c5ee48a-1aa7-49b5-90fc-f93729cbc756
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '11'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19856'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Fri, 06 Feb 2026 14:12:14 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"2
+        + 2 = **4**","reasoning_content":"The user is asking a simple math question:
+        \"What''s 2 + 2?\" This is a straightforward arithmetic problem. The answer
+        is 4.\n\nI should provide a clear, direct answer. There''s no need for complex
+        explanation since it''s such a basic question, but I can be friendly and concise.\n\nAnswer:
+        4 ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770387135,"id":"25a79d3205c445fa903e2b05220d0e13","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":74,"prompt_tokens":15,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":89}}
+
+        '
+  recorded_at: Fri, 06 Feb 2026 14:12:15 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        2 + 2?"}]},{"role":"assistant","content":[{"type":"text","text":"2 + 2 = **4**"}]},{"role":"user","content":[{"type":"text","text":"and
+        4 + 4?"}]}],"max_tokens":8192}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20260206T141215Z
+      X-Amz-Content-Sha256:
+      - 0422b213e92e0240df979f34a053f367fcb3b1e870f3090bd476fdb7740d93c0
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260206/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=86944852c5878bec027192e0864a61c14dfef8bf1048d62b3c6ce33ac0de0b49
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Feb 2026 14:12:16 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '314'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - eeac6a04-f31d-418a-9d79-c7aae2cc898e
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '621'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '13'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '41'
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_bdrk_01VnvdU6LzXTGfJNbAbN1xDN","type":"message","role":"assistant","content":[{"type":"text","text":"4
+        + 4 = 8"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":41,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":13}}'
+  recorded_at: Fri, 06 Feb 2026 14:12:17 GMT
+recorded_with: VCR 6.4.0

@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Fri, 06 Feb 2026 13:44:53 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 16 Jan 2026 15:15:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 16 Jan 2026 15:15:00 GMT
+  recorded_at: Fri, 06 Feb 2026 13:44:53 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 15:15:11 GMT
+      - Fri, 06 Feb 2026 13:45:03 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This image shows a **stylized red gemstone**, which is widely recognized as the **logo for the Ruby programming language**.\n\nHere's a more detailed description:\n*   **Color:** It is predominantly a deep, rich red, with variations in shade that create depth and dimension.\n*   **Shape:** It's a faceted gem, resembling a cut ruby. It has a prominent, somewhat oval-shaped top facet, and numerous smaller triangular and trapezoidal facets around its sides and bottom.\n*   **Lighting & Shine:** The gem is depicted with bright white highlights and reflections across its surface, particularly on the top and along its edges, giving it a glossy, polished, and sparkling appearance. This suggests it's reflecting light.\n*   **Dimensionality:** The rendering creates a 3D effect, making the gem appear solid and cut, rather than flat.\n\nIn essence, it's a vibrant, shiny, red ruby logo."
+                    "text": "I see a stylized, faceted **red gemstone**, which is widely recognized as the **logo for the Ruby programming language**.\n\nKey features include:\n*   **Color:** It's a deep, rich red, with variations in shade due to lighting, ranging from darker tones to bright, almost white highlights.\n*   **Shape:** It's depicted with multiple angular facets, giving it the appearance of a polished, cut jewel.\n*   **Shine/Highlights:** There's a prominent, crescent-shaped white highlight on its upper-left surface, indicating a glossy, reflective surface and suggesting a light source. Other smaller highlights are visible across its faces.\n*   **Texture/Depth:** The interplay of light and shadow creates a strong sense of three-dimensionality and a smooth, polished texture."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.8755310992805325
+              "avgLogprobs": -2.2135272658014871
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 196,
-            "totalTokenCount": 1239,
+            "candidatesTokenCount": 166,
+            "totalTokenCount": 1332,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "IMAGE",
-                "tokenCount": 258
-              },
-              {
                 "modality": "TEXT",
                 "tokenCount": 8
+              },
+              {
+                "modality": "IMAGE",
+                "tokenCount": 258
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 196
+                "tokenCount": 166
               }
             ],
-            "thoughtsTokenCount": 777
+            "thoughtsTokenCount": 900
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-16T15:15:01.031815Z",
-          "responseId": "9VVqacf4AYyK7PIP447pwAc"
+          "createTime": "2026-02-06T13:44:53.943709Z",
+          "responseId": "VfCFad3MObLiseMP6u2mkQI"
         }
-  recorded_at: Fri, 16 Jan 2026 15:15:11 GMT
+  recorded_at: Fri, 06 Feb 2026 13:45:03 GMT
 recorded_with: VCR 6.4.0

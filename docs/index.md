@@ -32,6 +32,10 @@ redirect_from:
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
   </div>
   <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-color.svg" alt="AzureAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-text.svg" alt="AzureAI" class="logo-small">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
   </div>

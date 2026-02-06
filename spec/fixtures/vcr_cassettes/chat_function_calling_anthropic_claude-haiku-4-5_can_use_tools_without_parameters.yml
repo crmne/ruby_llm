@@ -1,0 +1,172 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Feb 2026 07:57:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-02-06T07:57:52Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-02-06T07:57:52Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-02-06T07:57:52Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-02-06T07:57:52Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '534'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01LX6uvjCzaKiZV3Hno733DP","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_011UGjmUpJk9EMAPxkCFsAmc","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":571,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":41,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Fri, 06 Feb 2026 07:57:53 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_011UGjmUpJk9EMAPxkCFsAmc","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011UGjmUpJk9EMAPxkCFsAmc","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 06 Feb 2026 07:57:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-02-06T07:57:53Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-02-06T07:57:55Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-02-06T07:57:53Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-02-06T07:57:53Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '1683'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01186PBGASxc7uTQLLKCNXXR","type":"message","role":"assistant","content":[{"type":"text","text":"According
+        to the function, the best language to learn is **Ruby**! \n\nRuby is a popular
+        programming language known for:\n- **Beginner-friendly syntax** - It''s designed
+        to be readable and intuitive\n- **Rapid development** - Great for building
+        web applications quickly\n- **Ruby on Rails framework** - A powerful web development
+        framework that makes building web apps efficient\n- **Strong community** -
+        Lots of learning resources and supportive community\n- **Versatility** - Can
+        be used for web development, data analysis, automation, and more\n\nIf you''re
+        interested in learning Ruby or want to know more about other programming languages,
+        feel free to ask!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":625,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":144,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Fri, 06 Feb 2026 07:57:55 GMT
+recorded_with: VCR 6.4.0

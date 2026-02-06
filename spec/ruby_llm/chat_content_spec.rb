@@ -19,7 +19,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:text_url) { 'https://www.ruby-lang.org/en/about/license.txt' }
   let(:bad_image_url) { 'https://example.com/eiffel_tower' }
   let(:bad_image_path) { File.expand_path('../fixtures/bad_image.png', __dir__) }
-  let(:image_url_no_ext) { 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzSCawxoHrVtf9AX-o7bp7KVxcmkYWzsIjng&s' }
+  let(:image_url_no_ext) { 'https://httpbin.org/image/jpeg' }
 
   describe 'text models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     CHAT_MODELS.each do |model_info|
@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('images')
+        expect(chat.messages.first.content.attachments.first.filename).to eq('jpeg')
         expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/jpeg')
       end
     end

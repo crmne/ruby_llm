@@ -4,6 +4,9 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
+  before do
+    skip 'Local provider specs disabled via SKIP_LOCAL_PROVIDER_TESTS' if ENV['SKIP_LOCAL_PROVIDER_TESTS']
+  end
 
   describe 'local provider model fetching' do
     describe '.refresh!' do
