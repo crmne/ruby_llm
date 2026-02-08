@@ -18,7 +18,8 @@ module RubyLLM
       def headers
         {
           'x-api-key' => @config.anthropic_api_key,
-          'anthropic-version' => '2023-06-01'
+          'anthropic-version' => '2023-06-01',
+          'User-Agent' => "ruby_llm/#{RubyLLM::VERSION}"
         }
       end
 
