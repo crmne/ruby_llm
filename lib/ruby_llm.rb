@@ -13,10 +13,6 @@ require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
-  'ruby_llm' => 'RubyLLM',
-  'llm' => 'LLM',
-  'openai' => 'OpenAI',
-  'openai_base' => 'OpenAIBase',
   'azure' => 'Azure',
   'UI' => 'UI',
   'api' => 'API',
@@ -26,6 +22,7 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'mistral' => 'Mistral',
   'openai' => 'OpenAI',
+  'openai_base' => 'OpenAIBase',
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',
