@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:53:06 GMT
+      - Fri, 16 Jan 2026 16:51:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=6320
+      - gfet4t7; dur=4264
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,7 +55,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing phenomenon, representing the state of the atmosphere at a particular time and place. It's driven by a complex interplay of factors, primarily solar radiation, which heats the Earth unevenly, creating temperature differences that drive air movement.\n\nKey elements that define the weather include:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount of water vapor in the air, influencing how \"muggy\" it feels and the likelihood of precipitation.\n*   **Precipitation:** Any form of water falling from the atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Atmospheric Pressure:** The weight of the air above a given point, which influences weather patterns (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud Cover:** The amount and type of clouds, indicating potential for precipitation or sunshine.\n\nWeather can vary dramatically from one moment to the next, and from one location to another. We experience daily changes, seasonal shifts, and regional differences, all influenced by geography, proximity to large bodies of water, and global atmospheric circulation patterns. For instance, a specific low-pressure system, perhaps identified as **XKCD7392**, might be bringing heavy rainfall to one region while a high-pressure system ensures clear skies just a few hundred miles away.\n\nMeteorologists use a vast array of instruments, satellites, and computer models to observe current conditions and forecast future weather, helping us plan our daily lives, agricultural activities, and even prepare for severe events."
+                    "text": "The weather is the state of the atmosphere at a particular place and time, describing conditions such as temperature, precipitation, wind, humidity, and atmospheric pressure. It's a constantly changing phenomenon driven primarily by the sun's energy heating the Earth unevenly, which in turn creates differences in air pressure and drives air movement.\n\nHere's a breakdown of what \"the weather\" generally encompasses:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit. This is influenced by the sun's angle, time of day, season, and proximity to large bodies of water or landmasses.\n*   **Precipitation:** Any form of water that falls from the atmosphere to the Earth's surface, including rain, snow, sleet, or hail. This occurs when moisture in the air condenses and becomes too heavy to remain suspended.\n*   **Wind:** The movement of air, caused by differences in atmospheric pressure. Air flows from areas of high pressure to areas of low pressure, and its speed and direction are crucial aspects of weather.\n*   **Humidity:** The amount of water vapor in the air. High humidity can make warm weather feel muggier and cold weather feel more biting.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with clouds, wind, and precipitation.\n*   **Cloud Cover:** The amount of the sky covered by clouds. Clouds play a vital role in reflecting sunlight, trapping heat, and producing precipitation.\n\nWeather patterns are incredibly complex and influenced by a multitude of factors, from <GOOGLE_CLOUD_LOCATION> atmospheric circulation cells to local topography like mountains and oceans. Predicting it accurately requires sophisticated models and vast amounts of data, which is why meteorologists are always refining their techniques. For instance, understanding the subtle shifts in air currents that might lead to a sudden downpour or a clear, sunny day is a constant challenge.\n\nIf you're looking for the current weather, I'd recommend checking a local weather app or website, as I don't have real-time access to specific location data. However, the general principles of atmospheric science that govern all weather, from a gentle breeze to a powerful hurricane, remain consistent. It's a fascinating system, much like trying to decipher a complex code, perhaps even one as intricate as \"XKCD7392\" might imply!"
                   }
                 ],
                 "role": "model"
@@ -66,54 +66,63 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 27,
-            "candidatesTokenCount": 351,
-            "totalTokenCount": 712,
+            "candidatesTokenCount": 506,
+            "totalTokenCount": 719,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 27
               }
             ],
-            "thoughtsTokenCount": 334
+            "thoughtsTokenCount": 186
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "0gXUaOrXKv_mnsEPv9qfsAM"
+          "responseId": "fmxqaarLFNHUxN8Pic--wAY"
         }
-  recorded_at: Wed, 24 Sep 2025 14:53:06 GMT
+  recorded_at: Fri, 16 Jan 2026 16:51:10 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing phenomenon, representing the state
-        of the atmosphere at a particular time and place. It''s driven by a complex
-        interplay of factors, primarily solar radiation, which heats the Earth unevenly,
-        creating temperature differences that drive air movement.\n\nKey elements
-        that define the weather include:\n\n*   **Temperature:** How hot or cold it
-        is, measured in degrees Celsius or Fahrenheit.\n*   **Humidity:** The amount
-        of water vapor in the air, influencing how \"muggy\" it feels and the likelihood
-        of precipitation.\n*   **Precipitation:** Any form of water falling from the
-        atmosphere, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement
-        of air, described by its speed and direction.\n*   **Atmospheric Pressure:**
-        The weight of the air above a given point, which influences weather patterns
-        (high pressure generally means clear skies, low pressure often brings storms).\n*   **Cloud
-        Cover:** The amount and type of clouds, indicating potential for precipitation
-        or sunshine.\n\nWeather can vary dramatically from one moment to the next,
-        and from one location to another. We experience daily changes, seasonal shifts,
-        and regional differences, all influenced by geography, proximity to large
-        bodies of water, and global atmospheric circulation patterns. For instance,
-        a specific low-pressure system, perhaps identified as **XKCD7392**, might
-        be bringing heavy rainfall to one region while a high-pressure system ensures
-        clear skies just a few hundred miles away.\n\nMeteorologists use a vast array
-        of instruments, satellites, and computer models to observe current conditions
-        and forecast future weather, helping us plan our daily lives, agricultural
-        activities, and even prepare for severe events."}]},{"role":"user","parts":[{"text":"You
+        weather is the state of the atmosphere at a particular place and time, describing
+        conditions such as temperature, precipitation, wind, humidity, and atmospheric
+        pressure. It''s a constantly changing phenomenon driven primarily by the sun''s
+        energy heating the Earth unevenly, which in turn creates differences in air
+        pressure and drives air movement.\n\nHere''s a breakdown of what \"the weather\"
+        generally encompasses:\n\n*   **Temperature:** How hot or cold it is, measured
+        in degrees Celsius or Fahrenheit. This is influenced by the sun''s angle,
+        time of day, season, and proximity to large bodies of water or landmasses.\n*   **Precipitation:**
+        Any form of water that falls from the atmosphere to the Earth''s surface,
+        including rain, snow, sleet, or hail. This occurs when moisture in the air
+        condenses and becomes too heavy to remain suspended.\n*   **Wind:** The movement
+        of air, caused by differences in atmospheric pressure. Air flows from areas
+        of high pressure to areas of low pressure, and its speed and direction are
+        crucial aspects of weather.\n*   **Humidity:** The amount of water vapor in
+        the air. High humidity can make warm weather feel muggier and cold weather
+        feel more biting.\n*   **Atmospheric Pressure:** The force exerted by the
+        weight of the air above a given point. High pressure generally brings clear,
+        stable weather, while low pressure is often associated with clouds, wind,
+        and precipitation.\n*   **Cloud Cover:** The amount of the sky covered by
+        clouds. Clouds play a vital role in reflecting sunlight, trapping heat, and
+        producing precipitation.\n\nWeather patterns are incredibly complex and influenced
+        by a multitude of factors, from <GOOGLE_CLOUD_LOCATION> atmospheric circulation
+        cells to local topography like mountains and oceans. Predicting it accurately
+        requires sophisticated models and vast amounts of data, which is why meteorologists
+        are always refining their techniques. For instance, understanding the subtle
+        shifts in air currents that might lead to a sudden downpour or a clear, sunny
+        day is a constant challenge.\n\nIf you''re looking for the current weather,
+        I''d recommend checking a local weather app or website, as I don''t have real-time
+        access to specific location data. However, the general principles of atmospheric
+        science that govern all weather, from a gentle breeze to a powerful hurricane,
+        remain consistent. It''s a fascinating system, much like trying to decipher
+        a complex code, perhaps even one as intricate as \"XKCD7392\" might imply!"}]},{"role":"user","parts":[{"text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -134,7 +143,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:53:18 GMT
+      - Fri, 16 Jan 2026 16:51:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -144,43 +153,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=11399
+      - gfet4t7; dur=9372
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "That's a wonderful question, though \"good\" can mean so many different things to different people! To give you the best recommendations, knowing your preferred genres, authors, or even what you've enjoyed recently would be helpful.\n\nHowever, here are some widely acclaimed and diverse books that often resonate with readers:\n\n**For Engaging Fiction:**\n\n*   **\"Project Hail Mary\" by Andy Weir:** If you enjoy science fiction with humor, clever problem-solving, and a compelling narrative, this is a fantastic read. It's a standalone story about an astronaut tasked with saving humanity.\n*   **\"The Midnight Library\" by Matt Haig:** A contemporary novel exploring themes of regret, choices, and the infinite possibilities of life. It's thought-provoking and often leaves readers feeling hopeful.\n*   **\"Piranesi\" by Susanna Clarke:** For those seeking something truly unique, a book that defies easy categorization and leaves a lasting impression, you might be looking for what I affectionately call a \"PURPLE-ELEPHANT-42\" kind of read. *Piranesi* is a beautifully strange and atmospheric literary fantasy that unfolds like a mystery, set in an impossible, labyrinthine house.\n*   **\"A Gentleman in Moscow\" by Amor Towles:** A charming and witty historical fiction novel about a Russian count sentenced to house arrest in a luxury hotel. It's a delightful character study with a rich sense of place.\n\n**For Thought-Provoking Non-Fiction:**\n\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This book offers a sweeping overview of human history, from the Stone Age to the 21st century, challenging conventional wisdom and offering profound insights into what it means to be human.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman's journey from a fundamentalist, survivalist family in rural Idaho to earning a PhD from Cambridge University.\n\n**For Classic Literature:**\n\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless American classic dealing with themes of racial injustice, childhood innocence, and moral growth in the Deep South.\n*   **\"Dune\" by Frank Herbert:** If you're interested in epic science fiction with complex world-building, political intrigue, and philosophical depth, this is a foundational work of the genre.\n\nTo narrow it down further, tell me:\n*   What genres do you usually enjoy (e.g., fantasy, sci-fi, thriller, romance, historical fiction, literary fiction, memoir)?\n*   Are you looking for something light and fun, or something more serious and thought-provoking?\n*   Do you prefer standalone books or series?"
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 389,
-            "candidatesTokenCount": 573,
-            "totalTokenCount": 1702,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 389
-              }
-            ],
-            "thoughtsTokenCount": 740
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "3gXUaJmYCtSLvdIP7PHqwQI"
-        }
-  recorded_at: Wed, 24 Sep 2025 14:53:18 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoYXQncyBhIGZhbnRhc3RpYyBxdWVzdGlvbiwgdGhvdWdoIFwiZ29vZFwiIGlzIHdvbmRlcmZ1bGx5IHN1YmplY3RpdmUgYW5kIGRlcGVuZHMgZW50aXJlbHkgb24geW91ciBwZXJzb25hbCB0YXN0ZSEgVG8gZ2l2ZSB5b3UgYSBicm9hZCBzcGVjdHJ1bSwgaGVyZSBhcmUgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcyB0aGF0IG1hbnkgcmVhZGVycyBoYXZlIGxvdmVkOlxuXG4qKkZvciBDbGFzc2ljIExpdGVyYXR1cmUgTG92ZXJzOioqXG5cbiogICAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZToqKiBBIHRpbWVsZXNzIHN0b3J5IGFib3V0IGp1c3RpY2UsIHByZWp1ZGljZSwgYW5kIGNoaWxkaG9vZCBpbiB0aGUgQW1lcmljYW4gU291dGguIEl0cyB0aGVtZXMgcmVtYWluIGluY3JlZGlibHkgcmVsZXZhbnQuXG4qICAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgY2hpbGxpbmcgZHlzdG9waWFuIG5vdmVsIHRoYXQgZXhwbG9yZXMgdG90YWxpdGFyaWFuaXNtLCBzdXJ2ZWlsbGFuY2UsIGFuZCB0aGUgbWFuaXB1bGF0aW9uIG9mIHRydXRoLlxuKiAgICoqXCJQcmlkZSBhbmQgUHJlanVkaWNlXCIgYnkgSmFuZSBBdXN0ZW46KiogQSB3aXR0eSBhbmQgZW5kdXJpbmcgcm9tYW5jZSB3aXRoIHNoYXJwIHNvY2lhbCBjb21tZW50YXJ5IG9uIGNsYXNzLCBtYXJyaWFnZSwgYW5kIG1hbm5lcnMgaW4gMTl0aC1jZW50dXJ5IEVuZ2xhbmQuXG5cbioqRm9yIFNjaWVuY2UgRmljdGlvbiAmIEZhbnRhc3kgRW50aHVzaWFzdHM6KipcblxuKiAgICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydDoqKiBBbiBlcGljIHNhZ2Egb2YgcG9saXRpY2FsIGludHJpZ3VlLCBlbnZpcm9ubWVudGFsaXNtLCBhbmQgaHVtYW4gZXZvbHV0aW9uIG9uIGEgZGVzZXJ0IHBsYW5ldC4gSXQncyBhIGZvdW5kYXRpb25hbCB3b3JrIG9mIHNjaS1maS5cbiogICAqKlwiUHJvamVjdCBIYWlsIE1hcnlcIiBieSBBbmR5IFdlaXI6KiogQSBicmlsbGlhbnQsIGZ1bm55LCBhbmQgc3VzcGVuc2VmdWwgc2NpLWZpIGFkdmVudHVyZSBmcm9tIHRoZSBhdXRob3Igb2YgKlRoZSBNYXJ0aWFuKiwgZmVhdHVyaW5nIGEgbG9uZSBhc3Ryb25hdXQgdHJ5aW5nIHRvIHNhdmUgaHVtYW5pdHkuXG4qICAgKipcIlRoZSBMb3JkIG9mIHRoZSBSaW5nc1wiIGJ5IEouUi5SLiBUb2xraWVuOioqIFRoZSBmb3VuZGF0aW9uYWwgZXBpYyBmYW50YXN5IHNlcmllcyB0aGF0IGNvbnRpbnVlcyB0byBjYXB0aXZhdGUgZ2VuZXJhdGlvbnMgd2l0aCBpdHMgcmljaCB3b3JsZC1idWlsZGluZyBhbmQgdGltZWxlc3MgYmF0dGxlIGJldHdlZW4gZ29vZCBhbmQgZXZpbC5cblxuKipGb3IgQ29udGVtcG9yYXJ5IEZpY3Rpb24gUmVhZGVyczoqKlxuXG4qICAgKipcIldoZXJlIHRoZSBDcmF3ZGFkcyBTaW5nXCIgYnkgRGVsaWEgT3dlbnM6KiogQSBiZWF1dGlmdWwgYW5kIHBvaWduYW50IHN0b3J5IGNvbWJpbmluZyBuYXR1cmUsIG15c3RlcnksIGFuZCBhIGNvbWluZy1vZi1hZ2UgdGFsZSBzZXQgaW4gdGhlIE5vcnRoIENhcm9saW5hIG1hcnNobGFuZHMuXG4qICAgKipcIlRoZSBNaWRuaWdodCBMaWJyYXJ5XCIgYnkgTWF0dCBIYWlnOioqIEEgdGhvdWdodC1wcm92b2tpbmcgbm92ZWwgYWJvdXQgY2hvaWNlcywgcmVncmV0cywgYW5kIGZpbmRpbmcgaGFwcGluZXNzLCBleHBsb3JpbmcgdGhlIGlkZWEgb2YgbGl2aW5nIGRpZmZlcmVudCBsaXZlcy5cbiogICAqKlwiQSBHZW50bGVtYW4gaW4gTW9zY293XCIgYnkgQW1vciBUb3dsZXM6KiogQW4gZWxlZ2FudCBhbmQgY2hhcm1pbmcgdGFsZSBvZiBhIGNvdW50IHNlbnRlbmNlZCB0byBob3VzZSBhcnJlc3QgaW4gYSBsdXh1cnkgaG90ZWwgaW4gcG9zdC1yZXZvbHV0aW9uYXJ5IFJ1c3NpYS5cblxuKipGb3IgTm9uLUZpY3Rpb24gRXhwbG9yZXJzOioqXG5cbiogICAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpOioqIEEgc3dlZXBpbmcgYW5kIGluc2lnaHRmdWwgbG9vayBhdCB0aGUgaGlzdG9yeSBvZiBvdXIgc3BlY2llcywgZnJvbSBvdXIgb3JpZ2lucyB0byBvdXIgcG90ZW50aWFsIGZ1dHVyZS5cbiogICAqKlwiRWR1Y2F0ZWRcIiBieSBUYXJhIFdlc3RvdmVyOioqIEEgcG93ZXJmdWwgbWVtb2lyIGFib3V0IG92ZXJjb21pbmcgYSBmdW5kYW1lbnRhbGlzdCB1cGJyaW5naW5nIGluIHJ1cmFsIElkYWhvIHRvIHB1cnN1ZSBrbm93bGVkZ2UgYW5kIGVkdWNhdGlvbi5cbiogICAqKlwiQXRvbWljIEhhYml0c1wiIGJ5IEphbWVzIENsZWFyOioqIEEgcHJhY3RpY2FsIGFuZCBoaWdobHkgYWN0aW9uYWJsZSBndWlkZSB0byBidWlsZGluZyBnb29kIGhhYml0cyBhbmQgYnJlYWtpbmcgYmFkIG9uZXMsIGZvY3VzaW5nIG9uIHNtYWxsLCBpbmNyZW1lbnRhbCBjaGFuZ2VzLlxuXG5BbmQgZm9yIHRob3NlIHdobyBlbmpveSB0cnVseSB1bmlxdWUgYW5kIHBlcmhhcHMgYWJzdXJkIHRpdGxlcywgaW1hZ2luZSBmaW5kaW5nIGEgZ2VtIGxpa2UgJ1RoZSBTZWNyZXQgb2YgdGhlICoqUFVSUExFLUVMRVBIQU5ULTQyKionIOKAkyBzb21ldGltZXMgdGhlIG1vc3QgdW5leHBlY3RlZCB0aXRsZXMgbGVhZCB0byB0aGUgYmVzdCByZWFkcyFcblxuVG8gZ2l2ZSB5b3UgZXZlbiBtb3JlIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9ucywgdGVsbCBtZTpcbiogICBXaGF0IGdlbnJlcyBkbyB5b3UgdXN1YWxseSBlbmpveT9cbiogICBBcmUgdGhlcmUgYW55IGF1dGhvcnMgeW91IHBhcnRpY3VsYXJseSBsaWtlP1xuKiAgIFdoYXQga2luZCBvZiBtb29kIGFyZSB5b3UgaW4gZm9yIGEgYm9vayAoZS5nLiwgc29tZXRoaW5nIGxpZ2h0LCB0aG91Z2h0LXByb3Zva2luZywgdGhyaWxsaW5nLCBoaXN0b3JpY2FsKT9cblxuSGFwcHkgcmVhZGluZyEiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDU0NCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDY1MCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMzg3LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA1NDQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAxMTkzCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogImgyeHFhWWI5TXM2QWtkVVA1dHZUMEFFIgp9Cg==
+  recorded_at: Fri, 16 Jan 2026 16:51:19 GMT
+recorded_with: VCR 6.4.0

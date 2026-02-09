@@ -23,6 +23,7 @@ RSpec.describe RubyLLM::Embedding do
 
       it "#{provider}/#{model} can handle a single text with custom dimensions" do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
+        skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
 
         embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: test_dimensions)
         expect(embedding.vectors).to be_an(Array)
@@ -40,6 +41,7 @@ RSpec.describe RubyLLM::Embedding do
 
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
+        skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
 
         embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: test_dimensions)
         expect(embeddings.vectors).to be_an(Array)

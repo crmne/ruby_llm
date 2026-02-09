@@ -8,6 +8,7 @@ module RubyLLM
       include VertexAI::Streaming
       include VertexAI::Embeddings
       include VertexAI::Models
+      include VertexAI::Transcription
 
       def initialize(config)
         super
@@ -15,13 +16,22 @@ module RubyLLM
       end
 
       def api_base
-        "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        if @config.vertexai_location.to_s == 'global'
+          'https://aiplatform.googleapis.com/v1beta1'
+        else
+          "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        end
       end
 
       def headers
-        {
-          'Authorization' => "Bearer #{access_token}"
-        }
+        if defined?(VCR) && !VCR.current_cassette.recording?
+          { 'Authorization' => 'Bearer test-token' }
+        else
+          initialize_authorizer unless @authorizer
+          @authorizer.apply({})
+        end
+      rescue Google::Auth::AuthorizationError => e
+        raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
       end
 
       class << self
@@ -32,15 +42,6 @@ module RubyLLM
 
       private
 
-      def access_token
-        return 'test-token' if defined?(VCR) && !VCR.current_cassette.recording?
-
-        initialize_authorizer unless @authorizer
-        @authorizer.fetch_access_token!['access_token']
-      rescue Google::Auth::AuthorizationError => e
-        raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
-      end
-
       def initialize_authorizer
         require 'googleauth'
         @authorizer = ::Google::Auth.get_application_default(
@@ -50,7 +51,8 @@ module RubyLLM
           ]
         )
       rescue LoadError
-        raise Error, 'The googleauth gem is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
+        raise Error,
+              'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
       end
     end
   end

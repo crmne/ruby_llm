@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the object
+        params tool with window start 2025-01-01 and end 2025-01-02 and include the
+        result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 17:10:56 GMT
+      - Fri, 16 Jan 2026 17:10:57 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1487'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the object_params function with a window starting
+        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.
+        The function requires a \"window\" object with \"start\" and \"end\" as required
+        fields. Both should be ISO strings. The user provided the dates in the correct
+        format, so I''ll structure the JSON accordingly. I need to make sure the parameters
+        are correctly nested under \"window\". No additional properties are allowed,
+        so I''ll keep it simple. Alright, the tool call should include the name \"object_params\"
+        and the arguments with the window details.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-BXIjcVltGvmpx33n9RjzW9bwjVvAluRj","type":"function"}]}}],"created":1768583459,"id":"chatcmpl-itiGacVIklwliNuMHd2rTv2CAGmuwn93","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":194,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":145,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5453.044296384478,"time_per_output_token_ms":8.261726804123711,"time_to_first_token_ms":52.081,"tokens_per_second":121.04007112663973,"total_tokens":478}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:59 GMT
+recorded_with: VCR 6.4.0

@@ -7,23 +7,49 @@ module RubyLLM
       module Tools
         module_function
 
-        def chat_tool_for(tool)
-          {
+        EMPTY_PARAMETERS_SCHEMA = {
+          'type' => 'object',
+          'properties' => {},
+          'required' => [],
+          'additionalProperties' => false,
+          'strict' => true
+        }.freeze
+
+        def parameters_schema_for(tool)
+          tool.params_schema ||
+            schema_from_parameters(tool.parameters)
+        end
+
+        def schema_from_parameters(parameters)
+          schema_definition = RubyLLM::Tool::SchemaDefinition.from_parameters(parameters)
+          schema_definition&.json_schema || EMPTY_PARAMETERS_SCHEMA
+        end
+
+        def tool_for(tool)
+          parameters_schema = parameters_schema_for(tool)
+
+          definition = {
             type: 'function',
             function: {
               name: tool.name,
               description: tool.description,
-              parameters: tool_parameters_for(tool)
+              parameters: parameters_schema
             }
           }
+
+          return definition if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(definition, tool.provider_params)
         end
 
         def response_tool_for(tool)
+          parameters_schema = parameters_schema_for(tool)
+
           {
             type: 'function',
             name: tool.name,
             description: tool.description,
-            parameters: tool_parameters_for(tool)
+            parameters: parameters_schema
           }
         end
 
@@ -32,14 +58,6 @@ module RubyLLM
             type: param.type,
             description: param.description
           }.compact
-        end
-
-        def tool_parameters_for(tool)
-          {
-            type: 'object',
-            properties: tool.parameters.transform_values { |param| param_schema(param) },
-            required: tool.parameters.select { |_, p| p.required }.keys
-          }
         end
 
         def format_tool_calls(tool_calls)

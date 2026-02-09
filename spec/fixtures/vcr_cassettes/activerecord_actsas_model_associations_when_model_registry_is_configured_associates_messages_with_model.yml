@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Hello","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,31 +23,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 17 Oct 2025 15:17:39 GMT
+      - Fri, 06 Feb 2026 11:30:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-Ratelimit-Limit-Requests:
-      - '30000'
-      X-Ratelimit-Limit-Tokens:
-      - '150000000'
-      X-Ratelimit-Remaining-Requests:
-      - '29999'
-      X-Ratelimit-Remaining-Tokens:
-      - '149999972'
-      X-Ratelimit-Reset-Requests:
-      - 2ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      Openai-Version:
-      - '2020-10-01'
+      Access-Control-Expose-Headers:
+      - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '378'
       Openai-Project:
-      - "<OPENAI_PROJECT>"
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199996'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 1ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
@@ -73,19 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0502a32699d3cd470068f25e12719081979a533b3bf3249ca1",
-          "object": "response",
-          "created_at": 1760714258,
-          "status": "completed",
-          "background": false,
-          "billing": {
-            "payer": "developer"
-          },
-          "error": null,
-          "incomplete_details": null,
-          "instructions": null,
-          "max_output_tokens": null,
-          "max_tool_calls": null,
+          "id": "chatcmpl-D6EKMMWgiwhoan5QePiYHAe6Tnh9T",
+          "object": "chat.completion",
+          "created": 1770377414,
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
@@ -112,32 +106,7 @@ http_interactions:
           },
           "safety_identifier": null,
           "service_tier": "default",
-          "store": true,
-          "temperature": 1.0,
-          "text": {
-            "format": {
-              "type": "text"
-            },
-            "verbosity": "medium"
-          },
-          "tool_choice": "auto",
-          "tools": [],
-          "top_logprobs": 0,
-          "top_p": 1.0,
-          "truncation": "disabled",
-          "usage": {
-            "input_tokens": 8,
-            "input_tokens_details": {
-              "cached_tokens": 0
-            },
-            "output_tokens": 10,
-            "output_tokens_details": {
-              "reasoning_tokens": 0
-            },
-            "total_tokens": 18
-          },
-          "user": null,
-          "metadata": {}
+          "system_fingerprint": "fp_de604bd877"
         }
-  recorded_at: Fri, 17 Oct 2025 15:17:39 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 06 Feb 2026 11:30:14 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,175 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '18'
+      Sampling-Token-Len:
+      - '260'
+      Apim-Request-Id:
+      - 7680ab83-16b5-4aa4-84d8-7444d95549ce
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '17'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19952'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Fri, 06 Feb 2026 14:11:33 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
+        programming language **Ruby** was created by **Yukihiro \"Matz\" Matsumoto**,
+        a Japanese computer scientist.\n\nMatsumoto began working on Ruby in 1993
+        and released the first public version (0.95) in 1995. He designed Ruby with
+        a focus on **programmer happiness and productivity**, blending elements from
+        Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding philosophy was that Ruby
+        should be intuitive and make programming enjoyable, with the principle of
+        \"least surprise\" (meaning the language should behave in ways that minimize
+        confusion for developers).","reasoning_content":"The user is asking for the
+        creator of the programming language Ruby. This is a straightforward factual
+        question.\n\n Ruby is a dynamic, open-source programming language with a focus
+        on simplicity and productivity. It was created by Yukihiro \"Matz\" Matsumoto.\n\n
+        Key facts to include:\n - Creator: Yukihiro Matsumoto (often known as \"Matz\")\n
+        - Nationality: Japanese\n - Year created: First released in 1995\n - Philosophy:
+        Designed for programmer happiness, emphasizing human needs over computer needs\n\n
+        I should provide a clear, concise answer with the creator''s name, and maybe
+        a bit of context about when it was created and his philosophy behind it. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770387094,"id":"94e20768e480442bb41949fc6f2fa145","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":260,"prompt_tokens":18,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":278}}
+
+        '
+  recorded_at: Fri, 06 Feb 2026 14:11:34 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        programming language **Ruby** was created by **Yukihiro \"Matz\" Matsumoto**,
+        a Japanese computer scientist.\n\nMatsumoto began working on Ruby in 1993
+        and released the first public version (0.95) in 1995. He designed Ruby with
+        a focus on **programmer happiness and productivity**, blending elements from
+        Perl, Smalltalk, Eiffel, Ada, and Lisp. His guiding philosophy was that Ruby
+        should be intuitive and make programming enjoyable, with the principle of
+        \"least surprise\" (meaning the language should behave in ways that minimize
+        confusion for developers).","reasoning":"The user is asking for the creator
+        of the programming language Ruby. This is a straightforward factual question.\n\n
+        Ruby is a dynamic, open-source programming language with a focus on simplicity
+        and productivity. It was created by Yukihiro \"Matz\" Matsumoto.\n\n Key facts
+        to include:\n - Creator: Yukihiro Matsumoto (often known as \"Matz\")\n -
+        Nationality: Japanese\n - Year created: First released in 1995\n - Philosophy:
+        Designed for programmer happiness, emphasizing human needs over computer needs\n\n
+        I should provide a clear, concise answer with the creator''s name, and maybe
+        a bit of context about when it was created and his philosophy behind it. ","reasoning_content":"The
+        user is asking for the creator of the programming language Ruby. This is a
+        straightforward factual question.\n\n Ruby is a dynamic, open-source programming
+        language with a focus on simplicity and productivity. It was created by Yukihiro
+        \"Matz\" Matsumoto.\n\n Key facts to include:\n - Creator: Yukihiro Matsumoto
+        (often known as \"Matz\")\n - Nationality: Japanese\n - Year created: First
+        released in 1995\n - Philosophy: Designed for programmer happiness, emphasizing
+        human needs over computer needs\n\n I should provide a clear, concise answer
+        with the creator''s name, and maybe a bit of context about when it was created
+        and his philosophy behind it. "},{"role":"user","content":"What year did he
+        create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '156'
+      Sampling-Token-Len:
+      - '190'
+      Apim-Request-Id:
+      - f71e4121-cee9-482c-bc87-9a26367f58a6
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '16'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19936'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Fri, 06 Feb 2026 14:11:37 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"Yukihiro
+        Matsumoto began creating Ruby in **1993**, and publicly released the first
+        version (0.95) in **1995**.","reasoning_content":"The user is asking for the
+        year Ruby was created. Looking at the previous answer, I already mentioned
+        that Matsumoto began working on Ruby in 1993 and released the first public
+        version (0.95) in 1995. \n\nThe question asks \"what year did he create Ruby?\"
+        This could refer to:\n1. When he started working on it (1993)\n2. When it
+        was first released/publicly available (1995)\n\nI should provide both dates
+        to be accurate and complete, since \"create\" can mean either the start of
+        development or the public release. The most common answer people look for
+        is 1995 (the public release), but 1993 is when he actually started creating
+        it.\n\nI should clarify this distinction while keeping the answer concise.
+        ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770387098,"id":"88b6eecd264f4f349a1e0fec2ca6c0a0","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":190,"prompt_tokens":156,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":346}}
+
+        '
+  recorded_at: Fri, 06 Feb 2026 14:11:38 GMT
+recorded_with: VCR 6.4.0

@@ -5,7 +5,7 @@ require 'json-schema'
 
 RSpec.describe RubyLLM::Models do
   let(:schema_path) { described_class.schema_file }
-  let(:models_json_path) { described_class.models_file }
+  let(:models_json_path) { RubyLLM.config.model_registry_file }
 
   it 'validates that models.json conforms to the schema' do
     models_data = JSON.parse(File.read(models_json_path))

@@ -25,7 +25,7 @@ After reading this guide, you will know:
 
 *   What Tools are and why they are useful.
 *   How to define a Tool using `RubyLLM::Tool`.
-*   How to define parameters for your Tools.
+*   How to define parameters for your Tools (from quick helpers to full JSON Schema).
 *   How to use Tools within a `RubyLLM::Chat`.
 *   The execution flow when a model uses a Tool.
 *   How to handle errors within Tools.
@@ -50,8 +50,11 @@ Define a tool by creating a class that inherits from `RubyLLM::Tool`.
 ```ruby
 class Weather < RubyLLM::Tool
   description "Gets current weather for a location"
-  param :latitude, desc: "Latitude (e.g., 52.5200)"
-  param :longitude, desc: "Longitude (e.g., 13.4050)"
+
+  params do  # the params DSL is only available in v1.9+. older versions should use the param helper instead
+    string :latitude, description: "Latitude (e.g., 52.5200)"
+    string :longitude, description: "Longitude (e.g., 13.4050)"
+  end
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
@@ -68,12 +71,8 @@ end
 
 1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
 2.  **`description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
-3.  **`param`:** A class method used to define each input parameter.
-    *   **Name:** The first argument (a symbol) is the parameter name. It will become a keyword argument in the `execute` method.
-    *   **`type:`:** (Optional, defaults to `:string`) The expected data type. Common types include `:string`, `:integer`, `:number` (float), `:boolean`. Provider support for complex types like `:array` or `:object` varies. Stick to simple types for broad compatibility.
-    *   **`desc:`:** (Required) A clear description of the parameter, explaining its purpose and expected format (e.g., "The city and state, e.g., San Francisco, CA").
-    *   **`required:`:** (Optional, defaults to `true`) Whether the AI *must* provide this parameter when calling the tool. Set to `false` for optional parameters and provide a default value in your `execute` method signature.
-4.  **`execute` Method:** The instance method containing your Ruby code. It receives the parameters defined by `param` as keyword arguments. Its return value (typically a String or Hash) is sent back to the AI model.
+3.  **`params`:** (v1.9+) The DSL for describing your input schema. Declare nested objects, arrays, enums, and optional fields in one place. If you only need flat keyword arguments, the older `param` (v1.0+) helper remains available. See [Using the `param` Helper for Simple Tools](#using-the-param-helper-for-simple-tools).
+4.  **`execute` Method:** The instance method containing your Ruby code. It receives the keyword arguments defined by your schema and returns the payload the model will see (typically a String, Hash, or `RubyLLM::Content`).
 
 > The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining a `name` method in your tool class:
 >
@@ -85,6 +84,95 @@ end
 > end
 > ```
 {: .note }
+
+## Declaring Parameters
+
+RubyLLM ships with two complementary approaches:
+
+*   The **`params` DSL** for expressive, structured inputs. (v1.9+)
+*   The **`param` helper** for quick, flat argument lists. (v1.0+)
+
+Start with the DSL whenever you need anything beyond a handful of simple strings—it keeps complex schemas maintainable and identical across every provider.
+
+### params DSL
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+When you need nested objects, arrays, enums, or union types, the `params do ... end` DSL produces the JSON Schema that function-calling models expect while staying Ruby-flavoured.
+
+```ruby
+class Scheduler < RubyLLM::Tool
+  description "Books a meeting"
+
+  params do
+    object :window, description: "Time window to reserve" do
+      string :start, description: "ISO8601 start time"
+      string :finish, description: "ISO8601 end time"
+    end
+
+    array :participants, of: :string, description: "Email addresses to invite"
+
+    any_of :format, description: "Optional meeting format" do
+      string enum: %w[virtual in_person]
+      null
+    end
+  end
+
+  def execute(window:, participants:, format: nil)
+    # ...
+  end
+end
+```
+
+RubyLLM bundles the DSL through [`ruby_llm-schema`](https://github.com/danielfriis/ruby_llm-schema), so every project has the same schema builders out of the box.
+
+### Using the `param` Helper for Simple Tools
+
+If your tool just needs a few scalar arguments, stick with the `param` helper. RubyLLM translates these declarations into JSON Schema under the hood.
+
+```ruby
+class Distance < RubyLLM::Tool
+  description "Calculates distance between two cities"
+  param :origin, desc: "Origin city name"
+  param :destination, desc: "Destination city name"
+  param :units, type: :string, desc: "Unit system (metric or imperial)", required: false
+
+  def execute(origin:, destination:, units: "metric")
+    # ...
+  end
+end
+```
+
+### Supplying JSON Schema Manually
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Prefer to own the JSON Schema yourself? Pass a schema hash (or a class/object responding to `#to_json_schema`) directly to `params`:
+
+```ruby
+class Lookup < RubyLLM::Tool
+  description "Performs catalog lookups"
+
+  params type: "object",
+    properties: {
+      sku: { type: "string", description: "Product SKU" },
+      locale: { type: "string", description: "Country code", default: "US" }
+    },
+    required: %w[sku],
+    additionalProperties: false,
+    strict: true
+
+  def execute(sku:, locale: "US")
+    # ...
+  end
+end
+```
+
+RubyLLM normalizes symbol keys, deep duplicates the schema, and sends it to providers unchanged. This gives you full control when you need it.
 
 ## Returning Rich Content from Tools
 
@@ -261,6 +349,35 @@ chat.ask("Check weather for every major city...")
 
 > Raising an exception in `on_tool_call` breaks the conversation flow - the LLM expects a tool response after requesting a tool call. This can leave the chat in an inconsistent state. Consider using better models or clearer tool descriptions to prevent loops instead of hard limits.
 {: .warning }
+
+## Advanced Tool Metadata
+
+### Provider-Specific Parameters
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Some providers accept additional metadata alongside the JSON Schema—for example, Anthropic’s `cache_control` hints. Use `with_params` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
+
+```ruby
+class TodoTool < RubyLLM::Tool
+  description "Adds a task to the shared TODO list"
+
+  params do
+    string :title, description: "Human-friendly task description"
+  end
+
+  with_params cache_control: { type: "ephemeral" }
+
+  def execute(title:)
+    Todo.create!(title:)
+    "Added “#{title}” to the list."
+  end
+end
+```
+
+Provider metadata is passed through verbatim—turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
 
 ## Advanced: Halting Tool Continuation
 

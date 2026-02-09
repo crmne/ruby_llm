@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Call the
+        object params tool with window start 2025-01-01 and end 2025-01-02 and include
+        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '132'
+      Sampling-Token-Len:
+      - '168'
+      Apim-Request-Id:
+      - 9b2b9d57-c0b7-448a-ae4e-5cca03749866
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '4'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19744'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Fri, 06 Feb 2026 14:15:43 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{},"finish_reason":"tool_calls","index":0,"logprobs":null,"message":{"content":null,"reasoning_content":"The
+        user wants me to call the object_params tool with a window object that has
+        start as \"2025-01-01\" and end as \"2025-01-02\".\n\nLooking at the function
+        definition:\n- Function name: object_params\n- Parameters:\n  - window: object
+        with:\n    - start: string (ISO format)\n    - end: string (ISO format)\n  Both
+        are required.\n\nThe ISO format for dates is fine as \"2025-01-01\" and \"2025-01-02\".\n\nI
+        need to construct the JSON payload properly, making sure the window is an
+        object containing the start and end dates. ","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}","call_id":null,"name":"object_params"},"id":"functions.object_params:0","index":0,"type":"function"}]},"stop_reason":null}],"created":1770387344,"id":"5feebeb3f3214247a6a439016bee8053","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":168,"prompt_tokens":132,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":300}}
+
+        '
+  recorded_at: Fri, 06 Feb 2026 14:15:44 GMT
+recorded_with: VCR 6.4.0

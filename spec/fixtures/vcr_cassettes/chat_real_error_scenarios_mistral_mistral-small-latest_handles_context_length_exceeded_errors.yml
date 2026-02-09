@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Internal Server Error
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:49:42 GMT
+      - Fri, 16 Jan 2026 16:48:52 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -33,24 +33,26 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '01997c33-9ae9-71f9-b29c-631a93990c07'
+      - '019bc7b5-a456-7f79-8729-bb07ca20f026'
       X-Kong-Request-Id:
-      - '01997c33-9ae9-71f9-b29c-631a93990c07'
+      - '019bc7b5-a456-7f79-8729-bb07ca20f026'
       X-Envoy-Upstream-Service-Time:
-      - '1063'
+      - '3247'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1076'
+      - '3260'
       X-Kong-Proxy-Latency:
-      - '347'
+      - '361'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Alt-Svc:
@@ -58,5 +60,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"object":"error","message":"Service unavailable.","type":"internal_server_error","param":null,"code":"1000"}'
-  recorded_at: Wed, 24 Sep 2025 14:49:42 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:48:52 GMT
+recorded_with: VCR 6.4.0

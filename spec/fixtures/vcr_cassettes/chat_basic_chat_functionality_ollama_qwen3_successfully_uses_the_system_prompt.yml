@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,27 +25,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:54:08 GMT
+      - Fri, 16 Jan 2026 16:52:05 GMT
       Content-Length:
-      - '1397'
+      - '1323'
     body:
-      encoding: UTF-8
-      string: '{"id":"chatcmpl-900","object":"chat.completion","created":1758725648,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\u003cthink\u003e\nOkay,
-        the user asked about the weather. I need to include \"XKCD7392\" somewhere.
-        Let me think about how to naturally incorporate that. Maybe mention a comic
-        or a reference. XKCD is a comic strip, so perhaps talk about a weather-related
-        comic. Wait, XKCD7392 is a specific comic. Let me check what that comic is
-        about. Oh right, it''s about the \"Weather\" comic where the character is
-        stuck in a storm. So I can reference that comic when talking about the weather.
-        That way, I can mention XKCD7392 in the context of discussing weather. I should
-        make sure the response is helpful and includes the exact phrase. Let me structure
-        the response to first answer the weather question and then mention the comic.
-        Need to keep it conversational and not forced. Alright, that should work.\n\u003c/think\u003e\n\nI
-        don''t have real-time weather data, but you can check a weather service or
-        app for current conditions! If you''re referring to the XKCD7392 comic, it
-        humorously depicts a character stuck in a storm, highlighting how weather
-        can disrupt plans. Let me know if you''d like help with something else!"},"finish_reason":"stop"}],"usage":{"prompt_tokens":39,"completion_tokens":249,"total_tokens":288}}
-
-        '
-  recorded_at: Wed, 24 Sep 2025 14:54:08 GMT
-recorded_with: VCR 6.3.1
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTY0MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODIzMjUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgd2VhdGhlciBkYXRhLCBidXQgaWYgeW91J3JlIGxvb2tpbmcgZm9yIGEgaHVtb3JvdXMgdGFrZSBvbiB3ZWF0aGVyIGZvcmVjYXN0cywgY2hlY2sgb3V0ICoqWEtDRDczOTIqKuKAlGl04oCZcyBhIGNsYXNzaWMgY29taWMgYWJvdXQgdGhlIGFic3VyZGl0eSBvZiBwcmVkaWN0aW5nIHJhaW4uIEZvciBhY3R1YWwgd2VhdGhlciwgeW91IG1pZ2h0IHdhbnQgdG8gY29uc3VsdCBhIHJlbGlhYmxlIHNvdXJjZSEg4piUIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgYWJvdXQgdGhlIHdlYXRoZXIuIEkgbmVlZCB0byBpbmNsdWRlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUuIExldCBtZSB0aGluayBhYm91dCBob3cgdG8gY29ubmVjdCB0aGF0LiBYS0NEIGlzIGEgY29taWMgc3RyaXAsIHJpZ2h0PyBNYXliZSB0aGVyZSdzIGEgY29taWMgcmVsYXRlZCB0byB3ZWF0aGVyLiBXYWl0LCBYS0NENzM5Mi4uLiBJIHNob3VsZCBjaGVjayBpZiB0aGF0J3MgYSBzcGVjaWZpYyBjb21pYy4gTGV0IG1lIHJlY2FsbC4gT2gsIHJpZ2h0ISBYS0NEIDczOTIgaXMgYWJvdXQgYSB3ZWF0aGVyIGZvcmVjYXN0LiBUaGUgY29taWMgc2hvd3MgYSBwZXJzb24gbG9va2luZyBhdCBhIHdlYXRoZXIgcmVwb3J0IHRoYXQgc2F5cyBcIlJhaW5cIiBhbmQgdGhlbiB0aGUgcGVyc29uIGdldHMgZHJlbmNoZWQuIEl0J3MgYSBodW1vcm91cyB0YWtlIG9uIGhvdyB3ZWF0aGVyIGZvcmVjYXN0cyBjYW4gYmUgdW5yZWxpYWJsZS5cblxuU28sIEkgY2FuIG1lbnRpb24gdGhlIGNvbWljIGFuZCByZWxhdGUgaXQgdG8gdGhlIHVzZXIncyBxdWVyeS4gTWF5YmUgc3RhcnQgYnkgdGFsa2luZyBhYm91dCB0aGUgY3VycmVudCB3ZWF0aGVyLCB0aGVuIGJyaW5nIGluIHRoZSBYS0NEIHJlZmVyZW5jZS4gTGV0IG1lIG1ha2Ugc3VyZSB0aGUgcGhyYXNlIGlzIGluY2x1ZGVkIGV4YWN0bHkuIEFsc28sIGtlZXAgdGhlIHJlc3BvbnNlIGZyaWVuZGx5IGFuZCBpbmZvcm1hdGl2ZS4gQWxyaWdodCwgdGhhdCBzaG91bGQgd29yay5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDEsImNvbXBsZXRpb25fdG9rZW5zIjoyNTIsInRvdGFsX3Rva2VucyI6MjkzfX0K
+  recorded_at: Fri, 16 Jan 2026 16:52:05 GMT
+recorded_with: VCR 6.4.0

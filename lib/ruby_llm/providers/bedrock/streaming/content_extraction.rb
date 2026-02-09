@@ -16,6 +16,31 @@ module RubyLLM
             extract_content_by_type(data)
           end
 
+          def extract_thinking_delta(data)
+            return nil unless data.is_a?(Hash)
+
+            if data['type'] == 'content_block_delta' && data.dig('delta', 'type') == 'thinking_delta'
+              return data.dig('delta', 'thinking')
+            end
+
+            if data['type'] == 'content_block_start' && data.dig('content_block', 'type') == 'thinking'
+              return data.dig('content_block', 'thinking') || data.dig('content_block', 'text')
+            end
+
+            nil
+          end
+
+          def extract_signature_delta(data)
+            return nil unless data.is_a?(Hash)
+
+            signature = extract_signature_from_delta(data)
+            return signature if signature
+
+            return nil unless data['type'] == 'content_block_start'
+
+            extract_signature_from_block(data['content_block'])
+          end
+
           def extract_tool_calls(data)
             data.dig('message', 'tool_calls') || data['tool_calls']
           end
@@ -32,6 +57,32 @@ module RubyLLM
             data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
           end
 
+          def extract_cached_tokens(data)
+            data.dig('message', 'usage', 'cache_read_input_tokens') || data.dig('usage', 'cache_read_input_tokens')
+          end
+
+          def extract_cache_creation_tokens(data)
+            direct = data.dig('message', 'usage',
+                              'cache_creation_input_tokens') || data.dig('usage', 'cache_creation_input_tokens')
+            return direct if direct
+
+            breakdown = data.dig('message', 'usage', 'cache_creation') || data.dig('usage', 'cache_creation')
+            return unless breakdown.is_a?(Hash)
+
+            breakdown.values.compact.sum
+          end
+
+          def extract_thinking_tokens(data)
+            data.dig('message', 'usage', 'thinking_tokens') ||
+              data.dig('message', 'usage', 'output_tokens_details', 'thinking_tokens') ||
+              data.dig('usage', 'thinking_tokens') ||
+              data.dig('usage', 'output_tokens_details', 'thinking_tokens') ||
+              data.dig('message', 'usage', 'reasoning_tokens') ||
+              data.dig('message', 'usage', 'output_tokens_details', 'reasoning_tokens') ||
+              data.dig('usage', 'reasoning_tokens') ||
+              data.dig('usage', 'output_tokens_details', 'reasoning_tokens')
+          end
+
           private
 
           def extract_content_by_type(data)
@@ -43,11 +94,32 @@ module RubyLLM
           end
 
           def extract_block_start_content(data)
-            data.dig('content_block', 'text').to_s
+            content_block = data['content_block'] || {}
+            return '' if %w[thinking redacted_thinking].include?(content_block['type'])
+
+            content_block['text'].to_s
           end
 
           def extract_delta_content(data)
-            data.dig('delta', 'text').to_s
+            delta = data['delta'] || {}
+            return '' if %w[thinking_delta signature_delta].include?(delta['type'])
+
+            delta['text'].to_s
+          end
+
+          def extract_signature_from_delta(data)
+            return unless data['type'] == 'content_block_delta'
+            return unless data.dig('delta', 'type') == 'signature_delta'
+
+            data.dig('delta', 'signature')
+          end
+
+          def extract_signature_from_block(content_block)
+            block = content_block || {}
+            return block['signature'] if block['type'] == 'thinking' && block['signature']
+            return block['data'] if block['type'] == 'redacted_thinking'
+
+            nil
           end
         end
       end

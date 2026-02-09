@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,40 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 15:08:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:21 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 72a6a7d1e9892b1eddfca6685fcea98a
+      - a3d3b696ab246581658e267ca7b97977
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Report-To:
-      - '{"endpoints":[{"url":"https:\/\/csp-reporting.cloudflare.com\/cdn-cgi\/script_monitor\/report?m=TpTeuEA7gFL.jQZTNN_wYo3quBfTXX0pON7DhdpHTVk-1758726506-1.0.1.1-9LN1Aq.TLiyUkQ3FVt5wc2gbYPpjgBlx8fG5v4Ma8DZyjsjAOwxn6ghgToBJn4P8T8xkdvbx4XAfsRXwbpWW3Aoj24Na_AaWBaTTWKvP.UefDcLq6VfPQsVfIO.YxLSUld9Olo4gUIhiSeQ4jI1iTQEb7QmiSuQRTh9vOaZZcZSRMrE_D6fhe.fEAIQ.BrI."}],"group":"cf-csp-endpoint","max_age":86400}'
-      Content-Security-Policy-Report-Only:
-      - script-src 'none'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=TpTeuEA7gFL.jQZTNN_wYo3quBfTXX0pON7DhdpHTVk-1758726506-1.0.1.1-9LN1Aq.TLiyUkQ3FVt5wc2gbYPpjgBlx8fG5v4Ma8DZyjsjAOwxn6ghgToBJn4P8T8xkdvbx4XAfsRXwbpWW3Aoj24Na_AaWBaTTWKvP.UefDcLq6VfPQsVfIO.YxLSUld9Olo4gUIhiSeQ4jI1iTQEb7QmiSuQRTh9vOaZZcZSRMrE_D6fhe.fEAIQ.BrI.;
-        report-to cf-csp-endpoint
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 138c5da513bf886df833184db08dc3f0.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P6
+      X-Amz-Cf-Id:
+      - FLlpCd_n764ADsZR9DE1xr399Nz2ZAAJpkBnxjnDW3aQ1a9l8PVWWw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6c54caa3-d6d7-4b53-a22a-5b71e0031bb4","object":"chat.completion","created":1758726505,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        capital of France is **Paris**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":8,"total_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 15:08:30 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"bdec417a-3df4-49f1-86ab-94adc6566bcf","object":"chat.completion","created":1768582221,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":8,"total_tokens":19,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Fri, 16 Jan 2026 16:50:22 GMT
+recorded_with: VCR 6.4.0

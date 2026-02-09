@@ -9,7 +9,9 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:43 GMT
-      - Wed, 24 Sep 2025 15:09:43 GMT
+      - Fri, 16 Jan 2026 16:51:22 GMT
+      - Fri, 16 Jan 2026 16:51:22 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '791'
+      - '1536'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,7 +44,17 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        capital of France is **Paris**. It is the largest city in France and serves
-        as the political, economic, and cultural center of the country.","role":"assistant"}}],"created":1758726586,"id":"chatcmpl-NkQmxUwXtzbzG3kiocc96BlG7CDcLRdf","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":232,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":197,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":876.4241893076249,"time_per_output_token_ms":9.124987068965517,"time_to_first_token_ms":17.115,"tokens_per_second":109.58919639470439,"total_tokens":247}}'
-  recorded_at: Wed, 24 Sep 2025 15:09:46 GMT
-recorded_with: VCR 6.3.1
+        capital of France is **Paris**. It is a major cultural, economic, and political
+        center in Europe, known for landmarks like the Eiffel Tower, the Louvre Museum,
+        and its rich history as a hub of art and literature.","reasoning_content":"\nOkay,
+        the user is asking for the capital of France. I know that France is a country
+        in Europe, and I remember that its capital is Paris. But wait, let me make
+        sure I''m not confusing it with another country. For example, the capital
+        of Spain is Madrid, and the capital of Italy is Rome. So, France''s capital
+        is definitely Paris. I should also mention that Paris is not only the capital
+        but also a major cultural and economic hub. Maybe add a bit about its history
+        or significance to give more context. Let me double-check if there''s any
+        other city that could be considered the capital, but I don''t think so. The
+        answer should be straightforward.\n","role":"assistant"}}],"created":1768582284,"id":"chatcmpl-Hr06anbpAg2gDatkM35lQ7nu0PMArXhG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":193,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":140,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":1088.8501742160279,"time_per_output_token_ms":7.772383419689119,"time_to_first_token_ms":13.776,"tokens_per_second":128.66066250241656,"total_tokens":208}}'
+  recorded_at: Fri, 16 Jan 2026 16:51:24 GMT
+recorded_with: VCR 6.4.0

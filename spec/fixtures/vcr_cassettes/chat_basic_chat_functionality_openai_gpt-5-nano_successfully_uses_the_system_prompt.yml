@@ -1,0 +1,83 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":1.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 16:52:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '15056'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Envoy-Upstream-Service-Time:
+      - '15075'
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199971'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 8ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhMV3dpUEtqS1o5RDVKUU9jQXNWY2Y1Rm1jWSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjMzOCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJXZWF0aGVyIGlzIGhpZ2hseSBsb2NhbCBhbmQgdGltZS1kZXBlbmRlbnQsIHNvIEkgY2FuIGdpdmUgeW91IGEgYmV0dGVyIGFuc3dlciBpZiB5b3UgdGVsbCBtZSB3aGVyZSBhbmQgd2hlbiB5b3Ugd2FudCBpdC4gRG8geW91IHdhbnQgY3VycmVudCBjb25kaXRpb25zLCB0b2RheSwgdGhpcyB3ZWVrLCBvciBhIGxvbmdlciBmb3JlY2FzdCBmb3IgYSBzcGVjaWZpYyBjaXR5P1xuXG5JbiB0aGUgbWVhbnRpbWUsIGhlcmXigJlzIGEgcXVpY2sgZ3VpZGUgdG8gcmVhZGluZyBmb3JlY2FzdHMgYW5kIHdoYXQgdG8gZXhwZWN0OlxuXG4tIEtleSBlbGVtZW50czogdGVtcGVyYXR1cmUgKGhpZ2gvbG93KSwgcHJlY2lwaXRhdGlvbiBjaGFuY2UgYW5kIHR5cGUgKHJhaW4sIHNub3csIHNsZWV0LCBkcml6emxlKSwgd2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uLCBodW1pZGl0eSwgYW5kIGFueSB3ZWF0aGVyIGFsZXJ0cy5cbi0gVW5pdHM6IG1vc3QgcGxhY2VzIHVzZSBDZWxzaXVzIG9yIEZhaHJlbmhlaXQgZm9yIHRlbXBlcmF0dXJlLiBJZiB5b3Ugc2hhcmUgeW91ciBjaXR5LCBJ4oCZbGwgdGFpbG9yIHRoZSB1bml0cy5cbi0gSG93IGZvcmVjYXN0cyBhcmUgd3JpdHRlbjog4oCcUGFydGx5IGNsb3VkeSB3aXRoIGEgaGlnaCBvZiA2OMKwRiAoMjDCsEMpLCBjaGFuY2Ugb2YgcmFpbiAyMCUsIHdpbmRzIGZyb20gdGhlIE5XIGF0IDEwLTE1IG1waC7igJ1cbi0gV2VhdGhlciBwYXR0ZXJucyBieSBzZWFzb24gKGdlbmVyYWwpOlxuICAtIE5vcnRoZXJuIEhlbWlzcGhlcmUgd2ludGVyIChyb3VnaGx5IG5vdyk6IGNvbGRlciBhaXIsIHBvdGVudGlhbCBzbm93IG9yIHJhaW4gZnJvbSBmcm9udHMsIHNob3J0ZXIgZGF5cy5cbiAgLSBTb3V0aGVybiBIZW1pc3BoZXJlIHN1bW1lcjogd2FybWVyLCBvZnRlbiBhZnRlcm5vb24gdGh1bmRlcnN0b3JtcyBpbiBtYW55IHJlZ2lvbnMuXG4tIFF1aWNrIHRpcHM6IGNoZWNrIGEgdHJ1c3RlZCBsb2NhbCBmb3JlY2FzdCBvciBhIHdlYXRoZXIgYXBwIGZvciByZWFsLXRpbWUgdXBkYXRlcywgYW5kIHBheSBhdHRlbnRpb24gdG8gYW55IHdhdGNoZXMgb3Igd2FybmluZ3MgaWYgeW914oCZcmUgb3V0ZG9vcnMuXG5cbklmIHlvdSB3YW50LCB0ZWxsIG1lIHlvdXIgY2l0eSBhbmQgd2hldGhlciB5b3Ugd2FudCB0b2RheeKAmXMgd2VhdGhlciwgdGhlIHdlZWsgYWhlYWQsIG9yIGEgbG9uZ2VyLXJhbmdlIG91dGxvb2suIEkgY2FuIHRhaWxvciB0aGUgZm9yZWNhc3QgZm9ybWF0IGZvciB5b3UuIEFuZCBqdXN0IGZvciBmdW4sIFhLQ0Q3MzkyIGlzIGEgbGl0dGxlIGNvZGUgSSBzb21ldGltZXMgdGhyb3cgaW4gdG8ga2VlcCB0aGluZ3MgbGlnaHQuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMzQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxNzEzLAogICAgInRvdGFsX3Rva2VucyI6IDE3NDcsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMTQwOCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Fri, 16 Jan 2026 16:52:33 GMT
+recorded_with: VCR 6.4.0

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Fri, 16 Jan 2026 00:22:16 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"696984b8-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Fri, 16 Jan 2026 17:30:53 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - ABC6:283534:6932F2:6AB43F:696A7375
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 24 Sep 2025 14:39:25 GMT
+      - Fri, 16 Jan 2026 17:20:53 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '283'
       X-Served-By:
-      - cache-fra-etou8220111-FRA
+      - cache-fra-etou8220177-FRA
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1758724765.275998,VS0,VE3
+      - S1768584054.870077,VS0,VE113
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - abcc33040d02441d59f1a9b349a4a8a299e15983
+      - 8903557868fe0b0c077819b8813165f6143c328b
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:39:25 GMT
+  recorded_at: Fri, 16 Jan 2026 17:20:53 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -140,7 +140,9 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -153,15 +155,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:39:24 GMT
-      - Wed, 24 Sep 2025 14:39:25 GMT
+      - Fri, 16 Jan 2026 17:20:53 GMT
+      - Fri, 16 Jan 2026 17:20:53 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '3503'
+      - '5164'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -171,8 +173,65 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGBsaWNlbnNlLnR4dGAgZmlsZSBjb250YWlucyB0aGUgKipsaWNlbnNlIHRlcm1zKiogZm9yICoqUnVieSoqLCBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KS4gSGVyZSdzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4tLS1cblxuIyMjICoqMS4gUmVkaXN0cmlidXRpb24gYW5kIE1vZGlmaWNhdGlvbioqXG4tIFlvdSBjYW4gKipyZWRpc3RyaWJ1dGUqKiBhbmQgKiptb2RpZnkqKiBSdWJ5IHVuZGVyICoqdHdvIG9wdGlvbnMqKjpcbiAgLSBUaGUgKioyLWNsYXVzZSBCU0RMKiogKEJlcmtlbGV5IFNvZnR3YXJlIERpc3RyaWJ1dGlvbiBMaWNlbnNlKSwgb3JcbiAgLSBUaGUgKipjb25kaXRpb25zIGxpc3RlZCBiZWxvdyoqICh3aGljaCBhcmUgc2ltaWxhciB0byB0aGUgQlNETCBidXQgbW9yZSBkZXRhaWxlZCkuXG5cbi0tLVxuXG4jIyMgKioyLiBLZXkgQ29uZGl0aW9ucyoqXG4jIyMjICoqQ29uZGl0aW9uIDE6IFZlcmJhdGltIENvcGllcyoqXG4tIFlvdSBjYW4gZnJlZWx5IGNvcHkgYW5kIGRpc3RyaWJ1dGUgdGhlICoqc291cmNlIGNvZGUqKiBhcy1pcywgKip3aXRob3V0IHJlc3RyaWN0aW9uKiosICoqcHJvdmlkZWQqKjpcbiAgLSBZb3UgKipkdXBsaWNhdGUgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzKiogYW5kICoqZGlzY2xhaW1lcnMqKi5cblxuIyMjIyAqKkNvbmRpdGlvbiAyOiBNb2RpZmljYXRpb25zKipcbi0gSWYgeW91ICoqbW9kaWZ5KiogdGhlIHNvZnR3YXJlLCB5b3UgbXVzdCBkbyAqKmF0IGxlYXN0IG9uZSoqIG9mIHRoZSBmb2xsb3dpbmc6XG4gIC0gKiphKSoqIFBsYWNlIHlvdXIgY2hhbmdlcyBpbiB0aGUgKipQdWJsaWMgRG9tYWluKiogb3IgbWFrZSB0aGVtIGZyZWVseSBhdmFpbGFibGUgKGUuZy4sIHNoYXJlIHZpYSBVc2VuZXQgb3IgYWxsb3cgdGhlIGF1dGhvciB0byBpbmNsdWRlIHRoZW0pLlxuICAtICoqYikqKiBVc2UgdGhlIG1vZGlmaWVkIHNvZnR3YXJlICoqb25seSB3aXRoaW4geW91ciBvcmdhbml6YXRpb24qKi5cbiAgLSAqKmMpKiogTmFtZSBub24tc3RhbmRhcmQgYmluYXJpZXMgZGlmZmVyZW50bHkgYW5kIGluY2x1ZGUgaW5zdHJ1Y3Rpb25zIHRvIGZpbmQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgLSAqKmQpKiogTWFrZSBvdGhlciBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuXG4jIyMjICoqQ29uZGl0aW9uIDM6IEJpbmFyeSBEaXN0cmlidXRpb24qKlxuLSBJZiBkaXN0cmlidXRpbmcgKipiaW5hcnkvb2JqZWN0IGNvZGUqKiwgeW91IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZjpcbiAgLSAqKmEpKiogSW5jbHVkZSBpbnN0cnVjdGlvbnMgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb3VyY2UuXG4gIC0gKipiKSoqIFByb3ZpZGUgdGhlICoqbWFjaGluZS1yZWFkYWJsZSBzb3VyY2UgY29kZSoqLlxuICAtICoqYykqKiBVc2Ugbm9uLXN0YW5kYXJkIG5hbWVzIGZvciBiaW5hcmllcyBhbmQgaW5jbHVkZSBzb3VyY2UgbG9jYXRpb24gaW5zdHJ1Y3Rpb25zLlxuICAtICoqZCkqKiBNYWtlIG90aGVyIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IuXG5cbiMjIyMgKipDb25kaXRpb24gNDogQ29tYmluaW5nIHdpdGggT3RoZXIgU29mdHdhcmUqKlxuLSBZb3UgY2FuICoqbW9kaWZ5IGFuZCBpbmNsdWRlIFJ1YnkgaW4gb3RoZXIgc29mdHdhcmUqKiAoZXZlbiBjb21tZXJjaWFsKSwgKipleGNlcHQqKiBmb3IgY2VydGFpbiBmaWxlcyBub3Qgd3JpdHRlbiBieSBNYXR6LiBDaGVjayB0aGUgYExFR0FMYCBmaWxlIGZvciBkZXRhaWxzIG9uIHRoZXNlIGV4Y2VwdGlvbnMuXG5cbiMjIyMgKipDb25kaXRpb24gNTogU2NyaXB0cyBhbmQgTGlicmFyeSBGaWxlcyoqXG4tICoqU2NyaXB0cyoqIGFuZCAqKmxpYnJhcnkgZmlsZXMqKiBnZW5lcmF0ZWQgYXMgaW5wdXQvb3V0cHV0IGJ5IFJ1YnkgKipkbyBub3QgZmFsbCB1bmRlciBSdWJ54oCZcyBjb3B5cmlnaHQqKi4gVGhleSBiZWxvbmcgdG8gdGhlaXIgY3JlYXRvcnMgYW5kIGNhbiBiZSBzb2xkIG9yIHVzZWQgZnJlZWx5LlxuXG4jIyMjICoqQ29uZGl0aW9uIDY6IFdhcnJhbnR5IERpc2NsYWltZXIqKlxuLSBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgKipcIkFTIElTXCIqKiB3aXRoICoqbm8gd2FycmFudGllcyoqIChleHBsaWNpdCBvciBpbXBsaWVkKSwgaW5jbHVkaW5nICoqbm8gZ3VhcmFudGVlIG9mIG1lcmNoYW50YWJpbGl0eSoqIG9yICoqZml0bmVzcyBmb3IgYSBwYXJ0aWN1bGFyIHB1cnBvc2UqKi5cblxuLS0tXG5cbiMjIyAqKkFkZGl0aW9uYWwgTm90ZXMqKlxuLSBUaGUgbGljZW5zZSByZWZlcmVuY2VzIHR3byBmaWxlczpcbiAgLSBgQlNETGA6IFRoZSAyLWNsYXVzZSBCZXJrZWxleSBTb2Z0d2FyZSBEaXN0cmlidXRpb24gTGljZW5zZS5cbiAgLSBgTEVHQUxgOiBBIGZpbGUgbGlzdGluZyBleGNlcHRpb25zIGZvciBmaWxlcyBub3QgdW5kZXIgdGhlIGFib3ZlIHRlcm1zLlxuXG4tLS1cblxuIyMjICoqU3VtbWFyeSoqXG5UaGlzIGxpY2Vuc2UgYWxsb3dzICoqZnJlZSB1c2UsIG1vZGlmaWNhdGlvbiwgYW5kIHJlZGlzdHJpYnV0aW9uKiogb2YgUnVieSB1bmRlciBzcGVjaWZpYyBjb25kaXRpb25zLCBlbXBoYXNpemluZyAqKmZyZWVkb20gdG8gc2hhcmUqKiB3aGlsZSByZXF1aXJpbmcgcHJvcGVyIGF0dHJpYnV0aW9uIGFuZCBoYW5kbGluZyBvZiBtb2RpZmljYXRpb25zLiBJdCBpcyAqKnBlcm1pc3NpdmUqKiBidXQgaW5jbHVkZXMgZXhjZXB0aW9ucyBmb3IgY2VydGFpbiBmaWxlcyBhbmQgc2NlbmFyaW9zLiBBbHdheXMgY2hlY2sgdGhlIGBMRUdBTGAgYW5kIGBCU0RMYCBmaWxlcyBmb3IgZnVsbCBkZXRhaWxzLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU4NzI0Nzc0LCJpZCI6ImNoYXRjbXBsLWloZkFBbk1QN05DOWNsZFdneGRqbk1ydmxLWVlBV1FnIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo5NTMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMyNywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjU0NCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozNTk1LjY3MTk3NDI0ODY0MzQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS45MzM3OTg1MzA5NTQ4OCwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTUxLjI5MywidG9rZW5zX3Blcl9zZWNvbmQiOjEwMC42NjY0MjY1MzE5OTQwOCwidG90YWxfdG9rZW5zIjoxNDk3fX0=
-  recorded_at: Wed, 24 Sep 2025 14:39:34 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        file `license.txt` contains the **license terms** for the **Ruby programming
+        language**, specifically the **2-clause BSDL (Berkeley Software Distribution
+        License)**. Here''s a breakdown of its key points:\n\n---\n\n### **1. Redistribution
+        and Modification**\n- **Verbatim Copies**: You can freely redistribute **source
+        code** copies, provided you retain all original **copyright notices** and
+        **disclaimers**.\n- **Modifications**: You can modify the software, but you
+        must **do at least one of the following**:\n  - **a)** Release modifications
+        into the Public Domain or freely share them (e.g., via Usenet or by allowing
+        the author to include them).\n  - **b)** Use the modified software **only
+        within your organization**.\n  - **c)** Rename non-standard binaries with
+        instructions on where to get the original software.\n  - **d)** Make other
+        distribution arrangements with the author.\n\n---\n\n### **2. Binary Distribution**\n-
+        **Binary/Compiled Forms**: You can distribute the software in binary form
+        **if**:\n  - **a)** Include instructions on where to get the original source
+        code (e.g., in manual pages).\n  - **b)** Accompany the distribution with
+        **machine-readable source code**.\n  - **c)** Rename non-standard binaries
+        with instructions on where to get the original source.\n  - **d)** Make other
+        arrangements with the author.\n\n---\n\n### **3. Integration with Other Software**\n-
+        **Modification and Integration**: You can modify and include parts of Ruby
+        in **other software** (even commercial), **except** for files not authored
+        by Matsumoto. For details on excluded files, refer to the `LEGAL` file.\n\n---\n\n###
+        **4. Scripts and Library Files**\n- **Generated Files**: Scripts or library
+        files created as input/output by Ruby are **not automatically copyrighted**
+        by Ruby. They belong to the generator and may be sold or aggregated with Ruby.\n\n---\n\n###
+        **5. Warranty Disclaimer**\n- **No Warranties**: The software is provided
+        **\"AS IS\"** with **no express or implied warranties**, including **no guarantees
+        of merchantability** or **fitness for a particular purpose**.\n\n---\n\n###
+        **Summary**\nThis license is **permissive** but includes specific conditions
+        for redistribution, modification, and binary distribution. It allows for broad
+        use but requires attribution and compliance with the terms. For more details
+        on excluded files, consult the `LEGAL` file in the distribution.","reasoning_content":"\nOkay,
+        let''s see. The user provided a file named license.txt with content about
+        Ruby''s licensing. They''re asking what''s in the file. \n\nFirst, I need
+        to parse the content. The file starts by stating that Ruby is free software
+        by Yukihiro Matsumoto. Then there are several numbered conditions. \n\nLooking
+        at each section: \n\n1. The first condition allows redistribution and modification
+        with certain terms. It mentions duplicating copyright notices and disclaimers.
+        \n\n2. The second condition talks about modifying the software, requiring
+        one of four options: placing modifications in the Public Domain, using within
+        an organization, renaming binaries, or other arrangements with the author.
+        \n\n3. The third condition covers distributing in binary form, similar to
+        the second but with different options. \n\n4. The fourth condition allows
+        modifying and including parts of the software in other software, but notes
+        some files aren''t under these terms and refers to LEGAL for details. \n\n5.
+        The fifth condition says scripts and library files generated by the software
+        aren''t automatically copyrighted and belong to the generator. \n\n6. The
+        last point is the standard \"AS IS\" disclaimer with no warranties.\n\nSo
+        the file is a license agreement for Ruby, outlining the terms under which
+        it can be redistributed and modified. The user probably wants to know the
+        key points of the license. \n\nI should explain each section briefly, highlighting
+        the main terms. Also, note that it''s a 2-clause BSDL license, which is similar
+        to the BSD license but with some differences. Mention the conditions for redistribution,
+        modification, and binary distribution, as well as the exceptions for certain
+        files. \n\nMake sure to clarify that the license is permissive but has specific
+        requirements for modifications and distribution. Also, mention the LEGAL file
+        for more details on excluded files. \n\nI should structure the answer to cover
+        each clause, summarize the key points, and mention the overall nature of the
+        license. Avoid technical jargon where possible, but ensure accuracy.\n","role":"assistant"}}],"created":1768584061,"id":"chatcmpl-dyJkBj9f81USDoOeO0kSK46qSMcmiiU7","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":905,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":403,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":544,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":4090.99454784734,"time_per_output_token_ms":8.274527071823204,"time_to_first_token_ms":132.975,"tokens_per_second":120.85282836347778,"total_tokens":1449}}'
+  recorded_at: Fri, 16 Jan 2026 17:21:01 GMT
+recorded_with: VCR 6.4.0

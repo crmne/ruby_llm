@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:39:36 GMT
+      - Fri, 16 Jan 2026 16:42:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,38 +33,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c2a-5cb6-75c7-b5b8-24645aed02bc'
+      - '019bc7b0-4e37-7576-b7c8-b7a4fc322ff2'
       X-Kong-Request-Id:
-      - '01997c2a-5cb6-75c7-b5b8-24645aed02bc'
-      X-Envoy-Upstream-Service-Time:
-      - '1126'
+      - '019bc7b0-4e37-7576-b7c8-b7a4fc322ff2'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499921'
+      - '1999920'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999973108'
+      - '9999983624'
       X-Ratelimit-Tokens-Query-Cost:
-      - '79'
-      X-Ratelimit-Limit-Req-Minute:
-      - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '80'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '359'
+      X-Envoy-Upstream-Service-Time:
+      - '840'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1127'
+      - '841'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '6'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -73,11 +75,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"295e6f3bebe647d9b66389f42eea75e0","created":1758724775,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":79,"completion_tokens":50},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"06c4c132f1404b60b083512763790751","created":1768581779,"model":"mistral-small-latest","usage":{"prompt_tokens":29,"total_tokens":80,"completion_tokens":51},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file named `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nThe
         file is a plain text file (`mime_type=''text/plain''`), and its content is
-        a simple statement expressing that Ruby is the best."}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:39:36 GMT
+        a simple statement expressing enthusiasm for the Ruby programming language."}}]}'
+  recorded_at: Fri, 16 Jan 2026 16:42:59 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -88,12 +90,12 @@ http_interactions:
         is the best.</file>"}]},{"role":"assistant","content":"The file named `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nThe file is
         a plain text file (`mime_type=''text/plain''`), and its content is a simple
-        statement expressing that Ruby is the best."},{"role":"user","content":[{"type":"text","text":"and
+        statement expressing enthusiasm for the Ruby programming language."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -108,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:39:37 GMT
+      - Fri, 16 Jan 2026 16:43:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,38 +118,40 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c2a-6197-74b5-ac9d-9d7a5394190e'
+      - '019bc7b0-51ce-7f86-9404-1cb33c362910'
       X-Kong-Request-Id:
-      - '01997c2a-6197-74b5-ac9d-9d7a5394190e'
-      X-Envoy-Upstream-Service-Time:
-      - '1052'
+      - '019bc7b0-51ce-7f86-9404-1cb33c362910'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499689'
+      - '1999685'
       X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
+      - '10000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '999972876'
+      - '9999983389'
       X-Ratelimit-Tokens-Query-Cost:
-      - '232'
-      X-Ratelimit-Limit-Req-Minute:
-      - '60'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '235'
+      X-Ratelimit-Limit-Req-60-Second:
+      - '360'
+      X-Ratelimit-Remaining-Req-60-Second:
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '996'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1053'
+      - '997'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -156,12 +160,12 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d149c9f574cb45b3a7073954348dc34b","created":1758724776,"model":"mistral-small-latest","usage":{"prompt_tokens":112,"total_tokens":232,"completion_tokens":120},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"4488dcff228c4452a8e9aaad80babcbc","created":1768581779,"model":"mistral-small-latest","usage":{"prompt_tokens":113,"total_tokens":235,"completion_tokens":122},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file named **`ruby.xml`** contains the following XML content:\n\n```xml\n<truism>Ruby
         is the best</truism>\n```\n\n### Key Details:\n- **File Name:** `ruby.xml`\n-
         **MIME Type:** `application/xml` (indicating it''s an XML file)\n- **Content:**
-        A single XML element `<truism>` with the text \"Ruby is the best.\"\n\nThis
+        A single XML element (`<truism>`) with the text \"Ruby is the best.\"\n\nThis
         is a structured XML document where `<truism>` acts as a tag wrapping the statement.
         Unlike the plain text file (`ruby.txt`), this one follows XML syntax rules."}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:39:37 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:43:00 GMT
+recorded_with: VCR 6.4.0

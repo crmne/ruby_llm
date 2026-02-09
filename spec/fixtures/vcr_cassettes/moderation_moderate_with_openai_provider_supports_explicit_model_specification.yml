@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:06:19 GMT
+      - Fri, 16 Jan 2026 17:16:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,18 +39,18 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '132'
+      - '123'
       X-Envoy-Upstream-Service-Time:
-      - '136'
+      - '126'
       X-Openai-Proxy-Wasm:
       - v0.1
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
       Server:
@@ -63,7 +63,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-1390",
+          "id": "modr-531",
           "model": "omni-moderation-latest",
           "results": [
             {
@@ -142,5 +142,5 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Wed, 24 Sep 2025 15:06:19 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 17:16:00 GMT
+recorded_with: VCR 6.4.0

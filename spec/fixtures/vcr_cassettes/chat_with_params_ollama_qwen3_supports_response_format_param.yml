@@ -9,7 +9,7 @@ http_interactions:
         square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,14 +24,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Sep 2025 14:50:45 GMT
+      - Fri, 16 Jan 2026 16:49:29 GMT
       Content-Length:
-      - '301'
+      - '1016'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-919","object":"chat.completion","created":1758725445,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
-        8\n}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":10,"total_tokens":39}}
+      string: '{"id":"chatcmpl-724","object":"chat.completion","created":1768582169,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
+        8\n}","reasoning":"Okay, the user is asking for the square root of 64. Let
+        me think. The square root of a number is a value that, when multiplied by
+        itself, gives the original number. So, for 64, I need to find a number that
+        when squared equals 64.\n\nHmm, 8 times 8 is 64. Wait, but there''s also -8,
+        because negative numbers squared also give positive results. However, when
+        people ask for the square root, they usually mean the principal (positive)
+        root. So the answer should be 8.\n\nThe user wants the answer in a JSON object
+        with the key `result`. So I need to structure it as {\"result\": 8}. Let me
+        double-check. Yes, 8 squared is 64, and that''s the principal square root.
+        Alright, that''s the correct answer.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":212,"completion_tokens":10,"total_tokens":222}}
 
         '
-  recorded_at: Wed, 24 Sep 2025 14:50:45 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:49:29 GMT
+recorded_with: VCR 6.4.0

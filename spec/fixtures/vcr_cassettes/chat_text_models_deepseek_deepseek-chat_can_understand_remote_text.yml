@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Fri, 16 Jan 2026 00:22:16 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"696984b8-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Fri, 16 Jan 2026 16:34:17 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - CAA8:CA0BF:61D6EC:632DE0:696A6631
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
+      - Fri, 16 Jan 2026 16:42:42 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '247'
+      - '8'
       X-Served-By:
-      - cache-fra-etou8220174-FRA
+      - cache-fra-etou8220130-FRA
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1758724730.585976,VS0,VE2
+      - S1768581762.363107,VS0,VE3
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 05cb6536d4c320fb7ff8797fb4f95b0a8b52dc29
+      - f8fb2e201a47b01c534f60c15a8173f5b423c0c2
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:38:49 GMT
+  recorded_at: Fri, 16 Jan 2026 16:42:42 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -140,7 +138,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -154,49 +152,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:42:42 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c1418eeac9a7dff20ec1a625df4a2186
+      - c4588b7c948d9024349e4a6ff33d8efe
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 9b182fbbf070d660a2561c354cfc9980.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P3
+      X-Amz-Cf-Id:
+      - ahTwM1r42iAjmQjZkHBuVsuXHRXMyEE6IGjHdc1BakcyY12eJLiymg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c183eaa0-354b-412f-a16b-4404f5c2c86a","object":"chat.completion","created":1758724729,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file contains the license terms for the Ruby programming language. It''s a
-        copyright notice and software license that outlines the terms under which
-        Ruby can be used, modified, and distributed.\n\nKey points of this license:\n\n1.
-        **Copyright**: Ruby is copyrighted free software by Yukihiro Matsumoto (\"Matz\")\n\n2.
-        **Redistribution options**: Can be used under either the 2-clause BSDL or
-        the terms specified in this file\n\n3. **Main permissions**:\n   - Free copying
-        of source code with proper attribution\n   - Modification allowed with certain
-        conditions (like making modifications public, using only internally, or making
-        distribution arrangements)\n   - Distribution of binaries with various options\n   -
-        Incorporation into other software (including commercial)\n\n4. **Important
-        limitations**:\n   - Some files have different licensing terms (referenced
-        in \"LEGAL\" file)\n   - Generated scripts/files belong to their creator,
-        not under Ruby''s copyright\n   - Software is provided \"AS IS\" without warranties\n\nThis
-        appears to be Ruby''s historical license before it adopted the more standard
-        BSD-2-Clause license that Ruby uses today."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":229,"total_tokens":773,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 14:39:05 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjY0NWI5ZGQzLTA2MTYtNDI5Zi05NWZjLWY3NTczMDQ2YmZjMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODE3NjIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhpcyBmaWxlIChgbGljZW5zZS50eHRgKSBjb250YWlucyB0aGUgKipSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlIGxpY2Vuc2UqKiDigJQgc3BlY2lmaWNhbGx5LCB0aGUgdGVybXMgdW5kZXIgd2hpY2ggUnVieSBjYW4gYmUgdXNlZCwgbW9kaWZpZWQsIGFuZCBkaXN0cmlidXRlZC4gIFxuXG5IZXJl4oCZcyBhIHN1bW1hcnkgb2Ygd2hhdOKAmXMgaW4gaXQ6XG5cbjEuICoqQ29weXJpZ2h0IG5vdGljZSoqIOKAlCBSdWJ5IGlzIGNvcHlyaWdodGVkIGZyZWUgc29mdHdhcmUgYnkgWXVraWhpcm8gTWF0c3Vtb3RvICjigJxNYXR64oCdKS5cbjIuICoqUmVkaXN0cmlidXRpb24gdGVybXMqKiDigJQgWW91IGNhbiByZWRpc3RyaWJ1dGUvbW9kaWZ5IGl0IHVuZGVyIGVpdGhlcjpcbiAgIC0gVGhlIDItY2xhdXNlIEJTREwgKHJlZmVyZW5jZWQgc2VwYXJhdGVseSBpbiB0aGUgYEJTRExgIGZpbGUpLCAqKm9yKipcbiAgIC0gVGhlIHNpeC1wb2ludCBsaWNlbnNlIHRlcm1zIGxpc3RlZCBoZXJlLlxuMy4gKipLZXkgcGVybWlzc2lvbnMqKjpcbiAgIC0gTWFrZSB2ZXJiYXRpbSBjb3BpZXMgb2Ygc291cmNlIGNvZGUgaWYgb3JpZ2luYWwgY29weXJpZ2h0L2Rpc2NsYWltZXJzIGFyZSBrZXB0LlxuICAgLSBNb2RpZnkgdGhlIHNvZnR3YXJlIGlmIHlvdSBtZWV0IGNlcnRhaW4gY29uZGl0aW9ucyAoZS5nLiwgbWFrZSBtb2RpZmljYXRpb25zIHB1YmxpYywgdXNlIG9ubHkgaW50ZXJuYWxseSwgcmVuYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcywgZXRjLikuXG4gICAtIERpc3RyaWJ1dGUgaW4gYmluYXJ5L29iamVjdCBmb3JtIGlmIHlvdSBpbmNsdWRlIHNvdXJjZSBvciBpbnN0cnVjdGlvbnMgdG8gZ2V0IG9yaWdpbmFsIGRpc3RyaWJ1dGlvbi5cbiAgIC0gSW5jb3Jwb3JhdGUgcGFydHMgb2YgUnVieSBpbnRvIG90aGVyIHNvZnR3YXJlIChpbmNsdWRpbmcgY29tbWVyY2lhbCksIHRob3VnaCBzb21lIGZpbGVzIGhhdmUgc2VwYXJhdGUgdGVybXMgKHNlZSBgTEVHQUxgIGZpbGUpLlxuICAgLSBTY3JpcHRzIGFuZCBsaWJyYXJ5IGZpbGVzIGdlbmVyYXRlZCBmcm9tIFJ1YnkgYXJlIG5vdCBhdXRvbWF0aWNhbGx5IHVuZGVyIFJ1YnnigJlzIGNvcHlyaWdodC5cbjQuICoqRGlzY2xhaW1lcioqIOKAlCBUaGUgc29mdHdhcmUgY29tZXMgd2l0aCBubyB3YXJyYW50aWVzIChBUyBJUyksIHdpdGhvdXQgaW1wbGllZCB3YXJyYW50aWVzIG9mIG1lcmNoYW50YWJpbGl0eSBvciBmaXRuZXNzIGZvciBhIHBhcnRpY3VsYXIgcHVycG9zZS5cblxuVGhpcyBpcyBlc3NlbnRpYWxseSB0aGUgKipSdWJ5IExpY2Vuc2UqKiAoZHVhbC1saWNlbnNlZCB1bmRlciBCU0RMIG9yIHRoZXNlIGN1c3RvbSB0ZXJtcyksIHdoaWNoIGlzIGdlbmVyYWxseSBjb25zaWRlcmVkIG9wZW4gc291cmNlIGFuZCBHUEwtY29tcGF0aWJsZS4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NDQsImNvbXBsZXRpb25fdG9rZW5zIjozMDEsInRvdGFsX3Rva2VucyI6ODQ1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjU0NH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Fri, 16 Jan 2026 16:42:52 GMT
+recorded_with: VCR 6.4.0

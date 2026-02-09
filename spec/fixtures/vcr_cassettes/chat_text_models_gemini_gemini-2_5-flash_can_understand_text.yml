@@ -9,7 +9,7 @@ http_interactions:
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:39:06 GMT
+      - Fri, 16 Jan 2026 16:42:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +40,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1705
+      - gfet4t7; dur=1546
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,7 +54,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.txt` contains the text: \"Ruby is the best.\""
+                    "text": "The file `ruby.txt` contains the text: 'Ruby is the best.'"
                   }
                 ],
                 "role": "model"
@@ -66,19 +66,19 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 31,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 172,
+            "totalTokenCount": 217,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 31
               }
             ],
-            "thoughtsTokenCount": 124
+            "thoughtsTokenCount": 169
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "igLUaNrLMp7hnsEPwuCKqA0"
+          "responseId": "jmpqacnpGsKlvdIPj-z72Ac"
         }
-  recorded_at: Wed, 24 Sep 2025 14:39:06 GMT
+  recorded_at: Fri, 16 Jan 2026 16:42:54 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -86,12 +86,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
         name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]},{"role":"model","parts":[{"text":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\""}]},{"role":"user","parts":[{"text":"and
+        file `ruby.txt` contains the text: ''Ruby is the best.''"}]},{"role":"user","parts":[{"text":"and
         in this one?"},{"text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -112,7 +112,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:39:07 GMT
+      - Fri, 16 Jan 2026 16:42:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -122,7 +122,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=887
+      - gfet4t7; dur=942
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -136,7 +136,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains the XML text: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`."
+                    "text": "The file `ruby.xml` contains XML data. Specifically, it has a root element named `truism` which contains the text \"Ruby is the best\"."
                   }
                 ],
                 "role": "model"
@@ -147,18 +147,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 84,
-            "candidatesTokenCount": 25,
-            "totalTokenCount": 166,
+            "candidatesTokenCount": 33,
+            "totalTokenCount": 177,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 84
               }
             ],
-            "thoughtsTokenCount": 57
+            "thoughtsTokenCount": 60
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "iwLUaIGgL5m4nsEP8dng-QQ"
+          "responseId": "j2pqadbMH7LUvdIP-YnG2AY"
         }
-  recorded_at: Wed, 24 Sep 2025 14:39:07 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:42:55 GMT
+recorded_with: VCR 6.4.0

@@ -4,6 +4,8 @@ title: Home
 nav_order: 1
 description: One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, AI agents, RAG applications, and content generators.
 permalink: /
+redirect_from:
+ - /guides/
 ---
 
 <h1>
@@ -30,6 +32,10 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
   </div>
   <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-color.svg" alt="AzureAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-text.svg" alt="AzureAI" class="logo-small">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
   </div>
@@ -38,7 +44,8 @@ permalink: /
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-brand-color.svg" alt="Gemini" class="logo-large">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-color.svg" alt="Gemini" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-text.svg" alt="Gemini" class="logo-small">
   </div>
   <div class="provider-logo">
     <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
@@ -54,6 +61,10 @@ permalink: /
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
+  </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai.svg" alt="xAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai-text.svg" alt="xAI" class="logo-medium">
   </div>
   <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
@@ -78,9 +89,9 @@ permalink: /
 
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
+Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Your AI coworker*
 
-Using RubyLLM in production? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
+Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
 
 ---
@@ -131,6 +142,11 @@ RubyLLM.embed "Ruby is elegant and expressive"
 ```
 
 ```ruby
+# Transcribe audio to text
+RubyLLM.transcribe "meeting.wav"
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```
@@ -167,8 +183,8 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
-* **Vision:** Analyze images and screenshots
-* **Audio:** Transcribe and understand speech
+* **Vision:** Analyze images and videos
+* **Audio:** Transcribe and understand speech with `RubyLLM.transcribe`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
@@ -178,8 +194,9 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
-* **Model registry:** 500+ models with capability detection and pricing
-* **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Model registry:** 800+ models with capability detection and pricing
+* **Extended thinking:** Control, view, and persist model deliberation
+* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
@@ -217,4 +234,3 @@ chat.ask "What's in this file?", with: "report.pdf"
 ```
 
 Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
-

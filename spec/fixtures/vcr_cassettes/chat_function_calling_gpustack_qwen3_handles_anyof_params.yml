@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the any-of
+        params tool for task \"Review PR\" with status \"pending\" and report the
+        result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 16 Jan 2026 17:10:40 GMT
+      - Fri, 16 Jan 2026 17:10:41 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1332'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the any_of_params function for a task called \"Review
+        PR\" with status \"pending\". Let me check the function''s parameters. The
+        function requires both task and status. The status can be either \"pending\",
+        \"done\", or null. Since the user specified \"pending\", that''s valid. So
+        I need to structure the JSON with task as \"Review PR\" and status as \"pending\".
+        I''ll make sure to use the correct syntax and enclose it in the tool_call
+        tags.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call-b2gnVc232qwjvQTNTrFVc2FMABeC1e7Q","type":"function"}]}}],"created":1768583442,"id":"chatcmpl-AAFz9ug1BfM9xchIGHjq9OkG33P4lm5k","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":137,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":108,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5159.020379118816,"time_per_output_token_ms":8.151153284671533,"time_to_first_token_ms":50.591,"tokens_per_second":122.68202609813844,"total_tokens":398}}'
+  recorded_at: Fri, 16 Jan 2026 17:10:42 GMT
+recorded_with: VCR 6.4.0

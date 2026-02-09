@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
 
   describe '.format_tool_call' do
     let(:msg) do
-      instance_double(Message,
+      instance_double(RubyLLM::Message,
                       content: 'Some content',
                       tool_calls: {
                         'tool_123' => instance_double(RubyLLM::ToolCall,
@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
 
     context 'when message has no content' do
       let(:msg) do
-        instance_double(Message,
+        instance_double(RubyLLM::Message,
                         content: nil,
                         tool_calls: {
                           'tool_123' => instance_double(RubyLLM::ToolCall,
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
 
     context 'when message has empty content' do
       let(:msg) do
-        instance_double(Message,
+        instance_double(RubyLLM::Message,
                         content: '',
                         tool_calls: {
                           'tool_123' => instance_double(RubyLLM::ToolCall,

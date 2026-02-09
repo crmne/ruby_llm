@@ -9,6 +9,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
   gem 'codecov'
+  gem 'colorize'
   gem 'dotenv'
   gem 'ferrum'
   gem 'flay'
@@ -26,7 +27,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'rubocop-performance'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
-  gem 'ruby_llm-schema', '~> 0.1.0'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
 

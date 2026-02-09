@@ -1,4 +1,4 @@
-class MigrateToRubyLLMModelReferences < ActiveRecord::Migration<%= migration_version %>
+class MigrateToRubyLlmModelReferences < ActiveRecord::Migration<%= migration_version %>
   def up
     model_class = <%= model_model_name %>
     chat_class = <%= chat_model_name %>

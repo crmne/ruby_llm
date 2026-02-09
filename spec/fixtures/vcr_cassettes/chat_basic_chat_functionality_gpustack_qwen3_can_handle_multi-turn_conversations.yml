@@ -5,11 +5,13 @@ http_interactions:
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:45 GMT
-      - Wed, 24 Sep 2025 15:09:45 GMT
+      - Fri, 16 Jan 2026 16:51:23 GMT
+      - Fri, 16 Jan 2026 16:51:24 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1623'
+      - '2708'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -41,44 +43,96 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby,
-        the programming language, was created by **Yukihiro \"Matz\" Matsumoto**.
-        He developed it in the mid-1990s, with the first version (Ruby 0.0.0) released
-        in 1993 and the first stable version (Ruby 0.3.0) in 1995. Matsumoto designed
-        Ruby with a focus on simplicity and productivity, emphasizing a balance between
-        functional and object-oriented programming paradigms.\n\nAs for the **Ruby
-        gem** (a package format for Ruby libraries), it was introduced as part of
-        the Ruby ecosystem. The gem system was developed by the Ruby community, with
-        significant contributions from developers like **David Heinemeier Hansson
-        (DHH)**, who created the Ruby on Rails framework. However, the gem system
-        itself is managed by the **RubyGems** organization, which oversees its evolution.\n\nIn
-        summary:\n- **Ruby programming language**: Created by **Yukihiro Matsumoto**.\n-
-        **Ruby gem system**: Developed collaboratively by the Ruby community, with
-        key contributions from figures like DHH.","role":"assistant"}}],"created":1758726593,"id":"chatcmpl-lIPBIGXH2y49d9SV1yXYPuuqbYyBgxId","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":725,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":493,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":14,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":813.3860097606322,"time_per_output_token_ms":9.561884137931035,"time_to_first_token_ms":17.212,"tokens_per_second":104.58189887839158,"total_tokens":739}}'
-  recorded_at: Wed, 24 Sep 2025 15:09:53 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**.
+        He is a Japanese programmer who developed Ruby in the mid-1990s. The language
+        was designed with a focus on simplicity, productivity, and elegance, and it
+        is named after the gemstone **ruby**. Matsumoto is still actively involved
+        in the Ruby community and has contributed to its evolution over the years.","reasoning_content":"\nOkay,
+        so I need to find out who created the Ruby programming language. Let me think.
+        I remember that Ruby is a language that''s known for being elegant and having
+        a lot of features, maybe like object-oriented programming. I think it''s not
+        as old as some other languages like C or Java. \n\nWait, I think the creator''s
+        name is Yukihiro Matsumoto. I''ve heard that name before. Sometimes people
+        call him Matz. Yeah, Matz is a common nickname for him. Let me try to recall
+        more details. Was he from Japan? I think so. Maybe he worked at a company
+        in Japan? I think he was involved with some other projects before creating
+        Ruby. Oh, right, he was a programmer and worked on some other systems. \n\nI
+        also remember that Ruby was created in the mid-90s. Maybe around 1995? I think
+        that''s when he started developing it. The name Ruby comes from the gemstone,
+        right? So maybe he chose that as a tribute to the gem or something. \n\nWait,
+        I should make sure there''s not another person associated with Ruby. Sometimes
+        people confuse creators of similar languages. For example, Python was created
+        by Guido van Rossum, and PHP by Rasmus Lerdorf. But Ruby is definitely Matsumoto.
+        \n\nLet me check if there''s any other possible names. I don''t think so.
+        He''s the main creator. Also, he''s still involved with Ruby, maybe maintaining
+        the language or working on new versions. \n\nSo putting it all together, the
+        creator is Yukihiro Matsumoto, known as Matz. He created Ruby in the mid-90s,
+        and the language is named after the gemstone. I think that''s correct. I can''t
+        recall any conflicting information. I don''t think there are multiple creators,
+        so he''s the one.\n","role":"assistant"}}],"created":1768582288,"id":"chatcmpl-lSd78DAQsIxaTeHrHkYX5vmVOt5Hpxhe","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":479,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":387,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":18,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1271.7253073336158,"time_per_output_token_ms":8.057557411273487,"time_to_first_token_ms":14.154,"tokens_per_second":124.10708964988326,"total_tokens":497}}'
+  recorded_at: Fri, 16 Jan 2026 16:51:28 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who was Ruby''s
-        creator?"},{"role":"assistant","content":"\n\nRuby, the programming language,
-        was created by **Yukihiro \"Matz\" Matsumoto**. He developed it in the mid-1990s,
-        with the first version (Ruby 0.0.0) released in 1993 and the first stable
-        version (Ruby 0.3.0) in 1995. Matsumoto designed Ruby with a focus on simplicity
-        and productivity, emphasizing a balance between functional and object-oriented
-        programming paradigms.\n\nAs for the **Ruby gem** (a package format for Ruby
-        libraries), it was introduced as part of the Ruby ecosystem. The gem system
-        was developed by the Ruby community, with significant contributions from developers
-        like **David Heinemeier Hansson (DHH)**, who created the Ruby on Rails framework.
-        However, the gem system itself is managed by the **RubyGems** organization,
-        which oversees its evolution.\n\nIn summary:\n- **Ruby programming language**:
-        Created by **Yukihiro Matsumoto**.\n- **Ruby gem system**: Developed collaboratively
-        by the Ruby community, with key contributions from figures like DHH."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"role":"assistant","content":"\n\nThe
+        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**.
+        He is a Japanese programmer who developed Ruby in the mid-1990s. The language
+        was designed with a focus on simplicity, productivity, and elegance, and it
+        is named after the gemstone **ruby**. Matsumoto is still actively involved
+        in the Ruby community and has contributed to its evolution over the years.","reasoning":"\nOkay,
+        so I need to find out who created the Ruby programming language. Let me think.
+        I remember that Ruby is a language that''s known for being elegant and having
+        a lot of features, maybe like object-oriented programming. I think it''s not
+        as old as some other languages like C or Java. \n\nWait, I think the creator''s
+        name is Yukihiro Matsumoto. I''ve heard that name before. Sometimes people
+        call him Matz. Yeah, Matz is a common nickname for him. Let me try to recall
+        more details. Was he from Japan? I think so. Maybe he worked at a company
+        in Japan? I think he was involved with some other projects before creating
+        Ruby. Oh, right, he was a programmer and worked on some other systems. \n\nI
+        also remember that Ruby was created in the mid-90s. Maybe around 1995? I think
+        that''s when he started developing it. The name Ruby comes from the gemstone,
+        right? So maybe he chose that as a tribute to the gem or something. \n\nWait,
+        I should make sure there''s not another person associated with Ruby. Sometimes
+        people confuse creators of similar languages. For example, Python was created
+        by Guido van Rossum, and PHP by Rasmus Lerdorf. But Ruby is definitely Matsumoto.
+        \n\nLet me check if there''s any other possible names. I don''t think so.
+        He''s the main creator. Also, he''s still involved with Ruby, maybe maintaining
+        the language or working on new versions. \n\nSo putting it all together, the
+        creator is Yukihiro Matsumoto, known as Matz. He created Ruby in the mid-90s,
+        and the language is named after the gemstone. I think that''s correct. I can''t
+        recall any conflicting information. I don''t think there are multiple creators,
+        so he''s the one.\n","reasoning_content":"\nOkay, so I need to find out who
+        created the Ruby programming language. Let me think. I remember that Ruby
+        is a language that''s known for being elegant and having a lot of features,
+        maybe like object-oriented programming. I think it''s not as old as some other
+        languages like C or Java. \n\nWait, I think the creator''s name is Yukihiro
+        Matsumoto. I''ve heard that name before. Sometimes people call him Matz. Yeah,
+        Matz is a common nickname for him. Let me try to recall more details. Was
+        he from Japan? I think so. Maybe he worked at a company in Japan? I think
+        he was involved with some other projects before creating Ruby. Oh, right,
+        he was a programmer and worked on some other systems. \n\nI also remember
+        that Ruby was created in the mid-90s. Maybe around 1995? I think that''s when
+        he started developing it. The name Ruby comes from the gemstone, right? So
+        maybe he chose that as a tribute to the gem or something. \n\nWait, I should
+        make sure there''s not another person associated with Ruby. Sometimes people
+        confuse creators of similar languages. For example, Python was created by
+        Guido van Rossum, and PHP by Rasmus Lerdorf. But Ruby is definitely Matsumoto.
+        \n\nLet me check if there''s any other possible names. I don''t think so.
+        He''s the main creator. Also, he''s still involved with Ruby, maybe maintaining
+        the language or working on new versions. \n\nSo putting it all together, the
+        creator is Yukihiro Matsumoto, known as Matz. He created Ruby in the mid-90s,
+        and the language is named after the gemstone. I think that''s correct. I can''t
+        recall any conflicting information. I don''t think there are multiple creators,
+        so he''s the one.\n"},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -91,15 +145,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:52 GMT
-      - Wed, 24 Sep 2025 15:09:52 GMT
+      - Fri, 16 Jan 2026 16:51:27 GMT
+      - Fri, 16 Jan 2026 16:51:27 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1088'
+      - '2472'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -111,11 +165,29 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nYukihiro
-        \"Matz\" Matsumoto created the **Ruby programming language**. The first version
-        of Ruby, **Ruby 0.0.0**, was released in **1993**, but the first **stable
-        version**, **Ruby 0.3.0**, was released in **1995**. This marked the official
-        debut of the language as a mature and usable tool. \n\nSo, while the initial
-        development began in 1993, the stable release that established Ruby as a recognized
-        programming language was in **1995**.","role":"assistant"}}],"created":1758726596,"id":"chatcmpl-chM3eNoTiRtnUdGkLQwLGiMxTUOTDgoK","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":314,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":192,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":259,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":3860.140693931083,"time_per_output_token_ms":9.63938535031847,"time_to_first_token_ms":67.096,"tokens_per_second":103.74105439896762,"total_tokens":573}}'
-  recorded_at: Wed, 24 Sep 2025 15:09:56 GMT
-recorded_with: VCR 6.3.1
+        \"Matz\" Matsumoto created the **Ruby programming language** in **1995**.
+        The first public release of Ruby was version **0.2**, which came out in **1995**.
+        The first stable version, **1.0**, was released in **1997**. Matsumoto began
+        developing Ruby in the mid-1990s as a response to his frustrations with other
+        languages like Perl and Python, aiming to create a language that balanced
+        simplicity, productivity, and elegance.","reasoning_content":"\nOkay, the
+        user asked when Yukihiro Matsumoto created Ruby. I remember that the user
+        previously asked who the creator was, and I mentioned Matsumoto. Now they''re
+        following up with the year.\n\nI need to recall the exact year. I think Ruby
+        was first released in 1995. Let me double-check that. Matsumoto started working
+        on Ruby in the mid-90s, and the first version, 0.2, came out in 1995. The
+        first official release was 1.0 in 1997. So the creation year is 1995. \n\nWait,
+        sometimes people might confuse the first release with the creation. But the
+        user is asking for the year he created it, which would be when he started
+        developing it, not the first release. However, the first public release was
+        in 1995. So the answer is 1995. I should make sure to mention both the start
+        of development and the first release to avoid confusion. Also, maybe note
+        that the first version was 0.2 in 1995 and 1.0 in 1997. That way, the user
+        gets a complete picture. \n\nI should also check if there''s any conflicting
+        information. From what I know, Matsumoto started working on Ruby in 1993,
+        but the first public release was in 1995. So the answer should clarify that
+        the creation year is 1995, with the first release in that year. Maybe mention
+        the initial development started earlier but the official creation was in 1995.
+        That way, the user understands the timeline accurately.\n","role":"assistant"}}],"created":1768582292,"id":"chatcmpl-7nL39zytwExnOhpj9yt1se4zQWqSd25q","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":469,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":354,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":124,"prompt_tokens_details":{"cached_tokens":16},"prompt_tokens_per_second":2107.016023517018,"time_per_output_token_ms":8.166816631130065,"time_to_first_token_ms":58.851,"tokens_per_second":122.44673110306228,"total_tokens":593}}'
+  recorded_at: Fri, 16 Jan 2026 16:51:32 GMT
+recorded_with: VCR 6.4.0

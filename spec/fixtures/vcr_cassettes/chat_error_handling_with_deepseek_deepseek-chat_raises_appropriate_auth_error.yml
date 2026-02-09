@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer invalid-key
       Content-Type:
@@ -22,35 +22,37 @@ http_interactions:
       code: 401
       message: Unauthorized
     headers:
-      Date:
-      - Wed, 24 Sep 2025 14:48:55 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '153'
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
+      Date:
+      - Fri, 16 Jan 2026 16:48:13 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 54a2897752c4ac366e93dc4713869c82
+      - 8335a3befa87c6bdc1e614a49fa62dbd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 b7fabb5a327e018775ea26a6f65c6e10.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - tmi0TjxeHCws0ZYgTWw8TaTik67xEO7Bp0KCgexnxzw2AltIXDBwgw==
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Authentication Fails, Your api key: ****-key is
         invalid","type":"authentication_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Wed, 24 Sep 2025 14:48:55 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Fri, 16 Jan 2026 16:48:13 GMT
+recorded_with: VCR 6.4.0

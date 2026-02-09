@@ -4,12 +4,15 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
+  before do
+    skip 'Local provider specs disabled via SKIP_LOCAL_PROVIDER_TESTS' if ENV['SKIP_LOCAL_PROVIDER_TESTS']
+  end
 
   describe 'local provider model fetching' do
     describe '.refresh!' do
       context 'with default parameters' do # rubocop:disable RSpec/NestedGroups
         it 'includes local providers' do
-          allow(described_class).to receive(:fetch_from_parsera).and_return([])
+          allow(described_class).to receive(:fetch_from_models_dev).and_return([])
           allow(RubyLLM::Provider).to receive(:configured_providers).and_return([])
 
           described_class.refresh!
@@ -20,7 +23,7 @@ RSpec.describe RubyLLM::Models do
 
       context 'with remote_only: true' do # rubocop:disable RSpec/NestedGroups
         it 'excludes local providers' do
-          allow(described_class).to receive(:fetch_from_parsera).and_return([])
+          allow(described_class).to receive(:fetch_from_models_dev).and_return([])
           allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
 
           described_class.refresh!(remote_only: true)

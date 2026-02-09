@@ -59,6 +59,7 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'
@@ -70,6 +71,11 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+
+  # Azure - Available in v1.12.0+
+  config.azure_api_base = ENV['AZURE_API_BASE'] # Microsoft Foundry project endpoint
+  config.azure_api_key = ENV['AZURE_API_KEY'] # use this or
+  config.azure_ai_auth_token = ENV['AZURE_AI_AUTH_TOKEN'] # this
 end
 ```
 
@@ -126,6 +132,23 @@ end
 
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
 
+### Gemini API Versions
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyLLM defaults to `v1beta` for access to the latest features, but you can switch to `v1` to support older models:
+
+```ruby
+RubyLLM.configure do |config|
+  config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.gemini_api_base = 'https://generativelanguage.googleapis.com/v1'
+end
+```
+
+Some models are only available on specific API versions. For example, `gemini-1.5-flash-8b` requires `v1`. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
+
 ## Default Models
 
 Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`):
@@ -142,6 +165,28 @@ Defaults if not configured:
 - Chat: `{{ site.models.default_chat }}`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
+
+## Model Registry File
+
+By default, RubyLLM reads model information from the bundled `models.json` file. If your gem directory is read-only, you can configure a writable location:
+
+```ruby
+# First time: save to writable location
+RubyLLM.models.save_to_json('/var/app/models.json')
+
+# Configure to use new location (Available in v1.9.0+)
+RubyLLM.configure do |config|
+  config.model_registry_file = '/var/app/models.json'
+end
+```
+
+After this one-time setup, RubyLLM will read from your configured path automatically.
+
+> `RubyLLM.models.refresh!` updates the in-memory registry only. To persist changes, call `RubyLLM.models.save_to_json`.
+{: .note }
+
+> If you're using the ActiveRecord integration, model data is stored in the database. This configuration doesn't apply.
+{: .note }
 
 ## Connection Settings
 
@@ -239,16 +284,16 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_PROD_KEY']
 end
 
-# Create isolated context for Azure
-azure_context = RubyLLM.context do |config|
-  config.openai_api_key = ENV['AZURE_KEY']
-  config.openai_api_base = "https://azure.openai.azure.com"
+# Create isolated context
+ctx = RubyLLM.context do |config|
+  config.openai_api_key = ENV['ANOTHER_PROVIDER_KEY']
+  config.openai_api_base = "https://another-provider.com"
   config.request_timeout = 180
 end
 
 # Use Azure for this specific task
-azure_chat = azure_context.chat(model: '{{ site.models.openai_standard }}')
-response = azure_chat.ask("Process this with Azure...")
+ctx_chat = ctx.chat(model: '{{ site.models.openai_standard }}')
+response = ctx_chat.ask("Process this with another provider...")
 
 # Global config unchanged
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
@@ -302,6 +347,36 @@ RubyLLM.configure do |config|
 end
 ```
 
+### Initializer Load Timing Issue with `use_new_acts_as`
+
+**Important**: If you're using `use_new_acts_as = true` (from upgrading to 1.7+), you **cannot** set it in an initializer. Rails loads models before initializers run, so the legacy `acts_as` module will already be included by the time your initializer executes.
+
+Instead, configure it in `config/application.rb` **before** the `Application` class:
+
+```ruby
+# config/application.rb
+require_relative "boot"
+require "rails/all"
+
+# Configure RubyLLM before Rails::Application is inherited
+RubyLLM.configure do |config|
+  config.use_new_acts_as = true
+end
+
+module YourApp
+  class Application < Rails::Application
+    # ...
+  end
+end
+```
+
+This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
+
+> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
+{: .note }
+
+See the [Upgrading guide]({% link _advanced/upgrading.md %}#troubleshooting) for more details.
+
 ## Configuration Reference
 
 Here's a complete reference of all configuration options:
@@ -319,9 +394,14 @@ RubyLLM.configure do |config|
   config.perplexity_api_key = String
   config.openrouter_api_key = String
   config.gpustack_api_key = String
+  config.xai_api_key = String
+  config.azure_api_key = String  # v1.12.0+
+  config.azure_ai_auth_token = String  # v1.12.0+
 
   # Provider Endpoints
+  config.azure_api_base = String  # v1.12.0+
   config.openai_api_base = String
+  config.gemini_api_base = String  # v1.9.0+
   config.ollama_api_base = String
   config.gpustack_api_base = String
 
@@ -340,6 +420,12 @@ RubyLLM.configure do |config|
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
+  config.default_moderation_model = String
+  config.default_transcription_model = String
+
+  # Model Registry
+  config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
+  config.model_registry_class = String
 
   # Connection Settings
   config.request_timeout = Integer
@@ -354,6 +440,9 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+
+  # Rails integration
+  config.use_new_acts_as = Boolean
 end
 ```
 

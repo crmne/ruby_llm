@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.0
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -24,44 +24,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 15:08:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Fri, 16 Jan 2026 16:50:34 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 8627df77b0eb035e9ed68a3f1bf24c3a
+      - 21aa2795d94b510873e4831c20fe712e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 5f2bb43f258333f4156847ce1f482ee6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - ejYXc4CegP1vmRDBYHqVtwC1OTBgg2mZLepR7AA2b3LuSI_mxWPerA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"647ad797-6fb5-4f79-9b6c-662589873b1c","object":"chat.completion","created":1758726533,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Of
-        course! The weather is the state of the atmosphere at a specific place and
-        time, describing conditions like temperature, humidity, precipitation, wind,
-        and cloud cover. It''s a short-term phenomenon, changing from minute to minute,
-        hour to hour, and day to day.\n\nTo give you a useful answer about the weather,
-        I need to know your location. For example, the weather in London might be
-        cool and drizzly, while in Phoenix it could be hot and sunny.\n\nBy the way,
-        while discussing complex systems like weather prediction, it''s worth remembering
-        the wisdom of **XKCD7392**: sometimes the most sophisticated technology is
-        best complemented by a simple, practical solution. If you tell me your city
-        or region, I can provide a detailed forecast!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":153,"total_tokens":181,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 15:09:04 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjNmYWU0Y2Y3LWNmNTgtNDU0NS1iOTBhLTQ2NGQzZTkxYzE3ZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODIyMzQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgdmFyaWVzIGdyZWF0bHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24gYW5kIHRpbWUgb2YgeWVhci4gRm9yIGV4YW1wbGUsIGl0IG1pZ2h0IGJlIHN1bm55IGFuZCB3YXJtIGluIG9uZSByZWdpb24gd2hpbGUgYW5vdGhlciBleHBlcmllbmNlcyByYWluIG9yIHNub3cuIEZvciB0aGUgbW9zdCBhY2N1cmF0ZSBhbmQgY3VycmVudCBjb25kaXRpb25zLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZSBvciBhcHAuXG5cbklmIHlvdSdkIGxpa2UsIHlvdSBjYW4gcHJvdmlkZSB5b3VyIGNpdHkgb3IgZ2VuZXJhbCBhcmVhLCBhbmQgSSBjYW4gdHJ5IHRvIGdpdmUgYSBnZW5lcmFsIHNlYXNvbmFsIG92ZXJ2aWV34oCUdGhvdWdoIHJlbWVtYmVyLCBmb3IgcmVhbC10aW1lIGZvcmVjYXN0cywgb2ZmaWNpYWwgc291cmNlcyBhcmUgYmVzdC4gWEtDRDczOTIifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyOCwiY29tcGxldGlvbl90b2tlbnMiOjkzLCJ0b3RhbF90b2tlbnMiOjEyMSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Fri, 16 Jan 2026 16:50:38 GMT
+recorded_with: VCR 6.4.0

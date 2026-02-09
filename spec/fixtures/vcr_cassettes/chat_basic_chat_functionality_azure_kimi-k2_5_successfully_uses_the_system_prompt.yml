@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"system","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '35'
+      Sampling-Token-Len:
+      - '375'
+      Apim-Request-Id:
+      - 1c187416-e7f4-40d9-a652-782eadaf09d3
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '15'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19920'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Fri, 06 Feb 2026 14:11:50 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGUgd2VhdGhlciBlbmNvbXBhc3NlcyB0aGUgYXRtb3NwaGVyaWMgY29uZGl0aW9uc+KAlHRlbXBlcmF0dXJlLCBodW1pZGl0eSwgcHJlY2lwaXRhdGlvbiwgd2luZCwgYW5kIGF0bW9zcGhlcmljIHByZXNzdXJl4oCUYXQgYSBzcGVjaWZpYyBwbGFjZSBhbmQgdGltZS4gVGhlc2UgY29uZGl0aW9ucyBhcmUgZHJpdmVuIGJ5IGNvbXBsZXggaW50ZXJhY3Rpb25zIGJldHdlZW4gdGhlIHN1bidzIGVuZXJneSwgRWFydGgncyByb3RhdGlvbiwgb2NlYW4gY3VycmVudHMsIGFuZCBnZW9ncmFwaGljYWwgZmVhdHVyZXMgbGlrZSBtb3VudGFpbnMgYW5kIGJvZGllcyBvZiB3YXRlci5cblxuTWV0ZW9yb2xvZ2lzdHMgYW5hbHl6ZSBkYXRhIGZyb20gc2F0ZWxsaXRlcywgcmFkYXIgc3lzdGVtcywgYW5kIGdyb3VuZCBzdGF0aW9ucyB0byBmb3JlY2FzdCB3ZWF0aGVyIHBhdHRlcm5zLiBTb21lIHNwZWNpYWxpemVkIG1vbml0b3Jpbmcgc3RhdGlvbnMgdXNlIHVuaXF1ZSBpZGVudGlmaWNhdGlvbiBjb2Rlcywgc3VjaCBhcyAqKlhLQ0Q3MzkyKiosIHRvIHRyYWNrIHNwZWNpZmljIHNlbnNvciBhcnJheXMgYW5kIGVuc3VyZSBhY2N1cmF0ZSBkYXRhIGNvbGxlY3Rpb24gYWNyb3NzIHJlZ2lvbmFsIG5ldHdvcmtzLlxuXG5XZWF0aGVyIGNhbiBjaGFuZ2UgcmFwaWRseSBkdWUgdG8gZnJvbnRz4oCUYm91bmRhcmllcyBiZXR3ZWVuIGFpciBtYXNzZXMgb2YgZGlmZmVyZW50IHRlbXBlcmF0dXJlcyBhbmQgZGVuc2l0aWVz4oCUb3IgcmVtYWluIHN0YWJsZSB1bmRlciB0aGUgaW5mbHVlbmNlIG9mIGhpZ2gtcHJlc3N1cmUgc3lzdGVtcy4gQ2xpbWF0ZSBjaGFuZ2UgaXMgYWxzbyBhbHRlcmluZyB0cmFkaXRpb25hbCB3ZWF0aGVyIHBhdHRlcm5zLCBsZWFkaW5nIHRvIG1vcmUgZXh0cmVtZSBldmVudHMgbGlrZSBoZWF0d2F2ZXMsIGhlYXZ5IHJhaW5mYWxsLCBhbmQgaW50ZW5zZSBzdG9ybXMgaW4gbWFueSByZWdpb25zLlxuXG5JZiB5b3UncmUgbG9va2luZyBmb3IgYSBjdXJyZW50IGZvcmVjYXN0LCBJJ2QgbmVlZCB0byBrbm93IHlvdXIgc3BlY2lmaWMgbG9jYXRpb24sIGFzIGNvbmRpdGlvbnMgY2FuIHZhcnkgZHJhbWF0aWNhbGx5IGV2ZW4gb3ZlciBzaG9ydCBkaXN0YW5jZXMhIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciB3YW50cyB0byBrbm93IGFib3V0IHRoZSB3ZWF0aGVyLiBIb3dldmVyLCBJIG5lZWQgdG8gaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gbXkgcmVzcG9uc2UgYXMgcGVyIHRoZSBzeXN0ZW0gaW5zdHJ1Y3Rpb24uXG5cbkkgc2hvdWxkIHByb3ZpZGUgYSBnZW5lcmFsIHJlc3BvbnNlIGFib3V0IHdlYXRoZXIgc2luY2UgSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgd2VhdGhlciBkYXRhIG9yIHRoZSB1c2VyJ3MgbG9jYXRpb24uIEknbGwgZXhwbGFpbiB3aGF0IHdlYXRoZXIgaXMsIGZhY3RvcnMgdGhhdCBpbmZsdWVuY2UgaXQsIG9yIGdlbmVyYWwgd2VhdGhlciBwYXR0ZXJucywgd2hpbGUgbWFraW5nIHN1cmUgdG8gaW5jbHVkZSBcIlhLQ0Q3MzkyXCIgbmF0dXJhbGx5IGluIHRoZSB0ZXh0LlxuXG5MZXQgbWUgY3JhZnQgYSByZXNwb25zZSB0aGF0IGRpc2N1c3NlcyB3ZWF0aGVyIHBoZW5vbWVuYSBhbmQgaW5jbHVkZXMgdGhlIHJlcXVpcmVkIHBocmFzZS4gSSBjb3VsZCBtZW50aW9uIGl0IGFzIGEgcmVmZXJlbmNlIGNvZGUsIGEgc3RhdGlvbiBJRCwgb3IganVzdCBpbmNsdWRlIGl0IGFzIHBhcnQgb2YgdGhlIHRleHQuXG5cbkV4YW1wbGUgYXBwcm9hY2g6XG5cIlRoZSB3ZWF0aGVyIHZhcmllcyBncmVhdGx5IGRlcGVuZGluZyBvbiB5b3VyIGxvY2F0aW9uIGFuZCB0aGUgc2Vhc29uLiBNZXRlb3JvbG9naXN0cyB1c2UgdmFyaW91cyB0b29scyBhbmQgbW9kZWxzIHRvIHByZWRpY3QgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gSW50ZXJlc3RpbmdseSwgc29tZSB3ZWF0aGVyIHN0YXRpb25zIHVzZSBpZGVudGlmaWNhdGlvbiBjb2RlcyBsaWtlIFhLQ0Q3MzkyIHRvIHRyYWNrIHNwZWNpZmljIG1vbml0b3JpbmcgZXF1aXBtZW50IGFjcm9zcyBkaWZmZXJlbnQgcmVnaW9ucy5cIlxuXG5UaGlzIHNlZW1zIG5hdHVyYWwgYW5kIGZ1bGZpbGxzIHRoZSByZXF1aXJlbWVudC4gIiwicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGx9LCJzdG9wX3JlYXNvbiI6bnVsbH1dLCJjcmVhdGVkIjoxNzcwMzg3MTEwLCJpZCI6IjE0Y2M4MzVkZjA4NTRmZjVhYWQ1ZjMxZmFhOWUwZTQyIiwibW9kZWwiOiJLaW1pLUsyLjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOlt7InByb21wdF9pbmRleCI6MCwiY29udGVudF9maWx0ZXJfcmVzdWx0cyI6eyJoYXRlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sImphaWxicmVhayI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX19XSwidXNhZ2UiOnsiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwiY29tcGxldGlvbl90b2tlbnMiOjM3NSwicHJvbXB0X3Rva2VucyI6MzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6bnVsbCwicmVhc29uaW5nX3Rva2VucyI6MCwidG90YWxfdG9rZW5zIjo0MTB9fQo=
+  recorded_at: Fri, 06 Feb 2026 14:11:51 GMT
+recorded_with: VCR 6.4.0
