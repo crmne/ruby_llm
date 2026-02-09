@@ -11,12 +11,15 @@ module RubyLLM
 
         module_function
 
-        def render_response_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists
+        def render_response_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists
           payload = {
             model: model.id,
             input: format_input(messages),
             stream: stream
           }
+
+          effort = resolve_effort(thinking)
+          payload[:reasoning] = { effort: } if effort
 
           # Only include temperature if it's not nil (some models don't accept it)
           payload[:temperature] = temperature unless temperature.nil?
@@ -82,7 +85,7 @@ module RubyLLM
           end
         end
 
-        def parse_respond_response(response)
+        def parse_response_response(response)
           data = response.body
           return if data.empty?
 
@@ -91,12 +94,20 @@ module RubyLLM
           outputs = data['output']
           return unless outputs.any?
 
+          usage = data['usage'] || {}
+          cached_tokens = usage.dig('input_tokens_details', 'cached_tokens')
+          thinking_tokens = usage.dig('output_tokens_details', 'reasoning_tokens')
+
           Message.new(
             role: :assistant,
             content: all_output_text(outputs),
+            thinking: Thinking.build(text: all_reasoning_text(outputs)),
             tool_calls: parse_response_tool_calls(outputs),
-            input_tokens: data['usage']['input_tokens'],
-            output_tokens: data['usage']['output_tokens'],
+            input_tokens: usage['input_tokens'],
+            output_tokens: usage['output_tokens'],
+            cached_tokens: cached_tokens,
+            cache_creation_tokens: 0,
+            thinking_tokens: thinking_tokens,
             model_id: data['model'],
             raw: response
           )
@@ -106,6 +117,14 @@ module RubyLLM
           outputs.select { |o| o['type'] == 'message' }.flat_map do |o|
             o['content'].filter_map do |c|
               c['type'] == 'output_text' && c['text']
+            end
+          end.join("\n")
+        end
+
+        def all_reasoning_text(outputs)
+          outputs.select { |o| o['type'] == 'reasoning' }.flat_map do |o|
+            o['summary'].filter_map do |c|
+              c['type'] == 'summary_text' && c['text']
             end
           end.join("\n")
         end
