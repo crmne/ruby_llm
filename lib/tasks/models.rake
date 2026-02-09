@@ -7,7 +7,7 @@ require 'json-schema'
 require 'fileutils'
 
 desc 'Update models, docs, and aliases'
-task models: ['models:update', 'models:docs', 'models:aliases']
+task models: ['models:update', 'models:zdr', 'models:docs', 'models:aliases']
 
 namespace :models do
   desc 'Update available models from providers (API keys needed)'
@@ -21,6 +21,9 @@ namespace :models do
   desc 'Generate available models documentation'
   task :docs do
     FileUtils.mkdir_p('docs/_reference')
+    # Create fresh models collection from JSON to pick up ZDR enrichment from previous tasks
+    @models_for_generation = RubyLLM::Models.new
+    @models_for_generation.load_from_json!
     output = generate_models_markdown
     File.write('docs/_reference/available-models.md', output)
     puts 'Generated docs/_reference/available-models.md'
@@ -143,6 +146,10 @@ def status(provider_sym)
   end
 end
 
+def current_models
+  @models_for_generation || RubyLLM.models
+end
+
 def generate_models_markdown
   <<~MARKDOWN
     ---
@@ -187,12 +194,16 @@ def generate_models_markdown
     ## Models by Modality
 
     #{generate_modality_sections}
+
+    ## Data Retention & Compliance
+
+    #{generate_zdr_sections}
   MARKDOWN
 end
 
 def generate_provider_sections
   RubyLLM::Provider.providers.filter_map do |provider, provider_class|
-    models = RubyLLM.models.by_provider(provider)
+    models = current_models.by_provider(provider)
     next if models.none?
 
     <<~PROVIDER
@@ -205,10 +216,10 @@ end
 
 def generate_capability_sections
   capabilities = {
-    'Function Calling' => RubyLLM.models.select(&:function_calling?),
-    'Structured Output' => RubyLLM.models.select(&:structured_output?),
-    'Streaming' => RubyLLM.models.select { |m| m.capabilities.include?('streaming') },
-    'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
+    'Function Calling' => current_models.select(&:function_calling?),
+    'Structured Output' => current_models.select(&:structured_output?),
+    'Streaming' => current_models.select { |m| m.capabilities.include?('streaming') },
+    'Batch Processing' => current_models.select { |m| m.capabilities.include?('batch') }
   }
 
   capabilities.filter_map do |capability, models|
@@ -225,7 +236,7 @@ end
 def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
   sections = []
 
-  vision_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('image') }
+  vision_models = current_models.select { |m| (m.modalities.input || []).include?('image') }
   if vision_models.any?
     sections << <<~SECTION
       ### Vision Models (#{vision_models.count})
@@ -236,7 +247,7 @@ def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
     SECTION
   end
 
-  audio_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('audio') }
+  audio_models = current_models.select { |m| (m.modalities.input || []).include?('audio') }
   if audio_models.any?
     sections << <<~SECTION
       ### Audio Input Models (#{audio_models.count})
@@ -247,7 +258,7 @@ def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
     SECTION
   end
 
-  pdf_models = RubyLLM.models.select { |m| (m.modalities.input || []).include?('pdf') }
+  pdf_models = current_models.select { |m| (m.modalities.input || []).include?('pdf') }
   if pdf_models.any?
     sections << <<~SECTION
       ### PDF Models (#{pdf_models.count})
@@ -258,7 +269,7 @@ def generate_modality_sections # rubocop:disable Metrics/PerceivedComplexity
     SECTION
   end
 
-  embedding_models = RubyLLM.models.select { |m| (m.modalities.output || []).include?('embeddings') }
+  embedding_models = current_models.select { |m| (m.modalities.output || []).include?('embeddings') }
   if embedding_models.any?
     sections << <<~SECTION
       ### Embedding Models (#{embedding_models.count})
@@ -275,8 +286,8 @@ end
 def models_table(models)
   return '*No models found*' if models.none?
 
-  headers = ['Model', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', '--:', '--:', ':--']
+  headers = ['Model', 'Provider', 'Context', 'Max Output', 'ZDR', 'Standard Pricing (per 1M tokens)']
+  alignment = [':--', ':--', '--:', '--:', ':--', ':--']
 
   rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
     pricing = standard_pricing_display(model)
@@ -286,6 +297,7 @@ def models_table(models)
       model.provider,
       model.context_window || '-',
       model.max_output_tokens || '-',
+      zdr_indicator(model),
       pricing
     ]
   end
@@ -299,6 +311,112 @@ def models_table(models)
   end
 
   table.join("\n")
+end
+
+def zdr_indicator(model)
+  zdr_data = zdr_data_for_model(model)
+  return '-' unless zdr_data
+
+  zdr_data.fetch(:available, false) ? '✅' : '—'
+end
+
+def generate_zdr_sections
+  sections = []
+
+  zdr_available = current_models.select { |m| zdr_data_for_model(m)&.fetch(:available, false) }
+  sections << build_zdr_availability_section(zdr_available) if zdr_available.any?
+
+  return '*No ZDR data available*' if sections.empty?
+
+  sections.join("\n\n")
+end
+
+def build_zdr_availability_section(models)
+  <<~SECTION
+    ### Zero Data Retention Available (#{models.count})
+
+    Models with Zero Data Retention (ZDR) policies - your data is not retained or used for training:
+
+    #{zdr_availability_table(models)}
+  SECTION
+end
+
+def zdr_data_for_model(model)
+  model.to_h.dig(:metadata, :zdr) || model.to_h.dig('metadata', 'zdr')
+end
+
+def zdr_availability_table(models)
+  return '*No models found*' if models.none?
+
+  headers = ['Model', 'Provider', 'Data Retention', 'Training Use', 'Caching']
+  alignment = [':--', ':--', '--:', '--:', ':--:']
+
+  rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
+    zdr = zdr_data_for_model(model)
+
+    [
+      model.id,
+      model.provider,
+      format_retention_period(zdr&.fetch(:retention_period)),
+      format_training_use(zdr&.fetch(:training_data_use)),
+      format_caching(zdr&.fetch(:supports_implicit_caching, nil))
+    ]
+  end
+
+  table = []
+  table << "| #{headers.join(' | ')} |"
+  table << "| #{alignment.join(' | ')} |"
+
+  rows.each do |row|
+    table << "| #{row.join(' | ')} |"
+  end
+
+  table.join("\n")
+end
+
+def format_retention_period(period)
+  case period&.to_s&.downcase
+  when 'zero'
+    '✅ Zero'
+  when '7_days'
+    '7 days'
+  when '30_days'
+    '30 days'
+  when '55_days'
+    '55 days'
+  when '90_days'
+    '90 days'
+  when 'varies'
+    'Varies'
+  else
+    '-'
+  end
+end
+
+def format_training_use(training)
+  case training&.to_s&.downcase
+  when 'never'
+    '✅ Never'
+  when 'opt-out'
+    'Opt-out available'
+  when 'opt-in'
+    'Opt-in'
+  when 'varies'
+    'Varies'
+  else
+    '-'
+  end
+end
+
+def format_caching(supports_caching)
+  case supports_caching
+  when true
+    '✅'
+  when false
+    '—'
+  else
+    '-'
+  end
 end
 
 def standard_pricing_display(model)

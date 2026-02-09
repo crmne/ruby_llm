@@ -27,7 +27,8 @@ loader.inflector.inflect(
   'perplexity' => 'Perplexity',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI'
+  'xai' => 'XAI',
+  'zdr_enricher' => 'ZDREnricher'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")

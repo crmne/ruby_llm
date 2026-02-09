@@ -161,7 +161,33 @@
       },
       "metadata": {
         "type": "object",
-        "description": "Additional metadata about the model"
+        "description": "Additional metadata about the model",
+        "properties": {
+          "zdr": {
+            "type": "object",
+            "description": "Zero Data Retention (ZDR) policy information",
+            "properties": {
+              "available": {
+                "type": "boolean",
+                "description": "Whether ZDR is available for this model"
+              },
+              "retention_period": {
+                "type": "string",
+                "enum": ["zero", "7_days", "30_days", "55_days", "90_days", "varies", "unknown"],
+                "description": "How long data is retained"
+              },
+              "training_data_use": {
+                "type": "string",
+                "enum": ["never", "opt-out", "opt-in", "varies", "unknown"],
+                "description": "Whether/how data is used for training"
+              },
+              "supports_implicit_caching": {
+                "type": "boolean",
+                "description": "Whether the model supports implicit caching (OpenRouter does not consider this to violate ZDR)"
+              }
+            }
+          }
+        }
       }
     }
   }
