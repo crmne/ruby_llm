@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"Roll
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Roll
         the dice 3 times"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Feb 2026 07:58:08 GMT
+      - Tue, 10 Feb 2026 09:28:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,25 +40,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-06T07:58:07Z'
+      - '2026-02-10T09:28:31Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-06T07:58:08Z'
+      - '2026-02-10T09:28:31Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-06T07:58:07Z'
+      - '2026-02-10T09:28:30Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-06T07:58:07Z'
+      - '2026-02-10T09:28:31Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -68,7 +68,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '576'
+      - '874'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -79,25 +79,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01GTackda7dV5enzgKNBS6of","type":"message","role":"assistant","content":[{"type":"text","text":"I''ll
-        roll the dice 3 times for you."},{"type":"tool_use","id":"toolu_01QRBsdhsdFmwqZbFL3pY5hJ","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01NTGhxeYN3T2MJZTthRB1c8","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01STUVm4egT47omnmpLEC32A","name":"dice_roll","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":596,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":87,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Fri, 06 Feb 2026 07:58:08 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01HeonbxT2pzd1bbhgk9M2GG","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01LCeHhzinQxDxHCtpwZhvWh","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01MyHQdQkwWe6QQ91Qrv9U6U","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01E8N1Gs1RuHmjtJavXjfan6","name":"dice_roll","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":596,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 10 Feb 2026 09:28:31 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"Roll
-        the dice 3 times"}]},{"role":"assistant","content":[{"type":"text","text":"I''ll
-        roll the dice 3 times for you."},{"type":"tool_use","id":"toolu_01QRBsdhsdFmwqZbFL3pY5hJ","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01NTGhxeYN3T2MJZTthRB1c8","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01STUVm4egT47omnmpLEC32A","name":"dice_roll","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01QRBsdhsdFmwqZbFL3pY5hJ","content":[{"type":"text","text":"{roll:
-        1}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01NTGhxeYN3T2MJZTthRB1c8","content":[{"type":"text","text":"{roll:
-        2}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01STUVm4egT47omnmpLEC32A","content":[{"type":"text","text":"{roll:
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Roll
+        the dice 3 times"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01LCeHhzinQxDxHCtpwZhvWh","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01MyHQdQkwWe6QQ91Qrv9U6U","name":"dice_roll","input":{}},{"type":"tool_use","id":"toolu_01E8N1Gs1RuHmjtJavXjfan6","name":"dice_roll","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01LCeHhzinQxDxHCtpwZhvWh","content":[{"type":"text","text":"{roll:
+        1}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01MyHQdQkwWe6QQ91Qrv9U6U","content":[{"type":"text","text":"{roll:
+        2}"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01E8N1Gs1RuHmjtJavXjfan6","content":[{"type":"text","text":"{roll:
         3}"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"system":[{"type":"text","text":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -114,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Feb 2026 07:58:09 GMT
+      - Tue, 10 Feb 2026 09:28:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -126,25 +124,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-06T07:58:08Z'
+      - '2026-02-10T09:28:32Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-06T07:58:09Z'
+      - '2026-02-10T09:28:33Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-06T07:58:08Z'
+      - '2026-02-10T09:28:32Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-06T07:58:08Z'
+      - '2026-02-10T09:28:32Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -154,7 +152,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '775'
+      - '1588'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -165,8 +163,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_0115jt2hNFqV6r2ngSWesx6E","type":"message","role":"assistant","content":[{"type":"text","text":"Here
-        are your 3 dice rolls:\n- Roll 1: **1**\n- Roll 2: **2**\n- Roll 3: **3**\n\n**Total:
-        6**"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":783,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":46,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Fri, 06 Feb 2026 07:58:09 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01JgVRZud4yRJkvbrfKdkDUm","type":"message","role":"assistant","content":[{"type":"text","text":"Here
+        are your 3 dice rolls:\n1. **First roll:** 1\n2. **Second roll:** 2\n3. **Third
+        roll:** 3\n\n**Total:** 1 + 2 + 3 = **6**"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":771,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":58,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 10 Feb 2026 09:28:33 GMT
 recorded_with: VCR 6.4.0

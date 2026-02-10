@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"text-embedding-3-small","input":"Test embedding"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Feb 2026 11:30:50 GMT
+      - Tue, 10 Feb 2026 09:31:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,15 +39,17 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '40'
+      - '42'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
+      Server:
+      - cloudflare
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Via:
-      - envoy-router-6c4cd7b5f4-zs4hn
+      - envoy-router-5df9bfdd9d-n92sn
       X-Ratelimit-Limit-Requests:
       - '3000'
       X-Ratelimit-Limit-Tokens:
@@ -68,11 +70,8 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -1632,5 +1631,5 @@ http_interactions:
             "total_tokens": 2
           }
         }
-  recorded_at: Fri, 06 Feb 2026 11:30:50 GMT
+  recorded_at: Tue, 10 Feb 2026 09:31:52 GMT
 recorded_with: VCR 6.4.0

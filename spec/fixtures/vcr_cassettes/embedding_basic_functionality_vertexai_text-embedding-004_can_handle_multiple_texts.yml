@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -25,7 +25,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Fri, 06 Feb 2026 14:25:36 GMT
+      - Tue, 10 Feb 2026 09:32:09 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 06 Feb 2026 14:25:36 GMT
+  recorded_at: Tue, 10 Feb 2026 09:32:09 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"instances":[{"content":"Ruby"},{"content":"Python"},{"content":"JavaScript"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 06 Feb 2026 14:25:38 GMT
+      - Tue, 10 Feb 2026 09:32:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -884,10 +884,6 @@ http_interactions:
             },
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                },
                 "values": [
                   0.020355613902211189,
                   -0.049273330718278885,
@@ -1657,15 +1653,15 @@ http_interactions:
                   0.0027606498915702105,
                   0.018295800313353539,
                   -0.034528099000453949
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                }
               }
             },
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 2
-                },
                 "values": [
                   -0.0097851529717445374,
                   0.0091454703360795975,
@@ -2435,7 +2431,11 @@ http_interactions:
                   0.0023286323994398117,
                   0.018018519505858421,
                   -0.026372617110610008
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 2
+                }
               }
             }
           ],
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Fri, 06 Feb 2026 14:25:38 GMT
+  recorded_at: Tue, 10 Feb 2026 09:32:11 GMT
 recorded_with: VCR 6.4.0

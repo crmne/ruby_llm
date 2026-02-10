@@ -40,4 +40,7 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+
+  # Optional dependency for Bedrock
+  gem 'aws-eventstream'
 end

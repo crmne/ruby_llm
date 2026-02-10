@@ -10,7 +10,7 @@ end
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'Kimi-K2.5' },
-  { provider: :bedrock, model: 'claude-3-5-haiku' },
+  { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },

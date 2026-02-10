@@ -462,8 +462,8 @@ module RubyLLM
     def find_with_provider(model_id, provider)
       resolved_id = Aliases.resolve(model_id, provider)
       resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
-      all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+      all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+        all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
     end
 
