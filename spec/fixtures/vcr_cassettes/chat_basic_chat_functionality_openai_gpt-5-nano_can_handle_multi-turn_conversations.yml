@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Who
+        is the creator of the programming language Ruby?","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -24,25 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:52:13 GMT
+      - Tue, 10 Feb 2026 05:38:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2300'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2541'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -50,79 +40,122 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199985'
+      - '199939'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 4ms
+      - 18ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
+      Openai-Processing-Ms:
+      - '8715'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyhLPgB9RdyhieXt2Rwu2cnOeFQe9",
-          "object": "chat.completion",
-          "created": 1768582331,
+          "id": "resp_031254c9fa45695900698ac45bdfd481959b837d8287bf9ea7",
+          "object": "response",
+          "created_at": 1770701915,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701924,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Yukihiro Matsumoto, commonly known as Matz, is the creator of the Ruby programming language (first released in 1995).",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_031254c9fa45695900698ac45c77a88195819f2e95b82657f7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_031254c9fa45695900698ac46362a081959cc7b0db57a272cc",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Yukihiro Matsumoto (often known as Matz)."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 16,
-            "completion_tokens": 231,
-            "total_tokens": 247,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 16,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 278,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 294
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 16:52:13 GMT
+  recorded_at: Tue, 10 Feb 2026 05:38:44 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
-        Matsumoto, commonly known as Matz, is the creator of the Ruby programming
-        language (first released in 1995)."},{"role":"user","content":"What year did
-        he create Ruby?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Who
+        is the creator of the programming language Ruby?","status":"completed"},{"type":"message","role":"assistant","content":"Yukihiro
+        Matsumoto (often known as Matz).","status":"completed"},{"type":"message","role":"user","content":"What
+        year did he create Ruby?","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -140,25 +173,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:52:18 GMT
+      - Tue, 10 Feb 2026 05:38:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '4367'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '4560'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -166,67 +189,111 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199946'
+      - '199785'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 16ms
+      - 64ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      Openai-Processing-Ms:
+      - '3129'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyhLS1XhFxGEucDvNfFIMNFzvv5Q3",
-          "object": "chat.completion",
-          "created": 1768582334,
+          "id": "resp_0ac96d70e32b5cf000698ac464c6288190b83235f079648f21",
+          "object": "response",
+          "created_at": 1770701924,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701927,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "1995. Ruby was first released in 1995 by Yukihiro Matsumoto (Matz).",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0ac96d70e32b5cf000698ac4652144819090e7d6e8ed2a5bf7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0ac96d70e32b5cf000698ac4677a608190ad9ec141fbb64f73",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "1995."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 63,
-            "completion_tokens": 415,
-            "total_tokens": 478,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 384,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 47,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 432,
+            "output_tokens_details": {
+              "reasoning_tokens": 384
+            },
+            "total_tokens": 479
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 16:52:18 GMT
+  recorded_at: Tue, 10 Feb 2026 05:38:47 GMT
 recorded_with: VCR 6.4.0

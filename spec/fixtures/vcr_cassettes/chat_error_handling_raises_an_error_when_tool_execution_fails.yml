@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What is
-        the weather?"}],"stream":false,"tools":[{"type":"function","function":{"name":"broken","description":"Gets
-        current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"What
+        is the weather?","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"broken","description":"Gets
+        current weather","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -25,25 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:12:17 GMT
+      - Tue, 10 Feb 2026 05:17:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3042'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3080'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -51,77 +41,119 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199993'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 2ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
+      Openai-Processing-Ms:
+      - '1899'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyheoMLJVyOCUtctaeLS1D8CvTJPZ",
-          "object": "chat.completion",
-          "created": 1768583534,
+          "id": "resp_0b6ae71f3f5e96e100698abf574b8c81959d6cd0e71e228645",
+          "object": "response",
+          "created_at": 1770700631,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700633,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_xyqwfZQ8lMJA8rDdNy8bVNPK",
-                    "type": "function",
-                    "function": {
-                      "name": "broken",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0b6ae71f3f5e96e100698abf578c8c8195b01ebe8d3b87565b",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_0b6ae71f3f5e96e100698abf58da588195b7fb0daf4e0ebb9d",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_pt1WoTZOGfV9MjrJ5Yyef95p",
+              "name": "broken"
             }
           ],
-          "usage": {
-            "prompt_tokens": 120,
-            "completion_tokens": 275,
-            "total_tokens": 395,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 256,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather",
+              "name": "broken",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 38,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 360,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 398
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:12:17 GMT
+  recorded_at: Tue, 10 Feb 2026 05:17:13 GMT
 recorded_with: VCR 6.4.0

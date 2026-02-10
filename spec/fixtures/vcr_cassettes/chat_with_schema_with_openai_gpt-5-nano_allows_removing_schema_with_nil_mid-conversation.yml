@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Generate
+        a person named Bob","status":"completed"}],"stream":false,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -24,25 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:42 GMT
+      - Tue, 10 Feb 2026 05:38:16 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3691'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3714'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -50,77 +40,140 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199991'
+      - '199641'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 2ms
+      - 107ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '4406'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyhIw1QmURGzOzaA1am5d9AzpTlUq",
-          "object": "chat.completion",
-          "created": 1768582178,
+          "id": "resp_0bb8ad7ec35b43fd00698ac443b6308197a0c1d2f6526203a0",
+          "object": "response",
+          "created_at": 1770701891,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701895,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"name\":\"Bob\",\"age\":30}",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0bb8ad7ec35b43fd00698ac44428e0819783bd75a2df7dda1d",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0bb8ad7ec35b43fd00698ac447a97081978a268436be9c40ab",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"name\":\"Bob\",\"age\":32}"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 43,
-            "completion_tokens": 341,
-            "total_tokens": 384,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 320,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "age"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 39,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 575,
+            "output_tokens_details": {
+              "reasoning_tokens": 512
+            },
+            "total_tokens": 614
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 16:49:42 GMT
+  recorded_at: Tue, 10 Feb 2026 05:38:16 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Generate
+        a person named Bob","status":"completed"},{"type":"message","role":"assistant","content":"{\"name\":\"Bob\",\"age\":32}","status":"completed"},{"type":"message","role":"user","content":"Now
+        just tell me about Ruby","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -138,25 +191,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:58 GMT
+      - Tue, 10 Feb 2026 05:38:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '15870'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '15888'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -164,33 +207,111 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199976'
+      - '198237'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - 528ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '12159'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhKMEo0T0pnbTZxdG5iNWpPY1piV2lnUk00aCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjE4MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGlzIGEgZHluYW1pYywgaW50ZXJwcmV0ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgZm9yIHByb2dyYW1tZXIgaGFwcGluZXNzLiBJdCB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopIGluIHRoZSBtaWTigJExOTkwcyBhbmQgZW1waGFzaXplcyByZWFkYWJpbGl0eSBhbmQgcHJvZHVjdGl2aXR5LlxuXG5LZXkgcG9pbnRzOlxuLSBFdmVyeXRoaW5nIGlzIGFuIG9iamVjdC4gRXZlbiBudW1iZXJzIGFuZCBib29sZWFucyBhcmUgb2JqZWN0cy5cbi0gQ2xlYW4sIHJlYWRhYmxlIHN5bnRheCB3aXRoIGEgZm9jdXMgb24gbmF0dXJhbCBsYW5ndWFnZS1saWtlIGNvZGUuXG4tIENvcmUgZmVhdHVyZXMgaW5jbHVkZSBibG9ja3MvcHJvY3MvbGFtYmRhcywgbWl4aW5zIHZpYSBtb2R1bGVzLCBhbmQgZHluYW1pYyB0eXBpbmcgd2l0aCBkdWNrIHR5cGluZy5cbi0gUmljaCBzdGFuZGFyZCBsaWJyYXJ5IGFuZCBhIGxhcmdlIGVjb3N5c3RlbSBidWlsdCBhcm91bmQgUnVieUdlbXMgKHRoZSBwYWNrYWdlIG1hbmFnZXIpIGFuZCBCdW5kbGVyIGZvciBkZXBlbmRlbmN5IG1hbmFnZW1lbnQuXG4tIFBvcHVsYXIgd2ViIGZyYW1ld29yazogUnVieSBvbiBSYWlscywgd2hpY2ggaGVscGVkIG1ha2UgUnVieSBmYW1vdXMgZm9yIHdlYiBkZXZlbG9wbWVudC4gT3RoZXIgZnJhbWV3b3JrcyBpbmNsdWRlIFNpbmF0cmEgYW5kIEhhbmFtaS5cblxuUGVyZm9ybWFuY2UgYW5kIGNvbmN1cnJlbmN5OlxuLSBSdWJ5IGlzIGdlbmVyYWxseSBzbG93ZXIgdGhhbiBjb21waWxlZCBsYW5ndWFnZXMsIHRob3VnaCB0aGVyZSBoYXZlIGJlZW4gb25nb2luZyBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMgKEpJVHMgYW5kIGFsdGVybmF0aXZlcyBsaWtlIFlKSVQgaW4gbmV3ZXIgdmVyc2lvbnMpLlxuLSBNUkkgKHRoZSBzdGFuZGFyZCBSdWJ5IGludGVycHJldGVyKSB1c2VzIGEgR2xvYmFsIFZNIExvY2sgKEdWTCksIHdoaWNoIGFmZmVjdHMgdHJ1ZSBwYXJhbGxlbCB0aHJlYWRzLiBSdWJ5IDMgaW50cm9kdWNlZCBmZWF0dXJlcyBsaWtlIFJhY3RvciBmb3IgcGFyYWxsZWwgZXhlY3V0aW9uLCBhbmQgb3RoZXIgcnVudGltZXMgKGUuZy4sIEpSdWJ5KSBjYW4gb2ZmZXIgZGlmZmVyZW50IGNvbmN1cnJlbmN5IG1vZGVscy5cblxuQ29tbW9uIHVzZSBjYXNlczpcbi0gV2ViIGFwcGxpY2F0aW9ucyAoZXNwZWNpYWxseSB3aXRoIFJhaWxzKVxuLSBTY3JpcHRpbmcgYW5kIGF1dG9tYXRpb25cbi0gUHJvdG90eXBpbmcgYW5kIHJhcGlkIGRldmVsb3BtZW50XG5cbklmIHlvdeKAmWQgbGlrZSwgSSBjYW4gc2hhcmUgYSB0aW55IGV4YW1wbGUgb3IgcG9pbnQgeW91IHRvIGJlZ2lubmVyIHJlc291cmNlcyB0YWlsb3JlZCB0byB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBSdWJ5IG9uIFJhaWxzLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDM2LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjE1MCwKICAgICJ0b3RhbF90b2tlbnMiOiAyMTg2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDE4NTYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Fri, 16 Jan 2026 16:49:58 GMT
+      string: |-
+        {
+          "id": "resp_083e3eaa7ac439a400698ac4485468819597279d8547a21a60",
+          "object": "response",
+          "created_at": 1770701896,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701908,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_083e3eaa7ac439a400698ac448b4f481959335827d0bca2022",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_083e3eaa7ac439a400698ac45200288195a6a0bd2819e40280",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ruby can mean two things. Here\u2019s a quick rundown of both:\n\nRuby (programming language)\n- What it is: a dynamic, object-oriented scripting language designed for programmer happiness by Yukihiro Matsumoto (Matz) starting in the 1990s.\n- Design goals: productive, readable, and enjoyable to work with.\n- Key features: everything is an object; dynamic typing; garbage collection; blocks/procs/lambdas; clean syntax; open classes; powerful metaprogramming and modules for mixins.\n- Ecosystem: RubyGems (package manager), Bundler (dependency management); popular frameworks include Ruby on Rails and Sinatra.\n- Typical use: web development, automation, scripting, DevOps tooling, CLI apps.\n- Current state: major versions like Ruby 2.x and 3.x; ongoing improvements in performance and concurrency (e.g., JIT/compilers in newer releases).\n\nRuby (gemstone)\n- What it is: a precious red to pinkish-red gemstone in the corundum family.\n- Hardness: 9 on the Mohs scale (very durable, second only to diamond among common gemstones).\n- Color and treatments: vivid red color driven by chromium; often heat-treated to improve color; some stones are heat-treated or, less commonly, treated with limonitic staining or diffusion.\n- Sources: historically Myanmar (Burma) was famous for \"pigeon blood\" rubies; also from Sri Lanka, Madagascar, Tanzania, and other locations.\n- Uses: primarily jewelry; value depends on color, clarity, cut, and carat weight.\n- Care: avoid rough impacts; clean with mild soapy water; be mindful of heat and chemicals.\n\nIf you meant one specifically, tell me which you want more detail about."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 36,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1980,
+            "output_tokens_details": {
+              "reasoning_tokens": 1600
+            },
+            "total_tokens": 2016
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:38:28 GMT
 recorded_with: VCR 6.4.0

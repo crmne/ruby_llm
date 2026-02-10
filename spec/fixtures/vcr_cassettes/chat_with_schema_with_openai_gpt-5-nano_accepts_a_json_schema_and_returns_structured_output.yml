@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Generate
+        a person named John who is 30 years old","status":"completed"}],"stream":false,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -24,25 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:37 GMT
+      - Tue, 10 Feb 2026 05:38:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3216'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3235'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -50,28 +40,29 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199986'
+      - '199937'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 4ms
+      - 18ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '318'
-      X-Envoy-Upstream-Service-Time:
-      - '320'
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      - '2492'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -80,40 +71,99 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "chatcmpl-CyhIsV19TFKrCH2q2Std7zRUPPGUV",
-          "object": "chat.completion",
-          "created": 1768582174,
+          "id": "resp_0f07231a4a7af3c600698ac440f02481958041e6148be25c17",
+          "object": "response",
+          "created_at": 1770701888,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701891,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"name\":\"John\",\"age\":30}",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0f07231a4a7af3c600698ac44135288195ae5d35b71cf10804",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0f07231a4a7af3c600698ac4430e088195aa6368b8b60bf851",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"name\":\"John\",\"age\":30}"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 49,
-            "completion_tokens": 341,
-            "total_tokens": 390,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 320,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
           "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "response",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "name",
+                  "age"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 45,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 280,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 325
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 16:49:38 GMT
+  recorded_at: Tue, 10 Feb 2026 05:38:11 GMT
 recorded_with: VCR 6.4.0

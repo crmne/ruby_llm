@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":1.0}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -25,25 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:52:46 GMT
+      - Tue, 10 Feb 2026 05:39:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '12208'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '12227'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -51,51 +41,131 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199972'
+      - '199209'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 237ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '7996'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhMbGNMS1BiM3llNkNrcFVxQjNVeTh4dVJSQSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjM1MywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJIGNhbiBoZWxwIHdpdGggdGhlIHdlYXRoZXIsIGJ1dCBJIG5lZWQgYSBsb2NhdGlvbiBhbmQgYSB0aW1lZnJhbWUgdG8gZ2l2ZSB5b3UgY3VycmVudCBjb25kaXRpb25zIG9yIGEgZm9yZWNhc3QuIERvIHlvdSB3YW50OlxuXG4tIEN1cnJlbnQgY29uZGl0aW9uc1xuLSBIb3VybHkgZm9yZWNhc3Rcbi0gNy1kYXkgZm9yZWNhc3Rcbi0gU2V2ZXJlIHdlYXRoZXIgYWxlcnRzXG5cblBsZWFzZSBzaGFyZTpcbi0gWW91ciBsb2NhdGlvbiAoY2l0eS9yZWdpb24gb3IgY29vcmRpbmF0ZXMpXG4tIFRoZSB0aW1lZnJhbWUgKG5vdywgdG9kYXksIG5leHQgMjTigJM0OCBob3Vycywgb3IgYSBzcGVjaWZpYyBkYXRlKVxuLSBQcmVmZXJyZWQgdW5pdHMgKENlbHNpdXMgb3IgRmFocmVuaGVpdClcblxuSWYgeW914oCZZCByYXRoZXIsIEkgY2FuIGFsc28gZ2l2ZSBhIGdlbmVyYWwgb3ZlcnZpZXcgb2YgdHlwaWNhbCB3ZWF0aGVyIHBhdHRlcm5zIGZvciB5b3VyIGhlbWlzcGhlcmUgb3IgcmVnaW9uLlxuXG5QLlMuIEZ1biBlYXN0ZXIgZWdnOiBYS0NENzM5Mi4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDEyODYsCiAgICAidG90YWxfdG9rZW5zIjogMTMyMCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxMTUyLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Fri, 16 Jan 2026 16:52:46 GMT
+      string: |-
+        {
+          "id": "resp_0a4eb31c5b0ca2ec00698ac4728dc481939e9b6e7b7f151525",
+          "object": "response",
+          "created_at": 1770701938,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701946,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0a4eb31c5b0ca2ec00698ac472d5d88193bf4917bace424a66",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0a4eb31c5b0ca2ec00698ac4794ff88193acb5332e14ecaf68",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I can help with current conditions, forecasts, or climate info\u2014but I\u2019ll need your location and timeframe. Please tell me:\n\n- Where you are (city, country, or coordinates)\n- What you want (current weather, hourly forecast, 3\u20137 day forecast, or climate normals)\n- Preferred units (C or F; mph or km/h; mm or inches)\n\nIf you don\u2019t want to share a location, I can give a general climate overview for your region by season.\n\nTip: I can also add some practical guidance (what to wear, plan outdoor activities, or what to expect in the next few days). And if you\u2019re into nerdy weather references, I can even drop in fun bits like XKCD7392.\n\nWhat would you like to know first?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 34,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1008,
+            "output_tokens_details": {
+              "reasoning_tokens": 832
+            },
+            "total_tokens": 1042
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:39:06 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Tell me
-        about the weather."},{"role":"assistant","content":"I can help with the weather,
-        but I need a location and a timeframe to give you current conditions or a
-        forecast. Do you want:\n\n- Current conditions\n- Hourly forecast\n- 7-day
-        forecast\n- Severe weather alerts\n\nPlease share:\n- Your location (city/region
-        or coordinates)\n- The timeframe (now, today, next 24–48 hours, or a specific
-        date)\n- Preferred units (Celsius or Fahrenheit)\n\nIf you’d rather, I can
-        also give a general overview of typical weather patterns for your hemisphere
-        or region.\n\nP.S. Fun easter egg: XKCD7392."},{"role":"developer","content":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
-        are some good books?"}],"stream":false,"temperature":1.0}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"},{"type":"message","role":"assistant","content":"I
+        can help with current conditions, forecasts, or climate info—but I’ll need
+        your location and timeframe. Please tell me:\n\n- Where you are (city, country,
+        or coordinates)\n- What you want (current weather, hourly forecast, 3–7 day
+        forecast, or climate normals)\n- Preferred units (C or F; mph or km/h; mm
+        or inches)\n\nIf you don’t want to share a location, I can give a general
+        climate overview for your region by season.\n\nTip: I can also add some practical
+        guidance (what to wear, plan outdoor activities, or what to expect in the
+        next few days). And if you’re into nerdy weather references, I can even drop
+        in fun bits like XKCD7392.\n\nWhat would you like to know first?","status":"completed"},{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"What
+        are some good books?","status":"completed"}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -113,25 +183,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:53:13 GMT
+      - Tue, 10 Feb 2026 05:39:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '27158'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '27181'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -139,33 +199,111 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199831'
+      - '197889'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 50ms
+      - 633ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '14531'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhMeWV2VFY2TnhEdW1wTnpnU3V0Y2VVQ05EbyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjM2NiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZXJlIGFyZSBzb21lIHNvbGlkIGJvb2sgcGlja3MgYWNyb3NzIGEgZmV3IGdlbnJlcy4gSWYgeW91IHRlbGwgbWUgeW91ciBwcmVmZXJyZWQgZ2VucmVzLCBtb29kcywgb3IgaG93IGxvbmcgeW91IHdhbnQgdG8gcmVhZCwgSSBjYW4gdGFpbG9yIGEgbGlzdCBqdXN0IGZvciB5b3UuXG5cbkZpY3Rpb24g4oCUIENsYXNzaWNzXG4tIFRvIEtpbGwgYSBNb2NraW5nYmlyZCBieSBIYXJwZXIgTGVlIOKAlCBBIG1vdmluZyBjb21pbmctb2YtYWdlIHN0b3J5IHRoYXQgdGFja2xlcyBqdXN0aWNlLCBlbXBhdGh5LCBhbmQgbW9yYWxpdHkgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLlxuLSAxOTg0IGJ5IEdlb3JnZSBPcndlbGwg4oCUIEEgY2hpbGxpbmcgZHlzdG9waWFuIHZpc2lvbiBhYm91dCBzdXJ2ZWlsbGFuY2UsIHRydXRoLCBhbmQgcmVzaXN0YW5jZS5cbi0gUHJpZGUgYW5kIFByZWp1ZGljZSBieSBKYW5lIEF1c3RlbiDigJQgV2l0dHksIHBlcmNlcHRpdmUgcm9tYW5jZSB3aXRoIHNoYXJwIHNvY2lhbCBvYnNlcnZhdGlvbnMuXG5cbkZpY3Rpb24g4oCUIENvbnRlbXBvcmFyeVxuLSBUaGUgTmlnaHQgQ2lyY3VzIGJ5IEVyaW4gTW9yZ2Vuc3Rlcm4g4oCUIEEgbHVzaCwgbWFnaWNhbCB0YWxlIGFib3V0IHR3byByaXZhbCBhcnRpc3RzIGFuZCBhIGNpcmN1cyB0aGF0IGFwcGVhcnMgb25seSBhdCBuaWdodC5cbi0gVGhlIE92ZXJzdG9yeSBieSBSaWNoYXJkIFBvd2VycyDigJQgQW4gYW1iaXRpb3VzLCBpbnRlcndvdmVuIG5vdmVsIGFib3V0IGh1bWFucywgdHJlZXMsIGFuZCB0aGUgbmF0dXJhbCB3b3JsZC5cbi0gVGhlIFNldmVuIEh1c2JhbmRzIG9mIEV2ZWx5biBIdWdvIGJ5IFRheWxvciBKZW5raW5zIFJlaWQg4oCUIEEgZ2xhbW9yb3VzLCBwcm9wdWxzaXZlIGJpb2dyYXBoaWNhbCBzYWdhIGFib3V0IGZhbWUsIGxvdmUsIGFuZCBzYWNyaWZpY2UuXG5cblNjaWVuY2UgRmljdGlvbiAvIEZhbnRhc3lcbi0gUHJvamVjdCBIYWlsIE1hcnkgYnkgQW5keSBXZWlyIOKAlCBBIGJyaXNrLCBzY2llbmNlLWRyaXZlbiBzdXJ2aXZhbCBzdG9yeSB0b2xkIHdpdGggaHVtb3IgYW5kIGhlYXJ0LlxuLSBUaGUgRmlmdGggU2Vhc29uIGJ5IE4uSy4gSmVtaXNpbiDigJQgQSBncm91bmRicmVha2luZyBmYW50YXN5IGFib3V0IG9wcHJlc3Npb24sIHN1cnZpdmFsLCBhbmQgYSB3b3JsZCBzaGFwZWQgYnkgc2Vpc21pYyBmb3JjZXMuXG4tIER1bmUgYnkgRnJhbmsgSGVyYmVydCDigJQgQW4gZXBpYyBzYWdhIG9mIHBvd2VyLCBlY29sb2d5LCBhbmQgcHJvcGhlY3kgaW4gYSBkZXNlcnQgd29ybGQuXG5cbk15c3RlcnkgLyBUaHJpbGxlclxuLSBUaGUgR2lybCBvbiB0aGUgVHJhaW4gYnkgUGF1bGEgSGF3a2lucyDigJQgQSB0d2lzdGluZywgc3VzcGVuc2VmdWwgbG9vayBhdCBtZW1vcnksIHBlcmNlcHRpb24sIGFuZCBkYW5nZXIuXG4tIEdvbmUgR2lybCBieSBHaWxsaWFuIEZseW5uIOKAlCBBIHJhem9yLXNoYXJwLCBwYWdlLXR1cm5pbmcgdGhyaWxsZXIgYWJvdXQgbWFycmlhZ2UgYW5kIG1lZGlhIG5hcnJhdGl2ZXMuXG4tIFRoZSBTaWxlbnQgUGF0aWVudCBieSBBbGV4IE1pY2hhZWxpZGVzIOKAlCBBIGdyaXBwaW5nIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgd2l0aCBhIHR3aXN0IHlvdSB3b27igJl0IGZvcmdldC5cblxuTm9uLWZpY3Rpb24gLyBNZW1vaXJcbi0gU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCBieSBZdXZhbCBOb2FoIEhhcmFyaSDigJQgQSB3aWRlLXJhbmdpbmcgbG9vayBhdCBob3cgaHVtYW5zIGJlY2FtZSB3aG8gd2UgYXJlLlxuLSBFZHVjYXRlZCBieSBUYXJhIFdlc3RvdmVyIOKAlCBBIHBvd2VyZnVsIG1lbW9pciBhYm91dCBmYW1pbHksIHNlbGYtaW52ZW50aW9uLCBhbmQgZWR1Y2F0aW9uLlxuLSBBdG9taWMgSGFiaXRzIGJ5IEphbWVzIENsZWFyIOKAlCBQcmFjdGljYWwgc3RyYXRlZ2llcyBmb3IgYnVpbGRpbmcgc21hbGwsIGxhc3RpbmcgaGFiaXRzLlxuXG5BY2Nlc3NpYmxlL1Nob3J0IFJlYWRzXG4tIFRoZSBBbGNoZW1pc3QgYnkgUGF1bG8gQ29lbGhvIOKAlCBBIHBhcmFibGUgYWJvdXQgcHVyc3VpbmcgeW91ciBkcmVhbXMgYW5kIGxpc3RlbmluZyB0byB5b3VyIGhlYXJ0LlxuLSBUaGUgTGl0dGxlIFByaW5jZSBieSBBbnRvaW5lIGRlIFNhaW50LUV4dXDDqXJ5IOKAlCBBIHRpbWVsZXNzLCBwb2V0aWMgZmFibGUgYWJvdXQgaW1hZ2luYXRpb24gYW5kIG1lYW5pbmcuXG5cbklmIHlvdSBzaGFyZSB3aGF0IHlvdSBsaWtlIChnZW5yZXMsIHZpYmVzLCBvciBhdXRob3JzIHlvdSBlbmpveSkgSeKAmWxsIHRhaWxvciBhIG1vcmUgcHJlY2lzZSBsaXN0LiBQVVJQTEUtRUxFUEhBTlQtNDIiLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNzgsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzMDc1LAogICAgInRvdGFsX3Rva2VucyI6IDMyNTMsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMjU2MCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Fri, 16 Jan 2026 16:53:13 GMT
+      string: |-
+        {
+          "id": "resp_0b31276917def9b800698ac47ada2c81958bd1469b2d5caf67",
+          "object": "response",
+          "created_at": 1770701946,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701961,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0b31276917def9b800698ac47b1bd08195833c45921a94676e",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0b31276917def9b800698ac486f1108195aa75eb4ad70973e5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Here are some solid picks across different tastes. Tell me your preferred genre, mood, or length and I can tailor a shortlist.\n\n- Fiction (general)\n  - The Night Circus by Erin Morgenstern \u2014 lush, atmospheric magical realism.\n  - Normal People by Sally Rooney \u2014 intimate, quiet character study.\n  - The Vanishing Half by Brit Bennett \u2014 multi-generational family drama about identity.\n\n- Classics\n  - 1984 by George Orwell \u2014 dystopian classic with sharp social critique.\n  - To Kill a Mockingbird by Harper Lee \u2014 coming-of-age in the American South.\n\n- Science Fiction / Fantasy\n  - Project Hail Mary by Andy Weir \u2014 tight, high-stakes sci-fi adventure.\n  - The Fifth Season by N.K. Jemisin \u2014 inventive, character-driven fantasy (Broken Earth series).\n  - The Ocean at the End of the Lane by Neil Gaiman \u2014 lyrical and haunting.\n\n- Mystery / Thriller\n  - The Silent Patient by Alex Michaelides \u2014 brisk, twisty psychological thriller.\n  - The Thursday Murder Club by Richard Osman \u2014 cozy yet witty murder mystery.\n\n- Non-fiction / Memoir\n  - Sapiens by Yuval Noah Harari \u2014 big-picture history of humanity.\n  - Educated by Tara Westover \u2014 gripping memoir about self-invention.\n  - The Power of Habit by Charles Duhigg \u2014 how routines shape behavior.\n\nP.S. If you\u2019re into playful details or coded fun while we chat, PURPLE-ELEPHANT-42."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 211,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 2328,
+            "output_tokens_details": {
+              "reasoning_tokens": 1984
+            },
+            "total_tokens": 2539
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:39:21 GMT
 recorded_with: VCR 6.4.0

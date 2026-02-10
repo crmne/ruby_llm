@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Hello","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>-context-key
+      - Bearer test-context-key
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,42 +23,46 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 06 Feb 2026 11:30:43 GMT
+      - Tue, 10 Feb 2026 05:40:58 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
       Content-Length:
-      - '266'
+      - '245'
       Connection:
       - keep-alive
-      Vary:
-      - Origin
+      Server:
+      - cloudflare
+      Www-Authenticate:
+      - Bearer realm="OpenAI API"
+      Openai-Version:
+      - '2020-10-01'
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '19'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         {
-            "error": {
-                "message": "Incorrect API key provided: <GPUSTACK_API_KEY>-con****-key. You can find your API key at https://platform.openai.com/account/api-keys.",
-                "type": "invalid_request_error",
-                "param": null,
-                "code": "invalid_api_key"
-            }
+          "error": {
+            "message": "Incorrect API key provided: test-con****-key. You can find your API key at https://platform.openai.com/account/api-keys.",
+            "type": "invalid_request_error",
+            "param": null,
+            "code": "invalid_api_key"
+          }
         }
-  recorded_at: Fri, 06 Feb 2026 11:30:43 GMT
+  recorded_at: Tue, 10 Feb 2026 05:40:58 GMT
 recorded_with: VCR 6.4.0

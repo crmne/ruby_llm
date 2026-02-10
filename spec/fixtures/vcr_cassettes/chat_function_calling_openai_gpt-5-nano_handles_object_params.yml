@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Call the
-        object params tool with window start 2025-01-01 and end 2025-01-02 and include
-        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result.","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -28,25 +28,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:11:07 GMT
+      - Tue, 10 Feb 2026 05:19:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '6108'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '6132'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -54,77 +44,141 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199973'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '2014'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyhddFcS3eyQtIwDvOChBHJL3Wrgh",
-          "object": "chat.completion",
-          "created": 1768583461,
+          "id": "resp_0707f41e9374418400698abfe2d71081978b071dedd328b19c",
+          "object": "response",
+          "created_at": 1770700770,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700772,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_omhVESId5PHqXraB3SArUrZB",
-                    "type": "function",
-                    "function": {
-                      "name": "object_params",
-                      "arguments": "{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0707f41e9374418400698abfe31ef4819798904790e3a72715",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_0707f41e9374418400698abfe489f08197ba55eb5ffc6811ec",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}",
+              "call_id": "call_sXHUPDE4UetuPswn32PiT927",
+              "name": "object_params"
             }
           ],
-          "usage": {
-            "prompt_tokens": 173,
-            "completion_tokens": 423,
-            "total_tokens": 596,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 384,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Uses params DSL object support",
+              "name": "object_params",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "window": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "string",
+                        "description": "ISO start"
+                      },
+                      "end": {
+                        "type": "string",
+                        "description": "ISO end"
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Time window to schedule"
+                  }
+                },
+                "required": [
+                  "window"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 91,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 385,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 476
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:11:07 GMT
+  recorded_at: Tue, 10 Feb 2026 05:19:32 GMT
 recorded_with: VCR 6.4.0

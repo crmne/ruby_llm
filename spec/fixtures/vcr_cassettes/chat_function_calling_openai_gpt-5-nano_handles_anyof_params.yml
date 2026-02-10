@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Call the
-        any-of params tool for task \"Review PR\" with status \"pending\" and report
-        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Call
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        report the result.","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -27,25 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:47 GMT
+      - Tue, 10 Feb 2026 05:19:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '1249'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '1528'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -53,77 +43,142 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199974'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 7ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Decorator-Operation:
-      - router.openai.svc.cluster.local:5004/*
+      Openai-Processing-Ms:
+      - '1750'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-CyhdNovZZs8ok6q2bdn1jaRbxXzOe",
-          "object": "chat.completion",
-          "created": 1768583445,
+          "id": "resp_009744c32da6c6f900698abfe0a27081968cd3a770f95a8911",
+          "object": "response",
+          "created_at": 1770700768,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700770,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_voAppfilA29tF4W2tddCewWT",
-                    "type": "function",
-                    "function": {
-                      "name": "any_of_params",
-                      "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_009744c32da6c6f900698abfe0e9588196b789fe48752f0588",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_009744c32da6c6f900698abfe1f5708196aa8908b45cb9df70",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}",
+              "call_id": "call_6iib1nxzR5GRfeYUDwJrOB2y",
+              "name": "any_of_params"
             }
           ],
-          "usage": {
-            "prompt_tokens": 168,
-            "completion_tokens": 93,
-            "total_tokens": 261,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 64,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Uses params DSL any_of support",
+              "name": "any_of_params",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "task": {
+                    "type": "string",
+                    "description": "Task description"
+                  },
+                  "status": {
+                    "description": "Optional task status",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "done"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "task",
+                  "status"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 86,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 239,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 325
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:10:47 GMT
+  recorded_at: Tue, 10 Feb 2026 05:19:30 GMT
 recorded_with: VCR 6.4.0

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Hello","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -23,25 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:34:28 GMT
+      - Tue, 10 Feb 2026 04:52:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3572'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3593'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -49,35 +39,111 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199996'
+      - '199805'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 58ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '691'
-      X-Envoy-Upstream-Service-Time:
-      - '695'
+      - '3611'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWg0RFdMNGJuYkVJd3J5UGc0UnVFSUd3ZDJpbSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MTI2NSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZWxsbyEgSG93IGNhbiBJIGhlbHAgeW91IHRvZGF5P1xuXG5JIGNhbiBhbnN3ZXIgcXVlc3Rpb25zLCBoZWxwIHdpdGggd3JpdGluZywgYnJhaW5zdG9ybSBpZGVhcywgZXhwbGFpbiBjb25jZXB0cywgcGxhbiB0YXNrcywgb3IgYXNzaXN0IHdpdGggY29kaW5nLiBUZWxsIG1lIHdoYXQgeW914oCZcmUgd29ya2luZyBvbiBvciB3aGF0IHlvdeKAmWQgbGlrZSB0byBkby4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiA3LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMzEyLAogICAgInRvdGFsX3Rva2VucyI6IDMxOSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAyNTYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Fri, 16 Jan 2026 16:34:28 GMT
+      string: |-
+        {
+          "id": "resp_03c24ddfd6cedf1e00698ab96d2a208194979aff6490f6d836",
+          "object": "response",
+          "created_at": 1770699117,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699120,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_03c24ddfd6cedf1e00698ab96d7070819493bf5023bef8e7b5",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_03c24ddfd6cedf1e00698ab96fcf948194840e4ff5c248e0a3",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Hi there! How can I help today? I can answer questions, explain concepts, help with writing or coding, plan something, brainstorm ideas, or analyze data/images. \n\nA few quick prompts if you\u2019re unsure:\n- Explain a topic in simple terms\n- Draft an email or document\n- Solve a math problem or debug code\n- Plan a trip or project\n- Summarize or translate text\n- Analyze an image (if you have one)\n\nWhat would you like to do?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 7,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 412,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 419
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 04:52:00 GMT
 recorded_with: VCR 6.4.0

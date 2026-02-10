@@ -2,13 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Call the
-        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Call
+        the array params tool with tags [\"red\",\"blue\"] and tell me the combined
+        tags.","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -26,25 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:32 GMT
+      - Tue, 10 Feb 2026 05:19:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2092'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2163'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -52,75 +43,129 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199977'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 6ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      Openai-Processing-Ms:
+      - '1463'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-Cyhd8ZHnpxoKK88HXX3sLsAoQkzZp",
-          "object": "chat.completion",
-          "created": 1768583430,
+          "id": "resp_0b5264a16fcb73e700698abfde9d808193895992896dbcbd95",
+          "object": "response",
+          "created_at": 1770700766,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700767,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_iLBMKbo2kYARrVBUF0n3jJw5",
-                    "type": "function",
-                    "function": {
-                      "name": "array_params",
-                      "arguments": "{\"tags\":[\"red\",\"blue\"]}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0b5264a16fcb73e700698abfdee5588193a1be1d5d5b0962fb",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_0b5264a16fcb73e700698abfdfd4a08193a4b2b0dcaa89407d",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"tags\":[\"red\",\"blue\"]}",
+              "call_id": "call_QAuWH686eQxzXvYleDh1YLb6",
+              "name": "array_params"
             }
           ],
-          "usage": {
-            "prompt_tokens": 150,
-            "completion_tokens": 154,
-            "total_tokens": 304,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 128,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Uses params DSL array support",
+              "name": "array_params",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "tags": {
+                    "type": "array",
+                    "description": "List of tags to combine",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "tags"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 68,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 222,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 290
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:10:32 GMT
+  recorded_at: Tue, 10 Feb 2026 05:19:28 GMT
 recorded_with: VCR 6.4.0

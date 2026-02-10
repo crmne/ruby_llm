@@ -27,39 +27,39 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Last-Modified:
-      - Fri, 16 Jan 2026 00:22:16 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"696984b8-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Fri, 16 Jan 2026 16:34:17 GMT
+      - Tue, 10 Feb 2026 05:06:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - CAA8:CA0BF:61D6EC:632DE0:696A6631
+      - 4F8C:1877FE:45EB788:4C7336C:698ABA7D
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Fri, 16 Jan 2026 16:43:26 GMT
+      - Tue, 10 Feb 2026 04:56:29 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '52'
       X-Served-By:
-      - cache-fra-etou8220194-FRA
+      - cache-hhr-khhr2060024-HHR
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1768581807.888765,VS0,VE1
+      - S1770699389.333205,VS0,VE82
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 1a6f7ad14b4ce445ac06377a5488060526a67fa9
+      - 65e9f2b878040646318480bdd0f20c4685f3e339
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,14 +95,14 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 16 Jan 2026 16:43:26 GMT
+  recorded_at: Tue, 10 Feb 2026 04:56:29 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":[{"type":"input_text","text":"What''s
+        in this file?"},{"type":"input_text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
         BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
@@ -135,7 +135,7 @@ http_interactions:
         aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
         IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
         LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
+        A PARTICULAR\n     PURPOSE.\n</file>"}],"status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -153,25 +153,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:43:38 GMT
+      - Tue, 10 Feb 2026 04:56:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '11104'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '11121'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -179,33 +169,111 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199353'
+      - '198686'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 194ms
+      - 394ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '14352'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhDeG9IdTNoSWNBZzJlVXlGV2JjVjdoaktIYyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MTgwNywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJUaGlzIGlzIHRoZSBsaWNlbnNlIHRleHQgZm9yIFJ1YnkgKHRoZSBSdWJ5IExpY2Vuc2UsIGEgcGVybWlzc2l2ZSBsaWNlbnNlIHNpbWlsYXIgdG8gQlNEKS5cblxuS2V5IHBvaW50cyBpbiBwbGFpbiBsYW5ndWFnZTpcbi0gQ29weXJpZ2h0OiBZdWtpaGlybyBNYXRzdW1vdG8gKG1hdHpAbmV0bGFiLmpwKS5cbi0gWW91IG1heSByZWRpc3RyaWJ1dGUgYW5kL29yIG1vZGlmeSBSdWJ5IHVuZGVyIGVpdGhlciB0aGUgMi1jbGF1c2UgQlNEIExpY2Vuc2UgKEJTREwpIG9yIHRoZSBjb25kaXRpb25zIGxpc3RlZCBpbiB0aGlzIGZpbGUuXG4tIFZlcmJhdGltIGNvcGllczogWW91IG1heSBmcmVlbHkgY29weSBhbmQgZ2l2ZSBhd2F5IHRoZSBzb3VyY2UgYXMgbG9uZyBhcyB5b3Uga2VlcCB0aGUgb3JpZ2luYWwgY29weXJpZ2h0IG5vdGljZXMgYW5kIGRpc2NsYWltZXJzLlxuLSBNb2RpZnlpbmc6IFlvdSBtYXkgbW9kaWZ5IHRoZSBzb2Z0d2FyZSBpZiB5b3UgbWVldCBhdCBsZWFzdCBvbmUgb2YgdGhlc2U6XG4gIC0gUHV0IHlvdXIgY2hhbmdlcyBpbiB0aGUgUHVibGljIERvbWFpbiBvciBmcmVlbHkgYXZhaWxhYmxlIChlLmcuLCBwb3N0IHRoZW0gcHVibGljbHkgb3IgYWxsb3cgdGhlIGF1dGhvciB0byBpbmNsdWRlIHRoZW0pLlxuICAtIFVzZSB0aGUgbW9kaWZpZWQgc29mdHdhcmUgb25seSBpbnNpZGUgeW91ciBvcmdhbml6YXRpb24uXG4gIC0gRGlzdHJpYnV0ZSBub24tc3RhbmRhcmQgYmluYXJpZXMgd2l0aCBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbC5cbiAgLSBNYWtlIG90aGVyIGRpc3RyaWJ1dGlvbiBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuLSBEaXN0cmlidXRpb24gKGJpbmFyeS9vYmplY3QgY29kZSk6IFlvdSBtYXkgZGlzdHJpYnV0ZSBiaW5hcmllcyBpZiB5b3UgZWl0aGVyOlxuICAtIEluY2x1ZGUgdGhlIGJpbmFyaWVzIGFuZCBsaWJyYXJ5IGZpbGVzIHdpdGggaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgZGlzdHJpYnV0aW9uLCBvclxuICAtIEluY2x1ZGUgdGhlIG1hY2hpbmUtcmVhZGFibGUgc291cmNlLCBvclxuICAtIERpc3RyaWJ1dGUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIHdpdGggaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwsIG9yXG4gIC0gTWFrZSBvdGhlciBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuLSBJbmNsdWRpbmcgaW4gb3RoZXIgc29mdHdhcmU6IFlvdSBtYXkgbW9kaWZ5IGFuZCBpbmNsdWRlIHBhcnRzIG9mIFJ1YnkgaW4gb3RoZXIgc29mdHdhcmUgKGV2ZW4gY29tbWVyY2lhbCksIGJ1dCBzb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gYXJlIG5vdCB3cml0dGVuIGJ5IHRoZSBhdXRob3IgYW5kIGFyZW7igJl0IHVuZGVyIHRoZXNlIHRlcm1zIChzZWUgTEVHQUwgZm9yIHRoZSBsaXN0KS5cbi0gU2NyaXB0cyBhbmQgaW5wdXRzL291dHB1dHM6IFNjcmlwdCBhbmQgbGlicmFyeSBpbnB1dHMvb3V0cHV0cyBkbyBub3QgYXV0b21hdGljYWxseSBmYWxsIHVuZGVyIFJ1YnnigJlzIGNvcHlyaWdodCBhbmQgYmVsb25nIHRvIHdob2V2ZXIgZ2VuZXJhdGVkIHRoZW07IHRoZXkgbWF5IGJlIHNvbGQgb3IgY29tYmluZWQgd2l0aCBSdWJ5LlxuLSBXYXJyYW50aWVzOiBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQg4oCcYXMgaXPigJ0gd2l0aG91dCB3YXJyYW50aWVzIChleHByZXNzIG9yIGltcGxpZWQpLlxuXG5Ob3RlOiBUaGVyZeKAmXMgYSBMRUdBTCBmaWxlIHJlZmVyZW5jZWQgZm9yIGRldGFpbHMgb24gZmlsZXMgbm90IGNvdmVyZWQgYnkgdGhlc2UgdGVybXMuXG5cbklmIHlvdeKAmXJlIHBsYW5uaW5nIHRvIHJldXNlIG9yIHJlZGlzdHJpYnV0ZSBSdWJ5LCB5b3XigJlsbCB3YW50IHRvIGtlZXAgdGhlc2UgcG9pbnRzIGluIG1pbmQgYW5kIGZvbGxvdyB0aGUgY29uZGl0aW9ucyAocHJlc2VydmUgbm90aWNlcywgcHJvdmlkZSBzb3VyY2VzIG9yIGluc3RydWN0aW9ucyBhcyByZXF1aXJlZCwgZXRjLikuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNTM5LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTU3NSwKICAgICJ0b3RhbF90b2tlbnMiOiAyMTE0LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDExNTIsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Fri, 16 Jan 2026 16:43:38 GMT
+      string: |-
+        {
+          "id": "resp_04a442a488a2155700698aba7da3bc8193957820b2c1c3910e",
+          "object": "response",
+          "created_at": 1770699389,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699403,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_04a442a488a2155700698aba7df9a48193a1c635bc39e7b40e",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_04a442a488a2155700698aba88c7048193aab6654e9d14b103",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "This is the Ruby license text (license.txt) by Yukihiro Matsumoto. It describes how you may use, modify, and redistribute Ruby.\n\nKey points in plain language:\n- It\u2019s a dual-licensing setup: you may follow either the 2-clause BSD-style terms (BSDL) or the terms listed in this file.\n- Verbatim copies: You can make and give away exact copies of the source with all copyright notices.\n- Modifications: You may modify the software, but you must meet at least one of these options:\n  a) Place your changes in the Public Domain or make them freely available (e.g., publish them).\n  b) Use the modified software only within your organization.\n  c) Distribute non-standard binaries with instructions on how to get the original distribution.\n  d) Make other distribution arrangements with the author.\n- Distribution (binaries/object code): You may distribute binaries if you also provide the source or instructions to obtain the original distribution, or follow other specified distribution arrangements.\n- Inclusion in other software: You may modify and include parts of the software in other software (possibly commercial), but some files in the distribution are not written by the author and may not be covered by these terms. See LEGAL for those files.\n- Input/output files: Scripts and library files you generate or use with the software don\u2019t automatically fall under the software\u2019s copyright.\n- Warranty: The software is provided \"as is\" without any warranties.\n  \nIf you want, I can boil this down further or help you determine what obligations apply to a specific project."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 539,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1531,
+            "output_tokens_details": {
+              "reasoning_tokens": 1152
+            },
+            "total_tokens": 2070
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 04:56:44 GMT
 recorded_with: VCR 6.4.0

@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"stream":false}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        your favorite Ruby feature?","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -24,23 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Feb 2026 11:30:08 GMT
+      - Tue, 10 Feb 2026 04:51:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '1671'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -48,33 +40,106 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199989'
+      - '199968'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 9ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '1213'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1ENkVLRW01UWJwblNqd2FIaGQwYzZJN21WVHM4NCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDM3NzQwNiwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIk9uZSBvZiBteSBmYXZvcml0ZSBSdWJ5IGZlYXR1cmVzIGlzIGl0cyBlbGVnYW50IGFuZCBleHByZXNzaXZlIHN5bnRheCwgcGFydGljdWxhcmx5IHRoZSB1c2Ugb2YgYmxvY2tzIGFuZCBpdGVyYXRvcnMuIFJ1YnkgbWFrZXMgaXQgaW5jcmVkaWJseSBzdHJhaWdodGZvcndhcmQgdG8gaXRlcmF0ZSBvdmVyIGNvbGxlY3Rpb25zLCBkZWZpbmUgY29uY2lzZSBtZXRob2RzLCBhbmQgd3JpdGUgY29kZSB0aGF0J3MgYm90aCByZWFkYWJsZSBhbmQgcG93ZXJmdWwuIEZvciBleGFtcGxlLCB0aGUgdXNlIG9mIGBlYWNoYCwgYG1hcGAsIGFuZCBvdGhlciBlbnVtZXJhYmxlIG1ldGhvZHMgYWxsb3dzIGZvciBjbGVhbiBhbmQgZGVjbGFyYXRpdmUgZGF0YSBwcm9jZXNzaW5nOlxuXG5gYGBydWJ5XG5bMSwgMiwgM10ubWFwIHsgfG58IG4gKiAyIH0gICMgPT4gWzIsIDQsIDZdXG5gYGBcblxuQWRkaXRpb25hbGx5LCBSdWJ5J3MgZmxleGlibGUgb3BlbiBjbGFzc2VzIGFuZCBtZXRhcHJvZ3JhbW1pbmcgY2FwYWJpbGl0aWVzIGFsbG93IGRldmVsb3BlcnMgdG8gZXh0ZW5kIGV4aXN0aW5nIGNsYXNzZXMgb3IgZGVmaW5lIG5ldyBvbmVzIGR5bmFtaWNhbGx5LCBtYWtpbmcgdGhlIGxhbmd1YWdlIHZlcnkgYWRhcHRhYmxlLiBUaGVzZSBmZWF0dXJlcyBjb250cmlidXRlIHRvIHdyaXRpbmcgc3VjY2luY3QsIGV4cHJlc3NpdmUsIGFuZCBtYWludGFpbmFibGUgY29kZeKAlHRyYWl0cyBJIGZpbmQgcGFydGljdWxhcmx5IGFwcGVhbGluZyEiLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAibG9ncHJvYnMiOiBudWxsLAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxMywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE1NywKICAgICJ0b3RhbF90b2tlbnMiOiAxNzAsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9kZTYwNGJkODc3Igp9Cg==
-  recorded_at: Fri, 06 Feb 2026 11:30:08 GMT
+      string: |-
+        {
+          "id": "resp_06a05e2736ad722200698ab968a9748195aa4a4223f500e58d",
+          "object": "response",
+          "created_at": 1770699112,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699113,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "output": [
+            {
+              "id": "msg_06a05e2736ad722200698ab9690da88195a8db55f57d5d73de",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I find Ruby's expressive syntax and focus on developer happiness truly impressive. One of my favorite features is **blocks and closures**, which make Ruby very powerful and flexible for writing elegant code. They enable passing chunks of code around, making iterators, callbacks, and domain-specific languages (DSLs) straightforward and intuitive. This feature, combined with Ruby's natural language-like syntax, allows for concise and readable code that often feels like writing in plain English. Do you have a favorite Ruby feature?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 99,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 112
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 04:51:53 GMT
 recorded_with: VCR 6.4.0

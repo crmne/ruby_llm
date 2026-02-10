@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Roll a
-        die for me"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Roll
+        a die for me","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -25,25 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:11:31 GMT
+      - Tue, 10 Feb 2026 05:16:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2182'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2216'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -51,86 +41,129 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199993'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 2ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      Openai-Processing-Ms:
+      - '1512'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-Cyhe5CQx2xdGINkx3xgR513a1WC35",
-          "object": "chat.completion",
-          "created": 1768583489,
+          "id": "resp_0718ef37e5c6f2ad00698abf193bd48190a6f08b69cd8824a8",
+          "object": "response",
+          "created_at": 1770700569,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700570,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_Sdxe0S5kDRacAx6Xa3g7Y0G2",
-                    "type": "function",
-                    "function": {
-                      "name": "dice_roll",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0718ef37e5c6f2ad00698abf1988c48190bd1d7eb42db886c1",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_0718ef37e5c6f2ad00698abf1a5f348190bb3fbaebc7e63047",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_uqt9fLLPHF2mucdTeGrWybU2",
+              "name": "dice_roll"
             }
           ],
-          "usage": {
-            "prompt_tokens": 128,
-            "completion_tokens": 148,
-            "total_tokens": 276,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 128,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 46,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 194,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 240
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:11:31 GMT
+  recorded_at: Tue, 10 Feb 2026 05:16:10 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Roll a
-        die for me"},{"role":"assistant","tool_calls":[{"id":"call_Sdxe0S5kDRacAx6Xa3g7Y0G2","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_Sdxe0S5kDRacAx6Xa3g7Y0G2"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Roll
+        a die for me","status":"completed"},{"type":"function_call","call_id":"call_uqt9fLLPHF2mucdTeGrWybU2","name":"dice_roll","arguments":"{}","status":"completed"},{"type":"function_call_output","call_id":"call_uqt9fLLPHF2mucdTeGrWybU2","output":"{:roll=>1}","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.0
@@ -148,25 +181,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:11:34 GMT
+      - Tue, 10 Feb 2026 05:16:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2767'
-      Openai-Project:
-      - "<OPENAI_PROJECT>"
-      Openai-Version:
-      - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3042'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -174,65 +197,125 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199989'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      Openai-Processing-Ms:
+      - '3445'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-Cyhe8w8GLs8VGBqKIDKmudxixltFM",
-          "object": "chat.completion",
-          "created": 1768583492,
+          "id": "resp_0abc1253b58bf26700698abf1ace548196950889a28fedb553",
+          "object": "response",
+          "created_at": 1770700570,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700574,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "You rolled a 1 on a 6-sided die. Want to roll again, or roll multiple dice?",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0abc1253b58bf26700698abf1cb0908196bb5921ca138e30d2",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0abc1253b58bf26700698abf1dd4f08196b5d315141a388392",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "You rolled a 1 on a six-sided die.\n\nWant to roll again or roll a different type of die (e.g., 2d6, 1d20)?"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 159,
-            "completion_tokens": 287,
-            "total_tokens": 446,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 256,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 75,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 417,
+            "output_tokens_details": {
+              "reasoning_tokens": 320
+            },
+            "total_tokens": 492
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Fri, 16 Jan 2026 17:11:34 GMT
+  recorded_at: Tue, 10 Feb 2026 05:16:14 GMT
 recorded_with: VCR 6.4.0
