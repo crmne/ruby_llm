@@ -50,7 +50,14 @@ module RubyLLM
                   :logger,
                   :log_file,
                   :log_level,
-                  :log_stream_debug
+                  :log_stream_debug,
+                  # Tracing configuration
+                  :tracing_enabled,
+                  :tracing_log_content,
+                  :tracing_max_content_length,
+                  :tracing_metadata_prefix
+
+    attr_reader :tracing_langsmith_compat
 
     def initialize
       @request_timeout = 300
@@ -73,6 +80,24 @@ module RubyLLM
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       @log_stream_debug = ENV['RUBYLLM_STREAM_DEBUG'] == 'true'
+
+      @tracing_enabled = false
+      @tracing_log_content = false
+      @tracing_max_content_length = 10_000
+      @tracing_metadata_prefix = 'metadata'
+      @tracing_langsmith_compat = false
+    end
+
+    def tracing_langsmith_compat=(value)
+      @tracing_langsmith_compat = value
+      if value
+        # Auto-set metadata prefix for LangSmith when enabling compat mode,
+        # but only if the user hasn't customized it
+        @tracing_metadata_prefix = 'langsmith.metadata' if @tracing_metadata_prefix == 'metadata'
+      elsif @tracing_metadata_prefix == 'langsmith.metadata'
+        # Revert to default when disabling compat mode (if still using langsmith prefix)
+        @tracing_metadata_prefix = 'metadata'
+      end
     end
 
     def instance_variables
