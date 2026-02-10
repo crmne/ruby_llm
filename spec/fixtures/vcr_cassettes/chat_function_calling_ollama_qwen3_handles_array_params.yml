@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the array
+        params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 10 Feb 2026 14:04:22 GMT
+      Content-Length:
+      - '1356'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-359","object":"chat.completion","created":1770732262,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the array params tool with the tags [\"red\", \"blue\"]
+        and get the combined tags. Let me check the function definition.\n\nThe tool''s
+        function is described as taking an array of strings called tags. The parameters
+        use the array DSL, so I need to structure the arguments correctly. The user
+        provided the tags as a list, so I should pass them as a JSON array. \n\nWait,
+        the function''s parameters are expecting an object with a tags array. So the
+        arguments should be {\"tags\": [\"red\", \"blue\"]}. I need to make sure the
+        JSON is properly formatted. Let me verify again. The function''s parameters
+        are defined as {\"tags\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},
+        so the key is \"tags\" and the value is the array. \n\nYes, that''s correct.
+        So the tool call should have the name \"array_params\" and the arguments as
+        specified. I''ll format the JSON accordingly.\n","tool_calls":[{"id":"call_9mscv28i","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":226,"total_tokens":388}}
+
+        '
+  recorded_at: Tue, 10 Feb 2026 14:04:22 GMT
+recorded_with: VCR 6.4.0
