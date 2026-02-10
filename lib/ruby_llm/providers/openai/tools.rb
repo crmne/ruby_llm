@@ -42,17 +42,6 @@ module RubyLLM
           RubyLLM::Utils.deep_merge(definition, tool.provider_params)
         end
 
-        def response_tool_for(tool)
-          parameters_schema = parameters_schema_for(tool)
-
-          {
-            type: 'function',
-            name: tool.name,
-            description: tool.description,
-            parameters: parameters_schema
-          }
-        end
-
         def param_schema(param)
           {
             type: param.type,
