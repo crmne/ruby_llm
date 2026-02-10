@@ -95,7 +95,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     bedrock: {
-      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream',
+      url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',

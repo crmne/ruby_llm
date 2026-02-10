@@ -5,14 +5,14 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"Call
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"any_of_params","description":"Uses
         params DSL any_of support","input_schema":{"type":"object","properties":{"task":{"type":"string","description":"Task
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 06 Feb 2026 07:58:11 GMT
+      - Tue, 10 Feb 2026 09:29:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,25 +41,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-06T07:58:11Z'
+      - '2026-02-10T09:29:44Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-06T07:58:11Z'
+      - '2026-02-10T09:29:44Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-06T07:58:11Z'
+      - '2026-02-10T09:29:44Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-06T07:58:11Z'
+      - '2026-02-10T09:29:44Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -69,7 +69,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '641'
+      - '1061'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -80,7 +80,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01DENnWBcoKvewyw5Sdsat5C","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01B19PgAS5embdZMAUEZE6sb","name":"any_of_params","input":{"task":"Review
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01GeCrpdPGvPswWqbgEpwSaB","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Qbq2SAvkMmCsCvGfXtJgQU","name":"any_of_params","input":{"task":"Review
         PR","status":"pending"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":646,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":74,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Fri, 06 Feb 2026 07:58:11 GMT
+  recorded_at: Tue, 10 Feb 2026 09:29:45 GMT
 recorded_with: VCR 6.4.0

@@ -910,7 +910,7 @@
     "provider": "anthropic",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 +0700",
-    "context_window": 1000000,
+    "context_window": 200000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -958,7 +958,7 @@
         }
       },
       "limit": {
-        "context": 1000000,
+        "context": 200000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -10224,6 +10224,38 @@
     }
   },
   {
+    "id": "amazon.nova-2-sonic-v1:0",
+    "name": "Nova 2 Sonic",
+    "provider": "bedrock",
+    "family": "Nova",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "audio",
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-2-sonic-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
     "id": "amazon.nova-lite-v1:0",
     "name": "Nova Lite",
     "provider": "bedrock",
@@ -10373,6 +10405,202 @@
     }
   },
   {
+    "id": "amazon.nova-premier-v1:0:1000k",
+    "name": "Nova Premier",
+    "provider": "bedrock",
+    "family": "nova",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 1000000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 12.5
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-premier-v1:0:1000k",
+      "inference_types": [],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 2.5,
+        "output": 12.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 16384
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "amazon.nova-premier-v1:0:20k",
+    "name": "Nova Premier",
+    "provider": "bedrock",
+    "family": "nova",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 20000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 12.5
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-premier-v1:0:20k",
+      "inference_types": [],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 2.5,
+        "output": 12.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 16384
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "amazon.nova-premier-v1:0:8k",
+    "name": "Nova Premier",
+    "provider": "bedrock",
+    "family": "nova",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 8000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 12.5
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-premier-v1:0:8k",
+      "inference_types": [],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 2.5,
+        "output": 12.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 16384
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "amazon.nova-premier-v1:0:mm",
+    "name": "Nova Premier",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-premier-v1:0:mm",
+      "inference_types": [],
+      "converse": {}
+    }
+  },
+  {
     "id": "amazon.nova-pro-v1:0",
     "name": "Nova Pro",
     "provider": "bedrock",
@@ -10421,6 +10649,250 @@
         "output": 8192
       },
       "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "amazon.rerank-v1:0",
+    "name": "Rerank 1.0",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.rerank-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-g1-text-02",
+    "name": "Titan Text Embeddings v2",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-g1-text-02",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-image-v1",
+    "name": "Titan Multimodal Embeddings G1",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-image-v1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-image-v1:0",
+    "name": "Titan Multimodal Embeddings G1",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-image-v1:0",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v1",
+    "name": "Titan Embeddings G1 - Text",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v1:2:8k",
+    "name": "Titan Embeddings G1 - Text",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v1:2:8k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-embed-text-v2:0",
+    "name": "Titan Text Embeddings V2",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-embed-text-v2:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "amazon.titan-image-generator-v2:0",
+    "name": "Titan Image Generator G1 v2",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-image-generator-v2:0",
+      "inference_types": [
+        "PROVISIONED",
+        "ON_DEMAND"
+      ],
+      "converse": {}
     }
   },
   {
@@ -10514,6 +10986,37 @@
     }
   },
   {
+    "id": "amazon.titan-tg1-large",
+    "name": "Titan Text Large",
+    "provider": "bedrock",
+    "family": "amazon",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.titan-tg1-large",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
     "id": "anthropic.claude-3-5-haiku-20241022-v1:0",
     "name": "Claude Haiku 3.5",
     "provider": "bedrock",
@@ -10548,16 +11051,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-haiku-20241022-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10612,18 +11110,12 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0",
       "inference_types": [
         "ON_DEMAND",
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10678,17 +11170,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:18k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10743,17 +11229,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10808,17 +11288,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0:51k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10873,17 +11347,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -10938,17 +11406,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:18k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11003,17 +11465,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11068,17 +11524,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0:51k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11184,17 +11634,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-haiku-20240307-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11246,17 +11690,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-haiku-20240307-v1:0:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11308,17 +11746,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-haiku-20240307-v1:0:48k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11370,17 +11802,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-opus-20240229-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11432,15 +11858,9 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-opus-20240229-v1:0:12k",
       "inference_types": [],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11492,15 +11912,9 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-opus-20240229-v1:0:200k",
       "inference_types": [],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11552,15 +11966,9 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-opus-20240229-v1:0:28k",
       "inference_types": [],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11612,17 +12020,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11674,17 +12076,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11736,17 +12132,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:28k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -11865,16 +12255,14 @@
     "id": "anthropic.claude-instant-v1:2:100k",
     "name": "Claude Instant",
     "provider": "bedrock",
-    "family": "claude_instant",
+    "family": "anthropic",
     "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 4096,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
-        "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
@@ -11884,30 +12272,14 @@
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.8,
-          "output_per_million": 2.4
-        },
-        "batch": {
-          "input_per_million": 0.4,
-          "output_per_million": 1.2
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-instant-v1:2:100k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ]
+      "converse": {}
     }
   },
   {
@@ -12282,16 +12654,14 @@
     "id": "anthropic.claude-v2:0:100k",
     "name": "Claude",
     "provider": "bedrock",
-    "family": "claude2",
+    "family": "anthropic",
     "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 4096,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
-        "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
@@ -12301,46 +12671,28 @@
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 8.0,
-          "output_per_million": 24.0
-        },
-        "batch": {
-          "input_per_million": 4.0,
-          "output_per_million": 12.0
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-v2:0:100k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ]
+      "converse": {}
     }
   },
   {
     "id": "anthropic.claude-v2:0:18k",
     "name": "Claude",
     "provider": "bedrock",
-    "family": "claude2",
+    "family": "anthropic",
     "created_at": null,
-    "context_window": 200000,
-    "max_output_tokens": 4096,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
-        "text",
-        "image",
-        "pdf"
+        "text"
       ],
       "output": [
         "text"
@@ -12350,30 +12702,14 @@
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 8.0,
-          "output_per_million": 24.0
-        },
-        "batch": {
-          "input_per_million": 4.0,
-          "output_per_million": 12.0
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-v2:0:18k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ]
+      "converse": {}
     }
   },
   {
@@ -12451,16 +12787,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-v2:1:18k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -12509,16 +12840,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-v2:1:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -12598,7 +12924,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -12609,6 +12936,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.command-r-plus-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -12644,7 +12977,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -12655,6 +12989,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.command-r-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -12714,6 +13054,156 @@
         "output": 4096
       },
       "knowledge": "2023-08"
+    }
+  },
+  {
+    "id": "cohere.embed-english-v3",
+    "name": "Embed English",
+    "provider": "bedrock",
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.embed-english-v3",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "cohere.embed-english-v3:0:512",
+    "name": "Embed English",
+    "provider": "bedrock",
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.embed-english-v3:0:512",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "cohere.embed-multilingual-v3",
+    "name": "Embed Multilingual",
+    "provider": "bedrock",
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.embed-multilingual-v3",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "cohere.embed-multilingual-v3:0:512",
+    "name": "Embed Multilingual",
+    "provider": "bedrock",
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.embed-multilingual-v3:0:512",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "cohere.rerank-v3-5:0",
+    "name": "Rerank 3.5",
+    "provider": "bedrock",
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.rerank-v3-5:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
     }
   },
   {
@@ -12782,7 +13272,8 @@
     },
     "capabilities": [
       "function_calling",
-      "reasoning"
+      "reasoning",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -12793,6 +13284,24 @@
       }
     },
     "metadata": {
+      "provider_name": "DeepSeek",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/deepseek.v3-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 163840,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -12808,6 +13317,49 @@
         "output": 81920
       },
       "knowledge": "2024-07"
+    }
+  },
+  {
+    "id": "deepseek.v3.2",
+    "name": "DeepSeek V3.2",
+    "provider": "bedrock",
+    "family": "DeepSeek V3.2",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 163840,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "DeepSeek",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/deepseek.v3.2",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 163840,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      }
     }
   },
   {
@@ -13371,7 +13923,9 @@
       ]
     },
     "capabilities": [
-      "vision"
+      "vision",
+      "streaming",
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
@@ -13382,6 +13936,27 @@
       }
     },
     "metadata": {
+      "provider_name": "Google",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/google.gemma-3-12b-it",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -13419,7 +13994,8 @@
     },
     "capabilities": [
       "function_calling",
-      "vision"
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -13430,6 +14006,27 @@
       }
     },
     "metadata": {
+      "provider_name": "Google",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/google.gemma-3-27b-it",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -13467,7 +14064,8 @@
     },
     "capabilities": [
       "function_calling",
-      "vision"
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -13478,6 +14076,27 @@
       }
     },
     "metadata": {
+      "provider_name": "Google",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/google.gemma-3-4b-it",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -13492,6 +14111,67 @@
         "context": 128000,
         "output": 4096
       }
+    }
+  },
+  {
+    "id": "luma.ray-v2:0",
+    "name": "Ray v2",
+    "provider": "bedrock",
+    "family": "luma ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "video"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Luma AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/luma.ray-v2:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "meta.llama3-1-405b-instruct-v1:0",
+    "name": "Llama 3.1 405B Instruct",
+    "provider": "bedrock",
+    "family": "meta",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-405b-instruct-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
     }
   },
   {
@@ -13512,7 +14192,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -13523,6 +14204,66 @@
       }
     },
     "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-70b-instruct-v1:0",
+      "inference_types": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-07-23",
+      "cost": {
+        "input": 0.72,
+        "output": 0.72
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "meta.llama3-1-70b-instruct-v1:0:128k",
+    "name": "Llama 3.1 70B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-07-23 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.72,
+          "output_per_million": 0.72
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-70b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -13558,7 +14299,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -13569,6 +14311,66 @@
       }
     },
     "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-8b-instruct-v1:0",
+      "inference_types": [
+        "ON_DEMAND",
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-07-23",
+      "cost": {
+        "input": 0.22,
+        "output": 0.22
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "meta.llama3-1-8b-instruct-v1:0:128k",
+    "name": "Llama 3.1 8B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-07-23 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.22,
+          "output_per_million": 0.22
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-8b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -13635,6 +14437,61 @@
     }
   },
   {
+    "id": "meta.llama3-2-11b-instruct-v1:0:128k",
+    "name": "Llama 3.2 11B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.16,
+          "output_per_million": 0.16
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-11b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.16,
+        "output": 0.16
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
     "id": "meta.llama3-2-1b-instruct-v1:0",
     "name": "Llama 3.2 1B Instruct",
     "provider": "bedrock",
@@ -13681,6 +14538,59 @@
     }
   },
   {
+    "id": "meta.llama3-2-1b-instruct-v1:0:128k",
+    "name": "Llama 3.2 1B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-1b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.1,
+        "output": 0.1
+      },
+      "limit": {
+        "context": 131000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
     "id": "meta.llama3-2-3b-instruct-v1:0",
     "name": "Llama 3.2 3B Instruct",
     "provider": "bedrock",
@@ -13709,6 +14619,59 @@
       }
     },
     "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.15,
+        "output": 0.15
+      },
+      "limit": {
+        "context": 131000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "meta.llama3-2-3b-instruct-v1:0:128k",
+    "name": "Llama 3.2 3B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-3b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -13775,6 +14738,61 @@
     }
   },
   {
+    "id": "meta.llama3-2-90b-instruct-v1:0:128k",
+    "name": "Llama 3.2 90B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.72,
+          "output_per_million": 0.72
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-90b-instruct-v1:0:128k",
+      "inference_types": [
+        "PROVISIONED"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.72,
+        "output": 0.72
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
     "id": "meta.llama3-3-70b-instruct-v1:0",
     "name": "Llama 3.3 70B Instruct",
     "provider": "bedrock",
@@ -13821,6 +14839,57 @@
     }
   },
   {
+    "id": "meta.llama3-3-70b-instruct-v1:0:128k",
+    "name": "Llama 3.3 70B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-12-06 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.72,
+          "output_per_million": 0.72
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-3-70b-instruct-v1:0:128k",
+      "inference_types": [],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-12-06",
+      "cost": {
+        "input": 0.72,
+        "output": 0.72
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
     "id": "meta.llama3-70b-instruct-v1:0",
     "name": "Llama 3 70B Instruct",
     "provider": "bedrock",
@@ -13837,7 +14906,10 @@
         "text"
       ]
     },
-    "capabilities": [],
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
     "pricing": {
       "text_tokens": {
         "standard": {
@@ -13847,6 +14919,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-70b-instruct-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -13881,7 +14959,10 @@
         "text"
       ]
     },
-    "capabilities": [],
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
     "pricing": {
       "text_tokens": {
         "standard": {
@@ -13891,6 +14972,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-8b-instruct-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14023,7 +15110,8 @@
     },
     "capabilities": [
       "function_calling",
-      "reasoning"
+      "reasoning",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14034,6 +15122,24 @@
       }
     },
     "metadata": {
+      "provider_name": "MiniMax",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/minimax.minimax-m2",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 409600,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14047,6 +15153,100 @@
       "limit": {
         "context": 204608,
         "output": 128000
+      }
+    }
+  },
+  {
+    "id": "minimax.minimax-m2.1",
+    "name": "MiniMax M2.1",
+    "provider": "bedrock",
+    "family": "MiniMax M2.1",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 196608,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "MiniMax",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/minimax.minimax-m2.1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 196608,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      }
+    }
+  },
+  {
+    "id": "mistral.magistral-small-2509",
+    "name": "Magistral Small 2509",
+    "provider": "bedrock",
+    "family": "Magistral",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.magistral-small-2509",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
       }
     }
   },
@@ -14068,7 +15268,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14079,6 +15280,27 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.ministral-3-14b-instruct",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14092,6 +15314,53 @@
       "limit": {
         "context": 128000,
         "output": 4096
+      }
+    }
+  },
+  {
+    "id": "mistral.ministral-3-3b-instruct",
+    "name": "Ministral 3B",
+    "provider": "bedrock",
+    "family": "Ministral 3",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.ministral-3-3b-instruct",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
       }
     }
   },
@@ -14113,7 +15382,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14124,6 +15394,27 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.ministral-3-8b-instruct",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14159,7 +15450,8 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14170,6 +15462,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-7b-instruct-v0:2",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14204,7 +15502,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14215,6 +15514,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-large-2402-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14228,6 +15533,84 @@
       "limit": {
         "context": 128000,
         "output": 4096
+      }
+    }
+  },
+  {
+    "id": "mistral.mistral-large-2407-v1:0",
+    "name": "Mistral Large (24.07)",
+    "provider": "bedrock",
+    "family": "mistral ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-large-2407-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "mistral.mistral-large-3-675b-instruct",
+    "name": "Mistral Large 3",
+    "provider": "bedrock",
+    "family": "Ministral 3",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-large-3-675b-instruct",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
       }
     }
   },
@@ -14249,7 +15632,9 @@
       ]
     },
     "capabilities": [
-      "structured_output"
+      "structured_output",
+      "streaming",
+      "function_calling"
     ],
     "pricing": {
       "text_tokens": {
@@ -14260,6 +15645,12 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mixtral-8x7b-instruct-v0:1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14295,7 +15686,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14306,6 +15698,22 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.voxtral-mini-3b-2507",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 32768,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14341,7 +15749,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14352,6 +15761,22 @@
       }
     },
     "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.voxtral-small-24b-2507",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 32768,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14372,7 +15797,7 @@
     "id": "moonshot.kimi-k2-thinking",
     "name": "Kimi K2 Thinking",
     "provider": "bedrock",
-    "family": null,
+    "family": "Kimi K2",
     "created_at": "2025-12-02 00:00:00 +0700",
     "context_window": 256000,
     "max_output_tokens": 256000,
@@ -14387,7 +15812,8 @@
     },
     "capabilities": [
       "function_calling",
-      "reasoning"
+      "reasoning",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14398,6 +15824,24 @@
       }
     },
     "metadata": {
+      "provider_name": "Moonshot AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/moonshot.kimi-k2-thinking",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14412,6 +15856,55 @@
       "limit": {
         "context": 256000,
         "output": 256000
+      }
+    }
+  },
+  {
+    "id": "moonshotai.kimi-k2.5",
+    "name": "Kimi K2.5",
+    "provider": "bedrock",
+    "family": "Kimi K2.5",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Moonshot AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/moonshotai.kimi-k2.5",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
       }
     }
   },
@@ -14435,7 +15928,8 @@
     },
     "capabilities": [
       "function_calling",
-      "vision"
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14446,6 +15940,27 @@
       }
     },
     "metadata": {
+      "provider_name": "NVIDIA",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/nvidia.nemotron-nano-12b-v2",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14459,6 +15974,49 @@
       "limit": {
         "context": 128000,
         "output": 4096
+      }
+    }
+  },
+  {
+    "id": "nvidia.nemotron-nano-3-30b",
+    "name": "Nemotron Nano 3 30B",
+    "provider": "bedrock",
+    "family": "Nemotron",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "NVIDIA",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/nvidia.nemotron-nano-3-30b",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
       }
     }
   },
@@ -14480,7 +16038,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14491,6 +16050,22 @@
       }
     },
     "metadata": {
+      "provider_name": "NVIDIA",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/nvidia.nemotron-nano-9b-v2",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14525,7 +16100,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14536,6 +16112,24 @@
       }
     },
     "metadata": {
+      "provider_name": "OpenAI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/openai.gpt-oss-120b-1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": null,
+        "maxTokensDefault": 4096,
+        "maxTokensMaximum": 128000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14570,7 +16164,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14581,6 +16176,24 @@
       }
     },
     "metadata": {
+      "provider_name": "OpenAI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/openai.gpt-oss-20b-1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": null,
+        "maxTokensDefault": 4096,
+        "maxTokensMaximum": 128000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14615,7 +16228,9 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming",
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -14626,6 +16241,24 @@
       }
     },
     "metadata": {
+      "provider_name": "OpenAI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/openai.gpt-oss-safeguard-120b",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14660,7 +16293,9 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming",
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -14671,6 +16306,24 @@
       }
     },
     "metadata": {
+      "provider_name": "OpenAI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/openai.gpt-oss-safeguard-20b",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14705,7 +16358,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14716,6 +16370,22 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-235b-a22b-2507-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14752,7 +16422,8 @@
     },
     "capabilities": [
       "function_calling",
-      "reasoning"
+      "reasoning",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14763,6 +16434,24 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-32b-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":true}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 32768,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14798,7 +16487,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14809,6 +16499,22 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-coder-30b-a3b-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14844,7 +16550,8 @@
       ]
     },
     "capabilities": [
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14855,6 +16562,22 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-coder-480b-a35b-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 131072,
+        "reasoningSupported": null,
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
@@ -14891,7 +16614,8 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14902,6 +16626,24 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-next-80b-a3b",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14939,7 +16681,8 @@
     "capabilities": [
       "function_calling",
       "structured_output",
-      "vision"
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -14950,6 +16693,29 @@
       }
     },
     "metadata": {
+      "provider_name": "Qwen",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/qwen.qwen3-vl-235b-a22b",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 262144,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [
+          "png",
+          "jpeg",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -14964,6 +16730,438 @@
         "context": 262000,
         "output": 262000
       }
+    }
+  },
+  {
+    "id": "stability.sd3-5-large-v1:0",
+    "name": "Stable Diffusion 3.5 Large",
+    "provider": "bedrock",
+    "family": "stability ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.sd3-5-large-v1:0",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "stability.stable-image-core-v1:1",
+    "name": "Stable Image Core 1.0",
+    "provider": "bedrock",
+    "family": "stability ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-core-v1:1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "stability.stable-image-ultra-v1:1",
+    "name": "Stable Image Ultra 1.0",
+    "provider": "bedrock",
+    "family": "stability ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-ultra-v1:1",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.amazon.nova-2-lite-v1:0",
+    "name": "Nova 2 Lite",
+    "provider": "bedrock",
+    "family": "nova",
+    "created_at": "2024-12-01 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.33,
+          "output_per_million": 2.75
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-2-lite-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"topK\":{\"type\":\"number\",\"default\":50,\"minimum\":1,\"maximum\":100},\"reasoningConfig\":{\"budgetTokens\":{\"type\":\"enum\",\"default\":\"low\",\"minimum\":10000,\"maximum\":64000,\"enum\":{\"low\":10000,\"medium\":40000,\"high\":64000},\"smartSyncEnabled\":true}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 65535,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf",
+          "docx"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": [
+          "mkv",
+          "mov",
+          "mp4",
+          "webm",
+          "flv",
+          "mpeg",
+          "mpg",
+          "wmv",
+          "three_gp"
+        ]
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-12-01",
+      "cost": {
+        "input": 0.33,
+        "output": 2.75
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      }
+    }
+  },
+  {
+    "id": "us.amazon.nova-lite-v1:0",
+    "name": "Nova Lite",
+    "provider": "bedrock",
+    "family": "nova-lite",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 300000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06,
+          "output_per_million": 0.24,
+          "cached_input_per_million": 0.015
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-lite-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 0.06,
+        "output": 0.24,
+        "cache_read": 0.015
+      },
+      "limit": {
+        "context": 300000,
+        "output": 8192
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "us.amazon.nova-micro-v1:0",
+    "name": "Nova Micro",
+    "provider": "bedrock",
+    "family": "nova-micro",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.035,
+          "output_per_million": 0.14,
+          "cached_input_per_million": 0.00875
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-micro-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 0.035,
+        "output": 0.14,
+        "cache_read": 0.00875
+      },
+      "limit": {
+        "context": 128000,
+        "output": 8192
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "us.amazon.nova-premier-v1:0",
+    "name": "Nova Premier",
+    "provider": "bedrock",
+    "family": "nova",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 1000000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 12.5
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-premier-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 2.5,
+        "output": 12.5
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 16384
+      },
+      "knowledge": "2024-10"
+    }
+  },
+  {
+    "id": "us.amazon.nova-pro-v1:0",
+    "name": "Nova Pro",
+    "provider": "bedrock",
+    "family": "nova-pro",
+    "created_at": "2024-12-03 00:00:00 +0700",
+    "context_window": 300000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.8,
+          "output_per_million": 3.2,
+          "cached_input_per_million": 0.2
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Amazon",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/amazon.nova-pro-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": null,
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 10000,
+        "reasoningSupported": null,
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf",
+          "docx"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": [
+          "mkv",
+          "mov",
+          "mp4",
+          "webm",
+          "flv",
+          "mpeg",
+          "mpg",
+          "wmv",
+          "three_gp"
+        ]
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-12-03",
+      "cost": {
+        "input": 0.8,
+        "output": 3.2,
+        "cache_read": 0.2
+      },
+      "limit": {
+        "context": 300000,
+        "output": 8192
+      },
+      "knowledge": "2024-10"
     }
   },
   {
@@ -14988,10 +17186,7 @@
     "capabilities": [
       "function_calling",
       "vision",
-      "streaming",
-      "reasoning",
-      "batch",
-      "citations"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -15004,17 +17199,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-7-sonnet-20250219-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15070,17 +17259,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-haiku-4-5-20251001-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"top_k\":{\"type\":\"number\",\"default\":250,\"minimum\":0,\"maximum\":500},\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false},\"budgetTokens\":{\"type\":\"integer\",\"default\":2048,\"minimum\":1024,\"maximum\":63999}}}",
+        "maxTokensDefault": 64000,
+        "maxTokensMaximum": 64000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15136,17 +17338,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-opus-4-1-20250805-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"topK\":{\"type\":\"number\",\"default\":250,\"minimum\":0,\"maximum\":500},\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false},\"budgetTokens\":{\"type\":\"integer\",\"default\":2048,\"minimum\":1024,\"maximum\":63999}}}",
+        "maxTokensDefault": 1024,
+        "maxTokensMaximum": 32000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15202,17 +17417,11 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-opus-4-20250514-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {},
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15268,17 +17477,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-opus-4-5-20251101-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"top_k\":{\"type\":\"number\",\"default\":250,\"minimum\":0,\"maximum\":500},\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false},\"budgetTokens\":{\"type\":\"integer\",\"default\":2048,\"minimum\":1024,\"maximum\":63999}}}",
+        "maxTokensDefault": 64000,
+        "maxTokensMaximum": 64000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15334,17 +17556,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-opus-4-6-v1",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"top_k\":{\"type\":\"number\",\"default\":250,\"minimum\":0,\"maximum\":500},\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false},\"budgetTokens\":{\"type\":\"enum\",\"default\":\"low\",\"enum\":{\"low\":1024,\"medium\":40000,\"high\":63999},\"minimum\":1024,\"maximum\":63999}}}",
+        "maxTokensDefault": 128000,
+        "maxTokensMaximum": 128000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15406,17 +17641,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-sonnet-4-20250514-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": null,
+        "maxTokensDefault": 8192,
+        "maxTokensMaximum": 65536,
+        "reasoningSupported": {
+          "embedded": true
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15472,17 +17720,30 @@
     },
     "metadata": {
       "provider_name": "Anthropic",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-sonnet-4-5-20250929-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "streaming_supported": true,
-      "input_modalities": [
-        "TEXT",
-        "IMAGE"
-      ],
-      "output_modalities": [
-        "TEXT"
-      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"top_k\":{\"type\":\"number\",\"default\":250,\"minimum\":0,\"maximum\":500},\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false},\"budgetTokens\":{\"type\":\"integer\",\"default\":2048,\"minimum\":1024,\"maximum\":63999}}}",
+        "maxTokensDefault": 64000,
+        "maxTokensMaximum": 64000,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": null,
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [
+          "pdf"
+        ],
+        "userImageTypesSupported": [
+          "jpeg",
+          "png",
+          "gif",
+          "webp"
+        ],
+        "userVideoTypesSupported": []
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -15500,6 +17761,1085 @@
         "output": 64000
       },
       "knowledge": "2025-07-31"
+    }
+  },
+  {
+    "id": "us.cohere.embed-v4:0",
+    "name": "Embed v4",
+    "provider": "bedrock",
+    "family": "Embed",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Cohere",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.embed-v4:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.deepseek.r1-v1:0",
+    "name": "DeepSeek-R1",
+    "provider": "bedrock",
+    "family": "deepseek-thinking",
+    "created_at": "2025-01-20 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.35,
+          "output_per_million": 5.4
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "DeepSeek",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/deepseek.r1-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-05-29",
+      "cost": {
+        "input": 1.35,
+        "output": 5.4
+      },
+      "limit": {
+        "context": 128000,
+        "output": 32768
+      },
+      "knowledge": "2024-07"
+    }
+  },
+  {
+    "id": "us.meta.llama3-2-11b-instruct-v1:0",
+    "name": "Llama 3.2 11B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.16,
+          "output_per_million": 0.16
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-11b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.16,
+        "output": 0.16
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "us.meta.llama3-2-1b-instruct-v1:0",
+    "name": "Llama 3.2 1B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 131000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.1
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-1b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.1,
+        "output": 0.1
+      },
+      "limit": {
+        "context": 131000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "us.meta.llama3-2-3b-instruct-v1:0",
+    "name": "Llama 3.2 3B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 131000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-3b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.15,
+        "output": 0.15
+      },
+      "limit": {
+        "context": 131000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "us.meta.llama3-2-90b-instruct-v1:0",
+    "name": "Llama 3.2 90B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-09-25 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.72,
+          "output_per_million": 0.72
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-2-90b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2024-09-25",
+      "cost": {
+        "input": 0.72,
+        "output": 0.72
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "us.meta.llama3-3-70b-instruct-v1:0",
+    "name": "Llama 3.3 70B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2024-12-06 00:00:00 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.72,
+          "output_per_million": 0.72
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-3-70b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-12-06",
+      "cost": {
+        "input": 0.72,
+        "output": 0.72
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
+    }
+  },
+  {
+    "id": "us.meta.llama4-maverick-17b-instruct-v1:0",
+    "name": "Llama 4 Maverick 17B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2025-04-05 00:00:00 +0700",
+    "context_window": 1000000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.24,
+          "output_per_million": 0.97
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama4-maverick-17b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-04-05",
+      "cost": {
+        "input": 0.24,
+        "output": 0.97
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 16384
+      },
+      "knowledge": "2024-08"
+    }
+  },
+  {
+    "id": "us.meta.llama4-scout-17b-instruct-v1:0",
+    "name": "Llama 4 Scout 17B Instruct",
+    "provider": "bedrock",
+    "family": "llama",
+    "created_at": "2025-04-05 00:00:00 +0700",
+    "context_window": 3500000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.17,
+          "output_per_million": 0.66
+        }
+      }
+    },
+    "metadata": {
+      "provider_name": "Meta",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama4-scout-17b-instruct-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-04-05",
+      "cost": {
+        "input": 0.17,
+        "output": 0.66
+      },
+      "limit": {
+        "context": 3500000,
+        "output": 16384
+      },
+      "knowledge": "2024-08"
+    }
+  },
+  {
+    "id": "us.mistral.pixtral-large-2502-v1:0",
+    "name": "Pixtral Large (25.02)",
+    "provider": "bedrock",
+    "family": "mistral ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Mistral AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.pixtral-large-2502-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-conservative-upscale-v1:0",
+    "name": "Stable Image Conservative Upscale",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-conservative-upscale-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-creative-upscale-v1:0",
+    "name": "Stable Image Creative Upscale",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-creative-upscale-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-fast-upscale-v1:0",
+    "name": "Stable Image Fast Upscale",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-fast-upscale-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-control-sketch-v1:0",
+    "name": "Stable Image Control Sketch",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-control-sketch-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-control-structure-v1:0",
+    "name": "Stable Image Control Structure",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-control-structure-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-erase-object-v1:0",
+    "name": "Stable Image Erase Object",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-erase-object-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-inpaint-v1:0",
+    "name": "Stable Image Inpaint",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-inpaint-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-remove-background-v1:0",
+    "name": "Stable Image Remove Background",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-remove-background-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-search-recolor-v1:0",
+    "name": "Stable Image Search and Recolor",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-search-recolor-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-search-replace-v1:0",
+    "name": "Stable Image Search and Replace",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-search-replace-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-image-style-guide-v1:0",
+    "name": "Stable Image Style Guide",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-image-style-guide-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-outpaint-v1:0",
+    "name": "Stable Image Outpaint",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-outpaint-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.stability.stable-style-transfer-v1:0",
+    "name": "Stable Image Style Transfer",
+    "provider": "bedrock",
+    "family": "Stable Image Services",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Stability AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/stability.stable-style-transfer-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.twelvelabs.pegasus-1-2-v1:0",
+    "name": "Pegasus v1.2",
+    "provider": "bedrock",
+    "family": "Pegasus",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "TwelveLabs",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/twelvelabs.pegasus-1-2-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.writer.palmyra-x4-v1:0",
+    "name": "Palmyra X4",
+    "provider": "bedrock",
+    "family": "writer",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Writer",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/writer.palmyra-x4-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "us.writer.palmyra-x5-v1:0",
+    "name": "Palmyra X5",
+    "provider": "bedrock",
+    "family": "writer",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Writer",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/writer.palmyra-x5-v1:0",
+      "inference_types": [
+        "INFERENCE_PROFILE"
+      ],
+      "converse": {}
+    }
+  },
+  {
+    "id": "zai.glm-4.7",
+    "name": "GLM 4.7",
+    "provider": "bedrock",
+    "family": "GLM 4.7",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 202752,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Z.AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/zai.glm-4.7",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 202752,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      }
+    }
+  },
+  {
+    "id": "zai.glm-4.7-flash",
+    "name": "GLM 4.7 Flash",
+    "provider": "bedrock",
+    "family": "GLM 4.7",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": 202752,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "provider_name": "Z.AI",
+      "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/zai.glm-4.7-flash",
+      "inference_types": [
+        "ON_DEMAND"
+      ],
+      "converse": {
+        "additionalRequestFieldsSchema": "{\"reasoningConfig\":{\"enabled\":{\"type\":\"boolean\",\"default\":false}}}",
+        "maxTokensDefault": null,
+        "maxTokensMaximum": 202752,
+        "reasoningSupported": {
+          "embedded": false
+        },
+        "stopSequencesDefault": [],
+        "systemRoleSupported": true,
+        "userDocumentTypesSupported": [],
+        "userImageTypesSupported": [],
+        "userVideoTypesSupported": []
+      }
     }
   },
   {
@@ -25843,66 +29183,6 @@
     }
   },
   {
-    "id": "ai21/jamba-mini-1.7",
-    "name": "AI21: Jamba Mini 1.7",
-    "provider": "openrouter",
-    "family": "ai21",
-    "created_at": "2025-08-08 23:30:01 +0700",
-    "context_window": 256000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.39999999999999997
-        }
-      }
-    },
-    "metadata": {
-      "description": "Jamba Mini 1.7 is a compact and efficient member of the Jamba open model family, incorporating key improvements in grounding and instruction-following while maintaining the benefits of the SSM-Transformer hybrid architecture and 256K context window. Despite its compact size, it delivers accurate, contextually grounded responses and improved steerability.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 256000,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "response_format",
-        "stop",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "aion-labs/aion-1.0",
     "name": "AionLabs: Aion-1.0",
     "provider": "openrouter",
@@ -27504,7 +30784,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -27539,7 +30820,9 @@
         "include_reasoning",
         "max_tokens",
         "reasoning",
+        "response_format",
         "stop",
+        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
@@ -27828,32 +31111,35 @@
   },
   {
     "id": "anthropic/claude-opus-4.6",
-    "name": "Anthropic: Claude Opus 4.6",
+    "name": "Claude Opus 4.6",
     "provider": "openrouter",
-    "family": "anthropic",
-    "created_at": "2026-02-04 22:30:50 +0700",
+    "family": "claude-opus",
+    "created_at": "2026-02-05 00:00:00 +0700",
     "context_window": 1000000,
     "max_output_tokens": 128000,
-    "knowledge_cutoff": null,
+    "knowledge_cutoff": "2025-05-30",
     "modalities": {
       "input": [
         "text",
-        "image"
+        "image",
+        "pdf"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "reasoning",
+      "vision",
+      "streaming",
       "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 5.0,
-          "output_per_million": 25.0,
+          "input_per_million": 5,
+          "output_per_million": 25,
           "cached_input_per_million": 0.5
         }
       }
@@ -27891,7 +31177,30 @@
         "top_k",
         "top_p",
         "verbosity"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-02-05",
+      "cost": {
+        "input": 5,
+        "output": 25,
+        "cache_read": 0.5,
+        "cache_write": 6.25,
+        "context_over_200k": {
+          "input": 10,
+          "output": 37.5,
+          "cache_read": 1,
+          "cache_write": 12.5
+        }
+      },
+      "limit": {
+        "context": 1000000,
+        "output": 128000
+      },
+      "knowledge": "2025-05-30"
     }
   },
   {
@@ -29760,7 +33069,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 1.2
+          "output_per_million": 1.2,
+          "cached_input_per_million": 0.15
         }
       }
     },
@@ -29828,7 +33138,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.19,
-          "output_per_million": 0.87
+          "output_per_million": 0.87,
+          "cached_input_per_million": 0.095
         }
       }
     },
@@ -30069,7 +33380,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.75
+          "output_per_million": 1.75,
+          "cached_input_per_million": 0.19999999999999998
         }
       }
     },
@@ -30192,7 +33504,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 163840,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -30200,10 +33512,14 @@
         "frequency_penalty",
         "include_reasoning",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
-        "temperature"
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
       ],
       "source": "models.dev",
       "provider_id": "openrouter",
@@ -30249,7 +33565,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.03,
-          "output_per_million": 0.11
+          "output_per_million": 0.11,
+          "cached_input_per_million": 0.015
         }
       }
     },
@@ -37411,7 +40728,7 @@
     "family": "mistralai",
     "created_at": "2025-01-30 23:43:29 +0700",
     "context_window": 32768,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -37430,8 +40747,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.03,
-          "output_per_million": 0.11
+          "input_per_million": 0.049999999999999996,
+          "output_per_million": 0.08
         }
       }
     },
@@ -37450,7 +40767,7 @@
       },
       "top_provider": {
         "context_length": 32768,
-        "max_completion_tokens": 32768,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -37501,7 +40818,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.03,
-          "output_per_million": 0.11
+          "output_per_million": 0.11,
+          "cached_input_per_million": 0.015
         }
       }
     },
@@ -37645,7 +40963,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.06,
-          "output_per_million": 0.18
+          "output_per_million": 0.18,
+          "cached_input_per_million": 0.03
         }
       }
     },
@@ -38198,66 +41517,6 @@
     }
   },
   {
-    "id": "moonshotai/kimi-dev-72b",
-    "name": "MoonshotAI: Kimi Dev 72B",
-    "provider": "openrouter",
-    "family": "moonshotai",
-    "created_at": "2025-06-17 06:18:29 +0700",
-    "context_window": 131072,
-    "max_output_tokens": 131072,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.29,
-          "output_per_million": 1.15
-        }
-      }
-    },
-    "metadata": {
-      "description": "Kimi-Dev-72B is an open-source large language model fine-tuned for software engineering and issue resolution tasks. Based on Qwen2.5-72B, it is optimized using large-scale reinforcement learning that applies code patches in real repositories and validates them via full test suite execution—rewarding only correct, robust completions. The model achieves 60.4% on SWE-bench Verified, setting a new benchmark among open-source models for software bug fixing and code reasoning.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": 131072,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "reasoning",
-        "response_format",
-        "structured_outputs",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "moonshotai/kimi-dev-72b:free",
     "name": "Kimi Dev 72b (free)",
     "provider": "openrouter",
@@ -38691,7 +41950,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 65535,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -39131,7 +42390,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.02,
-          "output_per_million": 0.09999999999999999
+          "output_per_million": 0.09999999999999999,
+          "cached_input_per_million": 0.01
         }
       }
     },
@@ -43653,7 +46913,7 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -44542,8 +47802,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09999999999999999,
-          "output_per_million": 0.39
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.075
         }
       }
     },
@@ -44583,6 +47844,61 @@
     }
   },
   {
+    "id": "openrouter/aurora-alpha",
+    "name": "Aurora Alpha",
+    "provider": "openrouter",
+    "family": "openrouter",
+    "created_at": "2026-02-09 11:27:05 +0700",
+    "context_window": 128000,
+    "max_output_tokens": 50000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "This is a cloaked model provided to the community to gather feedback. A reasoning model designed for speed. It is built for coding assistants, real-time conversational applications, and agentic workflows.\n\nDefault reasoning effort is set to medium for fast responses. For agentic coding use cases, we recommend changing effort to high. \n\nNote: All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 50000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "reasoning_effort",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools"
+      ]
+    }
+  },
+  {
     "id": "openrouter/auto",
     "name": "Auto Router",
     "provider": "openrouter",
@@ -44612,7 +47928,7 @@
     ],
     "pricing": {},
     "metadata": {
-      "description": "Your prompt will be processed by a meta-model and routed to one of dozens of models (see below), optimizing for the best possible output.\n\nTo see which model was used, visit [Activity](/activity), or read the `model` attribute of the response. Your response will be priced at the same rate as the routed model.\n\nLearn more, including how to customize the models for routing, in our [docs](/docs/guides/routing/routers/auto-router).\n\nRequests will be routed to the following models:\n- [openai/gpt-5.2](/openai/gpt-5.2)\n- [openai/gpt-5.2-pro](/openai/gpt-5.2-pro)\n- [openai/gpt-5.1](/openai/gpt-5.1)\n- [openai/gpt-5](/openai/gpt-5)\n- [openai/gpt-5-mini](/openai/gpt-5-mini)\n- [openai/gpt-5-nano](/openai/gpt-5-nano)\n- [openai/gpt-4.1](/openai/gpt-4.1)\n- [openai/gpt-4.1-mini](/openai/gpt-4.1-mini)\n- [openai/gpt-4.1-nano](/openai/gpt-4.1-nano)\n- [openai/gpt-oss-120b](/openai/gpt-oss-120b)\n- [anthropic/claude-opus-4.5](/anthropic/claude-opus-4.5)\n- [anthropic/claude-sonnet-4.5](/anthropic/claude-sonnet-4.5)\n- [anthropic/claude-haiku-4.5](/anthropic/claude-haiku-4.5)\n- [google/gemini-3-pro-preview](/google/gemini-3-pro-preview)\n- [google/gemini-2.5-pro](/google/gemini-2.5-pro)\n- [google/gemini-2.5-flash](/google/gemini-2.5-flash)\n- [mistralai/mistral-large](/mistralai/mistral-large)\n- [mistralai/mistral-large-2407](/mistralai/mistral-large-2407)\n- [mistralai/mistral-large-2411](/mistralai/mistral-large-2411)\n- [mistralai/mistral-medium-3.1](/mistralai/mistral-medium-3.1)\n- [mistralai/mistral-nemo](/mistralai/mistral-nemo)\n- [mistralai/mistral-7b-instruct](/mistralai/mistral-7b-instruct)\n- [mistralai/mixtral-8x7b-instruct](/mistralai/mixtral-8x7b-instruct)\n- [mistralai/mixtral-8x22b-instruct](/mistralai/mixtral-8x22b-instruct)\n- [mistralai/codestral-2508](/mistralai/codestral-2508)\n- [x-ai/grok-4](/x-ai/grok-4)\n- [x-ai/grok-3](/x-ai/grok-3)\n- [x-ai/grok-3-mini](/x-ai/grok-3-mini)\n- [deepseek/deepseek-r1](/deepseek/deepseek-r1)\n- [meta-llama/llama-3.3-70b-instruct](/meta-llama/llama-3.3-70b-instruct)\n- [meta-llama/llama-3.1-405b-instruct](/meta-llama/llama-3.1-405b-instruct)\n- [meta-llama/llama-3.1-70b-instruct](/meta-llama/llama-3.1-70b-instruct)\n- [meta-llama/llama-3.1-8b-instruct](/meta-llama/llama-3.1-8b-instruct)\n- [meta-llama/llama-3-70b-instruct](/meta-llama/llama-3-70b-instruct)\n- [meta-llama/llama-3-8b-instruct](/meta-llama/llama-3-8b-instruct)\n- [qwen/qwen3-235b-a22b](/qwen/qwen3-235b-a22b)\n- [qwen/qwen3-32b](/qwen/qwen3-32b)\n- [qwen/qwen3-14b](/qwen/qwen3-14b)\n- [cohere/command-r-plus-08-2024](/cohere/command-r-plus-08-2024)\n- [cohere/command-r-08-2024](/cohere/command-r-08-2024)\n- [moonshotai/kimi-k2-thinking](/moonshotai/kimi-k2-thinking)\n- [perplexity/sonar](/perplexity/sonar)",
+      "description": "Your prompt will be processed by a meta-model and routed to one of dozens of models (see below), optimizing for the best possible output.\n\nTo see which model was used, visit [Activity](/activity), or read the `model` attribute of the response. Your response will be priced at the same rate as the routed model.\n\nLearn more, including how to customize the models for routing, in our [docs](/docs/guides/routing/routers/auto-router).\n\nRequests will be routed to the following models:\n- [anthropic/claude-3-haiku](/anthropic/claude-3-haiku)\n- [anthropic/claude-3.5-haiku](/anthropic/claude-3.5-haiku)\n- [anthropic/claude-3.7-sonnet](/anthropic/claude-3.7-sonnet)\n- [anthropic/claude-haiku-4.5](/anthropic/claude-haiku-4.5)\n- [anthropic/claude-opus-4](/anthropic/claude-opus-4)\n- [anthropic/claude-opus-4.1](/anthropic/claude-opus-4.1)\n- [anthropic/claude-opus-4.5](/anthropic/claude-opus-4.5)\n- [anthropic/claude-opus-4.6](/anthropic/claude-opus-4.6)\n- [anthropic/claude-sonnet-4](/anthropic/claude-sonnet-4)\n- [anthropic/claude-sonnet-4.5](/anthropic/claude-sonnet-4.5)\n- [cohere/command-r-08-2024](/cohere/command-r-08-2024)\n- [cohere/command-r-plus-08-2024](/cohere/command-r-plus-08-2024)\n- [deepseek/deepseek-r1](/deepseek/deepseek-r1)\n- [google/gemini-2.0-flash-001](/google/gemini-2.0-flash-001)\n- [google/gemini-2.5-flash](/google/gemini-2.5-flash)\n- [google/gemini-2.5-flash-lite](/google/gemini-2.5-flash-lite)\n- [google/gemini-2.5-pro](/google/gemini-2.5-pro)\n- [google/gemini-3-flash-preview](/google/gemini-3-flash-preview)\n- [google/gemini-3-pro-preview](/google/gemini-3-pro-preview)\n- [meta-llama/llama-3-70b-instruct](/meta-llama/llama-3-70b-instruct)\n- [meta-llama/llama-3-8b-instruct](/meta-llama/llama-3-8b-instruct)\n- [meta-llama/llama-3.1-405b-instruct](/meta-llama/llama-3.1-405b-instruct)\n- [meta-llama/llama-3.1-70b-instruct](/meta-llama/llama-3.1-70b-instruct)\n- [meta-llama/llama-3.1-8b-instruct](/meta-llama/llama-3.1-8b-instruct)\n- [meta-llama/llama-3.3-70b-instruct](/meta-llama/llama-3.3-70b-instruct)\n- [mistralai/codestral-2508](/mistralai/codestral-2508)\n- [mistralai/mistral-7b-instruct](/mistralai/mistral-7b-instruct)\n- [mistralai/mistral-large](/mistralai/mistral-large)\n- [mistralai/mistral-large-2407](/mistralai/mistral-large-2407)\n- [mistralai/mistral-large-2411](/mistralai/mistral-large-2411)\n- [mistralai/mistral-medium-3.1](/mistralai/mistral-medium-3.1)\n- [mistralai/mistral-nemo](/mistralai/mistral-nemo)\n- [mistralai/mistral-small-3.2-24b-instruct-2506](/mistralai/mistral-small-3.2-24b-instruct-2506)\n- [mistralai/mixtral-8x22b-instruct](/mistralai/mixtral-8x22b-instruct)\n- [mistralai/mixtral-8x7b-instruct](/mistralai/mixtral-8x7b-instruct)\n- [moonshotai/kimi-k2-thinking](/moonshotai/kimi-k2-thinking)\n- [moonshotai/kimi-k2.5](/moonshotai/kimi-k2.5)\n- [openai/chatgpt-4o-latest](/openai/chatgpt-4o-latest)\n- [openai/gpt-3.5-turbo](/openai/gpt-3.5-turbo)\n- [openai/gpt-4](/openai/gpt-4)\n- [openai/gpt-4-1106-preview](/openai/gpt-4-1106-preview)\n- [openai/gpt-4-turbo](/openai/gpt-4-turbo)\n- [openai/gpt-4-turbo-preview](/openai/gpt-4-turbo-preview)\n- [openai/gpt-4.1](/openai/gpt-4.1)\n- [openai/gpt-4.1-mini](/openai/gpt-4.1-mini)\n- [openai/gpt-4.1-nano](/openai/gpt-4.1-nano)\n- [openai/gpt-4o](/openai/gpt-4o)\n- [openai/gpt-4o-2024-05-13](/openai/gpt-4o-2024-05-13)\n- [openai/gpt-4o-2024-08-06](/openai/gpt-4o-2024-08-06)\n- [openai/gpt-4o-2024-11-20](/openai/gpt-4o-2024-11-20)\n- [openai/gpt-4o-mini](/openai/gpt-4o-mini)\n- [openai/gpt-4o-mini-2024-07-18](/openai/gpt-4o-mini-2024-07-18)\n- [openai/gpt-5](/openai/gpt-5)\n- [openai/gpt-5-mini](/openai/gpt-5-mini)\n- [openai/gpt-5-nano](/openai/gpt-5-nano)\n- [openai/gpt-5.1](/openai/gpt-5.1)\n- [openai/gpt-5.2](/openai/gpt-5.2)\n- [openai/gpt-5.2-pro](/openai/gpt-5.2-pro)\n- [openai/gpt-oss-120b](/openai/gpt-oss-120b)\n- [perplexity/sonar](/perplexity/sonar)\n- [qwen/qwen3-14b](/qwen/qwen3-14b)\n- [qwen/qwen3-235b-a22b](/qwen/qwen3-235b-a22b)\n- [qwen/qwen3-32b](/qwen/qwen3-32b)\n- [x-ai/grok-3](/x-ai/grok-3)\n- [x-ai/grok-3-mini](/x-ai/grok-3-mini)\n- [x-ai/grok-4](/x-ai/grok-4)",
       "architecture": {
         "modality": "text+image+file+audio+video->text+image",
         "input_modalities": [
@@ -44765,6 +48081,75 @@
         "top_k",
         "top_p"
       ]
+    }
+  },
+  {
+    "id": "openrouter/pony-alpha",
+    "name": "Pony Alpha",
+    "provider": "openrouter",
+    "family": "pony",
+    "created_at": "2026-02-06 00:00:00 +0700",
+    "context_window": 200000,
+    "max_output_tokens": 131000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Pony is a cutting-edge foundation model with strong performance in coding, agentic workflows, reasoning, and roleplay, making it well suited for hands-on coding and real-world use.\n\n**Note:** All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 200000,
+        "max_completion_tokens": 131000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "structured_outputs",
+        "temperature",
+        "tools",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-06",
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 200000,
+        "output": 131000
+      }
     }
   },
   {
@@ -45387,7 +48772,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.03,
-          "output_per_million": 0.11
+          "output_per_million": 0.11,
+          "cached_input_per_million": 0.015
         }
       }
     },
@@ -45575,7 +48961,7 @@
         "standard": {
           "input_per_million": 1.5999999999999999,
           "output_per_million": 6.3999999999999995,
-          "cached_input_per_million": 0.64
+          "cached_input_per_million": 0.32
         }
       }
     },
@@ -45616,8 +49002,8 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-02-01 18:37:20 +0700",
-    "context_window": 131072,
-    "max_output_tokens": 8192,
+    "context_window": 1000000,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -45637,7 +49023,7 @@
         "standard": {
           "input_per_million": 0.39999999999999997,
           "output_per_million": 1.2,
-          "cached_input_per_million": 0.16
+          "cached_input_per_million": 0.08
         }
       }
     },
@@ -45655,8 +49041,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": 8192,
+        "context_length": 1000000,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -45760,7 +49146,7 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.39999999999999997,
-          "output_per_million": 4.0
+          "output_per_million": 1.2
         }
       }
     },
@@ -45804,7 +49190,7 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-02-01 18:56:14 +0700",
-    "context_window": 1000000,
+    "context_window": 131072,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
@@ -45825,7 +49211,7 @@
         "standard": {
           "input_per_million": 0.049999999999999996,
           "output_per_million": 0.19999999999999998,
-          "cached_input_per_million": 0.02
+          "cached_input_per_million": 0.01
         }
       }
     },
@@ -45843,7 +49229,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1000000,
+        "context_length": 131072,
         "max_completion_tokens": 8192,
         "is_moderated": false
       },
@@ -45867,7 +49253,7 @@
     "family": "qwen",
     "created_at": "2025-02-02 01:25:04 +0700",
     "context_window": 131072,
-    "max_output_tokens": 8192,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -45907,7 +49293,7 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 8192,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -45929,8 +49315,8 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-02-05 11:54:15 +0700",
-    "context_window": 7500,
-    "max_output_tokens": 1500,
+    "context_window": 131072,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -45949,7 +49335,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.21,
-          "output_per_million": 0.63
+          "output_per_million": 0.63,
+          "cached_input_per_million": 0.041999999999999996
         }
       }
     },
@@ -45968,8 +49355,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 7500,
-        "max_completion_tokens": 1500,
+        "context_length": 131072,
+        "max_completion_tokens": 8192,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -46071,7 +49458,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.049999999999999996,
-          "output_per_million": 0.22
+          "output_per_million": 0.22,
+          "cached_input_per_million": 0.024999999999999998
         }
       }
     },
@@ -46184,7 +49572,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.15,
-          "output_per_million": 0.6
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.075
         }
       }
     },
@@ -46307,7 +49696,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.049999999999999996,
-          "output_per_million": 0.22
+          "output_per_million": 0.22,
+          "cached_input_per_million": 0.024999999999999998
         }
       }
     },
@@ -46775,7 +50165,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.06,
-          "output_per_million": 0.22
+          "output_per_million": 0.22,
+          "cached_input_per_million": 0.03
         }
       }
     },
@@ -47048,7 +50439,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.08,
-          "output_per_million": 0.24
+          "output_per_million": 0.24,
+          "cached_input_per_million": 0.04
         }
       }
     },
@@ -47357,7 +50749,7 @@
       },
       "top_provider": {
         "context_length": 262144,
-        "max_completion_tokens": 262144,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -47523,7 +50915,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 128000,
+        "context_length": 1000000,
         "max_completion_tokens": 65536,
         "is_moderated": false
       },
@@ -47582,7 +50974,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.07,
-          "output_per_million": 0.3
+          "output_per_million": 0.3,
+          "cached_input_per_million": 0.035
         }
       }
     },
@@ -47630,7 +51023,7 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-09-24 04:25:07 +0700",
-    "context_window": 128000,
+    "context_window": 1000000,
     "max_output_tokens": 65536,
     "knowledge_cutoff": null,
     "modalities": {
@@ -47651,7 +51044,7 @@
         "standard": {
           "input_per_million": 1.0,
           "output_per_million": 5.0,
-          "cached_input_per_million": 0.09999999999999999
+          "cached_input_per_million": 0.19999999999999998
         }
       }
     },
@@ -47669,7 +51062,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 128000,
+        "context_length": 1000000,
         "max_completion_tokens": 65536,
         "is_moderated": false
       },
@@ -47882,8 +51275,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
-        "max_completion_tokens": 32768,
+        "context_length": 262144,
+        "max_completion_tokens": 65536,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -47911,6 +51304,70 @@
         "context": 262144,
         "output": 32768
       }
+    }
+  },
+  {
+    "id": "qwen/qwen3-max-thinking",
+    "name": "Qwen: Qwen3 Max Thinking",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-02-10 04:18:21 +0700",
+    "context_window": 262144,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.2,
+          "output_per_million": 6.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen3-Max-Thinking is the flagship reasoning model in the Qwen3 series, designed for high-stakes cognitive tasks that require deep, multi-step reasoning. By significantly scaling model capacity and reinforcement learning compute, it delivers major gains in factual accuracy, complex reasoning, instruction following, alignment with human preferences, and agentic behavior.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 32768,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
     }
   },
   {
@@ -48588,7 +52045,7 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-10-15 00:42:26 +0700",
-    "context_window": 256000,
+    "context_window": 131072,
     "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
@@ -48628,7 +52085,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 256000,
+        "context_length": 131072,
         "max_completion_tokens": 32768,
         "is_moderated": false
       },
@@ -49457,71 +52914,6 @@
     }
   },
   {
-    "id": "stepfun-ai/step3",
-    "name": "StepFun: Step3",
-    "provider": "openrouter",
-    "family": "stepfun-ai",
-    "created_at": "2025-08-29 04:09:35 +0700",
-    "context_window": 65536,
-    "max_output_tokens": 65536,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.5700000000000001,
-          "output_per_million": 1.42
-        }
-      }
-    },
-    "metadata": {
-      "description": "Step3 is a cutting-edge multimodal reasoning model—built on a Mixture-of-Experts architecture with 321B total parameters and 38B active. It is designed end-to-end to minimize decoding costs while delivering top-tier performance in vision–language reasoning. Through the co-design of Multi-Matrix Factorization Attention (MFA) and Attention-FFN Disaggregation (AFD), Step3 maintains exceptional efficiency across both flagship and low-end accelerators.",
-      "architecture": {
-        "modality": "text+image->text",
-        "input_modalities": [
-          "image",
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 65536,
-        "max_completion_tokens": 65536,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "reasoning",
-        "response_format",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "stepfun/step-3.5-flash:free",
     "name": "StepFun: Step 3.5 Flash (free)",
     "provider": "openrouter",
@@ -50017,7 +53409,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.3,
-          "output_per_million": 1.2
+          "output_per_million": 1.2,
+          "cached_input_per_million": 0.15
         }
       }
     },
@@ -50138,7 +53531,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
-          "output_per_million": 0.85
+          "output_per_million": 0.85,
+          "cached_input_per_million": 0.125
         }
       }
     },
@@ -50277,7 +53671,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
-          "output_per_million": 0.85
+          "output_per_million": 0.85,
+          "cached_input_per_million": 0.125
         }
       }
     },
@@ -51256,12 +54651,12 @@
   },
   {
     "id": "xiaomi/mimo-v2-flash",
-    "name": "Xiaomi: MiMo-V2-Flash",
+    "name": "MiMo-V2-Flash",
     "provider": "openrouter",
-    "family": "xiaomi",
-    "created_at": "2025-12-14 23:55:08 +0700",
+    "family": "mimo",
+    "created_at": "2025-12-14 00:00:00 +0700",
     "context_window": 262144,
-    "max_output_tokens": null,
+    "max_output_tokens": 65536,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -51272,15 +54667,17 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
+      "reasoning",
+      "streaming",
       "structured_output"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09,
-          "output_per_million": 0.29
+          "input_per_million": 0.1,
+          "output_per_million": 0.3,
+          "cached_input_per_million": 0.01
         }
       }
     },
@@ -51319,7 +54716,23 @@
         "tools",
         "top_k",
         "top_p"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-14",
+      "cost": {
+        "input": 0.1,
+        "output": 0.3,
+        "cache_read": 0.01
+      },
+      "limit": {
+        "context": 262144,
+        "output": 65536
+      },
+      "knowledge": "2024-12"
     }
   },
   {
@@ -51509,7 +54922,7 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 131072,
+        "max_completion_tokens": 98304,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -52027,7 +55440,6 @@
         "temperature",
         "tool_choice",
         "tools",
-        "top_a",
         "top_k",
         "top_logprobs",
         "top_p"
@@ -52098,8 +55510,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 200000,
-        "max_completion_tokens": 131072,
+        "context_length": 202752,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -52193,7 +55605,7 @@
     "name": "Sonar Deep Research",
     "provider": "perplexity",
     "family": "sonar_deep_research",
-    "created_at": "2026-02-06 21:17:56 +0700",
+    "created_at": "2026-02-10 14:05:35 +0700",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -52277,7 +55689,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2026-02-06 21:17:56 +0700",
+    "created_at": "2026-02-10 14:05:35 +0700",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -54406,6 +57818,34 @@
   {
     "id": "grok-imagine-image",
     "name": "Grok Imagine Image",
+    "provider": "xai",
+    "family": "grok",
+    "created_at": "2026-01-28 07:00:00 +0700",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "xai"
+    }
+  },
+  {
+    "id": "grok-imagine-image-pro",
+    "name": "Grok Imagine Image Pro",
     "provider": "xai",
     "family": "grok",
     "created_at": "2026-01-28 07:00:00 +0700",

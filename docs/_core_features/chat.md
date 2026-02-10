@@ -582,7 +582,7 @@ response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 input_tokens = response.input_tokens   # Tokens in the prompt sent TO the model
 output_tokens = response.output_tokens # Tokens in the response FROM the model
 cached_tokens = response.cached_tokens # Tokens served from the provider's prompt cache (if supported) - v1.9.0+
-cache_creation_tokens = response.cache_creation_tokens # Tokens written to the cache (Anthropic/Bedrock) - v1.9.0+
+cache_creation_tokens = response.cache_creation_tokens # Tokens written to cache (Anthropic/some Bedrock models) - v1.9.0+
 thinking_tokens = response.thinking_tokens # Thinking tokens when providers report them - v1.10.0+
 
 puts "Input Tokens: #{input_tokens}"
@@ -608,7 +608,7 @@ total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + 
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
 ```
 
-`cached_tokens` captures the portion of the prompt served from the provider's cache. OpenAI reports this value automatically for prompts over 1024 tokens, while Anthropic and Bedrock/Claude expose both cache hits and cache writes. When the provider does not send cache data the attributes remain `nil`, so the example above falls back to zero for display. Available from v1.9+
+`cached_tokens` captures the portion of the prompt served from the provider's cache. OpenAI reports this value automatically for prompts over 1024 tokens, while Anthropic and some Bedrock models expose both cache hits and cache writes. When the provider does not send cache data the attributes remain `nil`, so the example above falls back to zero for display. Available from v1.9+
 
 Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For providers that do not include thinking token counts, these values remain `nil`.
 

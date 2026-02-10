@@ -26,7 +26,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 ## Last Updated
 {: .d-inline-block }
 
-2026-02-06
+2026-02-10
 {: .label .label-green }
 
 ## Models by Provider
@@ -47,7 +47,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | claude-opus-4-1 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-5-20251101 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-opus-4-5 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| claude-opus-4-6 | anthropic | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| claude-opus-4-6 | anthropic | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -328,12 +328,12 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-embedding-ada-002-2 | azure | - | - | In: $0.10, Out: $0.10 |
 
 
-### Bedrock (103)
+### Bedrock (175)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
-| anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| anthropic.claude-v2:0:100k | bedrock | - | - | - |
+| anthropic.claude-v2:0:18k | bedrock | - | - | - |
 | anthropic.claude-v2 | bedrock | 100000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
@@ -347,7 +347,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | anthropic.claude-instant-v1 | bedrock | 100000 | 4096 | In: $0.80, Out: $2.40 |
-| anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 12000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
@@ -389,8 +389,17 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cohere.command-light-text-v14 | bedrock | 4096 | 4096 | In: $0.30, Out: $0.60 |
 | cohere.command-r-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
 | cohere.command-r-plus-v1:0 | bedrock | 128000 | 4096 | In: $3.00, Out: $15.00 |
+| deepseek.v3.2 | bedrock | - | 163840 | - |
 | deepseek.r1-v1:0 | bedrock | 128000 | 32768 | In: $1.35, Out: $5.40 |
+| us.deepseek.r1-v1:0 | bedrock | 128000 | 32768 | In: $1.35, Out: $5.40 |
 | deepseek.v3-v1:0 | bedrock | 163840 | 81920 | In: $0.58, Out: $1.68 |
+| cohere.embed-english-v3 | bedrock | - | - | - |
+| cohere.embed-english-v3:0:512 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3:0:512 | bedrock | - | - | - |
+| us.cohere.embed-v4:0 | bedrock | 128000 | - | - |
+| zai.glm-4.7 | bedrock | - | 202752 | - |
+| zai.glm-4.7-flash | bedrock | - | 202752 | - |
 | openai.gpt-oss-safeguard-120b | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
 | openai.gpt-oss-safeguard-20b | bedrock | 128000 | 4096 | In: $0.07, Out: $0.20 |
 | google.gemma-3-4b-it | bedrock | 128000 | 4096 | In: $0.04, Out: $0.08 |
@@ -399,38 +408,101 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | ai21.jamba-1-5-large-v1:0 | bedrock | 256000 | 4096 | In: $2.00, Out: $8.00 |
 | ai21.jamba-1-5-mini-v1:0 | bedrock | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | moonshot.kimi-k2-thinking | bedrock | 256000 | 256000 | In: $0.60, Out: $2.50 |
+| moonshotai.kimi-k2.5 | bedrock | - | 262144 | - |
 | meta.llama3-70b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $2.65, Out: $3.50 |
 | meta.llama3-8b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $0.30, Out: $0.60 |
+| meta.llama3-1-405b-instruct-v1:0 | bedrock | - | - | - |
 | meta.llama3-1-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-1-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-1-8b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
+| meta.llama3-1-8b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-1b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| us.meta.llama3-2-1b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.10, Out: $0.10 |
 | meta.llama3-2-3b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.15, Out: $0.15 |
+| meta.llama3-2-3b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| us.meta.llama3-2-3b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-3-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-3-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
+| us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| mistral.magistral-small-2509 | bedrock | - | 131072 | - |
 | minimax.minimax-m2 | bedrock | 204608 | 128000 | In: $0.30, Out: $1.20 |
+| minimax.minimax-m2.1 | bedrock | - | 196608 | - |
 | mistral.ministral-3-14b-instruct | bedrock | 128000 | 4096 | In: $0.20, Out: $0.20 |
 | mistral.ministral-3-8b-instruct | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| mistral.ministral-3-3b-instruct | bedrock | - | 262144 | - |
 | mistral.mistral-large-2402-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
+| mistral.mistral-large-2407-v1:0 | bedrock | - | - | - |
+| mistral.mistral-large-3-675b-instruct | bedrock | - | 262144 | - |
 | mistral.mistral-7b-instruct-v0:2 | bedrock | 127000 | 127000 | In: $0.11, Out: $0.11 |
 | mistral.mixtral-8x7b-instruct-v0:1 | bedrock | 32000 | 32000 | In: $0.70, Out: $0.70 |
 | nvidia.nemotron-nano-12b-v2 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | nvidia.nemotron-nano-9b-v2 | bedrock | 128000 | 4096 | In: $0.06, Out: $0.23 |
+| nvidia.nemotron-nano-3-30b | bedrock | - | 262144 | - |
 | amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| us.amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| amazon.nova-2-sonic-v1:0 | bedrock | - | - | - |
 | amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
+| us.amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
 | amazon.nova-micro-v1:0 | bedrock | 128000 | 8192 | In: $0.04, Out: $0.14, Cache: $0.01 |
+| us.amazon.nova-micro-v1:0 | bedrock | 128000 | 8192 | In: $0.04, Out: $0.14, Cache: $0.01 |
 | amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:1000k | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:20k | bedrock | 20000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:8k | bedrock | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | - | - | - |
+| us.amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.writer.palmyra-x4-v1:0 | bedrock | - | - | - |
+| us.writer.palmyra-x5-v1:0 | bedrock | - | - | - |
+| us.twelvelabs.pegasus-1-2-v1:0 | bedrock | - | - | - |
+| us.mistral.pixtral-large-2502-v1:0 | bedrock | - | - | - |
 | qwen.qwen3-next-80b-a3b | bedrock | 262000 | 262000 | In: $0.14, Out: $1.40 |
 | qwen.qwen3-vl-235b-a22b | bedrock | 262000 | 262000 | In: $0.30, Out: $1.50 |
 | qwen.qwen3-235b-a22b-2507-v1:0 | bedrock | 262144 | 131072 | In: $0.22, Out: $0.88 |
 | qwen.qwen3-32b-v1:0 | bedrock | 16384 | 16384 | In: $0.15, Out: $0.60 |
 | qwen.qwen3-coder-30b-a3b-v1:0 | bedrock | 262144 | 131072 | In: $0.15, Out: $0.60 |
 | qwen.qwen3-coder-480b-a35b-v1:0 | bedrock | 131072 | 65536 | In: $0.22, Out: $1.80 |
+| luma.ray-v2:0 | bedrock | - | - | - |
+| amazon.rerank-v1:0 | bedrock | - | - | - |
+| cohere.rerank-v3-5:0 | bedrock | - | - | - |
+| stability.sd3-5-large-v1:0 | bedrock | - | - | - |
+| us.stability.stable-conservative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-sketch-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-structure-v1:0 | bedrock | - | - | - |
+| stability.stable-image-core-v1:1 | bedrock | - | - | - |
+| us.stability.stable-creative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-erase-object-v1:0 | bedrock | - | - | - |
+| us.stability.stable-fast-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-inpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-outpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-remove-background-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-recolor-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-replace-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-style-guide-v1:0 | bedrock | - | - | - |
+| us.stability.stable-style-transfer-v1:0 | bedrock | - | - | - |
+| stability.stable-image-ultra-v1:1 | bedrock | - | - | - |
+| amazon.titan-embed-text-v1 | bedrock | - | - | - |
+| amazon.titan-embed-text-v1:2:8k | bedrock | - | - | - |
+| amazon.titan-image-generator-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1:0 | bedrock | - | - | - |
+| amazon.titan-embed-text-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-g1-text-02 | bedrock | - | - | - |
 | amazon.titan-text-express-v1 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | amazon.titan-text-express-v1:0:8k | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
+| amazon.titan-tg1-large | bedrock | - | - | - |
 | mistral.voxtral-mini-3b-2507 | bedrock | 128000 | 4096 | In: $0.04, Out: $0.04 |
 | mistral.voxtral-small-24b-2507 | bedrock | 32000 | 8192 | In: $0.15, Out: $0.35 |
 | openai.gpt-oss-120b-1:0 | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
@@ -708,7 +780,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| ai21/jamba-mini-1.7 | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
 | aion-labs/aion-1.0-mini | openrouter | 131072 | 32768 | In: $0.70, Out: $1.40 |
 | aion-labs/aion-rp-llama-3.1-8b | openrouter | 32768 | 32768 | In: $0.80, Out: $1.60 |
@@ -728,12 +799,12 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-3-haiku | openrouter | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.03 |
 | anthropic/claude-3.5-sonnet | openrouter | 200000 | 8192 | In: $6.00, Out: $30.00 |
 | anthropic/claude-3.7-sonnet:thinking | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
-| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | arcee-ai/coder-large | openrouter | 32768 | - | In: $0.50, Out: $0.80 |
 | arcee-ai/maestro-reasoning | openrouter | 131072 | 32000 | In: $0.90, Out: $3.30 |
 | arcee-ai/spotlight | openrouter | 131072 | 65537 | In: $0.18, Out: $0.18 |
 | arcee-ai/trinity-mini | openrouter | 131072 | 131072 | In: $0.04, Out: $0.15 |
 | arcee-ai/virtuoso-large | openrouter | 131072 | 64000 | In: $0.75, Out: $1.20 |
+| openrouter/aurora-alpha | openrouter | 128000 | 50000 | - |
 | openrouter/auto | openrouter | 2000000 | - | - |
 | baidu/ernie-4.5-21b-a3b | openrouter | 120000 | 8000 | In: $0.07, Out: $0.28 |
 | baidu/ernie-4.5-21b-a3b-thinking | openrouter | 131072 | 65536 | In: $0.07, Out: $0.28 |
@@ -749,6 +820,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-opus-4 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-3.7-sonnet | openrouter | 200000 | 128000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-sonnet-4 | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -759,20 +831,20 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cohere/command-r7b-12-2024 | openrouter | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | 128000 | - | In: $1.25, Out: $1.25 |
 | nousresearch/deephermes-3-llama-3-8b-preview | openrouter | 131072 | 8192 | - |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | deepseek/deepseek-r1-distill-qwen-14b | openrouter | 64000 | 8192 | - |
 | tngtech/deepseek-r1t2-chimera:free | openrouter | 163840 | 163840 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87, Cache: $0.10 |
 | deepseek/deepseek-v3-base:free | openrouter | 163840 | 163840 | - |
 | deepseek/deepseek-v3.1-terminus | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | 163840 | 65536 | In: $0.28, Out: $0.40 |
 | deepseek/deepseek-v3.2-speciale | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-chat-v3.1 | openrouter | 163840 | 163840 | In: $0.20, Out: $0.80 |
-| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | deepseek/deepseek-v3.2-exp | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-r1 | openrouter | 64000 | 16000 | In: $0.70, Out: $2.50 |
-| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75 |
+| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75, Cache: $0.20 |
 | deepseek/deepseek-r1-distill-qwen-32b | openrouter | 32768 | 32768 | In: $0.29, Out: $0.29 |
 | deepseek/deepseek-r1-0528-qwen3-8b:free | openrouter | 131072 | 131072 | - |
 | mistralai/devstral-2512 | openrouter | 262144 | 262144 | In: $0.15, Out: $0.60 |
@@ -901,6 +973,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | meta-llama/llama-4-scout | openrouter | 327680 | 16384 | In: $0.08, Out: $0.30 |
 | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.18, Out: $0.18 |
 | meta-llama/llama-guard-2-8b | openrouter | 8192 | - | In: $0.20, Out: $0.20 |
+| xiaomi/mimo-v2-flash | openrouter | 262144 | 65536 | In: $0.10, Out: $0.30, Cache: $0.01 |
 | microsoft/phi-4 | openrouter | 16384 | 16384 | In: $0.06, Out: $0.14 |
 | minimax/minimax-m1 | openrouter | 1000000 | 40000 | In: $0.40, Out: $2.20 |
 | minimax/minimax-m2 | openrouter | 196600 | 118000 | In: $0.28, Out: $1.15, Cache: $0.28 |
@@ -914,9 +987,9 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-medium-3 | openrouter | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-medium-3.1 | openrouter | 262144 | 262144 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-nemo:free | openrouter | 131072 | 131072 | - |
-| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | mistralai/mistral-small-3.2-24b-instruct:free | openrouter | 96000 | 96000 | - |
-| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18 |
+| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18, Cache: $0.03 |
 | mistralai/mistral-tiny | openrouter | 32768 | - | In: $0.25, Out: $0.25 |
 | mistralai/devstral-medium | openrouter | 131072 | - | In: $0.40, Out: $2.00 |
 | mistralai/devstral-small | openrouter | 131072 | - | In: $0.10, Out: $0.30 |
@@ -931,7 +1004,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-7b-instruct-v0.3 | openrouter | 32768 | 4096 | In: $0.20, Out: $0.20 |
 | mistralai/mistral-large-2512 | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | mistralai/mistral-nemo | openrouter | 131072 | 16384 | In: $0.02, Out: $0.04 |
-| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 32768 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 16384 | In: $0.05, Out: $0.08 |
 | mistralai/mistral-small-3.1-24b-instruct:free | openrouter | 128000 | - | - |
 | mistralai/mistral-small-creative | openrouter | 32768 | - | In: $0.10, Out: $0.30 |
 | mistralai/mixtral-8x22b-instruct | openrouter | 65536 | - | In: $2.00, Out: $6.00 |
@@ -941,7 +1014,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-saba | openrouter | 32768 | - | In: $0.20, Out: $0.60 |
 | mistralai/voxtral-small-24b-2507 | openrouter | 32000 | - | In: $0.10, Out: $0.30 |
 | allenai/molmo-2-8b:free | openrouter | 36864 | 36864 | - |
-| moonshotai/kimi-dev-72b | openrouter | 131072 | 131072 | In: $0.29, Out: $1.15 |
 | morph/morph-v3-fast | openrouter | 81920 | 38000 | In: $0.80, Out: $1.20 |
 | morph/morph-v3-large | openrouter | 262144 | 131072 | In: $0.90, Out: $1.90 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
@@ -956,7 +1028,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 4096 | In: $0.09, Out: $0.60 |
 | nex-agi/deepseek-v3.1-nex-n1 | openrouter | 131072 | 163840 | In: $0.27, Out: $1.00 |
 | neversleep/noromaid-20b | openrouter | 4096 | 2048 | In: $1.00, Out: $1.75 |
-| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10 |
+| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10, Cache: $0.01 |
 | nousresearch/hermes-3-llama-3.1-405b | openrouter | 131072 | 16384 | In: $1.00, Out: $1.00 |
 | nousresearch/hermes-3-llama-3.1-70b | openrouter | 65536 | 65536 | In: $0.30, Out: $0.30 |
 | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 8192 | 8192 | In: $0.14, Out: $0.14 |
@@ -992,18 +1064,19 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/o3-pro | openrouter | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | openai/o4-mini-deep-research | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o4-mini-high | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.10, Out: $0.39 |
+| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | perplexity/sonar | openrouter | 127072 | - | In: $1.00, Out: $1.00 |
 | perplexity/sonar-deep-research | openrouter | 128000 | - | In: $2.00, Out: $8.00 |
 | perplexity/sonar-pro | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-pro-search | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-reasoning-pro | openrouter | 128000 | - | In: $2.00, Out: $8.00 |
+| openrouter/pony-alpha | openrouter | 200000 | 131000 | - |
 | prime-intellect/intellect-3 | openrouter | 131072 | 131072 | In: $0.20, Out: $1.10 |
 | qwen/qwq-32b:free | openrouter | 32768 | 32768 | - |
 | qwen/qwen-2.5-72b-instruct | openrouter | 32768 | 16384 | In: $0.12, Out: $0.39 |
-| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11 |
+| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | qwen/qwen2.5-vl-32b-instruct:free | openrouter | 8192 | 8192 | - |
-| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60 |
+| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen2.5-vl-72b-instruct:free | openrouter | 32768 | 32768 | - |
 | qwen/qwen-2.5-vl-7b-instruct:free | openrouter | 32768 | 32768 | - |
 | qwen/qwen3-14b:free | openrouter | 40960 | 40960 | - |
@@ -1028,31 +1101,32 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | qwen/qwen3-next-80b-a3b-thinking | openrouter | 262144 | 262144 | In: $0.14, Out: $1.40 |
 | qwen/qwq-32b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.40 |
 | qwen/qwen-plus-2025-07-28 | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
-| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $4.00 |
-| qwen/qwen-vl-max | openrouter | 131072 | 8192 | In: $0.80, Out: $3.20 |
-| qwen/qwen-vl-plus | openrouter | 7500 | 1500 | In: $0.21, Out: $0.63 |
-| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.64 |
-| qwen/qwen-plus | openrouter | 131072 | 8192 | In: $0.40, Out: $1.20, Cache: $0.16 |
-| qwen/qwen-turbo | openrouter | 1000000 | 8192 | In: $0.05, Out: $0.20, Cache: $0.02 |
+| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
+| qwen/qwen-vl-max | openrouter | 131072 | 32768 | In: $0.80, Out: $3.20 |
+| qwen/qwen-vl-plus | openrouter | 131072 | 8192 | In: $0.21, Out: $0.63, Cache: $0.04 |
+| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.32 |
+| qwen/qwen-plus | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20, Cache: $0.08 |
+| qwen/qwen-turbo | openrouter | 131072 | 8192 | In: $0.05, Out: $0.20, Cache: $0.01 |
 | qwen/qwen-2.5-7b-instruct | openrouter | 32768 | - | In: $0.04, Out: $0.10 |
 | qwen/qwen2.5-coder-7b-instruct | openrouter | 32768 | - | In: $0.03, Out: $0.09 |
-| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22 |
+| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen-2.5-vl-7b-instruct | openrouter | 32768 | - | In: $0.20, Out: $0.20 |
-| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22 |
+| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen3-235b-a22b | openrouter | 40960 | - | In: $0.20, Out: $0.60 |
 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.07, Out: $0.10 |
-| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22 |
-| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24 |
+| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22, Cache: $0.03 |
+| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24, Cache: $0.04 |
 | qwen/qwen3-8b | openrouter | 32000 | 8192 | In: $0.05, Out: $0.40, Cache: $0.05 |
-| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30 |
-| qwen/qwen3-coder-plus | openrouter | 128000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.10 |
+| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30, Cache: $0.04 |
+| qwen/qwen3-coder-plus | openrouter | 1000000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.20 |
+| qwen/qwen3-max-thinking | openrouter | 262144 | 32768 | In: $1.20, Out: $6.00 |
 | qwen/qwen3-vl-235b-a22b-instruct | openrouter | 262144 | - | In: $0.20, Out: $0.88, Cache: $0.11 |
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | 262144 | 262144 | In: $0.45, Out: $3.50 |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | 262144 | - | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | 131072 | 32768 | In: $0.20, Out: $1.00 |
 | qwen/qwen3-vl-32b-instruct | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
-| qwen/qwen3-vl-8b-thinking | openrouter | 256000 | 32768 | In: $0.18, Out: $2.10 |
+| qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.18, Out: $2.10 |
 | featherless/qwerky-72b | openrouter | 32768 | 8192 | - |
 | deepseek/deepseek-r1:free | openrouter | 163840 | 163840 | - |
 | deepseek/deepseek-r1-0528:free | openrouter | 163840 | 163840 | - |
@@ -1075,12 +1149,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openrouter/sherlock-think-alpha | openrouter | 1840000 | 0 | - |
 | raifle/sorcererlm-8x22b | openrouter | 16000 | - | In: $4.50, Out: $4.50 |
 | stepfun/step-3.5-flash:free | openrouter | 256000 | 256000 | - |
-| stepfun-ai/step3 | openrouter | 65536 | 65536 | In: $0.57, Out: $1.42 |
 | switchpoint/router | openrouter | 131072 | - | In: $0.85, Out: $3.40 |
-| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | tngtech/deepseek-r1t-chimera:free | openrouter | 163840 | - | - |
-| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85 |
-| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85 |
+| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85, Cache: $0.12 |
+| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85, Cache: $0.12 |
 | tencent/hunyuan-a13b-instruct | openrouter | 131072 | 131072 | In: $0.14, Out: $0.57 |
 | thedrummer/cydonia-24b-v4.1 | openrouter | 131072 | 131072 | In: $0.30, Out: $0.50 |
 | thedrummer/rocinante-12b | openrouter | 32768 | 32768 | In: $0.17, Out: $0.43 |
@@ -1093,7 +1166,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | upstage/solar-pro-3:free | openrouter | 128000 | - | - |
 | microsoft/wizardlm-2-8x22b | openrouter | 65536 | 16384 | In: $0.48, Out: $0.48 |
 | writer/palmyra-x5 | openrouter | 1040000 | 8192 | In: $0.60, Out: $6.00 |
-| xiaomi/mimo-v2-flash | openrouter | 262144 | - | In: $0.09, Out: $0.29 |
 | z-ai/glm-4-32b | openrouter | 128000 | - | In: $0.10, Out: $0.10 |
 | z-ai/glm-4.6v | openrouter | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | 131072 | 32768 | - |
@@ -1156,7 +1228,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-multilingual-embedding-002 | vertexai | - | - | - |
 
 
-### XAI (12)
+### XAI (13)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1171,12 +1243,13 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-4-fast-reasoning | xai | - | - | - |
 | grok-code-fast-1 | xai | - | - | - |
 | grok-imagine-image | xai | - | - | - |
+| grok-imagine-image-pro | xai | - | - | - |
 | grok-imagine-video | xai | - | - | - |
 
 
 ## Models by Capability
 
-### Function Calling (603)
+### Function Calling (681)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1192,7 +1265,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | claude-opus-4-1 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-5-20251101 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-opus-4-5 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| claude-opus-4-6 | anthropic | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| claude-opus-4-6 | anthropic | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -1236,8 +1309,8 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | o3-mini-2025-01-31 | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
 | o3-mini-alpha | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
 | o3-mini-alpha-2024-12-17 | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
-| anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| anthropic.claude-v2:0:100k | bedrock | - | - | - |
+| anthropic.claude-v2:0:18k | bedrock | - | - | - |
 | anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
@@ -1248,7 +1321,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 12000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
@@ -1288,44 +1361,120 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | us.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | cohere.command-r-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
 | cohere.command-r-plus-v1:0 | bedrock | 128000 | 4096 | In: $3.00, Out: $15.00 |
+| deepseek.v3.2 | bedrock | - | 163840 | - |
 | deepseek.r1-v1:0 | bedrock | 128000 | 32768 | In: $1.35, Out: $5.40 |
+| us.deepseek.r1-v1:0 | bedrock | 128000 | 32768 | In: $1.35, Out: $5.40 |
 | deepseek.v3-v1:0 | bedrock | 163840 | 81920 | In: $0.58, Out: $1.68 |
+| cohere.embed-english-v3 | bedrock | - | - | - |
+| cohere.embed-english-v3:0:512 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3:0:512 | bedrock | - | - | - |
+| us.cohere.embed-v4:0 | bedrock | 128000 | - | - |
+| zai.glm-4.7 | bedrock | - | 202752 | - |
+| zai.glm-4.7-flash | bedrock | - | 202752 | - |
 | openai.gpt-oss-safeguard-120b | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
 | openai.gpt-oss-safeguard-20b | bedrock | 128000 | 4096 | In: $0.07, Out: $0.20 |
 | google.gemma-3-4b-it | bedrock | 128000 | 4096 | In: $0.04, Out: $0.08 |
+| google.gemma-3-12b-it | bedrock | 131072 | 8192 | In: $0.05, Out: $0.10 |
 | google.gemma-3-27b-it | bedrock | 202752 | 8192 | In: $0.12, Out: $0.20 |
 | ai21.jamba-1-5-large-v1:0 | bedrock | 256000 | 4096 | In: $2.00, Out: $8.00 |
 | ai21.jamba-1-5-mini-v1:0 | bedrock | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | moonshot.kimi-k2-thinking | bedrock | 256000 | 256000 | In: $0.60, Out: $2.50 |
+| moonshotai.kimi-k2.5 | bedrock | - | 262144 | - |
+| meta.llama3-70b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $2.65, Out: $3.50 |
+| meta.llama3-8b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $0.30, Out: $0.60 |
+| meta.llama3-1-405b-instruct-v1:0 | bedrock | - | - | - |
 | meta.llama3-1-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-1-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-1-8b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
+| meta.llama3-1-8b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-1b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| us.meta.llama3-2-1b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.10, Out: $0.10 |
 | meta.llama3-2-3b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.15, Out: $0.15 |
+| meta.llama3-2-3b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| us.meta.llama3-2-3b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-3-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-3-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
+| us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| mistral.magistral-small-2509 | bedrock | - | 131072 | - |
 | minimax.minimax-m2 | bedrock | 204608 | 128000 | In: $0.30, Out: $1.20 |
+| minimax.minimax-m2.1 | bedrock | - | 196608 | - |
 | mistral.ministral-3-14b-instruct | bedrock | 128000 | 4096 | In: $0.20, Out: $0.20 |
 | mistral.ministral-3-8b-instruct | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| mistral.ministral-3-3b-instruct | bedrock | - | 262144 | - |
 | mistral.mistral-large-2402-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
+| mistral.mistral-large-2407-v1:0 | bedrock | - | - | - |
+| mistral.mistral-large-3-675b-instruct | bedrock | - | 262144 | - |
 | mistral.mistral-7b-instruct-v0:2 | bedrock | 127000 | 127000 | In: $0.11, Out: $0.11 |
+| mistral.mixtral-8x7b-instruct-v0:1 | bedrock | 32000 | 32000 | In: $0.70, Out: $0.70 |
 | nvidia.nemotron-nano-12b-v2 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | nvidia.nemotron-nano-9b-v2 | bedrock | 128000 | 4096 | In: $0.06, Out: $0.23 |
+| nvidia.nemotron-nano-3-30b | bedrock | - | 262144 | - |
 | amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| us.amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| amazon.nova-2-sonic-v1:0 | bedrock | - | - | - |
 | amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
+| us.amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
 | amazon.nova-micro-v1:0 | bedrock | 128000 | 8192 | In: $0.04, Out: $0.14, Cache: $0.01 |
+| us.amazon.nova-micro-v1:0 | bedrock | 128000 | 8192 | In: $0.04, Out: $0.14, Cache: $0.01 |
 | amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:1000k | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:20k | bedrock | 20000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:8k | bedrock | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | - | - | - |
+| us.amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.writer.palmyra-x4-v1:0 | bedrock | - | - | - |
+| us.writer.palmyra-x5-v1:0 | bedrock | - | - | - |
+| us.twelvelabs.pegasus-1-2-v1:0 | bedrock | - | - | - |
+| us.mistral.pixtral-large-2502-v1:0 | bedrock | - | - | - |
 | qwen.qwen3-next-80b-a3b | bedrock | 262000 | 262000 | In: $0.14, Out: $1.40 |
 | qwen.qwen3-vl-235b-a22b | bedrock | 262000 | 262000 | In: $0.30, Out: $1.50 |
 | qwen.qwen3-235b-a22b-2507-v1:0 | bedrock | 262144 | 131072 | In: $0.22, Out: $0.88 |
 | qwen.qwen3-32b-v1:0 | bedrock | 16384 | 16384 | In: $0.15, Out: $0.60 |
 | qwen.qwen3-coder-30b-a3b-v1:0 | bedrock | 262144 | 131072 | In: $0.15, Out: $0.60 |
 | qwen.qwen3-coder-480b-a35b-v1:0 | bedrock | 131072 | 65536 | In: $0.22, Out: $1.80 |
+| luma.ray-v2:0 | bedrock | - | - | - |
+| amazon.rerank-v1:0 | bedrock | - | - | - |
+| cohere.rerank-v3-5:0 | bedrock | - | - | - |
+| stability.sd3-5-large-v1:0 | bedrock | - | - | - |
+| us.stability.stable-conservative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-sketch-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-structure-v1:0 | bedrock | - | - | - |
+| stability.stable-image-core-v1:1 | bedrock | - | - | - |
+| us.stability.stable-creative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-erase-object-v1:0 | bedrock | - | - | - |
+| us.stability.stable-fast-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-inpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-outpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-remove-background-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-recolor-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-replace-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-style-guide-v1:0 | bedrock | - | - | - |
+| us.stability.stable-style-transfer-v1:0 | bedrock | - | - | - |
+| stability.stable-image-ultra-v1:1 | bedrock | - | - | - |
+| amazon.titan-embed-text-v1 | bedrock | - | - | - |
+| amazon.titan-embed-text-v1:2:8k | bedrock | - | - | - |
+| amazon.titan-image-generator-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1:0 | bedrock | - | - | - |
+| amazon.titan-embed-text-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-g1-text-02 | bedrock | - | - | - |
 | amazon.titan-text-express-v1 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | amazon.titan-text-express-v1:0:8k | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
+| amazon.titan-tg1-large | bedrock | - | - | - |
 | mistral.voxtral-mini-3b-2507 | bedrock | 128000 | 4096 | In: $0.04, Out: $0.04 |
 | mistral.voxtral-small-24b-2507 | bedrock | 32000 | 8192 | In: $0.15, Out: $0.35 |
 | openai.gpt-oss-120b-1:0 | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
@@ -1468,7 +1617,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini-deep-research | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| ai21/jamba-mini-1.7 | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | allenai/olmo-3.1-32b-instruct | openrouter | 65536 | - | In: $0.20, Out: $0.60 |
 | amazon/nova-2-lite-v1 | openrouter | 1000000 | 65535 | In: $0.30, Out: $2.50 |
 | amazon/nova-lite-v1 | openrouter | 300000 | 5120 | In: $0.06, Out: $0.24 |
@@ -1478,9 +1626,9 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-3-haiku | openrouter | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.03 |
 | anthropic/claude-3.5-sonnet | openrouter | 200000 | 8192 | In: $6.00, Out: $30.00 |
 | anthropic/claude-3.7-sonnet:thinking | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
-| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | arcee-ai/trinity-mini | openrouter | 131072 | 131072 | In: $0.04, Out: $0.15 |
 | arcee-ai/virtuoso-large | openrouter | 131072 | 64000 | In: $0.75, Out: $1.20 |
+| openrouter/aurora-alpha | openrouter | 128000 | 50000 | - |
 | openrouter/auto | openrouter | 2000000 | - | - |
 | baidu/ernie-4.5-21b-a3b | openrouter | 120000 | 8000 | In: $0.07, Out: $0.28 |
 | baidu/ernie-4.5-vl-28b-a3b | openrouter | 30000 | 8000 | In: $0.14, Out: $0.56 |
@@ -1491,6 +1639,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-opus-4 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-3.7-sonnet | openrouter | 200000 | 128000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-sonnet-4 | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -1498,16 +1647,16 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cohere/command-r-08-2024 | openrouter | 128000 | 4000 | In: $0.15, Out: $0.60 |
 | cohere/command-r-plus-08-2024 | openrouter | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | nousresearch/deephermes-3-llama-3-8b-preview | openrouter | 131072 | 8192 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87, Cache: $0.10 |
 | deepseek/deepseek-v3.1-terminus | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | 163840 | 65536 | In: $0.28, Out: $0.40 |
 | deepseek/deepseek-v3.2-speciale | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-chat-v3.1 | openrouter | 163840 | 163840 | In: $0.20, Out: $0.80 |
-| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | deepseek/deepseek-v3.2-exp | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-r1 | openrouter | 64000 | 16000 | In: $0.70, Out: $2.50 |
-| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75 |
+| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75, Cache: $0.20 |
 | deepseek/deepseek-r1-0528-qwen3-8b:free | openrouter | 131072 | 131072 | - |
 | mistralai/devstral-2512 | openrouter | 262144 | 262144 | In: $0.15, Out: $0.60 |
 | mistralai/devstral-2512:free | openrouter | 262144 | 262144 | - |
@@ -1595,6 +1744,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | meta-llama/llama-3.3-70b-instruct | openrouter | 131072 | 16384 | In: $0.10, Out: $0.32 |
 | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.15, Out: $0.60 |
 | meta-llama/llama-4-scout | openrouter | 327680 | 16384 | In: $0.08, Out: $0.30 |
+| xiaomi/mimo-v2-flash | openrouter | 262144 | 65536 | In: $0.10, Out: $0.30, Cache: $0.01 |
 | minimax/minimax-m1 | openrouter | 1000000 | 40000 | In: $0.40, Out: $2.20 |
 | minimax/minimax-m2 | openrouter | 196600 | 118000 | In: $0.28, Out: $1.15, Cache: $0.28 |
 | minimax/minimax-m2.1 | openrouter | 204800 | 131072 | In: $0.30, Out: $1.20 |
@@ -1606,9 +1756,9 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-medium-3 | openrouter | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-medium-3.1 | openrouter | 262144 | 262144 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-nemo:free | openrouter | 131072 | 131072 | - |
-| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | mistralai/mistral-small-3.2-24b-instruct:free | openrouter | 96000 | 96000 | - |
-| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18 |
+| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18, Cache: $0.03 |
 | mistralai/mistral-tiny | openrouter | 32768 | - | In: $0.25, Out: $0.25 |
 | mistralai/devstral-medium | openrouter | 131072 | - | In: $0.40, Out: $2.00 |
 | mistralai/devstral-small | openrouter | 131072 | - | In: $0.10, Out: $0.30 |
@@ -1619,7 +1769,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/ministral-8b | openrouter | 131072 | - | In: $0.10, Out: $0.10 |
 | mistralai/mistral-large-2512 | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | mistralai/mistral-nemo | openrouter | 131072 | 16384 | In: $0.02, Out: $0.04 |
-| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 32768 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 16384 | In: $0.05, Out: $0.08 |
 | mistralai/mistral-small-3.1-24b-instruct:free | openrouter | 128000 | - | - |
 | mistralai/mistral-small-creative | openrouter | 32768 | - | In: $0.10, Out: $0.30 |
 | mistralai/mixtral-8x22b-instruct | openrouter | 65536 | - | In: $2.00, Out: $6.00 |
@@ -1635,7 +1785,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | nvidia/nemotron-nano-12b-v2-vl:free | openrouter | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2:free | openrouter | 128000 | 128000 | - |
 | nex-agi/deepseek-v3.1-nex-n1 | openrouter | 131072 | 163840 | In: $0.27, Out: $1.00 |
-| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10 |
+| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10, Cache: $0.01 |
 | openai/gpt-3.5-turbo | openrouter | 16385 | 4096 | In: $0.50, Out: $1.50 |
 | openai/gpt-3.5-turbo-0613 | openrouter | 4095 | 4096 | In: $1.00, Out: $2.00 |
 | openai/gpt-3.5-turbo-16k | openrouter | 16385 | 4096 | In: $3.00, Out: $4.00 |
@@ -1661,6 +1811,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/o3-pro | openrouter | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | openai/o4-mini-deep-research | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o4-mini-high | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
+| openrouter/pony-alpha | openrouter | 200000 | 131000 | - |
 | prime-intellect/intellect-3 | openrouter | 131072 | 131072 | In: $0.20, Out: $1.10 |
 | qwen/qwq-32b:free | openrouter | 32768 | 32768 | - |
 | qwen/qwen-2.5-72b-instruct | openrouter | 32768 | 16384 | In: $0.12, Out: $0.39 |
@@ -1689,26 +1840,27 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | qwen/qwen3-next-80b-a3b-thinking | openrouter | 262144 | 262144 | In: $0.14, Out: $1.40 |
 | qwen/qwq-32b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.40 |
 | qwen/qwen-plus-2025-07-28 | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
-| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $4.00 |
-| qwen/qwen-vl-max | openrouter | 131072 | 8192 | In: $0.80, Out: $3.20 |
-| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.64 |
-| qwen/qwen-plus | openrouter | 131072 | 8192 | In: $0.40, Out: $1.20, Cache: $0.16 |
-| qwen/qwen-turbo | openrouter | 1000000 | 8192 | In: $0.05, Out: $0.20, Cache: $0.02 |
+| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
+| qwen/qwen-vl-max | openrouter | 131072 | 32768 | In: $0.80, Out: $3.20 |
+| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.32 |
+| qwen/qwen-plus | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20, Cache: $0.08 |
+| qwen/qwen-turbo | openrouter | 131072 | 8192 | In: $0.05, Out: $0.20, Cache: $0.01 |
 | qwen/qwen-2.5-7b-instruct | openrouter | 32768 | - | In: $0.04, Out: $0.10 |
-| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22 |
+| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen3-235b-a22b | openrouter | 40960 | - | In: $0.20, Out: $0.60 |
 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.07, Out: $0.10 |
-| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22 |
-| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24 |
+| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22, Cache: $0.03 |
+| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24, Cache: $0.04 |
 | qwen/qwen3-8b | openrouter | 32000 | 8192 | In: $0.05, Out: $0.40, Cache: $0.05 |
-| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30 |
-| qwen/qwen3-coder-plus | openrouter | 128000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.10 |
+| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30, Cache: $0.04 |
+| qwen/qwen3-coder-plus | openrouter | 1000000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.20 |
+| qwen/qwen3-max-thinking | openrouter | 262144 | 32768 | In: $1.20, Out: $6.00 |
 | qwen/qwen3-vl-235b-a22b-instruct | openrouter | 262144 | - | In: $0.20, Out: $0.88, Cache: $0.11 |
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | 262144 | 262144 | In: $0.45, Out: $3.50 |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | 262144 | - | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | 131072 | 32768 | In: $0.20, Out: $1.00 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
-| qwen/qwen3-vl-8b-thinking | openrouter | 256000 | 32768 | In: $0.18, Out: $2.10 |
+| qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.18, Out: $2.10 |
 | deepseek/deepseek-r1:free | openrouter | 163840 | 163840 | - |
 | tngtech/tng-r1t-chimera:free | openrouter | 163840 | 163840 | - |
 | rekaai/reka-flash-3 | openrouter | 32768 | 8192 | - |
@@ -1719,16 +1871,14 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openrouter/sherlock-dash-alpha | openrouter | 1840000 | 0 | - |
 | openrouter/sherlock-think-alpha | openrouter | 1840000 | 0 | - |
 | stepfun/step-3.5-flash:free | openrouter | 256000 | 256000 | - |
-| stepfun-ai/step3 | openrouter | 65536 | 65536 | In: $0.57, Out: $1.42 |
-| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85 |
-| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85 |
+| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85, Cache: $0.12 |
+| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85, Cache: $0.12 |
 | thedrummer/rocinante-12b | openrouter | 32768 | 32768 | In: $0.17, Out: $0.43 |
 | thedrummer/unslopnemo-12b | openrouter | 32768 | 32768 | In: $0.40, Out: $0.40 |
 | alibaba/tongyi-deepresearch-30b-a3b | openrouter | 131072 | 131072 | In: $0.09, Out: $0.45, Cache: $0.09 |
 | arcee-ai/trinity-large-preview:free | openrouter | 131072 | 131072 | - |
 | arcee-ai/trinity-mini:free | openrouter | 131072 | 131072 | - |
 | upstage/solar-pro-3:free | openrouter | 128000 | - | - |
-| xiaomi/mimo-v2-flash | openrouter | 262144 | - | In: $0.09, Out: $0.29 |
 | z-ai/glm-4-32b | openrouter | 128000 | - | In: $0.10, Out: $0.10 |
 | z-ai/glm-4.6v | openrouter | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | 131072 | 32768 | - |
@@ -1782,10 +1932,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-4-fast-reasoning | xai | - | - | - |
 | grok-code-fast-1 | xai | - | - | - |
 | grok-imagine-image | xai | - | - | - |
+| grok-imagine-image-pro | xai | - | - | - |
 | grok-imagine-video | xai | - | - | - |
 
 
-### Structured Output (423)
+### Structured Output (425)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1941,20 +2092,21 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | o3-pro | openai | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| ai21/jamba-mini-1.7 | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | allenai/olmo-3-32b-think | openrouter | 65536 | 65536 | In: $0.15, Out: $0.50 |
 | allenai/olmo-3-7b-instruct | openrouter | 65536 | 65536 | In: $0.10, Out: $0.20 |
 | allenai/olmo-3-7b-think | openrouter | 65536 | 65536 | In: $0.12, Out: $0.20 |
 | allenai/olmo-3.1-32b-instruct | openrouter | 65536 | - | In: $0.20, Out: $0.60 |
 | allenai/olmo-3.1-32b-think | openrouter | 65536 | 65536 | In: $0.15, Out: $0.50 |
-| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | arcee-ai/trinity-mini | openrouter | 131072 | 131072 | In: $0.04, Out: $0.15 |
+| openrouter/aurora-alpha | openrouter | 128000 | 50000 | - |
 | openrouter/auto | openrouter | 2000000 | - | - |
 | baidu/ernie-4.5-300b-a47b | openrouter | 123000 | 12000 | In: $0.28, Out: $1.10 |
 | bytedance-seed/seed-1.6 | openrouter | 262144 | 32768 | In: $0.25, Out: $2.00 |
 | bytedance-seed/seed-1.6-flash | openrouter | 262144 | 32768 | In: $0.08, Out: $0.30 |
+| anthropic/claude-haiku-4.5 | openrouter | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | mistralai/codestral-2508 | openrouter | 256000 | 256000 | In: $0.30, Out: $0.90 |
 | cohere/command-a | openrouter | 256000 | 8192 | In: $2.50, Out: $10.00 |
@@ -1962,16 +2114,16 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cohere/command-r-plus-08-2024 | openrouter | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | cohere/command-r7b-12-2024 | openrouter | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | 128000 | - | In: $1.25, Out: $1.25 |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11 |
-| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87, Cache: $0.10 |
 | deepseek/deepseek-v3.1-terminus | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | 163840 | 65536 | In: $0.28, Out: $0.40 |
 | deepseek/deepseek-v3.2-speciale | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-chat-v3.1 | openrouter | 163840 | 163840 | In: $0.20, Out: $0.80 |
-| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | deepseek/deepseek-v3.2-exp | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
-| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75 |
+| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75, Cache: $0.20 |
 | deepseek/deepseek-r1-distill-qwen-32b | openrouter | 32768 | 32768 | In: $0.29, Out: $0.29 |
 | mistralai/devstral-2512 | openrouter | 262144 | 262144 | In: $0.15, Out: $0.60 |
 | essentialai/rnj-1-instruct | openrouter | 32768 | - | In: $0.15, Out: $0.15 |
@@ -2059,6 +2211,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | meta-llama/llama-4-maverick | openrouter | 1048576 | 16384 | In: $0.15, Out: $0.60 |
 | meta-llama/llama-4-scout | openrouter | 327680 | 16384 | In: $0.08, Out: $0.30 |
 | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.18, Out: $0.18 |
+| xiaomi/mimo-v2-flash | openrouter | 262144 | 65536 | In: $0.10, Out: $0.30, Cache: $0.01 |
 | microsoft/phi-4 | openrouter | 16384 | 16384 | In: $0.06, Out: $0.14 |
 | minimax/minimax-m2 | openrouter | 196600 | 118000 | In: $0.28, Out: $1.15, Cache: $0.28 |
 | minimax/minimax-m2.1 | openrouter | 204800 | 131072 | In: $0.30, Out: $1.20 |
@@ -2067,8 +2220,8 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-large-2411 | openrouter | 131072 | - | In: $2.00, Out: $6.00 |
 | mistralai/mistral-medium-3 | openrouter | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-medium-3.1 | openrouter | 262144 | 262144 | In: $0.40, Out: $2.00 |
-| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11 |
-| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18 |
+| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
+| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18, Cache: $0.03 |
 | mistralai/mistral-tiny | openrouter | 32768 | - | In: $0.25, Out: $0.25 |
 | mistralai/devstral-medium | openrouter | 131072 | - | In: $0.40, Out: $2.00 |
 | mistralai/devstral-small | openrouter | 131072 | - | In: $0.10, Out: $0.30 |
@@ -2079,7 +2232,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/ministral-8b | openrouter | 131072 | - | In: $0.10, Out: $0.10 |
 | mistralai/mistral-large-2512 | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | mistralai/mistral-nemo | openrouter | 131072 | 16384 | In: $0.02, Out: $0.04 |
-| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 32768 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 16384 | In: $0.05, Out: $0.08 |
 | mistralai/mistral-small-3.1-24b-instruct:free | openrouter | 128000 | - | - |
 | mistralai/mixtral-8x22b-instruct | openrouter | 65536 | - | In: $2.00, Out: $6.00 |
 | mistralai/mixtral-8x7b-instruct | openrouter | 32768 | 16384 | In: $0.54, Out: $0.54 |
@@ -2087,7 +2240,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/pixtral-large-2411 | openrouter | 131072 | - | In: $2.00, Out: $6.00 |
 | mistralai/mistral-saba | openrouter | 32768 | - | In: $0.20, Out: $0.60 |
 | mistralai/voxtral-small-24b-2507 | openrouter | 32000 | - | In: $0.10, Out: $0.30 |
-| moonshotai/kimi-dev-72b | openrouter | 131072 | 131072 | In: $0.29, Out: $1.15 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
 | nvidia/llama-3.1-nemotron-70b-instruct | openrouter | 131072 | 16384 | In: $1.20, Out: $1.20 |
 | nvidia/llama-3.1-nemotron-ultra-253b-v1 | openrouter | 131072 | - | In: $0.60, Out: $1.80 |
@@ -2098,7 +2250,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 4096 | In: $0.09, Out: $0.60 |
 | nex-agi/deepseek-v3.1-nex-n1 | openrouter | 131072 | 163840 | In: $0.27, Out: $1.00 |
 | neversleep/noromaid-20b | openrouter | 4096 | 2048 | In: $1.00, Out: $1.75 |
-| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10 |
+| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10, Cache: $0.01 |
 | nousresearch/hermes-3-llama-3.1-405b | openrouter | 131072 | 16384 | In: $1.00, Out: $1.00 |
 | nousresearch/hermes-3-llama-3.1-70b | openrouter | 65536 | 65536 | In: $0.30, Out: $0.30 |
 | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 8192 | 8192 | In: $0.14, Out: $0.14 |
@@ -2134,11 +2286,12 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/o3-pro | openrouter | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | openai/o4-mini-deep-research | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o4-mini-high | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.10, Out: $0.39 |
+| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.60, Cache: $0.08 |
+| openrouter/pony-alpha | openrouter | 200000 | 131000 | - |
 | prime-intellect/intellect-3 | openrouter | 131072 | 131072 | In: $0.20, Out: $1.10 |
 | qwen/qwen-2.5-72b-instruct | openrouter | 32768 | 16384 | In: $0.12, Out: $0.39 |
-| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11 |
-| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60 |
+| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
+| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | 81920 | In: $0.08, Out: $0.31 |
 | qwen/qwen3-30b-a3b-instruct-2507 | openrouter | 262000 | 262000 | In: $0.20, Out: $0.80 |
 | qwen/qwen3-30b-a3b-thinking-2507 | openrouter | 262000 | 262000 | In: $0.20, Out: $0.80 |
@@ -2153,38 +2306,38 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | qwen/qwen3-next-80b-a3b-thinking | openrouter | 262144 | 262144 | In: $0.14, Out: $1.40 |
 | qwen/qwq-32b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.40 |
 | qwen/qwen-plus-2025-07-28 | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
-| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $4.00 |
-| qwen/qwen-vl-max | openrouter | 131072 | 8192 | In: $0.80, Out: $3.20 |
-| qwen/qwen-vl-plus | openrouter | 7500 | 1500 | In: $0.21, Out: $0.63 |
-| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.64 |
-| qwen/qwen-plus | openrouter | 131072 | 8192 | In: $0.40, Out: $1.20, Cache: $0.16 |
-| qwen/qwen-turbo | openrouter | 1000000 | 8192 | In: $0.05, Out: $0.20, Cache: $0.02 |
+| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
+| qwen/qwen-vl-max | openrouter | 131072 | 32768 | In: $0.80, Out: $3.20 |
+| qwen/qwen-vl-plus | openrouter | 131072 | 8192 | In: $0.21, Out: $0.63, Cache: $0.04 |
+| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.32 |
+| qwen/qwen-plus | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20, Cache: $0.08 |
+| qwen/qwen-turbo | openrouter | 131072 | 8192 | In: $0.05, Out: $0.20, Cache: $0.01 |
 | qwen/qwen2.5-coder-7b-instruct | openrouter | 32768 | - | In: $0.03, Out: $0.09 |
-| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22 |
-| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22 |
+| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22, Cache: $0.02 |
+| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen3-235b-a22b | openrouter | 40960 | - | In: $0.20, Out: $0.60 |
 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.07, Out: $0.10 |
-| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22 |
-| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24 |
+| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22, Cache: $0.03 |
+| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24, Cache: $0.04 |
 | qwen/qwen3-8b | openrouter | 32000 | 8192 | In: $0.05, Out: $0.40, Cache: $0.05 |
-| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30 |
-| qwen/qwen3-coder-plus | openrouter | 128000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.10 |
+| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30, Cache: $0.04 |
+| qwen/qwen3-coder-plus | openrouter | 1000000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.20 |
+| qwen/qwen3-max-thinking | openrouter | 262144 | 32768 | In: $1.20, Out: $6.00 |
 | qwen/qwen3-vl-235b-a22b-instruct | openrouter | 262144 | - | In: $0.20, Out: $0.88, Cache: $0.11 |
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | 262144 | 262144 | In: $0.45, Out: $3.50 |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | 262144 | - | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | 131072 | 32768 | In: $0.20, Out: $1.00 |
 | qwen/qwen3-vl-32b-instruct | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
-| qwen/qwen3-vl-8b-thinking | openrouter | 256000 | 32768 | In: $0.18, Out: $2.10 |
+| qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.18, Out: $2.10 |
 | tngtech/tng-r1t-chimera:free | openrouter | 163840 | 163840 | - |
 | undi95/remm-slerp-l2-13b | openrouter | 6144 | 4096 | In: $0.45, Out: $0.65 |
 | sao10k/l3-lunaris-8b | openrouter | 8192 | - | In: $0.04, Out: $0.05 |
 | sao10k/l3.1-euryale-70b | openrouter | 32768 | 32768 | In: $0.65, Out: $0.75 |
 | sao10k/l3.3-euryale-70b | openrouter | 131072 | 16384 | In: $0.65, Out: $0.75 |
-| stepfun-ai/step3 | openrouter | 65536 | 65536 | In: $0.57, Out: $1.42 |
-| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
-| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85 |
-| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85 |
+| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
+| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85, Cache: $0.12 |
+| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85, Cache: $0.12 |
 | tencent/hunyuan-a13b-instruct | openrouter | 131072 | 131072 | In: $0.14, Out: $0.57 |
 | thedrummer/cydonia-24b-v4.1 | openrouter | 131072 | 131072 | In: $0.30, Out: $0.50 |
 | thedrummer/rocinante-12b | openrouter | 32768 | 32768 | In: $0.17, Out: $0.43 |
@@ -2195,7 +2348,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cognitivecomputations/dolphin-mistral-24b-venice-edition:free | openrouter | 32768 | 32768 | - |
 | upstage/solar-pro-3:free | openrouter | 128000 | - | - |
 | microsoft/wizardlm-2-8x22b | openrouter | 65536 | 16384 | In: $0.48, Out: $0.48 |
-| xiaomi/mimo-v2-flash | openrouter | 262144 | - | In: $0.09, Out: $0.29 |
 | z-ai/glm-4.6v | openrouter | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | nvidia/nemotron-nano-9b-v2 | openrouter | 131072 | 131072 | In: $0.04, Out: $0.16 |
 | openai/o4-mini | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
@@ -2211,10 +2363,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-4-fast-reasoning | xai | - | - | - |
 | grok-code-fast-1 | xai | - | - | - |
 | grok-imagine-image | xai | - | - | - |
+| grok-imagine-image-pro | xai | - | - | - |
 | grok-imagine-video | xai | - | - | - |
 
 
-### Streaming (889)
+### Streaming (962)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -2224,7 +2377,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | claude-opus-4-20250514 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-1-20250805 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-5-20251101 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| claude-opus-4-6 | anthropic | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| claude-opus-4-6 | anthropic | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-3-7-sonnet-20250219 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-sonnet-4-20250514 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-sonnet-4-5-20250929 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -2487,8 +2640,8 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-similarity-davinci-001 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | whisper | azure | - | - | In: $0.01, Out: $0.01 |
 | whisper-001 | azure | - | - | In: $0.01, Out: $0.01 |
-| anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
+| anthropic.claude-v2:0:100k | bedrock | - | - | - |
+| anthropic.claude-v2:0:18k | bedrock | - | - | - |
 | anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
@@ -2496,7 +2649,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $0.08 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
+| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 12000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
@@ -2519,6 +2672,78 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | us.anthropic.claude-sonnet-4-20250514-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | us.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
+| cohere.command-r-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
+| cohere.command-r-plus-v1:0 | bedrock | 128000 | 4096 | In: $3.00, Out: $15.00 |
+| deepseek.v3.2 | bedrock | - | 163840 | - |
+| us.deepseek.r1-v1:0 | bedrock | 128000 | 32768 | In: $1.35, Out: $5.40 |
+| deepseek.v3-v1:0 | bedrock | 163840 | 81920 | In: $0.58, Out: $1.68 |
+| zai.glm-4.7 | bedrock | - | 202752 | - |
+| zai.glm-4.7-flash | bedrock | - | 202752 | - |
+| openai.gpt-oss-safeguard-120b | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
+| openai.gpt-oss-safeguard-20b | bedrock | 128000 | 4096 | In: $0.07, Out: $0.20 |
+| google.gemma-3-4b-it | bedrock | 128000 | 4096 | In: $0.04, Out: $0.08 |
+| google.gemma-3-12b-it | bedrock | 131072 | 8192 | In: $0.05, Out: $0.10 |
+| google.gemma-3-27b-it | bedrock | 202752 | 8192 | In: $0.12, Out: $0.20 |
+| moonshot.kimi-k2-thinking | bedrock | 256000 | 256000 | In: $0.60, Out: $2.50 |
+| moonshotai.kimi-k2.5 | bedrock | - | 262144 | - |
+| meta.llama3-70b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $2.65, Out: $3.50 |
+| meta.llama3-8b-instruct-v1:0 | bedrock | 8192 | 2048 | In: $0.30, Out: $0.60 |
+| meta.llama3-1-405b-instruct-v1:0 | bedrock | - | - | - |
+| meta.llama3-1-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-1-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-1-8b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
+| meta.llama3-1-8b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.22, Out: $0.22 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| us.meta.llama3-2-1b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-3b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| us.meta.llama3-2-3b-instruct-v1:0 | bedrock | 131000 | 4096 | In: $0.15, Out: $0.15 |
+| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-3-70b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
+| us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| mistral.magistral-small-2509 | bedrock | - | 131072 | - |
+| minimax.minimax-m2 | bedrock | 204608 | 128000 | In: $0.30, Out: $1.20 |
+| minimax.minimax-m2.1 | bedrock | - | 196608 | - |
+| mistral.ministral-3-14b-instruct | bedrock | 128000 | 4096 | In: $0.20, Out: $0.20 |
+| mistral.ministral-3-8b-instruct | bedrock | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| mistral.ministral-3-3b-instruct | bedrock | - | 262144 | - |
+| mistral.mistral-large-2402-v1:0 | bedrock | 128000 | 4096 | In: $0.50, Out: $1.50 |
+| mistral.mistral-large-2407-v1:0 | bedrock | - | - | - |
+| mistral.mistral-large-3-675b-instruct | bedrock | - | 262144 | - |
+| mistral.mistral-7b-instruct-v0:2 | bedrock | 127000 | 127000 | In: $0.11, Out: $0.11 |
+| mistral.mixtral-8x7b-instruct-v0:1 | bedrock | 32000 | 32000 | In: $0.70, Out: $0.70 |
+| nvidia.nemotron-nano-12b-v2 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
+| nvidia.nemotron-nano-9b-v2 | bedrock | 128000 | 4096 | In: $0.06, Out: $0.23 |
+| nvidia.nemotron-nano-3-30b | bedrock | - | 262144 | - |
+| us.amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| amazon.nova-2-sonic-v1:0 | bedrock | - | - | - |
+| us.amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
+| us.amazon.nova-micro-v1:0 | bedrock | 128000 | 8192 | In: $0.04, Out: $0.14, Cache: $0.01 |
+| amazon.nova-premier-v1:0:1000k | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:20k | bedrock | 20000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:8k | bedrock | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | - | - | - |
+| us.amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| us.amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.writer.palmyra-x4-v1:0 | bedrock | - | - | - |
+| us.writer.palmyra-x5-v1:0 | bedrock | - | - | - |
+| us.twelvelabs.pegasus-1-2-v1:0 | bedrock | - | - | - |
+| us.mistral.pixtral-large-2502-v1:0 | bedrock | - | - | - |
+| qwen.qwen3-next-80b-a3b | bedrock | 262000 | 262000 | In: $0.14, Out: $1.40 |
+| qwen.qwen3-vl-235b-a22b | bedrock | 262000 | 262000 | In: $0.30, Out: $1.50 |
+| qwen.qwen3-235b-a22b-2507-v1:0 | bedrock | 262144 | 131072 | In: $0.22, Out: $0.88 |
+| qwen.qwen3-32b-v1:0 | bedrock | 16384 | 16384 | In: $0.15, Out: $0.60 |
+| qwen.qwen3-coder-30b-a3b-v1:0 | bedrock | 262144 | 131072 | In: $0.15, Out: $0.60 |
+| qwen.qwen3-coder-480b-a35b-v1:0 | bedrock | 131072 | 65536 | In: $0.22, Out: $1.80 |
+| amazon.titan-tg1-large | bedrock | - | - | - |
+| mistral.voxtral-mini-3b-2507 | bedrock | 128000 | 4096 | In: $0.04, Out: $0.04 |
+| mistral.voxtral-small-24b-2507 | bedrock | 32000 | 8192 | In: $0.15, Out: $0.35 |
+| openai.gpt-oss-120b-1:0 | bedrock | 128000 | 4096 | In: $0.15, Out: $0.60 |
+| openai.gpt-oss-20b-1:0 | bedrock | 128000 | 4096 | In: $0.07, Out: $0.30 |
 | deepseek-chat | deepseek | 128000 | 8192 | In: $0.28, Out: $0.42, Cache: $0.03 |
 | deepseek-reasoner | deepseek | 128000 | 128000 | In: $0.28, Out: $0.42, Cache: $0.03 |
 | deep-research-pro-preview-12-2025 | gemini | 131072 | 65536 | In: $0.08, Out: $0.30 |
@@ -2725,7 +2950,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | o4-mini | openai | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | o4-mini-deep-research | openai | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
-| ai21/jamba-mini-1.7 | openrouter | 256000 | 4096 | In: $0.20, Out: $0.40 |
 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
 | aion-labs/aion-1.0-mini | openrouter | 131072 | 32768 | In: $0.70, Out: $1.40 |
 | aion-labs/aion-rp-llama-3.1-8b | openrouter | 32768 | 32768 | In: $0.80, Out: $1.60 |
@@ -2745,12 +2969,12 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-3-haiku | openrouter | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.03 |
 | anthropic/claude-3.5-sonnet | openrouter | 200000 | 8192 | In: $6.00, Out: $30.00 |
 | anthropic/claude-3.7-sonnet:thinking | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
-| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | arcee-ai/coder-large | openrouter | 32768 | - | In: $0.50, Out: $0.80 |
 | arcee-ai/maestro-reasoning | openrouter | 131072 | 32000 | In: $0.90, Out: $3.30 |
 | arcee-ai/spotlight | openrouter | 131072 | 65537 | In: $0.18, Out: $0.18 |
 | arcee-ai/trinity-mini | openrouter | 131072 | 131072 | In: $0.04, Out: $0.15 |
 | arcee-ai/virtuoso-large | openrouter | 131072 | 64000 | In: $0.75, Out: $1.20 |
+| openrouter/aurora-alpha | openrouter | 128000 | 50000 | - |
 | openrouter/auto | openrouter | 2000000 | - | - |
 | baidu/ernie-4.5-21b-a3b | openrouter | 120000 | 8000 | In: $0.07, Out: $0.28 |
 | baidu/ernie-4.5-21b-a3b-thinking | openrouter | 131072 | 65536 | In: $0.07, Out: $0.28 |
@@ -2766,6 +2990,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | anthropic/claude-opus-4 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-3.7-sonnet | openrouter | 200000 | 128000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-sonnet-4 | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -2775,18 +3000,18 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | cohere/command-r-plus-08-2024 | openrouter | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | cohere/command-r7b-12-2024 | openrouter | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | 128000 | - | In: $1.25, Out: $1.25 |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | 8192 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | tngtech/deepseek-r1t2-chimera:free | openrouter | 163840 | 163840 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | 16384 | 8192 | In: $0.19, Out: $0.87, Cache: $0.10 |
 | deepseek/deepseek-v3.1-terminus | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | 163840 | 65536 | In: $0.28, Out: $0.40 |
 | deepseek/deepseek-v3.2-speciale | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-chat-v3.1 | openrouter | 163840 | 163840 | In: $0.20, Out: $0.80 |
-| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| deepseek/deepseek-chat | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | deepseek/deepseek-v3.2-exp | openrouter | 163840 | 65536 | In: $0.27, Out: $0.41 |
 | deepseek/deepseek-r1 | openrouter | 64000 | 16000 | In: $0.70, Out: $2.50 |
-| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75 |
+| deepseek/deepseek-r1-0528 | openrouter | 163840 | 65536 | In: $0.40, Out: $1.75, Cache: $0.20 |
 | deepseek/deepseek-r1-distill-qwen-32b | openrouter | 32768 | 32768 | In: $0.29, Out: $0.29 |
 | mistralai/devstral-2512 | openrouter | 262144 | 262144 | In: $0.15, Out: $0.60 |
 | eleutherai/llemma_7b | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
@@ -2894,6 +3119,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | meta-llama/llama-4-scout | openrouter | 327680 | 16384 | In: $0.08, Out: $0.30 |
 | meta-llama/llama-guard-4-12b | openrouter | 163840 | - | In: $0.18, Out: $0.18 |
 | meta-llama/llama-guard-2-8b | openrouter | 8192 | - | In: $0.20, Out: $0.20 |
+| xiaomi/mimo-v2-flash | openrouter | 262144 | 65536 | In: $0.10, Out: $0.30, Cache: $0.01 |
 | microsoft/phi-4 | openrouter | 16384 | 16384 | In: $0.06, Out: $0.14 |
 | minimax/minimax-m1 | openrouter | 1000000 | 40000 | In: $0.40, Out: $2.20 |
 | minimax/minimax-m2 | openrouter | 196600 | 118000 | In: $0.28, Out: $1.15, Cache: $0.28 |
@@ -2905,8 +3131,8 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-large-2411 | openrouter | 131072 | - | In: $2.00, Out: $6.00 |
 | mistralai/mistral-medium-3 | openrouter | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-medium-3.1 | openrouter | 262144 | 262144 | In: $0.40, Out: $2.00 |
-| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11 |
-| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18 |
+| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
+| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18, Cache: $0.03 |
 | mistralai/mistral-tiny | openrouter | 32768 | - | In: $0.25, Out: $0.25 |
 | mistralai/devstral-medium | openrouter | 131072 | - | In: $0.40, Out: $2.00 |
 | mistralai/devstral-small | openrouter | 131072 | - | In: $0.10, Out: $0.30 |
@@ -2921,7 +3147,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/mistral-7b-instruct-v0.3 | openrouter | 32768 | 4096 | In: $0.20, Out: $0.20 |
 | mistralai/mistral-large-2512 | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | mistralai/mistral-nemo | openrouter | 131072 | 16384 | In: $0.02, Out: $0.04 |
-| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 32768 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-24b-instruct-2501 | openrouter | 32768 | 16384 | In: $0.05, Out: $0.08 |
 | mistralai/mistral-small-3.1-24b-instruct:free | openrouter | 128000 | - | - |
 | mistralai/mistral-small-creative | openrouter | 32768 | - | In: $0.10, Out: $0.30 |
 | mistralai/mixtral-8x22b-instruct | openrouter | 65536 | - | In: $2.00, Out: $6.00 |
@@ -2930,7 +3156,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/pixtral-large-2411 | openrouter | 131072 | - | In: $2.00, Out: $6.00 |
 | mistralai/mistral-saba | openrouter | 32768 | - | In: $0.20, Out: $0.60 |
 | mistralai/voxtral-small-24b-2507 | openrouter | 32000 | - | In: $0.10, Out: $0.30 |
-| moonshotai/kimi-dev-72b | openrouter | 131072 | 131072 | In: $0.29, Out: $1.15 |
 | morph/morph-v3-fast | openrouter | 81920 | 38000 | In: $0.80, Out: $1.20 |
 | morph/morph-v3-large | openrouter | 262144 | 131072 | In: $0.90, Out: $1.90 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
@@ -2945,7 +3170,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | neversleep/llama-3.1-lumimaid-8b | openrouter | 32768 | 4096 | In: $0.09, Out: $0.60 |
 | nex-agi/deepseek-v3.1-nex-n1 | openrouter | 131072 | 163840 | In: $0.27, Out: $1.00 |
 | neversleep/noromaid-20b | openrouter | 4096 | 2048 | In: $1.00, Out: $1.75 |
-| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10 |
+| nousresearch/deephermes-3-mistral-24b-preview | openrouter | 32768 | 32768 | In: $0.02, Out: $0.10, Cache: $0.01 |
 | nousresearch/hermes-3-llama-3.1-405b | openrouter | 131072 | 16384 | In: $1.00, Out: $1.00 |
 | nousresearch/hermes-3-llama-3.1-70b | openrouter | 65536 | 65536 | In: $0.30, Out: $0.30 |
 | nousresearch/hermes-2-pro-llama-3-8b | openrouter | 8192 | 8192 | In: $0.14, Out: $0.14 |
@@ -2981,16 +3206,17 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/o3-pro | openrouter | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | openai/o4-mini-deep-research | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o4-mini-high | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.10, Out: $0.39 |
+| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | perplexity/sonar | openrouter | 127072 | - | In: $1.00, Out: $1.00 |
 | perplexity/sonar-deep-research | openrouter | 128000 | - | In: $2.00, Out: $8.00 |
 | perplexity/sonar-pro | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-pro-search | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-reasoning-pro | openrouter | 128000 | - | In: $2.00, Out: $8.00 |
+| openrouter/pony-alpha | openrouter | 200000 | 131000 | - |
 | prime-intellect/intellect-3 | openrouter | 131072 | 131072 | In: $0.20, Out: $1.10 |
 | qwen/qwen-2.5-72b-instruct | openrouter | 32768 | 16384 | In: $0.12, Out: $0.39 |
-| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11 |
-| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60 |
+| qwen/qwen-2.5-coder-32b-instruct | openrouter | 32768 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
+| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-235b-a22b-thinking-2507 | openrouter | 262144 | 81920 | In: $0.08, Out: $0.31 |
 | qwen/qwen3-30b-a3b-instruct-2507 | openrouter | 262000 | 262000 | In: $0.20, Out: $0.80 |
 | qwen/qwen3-30b-a3b-thinking-2507 | openrouter | 262000 | 262000 | In: $0.20, Out: $0.80 |
@@ -3006,31 +3232,32 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | qwen/qwen3-next-80b-a3b-thinking | openrouter | 262144 | 262144 | In: $0.14, Out: $1.40 |
 | qwen/qwq-32b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.40 |
 | qwen/qwen-plus-2025-07-28 | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
-| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $4.00 |
-| qwen/qwen-vl-max | openrouter | 131072 | 8192 | In: $0.80, Out: $3.20 |
-| qwen/qwen-vl-plus | openrouter | 7500 | 1500 | In: $0.21, Out: $0.63 |
-| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.64 |
-| qwen/qwen-plus | openrouter | 131072 | 8192 | In: $0.40, Out: $1.20, Cache: $0.16 |
-| qwen/qwen-turbo | openrouter | 1000000 | 8192 | In: $0.05, Out: $0.20, Cache: $0.02 |
+| qwen/qwen-plus-2025-07-28:thinking | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20 |
+| qwen/qwen-vl-max | openrouter | 131072 | 32768 | In: $0.80, Out: $3.20 |
+| qwen/qwen-vl-plus | openrouter | 131072 | 8192 | In: $0.21, Out: $0.63, Cache: $0.04 |
+| qwen/qwen-max | openrouter | 32768 | 8192 | In: $1.60, Out: $6.40, Cache: $0.32 |
+| qwen/qwen-plus | openrouter | 1000000 | 32768 | In: $0.40, Out: $1.20, Cache: $0.08 |
+| qwen/qwen-turbo | openrouter | 131072 | 8192 | In: $0.05, Out: $0.20, Cache: $0.01 |
 | qwen/qwen-2.5-7b-instruct | openrouter | 32768 | - | In: $0.04, Out: $0.10 |
 | qwen/qwen2.5-coder-7b-instruct | openrouter | 32768 | - | In: $0.03, Out: $0.09 |
-| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22 |
+| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen-2.5-vl-7b-instruct | openrouter | 32768 | - | In: $0.20, Out: $0.20 |
-| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22 |
+| qwen/qwen3-14b | openrouter | 40960 | 40960 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen3-235b-a22b | openrouter | 40960 | - | In: $0.20, Out: $0.60 |
 | qwen/qwen3-235b-a22b-2507 | openrouter | 262144 | - | In: $0.07, Out: $0.10 |
-| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22 |
-| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24 |
+| qwen/qwen3-30b-a3b | openrouter | 40960 | 40960 | In: $0.06, Out: $0.22, Cache: $0.03 |
+| qwen/qwen3-32b | openrouter | 40960 | 40960 | In: $0.08, Out: $0.24, Cache: $0.04 |
 | qwen/qwen3-8b | openrouter | 32000 | 8192 | In: $0.05, Out: $0.40, Cache: $0.05 |
-| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30 |
-| qwen/qwen3-coder-plus | openrouter | 128000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.10 |
+| qwen/qwen3-coder-next | openrouter | 262144 | 65536 | In: $0.07, Out: $0.30, Cache: $0.04 |
+| qwen/qwen3-coder-plus | openrouter | 1000000 | 65536 | In: $1.00, Out: $5.00, Cache: $0.20 |
+| qwen/qwen3-max-thinking | openrouter | 262144 | 32768 | In: $1.20, Out: $6.00 |
 | qwen/qwen3-vl-235b-a22b-instruct | openrouter | 262144 | - | In: $0.20, Out: $0.88, Cache: $0.11 |
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | 262144 | 262144 | In: $0.45, Out: $3.50 |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | 262144 | - | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | 131072 | 32768 | In: $0.20, Out: $1.00 |
 | qwen/qwen3-vl-32b-instruct | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
-| qwen/qwen3-vl-8b-thinking | openrouter | 256000 | 32768 | In: $0.18, Out: $2.10 |
+| qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.18, Out: $2.10 |
 | deepseek/deepseek-r1-0528:free | openrouter | 163840 | 163840 | - |
 | tngtech/tng-r1t-chimera:free | openrouter | 163840 | 163840 | - |
 | undi95/remm-slerp-l2-13b | openrouter | 6144 | 4096 | In: $0.45, Out: $0.65 |
@@ -3043,12 +3270,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | sao10k/l3-euryale-70b | openrouter | 8192 | 8192 | In: $1.48, Out: $1.48 |
 | raifle/sorcererlm-8x22b | openrouter | 16000 | - | In: $4.50, Out: $4.50 |
 | stepfun/step-3.5-flash:free | openrouter | 256000 | 256000 | - |
-| stepfun-ai/step3 | openrouter | 65536 | 65536 | In: $0.57, Out: $1.42 |
 | switchpoint/router | openrouter | 131072 | - | In: $0.85, Out: $3.40 |
-| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20 |
+| tngtech/deepseek-r1t-chimera | openrouter | 163840 | 163840 | In: $0.30, Out: $1.20, Cache: $0.15 |
 | tngtech/deepseek-r1t-chimera:free | openrouter | 163840 | - | - |
-| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85 |
-| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85 |
+| tngtech/deepseek-r1t2-chimera | openrouter | 163840 | 163840 | In: $0.25, Out: $0.85, Cache: $0.12 |
+| tngtech/tng-r1t-chimera | openrouter | 163840 | 65536 | In: $0.25, Out: $0.85, Cache: $0.12 |
 | tencent/hunyuan-a13b-instruct | openrouter | 131072 | 131072 | In: $0.14, Out: $0.57 |
 | thedrummer/cydonia-24b-v4.1 | openrouter | 131072 | 131072 | In: $0.30, Out: $0.50 |
 | thedrummer/rocinante-12b | openrouter | 32768 | 32768 | In: $0.17, Out: $0.43 |
@@ -3061,7 +3287,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | upstage/solar-pro-3:free | openrouter | 128000 | - | - |
 | microsoft/wizardlm-2-8x22b | openrouter | 65536 | 16384 | In: $0.48, Out: $0.48 |
 | writer/palmyra-x5 | openrouter | 1040000 | 8192 | In: $0.60, Out: $6.00 |
-| xiaomi/mimo-v2-flash | openrouter | 262144 | - | In: $0.09, Out: $0.29 |
 | z-ai/glm-4-32b | openrouter | 128000 | - | In: $0.10, Out: $0.10 |
 | z-ai/glm-4.6v | openrouter | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | 131072 | 32768 | - |
@@ -3106,10 +3331,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-4-fast-reasoning | xai | - | - | - |
 | grok-code-fast-1 | xai | - | - | - |
 | grok-imagine-image | xai | - | - | - |
+| grok-imagine-image-pro | xai | - | - | - |
 | grok-imagine-video | xai | - | - | - |
 
 
-### Batch Processing (68)
+### Batch Processing (67)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -3120,7 +3346,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-embedding-3-small | azure | - | - | In: $0.02, Out: $0.02 |
 | text-embedding-ada-002 | azure | - | - | In: $0.10, Out: $0.10 |
 | text-embedding-ada-002-2 | azure | - | - | In: $0.10, Out: $0.10 |
-| us.anthropic.claude-3-7-sonnet-20250219-v1:0 | bedrock | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | gemini-2.0-flash | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | gemini-2.0-flash-exp-image-generation | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40 |
 | gemini-2.0-flash-001 | gemini | 1048576 | 8192 | In: $0.10, Out: $0.40 |
@@ -3185,7 +3410,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 
 ## Models by Modality
 
-### Vision Models (387)
+### Vision Models (420)
 
 Models that can process images:
 
@@ -3203,7 +3428,7 @@ Models that can process images:
 | claude-opus-4-1 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-5-20251101 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-opus-4-5 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| claude-opus-4-6 | anthropic | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| claude-opus-4-6 | anthropic | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -3243,8 +3468,6 @@ Models that can process images:
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
-| anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
@@ -3253,7 +3476,6 @@ Models that can process images:
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 12000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
@@ -3291,19 +3513,56 @@ Models that can process images:
 | eu.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | global.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | us.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
+| us.cohere.embed-v4:0 | bedrock | 128000 | - | - |
 | google.gemma-3-4b-it | bedrock | 128000 | 4096 | In: $0.04, Out: $0.08 |
 | google.gemma-3-12b-it | bedrock | 131072 | 8192 | In: $0.05, Out: $0.10 |
 | google.gemma-3-27b-it | bedrock | 202752 | 8192 | In: $0.12, Out: $0.20 |
+| moonshotai.kimi-k2.5 | bedrock | - | 262144 | - |
 | meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| us.meta.llama3-2-90b-instruct-v1:0 | bedrock | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
+| us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| mistral.magistral-small-2509 | bedrock | - | 131072 | - |
+| mistral.ministral-3-3b-instruct | bedrock | - | 262144 | - |
+| mistral.mistral-large-3-675b-instruct | bedrock | - | 262144 | - |
 | nvidia.nemotron-nano-12b-v2 | bedrock | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| us.amazon.nova-2-lite-v1:0 | bedrock | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
+| us.amazon.nova-lite-v1:0 | bedrock | 300000 | 8192 | In: $0.06, Out: $0.24, Cache: $0.02 |
 | amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:1000k | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:20k | bedrock | 20000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:8k | bedrock | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | - | - | - |
+| us.amazon.nova-premier-v1:0 | bedrock | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.amazon.nova-pro-v1:0 | bedrock | 300000 | 8192 | In: $0.80, Out: $3.20, Cache: $0.20 |
+| us.mistral.pixtral-large-2502-v1:0 | bedrock | - | - | - |
 | qwen.qwen3-vl-235b-a22b | bedrock | 262000 | 262000 | In: $0.30, Out: $1.50 |
+| stability.sd3-5-large-v1:0 | bedrock | - | - | - |
+| us.stability.stable-conservative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-sketch-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-control-structure-v1:0 | bedrock | - | - | - |
+| us.stability.stable-creative-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-erase-object-v1:0 | bedrock | - | - | - |
+| us.stability.stable-fast-upscale-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-inpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-outpaint-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-remove-background-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-recolor-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-search-replace-v1:0 | bedrock | - | - | - |
+| us.stability.stable-image-style-guide-v1:0 | bedrock | - | - | - |
+| us.stability.stable-style-transfer-v1:0 | bedrock | - | - | - |
+| amazon.titan-image-generator-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1:0 | bedrock | - | - | - |
 | deep-research-pro-preview-12-2025 | gemini | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-1.5-flash | gemini | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | gemini-1.5-flash-8b | gemini | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
@@ -3418,7 +3677,6 @@ Models that can process images:
 | anthropic/claude-3-haiku | openrouter | 200000 | 4096 | In: $0.25, Out: $1.25, Cache: $0.03 |
 | anthropic/claude-3.5-sonnet | openrouter | 200000 | 8192 | In: $6.00, Out: $30.00 |
 | anthropic/claude-3.7-sonnet:thinking | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
-| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | arcee-ai/spotlight | openrouter | 131072 | 65537 | In: $0.18, Out: $0.18 |
 | openrouter/auto | openrouter | 2000000 | - | - |
 | baidu/ernie-4.5-vl-28b-a3b | openrouter | 30000 | 8000 | In: $0.14, Out: $0.56 |
@@ -3431,6 +3689,7 @@ Models that can process images:
 | anthropic/claude-opus-4 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-3.7-sonnet | openrouter | 200000 | 128000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-sonnet-4 | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -3492,9 +3751,9 @@ Models that can process images:
 | minimax/minimax-01 | openrouter | 1000000 | 1000000 | In: $0.20, Out: $1.10 |
 | mistralai/mistral-medium-3 | openrouter | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistralai/mistral-medium-3.1 | openrouter | 262144 | 262144 | In: $0.40, Out: $2.00 |
-| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11 |
+| mistralai/mistral-small-3.1-24b-instruct | openrouter | 128000 | 8192 | In: $0.03, Out: $0.11, Cache: $0.02 |
 | mistralai/mistral-small-3.2-24b-instruct:free | openrouter | 96000 | 96000 | - |
-| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18 |
+| mistralai/mistral-small-3.2-24b-instruct | openrouter | 96000 | 8192 | In: $0.06, Out: $0.18, Cache: $0.03 |
 | mistralai/ministral-14b-2512 | openrouter | 262144 | - | In: $0.20, Out: $0.20 |
 | mistralai/ministral-3b-2512 | openrouter | 131072 | - | In: $0.10, Out: $0.10 |
 | mistralai/ministral-8b-2512 | openrouter | 262144 | - | In: $0.15, Out: $0.15 |
@@ -3522,18 +3781,18 @@ Models that can process images:
 | openai/o3-pro | openrouter | 200000 | 100000 | In: $20.00, Out: $80.00 |
 | openai/o4-mini-deep-research | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o4-mini-high | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.10, Out: $0.39 |
+| opengvlab/internvl3-78b | openrouter | 32768 | 32768 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | perplexity/sonar | openrouter | 127072 | - | In: $1.00, Out: $1.00 |
 | perplexity/sonar-pro | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-pro-search | openrouter | 200000 | 8000 | In: $3.00, Out: $15.00 |
 | perplexity/sonar-reasoning-pro | openrouter | 128000 | - | In: $2.00, Out: $8.00 |
 | qwen/qwen2.5-vl-32b-instruct:free | openrouter | 8192 | 8192 | - |
-| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60 |
+| qwen/qwen2.5-vl-72b-instruct | openrouter | 32768 | 8192 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | qwen/qwen2.5-vl-72b-instruct:free | openrouter | 32768 | 32768 | - |
 | qwen/qwen-2.5-vl-7b-instruct:free | openrouter | 32768 | 32768 | - |
-| qwen/qwen-vl-max | openrouter | 131072 | 8192 | In: $0.80, Out: $3.20 |
-| qwen/qwen-vl-plus | openrouter | 7500 | 1500 | In: $0.21, Out: $0.63 |
-| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22 |
+| qwen/qwen-vl-max | openrouter | 131072 | 32768 | In: $0.80, Out: $3.20 |
+| qwen/qwen-vl-plus | openrouter | 131072 | 8192 | In: $0.21, Out: $0.63, Cache: $0.04 |
+| qwen/qwen2.5-vl-32b-instruct | openrouter | 16384 | 16384 | In: $0.05, Out: $0.22, Cache: $0.02 |
 | qwen/qwen-2.5-vl-7b-instruct | openrouter | 32768 | - | In: $0.20, Out: $0.20 |
 | qwen/qwen3-vl-235b-a22b-instruct | openrouter | 262144 | - | In: $0.20, Out: $0.88, Cache: $0.11 |
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | 262144 | 262144 | In: $0.45, Out: $3.50 |
@@ -3541,14 +3800,13 @@ Models that can process images:
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | 131072 | 32768 | In: $0.20, Out: $1.00 |
 | qwen/qwen3-vl-32b-instruct | openrouter | 262144 | - | In: $0.50, Out: $1.50 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
-| qwen/qwen3-vl-8b-thinking | openrouter | 256000 | 32768 | In: $0.18, Out: $2.10 |
+| qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.18, Out: $2.10 |
 | sourceful/riverflow-v2-fast-preview | openrouter | 8192 | 8192 | - |
 | sourceful/riverflow-v2-max-preview | openrouter | 8192 | 8192 | - |
 | sourceful/riverflow-v2-standard-preview | openrouter | 8192 | 8192 | - |
 | bytedance-seed/seedream-4.5 | openrouter | 4096 | 4096 | - |
 | openrouter/sherlock-dash-alpha | openrouter | 1840000 | 0 | - |
 | openrouter/sherlock-think-alpha | openrouter | 1840000 | 0 | - |
-| stepfun-ai/step3 | openrouter | 65536 | 65536 | In: $0.57, Out: $1.42 |
 | z-ai/glm-4.6v | openrouter | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/o4-mini | openrouter | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | sonar-pro | perplexity | 200000 | 8192 | In: $3.00, Out: $15.00 |
@@ -3580,7 +3838,7 @@ Models that can process images:
 | grok-4-fast-reasoning | xai | - | - | - |
 
 
-### Audio Input Models (104)
+### Audio Input Models (105)
 
 Models that can process audio:
 
@@ -3605,6 +3863,7 @@ Models that can process audio:
 | gpt-audio-mini-2025-10-06 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | whisper | azure | - | - | In: $0.01, Out: $0.01 |
 | whisper-001 | azure | - | - | In: $0.01, Out: $0.01 |
+| amazon.nova-2-sonic-v1:0 | bedrock | - | - | - |
 | mistral.voxtral-mini-3b-2507 | bedrock | 128000 | 4096 | In: $0.04, Out: $0.04 |
 | mistral.voxtral-small-24b-2507 | bedrock | 32000 | 8192 | In: $0.15, Out: $0.35 |
 | gemini-1.5-flash | gemini | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
@@ -3692,7 +3951,7 @@ Models that can process audio:
 | gemini-flash-lite-latest | vertexai | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
 
 
-### PDF Models (193)
+### PDF Models (191)
 
 Models that can process PDF documents:
 
@@ -3710,7 +3969,7 @@ Models that can process PDF documents:
 | claude-opus-4-1 | anthropic | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | claude-opus-4-5-20251101 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-opus-4-5 | anthropic | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| claude-opus-4-6 | anthropic | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| claude-opus-4-6 | anthropic | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | claude-3-sonnet-20240229 | anthropic | 200000 | 4096 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20240620 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | claude-3-5-sonnet-20241022 | anthropic | 200000 | 8192 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -3750,8 +4009,6 @@ Models that can process PDF documents:
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
-| anthropic.claude-v2:0:100k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:0:18k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
@@ -3760,7 +4017,6 @@ Models that can process PDF documents:
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | 200000 | 4096 | In: $0.80, Out: $2.40 |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:12k | bedrock | 12000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-3-opus-20240229-v1:0:200k | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
@@ -3861,6 +4117,7 @@ Models that can process PDF documents:
 | anthropic/claude-opus-4 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.1 | openrouter | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-opus-4.5 | openrouter | 200000 | 32000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic/claude-opus-4.6 | openrouter | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic/claude-3.7-sonnet | openrouter | 200000 | 128000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | anthropic/claude-sonnet-4 | openrouter | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
@@ -3893,7 +4150,7 @@ Models that can process PDF documents:
 | gemini-flash-lite-latest | vertexai | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
 
 
-### Embedding Models (12)
+### Embedding Models (23)
 
 Models that generate embeddings:
 
@@ -3903,6 +4160,17 @@ Models that generate embeddings:
 | text-embedding-3-small | azure | - | - | In: $0.02, Out: $0.02 |
 | text-embedding-ada-002 | azure | - | - | In: $0.10, Out: $0.10 |
 | text-embedding-ada-002-2 | azure | - | - | In: $0.10, Out: $0.10 |
+| cohere.embed-english-v3 | bedrock | - | - | - |
+| cohere.embed-english-v3:0:512 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3 | bedrock | - | - | - |
+| cohere.embed-multilingual-v3:0:512 | bedrock | - | - | - |
+| us.cohere.embed-v4:0 | bedrock | 128000 | - | - |
+| amazon.titan-embed-text-v1 | bedrock | - | - | - |
+| amazon.titan-embed-text-v1:2:8k | bedrock | - | - | - |
+| amazon.titan-embed-image-v1 | bedrock | - | - | - |
+| amazon.titan-embed-image-v1:0 | bedrock | - | - | - |
+| amazon.titan-embed-text-v2:0 | bedrock | - | - | - |
+| amazon.titan-embed-g1-text-02 | bedrock | - | - | - |
 | gemini-embedding-001 | gemini | 2048 | 3072 | In: $0.15 |
 | codestral-embed | mistral | 32768 | 8192 | - |
 | codestral-embed-2505 | mistral | 32768 | 8192 | - |

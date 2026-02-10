@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -19,31 +19,35 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 500
-      message: Internal Server Error
+      code: 429
+      message: Too Many Requests
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:48:52 GMT
+      - Tue, 10 Feb 2026 08:56:57 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '109'
+      - '99'
       Connection:
       - keep-alive
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '019bc7b5-a456-7f79-8729-bb07ca20f026'
+      - '019c46c4-9559-709d-a217-a0e7d41e7e74'
       X-Kong-Request-Id:
-      - '019bc7b5-a456-7f79-8729-bb07ca20f026'
+      - '019c46c4-9559-709d-a217-a0e7d41e7e74'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '2000000'
       X-Envoy-Upstream-Service-Time:
-      - '3247'
+      - '850'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '3260'
+      - '863'
       X-Kong-Proxy-Latency:
-      - '361'
+      - '1708'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -59,6 +63,6 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: '{"object":"error","message":"Service unavailable.","type":"internal_server_error","param":null,"code":"1000"}'
-  recorded_at: Fri, 16 Jan 2026 16:48:52 GMT
+      string: '{"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300"}'
+  recorded_at: Tue, 10 Feb 2026 08:56:57 GMT
 recorded_with: VCR 6.4.0

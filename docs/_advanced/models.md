@@ -190,7 +190,7 @@ chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 puts chat.model.id # => "claude-3-5-sonnet-20241022" (or latest version)
 ```
 
-`find` prioritizes exact ID matches before falling back to aliases.
+When you call `find` **without** a provider, RubyLLM prioritizes exact ID matches before falling back to aliases.
 
 ### Provider-Specific Resolution
 
@@ -203,6 +203,8 @@ model_anthropic = RubyLLM.models.find('{{ site.models.anthropic_current }}', :an
 # Get Claude 3.5 Sonnet via AWS Bedrock
 model_bedrock = RubyLLM.models.find('{{ site.models.anthropic_current }}', :bedrock)
 ```
+
+When you pass a provider, RubyLLM resolves aliases first. For Bedrock, it then applies region/inference-profile resolution (for example `us.` prefixes) before falling back to an exact ID match.
 
 ## Connecting to Custom Endpoints & Using Unlisted Models
 {: .d-inline-block }
