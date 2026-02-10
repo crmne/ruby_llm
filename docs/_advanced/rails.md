@@ -297,7 +297,7 @@ Route models through different providers dynamically:
 # Use a model through a different provider
 chat = Chat.create!(
   model: '{{ site.models.anthropic_current }}',
-  provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
+  provider: 'bedrock'  # Route this model through AWS Bedrock
 )
 
 # The model registry handles the routing automatically
