@@ -68,6 +68,16 @@ module GeneratorTestHelpers
     ENV['OPENAI_API_KEY'] = previous_openai_api_key
   end
 
+  def run_rails_runner(script)
+    env = {
+      'BUNDLE_GEMFILE' => ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s,
+      'BUNDLE_IGNORE_CONFIG' => '1',
+      'OPENAI_API_KEY' => ENV.fetch('OPENAI_API_KEY', 'test')
+    }
+    stdout, stderr, status = Open3.capture3(env, 'bundle', 'exec', 'rails', 'runner', script)
+    [status.success?, "#{stdout}#{stderr}"]
+  end
+
   # Instance methods for use in examples
   def create_test_app(name, template:)
     GeneratorTestHelpers.create_test_app(name, template: template, template_path: template_path)
