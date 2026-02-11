@@ -2,8 +2,7 @@
 
 gem 'ruby_llm', path: ENV['RUBYLLM_PATH'] || '../../../..'
 
-after_bundle do
-  generate 'ruby_llm:install'
-  rails_command 'db:migrate'
-  generate 'ruby_llm:chat_ui'
-end
+bundle_command 'install'
+generate 'ruby_llm:install'
+rails_command 'db:migrate'
+generate 'ruby_llm:chat_ui'
