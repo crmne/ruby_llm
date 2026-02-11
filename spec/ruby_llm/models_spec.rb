@@ -111,7 +111,15 @@ RSpec.describe RubyLLM::Models do
 
   describe '#refresh!' do
     before do
-      allow(described_class).to receive(:fetch_from_models_dev).and_return([])
+      allow(described_class).to receive_messages(
+        fetch_provider_models: {
+          models: [],
+          fetched_providers: [],
+          configured_names: [],
+          failed: []
+        },
+        fetch_models_dev_models: { models: [], fetched: true }
+      )
     end
 
     it 'updates models and returns a chainable Models instance' do
