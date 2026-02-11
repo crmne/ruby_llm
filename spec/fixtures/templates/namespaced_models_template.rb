@@ -2,7 +2,6 @@
 
 gem 'ruby_llm', path: ENV['RUBYLLM_PATH'] || '../../../..'
 
-bundle_command 'install'
 generate 'ruby_llm:install',
          'chat:Llm::Chat',
          'message:Llm::Message',

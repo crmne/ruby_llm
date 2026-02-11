@@ -24,20 +24,13 @@ module GeneratorTestHelpers
 
     create_command = [
       'bundle', 'exec', 'rails', 'new', name,
-      '--skip-bootsnap', '--skip-bundle', '--skip-kamal', '--skip-thruster'
+      '--skip-bootsnap', '--skip-bundle', '--skip-kamal', '--skip-thruster',
+      '--skip-asset-pipeline', '--skip-javascript', '--skip-hotwire'
     ]
     output, status = run_command(root_env, create_command, chdir: Dir.tmpdir)
     raise_command_error(name, create_command, status, output) unless status.success?
 
-    app_env = clean_bundle_env(
-      ruby_llm_path: ruby_llm_path,
-      bundle_gemfile: File.join(app_path, 'Gemfile')
-    )
-
-    install_command = ['bundle', 'install', '--quiet']
-    output, status = run_command(app_env, install_command, chdir: app_path)
-    raise_command_error(name, install_command, status, output) unless status.success?
-
+    app_env = root_env
     template_command = ['bundle', 'exec', 'rails', 'app:template', "LOCATION=#{template_file}"]
     output, status = run_command(app_env, template_command, chdir: app_path)
     raise_command_error(name, template_command, status, output) unless status.success?
@@ -46,23 +39,6 @@ module GeneratorTestHelpers
   def self.run_command(env, command, chdir:)
     stdout, stderr, process_status = Open3.capture3(env, *command, chdir:)
     ["#{stdout}#{stderr}", process_status]
-  end
-
-  def self.clean_bundle_env(ruby_llm_path:, bundle_gemfile:)
-    env = {
-      'RUBYLLM_PATH' => ruby_llm_path,
-      'BUNDLE_GEMFILE' => bundle_gemfile,
-      'BUNDLE_IGNORE_CONFIG' => '1'
-    }
-
-    ENV.each_key do |key|
-      next unless key.start_with?('BUNDLE_')
-      next if key == 'BUNDLE_GEMFILE'
-
-      env[key] = nil
-    end
-
-    env
   end
 
   def self.raise_command_error(name, command, status, output)
@@ -77,10 +53,8 @@ module GeneratorTestHelpers
 
   def within_test_app(app_path, &)
     api_key = ENV.fetch('OPENAI_API_KEY', 'test')
-    Bundler.with_unbundled_env do
-      ENV['OPENAI_API_KEY'] = api_key
-      Dir.chdir(app_path, &)
-    end
+    ENV['OPENAI_API_KEY'] = api_key
+    Dir.chdir(app_path, &)
   end
 
   # Instance methods for use in examples
