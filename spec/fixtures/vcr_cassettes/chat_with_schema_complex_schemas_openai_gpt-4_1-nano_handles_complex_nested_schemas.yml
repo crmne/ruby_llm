@@ -6,10 +6,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Generate
-        a person named Alice who is 25 years old","status":"completed"}],"stream":false,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+        a response with 2 users and metadata with version 1","status":"completed"}],"stream":false,"temperature":0.7,"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"users":{"type":"array","items":{"type":"object","properties":{"name":{"type":"string"},"role":{"type":"string","enum":["admin","user","guest"]}},"required":["name","role"],"additionalProperties":false}},"metadata":{"type":"object","properties":{"created_at":{"type":"string"},"version":{"type":"integer"}},"required":["created_at","version"],"additionalProperties":false}},"required":["users","metadata"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,45 +24,48 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 04:52:01 GMT
+      - Wed, 06 Aug 2025 05:07:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Server:
-      - cloudflare
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '30000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '150000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '199934'
+      - '149999885'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 2ms
       X-Ratelimit-Reset-Tokens:
-      - 19ms
+      - 0s
       Openai-Version:
       - '2020-10-01'
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Project:
-      - "<OPENAI_PROJECT>"
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '517'
+      - '894'
+      X-Envoy-Upstream-Service-Time:
+      - '904'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      - "<COOKIE>"
       X-Content-Type-Options:
       - nosniff
+      Server:
+      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -71,17 +74,12 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0a9db53468769cb000698ab97136d48197b9d783e950879515",
+          "id": "resp_6892e2ffd3d8819181008803a9c784f80251f77e9710ce40",
           "object": "response",
-          "created_at": 1770699121,
+          "created_at": 1754456831,
           "status": "completed",
           "background": false,
-          "billing": {
-            "payer": "developer"
-          },
-          "completed_at": 1770699121,
           "error": null,
-          "frequency_penalty": 0.0,
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
@@ -89,7 +87,7 @@ http_interactions:
           "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
-              "id": "msg_0a9db53468769cb000698ab9717d588197bf3fe512b7f32e24",
+              "id": "msg_6892e30007bc81918f93e1e71af03f820251f77e9710ce40",
               "type": "message",
               "status": "completed",
               "content": [
@@ -97,17 +95,15 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "{\"name\":\"Alice\",\"age\":25}"
+                  "text": "{\"users\":[{\"name\":\"Alice\",\"role\":\"admin\"},{\"name\":\"Bob\",\"role\":\"user\"}],\"metadata\":{\"created_at\":\"2023-10-04T12:00:00Z\",\"version\":1}}"
                 }
               ],
               "role": "assistant"
             }
           ],
           "parallel_tool_calls": true,
-          "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": null,
           "reasoning": {
             "effort": null,
             "summary": null
@@ -115,7 +111,7 @@ http_interactions:
           "safety_identifier": null,
           "service_tier": "default",
           "store": true,
-          "temperature": 1.0,
+          "temperature": 0.7,
           "text": {
             "format": {
               "type": "json_schema",
@@ -124,22 +120,55 @@ http_interactions:
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string"
+                  "users": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string",
+                          "enum": [
+                            "admin",
+                            "user",
+                            "guest"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "role"
+                      ],
+                      "additionalProperties": false
+                    }
                   },
-                  "age": {
-                    "type": "integer"
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "version": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "created_at",
+                      "version"
+                    ],
+                    "additionalProperties": false
                   }
                 },
                 "required": [
-                  "name",
-                  "age"
+                  "users",
+                  "metadata"
                 ],
                 "additionalProperties": false
               },
               "strict": true
-            },
-            "verbosity": "medium"
+            }
           },
           "tool_choice": "auto",
           "tools": [],
@@ -147,18 +176,18 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 47,
+            "input_tokens": 97,
             "input_tokens_details": {
               "cached_tokens": 0
             },
-            "output_tokens": 10,
+            "output_tokens": 45,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 57
+            "total_tokens": 142
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Feb 2026 04:52:01 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 06 Aug 2025 05:07:12 GMT
+recorded_with: VCR 6.3.1

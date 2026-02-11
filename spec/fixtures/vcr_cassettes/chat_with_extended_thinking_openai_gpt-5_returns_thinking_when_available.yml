@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5","messages":[{"role":"user","content":"If a magic mirror
-        shows your future self, but only if you ask a question it cannot answer truthfully,
-        what question do you ask to see your future, and what would the mirror reveal
-        about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+      string: '{"model":"gpt-5","input":[{"type":"message","role":"user","content":"If
+        a magic mirror shows your future self, but only if you ask a question it cannot
+        answer truthfully, what question do you ask to see your future, and what would
+        the mirror reveal about the answer it gives?","status":"completed"}],"stream":false,"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -26,23 +26,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:19:21 GMT
+      - Tue, 10 Feb 2026 05:40:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '92851'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -52,15 +42,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '499946'
+      - '498033'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 6ms
+      - 236ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '35178'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,7 +71,82 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VBT256d0o1elljdlNPRVY0c1hSdm15R0kwayIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTA2OCwKICAibW9kZWwiOiAiZ3B0LTUtMjAyNS0wOC0wNyIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiLSBUaGUgcXVlc3Rpb24gdG8gYXNrOiDigJxXaWxsIHlvdXIgYW5zd2VyIHRvIHRoaXMgcXVlc3Rpb24gYmUg4oCYbm/igJk/4oCdXG5cbi0gV2hhdCB0aGUgbWlycm9yIHdvdWxkIHJldmVhbDogSXQgY2Fu4oCZdCBhbnN3ZXIgdGhhdCB0cnV0aGZ1bGx54oCUYm90aCBwb3NzaWJsZSByZXBsaWVzIGFyZSBmYWxzZS4gSWYgaXQgc2F5cyDigJx5ZXMs4oCdIHRoYXTigJlzIGZhbHNlIGJlY2F1c2UgaXRzIGFuc3dlciB3YXNu4oCZdCDigJxuby7igJ0gSWYgaXQgc2F5cyDigJxubyzigJ0gdGhhdOKAmXMgZmFsc2UgYmVjYXVzZSBpdHMgYW5zd2VyIHdhcyDigJxuby7igJ0gU28gdGhlIG1pcnJvciBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmLCB3aG8gZXhwbGFpbnMgdGhhdCB3aGF0ZXZlciB0aGUgbWlycm9yIGp1c3QgYW5zd2VyZWTigJR5ZXMgb3Igbm/igJRpcyBhIGxpZSBieSBjb25zdHJ1Y3Rpb24uIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNTAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzMTE1LAogICAgInRvdGFsX3Rva2VucyI6IDMxNjUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMzAwOCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Tue, 10 Feb 2026 09:19:22 GMT
+      string: |-
+        {
+          "id": "resp_0a42ee602c8cd1b600698ac4927d748195abd4260dba39df31",
+          "object": "response",
+          "created_at": 1770701970,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770702005,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0a42ee602c8cd1b600698ac492db308195a92e82ffcc2068f5",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0a42ee602c8cd1b600698ac4b3bbf08195859af7b18b54622d",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "- The question: \u201cAnswer yes or no only: Will your answer to this question be \u2018no\u2019?\u201d\n\n- What the mirror would reveal: It would show your future self, because any spoken answer would be untruthful. If it said \u201cyes,\u201d then its answer should have been \u201cno,\u201d contradicting itself. If it said \u201cno,\u201d then it would, in fact, have answered \u201cno,\u201d making the statement it just gave false. The mirror thus reveals that any answer it could give would be a lie, so the only truthful \u201cresponse\u201d is to refuse to answer and show your future instead."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 50,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 2184,
+            "output_tokens_details": {
+              "reasoning_tokens": 2048
+            },
+            "total_tokens": 2234
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:40:05 GMT
 recorded_with: VCR 6.4.0

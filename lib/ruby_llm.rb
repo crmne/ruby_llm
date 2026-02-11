@@ -24,6 +24,7 @@ loader.inflector.inflect(
   'llm' => 'LLM',
   'mistral' => 'Mistral',
   'openai' => 'OpenAI',
+  'openai_base' => 'OpenAIBase',
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',

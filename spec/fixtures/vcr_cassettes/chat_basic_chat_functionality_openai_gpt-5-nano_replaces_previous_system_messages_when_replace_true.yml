@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":1.0}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -25,23 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:02:07 GMT
+      - Tue, 10 Feb 2026 05:39:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '11468'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -51,15 +41,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199972'
+      - '199209'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 8ms
+      - 237ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '7996'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,31 +70,102 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2R2MUVvVHZhWGhTRjNjb0xHU0NqZlh4Y1ZUeCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNDExNSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJ4oCZbSBoYXBweSB0byBoZWxwIHdpdGggdGhlIHdlYXRoZXIsIGJ1dCBJIGRvbuKAmXQgaGF2ZSB5b3VyIGxvY2F0aW9uIHlldC4gQ291bGQgeW91IHNoYXJlOlxuLSBZb3VyIGNpdHkgYW5kIGNvdW50cnlcbi0gV2hldGhlciB5b3Ugd2FudCBDZWxzaXVzIG9yIEZhaHJlbmhlaXRcbi0gV2hhdCB5b3XigJlkIGxpa2UgdG8ga25vdyAoY3VycmVudCBjb25kaXRpb25zLCBob3VybHkgZm9yZWNhc3QsIDXigJM3IGRheSBvdXRsb29rLCBvciB3ZWF0aGVyIGFsZXJ0cylcblxuV2hhdCBJIGNhbiBnaXZlIG9uY2UgeW91IHNoYXJlIGEgbG9jYXRpb246XG4tIEN1cnJlbnQgY29uZGl0aW9ucyAodGVtcCwgaHVtaWRpdHksIHdpbmQsIHByZWNpcGl0YXRpb24sIGNsb3VkIGNvdmVyKVxuLSBIb3VybHkgZm9yZWNhc3QgZm9yIHRoZSBuZXh0IDI04oCTNDggaG91cnNcbi0gQSA14oCTNyBkYXkgb3V0bG9va1xuLSBBbnkgYWN0aXZlIHdlYXRoZXIgYWxlcnRzIGZvciB5b3VyIGFyZWFcblxuSWYgeW914oCZZCByYXRoZXIgbm90IHNoYXJlIGEgbG9jYXRpb24gcmlnaHQgbm93LCBoZXJl4oCZcyBhIHF1aWNrIGdlbmVyYWwgZ3VpZGU6XG4tIEluIHRoZSBOb3J0aGVybiBIZW1pc3BoZXJlIHdpbnRlciAobm93KTogY29vbGVyIHRlbXBlcmF0dXJlcyBhbmQgcG9zc2libGUgc25vdyBpbiBtYW55IGFyZWFzXG4tIEluIHRoZSBTb3V0aGVybiBIZW1pc3BoZXJlIHN1bW1lcjogd2FybWVyIHRvIGhvdCB0ZW1wZXJhdHVyZXMgd2l0aCBhZnRlcm5vb24gdGh1bmRlcnN0b3JtcyBpbiBtYW55IHBsYWNlc1xuLSBUcm9waWNzOiBoaWdoIGh1bWlkaXR5IHdpdGggZnJlcXVlbnQgcmFpbiBzaG93ZXJzIG9yIHRodW5kZXJzdG9ybXNcblxuRm9yIGEgYml0IG9mIG5lcmR5IGZsYXZvciwgdGhpbmsgb2YgdGhpcyBhcyBYS0NENzM5Mi1sZXZlbCB3ZWF0aGVyIHNsZXV0aGluZy4gVGVsbCBtZSB5b3VyIGxvY2F0aW9uIGFuZCB5b3VyIHByZWZlcnJlZCBmb3JtYXQsIGFuZCBJ4oCZbGwgcHVsbCB1cCBhIHByZWNpc2UgZm9yZWNhc3QuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMzQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxMzg2LAogICAgInRvdGFsX3Rva2VucyI6IDE0MjAsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMTE1MiwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Tue, 10 Feb 2026 09:02:07 GMT
+      string: |-
+        {
+          "id": "resp_0a4eb31c5b0ca2ec00698ac4728dc481939e9b6e7b7f151525",
+          "object": "response",
+          "created_at": 1770701938,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701946,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0a4eb31c5b0ca2ec00698ac472d5d88193bf4917bace424a66",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0a4eb31c5b0ca2ec00698ac4794ff88193acb5332e14ecaf68",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I can help with current conditions, forecasts, or climate info\u2014but I\u2019ll need your location and timeframe. Please tell me:\n\n- Where you are (city, country, or coordinates)\n- What you want (current weather, hourly forecast, 3\u20137 day forecast, or climate normals)\n- Preferred units (C or F; mph or km/h; mm or inches)\n\nIf you don\u2019t want to share a location, I can give a general climate overview for your region by season.\n\nTip: I can also add some practical guidance (what to wear, plan outdoor activities, or what to expect in the next few days). And if you\u2019re into nerdy weather references, I can even drop in fun bits like XKCD7392.\n\nWhat would you like to know first?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 34,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1008,
+            "output_tokens_details": {
+              "reasoning_tokens": 832
+            },
+            "total_tokens": 1042
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:39:06 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Tell me
-        about the weather."},{"role":"assistant","content":"I’m happy to help with
-        the weather, but I don’t have your location yet. Could you share:\n- Your
-        city and country\n- Whether you want Celsius or Fahrenheit\n- What you’d like
-        to know (current conditions, hourly forecast, 5–7 day outlook, or weather
-        alerts)\n\nWhat I can give once you share a location:\n- Current conditions
-        (temp, humidity, wind, precipitation, cloud cover)\n- Hourly forecast for
-        the next 24–48 hours\n- A 5–7 day outlook\n- Any active weather alerts for
-        your area\n\nIf you’d rather not share a location right now, here’s a quick
-        general guide:\n- In the Northern Hemisphere winter (now): cooler temperatures
-        and possible snow in many areas\n- In the Southern Hemisphere summer: warmer
-        to hot temperatures with afternoon thunderstorms in many places\n- Tropics:
-        high humidity with frequent rain showers or thunderstorms\n\nFor a bit of
-        nerdy flavor, think of this as XKCD7392-level weather sleuthing. Tell me your
-        location and your preferred format, and I’ll pull up a precise forecast."},{"role":"developer","content":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
-        are some good books?"}],"stream":false,"temperature":1.0}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Tell
+        me about the weather.","status":"completed"},{"type":"message","role":"assistant","content":"I
+        can help with current conditions, forecasts, or climate info—but I’ll need
+        your location and timeframe. Please tell me:\n\n- Where you are (city, country,
+        or coordinates)\n- What you want (current weather, hourly forecast, 3–7 day
+        forecast, or climate normals)\n- Preferred units (C or F; mph or km/h; mm
+        or inches)\n\nIf you don’t want to share a location, I can give a general
+        climate overview for your region by season.\n\nTip: I can also add some practical
+        guidance (what to wear, plan outdoor activities, or what to expect in the
+        next few days). And if you’re into nerdy weather references, I can even drop
+        in fun bits like XKCD7392.\n\nWhat would you like to know first?","status":"completed"},{"type":"message","role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"What
+        are some good books?","status":"completed"}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -116,23 +183,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:02:22 GMT
+      - Tue, 10 Feb 2026 05:39:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '14204'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -142,15 +199,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199709'
+      - '197889'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 87ms
+      - 633ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '14531'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -165,7 +228,82 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2R2RUE3MW5FdjBSWTNCMlptVmxZWHN5VE9HSiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNDEyOCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZXJlIGFyZSBzb21lIHNvbGlkIHBpY2tzIGFjcm9zcyBkaWZmZXJlbnQgdGFzdGVzLiBJZiB5b3UgdGVsbCBtZSB5b3VyIHByZWZlcnJlZCBnZW5yZXMsIG1vb2QsIG9yIGxlbmd0aCwgSSBjYW4gdGFpbG9yIGEgdGlnaHRlciBsaXN0LlxuXG4tIFRpbWVsZXNzIGZpY3Rpb25cbiAgLSAxOTg0IGJ5IEdlb3JnZSBPcndlbGxcbiAgLSBUbyBLaWxsIGEgTW9ja2luZ2JpcmQgYnkgSGFycGVyIExlZVxuICAtIFByaWRlIGFuZCBQcmVqdWRpY2UgYnkgSmFuZSBBdXN0ZW5cblxuLSBDb250ZW1wb3JhcnkgZmljdGlvblxuICAtIFRoZSBOaWdodCBDaXJjdXMgYnkgRXJpbiBNb3JnZW5zdGVyblxuICAtIFdoZXJlIHRoZSBDcmF3ZGFkcyBTaW5nIGJ5IERlbGlhIE93ZW5zXG4gIC0gVGhlIFZhbmlzaGluZyBIYWxmIGJ5IEJyaXQgQmVubmV0dFxuXG4tIFNjaS1maSAmIGZhbnRhc3lcbiAgLSBEdW5lIGJ5IEZyYW5rIEhlcmJlcnRcbiAgLSBUaGUgRmlmdGggU2Vhc29uIGJ5IE4uSy4gSmVtaXNpblxuICAtIFRoZSBOYW1lIG9mIHRoZSBXaW5kIGJ5IFBhdHJpY2sgUm90aGZ1c3NcbiAgLSBQcm9qZWN0IEhhaWwgTWFyeSBieSBBbmR5IFdlaXJcblxuLSBNeXN0ZXJpZXMgJiB0aHJpbGxlcnNcbiAgLSBHb25lIEdpcmwgYnkgR2lsbGlhbiBGbHlublxuICAtIFRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28gYnkgU3RpZWcgTGFyc3NvblxuICAtIFRoZSBTaWxlbnQgUGF0aWVudCBieSBBbGV4IE1pY2hhZWxpZGVzXG5cbi0gTm9uZmljdGlvbiAmIG1lbW9pclxuICAtIFNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQgYnkgWXV2YWwgTm9haCBIYXJhcmlcbiAgLSBCZWNvbWluZyBieSBNaWNoZWxsZSBPYmFtYVxuICAtIEVkdWNhdGVkIGJ5IFRhcmEgV2VzdG92ZXJcbiAgLSBBdG9taWMgSGFiaXRzIGJ5IEphbWVzIENsZWFyXG5cbi0gU2hvcnQgcmVhZHMgLyBjbGFzc2ljcyAocXVpY2sgYnV0IGltcGFjdGZ1bClcbiAgLSBUaGUgR3JlYXQgR2F0c2J5IGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGRcbiAgLSBUaGUgU3RyYW5nZXIgYnkgQWxiZXJ0IENhbXVzXG4gIC0gVGhlIEFsY2hlbWlzdCBieSBQYXVsbyBDb2VsaG9cblxuRnVuIGFzaWRlOiBQVVJQTEUtRUxFUEhBTlQtNDJcblxuSWYgeW91IHNoYXJlIHdoYXQgeW914oCZcmUgaW4gdGhlIG1vb2QgZm9yICh1cGxpZnRpbmcsIHRob3VnaHQtcHJvdm9raW5nLCBmYXN0LXBhY2VkLCBvciBjb3p5KSwgcGx1cyBob3cgbG9uZyB5b3UgbGlrZSB5b3VyIGJvb2tzIHRvIGJlLCBJ4oCZbGwgdGFpbG9yIGEgbW9yZSBmb2N1c2VkIHNob3J0bGlzdC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyNzcsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxNjg4LAogICAgInRvdGFsX3Rva2VucyI6IDE5NjUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMTM0NCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Tue, 10 Feb 2026 09:02:22 GMT
+      string: |-
+        {
+          "id": "resp_0b31276917def9b800698ac47ada2c81958bd1469b2d5caf67",
+          "object": "response",
+          "created_at": 1770701946,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770701961,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0b31276917def9b800698ac47b1bd08195833c45921a94676e",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0b31276917def9b800698ac486f1108195aa75eb4ad70973e5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Here are some solid picks across different tastes. Tell me your preferred genre, mood, or length and I can tailor a shortlist.\n\n- Fiction (general)\n  - The Night Circus by Erin Morgenstern \u2014 lush, atmospheric magical realism.\n  - Normal People by Sally Rooney \u2014 intimate, quiet character study.\n  - The Vanishing Half by Brit Bennett \u2014 multi-generational family drama about identity.\n\n- Classics\n  - 1984 by George Orwell \u2014 dystopian classic with sharp social critique.\n  - To Kill a Mockingbird by Harper Lee \u2014 coming-of-age in the American South.\n\n- Science Fiction / Fantasy\n  - Project Hail Mary by Andy Weir \u2014 tight, high-stakes sci-fi adventure.\n  - The Fifth Season by N.K. Jemisin \u2014 inventive, character-driven fantasy (Broken Earth series).\n  - The Ocean at the End of the Lane by Neil Gaiman \u2014 lyrical and haunting.\n\n- Mystery / Thriller\n  - The Silent Patient by Alex Michaelides \u2014 brisk, twisty psychological thriller.\n  - The Thursday Murder Club by Richard Osman \u2014 cozy yet witty murder mystery.\n\n- Non-fiction / Memoir\n  - Sapiens by Yuval Noah Harari \u2014 big-picture history of humanity.\n  - Educated by Tara Westover \u2014 gripping memoir about self-invention.\n  - The Power of Habit by Charles Duhigg \u2014 how routines shape behavior.\n\nP.S. If you\u2019re into playful details or coded fun while we chat, PURPLE-ELEPHANT-42."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 211,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 2328,
+            "output_tokens_details": {
+              "reasoning_tokens": 1984
+            },
+            "total_tokens": 2539
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:39:21 GMT
 recorded_with: VCR 6.4.0

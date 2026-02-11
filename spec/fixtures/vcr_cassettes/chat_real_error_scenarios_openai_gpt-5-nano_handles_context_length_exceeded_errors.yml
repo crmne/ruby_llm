@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"assistant","content":"<MASSIVE_TEXT>","status":"completed"},{"type":"message","role":"user","content":"Hi","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -19,41 +19,32 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 429
-      message: Too Many Requests
+      code: 400
+      message: Bad Request
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:57:09 GMT
+      - Tue, 10 Feb 2026 05:38:08 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
       Content-Length:
-      - '412'
+      - '228'
       Connection:
       - keep-alive
-      Vary:
-      - Origin
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '200000'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
       Server:
       - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16997'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
@@ -65,14 +56,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         {
-            "error": {
-                "message": "Request too large for gpt-5-nano in organization org-eLwBCUaB2ePnSi6dlToWtHZK on tokens per min (TPM): Limit 200000, Requested 2500013. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
-                "type": "tokens",
-                "param": null,
-                "code": "rate_limit_exceeded"
-            }
+          "error": {
+            "message": "Your input exceeds the context window of this model. Please adjust your input and try again.",
+            "type": "invalid_request_error",
+            "param": "input",
+            "code": "context_length_exceeded"
+          }
         }
-  recorded_at: Tue, 10 Feb 2026 08:57:10 GMT
+  recorded_at: Tue, 10 Feb 2026 05:38:08 GMT
 recorded_with: VCR 6.4.0

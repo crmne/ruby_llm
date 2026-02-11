@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # Mistral API integration.
-    class Mistral < OpenAI
+    class Mistral < OpenAIBase
       include Mistral::Chat
       include Mistral::Models
       include Mistral::Embeddings

@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"stream":false}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"What''s
+        your favorite Ruby feature?","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -24,23 +24,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:33:57 GMT
+      - Tue, 10 Feb 2026 04:51:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '1323'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -50,15 +40,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199989'
+      - '199968'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 9ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '1213'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,42 +69,77 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-D7dTvcqecw5fgkAStPI1rDrIPnEYO",
-          "object": "chat.completion",
-          "created": 1770712435,
+          "id": "resp_06a05e2736ad722200698ab968a9748195aa4a4223f500e58d",
+          "object": "response",
+          "created_at": 1770699112,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699113,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks allow for concise and readable code when working with collections, making operations like iteration, filtering, and mapping straightforward and intuitive. For example, methods like `each`, `map`, and `select` seamlessly incorporate blocks, enabling developers to write expressive code that closely mirrors natural language. This feature promotes clear, maintainable, and flexible coding styles, which is part of what makes Ruby so enjoyable to work with.",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
+              "id": "msg_06a05e2736ad722200698ab9690da88195a8db55f57d5d73de",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I find Ruby's expressive syntax and focus on developer happiness truly impressive. One of my favorite features is **blocks and closures**, which make Ruby very powerful and flexible for writing elegant code. They enable passing chunks of code around, making iterators, callbacks, and domain-specific languages (DSLs) straightforward and intuitive. This feature, combined with Ruby's natural language-like syntax, allows for concise and readable code that often feels like writing in plain English. Do you have a favorite Ruby feature?"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 13,
-            "completion_tokens": 106,
-            "total_tokens": 119,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": "fp_de604bd877"
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 99,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 112
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Tue, 10 Feb 2026 08:33:57 GMT
+  recorded_at: Tue, 10 Feb 2026 04:51:53 GMT
 recorded_with: VCR 6.4.0

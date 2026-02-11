@@ -15,7 +15,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::OverloadedError
     },
     openai: {
-      url: 'https://api.openai.com/v1/chat/completions',
+      url: 'https://api.openai.com/v1/responses',
       error_response: {
         error: {
           message: 'The server is temporarily overloaded. Please try again later.',

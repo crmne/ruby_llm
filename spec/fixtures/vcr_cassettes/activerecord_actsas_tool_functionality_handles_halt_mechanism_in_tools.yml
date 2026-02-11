@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Use the
-        halting tool with ''test''"}],"stream":false,"tools":[{"type":"function","function":{"name":"halting","description":"A
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"Use
+        the halting tool with ''test''","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"halting","description":"A
         tool that halts","parameters":{"type":"object","properties":{"input":{"type":"string","description":"Input
-        text"}},"required":["input"],"additionalProperties":false,"strict":true}}}]}'
+        text"}},"required":["input"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -26,23 +26,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:34:08 GMT
+      - Tue, 10 Feb 2026 04:52:02 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '252'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -52,15 +42,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199990'
+      - '199733'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 80ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '548'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,52 +71,92 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-D7dU8ofZl6WovO5PyaYJPF6LdEQGd",
-          "object": "chat.completion",
-          "created": 1770712448,
+          "id": "resp_0aa4ab27561a4c2a00698ab971fb088195bcbfa58160ee1774",
+          "object": "response",
+          "created_at": 1770699122,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699122,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_ENNlURMYmboQqrIVdQ9dncqR",
-                    "type": "function",
-                    "function": {
-                      "name": "halting",
-                      "arguments": "{\"input\":\"test\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "tool_calls"
+              "id": "fc_0aa4ab27561a4c2a00698ab97257f08195bada766368b9f192",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"input\":\"test\"}",
+              "call_id": "call_Zf98ErRI4HQf2ojO9zfvp4Dx",
+              "name": "halting"
             }
           ],
-          "usage": {
-            "prompt_tokens": 56,
-            "completion_tokens": 15,
-            "total_tokens": 71,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": null,
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": "fp_70fc5e01a5"
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "A tool that halts",
+              "name": "halting",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "string",
+                    "description": "Input text"
+                  }
+                },
+                "required": [
+                  "input"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 50,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 16,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 66
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Tue, 10 Feb 2026 08:34:08 GMT
+  recorded_at: Tue, 10 Feb 2026 04:52:02 GMT
 recorded_with: VCR 6.4.0

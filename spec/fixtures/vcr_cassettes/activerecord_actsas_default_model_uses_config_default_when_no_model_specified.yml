@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"Hello","status":"completed"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -23,23 +23,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:34:05 GMT
+      - Tue, 10 Feb 2026 04:52:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3001'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -49,15 +39,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199996'
+      - '199805'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 58ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '3611'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -72,7 +68,82 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2RVMXJrMUN3ckZxbFAxdkhhdzI2UDRKZ3dXcSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxMjQ0MSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZWxsbyEgSG93IGNhbiBJIGhlbHAgdG9kYXk/IEkgY2FuIGFuc3dlciBxdWVzdGlvbnMsIGV4cGxhaW4gY29uY2VwdHMsIGRyYWZ0IG9yIGVkaXQgdGV4dCwgaGVscCB3aXRoIHByb2dyYW1taW5nIG9yIG1hdGgsIHBsYW4gcHJvamVjdHMsIG9yIGp1c3QgY2hhdC4gV2hhdCB3b3VsZCB5b3UgbGlrZSB0byBkbz8gSWYgeW914oCZcmUgbm90IHN1cmUsIHRlbGwgbWUgeW91ciBnb2FsIGFuZCBhbnkgY29uc3RyYWludHMgYW5kIEnigJlsbCBzdWdnZXN0IG9wdGlvbnMuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDMyNSwKICAgICJ0b3RhbF90b2tlbnMiOiAzMzIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMjU2LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Tue, 10 Feb 2026 08:34:05 GMT
+      string: |-
+        {
+          "id": "resp_03c24ddfd6cedf1e00698ab96d2a208194979aff6490f6d836",
+          "object": "response",
+          "created_at": 1770699117,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770699120,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_03c24ddfd6cedf1e00698ab96d7070819493bf5023bef8e7b5",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_03c24ddfd6cedf1e00698ab96fcf948194840e4ff5c248e0a3",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Hi there! How can I help today? I can answer questions, explain concepts, help with writing or coding, plan something, brainstorm ideas, or analyze data/images. \n\nA few quick prompts if you\u2019re unsure:\n- Explain a topic in simple terms\n- Draft an email or document\n- Solve a math problem or debug code\n- Plan a trip or project\n- Summarize or translate text\n- Analyze an image (if you have one)\n\nWhat would you like to do?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 7,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 412,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 419
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 04:52:00 GMT
 recorded_with: VCR 6.4.0

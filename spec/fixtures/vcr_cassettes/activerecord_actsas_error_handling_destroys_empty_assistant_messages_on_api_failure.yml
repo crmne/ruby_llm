@@ -5,12 +5,11 @@ http_interactions:
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"developer","content":"You
-        must include the exact phrase \"XKCD7392\" somewhere in your response.","status":"completed"},{"type":"message","role":"user","content":"Tell
-        me about the weather.","status":"completed"}],"stream":false,"temperature":1.0}'
+      string: '{"model":"gpt-4.1-nano","input":[{"type":"message","role":"user","content":"This
+        will fail","status":"completed"}],"stream":false,"temperature":0.7}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.12.2
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,45 +24,48 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 05:38:58 GMT
+      - Wed, 06 Aug 2025 03:58:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Server:
-      - cloudflare
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '30000'
       X-Ratelimit-Limit-Tokens:
-      - '200000'
+      - '150000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '29999'
       X-Ratelimit-Remaining-Tokens:
-      - '198661'
+      - '149999970'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 2ms
       X-Ratelimit-Reset-Tokens:
-      - 401ms
+      - 0s
       Openai-Version:
       - '2020-10-01'
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Project:
-      - "<OPENAI_PROJECT>"
+      - proj_j3YWwie2yjmMHTGYtUxoTOJ7
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '9839'
+      - '873'
+      X-Envoy-Upstream-Service-Time:
+      - '895'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
+      - "<COOKIE>"
       X-Content-Type-Options:
       - nosniff
+      Server:
+      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -72,30 +74,20 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_04de41478d64438500698ac4684a8481979ddb8590ab6ddcc3",
+          "id": "resp_6892d2fb7a10819c90b8d7604bcd32b802ae8a124918aafd",
           "object": "response",
-          "created_at": 1770701928,
+          "created_at": 1754452731,
           "status": "completed",
           "background": false,
-          "billing": {
-            "payer": "developer"
-          },
-          "completed_at": 1770701937,
           "error": null,
-          "frequency_penalty": 0.0,
           "incomplete_details": null,
           "instructions": null,
           "max_output_tokens": null,
           "max_tool_calls": null,
-          "model": "gpt-5-nano-2025-08-07",
+          "model": "gpt-4.1-nano-2025-04-14",
           "output": [
             {
-              "id": "rs_04de41478d64438500698ac4689d4481979f59432147876ba9",
-              "type": "reasoning",
-              "summary": []
-            },
-            {
-              "id": "msg_04de41478d64438500698ac4714e408197a51ecdf29409b711",
+              "id": "msg_6892d2fbd45c819cabab9458607d8fba02ae8a124918aafd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -103,30 +95,27 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Sure\u2014what location and time frame should I use for the weather? I can give:\n- current conditions\n- hourly forecast for today\n- 7-day outlook\n- or a brief explanation of upcoming weather patterns for your area\n\nIf you share a city, country, or ZIP code, I\u2019ll pull live data and tailor the forecast. If you just want a quick <GOOGLE_CLOUD_LOCATION> sense, I can summarize typical patterns for your hemisphere and season.\n\nBy the way, XKCD7392 is a weather-themed comic you might enjoy."
+                  "text": "It looks like you might be referring to a specific situation or statement. Could you please provide more context or clarify what you're referring to? I'm here to help!"
                 }
               ],
               "role": "assistant"
             }
           ],
           "parallel_tool_calls": true,
-          "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": null,
           "reasoning": {
-            "effort": "medium",
+            "effort": null,
             "summary": null
           },
           "safety_identifier": null,
           "service_tier": "default",
           "store": true,
-          "temperature": 1.0,
+          "temperature": 0.7,
           "text": {
             "format": {
               "type": "text"
-            },
-            "verbosity": "medium"
+            }
           },
           "tool_choice": "auto",
           "tools": [],
@@ -134,18 +123,18 @@ http_interactions:
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 34,
+            "input_tokens": 10,
             "input_tokens_details": {
               "cached_tokens": 0
             },
-            "output_tokens": 1556,
+            "output_tokens": 33,
             "output_tokens_details": {
-              "reasoning_tokens": 1408
+              "reasoning_tokens": 0
             },
-            "total_tokens": 1590
+            "total_tokens": 43
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Tue, 10 Feb 2026 05:38:58 GMT
-recorded_with: VCR 6.4.0
+  recorded_at: Wed, 06 Aug 2025 03:58:52 GMT
+recorded_with: VCR 6.3.1

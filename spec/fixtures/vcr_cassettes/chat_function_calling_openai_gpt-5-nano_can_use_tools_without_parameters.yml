@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"What''s
+        the best language to learn?","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -25,23 +25,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:38 GMT
+      - Tue, 10 Feb 2026 05:18:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '3790'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -51,15 +41,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199989'
+      - '200000'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 0s
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '1283'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,61 +70,100 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-D7eHuB25GE96SNuncFcLmZulLHrKK",
-          "object": "chat.completion",
-          "created": 1770715534,
+          "id": "resp_01e57bf8c965a97f00698abfa40d44819391de961dd4e13f23",
+          "object": "response",
+          "created_at": 1770700708,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700709,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_ionGd58nq60rPjgyj5Os4fxq",
-                    "type": "function",
-                    "function": {
-                      "name": "best_language_to_learn",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_01e57bf8c965a97f00698abfa44e8c8193a3631099263ad9bb",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "fc_01e57bf8c965a97f00698abfa4e0c48193b332c521757a3bed",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_TWiLPiA2aqhGg1rNO1Z7A4Hl",
+              "name": "best_language_to_learn"
             }
           ],
-          "usage": {
-            "prompt_tokens": 129,
-            "completion_tokens": 342,
-            "total_tokens": 471,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 320,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets the best language to learn",
+              "name": "best_language_to_learn",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 47,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 148,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 195
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Tue, 10 Feb 2026 09:25:38 GMT
+  recorded_at: Tue, 10 Feb 2026 05:18:29 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_ionGd58nq60rPjgyj5Os4fxq","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_ionGd58nq60rPjgyj5Os4fxq"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"type":"message","role":"user","content":"What''s
+        the best language to learn?","status":"completed"},{"type":"function_call","call_id":"call_TWiLPiA2aqhGg1rNO1Z7A4Hl","name":"best_language_to_learn","arguments":"{}","status":"completed"},{"type":"function_call_output","call_id":"call_TWiLPiA2aqhGg1rNO1Z7A4Hl","output":"Ruby","status":"completed"}],"stream":false,"tools":[{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -146,23 +181,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:46 GMT
+      - Tue, 10 Feb 2026 05:18:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '8031'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
@@ -172,15 +197,21 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199986'
+      - '199577'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 4ms
+      - 126ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      Openai-Processing-Ms:
+      - '4523'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -195,7 +226,96 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VIeWp1NzJXMlRMT01XdmtUUzJvRE93ZGx0ViIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTUzOCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJBY2NvcmRpbmcgdG8gdGhlIHRvb2wsIFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gcmlnaHQgbm93LlxuXG5XaHkgUnVieSBjYW4gYmUgYSBncmVhdCBjaG9pY2U6XG4tIEJlZ2lubmVyLWZyaWVuZGx5IHN5bnRheCBhbmQgcmVhZGFiaWxpdHkuXG4tIFZlcnkgcHJvZHVjdGl2ZSBmb3IgYnVpbGRpbmcgd2ViIGFwcHMgKGVzcGVjaWFsbHkgd2l0aCBSdWJ5IG9uIFJhaWxzKS5cbi0gU3Ryb25nIGxlYXJuaW5nIHJlc291cmNlcyBhbmQgYSB3ZWxjb21pbmcgY29tbXVuaXR5LlxuLSBHb29kIGZvciBsZWFybmluZyBjb3JlIHByb2dyYW1taW5nIGNvbmNlcHRzIHRoYXQgdHJhbnNmZXIgdG8gb3RoZXIgbGFuZ3VhZ2VzLlxuXG5UaGluZ3MgdG8gY29uc2lkZXI6XG4tIEpvYiBkZW1hbmQgYW5kIG1hcmtldCB2YXJ5IGJ5IHJlZ2lvbjsgUHl0aG9uL0phdmFTY3JpcHQgb2Z0ZW4gaGF2ZSBicm9hZGVyIGRlbWFuZCBpbiBzb21lIGFyZWFzLlxuLSBSdWJ5IGlzbuKAmXQgdGhlIGZhc3Rlc3QgbGFuZ3VhZ2UgaW4gdGVybXMgb2YgcGVyZm9ybWFuY2UsIGFuZCBpdHMgZWNvc3lzdGVtIGlzIG1vcmUgd2ViLWZvY3VzZWQuXG5cbklmIHlvdXIgZ29hbCBpcyB3ZWIgZGV2ZWxvcG1lbnQsIFJ1YnkgKHdpdGggUmFpbHMpIGlzIGEgc29saWQgcGF0aC4gSWYgeW914oCZcmUgYWltaW5nIGZvciBkYXRhIHNjaWVuY2UsIGF1dG9tYXRpb24sIG9yIHN5c3RlbXMgcHJvZ3JhbW1pbmcsIHlvdSBtaWdodCB3YW50IHRvIGV4cGxvcmUgUHl0aG9uIG9yIEdvL1J1c3QgbGF0ZXIuXG5cbldhbnQgYSB0YWlsb3JlZCBwbGFuPyBUZWxsIG1lIHlvdXIgZ29hbHMgKHdlYiBkZXYsIGRhdGEsIG1vYmlsZSwgZXRjLiksIHlvdXIgdGltZWxpbmUsIGFuZCBob3cgeW91IGxpa2UgdG8gbGVhcm4sIGFuZCBJ4oCZbGwgbWFwIG91dCBhIGJlZ2lubmVyLWZyaWVuZGx5IFJ1YnkgbGVhcm5pbmcgcGxhbi4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNjAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA4NDQsCiAgICAidG90YWxfdG9rZW5zIjogMTAwNCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA2NDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Tue, 10 Feb 2026 09:25:46 GMT
+      string: |-
+        {
+          "id": "resp_0f88938164a8ac6900698abfa5958881948ae3f84a0fa28c19",
+          "object": "response",
+          "created_at": 1770700709,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1770700713,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "output": [
+            {
+              "id": "rs_0f88938164a8ac6900698abfa5dc8c8194886708a223ef6482",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_0f88938164a8ac6900698abfa8e30c8194b5f706e86ce15ed5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "According to the tool I used, the best language to learn is Ruby.\n\nA quick why:\n- Beginner-friendly syntax and strong focus on readability.\n- Great for rapid web development with Ruby on Rails.\n- Friendly, supportive community and lots of beginner-friendly resources.\n\nThings to consider:\n- Job demand varies by region and domain. JavaScript, Python, and Java are often in high demand across many markets.\n- If your goal is data science or AI, Python might be a better fit.\n- If you want frontend web development, you'll likely need JavaScript anyway (even if you start with Ruby for backend).\n\nIf you want, I can tailor a suggestion based on your goals (e.g., web apps, data work, mobile apps, career shift, etc.). Quick questions:\n- What are you hoping to build or achieve?\n- Do you prefer web development, data work, scripting, or something else?\n- Any timeline or region in mind for job opportunities?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets the best language to learn",
+              "name": "best_language_to_learn",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 76,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 913,
+            "output_tokens_details": {
+              "reasoning_tokens": 704
+            },
+            "total_tokens": 989
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 10 Feb 2026 05:18:34 GMT
 recorded_with: VCR 6.4.0

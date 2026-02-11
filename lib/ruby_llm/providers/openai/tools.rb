@@ -92,6 +92,20 @@ module RubyLLM
             ]
           end
         end
+
+        def parse_response_tool_calls(outputs)
+          # TODO: implement the other & built-in tools
+          # 'web_search_call', 'file_search_call', 'image_generation_call',
+          # 'code_interpreter_call', 'local_shell_call', 'mcp_call',
+          # 'mcp_list_tools', 'mcp_approval_request'
+          outputs.select { |o| o['type'] == 'function_call' }.to_h do |o|
+            [o['id'], ToolCall.new(
+              id: o['call_id'],
+              name: o['name'],
+              arguments: JSON.parse(o['arguments'])
+            )]
+          end
+        end
       end
     end
   end

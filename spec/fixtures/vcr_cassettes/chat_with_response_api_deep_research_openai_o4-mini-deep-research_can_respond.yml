@@ -1,0 +1,446 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"tools":[{"type":"web_search_preview"}],"model":"o4-mini-deep-research","input":[{"role":"user","content":"At
+        what temperature does water boil (in Celsius)?"}],"stream":false,"temperature":1.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.2
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Jul 2025 20:22:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1988636'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 340ms
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - proj_c1LXe0DmfaJxa0MxGDmocdjJ
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '63465'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_687ff2aa365c8199aa5507c8b3baef3e04e204e1133d12d7",
+          "object": "response",
+          "created_at": 1753215658,
+          "status": "completed",
+          "background": false,
+          "error": null,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": 225,
+          "model": "o4-mini-deep-research-2025-06-26",
+          "output": [
+            {
+              "id": "rs_687ff2aacfb081999aea60da9ffc46e004e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2ac4574819999fdbe52a15dac9f04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"boils at 100\u00b0C\""
+              }
+            },
+            {
+              "id": "rs_687ff2b3924081998979e23aebc73d6a04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2b41ef8819985e7490c2af8bd4204e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"water boils at 100\u00b0C\" source:wikipedia"
+              }
+            },
+            {
+              "id": "rs_687ff2b5797881999dd4f5a124a9913e04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2b6927c8199a0f500fdfb257ecf04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "water boils at 100\bC Britannica"
+              }
+            },
+            {
+              "id": "rs_687ff2b7e8888199a4e8c7ff4c88b25d04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2b84bb8819996e14f7f76059eec04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://www.britannica.com/question/When-does-water-boil"
+              }
+            },
+            {
+              "id": "rs_687ff2b8ce788199b042cb1531409d7204e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2b95ba08199a052fabc4625c7d504e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"water boils at 100\u00b0C\" sea level"
+              }
+            },
+            {
+              "id": "rs_687ff2baf2f48199a8fe9fbd0ab716d804e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2bdc8e88199b955c90db08fab2b04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"100\u00179C at sea level\" water"
+              }
+            },
+            {
+              "id": "rs_687ff2bf69508199b63c6a7790076b1c04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2bfbdd88199a0f8c05c8cc9da5404e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"boils at 100\u0001C\" water standard"
+              }
+            },
+            {
+              "id": "rs_687ff2c01c788199adab462cb196a7fc04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2c0b4dc81999d4e661543f1699c04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"100 degrees Celsius\" boiling point water"
+              }
+            },
+            {
+              "id": "rs_687ff2c1ece081998256aafeff67af1104e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2c435508199a7e354cc09bd98fe04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"water boils at 100 degrees Celsius\" pressure"
+              }
+            },
+            {
+              "id": "rs_687ff2c58fe08199b3452e3e79e8c87004e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2c80cb481998857d2c2b6202e8a04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://www.britannica.com/science/boiling-point"
+              }
+            },
+            {
+              "id": "rs_687ff2c8afc48199b55d6064a4b8374004e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2c9756481998354313cae64c82904e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"Water boils at 100\" site:britannica.com"
+              }
+            },
+            {
+              "id": "rs_687ff2cae024819980f7e07640d215c204e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2cb26f88199b22740b92cce524d04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://kids.britannica.com/students/article/water/277663"
+              }
+            },
+            {
+              "id": "rs_687ff2cbb80c81999b2860d3596831b004e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2cbd7848199ad7125d8e938d86d04e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "find_in_page",
+                "pattern": "boils",
+                "url": "https://kids.britannica.com/students/article/water/277663"
+              }
+            },
+            {
+              "id": "rs_687ff2cc2378819991eb3899676aaa9404e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2ccd190819993b7cb79428d1c2704e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://kids.britannica.com/students/article/water/277663"
+              }
+            },
+            {
+              "id": "rs_687ff2cd76e8819987304d23113c9a7704e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2cf252c8199bbb7a7bd3daf99e804e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": null
+              }
+            },
+            {
+              "id": "rs_687ff2cf8f708199ac1b889e0f9d26eb04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2d1b10c81999f34c64f189fdf9604e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "open_page",
+                "url": "https://kids.britannica.com/students/article/water/277663"
+              }
+            },
+            {
+              "id": "rs_687ff2d2063481999db946d3c0c6894204e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2d486b08199bc1b3ddd1790b86104e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "find_in_page",
+                "pattern": "100 \u00125C",
+                "url": "https://kids.britannica.com/students/article/water/277663"
+              }
+            },
+            {
+              "id": "rs_687ff2d4df888199b02e20f573e2f55104e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2d629d4819989bd925e8f7bb14804e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"100\u0001C (212\u0001F) at standard pressure\""
+              }
+            },
+            {
+              "id": "rs_687ff2d7c4348199a299f29b1c31209904e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2d84d40819992eb1bf5fc0b95b004e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"100\u0001C\" boiling water NOAA"
+              }
+            },
+            {
+              "id": "rs_687ff2da28588199aa2da963f37f480f04e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "ws_687ff2da8a5c819991fc0e042a43aa6104e204e1133d12d7",
+              "type": "web_search_call",
+              "status": "completed",
+              "action": {
+                "type": "search",
+                "query": "\"vapour pressure of water = atmospheric pressure\" 100\u0001C"
+              }
+            },
+            {
+              "id": "rs_687ff2dc087081999dc8b019598062b204e204e1133d12d7",
+              "type": "reasoning",
+              "summary": []
+            },
+            {
+              "id": "msg_687ff2e8800c819998c4f8b59f78478a04e204e1133d12d7",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [
+                    {
+                      "type": "url_citation",
+                      "end_index": 305,
+                      "start_index": 126,
+                      "title": "water - Students | Britannica Kids | Homework Help",
+                      "url": "https://kids.britannica.com/students/article/water/277663#:~:text=Atmospheric%20pressure%20also%20affects%20the,and%20freezes%20at%20higher%20temperatures"
+                    },
+                    {
+                      "type": "url_citation",
+                      "end_index": 585,
+                      "start_index": 406,
+                      "title": "water - Students | Britannica Kids | Homework Help",
+                      "url": "https://kids.britannica.com/students/article/water/277663#:~:text=Atmospheric%20pressure%20also%20affects%20the,and%20freezes%20at%20higher%20temperatures"
+                    }
+                  ],
+                  "logprobs": [],
+                  "text": "# Boiling Point of Water\n\n- Under standard atmospheric pressure (1 atm at sea level), pure water boils at **100 \u00b0C** (212 \u00b0F) ([kids.britannica.com](https://kids.britannica.com/students/article/water/277663#:~:text=Atmospheric%20pressure%20also%20affects%20the,and%20freezes%20at%20higher%20temperatures)).  \n- At higher altitudes (lower pressure), water boils at lower temperatures.  \n\n**Answer:** 100 \u00b0C ([kids.britannica.com](https://kids.britannica.com/students/article/water/277663#:~:text=Atmospheric%20pressure%20also%20affects%20the,and%20freezes%20at%20higher%20temperatures))"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "reasoning": {
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": true,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            }
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "web_search_preview",
+              "search_context_size": "medium",
+              "user_location": null
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 125508,
+            "input_tokens_details": {
+              "cached_tokens": 85332
+            },
+            "output_tokens": 4753,
+            "output_tokens_details": {
+              "reasoning_tokens": 4672
+            },
+            "total_tokens": 130261
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Tue, 22 Jul 2025 20:22:01 GMT
+recorded_with: VCR 6.3.1

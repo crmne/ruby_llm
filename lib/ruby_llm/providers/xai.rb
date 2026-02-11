@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # xAI API integration
-    class XAI < OpenAI
+    class XAI < OpenAIBase
       include XAI::Chat
       include XAI::Models
 

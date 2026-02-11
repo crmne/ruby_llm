@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # Azure AI Foundry / OpenAI-compatible API integration.
-    class Azure < OpenAI
+    class Azure < OpenAIBase
       include Azure::Chat
       include Azure::Embeddings
       include Azure::Media

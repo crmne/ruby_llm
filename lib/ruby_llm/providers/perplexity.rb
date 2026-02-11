@@ -3,7 +3,7 @@
 module RubyLLM
   module Providers
     # Perplexity API integration.
-    class Perplexity < OpenAI
+    class Perplexity < OpenAIBase
       include Perplexity::Chat
       include Perplexity::Models
 
