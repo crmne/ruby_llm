@@ -29,7 +29,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'rubocop-rspec'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
-  gem 'turbo-rails'
 
   # database drivers for MRI and JRuby
   gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
@@ -44,4 +43,8 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Bedrock
   gem 'aws-eventstream'
+end
+
+group :development, :test do
+  gem 'turbo-rails'
 end
