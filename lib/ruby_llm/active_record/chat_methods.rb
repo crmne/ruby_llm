@@ -73,6 +73,13 @@ module RubyLLM
         @provider_string = nil
       end
 
+      def populate_messages
+        @chat.reset_messages!
+        messages_association.each do |msg|
+          @chat.add_message(msg.to_llm)
+        end
+      end
+
       public
 
       def to_llm
@@ -81,12 +88,7 @@ module RubyLLM
           model: model_record.model_id,
           provider: model_record.provider.to_sym
         )
-        @chat.reset_messages!
-
-        messages_association.each do |msg|
-          @chat.add_message(msg.to_llm)
-        end
-
+        populate_messages
         setup_persistence_callbacks
       end
 
