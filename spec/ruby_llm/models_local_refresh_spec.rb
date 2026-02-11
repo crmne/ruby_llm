@@ -91,6 +91,13 @@ RSpec.describe RubyLLM::Models do
 
     describe 'local provider model resolution' do
       it 'assumes model exists for Ollama without warning after refresh' do
+        allow(described_class).to receive_messages(fetch_provider_models: {
+                                                     models: [],
+                                                     fetched_providers: [],
+                                                     configured_names: [],
+                                                     failed: []
+                                                   }, fetch_models_dev_models: { models: [], fetched: true })
+
         allow_any_instance_of(RubyLLM::Providers::Ollama).to( # rubocop:disable RSpec/AnyInstance
           receive(:list_models).and_return([
                                              RubyLLM::Model::Info.new(
