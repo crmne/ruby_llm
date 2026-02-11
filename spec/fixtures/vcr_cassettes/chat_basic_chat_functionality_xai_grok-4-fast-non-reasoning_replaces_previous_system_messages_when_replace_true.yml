@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 10:18:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '4000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '480'
+      X-Ratelimit-Remaining-Requests:
+      - '480'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"f61573b7-d798-2d94-0983-6c909df13835","object":"chat.completion","created":1770718708,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, so I can''t give you
+        a precise forecast for your location. If you tell me your city or region,
+        I can share general info or suggest checking a reliable source like a weather
+        app. What''s your spot? \n\nXKCD7392","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":191,"completion_tokens":58,"total_tokens":249,"prompt_tokens_details":{"text_tokens":191,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":435000},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Tue, 10 Feb 2026 10:18:28 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"I''m afraid I don''t
+        have real-time access to weather data, so I can''t give you a precise forecast
+        for your location. If you tell me your city or region, I can share general
+        info or suggest checking a reliable source like a weather app. What''s your
+        spot? \n\nXKCD7392"},{"role":"system","content":"You must include the exact
+        phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 10:18:30 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '4000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '480'
+      X-Ratelimit-Remaining-Requests:
+      - '480'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjNhODc0ZmU3LTNkYzUtYTE3MC1jMzAzLWUxNzBkYzFhMjIxMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTg3MDksIm1vZGVsIjoiZ3Jvay00LWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiR29vZCBib29rcyBhcmUgc3ViamVjdGl2ZSwgYnV0IGhlcmUgYXJlIGEgZmV3IHRpbWVsZXNzIHJlY29tbWVuZGF0aW9ucyBhY3Jvc3MgZ2VucmVzIHRoYXQgSSAoYW5kIG1hbnkgb3RoZXJzKSBlbmpveS4gSSdsbCBrZWVwIGl0IHRvIGEgc2hvcnQgbGlzdCB3aXRoIHdoeSB0aGV5J3JlIHdvcnRoIHlvdXIgdGltZTpcblxuLSAqKlRvIEtpbGwgYSBNb2NraW5nYmlyZCoqIGJ5IEhhcnBlciBMZWU6IEEgcG93ZXJmdWwgc3RvcnkgYWJvdXQganVzdGljZSwgZW1wYXRoeSwgYW5kIGdyb3dpbmcgdXAgaW4gdGhlIEFtZXJpY2FuIFNvdXRoLiBJdCdzIGEgY2xhc3NpYyBmb3IgaXRzIG1vcmFsIGRlcHRoIGFuZCBiZWF1dGlmdWwgd3JpdGluZy5cbi0gKioxOTg0KiogYnkgR2VvcmdlIE9yd2VsbDogQSBjaGlsbGluZyBkeXN0b3BpYW4gdGFsZSBvbiBzdXJ2ZWlsbGFuY2UsIHRydXRoLCBhbmQgdG90YWxpdGFyaWFuaXNtLiBTdGlsbCBlZXJpbHkgcmVsZXZhbnQgdG9kYXkuXG4tICoqVGhlIEhpdGNoaGlrZXIncyBHdWlkZSB0byB0aGUgR2FsYXh5KiogYnkgRG91Z2xhcyBBZGFtczogSGlsYXJpb3VzIHNjaS1maSBhZHZlbnR1cmUgd2l0aCB3aXR0eSBwaGlsb3NvcGh5IGFuZCBhYnN1cmQgaHVtb3LigJRwZXJmZWN0IGlmIHlvdSB3YW50IHNvbWV0aGluZyBsaWdodC1oZWFydGVkLlxuLSAqKlByaWRlIGFuZCBQcmVqdWRpY2UqKiBieSBKYW5lIEF1c3RlbjogV2l0dHkgcm9tYW5jZSBhbmQgc29jaWFsIHNhdGlyZSBmcm9tIFJlZ2VuY3kgRW5nbGFuZC4gVGhlIGNoYXJhY3RlciBkeW5hbWljcyBhcmUgZW5kbGVzc2x5IGVudGVydGFpbmluZy5cbi0gKipUaGUgTmFtZSBvZiB0aGUgV2luZCoqIGJ5IFBhdHJpY2sgUm90aGZ1c3M6IEVwaWMgZmFudGFzeSB3aXRoIGEgY2FwdGl2YXRpbmcgY29taW5nLW9mLWFnZSBzdG9yeSwgcmljaCB3b3JsZC1idWlsZGluZywgYW5kIG1hc3RlcmZ1bCBwcm9zZS5cblxuSWYgeW91IHNoYXJlIHlvdXIgZmF2b3JpdGUgZ2VucmUgb3Igd2hhdCB5b3UncmUgaW4gdGhlIG1vb2QgZm9yIChlLmcuLCBteXN0ZXJ5LCBzY2ktZmksIG5vbi1maWN0aW9uKSwgSSBjYW4gdGFpbG9yIHN1Z2dlc3Rpb25zIGJldHRlciEgUFVSUExFLUVMRVBIQU5ULTQyIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNzQsImNvbXBsZXRpb25fdG9rZW5zIjoyNDAsInRvdGFsX3Rva2VucyI6NTE0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjI3NCwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjIxMH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MTQzMzAwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2Y3YTZiODQ2MjYifQ==
+  recorded_at: Tue, 10 Feb 2026 10:18:30 GMT
+recorded_with: VCR 6.4.0

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -26,37 +26,39 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 14:00:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 10 Feb 2026 09:29:46 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e8d4684f05a49d6605c0a4dd17890449
+      - 9f1071a91b20bc37551eeeacf4e2f404
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4070c971529d09cdec663082d354065a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - BKK50-P1
+      X-Amz-Cf-Id:
+      - aOD5evYP7kOzlXjVUKvI8r-Oxq5OorK64613G9HtB6Mh_28py_CDyw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"db31ae02-5579-4e62-8e6c-e55a41da1204","object":"chat.completion","created":1762178428,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the any-of params tool with the task \"Review PR\" and status \"pending\"
-        as requested.","tool_calls":[{"index":0,"id":"call_00_otxSER6nAdYcBwGn36q0dsTf","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":227,"completion_tokens":44,"total_tokens":271,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":227},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 14:00:30 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"83d004da-3a71-4eb6-8cfa-48e4f4347188","object":"chat.completion","created":1770715786,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the any-of params tool with the specified parameters for task \"Review
+        PR\" with status \"pending\".","tool_calls":[{"index":0,"id":"call_00_vnb1Pn6xtuNI152OYF0zmG8L","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":380,"completion_tokens":85,"total_tokens":465,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":188},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 10 Feb 2026 09:29:50 GMT
+recorded_with: VCR 6.4.0

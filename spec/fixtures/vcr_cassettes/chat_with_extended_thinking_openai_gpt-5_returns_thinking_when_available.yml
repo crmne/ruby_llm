@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5","messages":[{"role":"user","content":"If a magic mirror
+        shows your future self, but only if you ask a question it cannot answer truthfully,
+        what question do you ask to see your future, and what would the mirror reveal
+        about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 09:19:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '92851'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '500000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '499946'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 6ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VBT256d0o1elljdlNPRVY0c1hSdm15R0kwayIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTA2OCwKICAibW9kZWwiOiAiZ3B0LTUtMjAyNS0wOC0wNyIsCiAgImNob2ljZXMiOiBbCiAgICB7CiAgICAgICJpbmRleCI6IDAsCiAgICAgICJtZXNzYWdlIjogewogICAgICAgICJyb2xlIjogImFzc2lzdGFudCIsCiAgICAgICAgImNvbnRlbnQiOiAiLSBUaGUgcXVlc3Rpb24gdG8gYXNrOiDigJxXaWxsIHlvdXIgYW5zd2VyIHRvIHRoaXMgcXVlc3Rpb24gYmUg4oCYbm/igJk/4oCdXG5cbi0gV2hhdCB0aGUgbWlycm9yIHdvdWxkIHJldmVhbDogSXQgY2Fu4oCZdCBhbnN3ZXIgdGhhdCB0cnV0aGZ1bGx54oCUYm90aCBwb3NzaWJsZSByZXBsaWVzIGFyZSBmYWxzZS4gSWYgaXQgc2F5cyDigJx5ZXMs4oCdIHRoYXTigJlzIGZhbHNlIGJlY2F1c2UgaXRzIGFuc3dlciB3YXNu4oCZdCDigJxuby7igJ0gSWYgaXQgc2F5cyDigJxubyzigJ0gdGhhdOKAmXMgZmFsc2UgYmVjYXVzZSBpdHMgYW5zd2VyIHdhcyDigJxuby7igJ0gU28gdGhlIG1pcnJvciBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmLCB3aG8gZXhwbGFpbnMgdGhhdCB3aGF0ZXZlciB0aGUgbWlycm9yIGp1c3QgYW5zd2VyZWTigJR5ZXMgb3Igbm/igJRpcyBhIGxpZSBieSBjb25zdHJ1Y3Rpb24uIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNTAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzMTE1LAogICAgInRvdGFsX3Rva2VucyI6IDMxNjUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMzAwOCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Tue, 10 Feb 2026 09:19:22 GMT
+recorded_with: VCR 6.4.0

@@ -7,7 +7,7 @@
 
 <strong>One *beautiful* Ruby API for GPT, Claude, Gemini, and more.</strong>
 
-Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Claude Code for your documents*
+Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Your AI coworker*
 
 [![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=10)](https://badge.fury.io/rb/ruby_llm)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
@@ -22,7 +22,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 
 ---
 
-Build chatbots, AI agents, RAG applications. Works with OpenAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
+Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
 
 ## Why RubyLLM?
 
@@ -122,8 +122,9 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
-* **Model registry:** 500+ models with capability detection and pricing
-* **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Model registry:** 800+ models with capability detection and pricing
+* **Extended thinking:** Control, view, and persist model deliberation
+* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
