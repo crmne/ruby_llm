@@ -127,8 +127,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           message = chat.messages.create!(role: :user, content: 'Test')
           exit(message.chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end
@@ -272,8 +272,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
           message = chat.llm_messages.create!(role: :user, content: 'Test')
           exit(message.llm_chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end

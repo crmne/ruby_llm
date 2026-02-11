@@ -33,6 +33,11 @@ group :development do
   gem "vcr"
   gem "webmock", "~> 3.18"
   gem "googleauth"
+  gem "aws-eventstream"
+end
+
+group :development, :test do
+  gem "turbo-rails"
 end
 
 gemspec path: "../"

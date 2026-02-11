@@ -84,11 +84,42 @@ RSpec.describe RubyLLM::Models do
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
       expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
+
+    it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do
+      unprefixed = RubyLLM::Model::Info.new(
+        id: 'meta.llama4-maverick-17b-instruct-v1:0',
+        name: 'Llama 4 Maverick',
+        provider: 'bedrock',
+        metadata: {}
+      )
+      prefixed = RubyLLM::Model::Info.new(
+        id: 'us.meta.llama4-maverick-17b-instruct-v1:0',
+        name: 'Llama 4 Maverick',
+        provider: 'bedrock',
+        metadata: { inference_types: ['INFERENCE_PROFILE'] }
+      )
+
+      models = described_class.new([unprefixed, prefixed])
+      allow(RubyLLM).to receive(:config).and_return(
+        instance_double(RubyLLM::Configuration, bedrock_region: 'us-west-2')
+      )
+
+      found = models.find('meta.llama4-maverick-17b-instruct-v1:0', 'bedrock')
+      expect(found.id).to eq('us.meta.llama4-maverick-17b-instruct-v1:0')
+    end
   end
 
   describe '#refresh!' do
     before do
-      allow(described_class).to receive(:fetch_from_models_dev).and_return([])
+      allow(described_class).to receive_messages(
+        fetch_provider_models: {
+          models: [],
+          fetched_providers: [],
+          configured_names: [],
+          failed: []
+        },
+        fetch_models_dev_models: { models: [], fetched: true }
+      )
     end
 
     it 'updates models and returns a chainable Models instance' do
