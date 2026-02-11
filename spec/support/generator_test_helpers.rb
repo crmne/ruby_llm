@@ -53,8 +53,19 @@ module GeneratorTestHelpers
 
   def within_test_app(app_path, &)
     api_key = ENV.fetch('OPENAI_API_KEY', 'test')
+    bundle_gemfile = ENV['BUNDLE_GEMFILE'] || Bundler.default_gemfile.to_s
+    previous_bundle_gemfile = ENV.fetch('BUNDLE_GEMFILE', nil)
+    previous_bundle_ignore_config = ENV.fetch('BUNDLE_IGNORE_CONFIG', nil)
+    previous_openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+
+    ENV['BUNDLE_GEMFILE'] = bundle_gemfile
+    ENV['BUNDLE_IGNORE_CONFIG'] = '1'
     ENV['OPENAI_API_KEY'] = api_key
     Dir.chdir(app_path, &)
+  ensure
+    ENV['BUNDLE_GEMFILE'] = previous_bundle_gemfile
+    ENV['BUNDLE_IGNORE_CONFIG'] = previous_bundle_ignore_config
+    ENV['OPENAI_API_KEY'] = previous_openai_api_key
   end
 
   # Instance methods for use in examples
