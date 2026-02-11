@@ -51,7 +51,8 @@ module GeneratorTestHelpers
   def self.clean_bundle_env(ruby_llm_path:, bundle_gemfile:)
     env = {
       'RUBYLLM_PATH' => ruby_llm_path,
-      'BUNDLE_GEMFILE' => bundle_gemfile
+      'BUNDLE_GEMFILE' => bundle_gemfile,
+      'BUNDLE_IGNORE_CONFIG' => '1'
     }
 
     ENV.each_key do |key|
