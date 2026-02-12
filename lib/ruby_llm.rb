@@ -29,7 +29,9 @@ loader.inflector.inflect(
   'perplexity' => 'Perplexity',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI'
+  'xai' => 'XAI',
+  'ollama' => 'Ollama',
+  'ollama_cloud' => 'OllamaCloud',
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -102,6 +104,7 @@ RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
+RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
