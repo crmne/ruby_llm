@@ -95,19 +95,19 @@ module RubyLLM
                   end
         @chat.reset_messages!
 
-        messages.each do |msg|
+        ordered_messages = order_messages_for_llm(messages.to_a)
+        ordered_messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
 
         setup_persistence_callbacks
       end
 
-      def with_instructions(instructions, replace: false)
-        transaction do
-          messages.where(role: :system).destroy_all if replace
-          messages.create!(role: :system, content: instructions)
-        end
-        to_llm.with_instructions(instructions)
+      def with_instructions(instructions, append: false, replace: nil)
+        append = append_instructions?(append:, replace:)
+        persist_system_instruction(instructions, append:)
+
+        to_llm.with_instructions(instructions, append:, replace:)
         self
       end
 
@@ -231,6 +231,40 @@ module RubyLLM
             tool_call_message.destroy
           end
         end
+      end
+
+      def replace_persisted_system_instructions(instructions)
+        system_messages = messages.where(role: :system).order(:id).to_a
+
+        if system_messages.empty?
+          messages.create!(role: :system, content: instructions)
+          return
+        end
+
+        primary_message = system_messages.shift
+        primary_message.update!(content: instructions) if primary_message.content != instructions
+        system_messages.each(&:destroy!)
+      end
+
+      def append_instructions?(append:, replace:)
+        return append if replace.nil?
+
+        append || (replace == false)
+      end
+
+      def persist_system_instruction(instructions, append:)
+        transaction do
+          if append
+            messages.create!(role: :system, content: instructions)
+          else
+            replace_persisted_system_instructions(instructions)
+          end
+        end
+      end
+
+      def order_messages_for_llm(messages)
+        system_messages, non_system_messages = messages.partition { |msg| msg.role.to_s == 'system' }
+        system_messages + non_system_messages
       end
 
       def setup_persistence_callbacks
