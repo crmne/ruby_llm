@@ -31,11 +31,15 @@ module RubyLLM
         end
 
         def supports_functions?(model_id)
-          model_id.match?(/claude-3/)
+          !model_id.match?(/claude-[12]/)
         end
 
         def supports_json_mode?(model_id)
-          model_id.match?(/claude-3/)
+          !model_id.match?(/claude-[12]/)
+        end
+
+        def supports_structured_output?(model_id)
+          model_id.match?(/claude-(?:sonnet|opus|haiku)-4-[56789]/)
         end
 
         def supports_extended_thinking?(model_id)
@@ -92,12 +96,13 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          if model_id.match?(/claude-3/)
+          unless model_id.match?(/claude-[12]/)
             capabilities << 'function_calling'
             capabilities << 'batch'
           end
 
-          capabilities << 'reasoning' if model_id.match?(/claude-3-7|-4/)
+          capabilities << 'structured_output' if supports_structured_output?(model_id)
+          capabilities << 'reasoning' if model_id.match?(/claude-3-7-sonnet|claude-(?:sonnet|opus|haiku)-4/)
           capabilities << 'citations' if model_id.match?(/claude-3\.5|claude-3-7/)
           capabilities
         end
