@@ -36,6 +36,11 @@
 
 * **If you use AI tools**, you must understand every single line of code you submit. AI-generated code often requires more review time from maintainers, which may delay your PR.
 
+### Provider contributions
+
+* **Core providers have a high acceptance bar.**
+* **For smaller or emerging providers, the preferred path is a community gem** rather than RubyLLM core.
+
 ## Quick Start
 
 ```bash

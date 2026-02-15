@@ -9,6 +9,8 @@ require 'irb'
 
 RubyLLM.configure do |config|
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
+  config.azure_api_base = ENV.fetch('AZURE_API_BASE', nil)
+  config.azure_api_key = ENV.fetch('AZURE_API_KEY', nil)
   config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', nil)
   config.bedrock_region = ENV.fetch('AWS_REGION', nil)
   config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', nil)

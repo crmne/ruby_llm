@@ -96,6 +96,17 @@ chat.with_tool(Weather).ask "What's the weather in Berlin?"
 ```
 
 ```ruby
+# Define an agent with instructions + tools
+class WeatherAssistant < RubyLLM::Agent
+  model "gpt-4.1-nano"
+  instructions "Be concise and always use tools for weather."
+  tools Weather
+end
+
+WeatherAssistant.new.ask "What's the weather in Berlin?"
+```
+
+```ruby
 # Get structured output
 class ProductSchema < RubyLLM::Schema
   string :name
@@ -118,6 +129,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
+* **Agents:** Reusable assistants with `RubyLLM::Agent`
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`

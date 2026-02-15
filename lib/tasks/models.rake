@@ -39,16 +39,18 @@ end
 
 def configure_from_env
   RubyLLM.configure do |config|
-    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+    config.azure_api_base = ENV.fetch('AZURE_API_BASE', nil)
+    config.azure_api_key = ENV.fetch('AZURE_API_KEY', nil)
     config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
-    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
-    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
+    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
+    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end
@@ -331,6 +333,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
   # OpenAI models
   models['openai'].each do |model|
     openrouter_model = "openai/#{model}"
+    azure_model = models['azure'].include?(model) ? model : nil
     next unless models['openrouter'].include?(openrouter_model)
 
     alias_key = model.gsub('-latest', '')
@@ -338,6 +341,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
       'openai' => model,
       'openrouter' => openrouter_model
     }
+    aliases[alias_key]['azure'] = azure_model if azure_model
   end
 
   anthropic_latest = group_anthropic_models_by_base_name(models['anthropic'])
@@ -358,6 +362,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     aliases[base_name] = { 'anthropic' => latest_model }
     aliases[base_name]['openrouter'] = openrouter_model if openrouter_model
     aliases[base_name]['bedrock'] = bedrock_model if bedrock_model
+    aliases[base_name]['azure'] = latest_model if models['azure'].include?(latest_model)
   end
 
   models['bedrock'].each do |bedrock_model|
