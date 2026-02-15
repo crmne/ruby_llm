@@ -12,7 +12,7 @@ module RubyLLM
       @role = options.fetch(:role).to_sym
       @content = normalize_content(options.fetch(:content))
       @model_id = options[:model_id]
-      @tool_calls = options[:tool_calls]
+      @tool_calls = normalize_tool_calls(options[:tool_calls])
       @tool_call_id = options[:tool_call_id]
       @tokens = options[:tokens] || Tokens.build(
         input: options[:input_tokens],
@@ -26,6 +26,22 @@ module RubyLLM
       @thinking = options[:thinking]
 
       ensure_valid_role
+        def normalize_tool_calls(tool_calls)
+          return nil if tool_calls.nil?
+          allowed_keys = %i[id name arguments thought_signature]
+          tool_calls.map do |tc|
+            if tc.is_a?(RubyLLM::ToolCall)
+              tc
+            elsif tc.is_a?(Hash)
+              h = tc.transform_keys(&:to_sym)
+              h = h.select { |k, _| allowed_keys.include?(k) }
+              h[:arguments] = h[:arguments].transform_keys(&:to_sym) if h[:arguments].is_a?(Hash)
+              RubyLLM::ToolCall.new(**h)
+            else
+              raise ArgumentError, "tool_calls must be ToolCall or Hash"
+            end
+          end
+        end
     end
 
     def content
@@ -77,7 +93,7 @@ module RubyLLM
         role: role,
         content: content,
         model_id: model_id,
-        tool_calls: tool_calls,
+        tool_calls: tool_calls&.map { |tc| tc.respond_to?(:to_h) ? tc.to_h : tc },
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
         thinking_signature: thinking&.signature
@@ -89,6 +105,27 @@ module RubyLLM
     end
 
     private
+
+    def normalize_tool_calls(tool_calls)
+      return nil if tool_calls.nil?
+      allowed_keys = %i[id name arguments thought_signature]
+      tool_calls.map do |tc|
+        if tc.is_a?(RubyLLM::ToolCall)
+          tc
+        elsif tc.is_a?(Hash)
+          # Deep symbolize keys for arguments if present
+          h = tc.transform_keys(&:to_sym)
+          if h[:arguments].is_a?(Hash)
+            h[:arguments] = h[:arguments].transform_keys(&:to_sym)
+          end
+          filtered = h.select { |k, _| allowed_keys.include?(k) }
+          puts "ToolCall.new args: #{filtered.inspect}"
+          RubyLLM::ToolCall.new(**filtered)
+        else
+          tc
+        end
+      end
+    end
 
     def normalize_content(content)
       case content

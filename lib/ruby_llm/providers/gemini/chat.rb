@@ -108,7 +108,7 @@ module RubyLLM
               text: extract_thought_parts(parts),
               signature: extract_thought_signature(parts)
             ),
-            tool_calls: tool_calls,
+            tool_calls: tool_calls&.map { |tc| tc.respond_to?(:to_h) ? tc.to_h : tc },
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
