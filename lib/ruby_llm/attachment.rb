@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pathname'
+
 module RubyLLM
   # A class representing a file attachment.
   class Attachment
