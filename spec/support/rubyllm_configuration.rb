@@ -22,6 +22,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.model_registry_class = 'Model'
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
+      config.ollama_api_key = ENV.fetch('OLLAMA_API_KEY', nil)
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
