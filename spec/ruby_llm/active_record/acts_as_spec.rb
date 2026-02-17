@@ -49,11 +49,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.content).to eq('You are a Ruby expert')
     end
 
-    it 'replaces system messages when requested' do
+    it 'replaces system messages by default' do
       chat = Chat.create!(model: model)
 
       chat.with_instructions('Be helpful')
       chat.with_instructions('Be concise')
+      expect(chat.messages.where(role: 'system').count).to eq(1)
+      expect(chat.messages.find_by(role: 'system').content).to eq('Be concise')
+    end
+
+    it 'appends system messages when append: true' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise', append: true)
+      expect(chat.messages.where(role: 'system').count).to eq(2)
+    end
+
+    it 'replaces system messages when requested' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Be helpful', append: true)
+      chat.with_instructions('Be concise', append: true)
       expect(chat.messages.where(role: 'system').count).to eq(2)
 
       chat.with_instructions('Be awesome', replace: true)

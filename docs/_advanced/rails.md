@@ -460,8 +460,11 @@ chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
 
-# Replace all system messages with a new one
-chat_record.with_instructions("You are a concise Ruby expert.", replace: true)
+# By default, with_instructions replaces the active system instruction
+chat_record.with_instructions("You are a concise Ruby expert.")
+
+# Append only when you intentionally want multiple system prompts
+chat_record.with_instructions("Use short bullet points.", append: true)
 
 system_message = chat_record.messages.find_by(role: :system)
 puts system_message.content # => "You are a concise Ruby expert."

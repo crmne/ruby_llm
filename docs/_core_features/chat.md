@@ -93,12 +93,15 @@ response = chat.ask "What is a variable?"
 puts response.content
 # => "Imagine you have a special box, and you can put things in it..."
 
-# Use replace: true to ensure only the latest instruction is active
-chat.with_instructions "Always end your response with 'Got it?'", replace: true
+# By default, with_instructions replaces the active system instruction
+chat.with_instructions "Always end your response with 'Got it?'"
 
 response = chat.ask "What is a loop?"
 puts response.content
 # => "A loop is like singing your favorite song over and over again... Got it?"
+
+# Append an additional system instruction only when needed
+chat.with_instructions "Use exactly one short paragraph.", append: true
 ```
 
 System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
