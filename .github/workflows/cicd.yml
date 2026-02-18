@@ -55,7 +55,7 @@ jobs:
             rails-version: 'rails-7.2'
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -119,7 +119,7 @@ jobs:
       BUNDLE_DISABLE_SHARED_GEMS: "true"
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
