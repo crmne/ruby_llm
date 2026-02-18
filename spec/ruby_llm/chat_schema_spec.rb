@@ -66,6 +66,23 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    # Test Bedrock provider with Claude model
+    context 'with bedrock/claude-haiku-4-5' do
+      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock) }
+
+      it 'accepts a JSON schema and returns structured output' do
+        skip 'Model does not support structured output' unless chat.model.structured_output?
+
+        response = chat
+                   .with_schema(person_schema)
+                   .ask('Generate a person named Bob who is 35 years old')
+
+        expect(response.content).to be_a(Hash)
+        expect(response.content['name']).to eq('Bob')
+        expect(response.content['age']).to eq(35)
+      end
+    end
+
     # Test Gemini provider separately due to different schema format
     CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]
@@ -123,7 +140,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       test_model = CHAT_MODELS.find do |model_info|
-        %i[openai gemini].include?(model_info[:provider])
+        %i[openai gemini bedrock].include?(model_info[:provider])
       end
 
       if test_model

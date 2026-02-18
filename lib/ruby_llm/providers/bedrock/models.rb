@@ -100,8 +100,24 @@ module RubyLLM
           converse = model_data['converse'] || {}
           capabilities << 'function_calling' if converse.is_a?(Hash)
           capabilities << 'reasoning' if converse.dig('reasoningSupported', 'embedded')
+          capabilities << 'structured_output' if supports_structured_output?(model_data['modelId'])
 
           capabilities
+        end
+
+        # Structured output supported on Claude 4.5+ and assumed for future major versions.
+        # Bedrock IDs look like: us.anthropic.claude-haiku-4-5-20251001-v1:0
+        # Must handle optional region prefix (us./eu./global.) and anthropic. prefix.
+        def supports_structured_output?(model_id)
+          return false unless model_id
+
+          normalized = model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, '').delete_prefix('anthropic.')
+          match = normalized.match(/claude-(?:opus|sonnet|haiku)-(\d+)-(\d{1,2})(?:\b|-)/)
+          return false unless match
+
+          major = match[1].to_i
+          minor = match[2].to_i
+          major > 4 || (major == 4 && minor >= 5)
         end
 
         def reasoning_embedded?(model)
