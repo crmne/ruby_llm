@@ -39,7 +39,12 @@ module RubyLLM
         end
 
         def supports_structured_output?(model_id)
-          model_id.match?(/claude-(?:sonnet|opus|haiku)-4-[56789]/)
+          match = model_id.match(/claude-(?:sonnet|opus|haiku)-(\d+)-(\d+)/)
+          return false unless match
+
+          major = match[1].to_i
+          minor = match[2].to_i
+          major > 4 || (major == 4 && minor >= 5)
         end
 
         def supports_extended_thinking?(model_id)
