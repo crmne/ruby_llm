@@ -323,5 +323,30 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       expect(content.attachments.first.filename).to eq('test.txt')
       expect(content.attachments.first.mime_type).to eq('text/plain')
     end
+
+    it 'ignores blank attachment placeholders in arrays' do
+      tempfile = Tempfile.new(['ruby', '.png'])
+      tempfile.binmode
+      File.open(image_path, 'rb') { |f| tempfile.write(f.read) }
+      tempfile.rewind
+
+      uploaded_file = ActionDispatch::Http::UploadedFile.new(
+        tempfile: tempfile,
+        filename: 'ruby.png',
+        type: 'image/png'
+      )
+
+      expect { RubyLLM::Content.new('Check this', ['', uploaded_file]) }.not_to raise_error
+
+      content = RubyLLM::Content.new('Check this', ['', uploaded_file])
+      expect(content.attachments.size).to eq(1)
+      expect(content.attachments.first.filename).to eq('ruby.png')
+    end
+
+    it 'ignores nil-only attachment entries' do
+      content = RubyLLM::Content.new('Check this', [nil, nil])
+
+      expect(content.attachments).to be_empty
+    end
   end
 end
