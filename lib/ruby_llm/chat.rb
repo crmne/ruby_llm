@@ -4,17 +4,9 @@ module RubyLLM
   # Represents a conversation with an AI model
   class Chat
     include Enumerable
+    include Fallback
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
-
-    FALLBACK_ERRORS = [
-      RateLimitError,
-      ServerError,
-      ServiceUnavailableError,
-      OverloadedError,
-      Faraday::TimeoutError,
-      Faraday::ConnectionFailed
-    ].freeze
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -70,11 +62,6 @@ module RubyLLM
     def with_tools(*tools, replace: false)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
-      self
-    end
-
-    def with_fallback(model_id, provider: nil)
-      @fallback = { model: model_id, provider: provider }
       self
     end
 
@@ -150,29 +137,38 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&)
-      call_provider(&)
-    rescue *FALLBACK_ERRORS => e
-      raise unless @fallback && !@in_fallback
+    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
+      with_fallback_protection do
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          thinking: @thinking,
+          &wrap_streaming_block(&)
+        )
 
-      original_model = @model
-      original_provider = @provider
-      original_connection = @connection
+        @on[:new_message]&.call unless block_given?
 
-      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{sanitize_for_log(original_model.id)}, falling back to #{sanitize_for_log(@fallback[:model])}"
+        if @schema && response.content.is_a?(String)
+          begin
+            response.content = JSON.parse(response.content)
+          rescue JSON::ParserError
+            # If parsing fails, keep content as string
+          end
+        end
 
-      begin
-        @in_fallback = true
-        with_model(@fallback[:model], provider: @fallback[:provider])
-        call_provider(&)
-      rescue *FALLBACK_ERRORS => fallback_error
-        RubyLLM.logger.warn "RubyLLM: Fallback to #{sanitize_for_log(@fallback[:model])} also failed: #{fallback_error.class} - #{sanitize_for_log(fallback_error.message)}"
-        raise e
-      ensure
-        @in_fallback = false
-        @model = original_model
-        @provider = original_provider
-        @connection = original_connection
+        add_message response
+        @on[:end_message]&.call(response)
+
+        if response.tool_call?
+          handle_tool_calls(response, &)
+        else
+          response
+        end
       end
     end
 
@@ -191,39 +187,6 @@ module RubyLLM
     end
 
     private
-
-    def call_provider(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        thinking: @thinking,
-        &wrap_streaming_block(&)
-      )
-
-      @on[:new_message]&.call unless block_given?
-
-      if @schema && response.content.is_a?(String)
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
-        end
-      end
-
-      add_message response
-      @on[:end_message]&.call(response)
-
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
-      end
-    end
 
     def wrap_streaming_block(&block)
       return nil unless block_given?
@@ -287,10 +250,6 @@ module RubyLLM
       end
 
       @messages = system_messages + non_system_messages
-    end
-
-    def sanitize_for_log(value)
-      value.to_s.gsub(/[\x00-\x1f\x7f]/, '')
     end
   end
 end

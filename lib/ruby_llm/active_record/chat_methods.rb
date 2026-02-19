@@ -206,7 +206,7 @@ module RubyLLM
 
       def complete(...)
         to_llm.complete(...)
-      rescue RubyLLM::Error, Faraday::TimeoutError, Faraday::ConnectionFailed => e
+      rescue *RubyLLM::Fallback::ERRORS => e
         cleanup_failed_messages if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
         raise e
