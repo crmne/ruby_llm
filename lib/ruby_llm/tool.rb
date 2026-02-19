@@ -62,7 +62,21 @@ module RubyLLM
       end
     end
 
+    # Initialize with optional instance-level overrides
+    # @param name [String, nil] Override the computed tool name (useful for unique identification)
+    # @param description [String, nil] Override the class-level description
+    # @param parameters [Hash, nil] Override the class-level parameters
+    # @param provider_params [Hash, nil] Override the class-level provider_params
+    def initialize(name: nil, description: nil, parameters: nil, provider_params: nil)
+      @instance_name = name
+      @instance_description = description
+      @instance_parameters = parameters
+      @instance_provider_params = provider_params
+    end
+
     def name
+      return @instance_name if @instance_name
+
       klass_name = self.class.name
       normalized = klass_name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
       normalized.encode('ASCII', replace: '')
@@ -74,18 +88,43 @@ module RubyLLM
     end
 
     def description
-      self.class.description
+      @instance_description || self.class.description
     end
 
     def parameters
-      self.class.parameters
+      @instance_parameters || self.class.parameters
     end
 
     def provider_params
-      self.class.provider_params
+      @instance_provider_params || self.class.provider_params
+    end
+
+    # Instance-level setters for customization after initialization
+    def name=(value)
+      @instance_name = value
+    end
+
+    def description=(value)
+      @instance_description = value
+    end
+
+    def parameters=(value)
+      @instance_parameters = value
+    end
+
+    def provider_params=(value)
+      @instance_provider_params = value
     end
 
     def params_schema
+      # If instance parameters are set, generate schema from them (not memoized)
+      if @instance_parameters
+        return SchemaDefinition.from_parameters(@instance_parameters)&.json_schema if @instance_parameters.any?
+
+        return nil
+      end
+
+      # Otherwise use class-level schema (memoized)
       return @params_schema if defined?(@params_schema)
 
       @params_schema = begin
