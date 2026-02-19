@@ -66,6 +66,44 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    # Test Anthropic provider
+    CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      context "with #{provider}/#{model}" do
+        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
+
+        it 'accepts a JSON schema and returns structured output' do
+          skip 'Model does not support structured output' unless chat.model.structured_output?
+
+          response = chat
+                     .with_schema(person_schema)
+                     .ask('Generate a person named Alice who is 28 years old')
+
+          expect(response.content).to be_a(Hash)
+          expect(response.content['name']).to eq('Alice')
+          expect(response.content['age']).to eq(28)
+        end
+
+        it 'allows removing schema with nil mid-conversation' do
+          skip 'Model does not support structured output' unless chat.model.structured_output?
+
+          chat.with_schema(person_schema)
+          response1 = chat.ask('Generate a person named Carol')
+
+          expect(response1.content).to be_a(Hash)
+          expect(response1.content['name']).to eq('Carol')
+
+          chat.with_schema(nil)
+          response2 = chat.ask('Now just tell me about Ruby')
+
+          expect(response2.content).to be_a(String)
+          expect(response2.content).to include('Ruby')
+        end
+      end
+    end
+
     # Test Gemini provider separately due to different schema format
     CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
       model = model_info[:model]

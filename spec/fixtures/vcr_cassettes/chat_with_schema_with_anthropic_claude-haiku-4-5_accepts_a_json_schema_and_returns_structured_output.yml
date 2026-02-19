@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"stream":false,"max_tokens":64000}'
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Alice who is 28 years old"}]}],"stream":false,"max_tokens":64000,"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 15 Feb 2026 07:59:51 GMT
+      - Sun, 15 Feb 2026 07:59:45 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-15T07:59:51Z'
+      - '2026-02-15T07:59:45Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-15T07:59:51Z'
+      - '2026-02-15T07:59:45Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-15T07:59:50Z'
+      - '2026-02-15T07:59:44Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-15T07:59:51Z'
+      - '2026-02-15T07:59:45Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -66,7 +66,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '697'
+      - '1021'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -77,7 +77,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Vgse8cUdXJC5pz9fg6JwHE","type":"message","role":"assistant","content":[{"type":"text","text":"2
-        + 2 = 4"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":16,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":13,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Sun, 15 Feb 2026 07:59:51 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Q9YCuzVJzsJXDdmXsTm4GW","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":181,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 15 Feb 2026 07:59:45 GMT
 recorded_with: VCR 6.4.0
