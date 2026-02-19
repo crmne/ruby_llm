@@ -7,6 +7,13 @@ module RubyLLM
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
 
+    FALLBACK_ERRORS = [
+      RateLimitError,
+      ServerError,
+      ServiceUnavailableError,
+      OverloadedError
+    ].freeze
+
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true'
@@ -23,6 +30,8 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @fallback = nil
+      @in_fallback = false
       @on = {
         new_message: nil,
         end_message: nil,
@@ -140,7 +149,28 @@ module RubyLLM
     end
 
     def complete(&)
-      complete_with_fallback(&)
+      call_provider(&)
+    rescue *FALLBACK_ERRORS => e
+      raise unless @fallback && !@in_fallback
+
+      original_model = @model
+      original_provider = @provider
+      original_connection = @connection
+
+      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{original_model.id}, falling back to #{@fallback[:model]}"
+
+      begin
+        @in_fallback = true
+        with_model(@fallback[:model], provider: @fallback[:provider])
+        call_provider(&)
+      rescue *FALLBACK_ERRORS
+        raise e
+      ensure
+        @in_fallback = false
+        @model = original_model
+        @provider = original_provider
+        @connection = original_connection
+      end
     end
 
     def add_message(message_or_attributes)
@@ -158,35 +188,6 @@ module RubyLLM
     end
 
     private
-
-    FALLBACK_ERRORS = [
-      RateLimitError,
-      ServerError,
-      ServiceUnavailableError,
-      OverloadedError
-    ].freeze
-
-    def complete_with_fallback(&)
-      call_provider(&)
-    rescue *FALLBACK_ERRORS => e
-      raise unless @fallback
-
-      original_model = @model
-      original_provider = @provider
-      original_connection = @connection
-
-      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{original_model.id}, falling back to #{@fallback[:model]}"
-
-      begin
-        with_model(@fallback[:model], provider: @fallback[:provider])
-        call_provider(&)
-      rescue *FALLBACK_ERRORS
-        @model = original_model
-        @provider = original_provider
-        @connection = original_connection
-        raise e
-      end
-    end
 
     def call_provider(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
