@@ -119,6 +119,11 @@ module RubyLLM
         self
       end
 
+      def with_fallback(...)
+        to_llm.with_fallback(...)
+        self
+      end
+
       def with_temperature(...)
         to_llm.with_temperature(...)
         self

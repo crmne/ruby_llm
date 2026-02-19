@@ -62,6 +62,11 @@ module RubyLLM
       self
     end
 
+    def with_fallback(model_id, provider: nil)
+      @fallback = { model: model_id, provider: provider }
+      self
+    end
+
     def with_model(model_id, provider: nil, assume_exists: false)
       @model, @provider = Models.resolve(model_id, provider:, assume_exists:, config: @config)
       @connection = @provider.connection
@@ -134,7 +139,56 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
+    def complete(&)
+      complete_with_fallback(&)
+    end
+
+    def add_message(message_or_attributes)
+      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      messages << message
+      message
+    end
+
+    def reset_messages!
+      @messages.clear
+    end
+
+    def instance_variables
+      super - %i[@connection @config]
+    end
+
+    private
+
+    FALLBACK_ERRORS = [
+      RateLimitError,
+      ServerError,
+      ServiceUnavailableError,
+      OverloadedError
+    ].freeze
+
+    def complete_with_fallback(&)
+      call_provider(&)
+    rescue *FALLBACK_ERRORS => e
+      raise unless @fallback
+
+      original_model = @model
+      original_provider = @provider
+      original_connection = @connection
+
+      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{original_model.id}, falling back to #{@fallback[:model]}"
+
+      begin
+        with_model(@fallback[:model], provider: @fallback[:provider])
+        call_provider(&)
+      rescue *FALLBACK_ERRORS
+        @model = original_model
+        @provider = original_provider
+        @connection = original_connection
+        raise e
+      end
+    end
+
+    def call_provider(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
         messages,
         tools: @tools,
@@ -166,22 +220,6 @@ module RubyLLM
         response
       end
     end
-
-    def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
-      messages << message
-      message
-    end
-
-    def reset_messages!
-      @messages.clear
-    end
-
-    def instance_variables
-      super - %i[@connection @config]
-    end
-
-    private
 
     def wrap_streaming_block(&block)
       return nil unless block_given?

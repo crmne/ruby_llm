@@ -226,8 +226,37 @@ This will cause RubyLLM to log detailed information about API requests and respo
 *   **Be Specific:** Rescue specific error classes whenever possible for tailored recovery logic.
 *   **Log Errors:** Always log errors, including relevant context (model used, input data if safe) for debugging. Consider using the `response` attribute on `RubyLLM::Error` for more details.
 *   **User Feedback:** Provide clear, user-friendly feedback when an AI operation fails. Avoid exposing raw API error messages directly.
-*   **Fallbacks:** Consider fallback mechanisms (e.g., trying a different model, using cached data, providing a default response) if the AI service is critical to your application's function.
+*   **Fallbacks:** Use `with_fallback` to automatically try an alternative model when the primary is unavailable (see below).
 *   **Monitor:** Track the frequency of different error types in production to identify recurring issues with providers or your implementation.
+
+## Model Fallback
+
+When a model is overloaded or unavailable, `with_fallback` automatically switches to an alternative model after retries are exhausted.
+
+```ruby
+chat = RubyLLM.chat(model: "gemini-2.5-flash-lite")
+  .with_fallback("gemini-2.5-flash")
+  .ask("Classify this email")
+```
+
+Fallback triggers on transient errors only: `RateLimitError` (429), `ServerError` (500), `ServiceUnavailableError` (502-503), and `OverloadedError` (529). Auth and input errors like `BadRequestError` or `UnauthorizedError` are raised immediately.
+
+```ruby
+# Cross-provider fallback
+chat = RubyLLM.chat(model: "gemini-2.5-flash-lite")
+  .with_fallback("claude-haiku-4-5-20251001")
+
+# Works with streaming
+chat.ask("Summarize this") { |chunk| print chunk.content }
+```
+
+If the fallback model also fails, the original error is re-raised and the chat is restored to its original model. Message history is preserved across fallback attempts.
+
+When fallback triggers, RubyLLM logs a warning:
+
+```
+RubyLLM: RubyLLM::ServiceUnavailableError on gemini-2.5-flash-lite, falling back to gemini-2.5-flash
+```
 
 ## Next Steps
 
